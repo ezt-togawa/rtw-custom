@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="inherit_view_product_configurator_tree" model="ir.ui.view">
+    <field name="name">product.configurator.inherit.tree</field>
+    <field name="model">product.template</field>
+    <field eval="8" name="priority"/>
+    <field name="arch" type="xml">
+        <tree string="Product">
+            <field name="name"/>
+            <field name="series"/>
+            <field name="categ_id"/>
+            <field name="attribute_line_ids" widget="many2many_tags"/>
+            <field name="width" optional="hide"/>
+        </tree>
+    </field>
+</record>
+
+    <record id="product_configurator_form_rtw" model="ir.ui.view">
+        <field name="name">product.configurator.rtw</field>
+        <field name="model">product.configurator</field>
+        <field name="inherit_id" ref="product_configurator.product_configurator_form"/>
+        <field name="arch" type="xml">
+            <field name="product_tmpl_id" position="attributes">
+                <attribute name="context">{'tree_view_ref': 'inherit_view_product_configurator_tree'}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

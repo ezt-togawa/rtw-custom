@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_move_line_list">
+            <field name="name">move_line_list</field>
+            <field name="model">stock.move</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id"/>
+                    <field name="description_picking"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="depo_date"/>
+                    <field name="state"/>
+                    <field name="sai" sum="sai"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="stock_move_line_action_window">
+            <field name="name">move_line_list</field>
+            <field name="res_model">stock.move</field>
+            <field name="view_id" ref="stock_move_line_list" />
+            <field name="view_mode">tree,kanban,form</field>
+        </record>
+
+        <menuitem name="move_line"
+                  id="move_line_action_window_menu"
+                  action="stock_move_line_action_window"
+                  parent="stock.menu_stock_warehouse_mgmt"/>
+    </data>
+</odoo>

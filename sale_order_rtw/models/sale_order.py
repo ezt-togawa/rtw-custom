@@ -31,6 +31,16 @@ class sale_order_rtw(models.Model):
     depo_date = fields.Date(string="Depo Date")
     customer_order_number = fields.Char('Customer Order Number')
     items_under_consideration = fields.Boolean('Items under consideration', default=0)
+    waypoint = fields.Many2one(
+        comodel_name="res.partner",
+        string="waypoint",
+        required=False,
+        ondelete="set null",
+    )
+    sipping_to = fields.Selection([
+        ('depo', 'デポ入れまで'),
+        ('inst', '搬入設置まで'),
+    ], string="配送")
 #     value = fields.Integer()
 #     value2 = fields.Float(compute="_value_pc", store=True)
 #     description = fields.Text()
@@ -43,3 +53,5 @@ class sale_order_rtw(models.Model):
     def toggle_under_consideration(self):
         for record in self:
             record.items_under_consideration = not record.items_under_consideration
+
+

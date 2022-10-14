@@ -23,9 +23,13 @@
 <!--                <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="after">-->
 <!--                    <field name="contact_id"/>-->
 <!--                </xpath>-->
+<!--                 <xpath expr="//field[@name='date_deadline]" position="before">-->
+<!--                   -->
+<!--                 </xpath>-->
                 <xpath expr="//notebook" position="before">
                     <group>
                         <group>
+                             <field name="create_date" widget="date"/>
                             <field name="contract_id" string="contract_id" widget="many2many_tags"/>
                             <field name="order_no"/>
                             <field name="quote_number_by_hukusuke" string="quote_number_by_hukusuke"/>
@@ -286,6 +290,9 @@
                     <field name="partner_id" string="顧客"/>
                     <field name="partner_name" string="関連会社"/>
                     <field name="date_deadline" string="完了予定日"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="create_date" widget="date"/>
                 </xpath>
             </field>
         </record>

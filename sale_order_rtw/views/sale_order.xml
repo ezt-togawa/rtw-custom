@@ -41,7 +41,20 @@
 
                 </xpath>
                 <xpath expr="//group[@name='partner_details']" position="inside">
-                    <field name="forwarding_address" string="forwarding address"/>
+                    <field name="sipping_to" string="配送" widget="radio" options="{'horizontal': true}"/>
+                    <field
+                            name="waypoint"
+                            string="デポ"
+                            context="{'default_type':'delivery'}"
+                            domain="[('type', '=', 'delivery')]"
+                    />
+                    <field
+                            name="forwarding_address"
+                            string="納品設置先"
+                            attrs="{'invisible': [('sipping_to', '=', 'depo')]}"
+                            context="{'default_type':'delivery'}"
+                            domain="[('type', '=', 'delivery')]"
+                    />
                 </xpath>
             </field>
         </record>

@@ -229,7 +229,7 @@
             <field name="view_mode">tree,form,pivot,graph</field>
             <field name="view_id" ref="rtw_sf_case_list"/>
         </record>
-        <record id="action_case_report" model="ir.actions.act_window">
+        <record id="action_case_report_new" model="ir.actions.act_window">
             <field name="name">ケース抽出</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">rtw_sf_case</field>
@@ -263,9 +263,9 @@
                 sequence="30"
         />
         <menuitem
-                id="action_case_report"
+                id="action_case_report_new"
                 name="ケース抽出"
-                action="action_case_report"
+                action="action_case_report_new"
                 parent="case_report_root"
                 sequence="30"
         />

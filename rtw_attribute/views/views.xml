@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="rtw_attribute.list">
+      <field name="name">rtw_attribute list</field>
+      <field name="model">product.template.attribute.value</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="attribute_id"/>
+                <field name="name"/>
+                <field name="display_type"/>
+                <field name="html_color" attrs="{'invisible': [('display_type', '!=', 'color')]}" widget="color"/>
+                <field name="ptav_active" optional="hide"/>
+                <field name="price_extra" widget="monetary" options="{'field_digits': True}"/>
+                <field name="currency_id" invisible="1"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="rtw_attribute.action_window">
+      <field name="name">rtw_attribute window</field>
+      <field name="res_model">product.template.attribute.value</field>
+      <field name="view_id" ref="rtw_attribute.list"/>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="rtw_attribute.action_server">
+      <field name="name">rtw_attribute server</field>
+      <field name="model_id" ref="model_rtw_attribute_rtw_attribute"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="rtw_attribute" id="rtw_attribute.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="rtw_attribute.menu_1" parent="rtw_attribute.menu_root"/>
+    <menuitem name="Menu 2" id="rtw_attribute.menu_2" parent="rtw_attribute.menu_root"/>
+-->
+    <!-- actions -->
+
+    <menuitem name="product template attribute" id="rtw_attribute.menu_1_list" parent="stock.menu_stock_inventory_control"
+              action="rtw_attribute.action_window"/>
+<!--
+    <menuitem name="Server to list" id="rtw_attribute" parent="rtw_attribute.menu_2"
+              action="rtw_attribute.action_server"/>
+-->
+  </data>
+</odoo>
