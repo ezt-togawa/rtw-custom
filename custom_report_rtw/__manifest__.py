@@ -20,14 +20,17 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale', 'account'],
+    'depends': ['base', 'sale', 'account', 'product_spec_rtw'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'report/report_quotation.xml',
         'report/external_layout.xml',
+        'report/internal_layout.xml',
         'report/header_footer.xml',
+        'report/mrp.xml',
+        'report/invoice.xml',
         'views/views.xml',
         'views/templates.xml',
         # "views/sale_views.xml",

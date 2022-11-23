@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <report
+            string="invoice"
+            id="account.report_invoice_with_payments_rtw"
+            model="account.move"
+            report_type="qweb-pdf"
+            name="rtw_report.invoice"
+            file="rtw_report.invoice"
+            print_report_name=" (object.state in ('draft', 'sent') and 'invoice - %s' % (object.name) or
+                'invoice - %s' % (object.name))"
+    />
+</odoo>

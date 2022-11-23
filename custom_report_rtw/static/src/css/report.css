@@ -1,0 +1,13 @@
+div.stamp{
+      -moz-transform: rotate(-15deg); /*−30度回転（Mozilla系ブラウザ e.g.: Firefox）*/
+      -webkit-transform: rotate(-15deg); /*−30度回転（Webkit系ブラウザ e.g.: Safari, Google Chrome）*/
+      -o-transform: rotate(-15deg); /*−30度回転（Opera系ブラウザ e.g.: Opera）*/
+      -ms-transform: rotate(-15deg); /*−30度回転（Microsoft系ブラウザ e.g.: Internet Explore）*/
+      color: red;
+      font-weight: bold;
+      border-style: solid;
+      border-width: medium;
+      border-color: red;
+      width: 5em;
+      padding: 0em 0.5em 0em 0.5em;
+}

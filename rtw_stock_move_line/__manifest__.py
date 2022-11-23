@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'product', 'product_spec_rtw', 'sale', 'sale_order_line_custom_date'],
+    'depends': ['base', 'stock', 'product', 'product_spec_rtw', 'sale', 'sale_order_line_custom_date', 'sale_order_rtw'],
 
     # always loaded
     'data': [

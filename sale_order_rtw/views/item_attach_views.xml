@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_item_attach_form" model="ir.ui.view">
+        <field name="name">sale.order.sale_attach.view.form</field>
+        <field name="model">item.attach</field>
+        <field name="arch" type="xml">
+            <form string="Item Image">
+                <field name="sequence" invisible="1" />
+                <div class="row o_purchase_request_image_modal">
+                    <div class="col-md-6 col-xl-5">
+                        <label for="name" string="File Name" />
+                        <h2><field name="name" placeholder="File Name" /></h2>
+                        <field name="product_id" />
+                    </div>
+                    <div
+                        class="col-md-6 col-xl-7 text-center o_purchase_request_image_modal_container"
+                    >
+                        <div class="row">
+                            <div class="col">
+                                <field name="attach_file" widget="pdf_viewer"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_item_attach_tree" model="ir.ui.view">
+        <field name="name">sale.order.sale_attach.view.tree</field>
+        <field name="model">item.attach</field>
+        <field name="arch" type="xml">
+            <tree string="Item attach" editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="product_id" />
+                <field name="attach_file" widget="pdf_viewer"/>
+            </tree>
+        </field>
+    </record>
+<!--    <record id="item_image_view_kanban" model="ir.ui.view">-->
+<!--        <field name="name">item.purchase_image.view.kanban</field>-->
+<!--        <field name="model">item.purchase_image</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <kanban string="Item Images" default_order="sequence">-->
+<!--                <field name="id" />-->
+<!--                <field name="name" />-->
+<!--                <field name="product_id" />-->
+<!--                <field name="image_1920" />-->
+<!--                <field name="sequence" widget="handle" />-->
+<!--                <templates>-->
+<!--                    <t t-name="kanban-box">-->
+<!--                        <div class="card oe_kanban_global_click p-0">-->
+<!--                            <div class="o_squared_image">-->
+<!--                                <img-->
+<!--                                    class="card-img-top"-->
+<!--                                    t-att-src="kanban_image('item.image', 'image_1920', record.id.value)"-->
+<!--                                    t-att-alt="record.name.value"-->
+<!--                                />-->
+<!--                            </div>-->
+<!--                            <div class="card-body p-0">-->
+<!--                                <h4 class="card-title p-2 m-0 bg-200">-->
+<!--                                    <small><field name="name" /></small>-->
+<!--                                    <small><field name="product_id" /></small>-->
+<!--                                </h4>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash; below 100 Kb: good &ndash;&gt;-->
+<!--                            <t t-if="record.image_1920.raw_value.length &lt; 100*1000">-->
+<!--                                <t t-set="size_status" t-value="'badge-success'" />-->
+<!--                                <t t-set="message">Acceptable file size</t>-->
+<!--                            </t>-->
+<!--                            &lt;!&ndash; below 1000 Kb: decent &ndash;&gt;-->
+<!--                            <t-->
+<!--                                t-elif="record.image_1920.raw_value.length &lt; 1000*1000"-->
+<!--                            >-->
+<!--                                <t t-set="size_status" t-value="'badge-warning'" />-->
+<!--                                <t-->
+<!--                                    t-set="message"-->
+<!--                                >Huge file size. The image should be optimized/reduced.</t>-->
+<!--                            </t>-->
+<!--                            &lt;!&ndash; above 1000 Kb: bad &ndash;&gt;-->
+<!--                            <t t-else="1">-->
+<!--                                <t t-set="size_status" t-value="'badge-danger'" />-->
+<!--                                <t-->
+<!--                                    t-set="message"-->
+<!--                                >Optimization required! Reduce the image size or increase your compression settings.</t>-->
+<!--                            </t>-->
+<!--                            <span-->
+<!--                                t-attf-class="badge #{size_status} o_item_image_size"-->
+<!--                                t-esc="record.image_1920.value"-->
+<!--                                t-att-title="message"-->
+<!--                            />-->
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </templates>-->
+<!--            </kanban>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="view_item_image_search" model="ir.ui.view">-->
+<!--        <field name="name">item.purchase_image.select</field>-->
+<!--        <field name="model">item.purchase_image</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Search Item Images">-->
+<!--                <field name="name" />-->
+<!--                <field name="product_id" />-->
+<!--                <group expand="0" string="Group By...">-->
+<!--                    <filter-->
+<!--                        string="Product"-->
+<!--                        name="productgroup"-->
+<!--                        context="{'group_by': 'product_id'}"-->
+<!--                    />-->
+<!--                </group>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+    <record id="action_item_attach" model="ir.actions.act_window">
+        <field name="name">Item Images</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">item.attach</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="menu_item_attach"
+        name="Item attach"
+        parent="sale.menu_sale_config"
+        action="action_item_attach"
+    />
+</odoo>

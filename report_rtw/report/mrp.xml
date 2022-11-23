@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_mrp">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="report_common_rtw.external_layout_rtw">
+                    <div class="page">
+                        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+                        <t t-call="report_common_rtw.invoice_base"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

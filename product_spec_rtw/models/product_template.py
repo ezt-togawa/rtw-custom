@@ -60,7 +60,7 @@ class ProductSpecRtw(models.Model):
     necessary_length_of_the_cloth_a = fields.Float("necessary length of the cloth A")
     necessary_length_of_the_cloth_b = fields.Float("necessary length of the cloth B")
     catalog = fields.Many2many("product.catalog", string="Catalog")
-    series = fields.Char("series")
+    series = fields.Char("series", Translate=True)
     kubun = fields.Selection([
         ('bom', '構成品'),
         ('product', '製品'),

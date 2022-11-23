@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+        <record id="view_inquiry_dm_list" model="ir.ui.view">
+            <field name="name">crm partner list</field>
+            <field name="model">rtw_sf.inquiry</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id"/>
+                    <field name="owner_id"/>
+                    <field name="last_name" string="姓"/>
+                    <field name="first_name" string="名"/>
+                    <field name="in_has"/>
+                    <field name="zip" string="郵便番号"/>
+                    <field name="state_id" string="都道府県"/>
+                    <field name="city" string="市町村"/>
+                    <field name="street" string="番地1"/>
+                    <field name="street2" string="番地2"/>
+                    <field name="mailing_postal_code" string="郵送先 郵便番号"/>
+                    <field name="mailing_state" string="郵送先 都道府県"/>
+                    <field name="mailing_city" string="郵送先 市町村"/>
+                    <field name="mailing_street" string="郵送先 番地"/>
+                    <field name="phone" string="電話番号"/>
+                    <field name="mobile" string="携帯電話"/>
+                    <field name="fax" string="FAX"/>
+                    <field name="parent_id" string="関連会社"/>
+                    <field name="department" string="部署"/>
+                    <field name="title" string="役職"/>
+                    <field name="calender" string="カレンダ"/>
+                    <field name="ny_card" string="年賀状"/>
+                    <field name="create_date" string="作成日時"/>
+                    <field name="created_date" string="作成日時（SF）"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_inquiry_dm_tree" model="ir.actions.act_window">
+            <field name="name">送付リスト</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rtw_sf.inquiry</field>
+            <field name="view_id" ref="view_inquiry_dm_list"/>
+            <field name="domain">[
+                ("record_type_id","ilike","アンケート"),
+                '|',("create_date",">=","2022-01-01 00:00:00"),("created_date",">=","2022-01-01 00:00:00")
+                ]
+            </field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                name="レポート"
+                id="menu_inquiry_report"
+                parent="rtw_inquiry.menu_root"
+                sequence="10"
+        />
+        <menuitem
+                id="menu_inquiry_dm"
+                action="action_inquiry_dm_tree"
+                parent="menu_inquiry_report"
+                sequence="10"
+        />
+    </data>
+</odoo>

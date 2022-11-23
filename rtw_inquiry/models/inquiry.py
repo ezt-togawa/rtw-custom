@@ -343,6 +343,8 @@ class contract(models.Model):
     ], default='',
         string='Field59_yousei__c')  # 進捗
 
+    owners_desk = fields.Boolean("オーナーズデスク")
+
     def open_one2many_line(self, context=None):
         return {
             'type': 'ir.actions.act_window',

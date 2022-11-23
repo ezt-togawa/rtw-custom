@@ -1,0 +1,83 @@
+<odoo>
+    <data>
+        <record id="view_crm_dm_list" model="ir.ui.view">
+            <field name="name">crm dm list</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id"/>
+                    <field name="user_id" string="取引先所有者"/>
+                    <field name="last_name" string="姓"/>
+                    <field name="first_name" string="名"/>
+                    <field name="in_has"/>
+                    <field name="zip" string="郵便番号"/>
+                    <field name="state_id" string="都道府県"/>
+                    <field name="city" string="市町村"/>
+                    <field name="street" string="番地1"/>
+                    <field name="street2" string="番地2"/>
+                    <field name="mailing_postal_code" string="郵送先 郵便番号"/>
+                    <field name="mailing_state" string="郵送先 都道府県"/>
+                    <field name="mailing_city" string="郵送先 市町村"/>
+                    <field name="mailing_street" string="郵送先 番地"/>
+                    <field name="phone" string="電話番号"/>
+                    <field name="mobile" string="携帯電話"/>
+                    <field name="fax" string="FAX"/>
+                    <field name="parent_id" string="関連会社"/>
+                    <field name="department" string="部署"/>
+                    <field name="title" string="役職"/>
+                    <field name="calender" string="カレンダ"/>
+                    <field name="ny_card" string="年賀状"/>
+                    <field name="create_date" string="作成日時"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_crm_dm_tree" model="ir.actions.act_window">
+            <field name="name">送付リスト</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_id" ref="view_crm_dm_list"/>
+            <field name="domain">[
+                ("partner_name","not ilike","ユーザー_R"),
+                ("date_deadline",">=","2022-01-01 00:00:00"),
+                ("date_deadline","&lt;","2023-01-01 00:00:00"),
+                ("stage_id","ilike","成立"),
+                ("partner_name","ilike","個人"),
+                ("expected_revenue",">=",10000),
+                ]
+            </field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="action_crm_need_dm_tree" model="ir.actions.act_window">
+            <field name="name">送付リスト（DMフラグ）</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_id" ref="view_crm_dm_list"/>
+            <field name="domain">[
+                ("partner_name","not ilike","ユーザー_R"),
+                ("date_deadline",">=","2022-01-01 00:00:00"),
+                ("date_deadline","&lt;","2023-01-01 00:00:00"),
+                ("stage_id","ilike","成立"),
+                ("partner_name","ilike","個人"),
+                ("expected_revenue",">=",10000),
+                ("expected_revenue",">=",10000),
+                ("partner_id.need_dm","=",True),
+                ("partner_id.do_not_dm","=",False),
+                ]
+            </field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+                id="menu_crm_dm"
+                action="action_crm_dm_tree"
+                parent="crm.crm_menu_report"
+                sequence="10"
+        />
+        <menuitem
+                id="menu_crm_need_dm"
+                action="action_crm_need_dm_tree"
+                parent="crm.crm_menu_report"
+                sequence="20"
+        />
+    </data>
+</odoo>

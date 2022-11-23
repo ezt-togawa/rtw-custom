@@ -10,3 +10,4 @@ class ShipsShip(models.Model):
 
     name = fields.Char(required=True, )
     archive = fields.Boolean()
+    color = fields.Integer()

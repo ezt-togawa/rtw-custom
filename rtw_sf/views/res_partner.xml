@@ -311,6 +311,12 @@
                 <xpath expr="//span[hasclass('oe_kanban_partner_links')]" position="after">
                     <field name="site"/>
                 </xpath>
+                <xpath expr="//field[@name='id']" position="after">
+                    <field name="condition"/>
+                </xpath>
+                <xpath expr="//strong[hasclass('o_kanban_record_title')]" position="before">
+                    <field name="condition" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                </xpath>
             </field>
         </record>
     </data>

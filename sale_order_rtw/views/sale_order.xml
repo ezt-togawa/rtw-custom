@@ -6,6 +6,18 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="accepting an order" name="accepting_order" type="object" class="oe_highlight"
+                    attrs="{'invisible': [('status', '=', 'done')]}"/>
+                    <button string="back to draft" name="back_to_draft" type="object" class="oe_highlight"
+                    attrs="{'invisible': [('status', '!=', 'done')]}"/>
+                </xpath>
+                <xpath expr="//button[@id='action_confirm']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('state', 'not in', ['sent']),('status','!=','done')]}</attribute>
+                </xpath>
+                <xpath expr="//button[not(@id='action_confirm') and @name='action_confirm']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('state', 'not in', ['draft']),('status','!=','done')]}</attribute>
+                </xpath>
                 <xpath expr="//div[@class='oe_button_box']" position="inside">
 
                     <button name="toggle_under_consideration" type="object" class="oe_stat_button" icon="fa-check-square">
@@ -17,6 +29,9 @@
                             attrs="{'invisible': [('items_under_consideration', '=', False)]}"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="before">
+                    <div attrs="{'invisible': [('overseas', '=', False)]}">
+                        <span style="color:red">海外</span>
+                        </div>
                     <div class="o_row d-flex">
                         <label for="title" string="title"/>
                         <field name="title"/>
@@ -28,7 +43,9 @@
                 <xpath expr="//div[@class='oe_title']" position="after">
                     <group>
 <!--                        <field name="items_under_consideration" string="Items under consideration" widget="toggle_button"/>-->
-                        <field name="status" string="status" widget="radio"/>
+                        <field name="overseas"/>
+
+                        <field name="status" string="status" widget="selection_badge"/>
                         <field name="customer_order_number" string="Customer Order Number"/>
 
                     </group>
@@ -36,12 +53,14 @@
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="preferred_delivery_date" string="Preferred delivery date"/>
                     <field name="preferred_delivery_period" string="Preferred delivery period"/>
+                    <field name="estimated_shipping_date" string="Estimated shipping date"/>
                     <field name="shiratani_entry_date" string="Shiratani entry Date"/>
 
 
                 </xpath>
                 <xpath expr="//group[@name='partner_details']" position="inside">
                     <field name="sipping_to" string="配送" widget="radio" options="{'horizontal': true}"/>
+                    <field name="shipping_to_text" />
                     <field
                             name="waypoint"
                             string="デポ"
@@ -49,12 +68,16 @@
                             domain="[('type', '=', 'delivery')]"
                     />
                     <field
+                            name="forwarding_address_zip"
+                            string="納品設置先郵便番号"
+                            attrs="{'invisible': [('sipping_to', '=', 'depo')]}"/>
+                    <field
                             name="forwarding_address"
                             string="納品設置先"
-                            attrs="{'invisible': [('sipping_to', '=', 'depo')]}"
-                            context="{'default_type':'delivery'}"
-                            domain="[('type', '=', 'delivery')]"
-                    />
+                            attrs="{'invisible': [('sipping_to', '=', 'depo')]}"/>
+<!--                            context="{'default_type':'delivery'}"-->
+<!--                            domain="[('type', '=', 'delivery')]"-->
+<!--                    />-->
                 </xpath>
             </field>
         </record>
@@ -68,6 +91,7 @@
                     <field name="customer_order_number" string="customer_order_number"/>
                     <field name="process"/>
                     <field name="items_under_consideration" string="Items under consideration"/>
+                    <field name="estimated_shipping_date"  widget="remaining_days"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="attributes">
                     <attribute name="readonly">1</attribute>
@@ -85,6 +109,7 @@
                     <field name="process"/>
                     <field name="status"/>
                     <field name="items_under_consideration" string="Items under consideration"/>
+                    <field name="estimated_shipping_date"  widget="remaining_days"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="attributes">
                     <attribute name="readonly">1</attribute>
@@ -117,6 +142,13 @@
                 <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']"
                        position="after">
                     <field name="memo"/>
+                    <field name="item_sale_attach_ids" string="attach"/>
+                    <button
+                        name="action_get_item_sale_attach_view"
+                        string="View files"
+                        type="object"
+                        icon="fa-paperclip"
+                    />
                 </xpath>
             </field>
         </record>

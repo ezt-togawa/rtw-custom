@@ -17,4 +17,13 @@
         name="report_rtw.report_unit_price_list"
         file="report_rtw.report_unit_price_list"
     />
+
+   <report
+        string="mrp order"
+        id="report_mrp_order"
+        model="mrp.production"
+        report_type="qweb-pdf"
+        name="custom_report_rtw.report_mrp"
+        file="custom_report_rtw.report_mrp"
+    />
 </odoo>

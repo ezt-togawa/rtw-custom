@@ -103,6 +103,7 @@
                                     <field name="sr_attracting" string="sr_attracting"/>
                                     <field name="event_information_notices" string="event_information_notices"/>
                                     <field name="confirm_user_information" string="confirm_user_information"/>
+                                    <field name="owners_desk" string="オーナーズデスク"/>
                                 </group>
                             </group>
                             <group>
@@ -312,6 +313,7 @@
             <field name="name">rtw_inquiry window</field>
             <field name="res_model">rtw_sf.inquiry</field>
             <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="rtw_inquiry_list"/>
         </record>
 
 
@@ -336,11 +338,17 @@
         <menuitem name="inquiry" id="rtw_inquiry.menu_root" action="rtw_inquiry.action_window"
                   web_icon="rtw_inquiry,static/description/inquiry_icon.png"/>
 
+        <menuitem
+                name="問合せ・アンケート"
+                id="menu_inquiry"
+                parent="rtw_inquiry.menu_root"
+                sequence="10"
+        />
         <!-- menu categories -->
         <menuitem
                 id="menu_inquiry_tree"
                 action="rtw_inquiry.action_window"
-                parent="contacts.menu_contacts"
+                parent="menu_inquiry"
                 sequence="30"
         />
         <!--

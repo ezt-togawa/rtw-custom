@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="sale_order">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="rtw_report.external_layout" t-lang="o.partner_id.lang">
+                    <div class="page">
+                        <xpath expr="//div[@name='company_address']" position="replace"></xpath>
+                        <t t-set="type">type_purchase</t>
+                        <t t-set="address">
+                            <div t-field="o.partner_id"
+                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                            <p t-if="o.partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:
+                                <span t-field="o.partner_id.vat"/>
+                            </p>
+                        </t>
+<!--                        <t t-call="rtw_report.common_header_layout"/>-->
+<!--                        <t t-call="rtw_report.purchase_table"/>-->
+                        <!--                        <t t-call="kiz_report.purchase_table" />-->
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

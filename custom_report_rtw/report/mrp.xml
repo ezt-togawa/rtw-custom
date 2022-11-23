@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_mrp_order">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="custom_report_rtw.internal_layout">
+                    <div class="page">
+                        <t t-set="type">mrp_order</t>
+                        <div>発注番号：<span t-field="o.display_name"/></div>
+                        <div>送り先着日：<span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/></div>
+                        <div>出荷日：<span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/></div>
+                        <div>送り先：<span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/></div>
+                        <hr/>
+<!--                        <div t-field="o.product_id.image_1920"/>-->
+                        <img t-att-src="image_data_uri(o.product_id.image_1920)" style="max-width: 100%;max-height: 800px; padding-top: 10px;"/>
+                        <div>品番：</div>
+                        <div>仕様：</div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_mrp_report" model="report.paperformat">
+        <field name="name">RTW MRP format</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_width">210</field>
+        <field name="page_height">297</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report
+            string="mrp order"
+            id="report_mrp_order_rtw"
+            model="mrp.production"
+            report_type="qweb-pdf"
+            name="custom_report_rtw.report_mrp_order"
+            file="custom_report_rtw.report_mrp_order"
+            paperformat="paperformat_mrp_report"
+    />
+
+</odoo>

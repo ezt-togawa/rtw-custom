@@ -9,6 +9,7 @@
                 <tree editable="top">
                     <field name="name"/>
                     <field name="archive"/>
+                    <field name="color" widget="color_picker"/>
                 </tree>
             </field>
         </record>
@@ -25,6 +26,7 @@
                         <group>
                             <field name="name"/>
                             <field name="archive"/>
+                            <field name="color" widget="color_picker"/>
                         </group>
                     </sheet>
 <!--                    <div class="oe_chatter">-->

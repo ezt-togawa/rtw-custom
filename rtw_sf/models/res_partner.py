@@ -478,7 +478,7 @@ class rtw_sf_partner(models.Model):
         }
 
     @api.onchange("first_name", "last_name", "company_type")
-    def _compute_name(self):
+    def _compute_get_name(self):
         for rec in self:
             name = rec.name
             if rec.company_type == "person":

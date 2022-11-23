@@ -1,36 +1,57 @@
 <odoo>
     <data>
-        <record model="ir.ui.view" id="stock_move_line_list">
-            <field name="name">move_line_list</field>
+        <record model="ir.ui.view" id="stock_move_list">
+            <field name="name">move_list</field>
             <field name="model">stock.move</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="sale_order_no" string="受注注番"/>
-                    <field name="production_no" string="発注注番"/>
-                    <field name="product_tmpl_id" string="商品名"/>
-                    <field name="config_value_ids" widget="many2many_tags" string="属性"/>
-                    <field name="product_uom_qty" string="数量"/>
-                    <field name="sai" sum="sai" string="才数"/>
-                    <field name="warehouse_id" string="製作工場"/>
-                    <field name="state" string="製作状況"/>
-                    <field name="state_id" string="エリア"/>
-                    <field name="destination" string="到着地"/>
-                    <field name="shiratani_date" string="白谷"/>
-                    <field name="depo_date" string="デポ入れ日"/>
-                    <field name="date_planned" string="搬入設置日"/>
-                    <field name="delivery_confirmation" string="納期確認"/>
-                    <field name="remarks" string="備考"/>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="description_picking"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="depo_date"/>
+                    <field name="state"/>
+                    <field name="sai" sum="sai"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="stock_move_line_list">
+            <field name="name">move_line_list</field>
+            <field name="model">stock.move.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id"/>
+                    <field name="sale_id"/>
+                    <field name="title"/>
+                    <field name="spec" widget="many2many_tags"/>
+                    <field name="custom" widget="many2many_tags"/>
+                    <field name="customer_id"/>
+                    <field name="result_package_id"/>
+                    <field name="depo_date"/>
+                    <field name="sai" sum="sai"/>
                 </tree>
             </field>
         </record>
 
+
+        <record model="ir.actions.act_window" id="stock_move_action_window">
+            <field name="name">move_list</field>
+            <field name="res_model">stock.move</field>
+            <field name="view_id" ref="stock_move_list" />
+            <field name="view_mode">tree,kanban,form</field>
+        </record>
         <record model="ir.actions.act_window" id="stock_move_line_action_window">
             <field name="name">move_line_list</field>
-            <field name="res_model">stock.move</field>
+            <field name="res_model">stock.move.line</field>
             <field name="view_id" ref="stock_move_line_list" />
             <field name="view_mode">tree,kanban,form</field>
         </record>
 
+        <menuitem name="move"
+                  id="move_action_window_menu"
+                  action="stock_move_action_window"
+                  parent="stock.menu_stock_warehouse_mgmt"/>
         <menuitem name="move_line"
                   id="move_line_action_window_menu"
                   action="stock_move_line_action_window"
