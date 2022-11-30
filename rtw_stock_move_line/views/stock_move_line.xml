@@ -21,15 +21,29 @@
             <field name="model">stock.move.line</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="picking_id"/>
+                    <field name="overseas"/>
+                    <field name="sale_id" string="注番"/>
+                    <field name="production_id"/>
                     <field name="product_id"/>
-                    <field name="sale_id"/>
-                    <field name="title"/>
-                    <field name="spec" widget="many2many_tags"/>
-                    <field name="custom" widget="many2many_tags"/>
-                    <field name="customer_id"/>
+<!--                    <field name="title"/>-->
+                    <field name="spec" widget="many2many_tags" optional="hide" />
+                    <field name="custom" widget="many2many_tags" optional="hide" />
+                    <field name="product_qty"/>
+                    <field name="sai" sum="sai" string="才数" />
+                    <field name="factory" sum="工場"/>
+                    <field name="mrp_state"/>
+
+                    <field name="customer_id" optional="hide" />
                     <field name="result_package_id"/>
-                    <field name="depo_date"/>
-                    <field name="sai" sum="sai"/>
+                    <field name="shiratani_date" string="白谷日"/>
+                    <field name="area" string="エリア"/>
+                    <field name="depo_date" string="デポ入予定日"/>
+                    <field name="forwarding_address" string="到着地" optional="hide" />
+                    <field name="date_planned" string="搬入設置日"/>
+                    <field name="memo" string="備考"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
                 </tree>
             </field>
         </record>

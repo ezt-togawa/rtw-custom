@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="view_crm_form_sf" model="ir.ui.view">
+            <field name="name">rtw mrp workorder</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.workcenter_line_calendar"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="date_planned_finished"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
