@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import _, models, fields, api
 from odoo.exceptions import ValidationError
 
 
@@ -26,7 +26,7 @@ class sale_line_bom_stock(models.Model):
             else:
                 bom_product_tmpl, bom_product = None, None
             line_product = line.product_id
-            if not bom_product or line_product == bom_product:
+            if not bom_product or (line_product in bom_product):
                 continue
             raise ValidationError(
                 _(
@@ -38,7 +38,6 @@ class sale_line_bom_stock(models.Model):
     def _change_bom_id(self):
         if self.product_id.bom_ids:
             self.bom_id = min(self.product_id.bom_ids.ids)
-
 
     @api.onchange('bom_id')
     def _check_bom_stock(self):
