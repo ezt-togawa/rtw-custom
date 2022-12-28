@@ -22,7 +22,7 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="rtw_sf_case_list_report">
+        <record model="ir.ui.view" id="rtw_sf_case_list_report_new">
             <field name="name">rtw_sf_case_list_report</field>
             <field name="model">rtw_sf_case</field>
             <field name="arch" type="xml">
@@ -234,7 +234,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">rtw_sf_case</field>
             <field name="view_mode">tree,form,pivot,graph</field>
-            <field name="view_id" ref="rtw_sf_case_list_report"/>
+            <field name="view_id" ref="rtw_sf_case_list_report_new"/>
             <field name="context">{"search_default_this_year":1}</field>
         </record>
         <menuitem
@@ -262,10 +262,39 @@
                 parent="menu_case_root"
                 sequence="30"
         />
+
+
+        <record model="ir.ui.view" id="rtw_sf_case_list_report_2">
+            <field name="name">rtw_sf_case_list_report</field>
+            <field name="model">rtw_sf_case</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="display_id" options="{'format': 0}" string="ケース番号"/>
+                    <field name="owner_id" string="OwnerId"/>
+                    <field name="order_no"/>
+                    <field name="cope_order_no_1"/>
+                    <field name="cope_order_no_2"/>
+                    <field name="cope_order_no_3" />
+                    <field name="report_date_only" string="通報日"/>
+                    <field name="report_delivery_date" string="納品日"/>
+                    <field name="quantity" string="数量"/>
+                    <field name="subject"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_case_report_2" model="ir.actions.act_window">
+            <field name="name">ケース抽出</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rtw_sf_case</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="rtw_sf_case_list_report_2"/>
+            <field name="context">{"search_default_this_year":1}</field>
+        </record>
         <menuitem
-                id="action_case_report_new"
+                id="action_case_report_2"
                 name="ケース抽出"
-                action="action_case_report_new"
+                action="action_case_report_2"
                 parent="case_report_root"
                 sequence="30"
         />

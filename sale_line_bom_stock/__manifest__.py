@@ -23,6 +23,7 @@
     'depends': ['base',
                 "sale_stock",
                 "mrp",
+                "product_configurator_sale"
                 ],
 
     # always loaded
