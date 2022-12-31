@@ -4,11 +4,11 @@ from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
 
-class MergeMoveLine(models.TransientModel):
-    _name = 'merge.move.line'
-    _description = 'Merge Move Line'
+class CollectiveShipping(models.TransientModel):
+    _name = 'collective.shipping'
+    _description = 'Collective Shipping'
 
-    def merge_move_line(self):
+    def collective_shipping(self):
         move_lines = self.env['stock.move.line'].browse(
             self._context.get('active_ids', []))
         # 明細チェック数確認

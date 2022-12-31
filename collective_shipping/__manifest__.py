@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': "Marge Move Line",
+    'name': "Collective Shipping",
     'author': "My Company",
     'category': 'stock',
-    'summary': """Marge Move Line""",
+    'summary': """Collective Shipping""",
     'website': 'http://www.yourcompany.com',
     'description': """
 """,
@@ -12,7 +12,7 @@
     'depends': ['base', 'stock'],
     'data': [
         'security/ir.model.access.csv',
-        'wizard/merge_move_line_wizard_view.xml',
+        'wizard/collective_shipping_wizard_view.xml',
         'views/templates.xml',
     ],
 }
