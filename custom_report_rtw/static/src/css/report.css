@@ -11,3 +11,9 @@ div.stamp{
       width: 5em;
       padding: 0em 0.5em 0em 0.5em;
 }
+.so_title{
+    font-size:20px
+}
+.so_price{
+    font-size:40px
+}

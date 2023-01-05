@@ -15,20 +15,20 @@
                         </t>
                         <table class="table table-condensed">
                             <tbody class="invoice_tbody">
-                                <thead style="background-color:#F8F9FA">
+                                <thead style="background-color:#595959;color:#ffffff">
                                     <tr>
                                         <th>summary</th>
-                                        <th class="text-center">Item NO<br/>W/D/H/Ah
+                                        <th class="text-center">Item NO/Size
                                         </th>
                                         <th class="text-center">Spec</th>
-                                        <th class="text-center">Unit Price</th>
                                         <th class="text-center">Qty</th>
                                         <th class="text-center">Multiplication rate</th>
+                                        <th class="text-center">Unit Price</th>
                                         <th class="text-center">Amount</th>
 
                                     </tr>
                                 </thead>
-                                <tr t-foreach="o.order_line" t-as="l">
+                                <tr t-foreach="o.order_line" t-as="l" style="border-bottom:solid 1px #595959;">
                                     <td>
                                         <t t-if="l.product_id.summary == False">
                                             <span t-field="l.product_template_id"/>
@@ -38,9 +38,6 @@
                                         </t>
                                     </td>
                                     <td>
-
-
-                                        <br/>
                                         <span t-field="l.product_id.product_no"/>
                                         <br/>
                                         <t t-if="l.product_id.width > 0">
@@ -73,9 +70,7 @@
                                             <br/>
                                         </t>
                                     </td>
-                                    <td>
-                                        <span t-esc="'{0:,.0f}'.format(l.price_unit)"/>
-                                    </td>
+
                                     <td>
                                         <div id="quote_qty">
                                             <span t-esc="'{0:,.0f}'.format(l.product_uom_qty)"/>
@@ -86,10 +81,10 @@
                                         <span t-field="l.discount"/>%
                                     </td>
                                     <td>
+                                        <span t-esc="'{0:,.0f}'.format(l.price_unit)"/>
+                                    </td>
+                                    <td>
                                         <span t-field="l.price_reduce_taxexcl"/>
-                                        <span t-field="l.price_unit"/>
-                                        <span t-field="l.product_id.price_extra"/>
-                                        <span t-field="l.product_id.sales_count"/>
                                     </td>
                                 </tr>
                             </tbody>

@@ -120,13 +120,13 @@
                 </div>
                 <div class="col-6 text-center" style="font-size:24px;text-align:center">
                     <t t-if="type == 'quotation'">
-                        <span>quotation</span>
+                        <span t-field="o.name" class="so_title"/>　 <span>quotation</span>
                     </t>
                     <t t-if="type == 'invoice'">
-                        <span>invoice</span>
+                        <span t-field="o.name" class="so_title"/>　 <span>invoice</span>
                     </t>
                 </div>
-                <div class="col-3 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                <div class="col-3 text-right" style="margin-top:28px;" t-field="company.report_header" name="moto"/>
             </div>
             <div t-if="company.logo or company.report_header" class="row zero_min_height">
                 <div class="col-12">
@@ -134,14 +134,28 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-4">
+                    <div><span class="so_title" t-field="o.partner_id.name"/>　様</div>
+                    <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。<br/>
+                        御依頼の件、下記の通りお見積り致しました。<br/>
+                        ご査収の程宜しくお願い致します。
+                    </div>
+
+                    <div>税込合計:<span class="so_price" t-field="o.amount_total"/> </div>
+                </div>
                 <div class="col-3">
-                    <div t-field="o.partner_id"
-                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
-                    />
+                    <div>納品希望日：<span t-field="o.preferred_delivery_date"/></div>
+                    <div>製作日数：</div>
+                    <div>発注期限：</div>
+                    <div>納品場所：<span t-field="o.shipping_to_text"/></div>
+                    <div>支払条件：<span t-field="o.payment_term_id"/></div>
+                    <div>見積有効期限：<span t-field="o.validity_date"/></div>
                 </div>
-                <div class="col-8">
+                <div class="col-2">
+                    <div>備考：</div><div t-field="o.note"/>
+
                 </div>
-                <div class="col-4" name="company_address">
+                <div class="col-3" name="company_address">
                     <div t-field="company.partner_id"
                          t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
                     />

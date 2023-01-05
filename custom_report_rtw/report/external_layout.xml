@@ -27,6 +27,7 @@
         <t t-call="custom_report_rtw.common_footer_layout"/>
     </template>
     <template id="so_ex_layout">
+        <link href="/custom_report_rtw/static/src/css/report.css" rel="stylesheet" />
         <t t-if="not o" t-set="o" t-value="doc"/>
         <field name="margin_bottom">3</field>
         <t t-if="not company">
