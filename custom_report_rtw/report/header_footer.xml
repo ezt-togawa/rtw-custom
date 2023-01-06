@@ -120,10 +120,10 @@
                 </div>
                 <div class="col-6 text-center" style="font-size:24px;text-align:center">
                     <t t-if="type == 'quotation'">
-                        <span t-field="o.name" class="so_title"/>　 <span>quotation</span>
+                        <span t-field="o.title" class="so_title"/>　 <span>quotation</span>
                     </t>
                     <t t-if="type == 'invoice'">
-                        <span t-field="o.name" class="so_title"/>　 <span>invoice</span>
+                        <span t-field="o.title" class="so_title"/>　 <span>invoice</span>
                     </t>
                 </div>
                 <div class="col-3 text-right" style="margin-top:28px;" t-field="company.report_header" name="moto"/>
