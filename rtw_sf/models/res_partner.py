@@ -121,7 +121,10 @@ class rtw_sf_partner(models.Model):
     dummy = fields.Boolean("dummy", default=0, tracking=True)  # ダミー OK Field29__c
     # relation
 
-    case = fields.One2many('rtw_sf_case')  # ケース OK
+    case = fields.One2many(
+        comodel_name="rtw_sf_case",
+        inverse_name="crm_id",
+        string="case")  # ケース OK
     # contact
     account_id = fields.Many2one('res.partner', "AccountId", tracking=True)  # OK
     first_name = fields.Char("FirstName")  # OK
