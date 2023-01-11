@@ -6,5 +6,5 @@ from odoo import models, fields, api
 class stock_move_rtw(models.Model):
     _inherit = "stock.move"
 
-    depo_date = fields.Date(related="sale_line_id.depo_date", tracking=True)
-    shiratani_date = fields.Date(related="sale_line_id.shiratani_date", tracking=True)
+    depo_date = fields.Date(related="sale_line_id.depo_date")
+    shiratani_date = fields.Date(related="sale_line_id.shiratani_date")

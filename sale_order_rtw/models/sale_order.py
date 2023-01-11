@@ -24,7 +24,6 @@ class sale_order_rtw(models.Model):
     forwarding_address = fields.Text(
         string="forwarding address",
         required=False,
-        ondelete="set null",
     )
     shiratani_entry_date = fields.Date(string="Shiratani entry Date")
     depo_date = fields.Date(string="Depo Date")
