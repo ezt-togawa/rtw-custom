@@ -11,6 +11,7 @@ _STATES = [
 
 class shinsei(models.Model):
     _name = 'shinsei.shinsei'
+    _description = 'shinsei.shinsei'
     _inherit = ["mail.thread", "mail.activity.mixin", "tier.validation"]
     _state_from = ["draft"]
     _state_to = ["approved"]

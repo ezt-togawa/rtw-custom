@@ -142,9 +142,9 @@ class opportunity(models.Model):
     product_list_sofa_ot1 = fields.Char('Sofa_OT__c')  # 商品リスト(ソファOT1) EA列
     product_list_sofa_ot2 = fields.Char('OT2__c')  # 商品リスト(ソファOT2) EB列
     rate = fields.Float('Field74__c')  # 掛率 EC列
-    dummy = fields.Boolean('Field75__c', defaule=0)  # ﾀﾞﾐｰ ED列
+    dummy = fields.Boolean('Field75__c', default=0)  # ﾀﾞﾐｰ ED列
     lw_set_count = fields.Float('LW_5__c')  # LWセット数 EE列
-    trw_candidate = fields.Boolean('TRW__c', defaule=0)  # TRW候補 EF列
+    trw_candidate = fields.Boolean('TRW__c', default=0)  # TRW候補 EF列
     questionnaire = fields.Boolean('Field50__c', default=0)  # アンケート EG列
     letter_of_acceptance = fields.Boolean('Field51__c', default=0)  # 承諾書 EH列
     how_to_get_photos = fields.Char('Field52__c')  # 写真入手方法 EI列
