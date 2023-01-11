@@ -8,8 +8,7 @@ class rtw_crm_role_partner(models.Model):
 
     rel_crm = fields.Many2many(
         comodel_name="crm.lead",
-        compute="_get_rel_crm",
-        inverse_name='partner_id')
+        compute="_get_rel_crm")
 
     def _get_rel_crm(self):
         for rec in self:
