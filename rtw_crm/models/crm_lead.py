@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
-
+from odoo import models, fields, api, _
+import datetime
 
 class rtw_crm(models.Model):
     _inherit = 'crm.lead'
 
+    crm_seq = fields.Char('Opportunity No', readonly=True, copy=False, default=lambda self: _("New"))
     stage_sort_order = fields.Integer('StageSortOrder')  # 受注段階コード H列
     # expected_revenue = fields.Monetary('ExpectedRevenue')  # 予想売上高 K列
     reference_price = fields.Monetary(compute="_get_reference_price", currency_field='company_currency', store=True,
@@ -782,6 +783,8 @@ class rtw_crm(models.Model):
     belong = fields.Char(compute="_get_belong", store=True)
 
     tracking_deadline = fields.Date(compute="_set_deadline", store=True, tracking=True)
+    presentation_flag = fields.Boolean(compute="_get_presentation_flag")
+    sr_status = fields.Char(compute="_get_sr_status")
 
     @api.depends('date_deadline')
     def _set_deadline(self):
@@ -793,10 +796,25 @@ class rtw_crm(models.Model):
         for rec in self:
             rec.belong = self.env['crm.team'].search([('member_ids.id', '=', rec.user_id.id)]).name
 
+    def _get_sr_status(self):
+        for rec in self:
+            sr_y = 0
+            for line in rec.calendar_ids:
+                if sr_y < rec.calendar_ids:
+                print(line.start.year)
+            rec.sr_status = line.sr.name
+
     def _compute_case_count(self):
         for rec in self:
             case_count = self.env['rtw_sf_case'].search_count([('crm_id', '=', rec.id)])
             rec.case_count = case_count
+
+    def _get_presentation_flag(self):
+        for rec in self:
+            if rec.presentation or rec.pre_contract_presentation or rec.fair_advance_plan:
+                rec.presentation_flag = True
+            else:
+                rec.presentation_flag = False
 
     def action_open_case(self):
         return {
@@ -849,3 +867,13 @@ class rtw_crm(models.Model):
                 rec.reference_price = reference_price
             else:
                 rec.reference_price = rec.expected_revenue
+
+    @api.model
+    def create(self, vals):
+
+        if vals.get('crm_seq', 'New') == 'New':
+            vals['crm_seq'] = self.env['ir.sequence'].next_by_code('crm.lead') or 'New'
+
+        result = super(rtw_crm, self).create(vals)
+
+        return result

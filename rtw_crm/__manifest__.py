@@ -27,6 +27,7 @@
         # 'security/ir.model.access.csv',
         'views/crm_lead.xml',
         'views/templates.xml',
+        'data/crm_sequence.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

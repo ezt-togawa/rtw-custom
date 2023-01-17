@@ -286,6 +286,9 @@
                 <xpath expr="//field[@name='phone']" position="after">
                     <field name="opportunity_completion_date"/>
                 </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="crm_seq"/>
+                </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="partner_id" string="顧客"/>
                     <field name="partner_name" string="関連会社"/>
@@ -336,6 +339,8 @@
                     <field name="user_id"/>
                     <field name="belong"/>
                     <field name="date_deadline"/>
+                    <field name="presentation_flag"/>
+                    <field name="sr_status"/>
                 </tree>
             </field>
         </record>
