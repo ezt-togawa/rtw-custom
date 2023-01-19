@@ -28,6 +28,7 @@
         'views/crm_lead.xml',
         'views/templates.xml',
         'data/crm_sequence.xml',
+        'data/ir_cron_crm_sequence.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
