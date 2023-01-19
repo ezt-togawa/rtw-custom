@@ -57,6 +57,7 @@
                             <group>
                                 <field name="who_id" string="who_id"/>
                                 <field name="what_id" string="what_id"/>
+                                <field name="record_ref" string="record_ref"/>
                             </group>
                             <group>
                                 <field name="status" string="status"/>

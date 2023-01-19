@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="view_partner_form_sf" model="ir.ui.view">
+            <field name="name">partner sf</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="task" string="task">
+                        <group>
+                            <field name="rtw_task_ids"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
