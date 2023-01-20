@@ -6,13 +6,14 @@ from odoo import models, fields, api
 class task(models.Model):
     _name = 'task.task'
     _description = 'task.task'
-
+    _rec_name = 'subject'
     record_ref = fields.Reference(
         string="Record Referenced",
         compute="_compute_record_ref",
         selection=lambda self: self._get_ref_selection(),
     )
 
+    res_id = fields.Many2one('task.thread.mixin')
     who_id = fields.Many2one('res.partner', 'WhoId')  # 取引先責任者id B列
     # who_id = fields.Char('WhoId')  # 取引先責任者id B列
     # what_id = fields.Many2one('res.partner', 'WhatId')  # 関連先(商談他)id C列
