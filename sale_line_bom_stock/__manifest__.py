@@ -31,6 +31,7 @@
         "security/security.xml",
         "views/sale_order.xml",
         "views/sale_order_line.xml",
+        "views/mrp_bom.xml",
     ],
     # only loaded in demonstration mode
     'demo': [

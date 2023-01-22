@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form view of Collective Shipping -->
+    <record id="view_collective_shipping" model="ir.ui.view">
+        <field name="name">Collective Shipping</field>
+        <field name="model">collective.shipping</field>
+        <field name="arch" type="xml">
+             <form string="Collective Shipping">
+                <group>
+                    <h3>Do you want to register the selected items for new delivery?</h3>
+                    <newline/>
+                    <h3>※Selected items will be removed from the existing delivery</h3>
+                </group>
+                <footer>
+                    <button name="collective_shipping" string="Yes" type="object"
+                        class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action of Collective Shipping -->
+    <record id="action_view_collective_shipping" model="ir.actions.act_window">
+        <field name="name">Collective Shipping</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">collective.shipping</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_collective_shipping"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock.model_stock_move_line"/>
+    </record>
+</odoo>
