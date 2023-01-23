@@ -8,7 +8,7 @@
                 <xpath expr="//page[@name='internal_notes']" position="after">
                     <page name="task" string="task">
                         <group>
-<!--                            <field name="rtw_task_ids"/>-->
+                            <field name="rtw_task_ids"/>
                         </group>
                     </page>
                 </xpath>

@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
 
 class rtw_sf_partner_task(models.Model):
+    _name = "res.partner"
     _inherit = [
         "res.partner",
         "task.thread.mixin"

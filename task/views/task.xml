@@ -11,6 +11,7 @@
                     <field name="what_id" string="what_id"/>
                     <field name="activity_date" string="activity_date"/>
                     <field name="owner_id" string="owner_id"/>
+                    <field name="res_id" string="res_id"/>
                 </tree>
             </field>
         </record>
@@ -70,6 +71,7 @@
                                 <field name="who_id" string="who_id"/>
                                 <field name="what_id" string="what_id"/>
                                 <field name="record_ref" string="record_ref"/>
+                                <field name="res_id" string="res_id"/>
                             </group>
                             <group>
                                 <field name="status" string="status"/>
