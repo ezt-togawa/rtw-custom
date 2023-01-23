@@ -64,6 +64,14 @@
                     <field name="multiplier_green" string="multiplier_green"/>
                     <field name="fare_payment_terms" string="fare_payment_terms"/>
                 </xpath>
+                <xpath expr="//field[@name='function']" position="after">
+                    <field name="phone_code" style="width:40px"/>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="replace">
+
+
+                    <field name="phone"/>
+                </xpath>
                 <xpath expr="//field[@name='user_ids']" position="before">
                     <field name="no_hyphen_phone" invisible="1"/>
                     <field name="fax" widget="phone"/>

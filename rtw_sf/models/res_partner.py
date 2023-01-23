@@ -388,6 +388,8 @@ class rtw_sf_partner(models.Model):
 
     condition = fields.Many2many('res.partner.condition')
 
+    phone_code = fields.Char(compute='_get_phone_code')
+
     # 関連項目
     rel_industry = fields.Char(related='parent_id.industry_id.name')
     rel_contact_type = fields.Char(related='parent_id.contact_type.name')
@@ -428,6 +430,12 @@ class rtw_sf_partner(models.Model):
     #             rec.region = "九州・沖縄"
     #         else:
     #             rec.region = ""
+    @api.onchange("country_id")
+    def _get_phone_code(self):
+        if self.country_id:
+            self.phone_code = "+" + str(self.country_id.phone_code)
+        else:
+            self.phone_code = False
 
     def _search_npp(self, no_hyphen_phone, args=None, operator='ilike', limit=100):
         if operator == 'like':
