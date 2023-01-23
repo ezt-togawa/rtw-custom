@@ -68,13 +68,14 @@
                     <field name="phone_code" style="width:40px"/>
                 </xpath>
                 <xpath expr="//field[@name='phone']" position="replace">
-
-
                     <field name="phone"/>
+                </xpath>
+                <xpath expr="//field[@name='mobile']" position="replace">
+                    <field name="mobile"/>
                 </xpath>
                 <xpath expr="//field[@name='user_ids']" position="before">
                     <field name="no_hyphen_phone" invisible="1"/>
-                    <field name="fax" widget="phone"/>
+                    <field name="fax"/>
                     <field name="industry_id" widget="many2one"/>
                     <field name="contact_type" string="contact_type" attrs="{'required': [('is_company','=', True)]}"/>
                     <field name="channel" widget="many2one"/>
