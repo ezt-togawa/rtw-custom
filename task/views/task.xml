@@ -11,7 +11,20 @@
                     <field name="what_id" string="what_id"/>
                     <field name="activity_date" string="activity_date"/>
                     <field name="owner_id" string="owner_id"/>
+                    <field name="res_id" string="res_id"/>
                 </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="task_calendar">
+            <field name="name">task_calendar</field>
+            <field name="model">task.task</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendar View" date_start="activity_date" color="owner_id" event_limit="5">
+                    <field name="owner_id" filters="1"/>
+                    <field name="status"/>
+                </calendar>
+
             </field>
         </record>
 
@@ -19,7 +32,7 @@
         <record model="ir.actions.act_window" id="task.action_window">
             <field name="name">task</field>
             <field name="res_model">task.task</field>
-            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_mode">tree,kanban,calendar,form</field>
         </record>
 
         <!--        <record id="view_task_form_sf_oppo" model="ir.ui.view">-->
@@ -57,6 +70,8 @@
                             <group>
                                 <field name="who_id" string="who_id"/>
                                 <field name="what_id" string="what_id"/>
+                                <field name="record_ref" string="record_ref"/>
+                                <field name="res_id" string="res_id"/>
                             </group>
                             <group>
                                 <field name="status" string="status"/>

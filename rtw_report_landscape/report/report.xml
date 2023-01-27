@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+    <report
+            string="quotation"
+            id="report_quotation_rtw"
+            model="sale.order"
+            report_type="qweb-pdf"
+            name="rtw_report_landscape.sale_order"
+            file="rtw_report_landscape.sale_order"
+            orientation="Landscape"
+    />
+    </data>
+</odoo>

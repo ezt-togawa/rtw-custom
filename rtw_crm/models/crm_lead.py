@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+import datetime
 
 
 class rtw_crm(models.Model):
     _inherit = 'crm.lead'
 
+    # crm_seq = fields.Char('Opportunity No', readonly=True, copy=False)
+    crm_seq = fields.Char('Opportunity No', readonly=True, copy=False, default=lambda self: _("New"))
     stage_sort_order = fields.Integer('StageSortOrder')  # 受注段階コード H列
     # expected_revenue = fields.Monetary('ExpectedRevenue')  # 予想売上高 K列
     reference_price = fields.Monetary(compute="_get_reference_price", currency_field='company_currency', store=True,
@@ -101,7 +104,8 @@ class rtw_crm(models.Model):
     contact_id = fields.Many2one('res.partner', 'ContactId')  # コンタクトId
     primary_partner_Account_id = fields.Char('PrimaryPartnerAccountId')  # プライマリーパートナーId
     # synced_quote_id = fields.Char('SyncedQuoteId')  # 同期引用Id
-    contract_id = fields.One2many('contract.contract', inverse_name="related_opportunity", string='ContractId', tracking=True)  # 契約Id
+    contract_id = fields.One2many('contract.contract', inverse_name="related_opportunity", string='ContractId',
+                                  tracking=True)  # 契約Id
     last_amount_changed_history_id = fields.Char('LastAmountChangedHistoryId')  # 最終金額変更履歴
     last_close_date_changed_history_id = fields.Char('LastCloseDateChangedHistoryId')  # 最終完了日変更履歴
     progress_check_date = fields.Datetime('Field1__c', tracking=True)  # 進捗確認日 AN列
@@ -228,7 +232,7 @@ class rtw_crm(models.Model):
     competitive_product_other = fields.Selection([
         ('1', 'Sﾎﾞｰﾄﾞ'),
         ('2', 'ﾗｸﾞ'),
-        ], default='',
+    ], default='',
         string='Field20__c')  # 競合商品（他） BY列
     other_strengths = fields.Text('Field21__c')  # 他社の強み BZ列
     competition_b = fields.Selection([
@@ -309,7 +313,7 @@ class rtw_crm(models.Model):
     sample_sale = fields.Selection([
         ('all', '全て'),
         ('same', '一部'),
-        ], default='',
+    ], default='',
         string='Field25__c', tracking=True)  # サンプル販売 CJ列
     sample_sales_amount = fields.Integer('Field26__c', tracking=True)  # サンプル販売金額 CK列
     push_c = fields.Float('Push_Counter__c', tracking=True)  # Push C(完了予定日を翌月以降に変更した回数をカウント) CL列
@@ -415,7 +419,7 @@ class rtw_crm(models.Model):
         ('15', 'MT BENCH(L)'),
     ], default='',
         string='EC2_2__c')  # 商品リスト(EC2) CX列
-    l_set = fields.Integer('Lset__c')  #  CY列
+    l_set = fields.Integer('Lset__c')  # CY列
     product_list_st2 = fields.Selection([
         ('1', 'CM TABLE(S)'),
         ('2', 'CB TABLE(S)'),
@@ -704,9 +708,9 @@ class rtw_crm(models.Model):
     ], default='',
         string='OT2__c')  # 商品リスト(ソファOT2) EB列
     rate = fields.Float('Field74__c', tracking=True)  # 掛率 EC列
-    dummy = fields.Boolean('Field75__c', defaule=0)  # ﾀﾞﾐｰ ED列
+    dummy = fields.Boolean('Field75__c', default=0)  # ﾀﾞﾐｰ ED列
     lw_set_count = fields.Float('LW_5__c')  # LWセット数 EE列
-    trw_candidate = fields.Boolean('TRW__c', defaule=0)  # TRW候補 EF列
+    trw_candidate = fields.Boolean('TRW__c', default=0)  # TRW候補 EF列
     questionnaire = fields.Boolean('Field50__c', default=0)  # アンケート EG列
     letter_of_acceptance = fields.Boolean('Field51__c', default=0)  # 承諾書 EH列
     how_to_get_photos = fields.Selection([
@@ -782,6 +786,8 @@ class rtw_crm(models.Model):
     belong = fields.Char(compute="_get_belong", store=True)
 
     tracking_deadline = fields.Date(compute="_set_deadline", store=True, tracking=True)
+    presentation_flag = fields.Boolean(compute="_get_presentation_flag")
+    sr_status = fields.Char(compute="_get_sr_status")
 
     @api.depends('date_deadline')
     def _set_deadline(self):
@@ -793,10 +799,38 @@ class rtw_crm(models.Model):
         for rec in self:
             rec.belong = self.env['crm.team'].search([('member_ids.id', '=', rec.user_id.id)]).name
 
+    def _get_sr_status(self):
+        for rec in self:
+            if rec.calendar_ids.sr:
+                # print(rec.calendar_ids.situation.value)
+                # print(rec.id)
+                # res = rec.search([('calendar_ids.situation', '=', "4"),
+                #                    ('id', '=', rec.id)])
+                res = self.env['calendar.event'].search([('opportunity_id', '=', rec.id),
+                                                               ('situation', '=', "4")])
+                # print(res.name)
+                rec.sr_status = min(res).sr.name + str(min(res).start.year)
+                # print(min(res.calendar_ids).sr.name)
+                # for line in res:
+                #     print(line.sr.name)
+            else:
+                rec.sr_status = ""
+            sr_y = 0
+            # for line in rec.calendar_ids:
+            #     print(line.sr.name)
+            # rec.sr_status = line.sr.name
+
     def _compute_case_count(self):
         for rec in self:
             case_count = self.env['rtw_sf_case'].search_count([('crm_id', '=', rec.id)])
             rec.case_count = case_count
+
+    def _get_presentation_flag(self):
+        for rec in self:
+            if rec.presentation or rec.pre_contract_presentation or rec.fair_advance_plan:
+                rec.presentation_flag = True
+            else:
+                rec.presentation_flag = False
 
     def action_open_case(self):
         return {
@@ -844,8 +878,25 @@ class rtw_crm(models.Model):
     @api.depends('expected_revenue', 'rate')
     def _get_reference_price(self):
         for rec in self:
-            if rec.rate >0 :
+            if rec.rate > 0:
                 reference_price = rec.expected_revenue / rec.rate * 100
                 rec.reference_price = reference_price
             else:
                 rec.reference_price = rec.expected_revenue
+
+    @api.model
+    def create(self, vals):
+
+        if vals.get('crm_seq', 'New') == 'New':
+            vals['crm_seq'] = self.env['ir.sequence'].next_by_code('crm.lead') or 'New'
+
+        result = super(rtw_crm, self).create(vals)
+
+        return result
+
+    def _update_crm_seq(self, limit=1000):
+        leads = self.search([("crm_seq", "=", "新規")], order="id", limit=limit)
+        print(leads)
+        for lead in leads:
+            lead.crm_seq = self.env["ir.sequence"].next_by_code("crm.lead")
+            print(lead.crm_seq)

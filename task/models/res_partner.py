@@ -1,28 +1,15 @@
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
 
 class rtw_sf_partner_task(models.Model):
-    _inherit = "res.partner"
+    _name = "res.partner"
+    _inherit = [
+        "res.partner",
+        "task.thread.mixin"
+    ]
     _description = 'task'
 
-    opportunity = fields.One2many('opportunity.opportunity', inverse_name='accounts')  # ケース OK
-    opportunity_count = fields.Integer(string="case count", compute="_compute_oppo_count")
-
-    def _compute_oppo_count(self):
-        for rec in self:
-            opportunity_count = self.env['opportunity.opportunity'].search_count([('accounts', '=', rec.id)])
-            rec.opportunity_count = opportunity_count
-
-    def action_open_opportunity(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'opportunity',
-            'res_model': 'opportunity.opportunity',
-            'domain': [('accounts', '=', self.id)],
-            'view_mode': 'tree,form',
-            'target': 'current',
-            'context': {
-                'default_id': self.id,
-                'default_accounts': self.id,
-            }
-        }
+    # rtw_task_ids = fields.One2many('task.task')
+    channel_ids = fields.Many2many(relation='channel_task_thread_mixin_partner')
+    meeting_ids = fields.Many2many(relation='meeting_task_thread_mixin_partner')

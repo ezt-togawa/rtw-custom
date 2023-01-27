@@ -6,7 +6,14 @@ from odoo import models, fields, api
 class task(models.Model):
     _name = 'task.task'
     _description = 'task.task'
+    _rec_name = 'subject'
+    record_ref = fields.Reference(
+        string="Record Referenced",
+        compute="_compute_record_ref",
+        selection=lambda self: self._get_ref_selection(),
+    )
 
+    res_id = fields.Many2one('task.thread.mixin')
     who_id = fields.Many2one('res.partner', 'WhoId')  # 取引先責任者id B列
     # who_id = fields.Char('WhoId')  # 取引先責任者id B列
     # what_id = fields.Many2one('res.partner', 'WhatId')  # 関連先(商談他)id C列
@@ -89,3 +96,16 @@ class task(models.Model):
 #     def _value_pc(self):
 #         for record in self:
 #             record.value2 = float(record.value) / 100
+    @api.model
+    def _get_ref_selection(self):
+        models = self.env["ir.model"].search([])
+        return [(model.model, model.name) for model in models]
+
+    @api.depends("what_id")
+    def _compute_record_ref(self):
+        for record in self:
+            record.record_ref = False
+            if record.what_id:
+                rec_id = self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1)
+                record.record_ref = "{},{}".format(min(rec_id).model, min(rec_id).res_id)
+

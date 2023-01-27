@@ -291,13 +291,13 @@
             <field name="view_id" ref="rtw_sf_case_list_report_2"/>
             <field name="context">{"search_default_this_year":1}</field>
         </record>
-        <menuitem
-                id="action_case_report_2"
-                name="ケース抽出"
-                action="action_case_report_2"
-                parent="case_report_root"
-                sequence="30"
-        />
+<!--        <menuitem-->
+<!--                id="action_case_report_2"-->
+<!--                name="ケース抽出"-->
+<!--                action="action_case_report_2"-->
+<!--                parent="case_report_root"-->
+<!--                sequence="30"-->
+<!--        />-->
 
         <record id="view_rtw_case_search" model="ir.ui.view">
             <field name="name">rtw_sf_case.search</field>

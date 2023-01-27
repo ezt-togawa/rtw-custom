@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <record id="sale_seal_approval_view_tree_rtw" model="ir.ui.view">
+            <field name="name">sale_seal_approval_view_tree_rtw</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="seal_of_approval"/>
+                </xpath>
+
+            </field>
+
+        </record>
+
+        <record id="view_sale_seal_approval_view_tree_rtw" model="ir.ui.view">
+            <field name="name">view_sale_seal_approval_view_tree_rtw</field>
+            <field name="model">sale.order</field>
+            <field name="priority">50</field>
+            <field name="arch" type="xml">
+                <tree
+                        editable="top"
+                        create="false"
+                >
+                    <field name="seal_of_approval"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="payment_term_id" readonly="1"/>
+                    <field name="amount_total" widget="monetary" readonly="1"/>
+                    <field name="user_id" readonly="1"/>
+                    <field name="currency_id" invisible="1" />
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_sales_order_seal_approval" model="ir.actions.act_window">
+            <field name="name">Seal Of Approval</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="view_id" ref="view_sale_seal_approval_view_tree_rtw"/>
+        </record>
+        <menuitem
+                id="menu_sales_order_seal_approval"
+                action="action_sales_order_seal_approval"
+                parent="sale.sale_order_menu"
+                groups="sales_team.group_sale_salesman"
+                sequence="30"
+        />
+    </data>
+</odoo>

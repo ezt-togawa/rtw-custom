@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="purchase">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="custom_report_rtw.po_ex_layout">
+                    <div class="page">
+                        <t t-set="type">purchase</t>
+                        <t t-set="address">
+                            <div t-field="o.partner_id"
+                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                            <p t-if="o.partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:
+                                <span t-field="o.partner_id.vat"/>
+                            </p>
+                        </t>
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <thead style="background-color:#595959;color:#ffffff">
+                                    <tr>
+                                        <th>summary</th>
+                                        <th class="text-center">Item NO/Size
+                                        </th>
+                                        <th class="text-center">Spec</th>
+                                        <th class="text-center">Qty</th>
+                                        <th class="text-center">Unit Price</th>
+
+                                    </tr>
+                                </thead>
+                                <tr t-foreach="o.order_line" t-as="l" style="border-bottom:solid 1px #595959;">
+                                    <td>
+                                        <t t-if="l.product_id.summary == False">
+                                            <span t-field="l.product_id"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-field="l.product_id.summary"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.product_id.product_no"/>
+                                        <br/>
+                                        <t t-if="l.product_id.width > 0">
+                                            W
+                                            <span t-field="l.product_id.width"/>
+                                        </t>
+                                        <t t-if="l.product_id.depth > 0">
+                                            　D
+                                            <span t-field="l.product_id.depth"/>
+                                        </t>
+                                        <t t-if="l.product_id.height > 0">
+                                            　H
+                                            <span t-field="l.product_id.height"/>
+                                        </t>
+                                        <t t-if="l.product_id.ah > 0">
+                                            　Ah
+                                            <span t-field="l.product_id.ah"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="l.product_id.product_template_attribute_value_ids"
+                                           t-as="string_line">
+                                            ●
+                                            <span t-esc="string_line.display_name"/>
+                                            <br/>
+                                        </t>
+                                        <t t-foreach="l.config_session_id.custom_value_ids" t-as="string_line">
+                                            ●<span t-esc="string_line.display_name"/>:
+                                            <span t-esc="string_line.value"/>
+                                            <br/>
+                                        </t>
+                                    </td>
+
+                                    <td>
+                                        <div id="quote_qty">
+                                            <span t-esc="'{0:,.0f}'.format(l.product_uom_qty)"/>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.0f}'.format(l.price_unit)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <report
+            string="purchase"
+            id="report_quotation_rtw"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="custom_report_rtw.purchase"
+            file="custom_report_rtw.purchase"
+    />
+
+</odoo>

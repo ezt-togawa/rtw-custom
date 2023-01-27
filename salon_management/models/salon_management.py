@@ -35,6 +35,7 @@ class PartnerSalon(models.Model):
 
 class SequenceUpdaterSalon(models.Model):
     _name = 'salon.sequence.updater'
+    _description = 'salon.sequence.updater'
 
     sequence_salon = fields.Char(string="Salon Sequence")
 
