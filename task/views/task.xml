@@ -31,6 +31,22 @@
             </field>
         </record>
 
+        <record id="task_task_search" model="ir.ui.view">
+            <field name="name">task.search</field>
+            <field name="model">task.task</field>
+            <field name="arch" type="xml">
+                <search string="task">
+                    <field name="subject"/>
+                    <separator/>
+                    <filter string="My Task" name="mytask" domain="[('owner_id', '=', uid)]"/>
+                    <!--                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>-->
+                    <group expand="1" string="Group By">
+                        <filter string="Status" name="acquirer_id" context="{'group_by': 'status'}"/>
+                        <filter string="Owner" name="partner_id" context="{'group_by': 'owner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="task.action_window">
             <field name="name">task</field>
@@ -171,21 +187,6 @@
             <menuitem name="Server to list" id="car" parent="car.menu_2"
                       action="car.action_server"/>
         -->
-        <record id="task_task_search" model="ir.ui.view">
-            <field name="name">task.search</field>
-            <field name="model">task.task</field>
-            <field name="arch" type="xml">
-                <search string="task">
-                    <field name="subject"/>
-                    <separator/>
-                    <filter string="My Task" name="mytask" domain="[('owner_id', '=', uid)]"/>
-                    <!--                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>-->
-                    <group expand="1" string="Group By">
-                        <filter string="Status" name="acquirer_id" context="{'group_by': 'status'}"/>
-                        <filter string="Owner" name="partner_id" context="{'group_by': 'owner_id'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
+
     </data>
 </odoo>
