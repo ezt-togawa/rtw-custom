@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="stock_picking">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="custom_report_rtw.mo_ex_layout">
+                    <div class="page">
+                        <t t-set="type">picking</t>
+                        <t t-set="address">
+                            <div t-field="o.partner_id"
+                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                            <p t-if="o.partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:
+                                <span t-field="o.partner_id.vat"/>
+                            </p>
+                        </t>
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <thead style="background-color:#595959;color:#ffffff">
+                                    <tr>
+                                        <th>No</th>
+                                        <th class="text-center">ARTICLE
+                                        </th>
+                                        <th class="text-center">HS CODE</th>
+                                        <th class="text-center">DIMENSIONS</th>
+                                        <th class="text-center">QTY</th>
+                                        <th class="text-center">GOODS CODE</th>
+                                        <th class="text-center">LOCATION</th>
+
+                                    </tr>
+                                </thead>
+                                <tr t-foreach="o.move_ids_without_package" t-as="l" style="border-bottom:solid 1px #595959;">
+                                    <td>
+                                        <span t-field="l.product_id.name"/>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <!--                                    <td>-->
+<!--                                        <t t-if="l.product_id.summary == False">-->
+<!--                                            <span t-field="l.product_template_id"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-else="">-->
+<!--                                            <span t-field="l.product_id.summary"/>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="l.product_id.product_no"/>-->
+<!--                                        <br/>-->
+<!--                                        <t t-if="l.product_id.width > 0">-->
+<!--                                            W-->
+<!--                                            <span t-field="l.product_id.width"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="l.product_id.depth > 0">-->
+<!--                                            　D-->
+<!--                                            <span t-field="l.product_id.depth"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="l.product_id.height > 0">-->
+<!--                                            　H-->
+<!--                                            <span t-field="l.product_id.height"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="l.product_id.ah > 0">-->
+<!--                                            　Ah-->
+<!--                                            <span t-field="l.product_id.ah"/>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <t t-foreach="l.product_id.product_template_attribute_value_ids"-->
+<!--                                           t-as="string_line">-->
+<!--                                            ●-->
+<!--                                            <span t-esc="string_line.display_name"/>-->
+<!--                                            <br/>-->
+<!--                                        </t>-->
+<!--                                        <t t-foreach="l.config_session_id.custom_value_ids" t-as="string_line">-->
+<!--                                            ●<span t-esc="string_line.display_name"/>:-->
+<!--                                            <span t-esc="string_line.value"/>-->
+<!--                                            <br/>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+
+<!--                                    <td>-->
+<!--                                        <div id="quote_qty">-->
+<!--                                            <span t-esc="'{0:,.0f}'.format(l.product_uom_qty)"/>-->
+
+<!--                                        </div>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="l.discount"/>%-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-esc="'{0:,.0f}'.format(l.price_unit)"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="l.price_reduce_taxexcl"/>-->
+<!--                                    </td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <report
+            string="Picking"
+            id="report_stock_picking_rtw"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="custom_report_rtw.stock_picking"
+            file="custom_report_rtw.stock_picking"
+    />
+
+</odoo>

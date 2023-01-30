@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="rtw_international_trade_move_line" model="ir.ui.view">
+            <field name="name">rtw_international_trade_move_line</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="rtw_stock_move_line.stock_move_line_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mrp_state']" position="after">
+                    <field name="packing_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -376,6 +376,8 @@ class rtw_sf_partner(models.Model):
         ('8', 'CasaBRUTUS'),
         ('9', 'シグネチャー'),
         ('10', 'ヴィズスタ'),
+        ('12', 'DESIGNART'),
+        ('13', 'エルデコ'),
         ('11', 'その他'),
 
     ], default='',
