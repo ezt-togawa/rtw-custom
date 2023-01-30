@@ -22,7 +22,16 @@ class task(models.Model):
     what_count = fields.Integer('WhatCount')  # 関連先(商談他)件数 E列
     subject = fields.Char('Subject')  # 件名 F列
     activity_date = fields.Datetime('ActivityDate')  # 活動日 G列
-    status = fields.Char('Status')  # ステータス H列
+    # status = fields.Char('Status')  # ステータス H列
+    status = fields.Selection([
+        ('1', '未着手'),
+        ('2', '進行中'),
+        ('3', '顧客待ち'),
+        ('4', '延期'),
+        ('5', '完了'),
+        ('6', 'ｷｬﾝｾﾙ'),
+    ], default='1',
+        string="status", )    # ステータス H列
     priority = fields.Char('Priority')  # 優先順位 I列
     owner_id = fields.Many2one('res.users', 'OwnerId')  # 割り当て先Id J列
     description = fields.Text('Description')  # 説明 K列
@@ -106,6 +115,9 @@ class task(models.Model):
         for record in self:
             record.record_ref = False
             if record.what_id:
+                print(self.what_id)
                 rec_id = self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1)
                 record.record_ref = "{},{}".format(min(rec_id).model, min(rec_id).res_id)
+
+
 

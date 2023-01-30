@@ -65,13 +65,13 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <h1>ToDo：<field name="subject" string="subject"/></h1>
+                        <h1>ToDo：<field name="subject" string="subject" required="1"/></h1>
                         <group>
                             <group>
-                                <field name="who_id" string="who_id"/>
-                                <field name="what_id" string="what_id"/>
+<!--                                <field name="who_id" string="who_id"/>-->
+                                <field name="what_id" string="what_id" readonly="True"/>
                                 <field name="record_ref" string="record_ref"/>
-                                <field name="res_id" string="res_id"/>
+                                <field name="res_id" string="res_id" invisible="1"/>
                             </group>
                             <group>
                                 <field name="status" string="status"/>
@@ -81,12 +81,12 @@
                         <group string="詳細">
                             <group>
                                 <field name="owner_id" string="owner_id"/>
-                                <field name="subject" string="subject"/>
+<!--                                <field name="subject" string="subject"/>-->
                                 <field name="activity_date" string="activity_date"/>
                                 <field name="who_id" string="who_id"/>
                                 <field name="client_id" string="client_id"/>
-                                <field name="activity_origin_type" string="activity_origin_type"/>
-                                <field name="what_id" string="what_id"/>
+<!--                                <field name="activity_origin_type" string="activity_origin_type"/>-->
+<!--                                <field name="what_id" string="what_id"/>-->
                                 <field name="campaign_id" string="campaign_id"/>
                                 <field name="description" string="description"/>
                             </group>
@@ -103,12 +103,12 @@
                             <group>
                             </group>
                             <group>
-                                <field name="is_reminder_set" string="is_reminder_set"/>
-                                <field name="reminder_datetime" string="reminder_datetime"/>
-                                <field name="last_modified_by_id" string="last_modified_by_id"/>
-                                <field name="last_modified_date" string="last_modified_date"/>
-                                <field name="created_by_id" string="created_by_id"/>
-                                <field name="created_date" string="created_date"/>
+<!--                                <field name="is_reminder_set" string="is_reminder_set"/>-->
+<!--                                <field name="reminder_datetime" string="reminder_datetime"/>-->
+<!--                                <field name="last_modified_by_id" string="last_modified_by_id"/>-->
+<!--                                <field name="last_modified_date" string="last_modified_date"/>-->
+<!--                                <field name="created_by_id" string="created_by_id"/>-->
+<!--                                <field name="created_date" string="created_date"/>-->
                             </group>
                         </group>
                     </sheet>

@@ -2,13 +2,12 @@
 from odoo import models, fields, api
 
 
-class rtw_sf_partner_task(models.Model):
-    _name = "res.partner"
+class rtw_sf_crm_lead(models.Model):
+    _name = "crm.lead"
     _inherit = [
-        "res.partner",
+        "crm.lead",
         "task.thread.mixin"
     ]
-    _description = 'task'
 
     # rtw_task_ids = fields.One2many('task.task')
     # channel_ids = fields.Many2many(relation='channel_task_thread_mixin_partner')

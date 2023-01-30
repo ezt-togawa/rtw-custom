@@ -1,9 +1,9 @@
 <odoo>
     <data>
-        <record id="view_partner_form_sf" model="ir.ui.view">
-            <field name="name">partner sf</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
+        <record id="view_lead_form_sf" model="ir.ui.view">
+            <field name="name">lead sf</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form//header" position="inside">
                         <button string="Create Task" name="create_task" type="object" class="oe_highlight"/>

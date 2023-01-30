@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 08:57+0000\n"
-"PO-Revision-Date: 2022-05-31 08:57+0000\n"
+"POT-Creation-Date: 2023-01-30 11:18+0000\n"
+"PO-Revision-Date: 2023-01-30 11:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,13 +31,29 @@ msgid "ActivityOriginType"
 msgstr ""
 
 #. module: task
+#: model_terms:ir.ui.view,arch_db:task.task_calendar
+msgid "Calendar View"
+msgstr ""
+
+#. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__call_duration_in_seconds
 msgid "CallDurationInSeconds"
 msgstr ""
 
 #. module: task
+#: model:ir.model.fields,field_description:task.field_res_partner__channel_ids
+#: model:ir.model.fields,field_description:task.field_res_users__channel_ids
+msgid "Channels"
+msgstr "チャネル"
+
+#. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__completed_datetime
 msgid "CompletedDateTime"
+msgstr ""
+
+#. module: task
+#: model_terms:ir.ui.view,arch_db:task.view_partner_form_sf
+msgid "Create Task"
 msgstr ""
 
 #. module: task
@@ -66,9 +82,11 @@ msgid "Description"
 msgstr ""
 
 #. module: task
+#: model:ir.model.fields,field_description:task.field_res_partner__display_name
 #: model:ir.model.fields,field_description:task.field_task_task__display_name
+#: model:ir.model.fields,field_description:task.field_task_thread_mixin__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__email_message_id
@@ -166,7 +184,9 @@ msgid "Field8__c"
 msgstr ""
 
 #. module: task
+#: model:ir.model.fields,field_description:task.field_res_partner__id
 #: model:ir.model.fields,field_description:task.field_task_task__id
+#: model:ir.model.fields,field_description:task.field_task_thread_mixin__id
 msgid "ID"
 msgstr ""
 
@@ -191,9 +211,11 @@ msgid "IsReminderSet"
 msgstr ""
 
 #. module: task
+#: model:ir.model.fields,field_description:task.field_res_partner____last_update
 #: model:ir.model.fields,field_description:task.field_task_task____last_update
+#: model:ir.model.fields,field_description:task.field_task_thread_mixin____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "最終更新日"
 
 #. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__write_uid
@@ -216,13 +238,24 @@ msgid "LastModifiedDate"
 msgstr ""
 
 #. module: task
+#: model:ir.model.fields,field_description:task.field_res_partner__meeting_ids
+#: model:ir.model.fields,field_description:task.field_res_users__meeting_ids
+msgid "Meetings"
+msgstr "打ち合わせ"
+
+#. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__owner_id
 msgid "OwnerId"
-msgstr ""
+msgstr "割当先"
 
 #. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__priority
 msgid "Priority"
+msgstr ""
+
+#. module: task
+#: model:ir.model.fields,field_description:task.field_task_task__record_ref
+msgid "Record Referenced"
 msgstr ""
 
 #. module: task
@@ -266,23 +299,35 @@ msgid "ReminderDateTime"
 msgstr ""
 
 #. module: task
+#: model:ir.model.fields,field_description:task.field_task_task__res_id
+msgid "Res"
+msgstr ""
+
+#. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__sr
 msgid "SR__c"
 msgstr ""
 
 #. module: task
-#: model:ir.model.fields,field_description:task.field_task_task__status
-msgid "Status"
-msgstr ""
-
-#. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__subject
 msgid "Subject"
-msgstr ""
+msgstr "件名"
 
 #. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__system_mod_stamp
 msgid "SystemModstamp"
+msgstr ""
+
+#. module: task
+#: model:ir.model,name:task.model_task_thread_mixin
+msgid "Task Thread"
+msgstr ""
+
+#. module: task
+#: model:ir.model.fields,field_description:task.field_res_partner__rtw_task_ids
+#: model:ir.model.fields,field_description:task.field_res_users__rtw_task_ids
+#: model:ir.model.fields,field_description:task.field_task_thread_mixin__rtw_task_ids
+msgid "Tasks"
 msgstr ""
 
 #. module: task
@@ -323,11 +368,6 @@ msgstr "期日"
 
 #. module: task
 #: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
-msgid "activity_origin_type"
-msgstr "チャネル"
-
-#. module: task
-#: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
 msgid "bill_amount"
 msgstr "請求額"
 
@@ -353,33 +393,8 @@ msgstr "コスト"
 
 #. module: task
 #: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
-msgid "created_by_id"
-msgstr "作成者"
-
-#. module: task
-#: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
-msgid "created_date"
-msgstr "作成日"
-
-#. module: task
-#: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
 msgid "description"
 msgstr "説明"
-
-#. module: task
-#: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
-msgid "is_reminder_set"
-msgstr "アラーム設定"
-
-#. module: task
-#: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
-msgid "last_modified_by_id"
-msgstr "最終更新者"
-
-#. module: task
-#: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
-msgid "last_modified_date"
-msgstr "最終更新日"
 
 #. module: task
 #: model:ir.model.fields,field_description:task.field_task_task__new_sales
@@ -399,8 +414,14 @@ msgstr "優先度"
 
 #. module: task
 #: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
-msgid "reminder_datetime"
-msgstr "アラーム設定日"
+msgid "record_ref"
+msgstr "関連レコード"
+
+#. module: task
+#: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
+#: model_terms:ir.ui.view,arch_db:task.task_list
+msgid "res_id"
+msgstr ""
 
 #. module: task
 #: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
@@ -408,6 +429,7 @@ msgid "start_datetime"
 msgstr "開始時間"
 
 #. module: task
+#: model:ir.model.fields,field_description:task.field_task_task__status
 #: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
 msgid "status"
 msgstr "状況"
@@ -420,7 +442,9 @@ msgstr "件名"
 
 #. module: task
 #: model:ir.actions.act_window,name:task.action_window
+#: model:ir.model,name:task.model_res_partner
 #: model:ir.ui.menu,name:task.menu_root
+#: model_terms:ir.ui.view,arch_db:task.view_partner_form_sf
 msgid "task"
 msgstr "ToDo"
 
@@ -447,6 +471,36 @@ msgid "who_id"
 msgstr "割り当て先"
 
 #. module: task
+#: model:ir.model.fields.selection,name:task.selection__task_task__status__5
+msgid "完了"
+msgstr ""
+
+#. module: task
+#: model:ir.model.fields.selection,name:task.selection__task_task__status__4
+msgid "延期"
+msgstr ""
+
+#. module: task
+#: model:ir.model.fields.selection,name:task.selection__task_task__status__1
+msgid "未着手"
+msgstr ""
+
+#. module: task
 #: model_terms:ir.ui.view,arch_db:task.rtw_sf_task_form
 msgid "詳細"
+msgstr ""
+
+#. module: task
+#: model:ir.model.fields.selection,name:task.selection__task_task__status__2
+msgid "進行中"
+msgstr ""
+
+#. module: task
+#: model:ir.model.fields.selection,name:task.selection__task_task__status__3
+msgid "顧客待ち"
+msgstr ""
+
+#. module: task
+#: model:ir.model.fields.selection,name:task.selection__task_task__status__6
+msgid "ｷｬﾝｾﾙ"
 msgstr ""
