@@ -63,6 +63,9 @@ class calendar_event_rtw(models.Model):
         ('21', '未確認/声かけのみ'),
         ('22', 'R営業誘致（営業活動）'),
         ('23', 'ミラノサローネ'),
+        ('25', '広報 (PR)'),
+        ('26', '通常営業'),
+        ('27', '紹介（知人・外部）'),
         ('24', 'その他'),
     ], default="1", string='Field17__c')  # リード（来場） BK
     visitor_purpose = fields.Selection([
