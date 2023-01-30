@@ -5,13 +5,16 @@
             <field name="name">task_list</field>
             <field name="model">task.task</field>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="subject" string="subject"/>
-                    <field name="who_id" string="who_id"/>
-                    <field name="what_id" string="what_id"/>
-                    <field name="activity_date" string="activity_date"/>
-                    <field name="owner_id" string="owner_id"/>
-                    <field name="res_id" string="res_id"/>
+                <tree
+                        decoration-success="status == '5'"
+                        decoration-danger="activity_date and activity_date&lt;current_date and status not in ('Done', 'Cancel') "
+
+                >
+                    <field name="subject"/>
+                    <field name="owner_id"/>
+                    <field name="activity_date"/>
+                    <field name="status"/>
+                    <field name="description"/>
                 </tree>
             </field>
         </record>
@@ -32,6 +35,7 @@
         <record model="ir.actions.act_window" id="task.action_window">
             <field name="name">task</field>
             <field name="res_model">task.task</field>
+            <field name="search_view_id" ref="task_task_search"/>
             <field name="view_mode">tree,kanban,calendar,form</field>
         </record>
 
@@ -65,10 +69,12 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <h1>ToDo：<field name="subject" string="subject" required="1"/></h1>
+                        <h1>ToDo：
+                            <field name="subject" string="subject" required="1"/>
+                        </h1>
                         <group>
                             <group>
-<!--                                <field name="who_id" string="who_id"/>-->
+                                <!--                                <field name="who_id" string="who_id"/>-->
                                 <field name="what_id" string="what_id" readonly="True"/>
                                 <field name="record_ref" string="record_ref"/>
                                 <field name="res_id" string="res_id" invisible="1"/>
@@ -81,12 +87,12 @@
                         <group string="詳細">
                             <group>
                                 <field name="owner_id" string="owner_id"/>
-<!--                                <field name="subject" string="subject"/>-->
+                                <!--                                <field name="subject" string="subject"/>-->
                                 <field name="activity_date" string="activity_date"/>
                                 <field name="who_id" string="who_id"/>
                                 <field name="client_id" string="client_id"/>
-<!--                                <field name="activity_origin_type" string="activity_origin_type"/>-->
-<!--                                <field name="what_id" string="what_id"/>-->
+                                <!--                                <field name="activity_origin_type" string="activity_origin_type"/>-->
+                                <!--                                <field name="what_id" string="what_id"/>-->
                                 <field name="campaign_id" string="campaign_id"/>
                                 <field name="description" string="description"/>
                             </group>
@@ -103,21 +109,21 @@
                             <group>
                             </group>
                             <group>
-<!--                                <field name="is_reminder_set" string="is_reminder_set"/>-->
-<!--                                <field name="reminder_datetime" string="reminder_datetime"/>-->
-<!--                                <field name="last_modified_by_id" string="last_modified_by_id"/>-->
-<!--                                <field name="last_modified_date" string="last_modified_date"/>-->
-<!--                                <field name="created_by_id" string="created_by_id"/>-->
-<!--                                <field name="created_date" string="created_date"/>-->
+                                <!--                                <field name="is_reminder_set" string="is_reminder_set"/>-->
+                                <!--                                <field name="reminder_datetime" string="reminder_datetime"/>-->
+                                <!--                                <field name="last_modified_by_id" string="last_modified_by_id"/>-->
+                                <!--                                <field name="last_modified_date" string="last_modified_date"/>-->
+                                <!--                                <field name="created_by_id" string="created_by_id"/>-->
+                                <!--                                <field name="created_date" string="created_date"/>-->
                             </group>
                         </group>
                     </sheet>
-<!--                    <div class="oe_chatter">-->
-<!--                        <field name="message_follower_ids" widget="mail_followers"/>-->
-<!--                        <field name="activity_ids" modifiers="{}" id="activity_ids"/>-->
-<!--                        <field name="message_ids" widget="mail_thread"/>-->
-<!--                        <field name="Determined_on_the_day" widget="Determined_on_the_day"/>-->
-<!--                    </div>-->
+                    <!--                    <div class="oe_chatter">-->
+                    <!--                        <field name="message_follower_ids" widget="mail_followers"/>-->
+                    <!--                        <field name="activity_ids" modifiers="{}" id="activity_ids"/>-->
+                    <!--                        <field name="message_ids" widget="mail_thread"/>-->
+                    <!--                        <field name="Determined_on_the_day" widget="Determined_on_the_day"/>-->
+                    <!--                    </div>-->
                 </form>
             </field>
         </record>
@@ -148,11 +154,11 @@
         <!--
         <menuitem name="opportunity" id="opportunity.menu_1" parent="opportunity.menu_root"/>
         -->
-<!--         <menuitem-->
-<!--                 id="menu_task_tree"-->
-<!--                 action="task.action_window"-->
-<!--                 sequence="30"-->
-<!--         />-->
+        <!--         <menuitem-->
+        <!--                 id="menu_task_tree"-->
+        <!--                 action="task.action_window"-->
+        <!--                 sequence="30"-->
+        <!--         />-->
         <!--
             <menuitem name="Menu 2" id="car.menu_2" parent="car.menu_root"/>
         -->
@@ -165,5 +171,21 @@
             <menuitem name="Server to list" id="car" parent="car.menu_2"
                       action="car.action_server"/>
         -->
+        <record id="task_task_search" model="ir.ui.view">
+            <field name="name">task.search</field>
+            <field name="model">task.task</field>
+            <field name="arch" type="xml">
+                <search string="task">
+                    <field name="subject"/>
+                    <separator/>
+                    <filter string="My Task" name="mytask" domain="[('owner_id', '=', uid)]"/>
+                    <!--                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>-->
+                    <group expand="1" string="Group By">
+                        <filter string="Status" name="acquirer_id" context="{'group_by': 'status'}"/>
+                        <filter string="Owner" name="partner_id" context="{'group_by': 'owner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
     </data>
 </odoo>

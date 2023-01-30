@@ -6,26 +6,27 @@
             <field name="inherit_id" ref="crm.crm_lead_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form//header" position="inside">
-                        <button string="Create Task" name="create_task" type="object" class="oe_highlight"/>
+                    <button string="Create Task" name="create_task" type="object" class="oe_highlight"/>
 
                 </xpath>
                 <xpath expr="//page[@name='internal_notes']" position="after">
                     <page name="task" string="task">
 
-                            <field name="rtw_task_ids">
+                        <field name="rtw_task_ids">
                             <tree
-                                        create="false"
-                                        edit="true"
-                                        default_order="activity_date"
-                                        decoration-success="status == '5'"
-                                        editable="bottom"
-                                    >
+                                    create="false"
+                                    edit="true"
+                                    default_order="activity_date"
+                                    decoration-success="status == '5'"
+                                    editable="bottom"
+                            >
                                 <field name="subject"/>
                                 <field name="owner_id"/>
                                 <field name="activity_date"/>
                                 <field name="status"/>
+                                <field name="description"/>
                             </tree>
-                            </field>
+                        </field>
                     </page>
                 </xpath>
             </field>
