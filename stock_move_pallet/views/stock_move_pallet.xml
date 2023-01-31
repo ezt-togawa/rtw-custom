@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_move_pallet_list">
+            <field name="name">move_pallet_list</field>
+            <field name="model">stock.move.pallet</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="move_line_ids" widget="many2many_tags"/>
+                    <field name="picking_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="stock_move_pallet_action_window">
+            <field name="name">move_pallet_list</field>
+            <field name="res_model">stock.move.pallet</field>
+            <field name="view_id" ref="stock_move_pallet_list" />
+            <field name="view_mode">tree,kanban,form</field>
+        </record>
+
+        <menuitem name="move_pallet"
+                  id="move_pallet_action_window_menu"
+                  action="stock_move_pallet_action_window"
+                  parent="stock.menu_stock_warehouse_mgmt"/>
+    </data>
+</odoo>

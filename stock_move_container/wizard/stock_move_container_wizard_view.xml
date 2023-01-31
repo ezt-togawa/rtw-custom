@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form view of Container Loading -->
+    <record id="view_container_loading" model="ir.ui.view">
+        <field name="name">Container Loading</field>
+        <field name="model">container.loading</field>
+        <field name="arch" type="xml">
+             <form string="Container Loading">
+                 <group>
+                     <h3>Do you want to register the selected items for new container?</h3>
+                 </group>
+                 <footer>
+                     <button name="container_loading" string="Yes" type="object" class="btn-primary"/>
+                     <button string="Cancel" class="btn-default" special="cancel"/>
+                 </footer>
+             </form>
+        </field>
+    </record>
+
+    <!-- Action of Container Loading -->
+    <record id="action_view_container_loading" model="ir.actions.act_window">
+        <field name="name">Container Loading</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">container.loading</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_container_loading"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock_move_pallet.model_stock_move_pallet"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+</odoo>

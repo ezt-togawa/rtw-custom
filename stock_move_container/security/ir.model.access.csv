@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_move_container,stock_move_container,model_stock_move_container,base.group_user,1,1,1,1
+access_container_loading,access.container_loading,model_container_loading,base.group_user,1,1,1,1
