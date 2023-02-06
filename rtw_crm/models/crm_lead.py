@@ -895,7 +895,7 @@ class rtw_crm(models.Model):
         return result
 
     def _update_crm_seq(self, limit=1000):
-        leads = self.search([("crm_seq", "=", "新規")], order="id", limit=limit)
+        leads = self.search([("crm_seq", "=", "New")], order="id", limit=limit)
         print(leads)
         for lead in leads:
             lead.crm_seq = self.env["ir.sequence"].next_by_code("crm.lead")

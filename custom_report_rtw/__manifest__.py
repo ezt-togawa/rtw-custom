@@ -20,7 +20,8 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale', 'account', 'product_spec_rtw'],
+    'depends': ['base', 'sale', 'account', 'product_spec_rtw',
+                'rtw_mrp_custom'],
 
     # always loaded
     'data': [
