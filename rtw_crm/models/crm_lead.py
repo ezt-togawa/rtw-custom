@@ -801,7 +801,7 @@ class rtw_crm(models.Model):
 
     def _get_sr_status(self):
         for rec in self:
-            if rec.calendar_ids.sr:
+            if rec.calendar_ids.sr and rec.calendar_ids.start:
                 # print(rec.calendar_ids.situation.value)
                 # print(rec.id)
                 # res = rec.search([('calendar_ids.situation', '=', "4"),
