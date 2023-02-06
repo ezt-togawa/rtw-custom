@@ -37,6 +37,9 @@
                         <field name="site"/>
                     </group>
                 </xpath>
+                <xpath expr="//field[@name='type']" position="before">
+                    <field name="user_id" required="1"/>
+                </xpath>
                 <xpath expr="//field[@name='parent_id']" position="before">
                     <span attrs="{'invisible': [('is_company','=', True)]}">
                         <div>関連会社情報</div>
@@ -65,6 +68,7 @@
                     <field name="fare_payment_terms" string="fare_payment_terms"/>
                 </xpath>
                 <xpath expr="//field[@name='function']" position="after">
+                    <field name="department" string="department"/>
                     <field name="phone_code" style="width:40px"/>
                 </xpath>
                 <xpath expr="//field[@name='phone']" position="replace">
@@ -83,6 +87,9 @@
                            attrs="{'required': [('is_company','=', False)]}"/>
                 </xpath>
                 <xpath expr="//field[@name='company_type']" position="after">
+                    <!--                    <field name="contact_type" widget="many2one"/>-->
+                </xpath>
+                <xpath expr="//page[@name='sales_purchases']/group/group/field[@name='user_id']" position="replace">
                     <!--                    <field name="contact_type" widget="many2one"/>-->
                 </xpath>
                 <xpath expr="//notebook " position="before">
@@ -104,7 +111,7 @@
                     <page name="account_info" string="account info">
                         <group>
                             <group>
-                                <field name="department" string="department"/>
+
                                 <field name="account_number" string="account_number"/>
                                 <field name="supplier_no" string="supplier_no"/>
                                 <field name="multiplier_black" string="multiplier_black"/>
