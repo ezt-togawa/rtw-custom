@@ -801,12 +801,14 @@ class rtw_crm(models.Model):
 
     def _get_sr_status(self):
         for rec in self:
-            if rec.calendar_ids.sr and rec.calendar_ids.start:
+            if rec.calendar_ids:
                 # print(rec.calendar_ids.situation.value)
                 # print(rec.id)
                 # res = rec.search([('calendar_ids.situation', '=', "4"),
                 #                    ('id', '=', rec.id)])
+
                 res = self.env['calendar.event'].search([('opportunity_id', '=', rec.id), ('situation', '=', "4")])
+
                 if res:
                     rec.sr_status = min(res).sr.name + str(min(res).start.year)
                 else:
