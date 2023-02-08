@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "custom_report_rtw",
+    'name': "rtw_product_attribute_value_images",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,26 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale', 'account', 'product_spec_rtw',
-                'rtw_mrp_custom', 'rtw_product_attribute_value_images'],
+    'depends': ['base', 'product_configurator'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'report/report_quotation.xml',
-        'report/stock_picking.xml',
-        'report/purchase.xml',
-        'report/spec_list.xml',
-        'report/external_layout.xml',
-        'report/internal_layout.xml',
-        'report/header_footer.xml',
-        'report/mrp.xml',
-        'report/invoice.xml',
-        'views/views.xml',
+        'views/product_attribute_value.xml',
         'views/templates.xml',
-        # "views/sale_views.xml",
-        # "views/assets.xml",
-        "views/res_company_view.xml"
     ],
     # only loaded in demonstration mode
     'demo': [

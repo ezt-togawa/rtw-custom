@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="product_spec">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="custom_report_rtw.so_ex_layout">
+                    <div class="page">
+                        <t t-set="type">quotation</t>
+                        <t t-set="address">
+                            <div t-field="o.partner_id"
+                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                            <p t-if="o.partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:
+                                <span t-field="o.partner_id.vat"/>
+                            </p>
+                        </t>
+                        <table class="table table-condensed">
+                            <div class="row">
+                                <div t-foreach="o.order_line" t-as="l" style="display:inline-block;" class="col-4">
+                                    <div style="margin:5px;border:1px gray solid !important">
+                                    <div t-field="l.product_id.name"/>
+                                     <div t-field="l.product_id.image_256" t-options='{"widget": "image"}'/>
+                                     <div>
+                                         <t t-foreach="l.product_id.product_template_attribute_value_ids"
+                                           t-as="string_line">
+                                            ●
+                                            <span t-esc="string_line.display_name"/>
+                                            <br/>
+                                             <div t-field="string_line.product_attribute_value_id.image" t-options='{"widget": "image"}'/>
+                                        </t>
+                                        <t t-foreach="l.config_session_id.custom_value_ids" t-as="string_line">
+                                            ●<span t-esc="string_line.display_name"/>:
+                                            <span t-esc="string_line.value"/>
+                                            <br/>
+                                        </t>
+                                     </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <report
+            string="product spec"
+            id="report_product_spec_rtw"
+            model="sale.order"
+            report_type="qweb-html"
+            name="custom_report_rtw.product_spec"
+            file="custom_report_rtw.product_spec"
+    />
+
+</odoo>

@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="view_product_attribute_value_tree_rtw" model="ir.ui.view">
+            <field name="name">product.attribute.value tree</field>
+            <field name="model">product.attribute.value</field>
+            <field name="inherit_id" ref="product_configurator.variants_tree_view"/>
+             <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="image" widget="image" options='{"size": [20, 20]}'/>
+                </xpath>
+             </field>
+        </record>
+
+
+    </data>
+</odoo>

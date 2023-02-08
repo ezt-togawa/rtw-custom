@@ -145,7 +145,12 @@
                         <br/>
                         ご査収の程宜しくお願い致します。
                     </div>
-
+                    <div>税抜合計:
+                        <span class="" t-field="o.amount_untaxed"/>
+                    </div>
+                    <div>消費税:
+                        <span class="" t-field="o.amount_tax"/>
+                    </div>
                     <div>税込合計:
                         <span class="so_price" t-field="o.amount_total"/>
                     </div>
