@@ -809,7 +809,7 @@ class rtw_crm(models.Model):
                 print("chk1")
                 res = self.env['calendar.event'].search([('opportunity_id', '=', rec.id), ('situation', '=', "4")])
                 print("chk2")
-                if res.sr.name and res.start.year:
+                if min(res).sr.name and min(res).start.year:
                     print("chk3")
                     rec.sr_status = min(res).sr.name + str(min(res).start.year)
                 else:
