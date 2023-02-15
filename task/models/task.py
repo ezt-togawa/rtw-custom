@@ -118,11 +118,15 @@ class task(models.Model):
             if record.what_id:
                 if self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1):
                     rec_id = self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1)
+                    record.record_ref = "{},{}".format(min(rec_id).model, min(rec_id).res_id)
                 else:
-                    rec_id = self.env['ir.model.data'].search(
-                        [('res_id', '=', self.what_id), ('model', '=', self.model)], limit=1)
+                    print(self.what_id)
+                    print(str(self.model))
+                    rec_id = self.env[self.model].search(
+                        [('id', '=', self.what_id)], limit=1)
+                    print(rec_id)
                 # rec_id = self.env['ir.model.data'].search(['|', ('name', '=', self.what_id), '&', ('res_id', '=', self.what_id), ('model', '=', self.model_name)], limit=1)
-                record.record_ref = "{},{}".format(min(rec_id).model, min(rec_id).res_id)
+                    record.record_ref = rec_id
 
 
 
