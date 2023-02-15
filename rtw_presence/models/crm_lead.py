@@ -10,6 +10,7 @@ class rtw_crm_presence(models.Model):
     presence_ids = fields.One2many(comodel_name="rtw_presence.presence",
                                    inverse_name="crm_id",
                                    string="crm")
+    presence_count = fields.Integer(compute="_get_presence_count")
 
     def create_presence(self):
         return {
@@ -24,3 +25,11 @@ class rtw_crm_presence(models.Model):
                 'default_owner_id': self.user_id.ids
             }
         }
+
+    def _get_presence_count(self):
+        for rec in self:
+            if rec.presence_ids:
+                res = self.env['rtw_presence.presence'].search_count([('done', '=', True), ('crm_id', '=', rec.id)])
+                rec.presence_count = res
+            else:
+                rec.presence_count = False
