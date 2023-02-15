@@ -30,7 +30,7 @@ class task(models.Model):
         ('Postponement', '延期'),
         ('Done', '完了'),
         ('Cancel', 'ｷｬﾝｾﾙ'),
-    ], default='1',
+    ], default='NotStart',
         string="status", )    # ステータス H列
     priority = fields.Char('Priority')  # 優先順位 I列
     owner_id = fields.Many2one('res.users', 'OwnerId')  # 割り当て先Id J列
@@ -96,6 +96,7 @@ class task(models.Model):
     # guest_book = fields.Char('Field30__c')  # 芳名帳/アンケート BQ ★空白のみ
     estimated_accrual = fields.Boolean('Field31__c')  # 見積発生（新規商談） BR ★0,空白
     omotesando = fields.Boolean('Field35__c')  # 表参道来店 BS ★0,空白
+    model = fields.Char()
 
 #     value = fields.Integer()
 #     value2 = fields.Float(compute="_value_pc", store=True)
@@ -115,7 +116,12 @@ class task(models.Model):
         for record in self:
             record.record_ref = False
             if record.what_id:
-                rec_id = self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1)
+                if self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1):
+                    rec_id = self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1)
+                else:
+                    rec_id = self.env['ir.model.data'].search(
+                        [('res_id', '=', self.what_id), ('model', '=', self.model)], limit=1)
+                # rec_id = self.env['ir.model.data'].search(['|', ('name', '=', self.what_id), '&', ('res_id', '=', self.what_id), ('model', '=', self.model_name)], limit=1)
                 record.record_ref = "{},{}".format(min(rec_id).model, min(rec_id).res_id)
 
 

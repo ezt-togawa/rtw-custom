@@ -1,0 +1,227 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_presence
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-13 12:07+0000\n"
+"PO-Revision-Date: 2023-02-13 12:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__crm_id
+msgid "CRM"
+msgstr ""
+
+#. module: rtw_presence
+#: model_terms:ir.ui.view,arch_db:rtw_presence.view_crm_presence
+msgid "Create Presence"
+msgstr "納品立会い作成"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__create_uid
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person__create_uid
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__create_date
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person__create_date
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__date
+msgid "Date"
+msgstr "日付"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__display_name
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person__display_name
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__done
+msgid "Done"
+msgstr "完了"
+
+#. module: rtw_presence
+#: model_terms:ir.ui.view,arch_db:rtw_presence.rtw_presence_search
+msgid "Group By"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_crm_lead__id
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__id
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person__id
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__id
+msgid "ID"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__image_1920
+msgid "Image"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__image_count
+msgid "Image Count"
+msgstr "画像数"
+
+#. module: rtw_presence
+#: model_terms:ir.ui.view,arch_db:rtw_presence.form
+msgid "Images"
+msgstr "画像"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_crm_lead____last_update
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image____last_update
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person____last_update
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence____last_update
+msgid "Last Modified on"
+msgstr "最終更新日"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__write_uid
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person__write_uid
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__write_date
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person__write_date
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model,name:rtw_presence.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "リード / 案件"
+
+#. module: rtw_presence
+#: model:ir.ui.menu,name:rtw_presence.list
+msgid "List"
+msgstr "一覧"
+
+#. module: rtw_presence
+#: model_terms:ir.ui.view,arch_db:rtw_presence.rtw_presence_search
+msgid "My Presence"
+msgstr "私の納品立会い"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__name
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__name
+msgid "Name"
+msgstr "件名"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__note
+msgid "Note"
+msgstr "メモ"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__owner_id
+msgid "Owner ID"
+msgstr "訪問者"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__presence_id
+#: model_terms:ir.ui.view,arch_db:rtw_presence.view_rtw_presence_calendar
+msgid "Presence"
+msgstr "納品立会い"
+
+#. module: rtw_presence
+#: model:ir.ui.menu,name:rtw_presence.rtw_presence_presence_image
+msgid "Presence Image"
+msgstr "納品立会い画像"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__presence_person_id
+#: model:ir.ui.menu,name:rtw_presence.rtw_presence_presence_person
+msgid "Presence Person"
+msgstr "納品立会い者"
+
+#. module: rtw_presence
+#: model:ir.ui.menu,name:rtw_presence.rtw_presence_person_setting
+msgid "Setting"
+msgstr "設定"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_image__image_128
+msgid "Small Image"
+msgstr ""
+
+#. module: rtw_presence
+#: model_terms:ir.ui.view,arch_db:rtw_presence.form
+msgid "ToDo："
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_crm_lead__presence_ids
+msgid "crm"
+msgstr "CRM"
+
+#. module: rtw_presence
+#: model_terms:ir.ui.view,arch_db:rtw_presence.rtw_presence_search
+msgid "done"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_presence__image_ids
+msgid "image"
+msgstr "画像"
+
+#. module: rtw_presence
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person__name
+#: model_terms:ir.ui.view,arch_db:rtw_presence.form
+msgid "name"
+msgstr "件名"
+
+#. module: rtw_presence
+#: model:ir.actions.act_window,name:rtw_presence.action_window
+#: model:ir.model.fields,field_description:rtw_presence.field_rtw_presence_person__presence_person_ids
+#: model:ir.ui.menu,name:rtw_presence.menu_root
+#: model:ir.ui.menu,name:rtw_presence.presence
+#: model_terms:ir.ui.view,arch_db:rtw_presence.rtw_presence_search
+#: model_terms:ir.ui.view,arch_db:rtw_presence.view_crm_presence
+msgid "presence"
+msgstr "納品立会い"
+
+#. module: rtw_presence
+#: model:ir.actions.act_window,name:rtw_presence.rtw_presence_image_action_window
+msgid "presence images"
+msgstr "納品立会い画像"
+
+#. module: rtw_presence
+#: model:ir.actions.act_window,name:rtw_presence.rtw_presence_person_action_window
+msgid "presence person"
+msgstr "納品立会い者"
+
+#. module: rtw_presence
+#: model:ir.model,name:rtw_presence.model_rtw_presence_image
+msgid "rtw_presence.image"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model,name:rtw_presence.model_rtw_presence_person
+msgid "rtw_presence.person"
+msgstr ""
+
+#. module: rtw_presence
+#: model:ir.model,name:rtw_presence.model_rtw_presence_presence
+msgid "rtw_presence.rtw_presence"
+msgstr ""

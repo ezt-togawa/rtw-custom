@@ -22,7 +22,8 @@ class rtw_sf_crm_lead(models.Model):
             'target': 'new',
             'context': {
                 'default_res_id': self.id,
-                'default_what_id': self.get_external_id().get(self.id).rsplit('.', 1)[1],
+                'default_what_id': self.id,
+                'default_model': self._name,
                 'default_owner_id': self.env.user.id,
                 'default_client_id': self.id,
             }
