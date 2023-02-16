@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="seq_container" model="ir.sequence">
+            <field name="name">Container Sequence</field>
+            <field name="code">stock.move.container</field>
+            <field name="prefix">MC</field>
+            <field name="padding">6</field>
+        </record>
+    </data>
+</odoo>

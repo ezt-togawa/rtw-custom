@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="stock_move_line_list_pallet_container" model="ir.ui.view">
+            <field name="name">move_line_list_pallet_container</field>
+            <field name="model">stock.move.pallet</field>
+            <field name="inherit_id" ref="stock_move_pallet.stock_move_pallet_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="container_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
