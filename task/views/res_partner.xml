@@ -23,6 +23,7 @@
                             >
                                 <field name="subject"/>
                                 <field name="owner_id"/>
+                                <field name="created_date"/>
                                 <field name="activity_date"/>
                                 <field name="status"/>
                                 <field name="description"/>

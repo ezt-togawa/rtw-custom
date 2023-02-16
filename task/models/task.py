@@ -40,7 +40,7 @@ class task(models.Model):
     account_id = fields.Many2one('res.partner', "AccountId", copy=False)  # アカウント
     # account_id = fields.Char('AccountId')  # アカウントid N列
     isclosed = fields.Boolean('IsClosed')  # 完了済みフラグ O列
-    created_date = fields.Datetime('CreatedDate')  # 作成日 P列
+    created_date = fields.Datetime('CreatedDate', default=fields.Datetime.now)  # 作成日 P列
     created_by_id = fields.Many2one('res.users', 'CreatedById')  # 作成ID Q列
     last_modified_date = fields.Datetime('LastModifiedDate')  # 最終更新日 R列
     last_modified_by_id = fields.Many2one('res.users', 'LastModifiedById')  # 最終更新者 S列

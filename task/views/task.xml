@@ -104,13 +104,14 @@
                             <group>
                                 <field name="owner_id" string="owner_id"/>
                                 <!--                                <field name="subject" string="subject"/>-->
+                                <field name="created_date" string="Created Date"/>
                                 <field name="activity_date" string="activity_date"/>
                                 <field name="who_id" string="who_id"/>
                                 <field name="client_id" string="client_id"/>
                                 <!--                                <field name="activity_origin_type" string="activity_origin_type"/>-->
                                 <!--                                <field name="what_id" string="what_id"/>-->
                                 <field name="campaign_id" string="campaign_id"/>
-                                <field name="description" string="description"/>
+
                             </group>
                             <group>
                                 <field name="type" string="type"/>
@@ -120,6 +121,8 @@
                                 <field name="cost" string="cost"/>
                                 <field name="bill_amount" string="bill_amount"/>
                             </group>
+
+                                <field name="description" string="description"/>
                         </group>
                         <group>
                             <group>
