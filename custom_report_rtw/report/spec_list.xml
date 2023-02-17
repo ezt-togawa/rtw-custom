@@ -3,7 +3,8 @@
     <template id="product_spec">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="custom_report_rtw.so_ex_layout">
+                <t t-call="custom_report_rtw.spec_layout">
+
                     <div class="page">
                         <t t-set="type">quotation</t>
                         <t t-set="address">
@@ -13,27 +14,42 @@
                                 <span t-field="o.partner_id.vat"/>
                             </p>
                         </t>
+                        <t t-if="not o" t-set="o" t-value="doc"/>
+                        <t t-if="not company">
+                            <!-- Multicompany -->
+                            <t t-if="company_id">
+                                <t t-set="company" t-value="company_id"/>
+                            </t>
+                            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                                <t t-set="company" t-value="o.company_id.sudo()"/>
+                            </t>
+                            <t t-else="else">
+                                <t t-set="company" t-value="res_company"/>
+                            </t>
+                        </t>
+                        <t t-call="custom_report_rtw.spec_header_layout"/>
                         <table class="table table-condensed">
                             <div class="row">
-                                <div t-foreach="o.order_line" t-as="l" style="display:inline-block;" class="col-4">
-                                    <div style="margin:5px;border:1px gray solid !important">
-                                    <div t-field="l.product_id.name"/>
-                                     <div t-field="l.product_id.image_256" t-options='{"widget": "image"}'/>
-                                     <div>
-                                         <t t-foreach="l.product_id.product_template_attribute_value_ids"
-                                           t-as="string_line">
-                                            ●
-                                            <span t-esc="string_line.display_name"/>
-                                            <br/>
-                                             <div t-field="string_line.product_attribute_value_id.image" t-options='{"widget": "image"}'/>
-                                        </t>
-                                        <t t-foreach="l.config_session_id.custom_value_ids" t-as="string_line">
-                                            ●<span t-esc="string_line.display_name"/>:
-                                            <span t-esc="string_line.value"/>
-                                            <br/>
-                                        </t>
-                                     </div>
+                                <div t-foreach="o.order_line" t-as="l" style="display:inline-block;height:100" class="col-4">
+                                    <div style="margin:2px;border:1px gray solid !important">
+                                        <div t-field="l.product_id.name"/>
+                                        <div t-field="l.product_id.image_256" t-options='{"widget": "image"}'/>
+                                        <div>
+                                            <t t-foreach="l.product_id.product_template_attribute_value_ids"
+                                               t-as="string_line">
+                                                ●
+                                                <span t-esc="string_line.display_name"/>
+                                                <br/>
+                                                <div t-field="string_line.product_attribute_value_id.image"
+                                                     t-options='{"widget": "image"}' />
+                                            </t>
+                                            <t t-foreach="l.config_session_id.custom_value_ids" t-as="string_line">
+                                                ●<span t-esc="string_line.display_name"/>:
+                                                <span t-esc="string_line.value"/>
+                                                <br/>
+                                            </t>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </table>
@@ -42,6 +58,23 @@
             </t>
         </t>
     </template>
+
+    <record id="paperformat_spec_report" model="report.paperformat">
+        <field name="name">Spec List</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_width">210</field>
+        <field name="page_height">297</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
     <report
             string="product spec"
             id="report_product_spec_rtw"
@@ -49,6 +82,7 @@
             report_type="qweb-html"
             name="custom_report_rtw.product_spec"
             file="custom_report_rtw.product_spec"
+            paperformat="paperformat_spec_report"
     />
 
 </odoo>

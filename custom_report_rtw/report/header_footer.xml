@@ -348,6 +348,26 @@
 
         </div>
     </template>
+    <template id="spec_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row">
+                <div class="col-3 mb4">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;"
+                         alt="Logo"/>
+                </div>
+                <div class="col-6 text-center" style="font-size:24px;text-align:center">
+                        <span t-field="o.title" class="so_title"/>
+                        <span>商品仕様書</span>
+                </div>
+                <div class="col-3 text-right" style="margin-top:28px;" t-field="company.report_header" name="moto"/>
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+        </div>
+    </template>
 
     <template id="common_footer_layout">
         <div t-attf-class="footer">

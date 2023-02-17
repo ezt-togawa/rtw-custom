@@ -29,6 +29,7 @@
                 <xpath expr="//notebook" position="before">
                     <group>
                         <group>
+                            <field name="crm_seq"/>
                              <field name="create_date" widget="date"/>
                             <field name="contract_id" string="contract_id" widget="many2many_tags"/>
                             <field name="order_no"/>
@@ -344,6 +345,7 @@
                     <field name="date_deadline"/>
                     <field name="presentation_flag"/>
                     <field name="sr_status"/>
+                    <field name="crm_seq"/>
                 </tree>
             </field>
         </record>
