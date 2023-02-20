@@ -330,7 +330,7 @@
                     <field name="delivery_date_unknown"/>
                     <field name="previous_amount"/>
                     <field name="opportunity_number"/>
-                    <field name="created_date"/>
+                    <field name="created_date" string="SF作成日"/>
                     <field name="partner_name"/>
                     <field name="contact_name"/>
                     <field name="name"/>
@@ -345,7 +345,8 @@
                     <field name="date_deadline"/>
                     <field name="presentation_flag"/>
                     <field name="sr_status"/>
-                    <field name="crm_seq"/>
+                    <field name="crm_seq" string="商談番号"/>
+                    <field name="create_date" string="Odoo作成日"/>
                 </tree>
             </field>
         </record>
