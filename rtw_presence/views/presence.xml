@@ -16,7 +16,7 @@
                             </group>
                             <group>
                                 <field name="owner_id" widget="many2many_tags"/>
-                                <field name="presence_person_id"/>
+                                <field name="presence_person_id" widget='selection'/>
                                 <field name="done"/>
                                 <field name="image_count"/>
                             </group>

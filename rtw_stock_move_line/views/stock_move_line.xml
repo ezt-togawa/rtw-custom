@@ -47,7 +47,53 @@
                 </tree>
             </field>
         </record>
+        <record model="ir.ui.view" id="stock_move_line_list_itoshima">
+            <field name="name">move_line_list_itoshima</field>
+            <field name="model">stock.move.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="picking_id"/>
+                    <field name="overseas"/>
+                    <field name="sale_id" string="注番"/>
+                    <field name="production_id"/>
+                    <field name="product_id"/>
+<!--                    <field name="title"/>-->
+                    <field name="spec" widget="many2many_tags" optional="hide" />
+                    <field name="custom" widget="many2many_tags" optional="hide" />
+                    <field name="product_qty"/>
+                    <field name="sai" sum="sai" string="才数" />
+                    <field name="factory" sum="工場"/>
+                    <field name="mrp_state"/>
 
+                    <field name="customer_id" optional="hide" />
+                    <field name="result_package_id"/>
+                    <field name="shiratani_date" string="白谷日"/>
+                    <field name="area" string="エリア"/>
+                    <field name="depo_date" string="デポ入予定日"/>
+                    <field name="forwarding_address" string="到着地" optional="hide" />
+                    <field name="date_planned" string="搬入設置日"/>
+                    <field name="memo" string="備考"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="stock_move_line_search_view_rtw" model="ir.ui.view">
+            <field name="name">move_line_search_view_rtw</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='incoming']" position="before">
+                    <filter string="糸島" name="itoshima" domain="['|',('location_id', 'like', '糸島'),('location_dest_id', 'like', '糸島')]"/>
+                    <separator/>
+                </xpath>
+                <xpath expr="//filter[@name='groupby_product_id']" position="before">
+                    <filter string="sale_id" name="注番" domain="[]" context="{'group_by': 'sale_id'}"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
 
         <record model="ir.actions.act_window" id="stock_move_action_window">
             <field name="name">move_list</field>
@@ -61,6 +107,13 @@
             <field name="view_id" ref="stock_move_line_list" />
             <field name="view_mode">tree,kanban,form</field>
         </record>
+        <record model="ir.actions.act_window" id="stock_move_line_itoshima_action_window">
+            <field name="name">糸島配送明細</field>
+            <field name="res_model">stock.move.line</field>
+            <field name="view_id" ref="stock_move_line_list_itoshima" />
+            <field name="search_view_id" ref="stock_move_line_search_view_rtw"/>
+            <field name="view_mode">tree,kanban,form</field>
+        </record>
 
         <menuitem name="move"
                   id="move_action_window_menu"
@@ -69,6 +122,10 @@
         <menuitem name="move_line"
                   id="move_line_action_window_menu"
                   action="stock_move_line_action_window"
+                  parent="stock.menu_stock_warehouse_mgmt"/>
+        <menuitem name="糸島配送一覧"
+                  id="move_line_action_window_menu"
+                  action="stock_move_line_itoshima_action_window"
                   parent="stock.menu_stock_warehouse_mgmt"/>
     </data>
 </odoo>
