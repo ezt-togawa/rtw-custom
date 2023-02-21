@@ -26,7 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/old_message.xml',
-        'views/crm_lead.xml',
+        #'views/crm_lead.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

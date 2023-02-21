@@ -72,6 +72,9 @@
                         <field name="progress_check" string="progress_check"/>
                     </group>
                 </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="replace">
+                    <page string="Internal Notes" name="internal_notes" style="display:none"/>
+                </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page string="納品先情報">
                         <group>
@@ -128,83 +131,83 @@
                             </group>
                         </group>
                     </page>
-                    <page string="商品情報">
-                        <notebook>
-                            <page string="1">
-                                <group>
-                                    <group>
-                                        <field name="product_list_dt1" string="product_list_dt1"/>
-                                        <field name="product_list_dt2" string="product_list_dt2"/>
-                                        <field name="product_list_sofa_bench1" string="product_list_sofa_bench1"/>
-                                        <field name="product_list_sofa_bench2" string="product_list_sofa_bench2"/>
-                                    </group>
-                                    <group>
-                                        <field name="product_list_chair1" string="product_list_chair1"/>
-                                        <field name="product_list_chair2" string="product_list_chair2"/>
-                                        <field name="product_list_chair3" string="product_list_chair3"/>
-                                        <field name="product_list_chair4" string="product_list_chair4"/>
-                                    </group>
-                                </group>
-                            </page>
-                            <page string="2">
-                                <group>
-                                    <group>
-                                        <field name="product_list_sofa1" string="product_list_sofa1"/>
-                                        <field name="product_list_sofa2" string="product_list_sofa2"/>
-                                        <field name="product_list_sofa3" string="product_list_sofa3"/>
-                                        <field name="product_list_sofa_ot1" string="product_list_sofa_ot1"/>
-                                        <field name="product_list_sofa_ot2" string="product_list_sofa_ot2"/>
-                                    </group>
-                                    <group>
-                                        <field name="product_list_ec1" string="product_list_ec1"/>
-                                        <field name="product_list_ec2" string="product_list_ec2"/>
-                                        <field name="product_list_ec3" string="product_list_ec3"/>
-                                        <field name="product_list_ot_st1" string="product_list_ot_st1"/>
-                                        <field name="product_list_ot_st2" string="product_list_ot_st2"/>
-                                    </group>
-                                </group>
-                            </page>
-                            <page string="3">
-                                <group>
-                                    <group>
-                                        <field name="product_list_lt1" string="product_list_lt1"/>
-                                        <field name="product_list_lt2" string="product_list_lt2"/>
-                                        <field name="product_list_st1" string="product_list_st1"/>
-                                        <field name="product_list_st2" string="product_list_st2"/>
-                                    </group>
-                                    <group>
-                                        <field name="product_list_board1" string="product_list_board1"/>
-                                        <field name="product_list_board2" string="product_list_board2"/>
-                                        <field name="product_list_rug" string="product_list_rug"/>
-                                        <field name="product_list_other" string="product_list_other"/>
-                                        <field name="product_others" string="product_others"/>
-                                    </group>
-                                </group>
-                            </page>
-                        </notebook>
-                    </page>
-                    <page string="戦略商品">
-                        <group>
-                            <group>
-                                <field name="lf_set_count" string="lf_set_count"/>
-                                <field name="lw_set_count" string="lw_set_count"/>
-                                <field name="diana_count" string="diana_count"/>
-                                <field name="beatrix_count" string="beatrix_count"/>
-                                <field name="jabara_count" string="jabara_count"/>
-                            </group>
-                            <group>
+<!--                    <page string="商品情報">-->
+<!--                        <notebook>-->
+<!--                            <page string="1">-->
+<!--                                <group>-->
+<!--                                    <group>-->
+<!--                                        <field name="product_list_dt1" string="product_list_dt1"/>-->
+<!--                                        <field name="product_list_dt2" string="product_list_dt2"/>-->
+<!--                                        <field name="product_list_sofa_bench1" string="product_list_sofa_bench1"/>-->
+<!--                                        <field name="product_list_sofa_bench2" string="product_list_sofa_bench2"/>-->
+<!--                                    </group>-->
+<!--                                    <group>-->
+<!--                                        <field name="product_list_chair1" string="product_list_chair1"/>-->
+<!--                                        <field name="product_list_chair2" string="product_list_chair2"/>-->
+<!--                                        <field name="product_list_chair3" string="product_list_chair3"/>-->
+<!--                                        <field name="product_list_chair4" string="product_list_chair4"/>-->
+<!--                                    </group>-->
+<!--                                </group>-->
+<!--                            </page>-->
+<!--                            <page string="2">-->
+<!--                                <group>-->
+<!--                                    <group>-->
+<!--                                        <field name="product_list_sofa1" string="product_list_sofa1"/>-->
+<!--                                        <field name="product_list_sofa2" string="product_list_sofa2"/>-->
+<!--                                        <field name="product_list_sofa3" string="product_list_sofa3"/>-->
+<!--                                        <field name="product_list_sofa_ot1" string="product_list_sofa_ot1"/>-->
+<!--                                        <field name="product_list_sofa_ot2" string="product_list_sofa_ot2"/>-->
+<!--                                    </group>-->
+<!--                                    <group>-->
+<!--                                        <field name="product_list_ec1" string="product_list_ec1"/>-->
+<!--                                        <field name="product_list_ec2" string="product_list_ec2"/>-->
+<!--                                        <field name="product_list_ec3" string="product_list_ec3"/>-->
+<!--                                        <field name="product_list_ot_st1" string="product_list_ot_st1"/>-->
+<!--                                        <field name="product_list_ot_st2" string="product_list_ot_st2"/>-->
+<!--                                    </group>-->
+<!--                                </group>-->
+<!--                            </page>-->
+<!--                            <page string="3">-->
+<!--                                <group>-->
+<!--                                    <group>-->
+<!--                                        <field name="product_list_lt1" string="product_list_lt1"/>-->
+<!--                                        <field name="product_list_lt2" string="product_list_lt2"/>-->
+<!--                                        <field name="product_list_st1" string="product_list_st1"/>-->
+<!--                                        <field name="product_list_st2" string="product_list_st2"/>-->
+<!--                                    </group>-->
+<!--                                    <group>-->
+<!--                                        <field name="product_list_board1" string="product_list_board1"/>-->
+<!--                                        <field name="product_list_board2" string="product_list_board2"/>-->
+<!--                                        <field name="product_list_rug" string="product_list_rug"/>-->
+<!--                                        <field name="product_list_other" string="product_list_other"/>-->
+<!--                                        <field name="product_others" string="product_others"/>-->
+<!--                                    </group>-->
+<!--                                </group>-->
+<!--                            </page>-->
+<!--                        </notebook>-->
+<!--                    </page>-->
+<!--                    <page string="戦略商品">-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="lf_set_count" string="lf_set_count"/>-->
+<!--                                <field name="lw_set_count" string="lw_set_count"/>-->
+<!--                                <field name="diana_count" string="diana_count"/>-->
+<!--                                <field name="beatrix_count" string="beatrix_count"/>-->
+<!--                                <field name="jabara_count" string="jabara_count"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
 
-                            </group>
-                        </group>
-                    </page>
-                    <page string="セット内容">
-                        <group>
-                            <group>
-                                <field name="l_set" string="l_set"/>
-                            </group>
-                            <group></group>
-                        </group>
-                    </page>
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                    <page string="セット内容">-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="l_set" string="l_set"/>-->
+<!--                            </group>-->
+<!--                            <group></group>-->
+<!--                        </group>-->
+<!--                    </page>-->
                     <page string="競合情報">
                         <group>
                             <group>
