@@ -6,15 +6,45 @@
                 <t t-call="custom_report_rtw.internal_layout">
                     <div class="page">
                         <t t-set="type">mrp_order</t>
-                        <div>発注番号：<span t-field="o.display_name"/></div>
-                        <div>送り先着日：<span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/></div>
-                        <div>出荷日：<span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/></div>
-                        <div>送り先：<span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/></div>
+                        <div>発注番号：
+                            <span t-field="o.display_name"/>
+                        </div>
+                        <div>送り先着日：
+                            <span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/>
+                        </div>
+                        <div>出荷日：
+                            <span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/>
+                        </div>
+                        <div>送り先：
+                            <span t-field="o.move_line_raw_ids.move_id.sale_line_id.depo_date"/>
+                        </div>
                         <hr/>
-<!--                        <div t-field="o.product_id.image_1920"/>-->
-                        <img t-att-src="image_data_uri(o.product_id.image_1920)" style="max-width: 100%;max-height: 800px; padding-top: 10px;"/>
+                        <!--                        <div t-field="o.product_id.image_1920"/>-->
+                        <img t-att-src="image_data_uri(o.product_id.image_1920)"
+                             style="max-width: 100%;max-height: 800px; padding-top: 10px;"/>
                         <div>品番：</div>
                         <div>仕様：</div>
+                         <t t-foreach="o.product_id.attribute_value_line_ids"
+                           t-as="string_line">
+                            ●
+                            <span t-esc="string_line.display_name"/>
+                            <br/>
+                        </t>
+                        <t t-foreach="o.move_line_raw_ids.move_id.sale_line_id.product_id.product_template_attribute_value_ids"
+                           t-as="string_line">
+                            ●
+                            <span t-esc="string_line.display_name"/>
+                            <br/>
+                        </t>
+                        <t t-foreach="o.move_line_raw_ids.move_id.sale_line_id.config_session_id.custom_value_ids" t-as="string_line">
+                            ●<span t-esc="string_line.display_name"/>:
+                            <span t-esc="string_line.value"/>
+                            <br/>
+                        </t>
+                        <div>改訂履歴</div>
+                        <div t-foreach="o.revised_edition_ids" t-as="l" style="border-bottom:solid 1px #595959;">
+                            <span t-field="l.date"/>:<span t-field="l.name"/>(<span t-field="l.description"/>)
+                        </div>
                     </div>
                 </t>
             </t>

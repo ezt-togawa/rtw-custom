@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="view_crm_presence" model="ir.ui.view">
+            <field name="name">crm presence</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="presence">
+                        <button string="Create Presence" name="create_presence" type="object" class="oe_highlight"/>
+                        <field name="presence_count"/>
+                        <field name="presence_ids">
+                                <tree>
+                                    <field name="done"/>
+                                    <field name="owner_id"/>
+                                    <field name="date"/>
+                                    <field name="presence_person_id"/>
+                                    <field name="note"/>
+                                    <field name="image_ids"/>
+                                </tree>
+                            </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_crm_presence_tree" model="ir.ui.view">
+            <field name="name">crm presence</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="rtw_crm.rtw_sale_manage_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sr_status']" position="after">
+                   <field name="presence_count"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="rtw_presence_image_form">
+            <field name="name">rtw_presence_image form</field>
+            <field name="model">rtw_presence.image</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="image_1920" widget="image" options="{'preview_image': 'image_128'}"/>
+<!--                            <field name="presence_id"/>-->
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="rtw_presence_image_action_window">
+            <field name="name">presence images</field>
+            <field name="res_model">rtw_presence.image</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- actions -->
+
+        <menuitem name="Presence Image" id="rtw_presence_presence_image" parent="rtw_presence_person_setting"
+                  action="rtw_presence_image_action_window"/>
+
+    </data>
+</odoo>

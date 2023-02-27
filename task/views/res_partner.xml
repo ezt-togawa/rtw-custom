@@ -5,11 +5,31 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//form//header" position="inside">
+                    <button string="Create Task" name="create_task" type="object" class="oe_highlight"/>
+
+                </xpath>
                 <xpath expr="//page[@name='internal_notes']" position="after">
                     <page name="task" string="task">
-                        <group>
-                            <field name="rtw_task_ids"/>
-                        </group>
+
+                        <field name="rtw_task_ids">
+                            <tree
+                                    create="false"
+                                    edit="true"
+                                    default_order="activity_date"
+                                    decoration-success="status == '5'"
+                                    decoration-danger="activity_date and activity_date&lt;current_date"
+                                    editable="bottom"
+                            >
+                                <field name="subject"/>
+                                <field name="owner_id"/>
+                                <field name="created_date"/>
+                                <field name="activity_date"/>
+                                <field name="status"/>
+                                <field name="description"/>
+
+                            </tree>
+                        </field>
                     </page>
                 </xpath>
             </field>

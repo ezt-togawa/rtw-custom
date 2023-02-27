@@ -26,6 +26,7 @@
         'security/ir.model.access.csv',
         'views/task.xml',
         'views/res_partner.xml',
+        'views/crm_lead.xml',
     ],
     # only loaded in demonstration mode
     # 'demo': [

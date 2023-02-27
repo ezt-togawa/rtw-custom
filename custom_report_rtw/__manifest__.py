@@ -20,13 +20,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale', 'account', 'product_spec_rtw'],
+    'depends': ['base', 'sale', 'account', 'product_spec_rtw',
+                'rtw_mrp_custom', 'rtw_product_attribute_value_images'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'report/report_quotation.xml',
+        'report/stock_picking.xml',
         'report/purchase.xml',
+        'report/spec_list.xml',
         'report/external_layout.xml',
         'report/internal_layout.xml',
         'report/header_footer.xml',

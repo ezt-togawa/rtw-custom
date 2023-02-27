@@ -22,7 +22,16 @@ class task(models.Model):
     what_count = fields.Integer('WhatCount')  # 関連先(商談他)件数 E列
     subject = fields.Char('Subject')  # 件名 F列
     activity_date = fields.Datetime('ActivityDate')  # 活動日 G列
-    status = fields.Char('Status')  # ステータス H列
+    # status = fields.Char('Status')  # ステータス H列
+    status = fields.Selection([
+        ('NotStart', '未着手'),
+        ('Progress', '進行中'),
+        ('Waiting', '顧客待ち'),
+        ('Postponement', '延期'),
+        ('Done', '完了'),
+        ('Cancel', 'ｷｬﾝｾﾙ'),
+    ], default='NotStart',
+        string="status", )    # ステータス H列
     priority = fields.Char('Priority')  # 優先順位 I列
     owner_id = fields.Many2one('res.users', 'OwnerId')  # 割り当て先Id J列
     description = fields.Text('Description')  # 説明 K列
@@ -31,7 +40,7 @@ class task(models.Model):
     account_id = fields.Many2one('res.partner', "AccountId", copy=False)  # アカウント
     # account_id = fields.Char('AccountId')  # アカウントid N列
     isclosed = fields.Boolean('IsClosed')  # 完了済みフラグ O列
-    created_date = fields.Datetime('CreatedDate')  # 作成日 P列
+    created_date = fields.Datetime('CreatedDate', default=fields.Datetime.now)  # 作成日 P列
     created_by_id = fields.Many2one('res.users', 'CreatedById')  # 作成ID Q列
     last_modified_date = fields.Datetime('LastModifiedDate')  # 最終更新日 R列
     last_modified_by_id = fields.Many2one('res.users', 'LastModifiedById')  # 最終更新者 S列
@@ -87,6 +96,7 @@ class task(models.Model):
     # guest_book = fields.Char('Field30__c')  # 芳名帳/アンケート BQ ★空白のみ
     estimated_accrual = fields.Boolean('Field31__c')  # 見積発生（新規商談） BR ★0,空白
     omotesando = fields.Boolean('Field35__c')  # 表参道来店 BS ★0,空白
+    model = fields.Char()
 
 #     value = fields.Integer()
 #     value2 = fields.Float(compute="_value_pc", store=True)
@@ -106,6 +116,17 @@ class task(models.Model):
         for record in self:
             record.record_ref = False
             if record.what_id:
-                rec_id = self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1)
-                record.record_ref = "{},{}".format(min(rec_id).model, min(rec_id).res_id)
+                if self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1):
+                    rec_id = self.env['ir.model.data'].search([('name', '=', self.what_id)], limit=1)
+                    record.record_ref = "{},{}".format(min(rec_id).model, min(rec_id).res_id)
+                else:
+                    print(self.what_id)
+                    print(str(self.model))
+                    rec_id = self.env[self.model].search(
+                        [('id', '=', self.what_id)], limit=1)
+                    print(rec_id)
+                # rec_id = self.env['ir.model.data'].search(['|', ('name', '=', self.what_id), '&', ('res_id', '=', self.what_id), ('model', '=', self.model_name)], limit=1)
+                    record.record_ref = rec_id
+
+
 

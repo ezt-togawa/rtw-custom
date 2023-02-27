@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rtw_presence_presence,rtw_presence.presence,model_rtw_presence_presence,base.group_user,1,1,1,1
+access_rtw_presence_image,rtw_presence.image,model_rtw_presence_image,base.group_user,1,1,1,1
+access_rtw_presence_person,rtw_presence.person,model_rtw_presence_person,base.group_user,1,1,1,1

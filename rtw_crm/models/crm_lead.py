@@ -8,7 +8,7 @@ class rtw_crm(models.Model):
     _inherit = 'crm.lead'
 
     # crm_seq = fields.Char('Opportunity No', readonly=True, copy=False)
-    crm_seq = fields.Char('Opportunity No', readonly=True, copy=False, default=lambda self: _("New"))
+    crm_seq = fields.Char('Opportunity No', copy=False, default=lambda self: _("New"), store=True)
     stage_sort_order = fields.Integer('StageSortOrder')  # 受注段階コード H列
     # expected_revenue = fields.Monetary('ExpectedRevenue')  # 予想売上高 K列
     reference_price = fields.Monetary(compute="_get_reference_price", currency_field='company_currency', store=True,
@@ -801,24 +801,15 @@ class rtw_crm(models.Model):
 
     def _get_sr_status(self):
         for rec in self:
-            if rec.calendar_ids.sr:
-                # print(rec.calendar_ids.situation.value)
-                # print(rec.id)
-                # res = rec.search([('calendar_ids.situation', '=', "4"),
-                #                    ('id', '=', rec.id)])
-                res = self.env['calendar.event'].search([('opportunity_id', '=', rec.id),
-                                                               ('situation', '=', "4")])
-                # print(res.name)
-                rec.sr_status = min(res).sr.name + str(min(res).start.year)
-                # print(min(res.calendar_ids).sr.name)
-                # for line in res:
-                #     print(line.sr.name)
+            if rec.calendar_ids:
+                res = self.env['calendar.event'].search([('opportunity_id', '=', rec.id), ('situation', '=', "4")])
+                if res and max(res).sr.name and max(res).start.year:
+                    rec.sr_status = max(res).sr.name + str(max(res).start.year)
+                else:
+                    rec.sr_status = ""
             else:
                 rec.sr_status = ""
             sr_y = 0
-            # for line in rec.calendar_ids:
-            #     print(line.sr.name)
-            # rec.sr_status = line.sr.name
 
     def _compute_case_count(self):
         for rec in self:
