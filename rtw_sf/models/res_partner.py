@@ -38,7 +38,8 @@ class rtw_sf_partner(models.Model):
     supplier_no = fields.Char("supplier_no", tracking=True)  # OK 仕入先番号 Field5__c
     kana = fields.Char("kana", tracking=True)  # OK フリガナ Field5__c
     corporate_mail = fields.Boolean("corporate_mail", default=0, tracking=True)  # 法人宛郵便 OK  Field6__c
-    transactions = fields.Many2one('res.partner.transactions', string="transactions", tracking=True)  # 取引方法 OK Field4__c
+    transactions = fields.Many2one('res.partner.transactions', string="transactions",
+                                   tracking=True)  # 取引方法 OK Field4__c
     payment_terms_1 = fields.Char("payment_terms_1", tracking=True)  # 支払い条件１ OK X1__c
     payment_terms_2 = fields.Char("payment_terms_2", tracking=True)  # 支払い条件2 OK X2__c
     multiplier_black = fields.Float("multiplier_black", tracking=True)  # 掛率(黒) OK Field7__c
@@ -102,7 +103,8 @@ class rtw_sf_partner(models.Model):
     ], default='1',
         string="situation", tracking=True)  # 状況 OK Field11__c
     address_confirmation_required = fields.Selection([('moving', '（不達）転居'), ('unknown', '（不達）不明')],
-                                                     string="address_confirmation_required", tracking=True)  # 住所要確認 OK Field12__c
+                                                     string="address_confirmation_required",
+                                                     tracking=True)  # 住所要確認 OK Field12__c
     last_contract_date = fields.Datetime("last_contract_date")  # 最新成約日 OK Field13__c
     total_number_of_transactions = fields.Integer("total_number_of_transactions")  # 累計取引回数 OK Field14__c
     cumulative_sales = fields.Float("cumulative_sales")  # 累計売上金額 OK Field15__c
@@ -502,3 +504,15 @@ class rtw_sf_partner(models.Model):
                 if rec.first_name and rec.last_name:
                     name = rec.last_name + " " + rec.first_name
             rec.name = name
+
+    @api.model
+    def create(self, vals):
+        att = super(rtw_sf_partner, self).create(vals)
+        last_check = 'last_name' in vals
+        first_check = 'first_name' in vals
+        # last_check = vals.get("last_name")
+        # first_check = vals.get("first_name")
+        if vals["name"] and last_check == False and first_check == False:
+            vals["last_name"] = vals["name"]
+            att.write({"last_name": vals["name"]})
+        return att

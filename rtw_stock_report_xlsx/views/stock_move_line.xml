@@ -1,0 +1,13 @@
+<odoo>
+  <data>
+      <report
+              id="product_seal"
+              model="stock.move.line"
+              string="Product Seals"
+              report_type="xlsx"
+              name="rtw_stock_report_xlsx.stock_move_line_xls"
+              file="rtw_stock_report_xlsx.stock_move_line_xls"
+              attachment_use="False"
+      />
+  </data>
+</odoo>

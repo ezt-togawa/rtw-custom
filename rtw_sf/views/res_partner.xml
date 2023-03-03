@@ -6,7 +6,6 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[@name='button_box']" position="inside">
-
                     <button name="action_open_case" class="oe_stat_button" type="object" icon="fa-sticky-note-o">
                         <div class="o_stat_info">
                             <field name="case_count" class="o_stat_value"/>
@@ -252,6 +251,9 @@
                 <!--                <xpath expr="//template/div[@class='oe_kanban_global_click']" position="attributes">-->
                 <!--                    <attribute name="t-attf-class">oe_kanban_global_click_edit</attribute>-->
                 <!--                </xpath>-->
+                <xpath expr="//form//form//field[@name='company_id']" position="after">
+                    <field name="lead_source" required="1"/>
+                </xpath>
             </field>
         </record>
         <record id="view_partner_list_sf" model="ir.ui.view">
