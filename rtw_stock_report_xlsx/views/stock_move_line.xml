@@ -1,9 +1,9 @@
 <odoo>
   <data>
       <report
-              id="product_seal"
+              id="child_voucher"
               model="stock.move.line"
-              string="Product Seals"
+              string="子伝票"
               report_type="xlsx"
               name="rtw_stock_report_xlsx.stock_move_line_xls"
               file="rtw_stock_report_xlsx.stock_move_line_xls"

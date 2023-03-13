@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_stock_report_xlsx",
+    'name': "rtw_partner_mass_update",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,13 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'rtw_stock_move_line', "report_xlsx"],
+    'depends': ['base'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/stock_move_line.xml',
-        'views/mrp_production.xml',
+        'security/ir.model.access.csv',
+        'wizard/partner_mass_update.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

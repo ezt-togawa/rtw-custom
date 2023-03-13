@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form view of Merge Purchase order -->
+    <record id="view_partner_mass_update" model="ir.ui.view">
+        <field name="name">partner mass update</field>
+        <field name="model">partner_mass_update</field>
+        <field name="arch" type="xml">
+             <form string="担当者一括変更">
+                <group>
+                    <field name="user_id" required="1"/>
+                </group>
+                 <footer>
+                    <button name="update_partner" string="担当者変更" type="object"
+                        class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action of Merge Purchase Order -->
+    <record id="action_view_partner_mass_update" model="ir.actions.act_window">
+        <field name="name">partner mass update</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner_mass_update</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_partner_mass_update"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+    </record>
+</odoo>

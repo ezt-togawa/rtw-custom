@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rtw_partner_mass_update_rtw_partner_mass_update,partner_mass_update,model_partner_mass_update,base.group_user,1,1,1,1

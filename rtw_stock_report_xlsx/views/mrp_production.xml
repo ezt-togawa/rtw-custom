@@ -1,0 +1,13 @@
+<odoo>
+  <data>
+      <report
+              id="product_seal"
+              model="mrp.production"
+              string="Product Seals"
+              report_type="xlsx"
+              name="rtw_stock_report_xlsx.mrp_production_xls"
+              file="rtw_stock_report_xlsx.mrp_production_xls"
+              attachment_use="False"
+      />
+  </data>
+</odoo>
