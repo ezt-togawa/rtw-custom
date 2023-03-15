@@ -7,7 +7,7 @@ class rtw_purchase(models.Model):
     _inherit = "purchase.order"
 
     sale_order_ids = fields.Char("sale order", compute='_compute_sale_order')
-    sale_order_names = fields.Char("sale order title", compute='_compute_sale_order')
+    sale_order_names = fields.Char("sale order title")
 
     # @api.model
     def action_purchase_form(self):
@@ -33,11 +33,8 @@ class rtw_purchase(models.Model):
                     order.append(rec.origin)
                     if self.env['sale.order'].search([('name', '=', rec.origin)]).title:
                         name.append(self.env['sale.order'].search([('name', '=', rec.origin)]).title)
-                    print(rec.origin)
-                print(order)
-                print(name)
-                purchase.sale_order_ids = ','.join(order)
-                purchase.sale_order_names = ','.join(name)
+                    purchase.sale_order_ids = ','.join(order)
+                    purchase.sale_order_names = ','.join(name)
                 # sale_order = self.env['sale.order'].search([('name', '=', move_dest_ids)])
                 # print(sale_order)
             # move_dest_ids.write({
