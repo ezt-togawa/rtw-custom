@@ -40,8 +40,9 @@
                     <field name="area" string="エリア"/>
                     <field name="depo_date" string="デポ入予定日"/>
                     <field name="forwarding_address" string="到着地" optional="hide" />
-                    <field name="date_planned" string="搬入設置日"/>
+                    <field name="date_planned" string="出荷日"/>
                     <field name="memo" string="備考"/>
+                    <field name="shipping_to"/>
                     <field name="location_id"/>
                     <field name="location_dest_id"/>
                 </tree>
@@ -51,7 +52,7 @@
             <field name="name">move_line_list_itoshima</field>
             <field name="model">stock.move.line</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree default_order='date_planned' decoration-danger="date_planned &lt; current_date">
                     <field name="picking_id"/>
                     <field name="overseas"/>
                     <field name="sale_id" string="注番"/>
@@ -71,8 +72,10 @@
                     <field name="area" string="エリア"/>
                     <field name="depo_date" string="デポ入予定日"/>
                     <field name="forwarding_address" string="到着地" optional="hide" />
-                    <field name="date_planned" string="搬入設置日"/>
+                    <field name="date_planned" string="出荷日"/>
+                    <field name="shizai_date" />
                     <field name="memo" string="備考"/>
+                    <field name="shipping_to"/>
                     <field name="location_id"/>
                     <field name="location_dest_id"/>
                 </tree>

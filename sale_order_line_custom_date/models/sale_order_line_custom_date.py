@@ -8,6 +8,7 @@ class sale_order_line_custom_date(models.Model):
 
     depo_date = fields.Date("Depo Date", tracking=True)
     shiratani_date = fields.Date("Shiratani Date", tracking=True)
+
 #     _description = 'sale_order_line_custom_date.sale_order_line_custom_date'
 
 #     name = fields.Char()

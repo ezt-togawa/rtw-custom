@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-
+import datetime
 
 class rtw_stock_move_line(models.Model):
     _inherit = "stock.move.line"
@@ -9,7 +9,7 @@ class rtw_stock_move_line(models.Model):
     sai = fields.Float(compute="_get_sai", group_operator="sum", store=True)
     depo_date = fields.Date(compute="_get_sale", store=True)
     shiratani_date = fields.Date(related='move_id.sale_line_id.shiratani_date')
-    date_planned = fields.Datetime(related='move_id.sale_line_id.date_planned')
+    date_planned = fields.Datetime(related='move_id.sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one('sale.order', compute="_get_sale_id", group_operator="sum", store=True)
     customer_id = fields.Many2one(related='sale_id.partner_id', string='顧客')
     title = fields.Char(related='sale_id.title', string='案件名')
@@ -23,6 +23,8 @@ class rtw_stock_move_line(models.Model):
     memo = fields.Char(related='move_id.sale_line_id.memo')
     area = fields.Many2one(related='sale_id.waypoint.state_id', string='エリア')
     forwarding_address = fields.Text(related='sale_id.forwarding_address', string='到着地')
+    shipping_to = fields.Selection(string="配送", related='sale_id.sipping_to', store=True)
+    shizai_date = fields.Date(string="資材出荷目安", compute="_get_shizai_date")
     # @api.depends('product_id')
     # def _get_state(self):
     #     for rec in self:
@@ -31,6 +33,11 @@ class rtw_stock_move_line(models.Model):
     #             rec.mrp_state = dict(rec.move_id._fields['type'].selection).get(rec.move_id.type)
     #         else:
     #             rec.mrp_state = ""
+
+    @api.depends('date_planned')
+    def _get_shizai_date(self):
+        for rec in self:
+            rec.shizai_date = rec.date_planned + datetime.timedelta(days=-20)
 
     @api.depends('product_id')
     def _get_sai(self):
