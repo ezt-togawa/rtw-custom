@@ -37,8 +37,10 @@ class rtw_stock_move_line(models.Model):
     @api.depends('date_planned')
     def _get_shizai_date(self):
         for rec in self:
-            rec.shizai_date = rec.date_planned + datetime.timedelta(days=-20)
-
+            if rec.date_planned:
+                rec.shizai_date = rec.date_planned + datetime.timedelta(days=-20)
+            else:
+                rec.shizai_date = False
     @api.depends('product_id')
     def _get_sai(self):
         for rec in self:
