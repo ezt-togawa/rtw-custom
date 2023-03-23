@@ -127,6 +127,7 @@
                                        attrs="{'required': [('is_company','=', True)]}"/>
                                 <field name="rival_companies" string="rival_companies"/>
                                 <field name="evaluation" string="evaluation"/>
+                                <field name="rating" string="rating"/>
                                 <field name="annual_revenue" string="annual_revenue"/>
                                 <field name="ticker_symbol" string="ticker_symbol"/>
                                 <field name="number_of_employees" string="number_of_employees"/>
