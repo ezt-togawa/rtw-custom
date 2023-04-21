@@ -27,7 +27,7 @@ class rtw_mrp_production_revised_edition(models.Model):
     def _compute_display_name(self):
         for record in self:
             project_name = ''
-            estimated_shipping_date=''
+            shipping_date = ''
             if record.origin:
                 production = self.env['mrp.production'].browse(record.id) #GET PRODUCTION
                 sale_order = self.env['sale.order'].search([ #GET SALE_ORDER By order_id
@@ -35,8 +35,8 @@ class rtw_mrp_production_revised_edition(models.Model):
                 ], limit=1)
                 if sale_order and sale_order.title:
                     project_name =f'/{sale_order.title}'
-                if sale_order and sale_order.estimated_shipping_date:
-                    estimated_shipping_date =f'/{sale_order.estimated_shipping_date}'
-                record.display_name = f'{record.origin}{estimated_shipping_date}{project_name}'
+                if sale_order and sale_order.preferred_delivery_date:
+                    shipping_date =f'/{sale_order.preferred_delivery_date}'
+                record.display_name = f'{record.origin}{project_name}{shipping_date}'
             else:
                 record.display_name = ''
