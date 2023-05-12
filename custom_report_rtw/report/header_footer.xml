@@ -128,6 +128,23 @@
             </div>
         </div>
     </template>
+    <template id="SO_list_price_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row">
+                <div class="col-6 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                        style="max-height: 45px;"
+                        alt="Logo" />
+                    <span style="font-size:20px" class="ml-2">定価御見積書</span>
+                </div>
+                <div class="col-6 text-right mt-2">
+                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                        t-esc="time.strftime('%m')" /> 月 <t
+                        t-esc="time.strftime('%d')" /> 日 </div>
+            </div>
+        </div>
+    </template>
     <template id="PO_header_layout">
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
             <div class="row">
