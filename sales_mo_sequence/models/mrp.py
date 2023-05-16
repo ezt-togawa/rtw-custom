@@ -42,9 +42,20 @@ class MrpProduction(models.Model):
                 for ele in mrp_ids:
                     value.mrp_reference = ele.mrp_reference
 
+    def _compute_production_type(self):
+        for record in self:
+            sale_order_line = self.env['sale.order.line'].search([('bom_id', '=', record.bom_id.id)])
+            if sale_order_line:
+                record.production_type = sale_order_line.p_type
+                record.production_memo = sale_order_line.memo
+            else:
+                record.production_type = ''
+                record.production_memo = ''
+
     sale_reference = fields.Char('SO Reference', compute='_compute_reference_value', store=True)
     mrp_reference = fields.Char('MO Reference', compute='_compute_reference_mo', store=True)
-
+    production_type = fields.Char('製品タイプ' , compute='_compute_production_type')
+    production_memo = fields.Char('memo' , compute='_compute_production_type')
 
 class Workorder(models.Model):
     _inherit = 'mrp.workorder'

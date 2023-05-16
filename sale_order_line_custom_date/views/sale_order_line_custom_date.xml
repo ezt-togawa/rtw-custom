@@ -8,6 +8,7 @@
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='name']" position="after">
                 <field name="depo_date"/>
                 <field name="shiratani_date"/>
+                <field name="p_type"/>
             </xpath>
         </field>
 

@@ -9,6 +9,7 @@
                    position="after">
                 <field name="depo_date"/>
                 <field name="shiratani_date"/>
+                <field name="p_type"/>
             </xpath>
             <!--        <xpath expr="/form/sheet/notebook/page/field[@name='move_ids_without_package']/form/group/field[@name='product_id']" position="after">-->
             <!--                        <field name="depo_date"/>-->
