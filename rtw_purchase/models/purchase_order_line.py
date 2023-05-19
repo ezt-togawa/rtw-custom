@@ -27,3 +27,6 @@ class rtw_purchase(models.Model):
                 print(name)
                 purchase.sale_order_ids = ','.join(order)
                 purchase.sale_order_names = ','.join(name)
+            else:
+                purchase.sale_order_ids = False
+                purchase.sale_order_names = False
