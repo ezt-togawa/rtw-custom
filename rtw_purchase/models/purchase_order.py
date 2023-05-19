@@ -35,6 +35,9 @@ class rtw_purchase(models.Model):
                         name.append(self.env['sale.order'].search([('name', '=', rec.origin)]).title)
                     purchase.sale_order_ids = ','.join(order)
                     purchase.sale_order_names = ','.join(name)
+            else:
+                purchase.sale_order_ids = False
+                purchase.sale_order_names = False
                 # sale_order = self.env['sale.order'].search([('name', '=', move_dest_ids)])
                 # print(sale_order)
             # move_dest_ids.write({
