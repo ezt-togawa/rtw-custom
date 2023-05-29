@@ -19,6 +19,10 @@ class StockPicking(models.Model):
 
     )
 
+    scheduled_date = fields.Datetime(
+        '予定日',
+    )
+
     @api.depends("shipping_due_date")
     def _compute_date_shipped(self):
         for pick in self.filtered(lambda x: x.shipping_due_date):
