@@ -56,15 +56,3 @@ class rtw_purchase(models.Model):
             #     'warranty_request_ids': [(4, self.id, {
             #     })]
             #     })
-
-    class CustomStockPickingType(models.Model):
-        _inherit = 'stock.picking.type'
-
-        def name_get(self):
-            result = []
-            for record in self:
-                name = record.name
-                city = record.company_id.partner_id.city
-                modified_name = city + '工場: ' + name
-                result.append((record.id, modified_name))
-            return result
