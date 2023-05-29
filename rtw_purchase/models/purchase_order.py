@@ -8,6 +8,17 @@ class rtw_purchase(models.Model):
 
     sale_order_ids = fields.Char("sale order", compute='_compute_sale_order')
     sale_order_names = fields.Char("sale order title")
+    operation_type = fields.Many2one('stock.picking.type' , string="オペレーションタイプ", compute='_compute_operation_type')
+
+    @api.depends('origin')
+    def _compute_operation_type(self):
+        for purchase in self:
+                production = self.env['mrp.production'].search([('origin' , '=' ,purchase.origin)] , limit=1)
+                if production :
+                    for p in production:
+                        purchase.operation_type = p.picking_type_id.id
+                else:
+                    purchase.operation_type = False
 
     # @api.model
     def action_purchase_form(self):
@@ -45,3 +56,15 @@ class rtw_purchase(models.Model):
             #     'warranty_request_ids': [(4, self.id, {
             #     })]
             #     })
+
+    class CustomStockPickingType(models.Model):
+        _inherit = 'stock.picking.type'
+
+        def name_get(self):
+            result = []
+            for record in self:
+                name = record.name
+                city = record.company_id.partner_id.city
+                modified_name = city + '工場: ' + name
+                result.append((record.id, modified_name))
+            return result
