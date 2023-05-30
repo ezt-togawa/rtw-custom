@@ -10,15 +10,12 @@ class rtw_purchase(models.Model):
     sale_order_names = fields.Char("sale order title")
     operation_type = fields.Many2one('stock.picking.type' , string="オペレーションタイプ", compute='_compute_operation_type')
 
-    @api.depends('origin')
     def _compute_operation_type(self):
-        for purchase in self:
-                production = self.env['mrp.production'].search([('origin' , '=' ,purchase.origin)] , limit=1)
-                if production :
-                    for p in production:
-                        purchase.operation_type = p.picking_type_id.id
-                else:
-                    purchase.operation_type = False
+            operation_type_value = self.order_line.move_dest_ids.group_id.mrp_production_ids
+            if operation_type_value:
+                self.operation_type = operation_type_value[0].picking_type_id
+            else:
+                self.operation_type = False
 
     # @api.model
     def action_purchase_form(self):
