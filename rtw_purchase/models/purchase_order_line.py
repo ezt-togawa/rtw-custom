@@ -19,12 +19,10 @@ class rtw_purchase(models.Model):
                 order = []
                 name = []
                 for rec in move_dest_ids:
-                    order.append(rec.origin)
+                    if rec.origin:
+                        order.append(rec.origin)
                     if self.env['sale.order'].search([('name', '=', rec.origin)]).title:
                         name.append(self.env['sale.order'].search([('name', '=', rec.origin)]).title)
-                    print(rec.origin)
-                print(order)
-                print(name)
                 purchase.sale_order_ids = ','.join(order)
                 purchase.sale_order_names = ','.join(name)
             else:
