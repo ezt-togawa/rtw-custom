@@ -9,8 +9,8 @@
 		<xpath expr="//field[@name='bom_id']" position="after">
 				<field name="sale_reference"/>
 				<field name="mrp_reference"/>
-				<field name="production_type" />
-				<field name="production_memo" />
+				<field name="production_type" widget="html"/>
+				<field name="production_memo"/>
 		</xpath>
 		</field>
 	</record>
