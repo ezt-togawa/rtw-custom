@@ -56,11 +56,11 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div>納品希望日： <span
+                                <div>納品希望日： <span t-if="docs.estimated_shipping_date"
                                         t-esc="docs.estimated_shipping_date.strftime('%Y-%m-%d')" />
                                 </div>
-                                <div>
-                                    製作日数：
+                                <div> 製作日数： <span t-if="docs.workdays"
+                                        t-esc="docs.workdays" />
                                 </div>
                                 <div> 発注期限： <span t-esc="docs.date_order.strftime('%Y-%m-%d')" />
                                 </div>
@@ -135,7 +135,7 @@
                                         <td>
                                             <span t-field="l.name" />
                                             <br />
-                                            <span t-field="docs.type_id.name" />
+                                            <span t-if="l.p_type" t-field="l.p_type" />
                                         </td>
                                         <td>
                                             <span t-field="l.product_id.product_no" />
