@@ -79,6 +79,8 @@ class MrpProduction(models.Model):
 
     sale_reference = fields.Char('SO Reference', compute='_compute_reference_value', store=True)
     mrp_reference = fields.Char('MO Reference', compute='_compute_reference_mo', store=True)
+    production_type = fields.Char('製品タイプ' , compute='_compute_production_type')
+    production_memo = fields.Char('memo' , compute='_compute_production_type')
 
 class Workorder(models.Model):
     _inherit = 'mrp.workorder'
