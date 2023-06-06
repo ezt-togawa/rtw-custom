@@ -11,7 +11,7 @@ class rtw_purchase(models.Model):
     operation_type = fields.Many2one('stock.picking.type' , string="オペレーションタイプ", compute='_compute_operation_type')
 
     def _compute_operation_type(self):
-            operation_type_value = self.order_line.move_dest_ids.group_id.mrp_production_ids
+            operation_type_value = self.order_line.move_dest_ids.group_id.mrp_production_ids | self.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
             if operation_type_value:
                 self.operation_type = operation_type_value[0].picking_type_id
             else:
@@ -32,7 +32,7 @@ class rtw_purchase(models.Model):
     def _compute_sale_order(self):
         for purchase in self:
             purchase.sale_order_ids = False
-            move_dest_ids = purchase.order_line.move_dest_ids.group_id.mrp_production_ids
+            move_dest_ids = purchase.order_line.move_dest_ids.group_id.mrp_production_ids | purchase.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
             move_ids = purchase.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
             if move_dest_ids:
                 order = []
