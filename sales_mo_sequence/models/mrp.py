@@ -44,7 +44,9 @@ class MrpProduction(models.Model):
 
     def _compute_production_type(self):
         for record in self:
-                sale_order_line = self.procurement_group_id.mrp_production_ids.move_dest_ids.sale_line_id
+                # sale_order_line = self.procurement_group_id.mrp_production_ids.move_dest_ids.sale_line_id
+                sale_order_line = record.procurement_group_id.stock_move_ids.move_dest_ids.sale_line_id
+
                 config_custom_values = self.env['product.config.session.custom.value'].search([('cfg_session_id','=',sale_order_line.config_session_id.id)])
 
                 list_custom_config = ''
