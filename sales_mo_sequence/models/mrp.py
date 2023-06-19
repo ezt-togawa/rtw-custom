@@ -44,40 +44,60 @@ class MrpProduction(models.Model):
 
     def _compute_production_type(self):
         for record in self:
-                # sale_order_line = self.procurement_group_id.mrp_production_ids.move_dest_ids.sale_line_id
-                sale_order_line = record.procurement_group_id.stock_move_ids.move_dest_ids.sale_line_id
-
-                config_custom_values = self.env['product.config.session.custom.value'].search([('cfg_session_id','=',sale_order_line.config_session_id.id)])
-
                 list_custom_config = ''
                 production_type = ''
                 production_memo = ''
+                sale_order_line = False
 
-                for custom in config_custom_values: #get list config custom of order line
-                    list_custom_config = list_custom_config + '<div>'+ custom.attribute_id.name + ' : ' + custom.value +'</div>'
+                search_criteria = [ #limit 10 times
+                    ('move_ids', 'in', record.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                ]
 
-                for line in sale_order_line: #get p_type and memo of order line
-                    if line.product_id == self.product_id:
-                        if line.p_type:
-                            if line.p_type == 'special':
-                                p_type = '別注'
-                            elif line.p_type == 'custom':
-                                p_type = '特注'
-                        else:
-                            p_type = ''
+                for search in search_criteria: #find sale_order_line
+                    if self.env['sale.order.line'].search([search]):
+                        sale_order_line = self.env['sale.order.line'].search([search])
+                        break
 
-                        if line.memo:
-                            memo = line.memo
-                        else:
-                            memo = ''
+                if sale_order_line:
+                    config_custom_values = self.env['product.config.session.custom.value'].search([('cfg_session_id','=',sale_order_line.config_session_id.id)])
 
-                        if memo:
-                            production_memo = memo
-                        if p_type:
-                            production_type = p_type
+                    for custom in config_custom_values: #get list config custom of order line
+                        list_custom_config = list_custom_config + '<div>'+ custom.attribute_id.name + ' : ' + custom.value +'</div>'
 
-                record.production_type = production_type + list_custom_config
-                record.production_memo = production_memo
+                    for line in sale_order_line: #get p_type and memo of order line
+                        if line.product_id == self.product_id:
+                            if line.p_type:
+                                if line.p_type == 'special':
+                                    p_type = '別注'
+                                elif line.p_type == 'custom':
+                                    p_type = '特注'
+                            else:
+                                p_type = ''
+
+                            if line.memo:
+                                memo = line.memo
+                            else:
+                                memo = ''
+
+                            if memo:
+                                production_memo = memo
+                            if p_type:
+                                production_type = p_type
+
+                    record.production_type = production_type + list_custom_config
+                    record.production_memo = production_memo
+                else:
+                    record.production_type = ''
+                    record.production_memo = ''
 
     sale_reference = fields.Char('SO Reference', compute='_compute_reference_value', store=True)
     mrp_reference = fields.Char('MO Reference', compute='_compute_reference_mo', store=True)
