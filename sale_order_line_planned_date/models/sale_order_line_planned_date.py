@@ -34,8 +34,29 @@ class sale_order(models.Model):
                     max_schedule_date = line.date_planned
                 elif line.date_planned > max_schedule_date:
                     max_schedule_date = line.date_planned
+        if max_schedule_date:
+            for stock in stock_picking:
+                if stock.state not in ('done', 'cancel'):
+                    stock.write({"scheduled_date": max_schedule_date})
+                    stock.write({"date_deadline": max_schedule_date})
+        return result
+
+    def action_confirm(self):
+        result = super(sale_order,self).action_confirm()
+        self.refresh()
+        stock_picking = self.env['stock.picking'].search([('sale_id' ,'=' ,self.id)])
+        max_schedule_date = ''
+        for line in self.order_line:
+            if line.date_planned:
+                if max_schedule_date == '':
+                    max_schedule_date = line.date_planned
+                elif line.date_planned > max_schedule_date:
+                    max_schedule_date = line.date_planned
 
         if max_schedule_date:
-            stock_picking.scheduled_date = max_schedule_date
+            for stock in stock_picking:
+                if stock.state not in ('done', 'cancel'):
+                    stock.write({"scheduled_date": max_schedule_date})
+                    stock.write({"date_deadline": max_schedule_date})
 
         return result
