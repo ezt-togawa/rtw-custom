@@ -95,6 +95,17 @@
                     <filter string="sale_id" name="注番" domain="[]" context="{'group_by': 'sale_id'}"/>
                     <separator/>
                 </xpath>
+                <xpath expr="//filter[@name='manufacturing']" position="after">
+                    <separator />
+                    <filter string="運送が糸島" name="to_itoshima"
+                        domain="[('location_dest_id', 'like', '糸島')]"
+                    />
+                    <separator />
+                    <filter string="移動元が糸島" name="from_itoshima"
+                        domain="[('location_id', 'like', '糸島')]"
+                    />
+                    <separator />
+                </xpath>
             </field>
         </record>
 
@@ -116,6 +127,7 @@
             <field name="view_id" ref="stock_move_line_list_itoshima" />
             <field name="search_view_id" ref="stock_move_line_search_view_rtw"/>
             <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{'search_default_from_itoshima':1, 'search_default_to_itoshima':1}</field>
         </record>
 
         <menuitem name="move"
