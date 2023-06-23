@@ -95,16 +95,13 @@
                     <filter string="sale_id" name="注番" domain="[]" context="{'group_by': 'sale_id'}"/>
                     <separator/>
                 </xpath>
-                <xpath expr="//filter[@name='manufacturing']" position="after">
-                    <separator />
+                <xpath expr="//filter[@name='itoshima']" position="after">
                     <filter string="運送が糸島" name="to_itoshima"
                         domain="[('location_dest_id', 'like', '糸島')]"
                     />
-                    <separator />
                     <filter string="移動元が糸島" name="from_itoshima"
                         domain="[('location_id', 'like', '糸島')]"
                     />
-                    <separator />
                 </xpath>
             </field>
         </record>
