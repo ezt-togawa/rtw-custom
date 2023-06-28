@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_view_order_approve_form" model="ir.ui.view">
+            <field name="name">Sale Order RTW</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="is_over_price" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="is_hide_button" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="user_type" invisible="1" />
+                </xpath>
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <button
+                        name="toggle_approve_btn"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-check-square"
+                        attrs="{'invisible': [('is_over_price', '=', False)]}"
+                    >
+                        <field name="approve_status" widget="boolean_button"
+                            options="{'active': '承認', 'inactive': '未承認'}"
+                            attrs="{'readonly': [('user_type', '!=', 'admin')]}"
+                        />
+                    </button>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send' and @states='sent,sale']"
+                    position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('is_hide_button', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send' and @states='draft']"
+                    position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('is_hide_button', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
