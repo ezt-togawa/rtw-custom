@@ -103,7 +103,8 @@ class sale_report_approve(models.Model):
 
     def _get_rendering_context(self, docids, data):
         res = super(sale_report_approve, self)._get_rendering_context(docids, data)
-        sale_order = self.env[self.model].sudo(False).browse(docids)
-        if not sale_order.approve_status and sale_order.is_over_price:
-            raise UserError('未承認のため印刷できません。')
+        if self.model == 'sale.order':
+            sale_order = self.env[self.model].sudo(False).browse(docids)
+            if not sale_order.approve_status and sale_order.is_over_price:
+                raise UserError('未承認のため印刷できません。')
         return res
