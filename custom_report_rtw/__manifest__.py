@@ -27,6 +27,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'report/report_quotation.xml',
+        'report/report_list_price_quotation.xml',
         'report/stock_picking.xml',
         'report/purchase.xml',
         'report/spec_list.xml',

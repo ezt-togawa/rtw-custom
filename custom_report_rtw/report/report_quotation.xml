@@ -1,110 +1,239 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_quotation">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="custom_report_rtw.so_ex_layout">
+                    <t t-set="total_subprice" t-value="0" />
+                    <t t-set="total_listprice" t-value="0" />
+                    <t t-if="not o" t-set="o" t-value="doc" />
+                    <t t-if="not company">
+                        <!-- Multicompany -->
+                        <t t-if="company_id">
+                            <t t-set="company" t-value="company_id" />
+                        </t>
+                        <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                            <t t-set="company" t-value="o.company_id.sudo()" />
+                        </t>
+                        <t t-else="else">
+                            <t t-set="company" t-value="res_company" />
+                        </t>
+                    </t>
+                    <t t-call="custom_report_rtw.SO_header_layout"></t>
                     <div class="page">
-                        <t t-set="type">quotation</t>
+                        <t
+                            t-set="type">quotation</t>
                         <t t-set="address">
-                            <div t-field="o.partner_id"
-                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
-                            <p t-if="o.partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:
-                                <span t-field="o.partner_id.vat"/>
+                            <div t-field="docs.partner_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name"],
+                        "no_marker": True}' />
+                            <p t-if="docs.partner_id.vat"><t
+                                    t-esc="docs.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                                    t-field="docs.partner_id.vat" />
                             </p>
                         </t>
-                        <table class="table table-condensed">
-                            <tbody class="invoice_tbody">
-                                <thead style="background-color:#595959;color:#ffffff">
-                                    <tr>
-                                        <th>summary</th>
-                                        <th class="text-center">Item NO/Size
-                                        </th>
-                                        <th class="text-center">Spec</th>
-                                        <th class="text-center">Qty</th>
-                                        <th class="text-center">Multiplication rate</th>
-                                        <th class="text-center">List Price</th>
-                                        <th class="text-center">Unit Price</th>
-                                        <th class="text-center">Amount</th>
-
+                        <div t-if="docs.company_id.logo or docs.company_id.report_header"
+                            class="row zero_min_height">
+                        </div>
+                        <div class="row" style="margin-top:-50px;font-weight:bold">
+                            <div class="col-5">
+                                <div>
+                                    <span class="so_title"
+                                        t-field="docs.company_id.partner_id.name" /> 様 </div>
+                                <br />
+                                <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
+                                    御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br /> <span class="mt-1"
+                                        style="font-size:16px">
+                                        件名 ご自宅用 家具お見積もり</span>
+                                </div>
+                                <br />
+                                <div>税抜合計: <span t-field="docs.amount_untaxed" />
+                                </div>
+                                <div class="so_title">消費税: <span t-field="docs.amount_tax" />
+                                </div>
+                                <div class="so_title">税込合計: <span class="so_price"
+                                        t-field="docs.amount_total" />
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>納品希望日： <span t-if="docs.estimated_shipping_date"
+                                        t-esc="docs.estimated_shipping_date.strftime('%Y-%m-%d')" />
+                                </div>
+                                <div> 製作日数： <span t-if="docs.workdays"
+                                        t-esc="docs.workdays" />
+                                </div>
+                                <div> 発注期限： <span t-esc="docs.date_order.strftime('%Y-%m-%d')" />
+                                </div>
+                                <div>
+                                    納品場所：
+                                </div>
+                                <div>
+                                    支払条件：
+                                </div>
+                                <br />
+                                <div>見積有効期限： <span
+                                        t-field="docs.validity_date" />
+                                </div>
+                                <div> 備考: <span t-field="docs.note" />
+                                </div>
+                            </div>
+                            <div class="col-3" name="company_address">
+                                <div>
+                                    <img style="width:100%"
+                                        src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                                        alt="Logo" />
+                                </div>
+                                <!-- <div t-field="docs.company_id.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                                /> -->
+                                <div>
+                                    <span t-field="docs.company_id.partner_id.display_name" />
+                                </div>
+                                <div>
+                                    <span t-field="docs.company_id.partner_id.city" />
+                                </div>
+                                <div>〒 <span t-field="docs.company_id.partner_id.zip" /></div>
+                                <div>
+                                    <span t-field="docs.company_id.partner_id.street" />
+                                </div>
+                                <div> tel. <span t-field="docs.company_id.partner_id.phone" />
+                                </div>
+                                <div> fax. <span t-field="docs.company_id.partner_id.fax" />
+                                </div>
+                                <span
+                                    t-field="docs.user_id.name" />
+                            </div>
+                        </div>
+                        <table
+                            class="table">
+                            <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
+                                t-att-last="last">
+                                <t t-set="total_subprice"
+                                    t-value="total_subprice + l.price_subtotal" />
+                                <t t-set="total_listprice"
+                                    t-value="total_listprice + l.product_template_id.list_price" />
+                                <t t-if="l_index == 0">
+                                    <thead>
+                                        <tr
+                                            style="background-color:#595959;color:#ffffff;padding:5px 0px 10px 0px;font-size:13px;">
+                                            <th class="text-center" style="width:2%">№</th>
+                                            <th class="text-center" style="width:20%">品名</th>
+                                            <th class="text-center" style="width:20%">品番・サイズ</th>
+                                            <th class="text-center" style="width:25%">仕様・詳細</th>
+                                            <th class="text-center" style="width:7%">数量</th>
+                                            <th class="text-center">掛率</th>
+                                            <th class="text-center">定価</th>
+                                            <th class="text-center" style="width:13%">販売単価</th>
+                                            <th class="text-center" style="width:13%">販売金額</th>
+                                        </tr>
+                                    </thead>
+                                </t>
+                                <tbody class="invoice_tbody">
+                                    <tr style="border-bottom:solid 1px #595959;font-size:12px;">
+                                        <td t-esc="l_index+1">
+                                        </td>
+                                        <td>
+                                            <span t-field="l.name" />
+                                            <br />
+                                            <span t-if="l.p_type" t-field="l.p_type" />
+                                        </td>
+                                        <td>
+                                            <span t-field="l.product_id.product_no" />
+                                            <br />
+                                            <t t-if="l.product_id.width > 0"> W <span
+                                                    t-field="l.product_id.width" />
+                                            </t>
+                                            <t t-if="l.product_id.depth > 0"> D <span
+                                                    t-field="l.product_id.depth" />
+                                            </t>
+                                            <t t-if="l.product_id.height > 0"> H <span
+                                                    t-field="l.product_id.height" />
+                                            </t>
+                                            <t t-if="l.product_id.ah > 0"> Ah <span
+                                                    t-field="l.product_id.ah" />
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t
+                                                t-foreach="l.product_id.product_template_attribute_value_ids"
+                                                t-as="string_line"> ● <span
+                                                    t-esc="string_line.display_name" />
+                                                <br />
+                                            </t>
+                                            <t t-foreach="l.config_session_id.custom_value_ids"
+                                                t-as="string_line"> ●<span
+                                                    t-esc="string_line.display_name" />: <span
+                                                    t-esc="string_line.value" />
+                                                <br />
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <div id="quote_qty">
+                                                <span
+                                                    t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span t-field="l.discount" />% </td>
+                                        <td>
+                                            <span
+                                                style="font-size:16px"
+                                                t-esc="'{0:,.0f}'.format(l.product_template_id.list_price)" />
+                                        </td>
+                                        <td>
+                                            <span
+                                                t-esc="(l.product_template_id.list_price * l.discount/100) if l.discount else l.product_template_id.list_price" />
+                                        </td>
+                                        <td>
+                                            <span
+                                                style="font-size:16px"
+                                                t-esc="l.price_subtotal" />
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tr t-foreach="o.order_line" t-as="l" style="border-bottom:solid 1px #595959;">
-                                    <td>
-                                        <t t-if="l.product_id.summary == False">
-                                            <span t-field="l.product_template_id"/>
-                                        </t>
-                                        <t t-else="">
-                                            <span t-field="l.product_id.summary"/>
-                                        </t>
-                                    </td>
-                                    <td>
-                                        <span t-field="l.product_id.product_no"/>
-                                        <br/>
-                                        <t t-if="l.product_id.width > 0">
-                                            W
-                                            <span t-field="l.product_id.width"/>
-                                        </t>
-                                        <t t-if="l.product_id.depth > 0">
-                                            　D
-                                            <span t-field="l.product_id.depth"/>
-                                        </t>
-                                        <t t-if="l.product_id.height > 0">
-                                            　H
-                                            <span t-field="l.product_id.height"/>
-                                        </t>
-                                        <t t-if="l.product_id.ah > 0">
-                                            　Ah
-                                            <span t-field="l.product_id.ah"/>
-                                        </t>
-                                    </td>
-                                    <td>
-                                        <t t-foreach="l.product_id.product_template_attribute_value_ids"
-                                           t-as="string_line">
-                                            ●
-                                            <span t-esc="string_line.display_name"/>
-                                            <br/>
-                                        </t>
-                                        <t t-foreach="l.config_session_id.custom_value_ids" t-as="string_line">
-                                            ●<span t-esc="string_line.display_name"/>:
-                                            <span t-esc="string_line.value"/>
-                                            <br/>
-                                        </t>
-                                    </td>
-
-                                    <td>
-                                        <div id="quote_qty">
-                                            <span t-esc="'{0:,.0f}'.format(l.product_uom_qty)"/>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span t-field="l.discount"/>%
-                                    </td>
-                                    <td>
-                                        <span t-esc="'{0:,.0f}'.format(l.product_template_id.list_price)"/>
-                                    </td>
-                                    <td>
-                                        <span t-esc="'{0:,.0f}'.format(l.price_subtotal)"/>
-                                    </td>
-                                    <td>
-                                        <span t-field="l.price_reduce_taxexcl"/>
-                                    </td>
-                                </tr>
-                            </tbody>
+                                </tbody>
+                            </t>
                         </table>
+                        <div
+                            class="d-flex justify-content-end">
+                            <div
+                                class="pr-4">定価合計 : <span
+                                    t-esc="total_listprice" /></div>
+                            <div>販売価格合計 : <span
+                                    t-esc="docs.amount_untaxed" /></div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <span style="font-size:13px"
+                                t-field="docs.name" />
+                        </div>
                     </div>
+                    <t t-call="custom_report_rtw.page_footer_layout"></t>
                 </t>
             </t>
         </t>
     </template>
+    <record id="paperformat_quotation_report" model="report.paperformat">
+        <field name="name">Quotation</field>
+        <field name="default" eval="False" />
+        <field name="format">custom</field>
+        <field name="page_width">210</field>
+        <field name="page_height">297</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">12</field>
+        <field name="dpi">90</field>
+    </record>
     <report
-            string="quotation"
-            id="report_quotation_rtw"
-            model="sale.order"
-            report_type="qweb-pdf"
-            name="custom_report_rtw.report_quotation"
-            file="custom_report_rtw.report_quotation"
+        string="御見積書"
+        id="report_quotation_rtw"
+        model="sale.order"
+        report_type="qweb-pdf"
+        name="custom_report_rtw.report_quotation"
+        file="custom_report_rtw.report_quotation"
+        paperformat="paperformat_quotation_report"
     />
 
 </odoo>

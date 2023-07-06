@@ -136,7 +136,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         <menuitem
-                id="action_event_crm_tree"
+                id="action_event_crm_tree_menu"
                 action="action_event_crm_tree"
                 parent="calendar.mail_menu_calendar"
                 sequence="10"
