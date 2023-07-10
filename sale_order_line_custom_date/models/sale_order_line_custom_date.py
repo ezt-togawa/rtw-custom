@@ -9,8 +9,8 @@ class sale_order_line_custom_date(models.Model):
     depo_date = fields.Date("Depo Date", tracking=True)
     shiratani_date = fields.Date("Shiratani Date", tracking=True)
     p_type = fields.Selection([
-        ('special', '特注'),
-        ('custom', '別注'),
+        ('special', '別注'),
+        ('custom', '特注'),
     ],string = "製品タイプ")
 #     _description = 'sale_order_line_custom_date.sale_order_line_custom_date'
 
