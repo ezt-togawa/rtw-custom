@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_purchase_product_type_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='operation_type']" position="after">
+                <field name="production_type" widget="html"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
