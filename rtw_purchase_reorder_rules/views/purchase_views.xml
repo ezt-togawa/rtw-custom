@@ -1,0 +1,6 @@
+<odoo>
+    <menuitem
+        id="menu_purchase_reordering_rules"
+        action="stock.action_orderpoint"
+        name="再オーダー規則" parent="purchase.menu_purchase_root" sequence="10" />
+</odoo>
