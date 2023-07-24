@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_confirmed_shipping_date_confirmed_shipping_date,confirmed_shipping_date.confirmed_shipping_date,model_confirmed_shipping_date_confirmed_shipping_date,base.group_user,1,1,1,1
