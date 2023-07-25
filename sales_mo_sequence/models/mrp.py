@@ -99,10 +99,35 @@ class MrpProduction(models.Model):
                     record.production_type = ''
                     record.production_memo = ''
 
+    def _inverse_production_memo(self):
+        for record in self:
+                search_criteria = [ #limit 10 times
+                    ('move_ids', 'in', record.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                ]
+
+                for search in search_criteria: #find sale_order_line
+                    if self.env['sale.order.line'].search([search]):
+                        sale_order_line = self.env['sale.order.line'].search([search])
+                        break
+
+                if sale_order_line:
+                    for line in sale_order_line:
+                        line.write({'memo': record.production_memo})
+
+
     sale_reference = fields.Char('SO Reference', compute='_compute_reference_value', store=True)
     mrp_reference = fields.Char('MO Reference', compute='_compute_reference_mo', store=True)
     production_type = fields.Char('製品タイプ' , compute='_compute_production_type')
-    production_memo = fields.Char('memo' , compute='_compute_production_type')
+    production_memo = fields.Char('memo' , compute='_compute_production_type' , inverse='_inverse_production_memo')
 
 class Workorder(models.Model):
     _inherit = 'mrp.workorder'
