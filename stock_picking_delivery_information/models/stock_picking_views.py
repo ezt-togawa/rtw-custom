@@ -33,7 +33,7 @@ class StockPicking(models.Model):
 
     def _compute_delivery_information(self):
         for record in self:
-            sale_order = self.env['sale.order'].search([('name' , '=' , record.origin)])
+            sale_order = self.env['sale.order'].search([('id' , '=' , record.sale_id.id)])
             if sale_order:
                 record.shipping_to_text = sale_order.shipping_to_text
                 record.forwarding_address_zip = sale_order.forwarding_address_zip
@@ -55,3 +55,9 @@ class StockPicking(models.Model):
                     record.waypoint = sale_order.waypoint.name
                 else:
                     record.waypoint = ''
+            else:
+                record.shipping_to_text = ''
+                record.forwarding_address_zip = ''
+                record.forwarding_address = ''
+                record.waypoint = ''
+                record.sipping_to = ''
