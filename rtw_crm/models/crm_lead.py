@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-import datetime
+from datetime import datetime , timedelta
 
 
 class rtw_crm(models.Model):
@@ -887,7 +887,6 @@ class rtw_crm(models.Model):
 
     def _update_crm_seq(self, limit=1000):
         leads = self.search([("crm_seq", "=", "新規")], order="id", limit=limit)
-        print(leads)
         for lead in leads:
             lead.crm_seq = self.env["ir.sequence"].next_by_code("crm.lead")
             print(lead.crm_seq)

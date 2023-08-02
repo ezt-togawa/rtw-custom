@@ -1,7 +1,7 @@
 <odoo>
     <record id="ir_cron_update_crm_seq" model="ir.cron">
         <field name="name">Update CRM Sequence</field>
-        <field name="model_id" ref="model_crm_lead"/>
+        <field name="model_id" ref="model_crm_lead" />
         <field name="state">code</field>
         <field name="code">model._update_crm_seq(1000)</field>
         <field name="interval_number">5</field>
