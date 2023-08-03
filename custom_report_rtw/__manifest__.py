@@ -25,9 +25,12 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
         'report/report_quotation.xml',
         'report/report_list_price_quotation.xml',
+        'report/report_unit_price.xml',
+        'report/purchase_order.xml',
+        'report/purchase_order_sheet.xml',
+        'report/report_invoice.xml',
         'report/stock_picking.xml',
         'report/purchase.xml',
         'report/spec_list.xml',

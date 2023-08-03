@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="header_footer_layout">
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
@@ -12,15 +12,17 @@
                         <span>invoice</span>
                     </t>
                 </div>
-                <div class="col-3 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                <div class="col-3 text-right" style="margin-top:22px;"
+                    t-field="company.report_header" name="moto" />
                 <div class="col-3 mb4">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;"
-                         alt="Logo"/>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                        style="max-height: 45px;"
+                        alt="Logo" />
                 </div>
             </div>
             <div t-if="company.logo or company.report_header" class="row zero_min_height">
                 <div class="col-12">
-                    <div style="border-bottom: 1px solid black;"/>
+                    <div style="border-bottom: 1px solid black;" />
                 </div>
                 <span>sssss</span>
             </div>
@@ -29,51 +31,49 @@
                 </div>
                 <div class="col-4" name="company_address">
                     <div t-field="company.partner_id"
-                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
                     />
                 </div>
             </div>
         </div>
 
         <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"
-             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
-             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+            t-att-data-oe-lang="o and o.env.context.get('lang')">
             <div class="pt-5">
                 <!-- This div ensures that the address is not cropped by the header. -->
-                <t t-call="web.address_layout"/>
+                <t t-call="web.address_layout" />
             </div>
-            <t t-raw="0"/>
+            <t t-raw="0" />
         </div>
 
         <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
             <div class="text-center" style="border-top: 1px solid black;">
                 <ul class="list-inline mb4">
-                    <!-- using the list-inline-item class from bootstrap causes weird behaviours in pdf report
+                    <!-- using the list-inline-item class from bootstrap causes weird behaviours in
+                    pdf report
                          adding d-inline class fixes the problem-->
                     <li t-if="company.phone" class="list-inline-item d-inline">
-                        <span class="o_force_ltr" t-field="company.phone"/>
+                        <span class="o_force_ltr" t-field="company.phone" />
                     </li>
                     <li t-if="company.email" class="list-inline-item d-inline">
-                        <span t-field="company.email"/>
+                        <span t-field="company.email" />
                     </li>
                     <li t-if="company.website" class="list-inline-item d-inline">
-                        <span t-field="company.website"/>
+                        <span t-field="company.website" />
                     </li>
                     <li t-if="company.vat" class="list-inline-item d-inline"><t
-                            t-esc="company.country_id.vat_label or 'Tax ID'"/>:
-                        <span t-field="company.vat"/>
+                            t-esc="company.country_id.vat_label or 'Tax ID'" />: <span
+                            t-field="company.vat" />
                     </li>
                 </ul>
 
                 <div name="financial_infos">
-                    <span t-field="company.report_footer"/>
+                    <span t-field="company.report_footer" />
                 </div>
 
-                <div t-if="report_type == 'pdf'" class="text-muted">
-                    Page:
-                    <span class="page"/>
-                    /
-                    <span class="topage"/>
+                <div t-if="report_type == 'pdf'" class="text-muted"> Page: <span class="page" /> / <span
+                        class="topage" />
                 </div>
             </div>
         </div>
@@ -82,8 +82,9 @@
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
             <div class="row">
                 <div class="col-3 mb4">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;"
-                         alt="Logo"/>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                        style="max-height: 45px;"
+                        alt="Logo" />
                 </div>
                 <div class="col-3 text-center" style="font-size:48px;text-align:center">
                     <t t-if="type == 'quotation'">
@@ -93,11 +94,12 @@
                         <span>invoice</span>
                     </t>
                 </div>
-                <div class="col-3 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                <div class="col-3 text-right" style="margin-top:22px;"
+                    t-field="company.report_header" name="moto" />
             </div>
             <div t-if="company.logo or company.report_header" class="row zero_min_height">
                 <div class="col-12">
-                    <div style="border-bottom: 1px solid black;"/>
+                    <div style="border-bottom: 1px solid black;" />
                 </div>
             </div>
             <div class="row">
@@ -105,7 +107,7 @@
                 </div>
                 <div class="col-4" name="company_address">
                     <div t-field="company.partner_id"
-                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
                     />
                 </div>
             </div>
@@ -113,7 +115,7 @@
     </template>
     <template id="SO_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row">
+            <div class="row" style="font-weight:bold">
                 <div class="col-6 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
@@ -126,11 +128,44 @@
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>
             </div>
+            <!-- <div t-if="page==1" class="row">
+                <div class="col-4">
+                    <div><span class="so_title" t-field="o.partner_id.name" /> 様 </div>
+                    <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
+                        御依頼の件、下記の通りお見積り致しました。 <br /> ご査収の程宜しくお願い致します。 </div>
+                    <div>税抜合計: <span class="" t-field="o.amount_untaxed" />
+                    </div>
+                    <div>消費税: <span class="" t-field="o.amount_tax" />
+                    </div>
+                    <div>税込合計: <span class="so_price" t-field="o.amount_total" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>納品希望日： <span t-field="o.preferred_delivery_date" />
+                    </div>
+                    <div>製作日数：</div>
+                    <div>発注期限：</div>
+                    <div>納品場所：</div>
+                    <div>支払条件：</div>
+                    <div>見積有効期限： <span t-field="o.validity_date" />
+                    </div>
+                </div>
+                <div class="col-4" name="company_address">
+                    <div t-field="company.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                    />
+                    <div>tel: <span t-field="company.partner_id.phone" />
+                    </div>
+                    <div>fax: <span t-field="company.partner_id.fax" />
+                    </div>
+                    <span t-field="company.partner_id.display_name" />
+                </div>
+            </div> -->
         </div>
     </template>
     <template id="SO_list_price_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row">
+            <div class="row" style="font-weight:bold">
                 <div class="col-6 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
@@ -145,12 +180,120 @@
             </div>
         </div>
     </template>
+    <template id="SO_unit_price_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row" style="font-weight:bold">
+                <div class="col-6 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                        style="max-height: 45px;"
+                        alt="Logo" />
+                    <span style="font-size:20px" class="ml-2">単価御見積書</span>
+                </div>
+                <div class="col-6 text-right mt-2">
+                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                        t-esc="time.strftime('%m')" /> 月 <t
+                        t-esc="time.strftime('%d')" /> 日 </div>
+            </div>
+        </div>
+    </template>
+    <template id="SO_invoice_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row" style="font-weight:bold">
+                <div class="col-6 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                        style="max-height: 45px;"
+                        alt="Logo" />
+                    <span style="font-size:20px" class="ml-2">御請求書
+                    </span>
+                </div>
+                <div class="col-6 text-right mt-2">
+                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                        t-esc="time.strftime('%m')" /> 月 <t
+                        t-esc="time.strftime('%d')" /> 日 </div>
+            </div>
+        </div>
+    </template>
+    <template id="SO_unit_price_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row" style="font-weight:bold">
+                <div class="col-6 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                        style="max-height: 45px;"
+                        alt="Logo" />
+                    <span style="font-size:20px" class="ml-2">単価御見積書
+                    </span>
+                </div>
+                <div class="col-6 text-right mt-2">
+                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                        t-esc="time.strftime('%m')" /> 月 <t
+                        t-esc="time.strftime('%d')" /> 日 </div>
+            </div>
+        </div>
+    </template>
+    <template id="SO_purchase_order_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row" style="font-weight:bold">
+                <div class="col-6 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                        style="max-height: 45px;"
+                        alt="Logo" />
+                    <span style="font-size:20px" class="ml-2">注文書</span>
+                </div>
+                <div class="col-6 text-right mt-2">
+                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                        t-esc="time.strftime('%m')" /> 月 <t
+                        t-esc="time.strftime('%d')" /> 日 </div>
+            </div>
+        </div>
+    </template>
+    <template id="SO_purchase_order_sheet_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row" style="font-weight:bold">
+                <div class="col-8 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                        style="max-height: 45px;"
+                        alt="Logo" />
+                    <span style="font-size:20px" class="ml-2">発注書</span>
+                    <span style="font-size:16px" class="ml-5">株式会社 <span
+                            t-esc="docs.partner_id.name" /> 御中</span>
+                </div>
+                <div class="col-4 text-right mt-2">
+                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                        t-esc="time.strftime('%m')" /> 月 <t
+                        t-esc="time.strftime('%d')" /> 日 </div>
+            </div>
+        </div>
+    </template>
+    <template id="SO_product_spec_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row" style="font-weight:bold">
+                <div class="col-6 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                        style="max-height: 45px;"
+                        alt="Logo" />
+                    <span style="font-size:20px" class="ml-2">商品仕様書
+                    </span>
+                </div>
+                <div class="col-6 text-right mt-2">
+                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                        t-esc="time.strftime('%m')" /> 月 <t
+                        t-esc="time.strftime('%d')" /> 日 </div>
+            </div>
+        </div>
+    </template>
     <template id="PO_header_layout">
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
             <div class="row">
                 <div class="col-3 mb4">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;"
-                         alt="Logo"/>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                        style="max-height: 45px;"
+                        alt="Logo" />
                 </div>
                 <div class="col-6 text-center" style="font-size:24px;text-align:center">
                     <t t-if="type == 'purchase'">
@@ -158,30 +301,25 @@
                         <span>purchase</span>
                     </t>
                     <t t-if="type == 'invoice'">
-                        <span t-field="o.title" class="so_title"/>　
+                        <span t-field="o.title" class="so_title" />
                         <span>invoice</span>
                     </t>
                 </div>
-                <div class="col-3 text-right" style="margin-top:28px;" t-field="company.report_header" name="moto"/>
+                <div class="col-3 text-right" style="margin-top:28px;"
+                    t-field="company.report_header" name="moto" />
             </div>
             <div t-if="company.logo or company.report_header" class="row zero_min_height">
                 <div class="col-12">
-                    <div style="border-bottom: 1px solid black;"/>
+                    <div style="border-bottom: 1px solid black;" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">
-                    <div><span class="so_title" t-field="o.partner_id.name"/>　様
-                    </div>
-                    <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。
-                        <br/>
-                        御依頼の件、下記の通りお見積り致しました。
-                        <br/>
-                        ご査収の程宜しくお願い致します。
-                    </div>
+                    <div><span class="so_title" t-field="o.partner_id.name" /> 様 </div>
+                    <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
+                        御依頼の件、下記の通りお見積り致しました。 <br /> ご査収の程宜しくお願い致します。 </div>
 
-                    <div>税込合計:
-                        <span class="so_price" t-field="o.amount_total"/>
+                    <div>税込合計: <span class="so_price" t-field="o.amount_total" />
                     </div>
                 </div>
                 <div class="col-3">
@@ -198,7 +336,7 @@
                 </div>
                 <div class="col-3" name="company_address">
                     <div t-field="company.partner_id"
-                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
                     />
                 </div>
             </div>
@@ -208,19 +346,21 @@
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
             <div class="row">
                 <div class="col-3 mb4">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;"
-                         alt="Logo"/>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                        style="max-height: 45px;"
+                        alt="Logo" />
                 </div>
                 <div class="col-6 text-center" style="font-size:48px;text-align:center">
                     <t t-if="type == 'mrp_order'">
                         <span>mrp order</span>
                     </t>
                 </div>
-                <div class="col-3 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                <div class="col-3 text-right" style="margin-top:22px;"
+                    t-field="company.report_header" name="moto" />
             </div>
             <div t-if="company.logo or company.report_header" class="row zero_min_height">
                 <div class="col-12">
-                    <div style="border-bottom: 1px solid black;"/>
+                    <div style="border-bottom: 1px solid black;" />
                 </div>
             </div>
         </div>
@@ -229,17 +369,19 @@
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
             <div class="row">
                 <div class="col-3 mb4">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;"
-                         alt="Logo"/>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                        style="max-height: 45px;"
+                        alt="Logo" />
                 </div>
                 <div class="col-6 text-center" style="font-size:48px;text-align:center">
                     <span>SHIPPING INSTRUCTION</span>
                 </div>
-                <div class="col-3 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                <div class="col-3 text-right" style="margin-top:22px;"
+                    t-field="company.report_header" name="moto" />
             </div>
             <div t-if="company.logo or company.report_header" class="row zero_min_height">
                 <div class="col-12">
-                    <div style="border-bottom: 1px solid black;"/>
+                    <div style="border-bottom: 1px solid black;" />
                 </div>
             </div>
             <div class="row">
@@ -248,83 +390,60 @@
                     <div style="font-size:12px">
                         <div>SHIPPER/EXPORTER</div>
                         <div style="font-weight:bold">Ritzwell &amp; Co.</div>
-                        5-2-9 ITAZUKE HAKATA-KU
-                        <br/>
-                        FUKUOKA, 812-0888 JAPAN
-                        <br/>
-                        TEL: +81-92-584-2240
-                        <br/>
-                        FAX: +81-92-584-2241
-                        <br/>
-                        VAT NO. NL 826346315B01
-                    </div>
+                        5-2-9 ITAZUKE HAKATA-KU <br /> FUKUOKA, 812-0888 JAPAN <br /> TEL:
+                        +81-92-584-2240 <br /> FAX: +81-92-584-2241 <br /> VAT NO. NL 826346315B01 </div>
 
                 </div>
                 <div class="col-3">
                     <div style="font-size:12px">
                         <div>CONSIGNEE</div>
-                        <div style="font-weight:bold">XXXXXX.</div>
-                        XXXXXXXXXXX
-                        <br/>
-                        XXXXXXXXXXX
-                        <br/>
-                        XXXXXXXXXXX
-                        <br/>
-                        XXXXXXXXXXX
-                        <br/>
-                        XXXXXXXXXXX
-                    </div>
+                        <div style="font-weight:bold">XXXXXX.</div> XXXXXXXXXXX <br />
+                        XXXXXXXXXXX <br /> XXXXXXXXXXX <br /> XXXXXXXXXXX <br /> XXXXXXXXXXX </div>
                 </div>
                 <div class="col-3">
                     <div style="font-size:12px">
                         <div>IMPORTER/BUYER - IF OTHER THAN CONSIGNEE</div>
-                        <div style="font-weight:bold">XXXXXX.</div>
-                        XXXXXXXXXXX
-                        <br/>
-                        XXXXXXXXXXX
-                        <br/>
-                        XXXXXXXXXXX
-                        <br/>
-                        XXXXXXXXXXX
-                        <br/>
-                        XXXXXXXXXXX
-                    </div>
+                        <div
+                            style="font-weight:bold">XXXXXX.</div> XXXXXXXXXXX <br /> XXXXXXXXXXX <br />
+                        XXXXXXXXXXX <br /> XXXXXXXXXXX <br /> XXXXXXXXXXX </div>
 
                 </div>
                 <div class="col-3">
-                     <div style="font-size:12px">
-<!--                    <div class="row">-->
-<!--                        <div class="col-4">PLACE OF LOADING</div>-->
-<!--                         <div class="col-8">XXXXXXXXXXXXXXXXXXX</div>-->
-<!--                         <div class="col-4">PLACE OF DELIVERY</div>-->
-<!--                         <div class="col-8">XXXXXXXXXXXXXXXXXXX</div>-->
-<!--                         <div class="col-4">COUNTRY OF ORIGIN </div>-->
-<!--                         <div class="col-8">XXXXXXXXXXXXXXXXXXX</div>-->
-<!--                        <div class="col-4">DELIVERY DATE &amp; REQUESTS</div>-->
-<!--                         <div class="col-8">XXXXXXXXXXXXXXXXXXX</div>-->
-<!--                    </div>-->
-                     </div>
+                    <div style="font-size:12px">
+                        <!--                    <div class="row">-->
+                        <!--                        <div class="col-4">PLACE OF LOADING</div>-->
+                        <!--                         <div class="col-8">XXXXXXXXXXXXXXXXXXX</div>-->
+                        <!--                         <div class="col-4">PLACE OF DELIVERY</div>-->
+                        <!--                         <div class="col-8">XXXXXXXXXXXXXXXXXXX</div>-->
+                        <!--                         <div class="col-4">COUNTRY OF ORIGIN </div>-->
+                        <!--                         <div class="col-8">XXXXXXXXXXXXXXXXXXX</div>-->
+                        <!--                        <div class="col-4">DELIVERY DATE &amp; REQUESTS</div>-->
+                        <!--                         <div class="col-8">XXXXXXXXXXXXXXXXXXX</div>-->
+                        <!--                    </div>-->
+                    </div>
                 </div>
             </div>
 
         </div>
     </template>
     <template id="spec_header_layout">
-        <div t-attf-class="header" t-att-style="report_header_style">
+        <div t-attf-class="header">
             <div class="row">
                 <div class="col-3 mb4">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;"
-                         alt="Logo"/>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                        style="max-height: 45px;"
+                        alt="Logo" />
                 </div>
                 <div class="col-6 text-center" style="font-size:24px;text-align:center">
-                        <span t-field="o.title" class="so_title"/>
-                        <span>商品仕様書</span>
+                    <span t-field="o.title" class="so_title" />
+                    <span>商品仕様書</span>
                 </div>
-                <div class="col-3 text-right" style="margin-top:28px;" t-field="company.report_header" name="moto"/>
+                <div class="col-3 text-right" style="margin-top:28px;"
+                    t-field="company.report_header" name="moto" />
             </div>
             <div t-if="company.logo or company.report_header" class="row zero_min_height">
                 <div class="col-12">
-                    <div style="border-bottom: 1px solid black;"/>
+                    <div style="border-bottom: 1px solid black;" />
                 </div>
             </div>
         </div>
@@ -334,7 +453,8 @@
         <div t-attf-class="footer">
             <div class="text-center" style="border-top: 1px solid black;">
                 <!--                <ul class="list-inline mb4">-->
-                <!--                    &lt;!&ndash; using the list-inline-item class from bootstrap causes weird behaviours in pdf report-->
+                <!--                    &lt;!&ndash; using the list-inline-item class from bootstrap causes weird
+                behaviours in pdf report-->
                 <!--                         adding d-inline class fixes the problem&ndash;&gt;-->
                 <!--                    <li t-if="company.phone" class="list-inline-item d-inline">-->
                 <!--                        <span class="o_force_ltr" t-field="company.phone"/>-->
@@ -352,14 +472,10 @@
                 <!--                </ul>-->
 
                 <div name="financial_infos">
-                    <span t-field="company.report_footer"/>
+                    <span t-field="company.report_footer" />
                 </div>
-
-                <div t-if="report_type == 'pdf'" class="text-muted">
-                    Page:
-                    <span class="page"/>
-                    /
-                    <span class="topage"/>
+                <div t-if="report_type == 'pdf'" class="text-muted"> Page: <span class="page" /> / <span
+                        class="topage" />
                 </div>
             </div>
         </div>
