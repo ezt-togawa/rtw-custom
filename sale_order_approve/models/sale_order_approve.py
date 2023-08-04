@@ -108,3 +108,14 @@ class sale_report_approve(models.Model):
             if not sale_order.approve_status and sale_order.is_over_price:
                 raise UserError('未承認のため印刷できません。')
         return res
+
+class sale_report_excel(models.AbstractModel):
+    _inherit = 'xlsx.export'
+
+    def export_xlsx(self, template, res_model, res_ids):
+        res = super(sale_report_excel, self).export_xlsx(template, res_model, res_ids)
+        if res_model == 'sale.order':
+            sale_order = self.env[res_model].sudo(False).browse(res_ids)
+            if not sale_order.approve_status and sale_order.is_over_price:
+                raise UserError('未承認のため印刷できません。')
+        return res
