@@ -81,8 +81,7 @@
                                 <field name="last_modified_by_id" string="LastModifiedById"/>
                                 <field name="last_modified_date" string="LastModifiedDate"/>
                                 <field name="progress_check" string="progress check"/>
-
-
+                                <field name="claim_no" widget="html" />
                             </group>
                             <group>
                                 <!--                                <field name="status" string="Status"/>-->
