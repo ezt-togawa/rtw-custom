@@ -301,3 +301,13 @@ class rtw_sf_case(models.Model):
     def _parents_set(self):
         if self.contacts:
             self.accounts = self.contacts.parent_id
+
+    def create_sale_order(self):
+        return {
+            'name': 'Create Sale Order',
+            'view_mode': 'form',
+            'view_id': self.env.ref('sale.view_order_form').id,
+            'res_model': 'sale.order',
+            'res_id': self.env['sale.order'].id,
+            'type': 'ir.actions.act_window',
+        }

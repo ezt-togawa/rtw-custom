@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">view.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_id']" position="after">
+                <field name="sale_id" attrs="{'invisible': 1}" />
+                <field name="sipping_to" attrs="{'invisible': [('sale_id', '=', False)]}" />
+                <field name="shipping_to_text" attrs="{'invisible': [('sale_id', '=', False)]}" />
+                <field name="waypoint" attrs="{'invisible': [('sale_id', '=', False)]}" />
+                <field name="forwarding_address_zip" attrs="{'invisible': [('sale_id', '=', False)]}" />
+                <field name="forwarding_address" attrs="{'invisible': [('sale_id', '=', False)]}" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
