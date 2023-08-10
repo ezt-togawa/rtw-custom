@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_quotation">
+    <template id="report_invoice_2">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="custom_report_rtw.so_ex_layout">
@@ -19,7 +19,7 @@
                             <t t-set="company" t-value="res_company" />
                         </t>
                     </t>
-                    <t t-call="custom_report_rtw.SO_header_layout"></t>
+                    <t t-call="custom_report_rtw.SO_invoice_header_layout"></t>
                     <div class="page">
                         <t
                             t-set="type">quotation</t>
@@ -38,7 +38,7 @@
                         <div class="row" style="margin-top:-50px;font-weight:bold">
                             <div class="col-5">
                                 <div>
-                                    <span class="so_title"
+                                    <span
                                         t-field="docs.company_id.partner_id.name" /> 様 </div>
                                 <div>
                                     <span
@@ -46,9 +46,9 @@
                                 </div>
                                 <br />
                                 <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
-                                    御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br /> <span class="mt-1"
-                                        style="font-size:16px">
-                                        件名 ご自宅用 家具お見積もり</span>
+                                    下記の通り、ご請求申し上げます。<br /> <span class="mt-1"
+                                        style="font-size:16px"> 件名 <span t-esc="docs.title" />
+                                    </span>
                                 </div>
                                 <br />
                                 <div>税抜合計: <span t-field="docs.amount_untaxed" />
@@ -64,25 +64,31 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div>納品希望日： <span t-if="docs.estimated_shipping_date"
+                                <div>お支払期限: <span
+                                        t-if="docs.estimated_shipping_date"
                                         t-esc="docs.estimated_shipping_date.strftime('%Y-%m-%d')" />
                                 </div>
-                                <div> 製作日数： <span t-if="docs.workdays"
-                                        t-esc="docs.workdays" />
+                                <div> お支払内容 : <span t-field="docs.payment_term_id.name" />
                                 </div>
-                                <div> 発注期限： <span t-esc="docs.date_order.strftime('%Y-%m-%d')" />
-                                </div>
+                                <div> お振込先: <span t-esc="docs.partner_id.bank_ids.bank_id.name" />
+                                <div
+                                        t-field="docs.partner_id.bank_ids.bank_id.street" />
+                                <div
+                                        t-field="docs.partner_id.bank_ids.bank_id.street2" />
                                 <div>
-                                    納品場所：
-                                </div>
-                                <div>
-                                    支払条件：
+                                    (普) <span
+                                            t-esc="docs.partner_id.bank_ids.acc_number" />
+
+                                    </div>
                                 </div>
                                 <br />
-                                <div>見積有効期限： <span
-                                        t-field="docs.validity_date" />
+                                <div>納品日: <span
+                                        t-field="docs.estimated_shipping_date" />
                                 </div>
-                                <div> 備考: <span t-field="docs.note" />
+                                <div> 納品場所: <span t-field="docs.forwarding_address" />
+                                <div> 備考: <span
+                                            t-field="docs.note" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-3" name="company_address">
@@ -110,7 +116,7 @@
                             </div>
                         </div>
                         <table
-                            class="table">
+                            class="table mt-1">
                             <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
                                 t-att-last="last">
                                 <t t-set="total_subprice"
@@ -121,13 +127,13 @@
                                     <thead>
                                         <tr
                                             style="background-color:#595959;color:#ffffff;padding:5px 0px 10px 0px;font-size:13px;">
-                                            <th class="text-center" style="width:1%">№</th>
-                                            <th class="text-center" style="width:18%">品名</th>
+                                            <th class="text-center" style="width:2%">№</th>
+                                            <th class="text-center" style="width:20%">品名</th>
                                             <th class="text-center" style="width:20%">品番・サイズ</th>
                                             <th class="text-center" style="width:20%">仕様・詳細</th>
                                             <th class="text-center" style="width:7%">数量</th>
-                                            <th class="text-center" style="width:4%">掛率</th>
-                                            <th class="text-center" style="width:6%">定価</th>
+                                            <th class="text-center" style="width:7%">定価</th>
+                                            <th class="text-center">掛率</th>
                                             <th class="text-center" style="width:13%">販売単価</th>
                                             <th class="text-center" style="width:13%">販売金額</th>
                                         </tr>
@@ -176,18 +182,18 @@
                                             </t>
                                         </td>
                                         <td class="text-center">
-                                            <div id="quote_qty">
+                                            <div id="quote_qty" style="font-size:16px">
                                                 <span
                                                     t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
                                             </div>
                                         </td>
-                                        <td>
-                                            <span t-field="l.discount" />% </td>
                                         <td class="text-center">
                                             <span
                                                 style="font-size:16px"
-                                                t-esc="'{0:,.0f}'.format(l.product_template_id.list_price)" />
+                                                t-esc="l.product_template_id.list_price" />
                                         </td>
+                                        <td class="text-center">
+                                            <span t-field="l.discount" />% </td>
                                         <td class="text-center">
                                             <span
                                                 t-esc="(l.product_template_id.list_price * l.discount/100) if l.discount else l.product_template_id.list_price" />
@@ -213,14 +219,14 @@
                             <span style="font-size:13px"
                                 t-field="docs.name" />
                         </div>
+                        <t t-call="custom_report_rtw.page_footer_layout"></t>
                     </div>
-                    <t t-call="custom_report_rtw.page_footer_layout"></t>
                 </t>
             </t>
         </t>
     </template>
-    <record id="paperformat_quotation_report" model="report.paperformat">
-        <field name="name">Quotation</field>
+    <record id="paperformat_invoice_report" model="report.paperformat">
+        <field name="name">Invoice</field>
         <field name="default" eval="False" />
         <field name="format">custom</field>
         <field name="page_width">210</field>
@@ -235,13 +241,13 @@
         <field name="dpi">90</field>
     </record>
     <report
-        string="御見積書"
-        id="report_quotation_rtw"
+        string="請求書"
+        id="report_invoice_rtw_2"
         model="sale.order"
         report_type="qweb-pdf"
-        name="custom_report_rtw.report_quotation"
-        file="custom_report_rtw.report_quotation"
-        paperformat="paperformat_quotation_report"
+        name="custom_report_rtw.report_invoice_2"
+        file="custom_report_rtw.report_invoice_2"
+        paperformat="paperformat_invoice_report"
     />
 
 </odoo>
