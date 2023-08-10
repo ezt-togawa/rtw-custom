@@ -1,60 +1,69 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="rtw_excel_report.list">
-      <field name="name">rtw_excel_report list</field>
-      <field name="model">rtw_excel_report.rtw_excel_report</field>
+    <record id="sale_view_order_excel_form" model="ir.ui.view">
+      <field name="name">Sale Order RTW</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form" />
       <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
+        <xpath expr="//field[@name='state']" position="after">
+          <field name="sale_order_amount_total" invisible="1" />
+          <field name="sale_order_amount_untaxed" invisible="1" />
+          <field name="sale_order_amount_tax" invisible="1" />
+          <field name="sale_order_fax" invisible="1" />
+          <field name="sale_order_tel" invisible="1" />
+          <field name="sale_order_zip" invisible="1" />
+          <field name="sale_order_current_date" invisible="1" />
+          <field name="sale_order_estimated_shipping_date" invisible="1" />
+          <field name="sale_order_date_order" invisible="1" />
+          <field name="sale_order_company_name" invisible="1" />
+          <field name="sale_order_total_list_price" invisible="1" />
+          <field name="sale_order_total_discount" invisible="1" />
+          <field name="sale_order_validity_date" invisible="1" />
+        </xpath>
       </field>
     </record>
--->
-
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="rtw_excel_report.action_window">
-      <field name="name">rtw_excel_report window</field>
-      <field name="res_model">rtw_excel_report.rtw_excel_report</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="rtw_excel_report.action_server">
-      <field name="name">rtw_excel_report server</field>
-      <field name="model_id" ref="model_rtw_excel_report_rtw_excel_report"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
+    <record id="view_order_form_sale_order_number_and_size" model="ir.ui.view">
+      <field name="name">sale.order.form</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale_sourced_by_line.view_order_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
+          position="before">
+          <field name="sale_order_number_and_size" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+          <field name="sale_order_number_and_size" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
+          position="before">
+          <field name="sale_order_product_detail" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+          <field name="sale_order_product_detail" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
+          position="before">
+          <field name="sale_order_sell_unit_price" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+          <field name="sale_order_sell_unit_price" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
+          position="before">
+          <field name="sale_order_index" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+          <field name="sale_order_index" invisible="1" />
+        </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
+          position="before">
+          <field name="sale_order_name" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+          <field name="sale_order_name" invisible="1" />
+        </xpath>
       </field>
     </record>
--->
 
-    <!-- Top menu item -->
-<!--
-    <menuitem name="rtw_excel_report" id="rtw_excel_report.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="rtw_excel_report.menu_1" parent="rtw_excel_report.menu_root"/>
-    <menuitem name="Menu 2" id="rtw_excel_report.menu_2" parent="rtw_excel_report.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="rtw_excel_report.menu_1_list" parent="rtw_excel_report.menu_1"
-              action="rtw_excel_report.action_window"/>
-    <menuitem name="Server to list" id="rtw_excel_report" parent="rtw_excel_report.menu_2"
-              action="rtw_excel_report.action_server"/>
--->
   </data>
 </odoo>
