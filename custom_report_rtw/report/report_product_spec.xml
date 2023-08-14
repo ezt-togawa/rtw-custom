@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_product_spec">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="custom_report_rtw.so_ex_layout">
+          <t t-set="total_subprice" t-value="0" />
+          <t t-set="total_listprice" t-value="0" />
+          <t t-if="not o" t-set="o" t-value="doc" />
+          <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+              <t t-set="company" t-value="company_id" />
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+              <t t-set="company" t-value="o.company_id.sudo()" />
+            </t>
+            <t t-else="else">
+              <t t-set="company" t-value="res_company" />
+            </t>
+          </t>
+          <t t-call="custom_report_rtw.SO_product_spec_header_layout"></t>
+          <div class="page">
+            <t
+              t-set="type">quotation</t>
+            <t t-set="address">
+              <div t-field="docs.partner_id"
+                t-options='{"widget": "contact", "fields": ["address", "name"],
+                        "no_marker": True}' />
+              <p t-if="docs.partner_id.vat"><t
+                  t-esc="docs.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                  t-field="docs.partner_id.vat" />
+              </p>
+            </t>
+            <div style="margin-top:-50px;font-weight:bold">
+              <div class="so_title"> 件名 <span t-esc="docs.title" />
+              </div>
+            </div>
+            <table class="table table-condensed">
+              <div>
+                <div t-foreach="o.order_line" t-as="l"
+                  class="product-wrap"
+                >
+                  <div
+                    class="product-container">
+                    <div class="row" style="width:100%">
+                      <div class="col-2 product-quantity"
+                      >
+                        <div
+                          class="quantity"
+                          t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                      </div>
+                      <div class="col-10 name">
+                        <span style="font-size:14px;" t-field="l.product_id.name" />
+                        <div> 単価: <span t-field="l.price_unit" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="product-img" t-field="l.product_id.image_256"
+                      t-options='{"widget": "image"}' />
+                    <div class="string-line">
+                      <t
+                        t-foreach="l.product_id.product_template_attribute_value_ids"
+                        t-as="string_line">
+                        <span
+                          t-esc="string_line.display_name" />
+                        <br />
+                      </t>
+                      <t t-foreach="l.config_session_id.custom_value_ids"
+                        t-as="string_line"><span
+                          t-esc="string_line.display_name" />: <span
+                          t-esc="string_line.value" />
+                      <br />
+                      </t>
+                      <t t-if="l.product_id.width > 0">W<span
+                          t-field="l.product_id.width" />
+                      </t>
+                      <t t-if="l.product_id.depth > 0">*D<span
+                          t-field="l.product_id.depth" />
+                      </t>
+                      <t t-if="l.product_id.height > 0">*H<span
+                          t-field="l.product_id.height" />
+                      </t>
+                      <t t-if="l.product_id.sh > 0"> SH<span
+                          t-field="l.product_id.sh" />
+                      </t>
+                      <t t-if="l.product_id.ah > 0"> AH<span
+                          t-field="l.product_id.ah" />
+                      </t>
+                    </div>
+                    <div style="width:100%;margin:0 auto;font-size:14px;">
+                      <div t-foreach="l.product_id.config_image_ids"
+                        t-as="string_line"
+                        class="product-config"
+                      >
+                        <div
+                          class="attribute-img"
+                          t-field="string_line.image_1920"
+                          t-options='{"widget": "image"}' />
+                        <div class="mt-1" t-field="string_line.value_ids" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </table>
+            <div class="d-flex justify-content-end">
+              <span style="font-size:13px"
+                t-field="docs.name" />
+            </div>
+          </div>
+          <t t-call="custom_report_rtw.page_footer_layout"></t>
+        </t>
+      </t>
+    </t>
+  </template>
+  <record id="paperformat_report_product_spec" model="report.paperformat">
+    <field name="name">Product Spec</field>
+    <field name="default" eval="False" />
+    <field name="format">custom</field>
+    <field name="page_width">210</field>
+    <field name="page_height">297</field>
+    <field name="orientation">Portrait</field>
+    <field name="margin_top">20</field>
+    <field name="margin_bottom">10</field>
+    <field name="margin_left">5</field>
+    <field name="margin_right">5</field>
+    <field name="header_line" eval="False" />
+    <field name="header_spacing">12</field>
+    <field name="dpi">90</field>
+  </record>
+  <report
+    string="商品仕様書"
+    id="report_product_spec_2"
+    model="sale.order"
+    report_type="qweb-pdf"
+    name="custom_report_rtw.report_product_spec"
+    file="custom_report_rtw.report_product_spec"
+    paperformat="paperformat_report_product_spec"
+  />
+
+</odoo>
