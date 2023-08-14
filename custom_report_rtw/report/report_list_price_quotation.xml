@@ -127,7 +127,7 @@
                                     <t t-set="total_subprice"
                                         t-value="total_subprice + l.price_subtotal" />
                                     <t t-set="total_listprice"
-                                        t-value="total_listprice + l.product_template_id.list_price" />
+                                        t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                                     <t t-set="total_discount"
                                         t-value="total_discount + (l.price_unit - l.price_reduce) * l.product_uom_qty" />
                                     <td t-esc="l_index+1" class="text-center">
@@ -179,7 +179,7 @@
                                     </td>
                                     <td class="text-center">
                                         <span
-                                            t-esc="l.product_template_id.list_price" />
+                                            t-esc="l.price_unit" />
                                     </td>
                                     <td class="text-center">
                                         <span

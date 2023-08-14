@@ -109,7 +109,7 @@
                 <t t-set="total_subprice"
                   t-value="total_subprice + l.price_subtotal" />
                 <t t-set="total_listprice"
-                  t-value="total_listprice + l.product_template_id.list_price" />
+                  t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                 <t t-if="l_index == 0">
                   <thead>
                     <tr
@@ -120,7 +120,7 @@
                       <th class="text-center" style="width:10%">摘要</th>
                       <th class="text-center" style="width:7%">数量</th>
                       <th class="text-center" style="width:3%"></th>
-                      <th class="text-center">単価</th>
+                      <th class="text-center" style="width:5%">単価</th>
                       <th class="text-center" style="width:10%">発注金額</th>
                       <th class="text-center" style="width:10%">メモ</th>
                     </tr>
@@ -132,6 +132,8 @@
                     </td>
                     <td>
                       <span t-field="l.name" />
+                      <br />
+                      <span t-if="l.p_type" t-field="l.p_type" />
                       <br />
                       <t t-if="l.product_id.width > 0">W<span
                           t-field="l.product_id.width" />
@@ -206,6 +208,10 @@
             <div class="d-flex justify-content-end">
               <div>販売価格合計 : <span
                   t-esc="docs.amount_untaxed" /></div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <span style="font-size:13px"
+                t-field="docs.name" />
             </div>
           </div>
           <t t-call="custom_report_rtw.page_footer_layout"></t>

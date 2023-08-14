@@ -116,7 +116,7 @@
                                 <t t-set="total_subprice"
                                     t-value="total_subprice + l.price_subtotal" />
                                 <t t-set="total_listprice"
-                                    t-value="total_listprice + l.product_template_id.list_price" />
+                                    t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                                 <t t-if="l_index == 0">
                                     <thead>
                                         <tr
@@ -182,15 +182,15 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span t-field="l.discount" />% </td>
+                                            <span t-esc="'{0:,.2f}'.format(l.discount)" />% </td>
                                         <td class="text-center">
                                             <span
                                                 style="font-size:16px"
-                                                t-esc="'{0:,.0f}'.format(l.product_template_id.list_price)" />
+                                                t-esc="'{0:,.0f}'.format(l.price_unit)" />
                                         </td>
                                         <td class="text-center">
                                             <span
-                                                t-esc="(l.product_template_id.list_price * l.discount/100) if l.discount else l.product_template_id.list_price" />
+                                                t-esc="'{0:,.2f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else l.price_unit" />
                                         </td>
                                         <td class="text-center">
                                             <span
