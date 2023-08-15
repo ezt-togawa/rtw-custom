@@ -36,7 +36,7 @@
               class="row zero_min_height">
             </div>
             <div class="row" style="margin-top:-50px;font-weight:bold">
-              <div class="col-5">
+              <div class="col-4">
                 <div> 発注番号 <span class="so_title"
                     t-field="docs.name" />
                 </div>
@@ -62,9 +62,9 @@
                 class="col-4">
 
               </div>
-              <div class="col-3" name="company_address">
+              <div class="col-4" name="company_address">
                 <div>
-                  <img style="width:100%"
+                  <img style="width:50%"
                     src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
                     alt="Logo" />
                 </div>
@@ -87,7 +87,7 @@
               </div>
             </div>
             <div class="row py-2">
-              <div class="col-6">
+              <div class="col-4">
                 <div> 送り先: <span t-field="docs.partner_id.name" />
                 </div>
                 <div> 住所: <span t-field="docs.partner_id.street" />
@@ -97,9 +97,12 @@
                 <div> 送り先注記: <span t-field="docs.shipping_to_text" />
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-4">
                 <div> 備考: <span t-field="docs.note" />
                 </div>
+              </div>
+              <div class="col-4">
+
               </div>
             </div>
             <table
@@ -225,7 +228,7 @@
     <field name="format">custom</field>
     <field name="page_width">210</field>
     <field name="page_height">297</field>
-    <field name="orientation">Portrait</field>
+    <field name="orientation">Landscape</field>
     <field name="margin_top">20</field>
     <field name="margin_bottom">10</field>
     <field name="margin_left">5</field>
