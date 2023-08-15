@@ -93,11 +93,13 @@
                         t-as="string_line"
                         class="product-config"
                       >
-                        <div
-                          class="attribute-img"
-                          t-field="string_line.image_1920"
-                          t-options='{"widget": "image"}' />
-                        <div class="mt-1" t-field="string_line.value_ids" />
+                        <t t-if="string_line_index &lt; 4">
+                          <div
+                            class="attribute-img"
+                            t-field="string_line.image_1920"
+                            t-options='{"widget": "image"}' />
+                          <div class="mt-1" t-field="string_line.value_ids" />
+                        </t>
                       </div>
                     </div>
                   </div>
