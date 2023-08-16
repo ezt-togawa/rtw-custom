@@ -185,16 +185,9 @@
                     </td>
                     <td class="text-center">
                       <div>
-                        <t t-if="l.product_id.two_legs_scale > 0">
-                          <span
-                            style="font-size:14px"
-                            t-esc="math.ceil(l.product_uom_qty / l.product_id.two_legs_scale)" />
-                        </t>
-                        <t t-else="else">
-                          <span
-                            style="font-size:14px"
-                            t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
-                        </t>
+                        <span
+                          style="font-size:14px"
+                          t-esc="'{0:,.0f}'.format(l.calculate_packages)" />
                       </div>
                     </td>
                     <td class="text-center">
