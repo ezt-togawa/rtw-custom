@@ -1,0 +1,250 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_spec_rtw
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-15 02:52+0000\n"
+"PO-Revision-Date: 2023-05-15 02:52+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__two_legs_scale
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__two_legs_scale
+msgid "2Legs Scale"
+msgstr "Scala 2Legs"
+
+#. module: product_spec_rtw
+#: model_terms:ir.ui.view,arch_db:product_spec_rtw.product_template_view_form_inherit
+msgid "BOM info"
+msgstr "Informazioni sulla distinta base"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__catalog
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__catalog
+msgid "Catalog"
+msgstr ""
+
+#. module: product_spec_rtw
+#: model:ir.model,name:product_spec_rtw.model_product_classification
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__classification
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__classification
+msgid "Classification"
+msgstr "Catalogo"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_catalog__create_uid
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_classification__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_catalog__create_date
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_classification__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_catalog__display_name
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_classification__display_name
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__display_name
+#: model:ir.model.fields,field_description:product_spec_rtw.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_catalog__id
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_classification__id
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__id
+#: model:ir.model.fields,field_description:product_spec_rtw.field_sale_order_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__lx_key_figure
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__lx_key_figure
+msgid "LX Key Figure"
+msgstr "Figura chiave LX"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_catalog____last_update
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_classification____last_update
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template____last_update
+#: model:ir.model.fields,field_description:product_spec_rtw.field_sale_order_line____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_catalog__write_uid
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_classification__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento da"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_catalog__write_date
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_classification__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__minimum_scale
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__minimum_scale
+msgid "Minimum scale"
+msgstr "Scala minima"
+
+#. module: product_spec_rtw
+#: model:ir.model,name:product_spec_rtw.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Linea ordine di vendita"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__ah
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__ah
+msgid "arm height"
+msgstr "altezza del braccio"
+
+#. module: product_spec_rtw
+#: model:ir.model,name:product_spec_rtw.model_product_catalog
+msgid "catalog"
+msgstr "catalogo"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__cloth
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__cloth
+msgid "cloth A(m)"
+msgstr "tessuto A(m)"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__cloth_b
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__cloth_b
+msgid "cloth B(m)"
+msgstr "tessuto B(m)"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__depth
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__depth
+msgid "depth"
+msgstr "profondità"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__height
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__height
+msgid "height"
+msgstr "altezza"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__kubun
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__kubun
+msgid "kubun"
+msgstr "kubun"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__leather_ds
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__leather_ds
+msgid "leather(ds)"
+msgstr "pelle(ds)"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__leather
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__leather
+msgid "leather(sheet)"
+msgstr "pelle (foglio)"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_catalog__name
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_classification__name
+msgid "name"
+msgstr "nome"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__necessary_length_of_the_cloth_a
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__necessary_length_of_the_cloth_a
+msgid "necessary length of the cloth A"
+msgstr "lunghezza necessaria del tessuto A"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__necessary_length_of_the_cloth_b
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__necessary_length_of_the_cloth_b
+msgid "necessary length of the cloth B"
+msgstr "lunghezza necessaria del tessuto B"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_sale_order_line__print_description
+msgid "print description"
+msgstr "descrizione della stampa"
+
+#. module: product_spec_rtw
+#: model_terms:ir.ui.view,arch_db:product_spec_rtw.sale_view_order_line_form
+msgid "print_description"
+msgstr "stampa descrizione"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__product_no
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__product_no
+msgid "product no"
+msgstr "prodotto no"
+
+#. module: product_spec_rtw
+#: model:ir.model,name:product_spec_rtw.model_product_template
+msgid "product_spec_rtw.product_spec_rtw"
+msgstr "prodotto_spec_rtw.prodotto_spec_rtw"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__sai
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__sai
+msgid "sai"
+msgstr "sai"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__series
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__series
+msgid "series"
+msgstr "serie"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__sh
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__sh
+msgid "sheet height"
+msgstr "altezza del foglio"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__shipping_cost_unit_price
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__shipping_cost_unit_price
+msgid "shipping cost unit price"
+msgstr "costo di spedizione prezzo unitario"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__storage_location
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__storage_location
+msgid "storage location"
+msgstr "posizione di stoccaggio"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__summary
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__summary
+#: model_terms:ir.ui.view,arch_db:product_spec_rtw.product_template_view_form_inherit
+msgid "summary"
+msgstr "sintesi"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_product__width
+#: model:ir.model.fields,field_description:product_spec_rtw.field_product_template__width
+msgid "width"
+msgstr "larghezza"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields.selection,name:product_spec_rtw.selection__product_template__kubun__bom
+msgid "構成品"
+msgstr "componente"
+
+#. module: product_spec_rtw
+#: model:ir.model.fields.selection,name:product_spec_rtw.selection__product_template__kubun__product
+msgid "製品"
+msgstr "Prodotto"

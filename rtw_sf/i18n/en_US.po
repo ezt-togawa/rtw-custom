@@ -1,0 +1,3541 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_sf
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-25 03:41+0000\n"
+"PO-Revision-Date: 2023-04-25 03:41+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__2
+msgid "(R)SR"
+msgstr "(R)SR"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__47
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__54
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__1
+msgid "(R)WEBページ"
+msgstr "(R)WEB page"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__1
+msgid "(営業）業務・手配ミス"
+msgstr "(Sales) Business/arrangement errors"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__9
+msgid "10"
+msgstr "10"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__13
+msgid "16"
+msgstr "16"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__10
+msgid "18"
+msgstr "18"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_res_partner__evaluation
+#: model:ir.model.fields,help:rtw_sf.field_res_users__evaluation
+msgid "2015年～2017年　売上金額ベースの評価"
+msgstr "2015-2017 Evaluation based on sales value"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "<span class=\"o_stat_text\">Case</span>"
+msgstr "<span class=\"o_stat_text\">Case</span>"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_res_partner__dm_unknown
+#: model:ir.model.fields,help:rtw_sf.field_res_users__dm_unknown
+msgid ">DM欄　未記入"
+msgstr ">DM column Blank"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__accounts
+msgid "Account"
+msgstr "Client"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__account_id
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__account_id
+msgid "AccountId"
+msgstr "ClientID"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__account_number
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__account_number
+msgid "AccountNumber"
+msgstr "ClientNo"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_needaction
+msgid "Action Needed"
+msgstr "Action Needed"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_ids
+msgid "Activities"
+msgstr "Activities"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Activity Exception Decoration"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_state
+msgid "Activity State"
+msgstr "Activity State"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Activity Type Icon"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Additional Information"
+msgstr "Additional Information"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__annual_revenue
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__annual_revenue
+msgid "AnnualRevenue"
+msgstr "AnnualRevenue"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__32
+msgid "Archiproducts"
+msgstr "Archiproducts"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__31
+msgid "Architonic"
+msgstr "Architonic"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__archive
+msgid "Archive"
+msgstr "Archive"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_attachment_count
+msgid "Attachment Count"
+msgstr "Attachment Count"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__evaluation__a
+msgid "A優良顧客"
+msgstr "A Excellent customer"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__birthdate
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__birthdate
+msgid "Birthdate"
+msgstr "Birthdate"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__evaluation__b
+msgid "B平均的"
+msgstr "B average"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__8
+msgid "CasaBRUTUS"
+msgstr "CasaBRUTUS"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Case Details"
+msgstr "Case Details"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__case_no
+msgid "CaseNumber"
+msgstr "CaseNumber"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__closed_date
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "ClosedDate"
+msgstr "ClosedDate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__color
+msgid "Color"
+msgstr "Color"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__condition
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__condition
+msgid "Condition"
+msgstr "Condition"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mc_subscriber
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mc_subscriber
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__contacts
+msgid "Contact"
+msgstr "Contact"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Cost/percentage of fault"
+msgstr "Cost/percentage of fault"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_channel__create_uid
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__create_uid
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_contact_type__create_uid
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_transactions__create_uid
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__create_uid
+msgid "Created by"
+msgstr "Created by"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_channel__create_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__create_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_contact_type__create_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_transactions__create_date
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__create_date
+msgid "Created on"
+msgstr "Created on"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__created_by_id
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "CreatedById"
+msgstr "CreatedById"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__created_date
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list
+msgid "CreatedDate"
+msgstr "CreatedDate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__crm_id
+msgid "Crm"
+msgstr "Crm"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_res_partner__gift
+#: model:ir.model.fields,help:rtw_sf.field_res_users__gift
+msgid ""
+"Customers, business partners, and suppliers who need to send gifts, gifts, "
+"mid-year gifts, New Year's gifts, and year-end gifts"
+msgstr ""
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__evaluation__c
+msgid "C見込み有"
+msgstr "C. Prospective"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__12
+msgid "DESIGNART"
+msgstr "DESIGNART"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__6
+msgid "DM"
+msgstr "DM"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__14
+msgid "DM・ニュースレター"
+msgstr "DM/Newsletters"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Delivery Information"
+msgstr "Delivery Information"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__department
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__department
+msgid "Department"
+msgstr "Department"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__description
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__description
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__description
+msgid "Description"
+msgstr "Description"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__display_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_channel__display_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__display_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_contact_type__display_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_transactions__display_name
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__do_not_call
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__do_not_call
+msgid "DoNotCall"
+msgstr "DoNotCall"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__evaluation__d
+msgid "D見込み無"
+msgstr "D No prospects"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__41
+msgid "Email"
+msgstr "Email"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__email_bounced_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__email_bounced_date
+msgid "EmailBouncedDate"
+msgstr "EmailBouncedDate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__email_bounced_reason
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__email_bounced_reason
+msgid "EmailBouncedReason"
+msgstr "EmailBouncedReason"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__web__fb
+msgid "FB"
+msgstr "FB"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__36
+msgid "Fax"
+msgstr "Fax"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__initial_explanation_by_person
+msgid "Field10__c"
+msgstr "Initial explanation (person in charge)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__action_details_by_quality_control
+msgid "Field11__c"
+msgstr "Action taken (product management)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__total_sales
+msgid "Field12__c"
+msgstr "Total Sales"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__coping_cost
+msgid "Field13__c"
+msgstr "Coping cost"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__order_no
+msgid "Field1__c"
+msgstr "Order number"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__cause_company_name
+msgid "Field24__c"
+msgstr "Name of the company causing the problem"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__cause_person_name
+msgid "Field30__c"
+msgstr "Name of the person responsible for the cause"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__billing_coping_cost
+msgid "Field31__c"
+msgstr "Claims handling costs"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__report_date
+msgid "Field34__c"
+msgstr "Date of report"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__Initial_response_date_by_person
+msgid "Field35__c"
+msgstr "Date of initial response (person in charge)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__Initial_response_date_by_quality_control
+msgid "Field36__c"
+msgstr "Date of initial response (product control)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__double_cause
+msgid "Field37__c"
+msgstr "Duplicate Cause List"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__freight_cost
+msgid "Field41__c"
+msgstr "Freight cost"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__billed_freight_cost
+msgid "Field42__c"
+msgstr "Billed Freight Cost"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__sales_department_comments
+msgid "Field44__c"
+msgstr "Sales Department Comments"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__cooperative_factory_opinion
+msgid "Field45__c"
+msgstr "Cooperating Factories Opinion"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__manufacturing_department_status
+msgid "Field46__c"
+msgstr "Manufacturing Department Status"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__product_category
+msgid "Field47__c"
+msgstr "Product Category"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__product_name
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__product_name2
+msgid "Field48__c"
+msgstr "Product Name"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__product_number
+msgid "Field49__c"
+msgstr "Part number"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__delivery_prefectures
+msgid "Field4__c"
+msgstr "State/Province to be delivered"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__specification
+msgid "Field50__c"
+msgstr "Specification"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__quantity
+msgid "Field51__c"
+msgstr "Quantity"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__discoverer
+msgid "Field52__c"
+msgstr "Finder"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__occurrence_status
+msgid "Field53__c"
+msgstr "Occurrence"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__carrier
+msgid "Field54__c"
+msgstr "Transportation and delivery company"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__delivery_municipality
+msgid "Field55__c"
+msgstr "Delivery destination municipality county"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__delivery_type
+msgid "Field56__c"
+msgstr "Delivery type"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__delivery_product_name
+msgid "Field57__c"
+msgstr "Product Name"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__reporter
+msgid "Field58__c"
+msgstr "Whistleblower"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__support
+msgid "Field59__c"
+msgstr "Support"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__delivery_date
+msgid "Field5__c"
+msgstr "Supplier No."
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__quality_control_comments
+msgid "Field60__c"
+msgstr "Quality control comments"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__cause_by_quality_control
+msgid "Field61__c"
+msgstr "Cause (product control verification)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__double_cause_by_quality_control
+msgid "Field62__c"
+msgstr "Cause of duplication (product control verification)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__follow_up_report_by_person
+msgid "Field63__c"
+msgstr "Continued (by person in charge)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__size
+msgid "Field65__c"
+msgstr "Size"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__probate_by_president
+msgid "Field6__c"
+msgstr "Probate of the President"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__progress_check
+msgid "Field77__c"
+msgstr "Progress Check"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__accounting_department_probate
+msgid "Field7__c"
+msgstr "Accounting Department Probate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__sales_department_probate
+msgid "Field8__c"
+msgstr "Sales Department Probate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__manufacturing_department_probate
+msgid "Field9__c"
+msgstr "Manufacturing Department Verification"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__final_cost_total_sales
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Final cost/total sales"
+msgstr "Final cost/total sales"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__first_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__first_name
+msgid "FirstName"
+msgstr "FirstName"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_follower_ids
+msgid "Followers"
+msgstr "Followers"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Followers (Channels)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Followers (Partners)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Font awesome icon e.g. fa-tasks"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__web__google
+msgid "Google検索"
+msgstr "Google Search"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__17
+msgid "G住宅ﾎﾟｲﾝﾄ"
+msgstr "G Housing Point"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__26
+msgid "HM/ビルダー先"
+msgstr "HM/Builder Destination"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__has_comments_unread_by_owner
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "HasCommentsUnreadByOwner"
+msgstr "HasCommentsUnreadByOwner"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__opt_out_email
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__opt_out_email
+msgid "HasOptedOutOfEmail"
+msgstr "HasOptedOutOfEmail"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__opt_out_fax
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__opt_out_fax
+msgid "HasOptedOutOfFax"
+msgstr "HasOptedOutOfFax"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__has_self_service_comments
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "HasSelfServiceComments"
+msgstr "HasSelfServiceComments"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__home_phone
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__home_phone
+msgid "HomePhone"
+msgstr "HomePhone"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__2
+msgid "I'm home."
+msgstr "I'm home."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__discoverer__2
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reporter__2
+msgid "IC・設計・建築家"
+msgstr "IC, Design, Architect"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__7
+msgid "IC事務所"
+msgstr "IC Office"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__id
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_channel__id
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__id
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_contact_type__id
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_transactions__id
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__display_id
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__haihai_id
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__haihai_id
+msgid "ID__c"
+msgstr "Layout ID"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__8
+msgid "ID事務所"
+msgstr "ID Office"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__43
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__50
+msgid "IFFT2007(sozo_comm)"
+msgstr "IFFT2007(sozo_comm)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_exception_icon
+msgid "Icon"
+msgstr "Icon"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icon to indicate an exception activity."
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__message_needaction
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "If checked, new messages require your attention."
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__message_has_error
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "If checked, some messages have a delivery error."
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__Influencers
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__Influencers
+msgid "Influencers"
+msgstr "Influencers"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Initial response date by person"
+msgstr "Initial response date by person"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Initial response date by quality control"
+msgstr "Initial response date by quality control"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_is_follower
+msgid "Is Follower"
+msgstr "Is Follower"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__isclosed
+msgid "IsClosed"
+msgstr "IsClosed"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__is_closed_on_create
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "IsClosedOnCreate"
+msgstr "Create Simultaneous Completion Flag"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__is_deleted
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__is_deleted
+msgid "IsDeleted"
+msgstr "IsDeleted"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__is_escalated
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "IsEscalated"
+msgstr "Escalation Flags"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__is_self_service_closed
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "IsSelfServiceClosed"
+msgstr "Self completion"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__is_visible_in_self_service
+msgid "IsVisibleInSelfService"
+msgstr "Self service display"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner____last_update
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_channel____last_update
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition____last_update
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_contact_type____last_update
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_transactions____last_update
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case____last_update
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_channel__write_uid
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__write_uid
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_contact_type__write_uid
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_transactions__write_uid
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__write_uid
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_channel__write_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__write_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_contact_type__write_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_transactions__write_date
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__write_date
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__last_cu_request_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__last_cu_request_date
+msgid "LastCURequestDate"
+msgstr "LastCURequestDate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__last_cu_update_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__last_cu_update_date
+msgid "LastCUUpdateDate"
+msgstr "LastCUUpdateDate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__last_modified_by_id
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "LastModifiedById"
+msgstr "Last Modified By"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__last_modified_date
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "LastModifiedDate"
+msgstr "LastModifiedDate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__last_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__last_name
+msgid "LastName"
+msgstr "LastName"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__lead_source
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__lead_source
+msgid "LeadSource"
+msgstr "LeadSource"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mailing_city
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mailing_city
+msgid "MailingCity"
+msgstr "MailingCity"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mailing_country
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mailing_country
+msgid "MailingCountry"
+msgstr "MailingCountry"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mailing_postal_code
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mailing_postal_code
+msgid "MailingPostalCode"
+msgstr "MailingPostalCode"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mailing_state
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mailing_state
+msgid "MailingState"
+msgstr "MailingState"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mailing_street
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mailing_street
+msgid "MailingStreet"
+msgstr "MailingStreet"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Main Attachment"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_has_error
+msgid "Message Delivery error"
+msgstr "Message Delivery error"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_ids
+msgid "Messages"
+msgstr "Messages"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "My Activity Deadline"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__rel_industry
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_condition__name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__rel_industry
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "Name"
+msgstr "Name"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Next Activity Deadline"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_summary
+msgid "Next Activity Summary"
+msgstr "Next Activity Summary"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_type_id
+msgid "Next Activity Type"
+msgstr "Next Activity Type"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Number of Actions"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_has_error_counter
+msgid "Number of errors"
+msgstr "Number of errors"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Number of messages which requires an action"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Number of messages with delivery error"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Number of unread messages"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__number_of_employees
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__number_of_employees
+msgid "NumberOfEmployees"
+msgstr "NumberOfEmployees"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__20
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__7
+msgid "OEM"
+msgstr "OEM"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "Open"
+msgstr "Open"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__origin
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Origin"
+msgstr "Origin"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__other_city
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__other_city
+msgid "OtherCity"
+msgstr "OtherCity"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__other_country
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__other_country
+msgid "OtherCountry"
+msgstr "OtherCountry"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__other_phone
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__other_phone
+msgid "OtherPhone"
+msgstr "OtherPhone"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__other_postal_code
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__other_postal_code
+msgid "OtherPostalCode"
+msgstr "OtherPostalCode"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__other_state
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__other_state
+msgid "OtherState"
+msgstr "OtherState"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__other_street
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__other_street
+msgid "OtherStreet"
+msgstr "OtherStreet"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__owner_id
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_new
+msgid "OwnerId"
+msgstr "Case owner"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__parents
+msgid "Parents"
+msgstr "Parents"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__partner_ids
+msgid "Partner"
+msgstr "Partner"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__7
+msgid "Pen"
+msgstr "Pen"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__phone_code
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__phone_code
+msgid "Phone Code"
+msgstr "Phone Code"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__priority
+msgid "Priority"
+msgstr "Priority"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__18
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "ROC"
+msgstr "ROC"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__rating
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__rating
+msgid "Rating"
+msgstr "Rating"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__reason
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Reason"
+msgstr "Reason"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__record_type
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__record_type
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__record_type_id
+msgid "RecordTypeId"
+msgstr "RecordType"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__region
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__region
+msgid "Region"
+msgstr "Region"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__reports_to_id
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__reports_to_id
+msgid "ReportsToId"
+msgstr "ReportsTo"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__activity_user_id
+msgid "Responsible User"
+msgstr "Responsible User"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__38
+msgid "Ritzwell"
+msgstr "Ritzwell"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__38
+msgid "RitzwellWebフォーム"
+msgstr "RitzwellWeb Forms"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_res_partner__r_owner
+#: model:ir.model.fields,help:rtw_sf.field_res_users__r_owner
+msgid "Ritzwell家具の購入実績がある"
+msgstr "Ritzwell Furniture has a history of purchasing Ritzwell Furniture."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__20
+msgid "Rオーナー(追加・リピート)"
+msgstr "R-owner (add/repeat)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__21
+msgid "Rオーナー（アフター）"
+msgstr "R-owner (after)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__10
+msgid "R友人"
+msgstr "R friend"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__7
+msgid "R関係者"
+msgstr "R officials"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "SMS Delivery error"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__10
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__5
+msgid "SNS"
+msgstr "SNS"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_rtw_case_search
+msgid "Search contacts"
+msgstr "Search contacts"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__site
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__site
+msgid "Site"
+msgstr "Site"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__status
+msgid "Status"
+msgstr "Status"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__subject
+msgid "Subject"
+msgstr "Subject"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Supplied Company"
+msgstr "Supplied Company"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Supplied Email"
+msgstr "Supplied Email"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Supplied Name"
+msgstr "Supplied Name"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Supplied Phone"
+msgstr "Supplied Phone"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__supplied_company
+msgid "SuppliedCompany"
+msgstr "SuppliedCompany"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__supplied_email
+msgid "SuppliedEmail"
+msgstr "SuppliedEmail"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__supplied_name
+msgid "SuppliedName"
+msgstr "SuppliedName"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__supplied_phone
+msgid "SuppliedPhone"
+msgstr "SuppliedPhone"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__system_mod_stamp
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "SystemModstamp"
+msgstr "SystemModstamp"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__11
+msgid "TABROOM"
+msgstr "TABROOM"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__ticker_symbol
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__ticker_symbol
+msgid "TickerSymbol"
+msgstr "Stock code"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_transactions__name
+msgid "Transactions"
+msgstr "Transactions"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__web__twitter
+msgid "Twitter"
+msgstr "Twitter"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__type
+msgid "Type"
+msgstr "Type"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Type of the exception activity on record."
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_unread
+msgid "Unread Messages"
+msgstr "Unread Messages"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Unread Messages Counter"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "Verification results"
+msgstr "Verification results"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__18
+msgid "WEB・グラフィックデザイナー"
+msgstr "WEB/Graphic Designer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__origin__8
+msgid "Web"
+msgstr "Web"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__website_message_ids
+msgid "Website Messages"
+msgstr "Website Messages"
+
+#. module: rtw_sf
+#: model:ir.model.fields,help:rtw_sf.field_rtw_sf_case__website_message_ids
+msgid "Website communication history"
+msgstr "Website communication history"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__9
+msgid "Web検索サイト"
+msgstr "Web search site"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__joint_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__joint_name
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__cope_order_no_1
+msgid "X1__c"
+msgstr "Joint names1"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__x20
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__x20
+msgid "X20__c"
+msgstr "20's"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__cope_order_no_2
+msgid "X2__c"
+msgstr "Action Order No. 2"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__x30
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__x30
+msgid "X30__c"
+msgstr "30's"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__cope_order_no_3
+msgid "X3__c"
+msgstr "Action Order No. 3"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__x40
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__x40
+msgid "X40__c"
+msgstr "40's"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__x50
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__x50
+msgid "X50__c"
+msgstr "50's"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__x60
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__x60
+msgid "X60__c"
+msgstr "60's"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__x70
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__x70
+msgid "X70__c"
+msgstr "70's"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__x80
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__x80
+msgid "X80__c"
+msgstr "80's"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__web__youtube
+msgid "Youtube"
+msgstr "Youtube"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "account"
+msgstr "Account"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "account info"
+msgstr "Account info"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "account_id"
+msgstr "Account name"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "account_number"
+msgstr "Account number"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "accounting department probate"
+msgstr "Accounting department probate"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "action details by quality control"
+msgstr "Action taken (product management)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__action_1
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__action_1
+msgid "action1"
+msgstr "Action①"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__action_2
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__action_2
+msgid "action2"
+msgstr "Action②"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__address_confirmation_required
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__address_confirmation_required
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "address_confirmation_required"
+msgstr "Address confirmation required"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__age
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__age
+msgid "age"
+msgstr "Age"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "annual_revenue"
+msgstr "Annual revenue"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "billed freight cost"
+msgstr "Billed freight cost"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "billing coping cost"
+msgstr "Billing coping cost"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "birthdate"
+msgstr "Birthdate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__calender
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__calender
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "calender"
+msgstr "Calender"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__campaign_1
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__campaign_1
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "campaign_1"
+msgstr "Main Campaign 1"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__campaign_2
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__campaign_2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "campaign_2"
+msgstr "Main Campaign 2"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "carrier"
+msgstr "Carrier"
+
+#. module: rtw_sf
+#: model:ir.actions.act_window,name:rtw_sf.action_case_tree
+#: model:ir.model,name:rtw_sf.model_rtw_sf_case
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__case
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__case
+#: model:ir.ui.menu,name:rtw_sf.menu_case_root
+#: model:ir.ui.menu,name:rtw_sf.menu_case_tree
+#: model:ir.ui.menu,name:rtw_sf.menu_case_tree_crm
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "case"
+msgstr "Case"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__case_count
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__case_count
+msgid "case count"
+msgstr "Case count"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__categorization
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__categorization
+msgid "categorization"
+msgstr "Classification"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "cause by quality control"
+msgstr "Cause (product control verification)"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "cause company name"
+msgstr "Cause company name"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "cause person name"
+msgstr "Cause person name"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__change
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__change
+msgid "change"
+msgstr "Change"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__channel
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__rel_channel
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_channel__name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__channel
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__rel_channel
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "channel"
+msgstr "Channel"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__company_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__company_name
+msgid "company_name"
+msgstr "Company_name"
+
+#. module: rtw_sf
+#: model:ir.actions.act_window,name:rtw_sf.action_condition_tree
+#: model:ir.model,name:rtw_sf.model_res_partner_condition
+#: model:ir.ui.menu,name:rtw_sf.menu_condition_tree
+msgid "condition"
+msgstr "Condition"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "contact"
+msgstr "Contact"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "contact info"
+msgstr "Contact info"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "contact_type"
+msgstr "Contact type"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "cooperative factory opinion"
+msgstr "Cooperative factory opinion"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "cope order no 1"
+msgstr "Cope order no 1"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "cope order no 2"
+msgstr "Cope order no 2"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "cope order no 3"
+msgstr "Cope order no 3"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "coping cost"
+msgstr "Coping cost"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__corporate_mail
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__corporate_mail
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "corporate_mail"
+msgstr "Corporate mail"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "crm_id"
+msgstr "Crm_id"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__cs_number
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__cs_number
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "cs_number"
+msgstr "Cs_number"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__cumulative_sales
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__cumulative_sales
+msgid "cumulative_sales"
+msgstr "Cumulative_sales"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "delivery date"
+msgstr "Delivery date"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "delivery municipality"
+msgstr "Delivery municipality"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "delivery prefectures"
+msgstr "Delivery prefectures"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "delivery product name"
+msgstr "Delivery product name"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "delivery type"
+msgstr "Delivery type"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "department"
+msgstr "Department"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "description"
+msgstr "Description"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "discoverer"
+msgstr "Discoverer"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__dm_unknown
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__dm_unknown
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "dm_unknown"
+msgstr "DM unknown"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__do_not_dm
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__do_not_dm
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "do_not_dm"
+msgstr "Do not DM"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "double cause"
+msgstr "Double cause"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "double cause by quality control"
+msgstr "Duplicate cause (product control verification)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__dummy
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__dummy
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "dummy"
+msgstr "Dummy"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__evaluation
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__evaluation
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "evaluation"
+msgstr "Evaluation"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__fare_payment_terms
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__fare_payment_terms
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "fare_payment_terms"
+msgstr "Fare payment terms"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__fax
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__fax
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_list_sf
+msgid "fax"
+msgstr "FAX"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "follow up report by person"
+msgstr "Continued (by person in charge)"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "freight cost"
+msgstr "Freight cost"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__gender
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "gender"
+msgstr "Gender"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__gift
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__gift
+msgid "gift"
+msgstr "Gift"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__group
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__group
+msgid "group"
+msgstr "Group"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__haihai_count
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__haihai_count
+msgid "haihai_count"
+msgstr "Haihai count"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "haihai_id"
+msgstr "Haihai id"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__haihai_open_count
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__haihai_open_count
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "haihai_open_count"
+msgstr "Haihai open count"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "home_phone"
+msgstr "Home phone"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__in_has
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__in_has
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "in_has"
+msgstr "R In-house Owner"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "industry"
+msgstr "Industry"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "initial explanation by person"
+msgstr "Initial explanation (person in charge)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__web__insta
+msgid "insta"
+msgstr "Insta"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__interest_roc
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__interest_roc
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "interest_roc"
+msgstr "Interests（ROC)"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "is visible in self service"
+msgstr "Display Confirmation"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "isclosed"
+msgstr "Completed flag"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "joint_name"
+msgstr "Joint name"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__kana
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__kana
+msgid "kana"
+msgstr "Kana"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__key_man
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__key_man
+msgid "key_man"
+msgstr "Key man"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__kin
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__kin
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "kin"
+msgstr "Relatives (relatives/family)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__kubun
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__kubun
+msgid "kubun"
+msgstr "Classification"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__last_contract_date
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__last_contract_date
+msgid "last_contract_date"
+msgstr "Last contract date"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "lead_source"
+msgstr "Lead source"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__lead_source_roc
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__lead_source_roc
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "lead_source_roc"
+msgstr "Lead source（ROC)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mail2
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mail2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "mail2"
+msgstr "Mail2"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mail3
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mail3
+msgid "mail3"
+msgstr "Mail3"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mail_1_2
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mail_1_2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "mail_1_2"
+msgstr "Mail 1 & 2"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__mail_change
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__mail_change
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "mail_change"
+msgstr "Mail change"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "mailing_city"
+msgstr "Mailing city"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "mailing_country"
+msgstr "Mailing country"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "mailing_postal_code"
+msgstr "Mailing postal code"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "mailing_state"
+msgstr "Mailing state"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "mailing_street"
+msgstr "Mailing street"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "manufacturing department probate"
+msgstr "Manufacturing department probate"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "manufacturing department status"
+msgstr "Manufacturing department status"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__maternity_leave_and_vacation
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__maternity_leave_and_vacation
+msgid "maternity_leave_and_vacation"
+msgstr "Maternity leave and vacation"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__media_name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__media_name
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "media_name"
+msgstr "Media name"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__multiplier_black
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__multiplier_black
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "multiplier_black"
+msgstr "Multiplier (black)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__multiplier_green
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__multiplier_green
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "multiplier_green"
+msgstr "Multiplier (green)"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__need_dm
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__need_dm
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "need_dm"
+msgstr "Direct mail request"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__no_hyphen_mobile
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__no_hyphen_mobile
+msgid "no_hyphen_mobile"
+msgstr "No mobile hyphen"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__no_hyphen_phone
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__no_hyphen_phone
+msgid "no_hyphen_phone"
+msgstr "No telephone hyphen"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__not_use
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__not_use
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "not_use"
+msgstr "Not use"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "number_of_employees"
+msgstr "Number of employees"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__ny_card
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__ny_card
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "ny_card"
+msgstr "New Year's card"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__occupational_category
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__occupational_category
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "occupational_category"
+msgstr "Occupational category"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "occurrence status"
+msgstr "Occurrence status"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__opportunity
+msgid "opportunity"
+msgstr "Opportunity"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "opt_out_email"
+msgstr "Opt out email"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "order no"
+msgstr "Order no"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "other_city"
+msgstr "Other city"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "other_country"
+msgstr "Other country"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "other_phone"
+msgstr "Other phone"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "other_postal_code"
+msgstr "Other postal code"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "other_state"
+msgstr "Other state"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "other_street"
+msgstr "Other street"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__ownership
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__ownership
+msgid "ownership"
+msgstr "Ownership"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_list_sf
+msgid "parent_id"
+msgstr "Affiliated company"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "parents case"
+msgstr "Parents case"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__payment_terms_1
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__payment_terms_1
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "payment_terms_1"
+msgstr "Payment terms 1"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__payment_terms_2
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__payment_terms_2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "payment_terms_2"
+msgstr "Payment terms 2"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__percentage_of_fault
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "percentage of fault"
+msgstr "Percentage of fault"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__potential
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__potential
+msgid "potential"
+msgstr "Potential"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "priority"
+msgstr "Priority"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "probate"
+msgstr "Probate"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "probate by president"
+msgstr "Probate by president"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "product category"
+msgstr "Product category"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "product name"
+msgstr "Product name"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "product name2"
+msgstr "Product name2"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "product number"
+msgstr "Product number"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "progress check"
+msgstr "Progress check"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "quality control comments"
+msgstr "Quality control comments"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "quantity"
+msgstr "Quantity"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__r_owner
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__r_owner
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "r_owner"
+msgstr "R Owner"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "rating"
+msgstr "Rating"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "region"
+msgstr "Region"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__related_attributes
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__related_attributes
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "related_attributes"
+msgstr "Related attributes"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "report date"
+msgstr "Report date"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "reporter"
+msgstr "Reporter"
+
+#. module: rtw_sf
+#: model:ir.model,name:rtw_sf.model_res_partner_contact_type
+msgid "res.partner.contact_type"
+msgstr "Type"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__retirement
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__retirement
+msgid "retirement"
+msgstr "Retirement"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__rival_companies
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__rival_companies
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "rival_companies"
+msgstr "Rival companies"
+
+#. module: rtw_sf
+#: model:ir.model,name:rtw_sf.model_res_partner_channel
+msgid "rtw_sf.partner_channel"
+msgstr "Rtw_sf.partner channel"
+
+#. module: rtw_sf
+#: model:ir.model,name:rtw_sf.model_res_partner_transactions
+msgid "rtw_sf.transactions"
+msgstr "Rtw_sf.transactions"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "sales department comments"
+msgstr "Sales department comments"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "sales department probate"
+msgstr "Sales department probate"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__sansancard
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__sansancard
+msgid "sansancard"
+msgstr "Sansancard"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__send_catalog
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__send_catalog
+msgid "send_catalog"
+msgstr "Send catalog"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_kanban_sf
+msgid "site"
+msgstr "Site"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__situation
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__situation
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "situation"
+msgstr "Situation"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "size"
+msgstr "Size"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "specification"
+msgstr "Specification"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__stop_letter
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__stop_letter
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "stop_letter"
+msgstr "Stop letter"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__summer_greeting
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__summer_greeting
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "summer_greeting"
+msgstr "Summer greeting"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__supplier_no
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__supplier_no
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "supplier_no"
+msgstr "Supplier no"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "support"
+msgstr "Support"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__web__tabroom
+msgid "tabroom"
+msgstr "Tabroom"
+
+#. module: rtw_sf
+#: model:ir.model,name:rtw_sf.model_res_partner
+msgid "task"
+msgstr "Task"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "ticker_symbol"
+msgstr "Ticker symbol"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "total sales"
+msgstr "Total sales"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__total_number_of_transactions
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__total_number_of_transactions
+msgid "total_number_of_transactions"
+msgstr "Total number of transactions"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__transaction_category
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__transaction_category
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "transaction_category"
+msgstr "Transaction category"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__transactions
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__transactions
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "transactions"
+msgstr "Transactions"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__contact_type
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__rel_contact_type
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner_contact_type__name
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__contact_type
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__rel_contact_type
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "type"
+msgstr "Type"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__unknown
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__unknown
+msgid "unknown"
+msgstr "Unknown"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__web
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__web
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "web"
+msgstr "WEB site"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__37
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__gender__3
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__33
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__10
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__11
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__26
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__ownership__4
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__11
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__web__other
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__14
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__10
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__type__4
+msgid "その他"
+msgstr "Other"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__2
+msgid "その他HM"
+msgstr "OtherHM"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__11
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__11
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__11
+msgid "その他の問題"
+msgstr "Other Problems"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__5
+msgid "その他マンション"
+msgstr "Other apartments"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__16
+msgid "ふるさと納税"
+msgstr "Tax payment at home"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__type__8
+msgid "アフターメンテナンス"
+msgstr "Customer service"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__8
+msgid "イベント会場"
+msgstr "Event site"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__22
+msgid "イベント参加"
+msgstr "Event Participation"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__39
+msgid "インテリアフェア"
+msgstr "Interior Fair"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__13
+msgid "エルデコ"
+msgstr "Elle Deco"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__17
+msgid "オフィス家具"
+msgstr "Office furniture"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__10
+msgid "オフィス設計"
+msgstr "Office Design"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__15
+msgid "カタログギフト"
+msgstr "Catalog gift"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__19
+msgid "カレンダー購入"
+msgstr "Buy Calendar"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "キャンペーン"
+msgstr "Campaign"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__close
+msgid "クローズ"
+msgstr "Close"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__33
+msgid "グラフィックデザイナー"
+msgstr "Graphic designer"
+
+#. module: rtw_sf
+#: model:ir.actions.act_window,name:rtw_sf.action_case_report_2
+#: model:ir.actions.act_window,name:rtw_sf.action_case_report_new
+msgid "ケース抽出"
+msgstr "Case retrieval"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_new
+msgid "ケース番号"
+msgstr "Case No."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__6
+msgid "ゲーテ"
+msgstr "Goethe"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__processing_cost
+msgid "コスト処理中"
+msgstr "Cost processing in progress"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__45
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__52
+msgid "コラボイベント"
+msgstr "Collaborative event"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__14
+msgid "コンサルタント"
+msgstr "Consultant"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__delivery_type__5
+msgid "コントラクト"
+msgstr "Contract"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__9
+msgid "シグネチャー"
+msgstr "Signature"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__type__6
+msgid "ショールームについて"
+msgstr "About the Showroom"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__13
+msgid "ゼネコン"
+msgstr "General contractor"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__1
+msgid "ソファ"
+msgstr "Sofa"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__15
+msgid "タレント・モデル・俳優"
+msgstr "Talent, Model, Actor"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__2
+msgid "チェア"
+msgstr "Chair"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__3
+msgid "テーブル"
+msgstr "Table"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__origin__3
+msgid "デポ先"
+msgstr "Depot location"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__24
+msgid "フェア・展示会"
+msgstr "Fairs and Exhibitions"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__30
+msgid "フォトグラファー"
+msgstr "Photographer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__31
+msgid "プロダクトデザイナー"
+msgstr "Product designer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__19
+msgid "プロダクト・ファッションデザイナー"
+msgstr "Product and Fashion Designer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__4
+msgid "ボード・デスク"
+msgstr "Board desk"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__30
+msgid "ミラノサローネ"
+msgstr "Milano Salone"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__28
+msgid "メディア"
+msgstr "Media"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__1
+msgid "モダンリビング"
+msgstr "Modern living"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__delivery_type__4
+msgid "モデルマンション"
+msgstr "Model apartments"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__delivery_type__3
+msgid "モデル戸建"
+msgstr "Model Detached House"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__29
+msgid "リクルート"
+msgstr "Recruit"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__2
+msgid "リサーチ・新規開拓"
+msgstr "Research and new business development"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__discoverer__6
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reporter__6
+msgid "リッツウェル社員"
+msgstr "Ritzwell Employees"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__6
+msgid "リノベーション"
+msgstr "Renovation"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__3
+msgid "リフォーム"
+msgstr "Renovation"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__19
+msgid "リース業"
+msgstr "Leasing business"
+
+#. module: rtw_sf
+#: model:ir.ui.menu,name:rtw_sf.case_report_root
+msgid "レポート"
+msgstr "Report"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__10
+msgid "ヴィズスタ"
+msgstr "Vizstar"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__21
+msgid "一般"
+msgstr "General"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__delivery_type__2
+msgid "一般邸マンション"
+msgstr "General Residence Apartments"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__delivery_type__1
+msgid "一般邸戸建"
+msgstr "General Residence Detached House"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__gender__4
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__34
+msgid "不明"
+msgstr "Unknown"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__8
+msgid "中国"
+msgstr "Western Honshu"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__10
+msgid "九州・沖縄"
+msgstr "Kyushu/Okinawa"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_rtw_case_search
+msgid "今年"
+msgstr "This year"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__8
+msgid "仕入"
+msgstr "Stocking"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__23
+msgid "仕入会社"
+msgstr "Purchasing company"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__40
+msgid "仕入調達"
+msgstr "Procurement"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__9
+msgid "付属品"
+msgstr "Accessory"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__gender__-
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__-
+msgid "以下不使用"
+msgstr "Not used below"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__-
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__rating__-
+msgid "以下未使用"
+msgstr "Not used below"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__-
+msgid "以下無効"
+msgstr "Not valid"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
+msgid "件名："
+msgstr "Subject:"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__32
+msgid "企業ブランディングデザイナー"
+msgstr "Corporate Branding Designer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__situation__3
+msgid "休眠"
+msgstr "Dormant"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__1
+msgid "会社員（専門職以外）"
+msgstr "Company employee (non-professional)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__2
+msgid "会社幹部"
+msgstr "Company executive"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__3
+msgid "会社役員"
+msgstr "Company executive"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__9
+msgid "会計士"
+msgstr "Accountant"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "住所（その他）"
+msgstr "Address (Other)"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "住所（郵送先）"
+msgstr "Address (Mailing address)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__24
+msgid "住設関係"
+msgstr "Housing related"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__pending
+msgid "保留"
+msgstr "Hold"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__7
+msgid "修理・部材交換（有償）"
+msgstr "Repair and replacement of parts and materials (for a fee)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__5
+msgid "修理・部材交換（無償）"
+msgstr "Repair and replacement of materials (free of charge)"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "個人取引条件"
+msgstr "Personal Transaction Terms"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__10
+msgid "公務員"
+msgstr "Public servant"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__ownership__1
+msgid "公開"
+msgstr "Public"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__11
+msgid "内装施工"
+msgstr "Interior Construction"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__23
+msgid "写真・映像"
+msgstr "Photo/Video"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__occurrence_status__5
+msgid "出荷前"
+msgstr "Before shipment"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__6
+msgid "別注･特注"
+msgstr "Bespoke and special order"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__2
+msgid "北関東"
+msgstr "North Kanto"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__6
+msgid "北陸"
+msgstr "Hokuriku"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__5
+msgid "医師・歯科医師他"
+msgstr "Doctors, dentists, etc."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__under_discussion
+msgid "協議中"
+msgstr "Pending"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__10
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__10
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__10
+msgid "原因不明"
+msgstr "Cause unknown"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__7
+msgid "友人・知人の紹介"
+msgstr "Referral by a friend or acquaintance"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__6
+msgid "取引先家族"
+msgstr "Business partner's family"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__5
+msgid "取引先社員"
+msgstr "Business partner"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__discoverer__3
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reporter__3
+msgid "取扱店・代理店担当"
+msgstr "Agent and distributor representative"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__35
+msgid "口コミ"
+msgstr "word of mouth"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__type__5
+msgid "商品問合せ"
+msgstr "Product Inquiry"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__5
+msgid "商品部対応完了"
+msgstr "Commodity Department support completed"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__4
+msgid "商品部調査中"
+msgstr "Under investigation by the Merchandise Department"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__3
+msgid "商店建築"
+msgstr "Store construction"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__15
+msgid "商社/インテリア資材"
+msgstr "Trading company/Interior materials"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__type__1
+msgid "問合せ/アフター"
+msgstr "Inquiry/After sales"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__16
+msgid "問屋"
+msgstr "Wholesale store"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__type__2
+msgid "問題/要対応"
+msgstr "Problem/need response"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__situation__5
+msgid "営業対象外"
+msgstr "Not subject to business"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__sales_representative_is_responding
+msgid "営業担当対応中"
+msgstr "Sales representatives are responding."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__sales_representative_response_completed
+msgid "営業担当対応完了"
+msgstr "Sales representative response completed"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__8
+msgid "営業部対応完了"
+msgstr "Sales Department response completed"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__9
+msgid "四国"
+msgstr "Shikoku"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__kubun__internal
+msgid "国内"
+msgstr "Internal"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__11
+msgid "国家公務員・議会議員"
+msgstr "National Public Officials and Members of Congress"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "基本情報"
+msgstr "Basic Information"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__25
+msgid "外部イベント"
+msgstr "External event"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__8
+msgid "大学教授"
+msgstr "University professor"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__1
+msgid "大手HM"
+msgstr "Major HM"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__4
+msgid "大手マンション"
+msgstr "Large apartment building"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__gender__1
+msgid "女性"
+msgstr "Female"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__4
+msgid "婦人画報"
+msgstr "Ladies' magazine"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__18
+msgid "家具メーカー"
+msgstr "Furniture manufacturer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__46
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__53
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__9
+msgid "家具店・IC等からの紹介"
+msgstr "Referrals from furniture stores, ICs, etc."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__media_name__5
+msgid "家庭画報"
+msgstr "Family magazine"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__対応
+msgid "対応"
+msgstr "Support"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__manufacturing_department_status__2
+msgid "対応中"
+msgstr "Currently supporting"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__manufacturing_department_status__3
+msgid "対応完了"
+msgstr "Correspondence completed"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__rating__5
+msgid "将来見込み有り"
+msgstr "With a promising future"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__14
+msgid "小売/百貨店"
+msgstr "Retail/Department stores"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__5
+msgid "小物･ラグ"
+msgstr "Accessories & Rugs"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__7
+msgid "工場対応中"
+msgstr "Factory support in progress"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__6
+msgid "工場打診中"
+msgstr "Factories are in the process of being approached"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__origin__5
+msgid "工場検品・出荷時"
+msgstr "Factory inspection and shipping"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__discoverer__7
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reporter__7
+msgid "工場関係者"
+msgstr "Factory worker"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__22
+msgid "師範（武道・芸道他）"
+msgstr "Shihan (Budo, Geido, etc.)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__rating__2
+msgid "平均的"
+msgstr "Average"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__12
+msgid "広報(広告）"
+msgstr "Public Relations (Advertising)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__13
+msgid "広報（PR）"
+msgstr "Public Relations (PR)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__44
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__51
+msgid "店舗"
+msgstr "Store"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__10
+msgid "廃盤ソファ"
+msgstr "Discontinued sofas"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__11
+msgid "廃盤チェア"
+msgstr "Discontinued chairs"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__12
+msgid "廃盤テーブル"
+msgstr "Discontinued table"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__product_category__13
+msgid "廃盤ボード・デスク"
+msgstr "Discontinued Boards and Desks"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__9
+msgid "建築設計（アトリエ系）"
+msgstr "Architectural design (atelier type)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__6
+msgid "弁護士・検察官他"
+msgstr "Lawyers, prosecutors, etc."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__send_catalog__holdings_
+msgid "手持"
+msgstr "Goods on hand"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__13
+msgid "技術者（建築・製造他）"
+msgstr "Engineer (construction, manufacturing, etc.)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__discoverer__4
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reporter__4
+msgid "搬入業者"
+msgstr "Delivery service provider"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.customer_search_view_sf
+msgid "支店"
+msgstr "Branch office"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__7
+msgid "教員"
+msgstr "Teaching staff"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_new
+msgid "数量"
+msgstr "Quantity"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__situation__1
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__new
+msgid "新規"
+msgstr "New"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__9
+msgid "新規購入"
+msgstr "New purchase"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__discoverer__1
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reporter__1
+msgid "施主"
+msgstr "Owner"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__1
+msgid "施主(住宅系先）"
+msgstr "Owner (residential client)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__12
+msgid "施主（その他住宅）"
+msgstr "Owner (other housing)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__4
+msgid "施主（販売店先）"
+msgstr "Owner (Distributor's office)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__3
+msgid "施主（ｺﾝﾄﾗｸﾄ系先）"
+msgstr "Owner (Contractor)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__2
+msgid "施主（ﾏﾝｼｮﾝ系先）"
+msgstr "Owner (condominium type destination)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__situation__2
+msgid "既存"
+msgstr "Existing"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__situation__4
+msgid "未取引"
+msgstr "Untraded"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_rtw_case_search
+msgid "未完了"
+msgstr "Incomplete"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__occurrence_status__4
+msgid "未開梱時"
+msgstr "Unpacked"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__8
+msgid "本体交換（有償）"
+msgstr "Replacement of the main unit (for a fee)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__6
+msgid "本体交換（無償）"
+msgstr "Replacement of main unit (free of charge)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__1
+msgid "東北・北海道"
+msgstr "Tohoku/Hokkaido"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__5
+msgid "東海"
+msgstr "Tokai"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__25
+msgid "植木職、造園師"
+msgstr "Arborist, landscape gardener"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__22
+msgid "法人"
+msgstr "Corporation"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__kubun__external
+msgid "海外"
+msgstr "Overseas"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__29
+msgid "海外展示会"
+msgstr "Overseas Exhibitions"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__42
+msgid "物件情報"
+msgstr "Property Information"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__34
+msgid "独占販売権ディーラー"
+msgstr "Exclusive Distribution Rights Dealer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__3
+msgid "現場対応・メンテ補修"
+msgstr "On-site support and maintenance repair"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__2
+msgid "現場確認・説明"
+msgstr "On-site confirmation and explanation"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__4
+msgid "甲信越"
+msgstr "Koshinetsu"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__gender__2
+msgid "男性"
+msgstr "Male"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__8
+msgid "異動(取責)"
+msgstr "Transfer (responsibility)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__12
+msgid "研究者"
+msgstr "Researcher"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__27
+msgid "競合他社"
+msgstr "Competing companies"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "管理者"
+msgstr "Manager"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__6
+msgid "納入先展示(展示場・MR)"
+msgstr "Delivery site display (exhibition hall, MR)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__7
+msgid "納入先展示(店舗・施設等)"
+msgstr "Display at destination (stores, facilities, etc.)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__occurrence_status__1
+msgid "納品後・使用中"
+msgstr "After delivery and in use"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__report_delivery_date
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_new
+msgid "納品日"
+msgstr "Delivery date"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__occurrence_status__2
+msgid "納品時"
+msgstr "Time of delivery (of a package, etc.)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__48
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__55
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__3
+msgid "納品時の案内用紙"
+msgstr "Information sheet at time of delivery"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__origin__1
+msgid "納品現場"
+msgstr "Delivery site"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__origin__2
+msgid "納品現場前の外"
+msgstr "Outside in front of the delivery site"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__27
+msgid "紹介(施主指定)"
+msgstr "Referral (designated by client)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__5
+msgid "紹介・提案(小売店・百貨店)"
+msgstr "Referral and proposals (retailers and department stores)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__4
+msgid "紹介・提案(販売店FFE)"
+msgstr "Referral and proposal (dealer FFE)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__3
+msgid "紹介・提案(ＩＣ・設計)"
+msgstr "Referral and proposal (IC and design)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__28
+msgid "紹介（従業員）"
+msgstr "Referral (Employee)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__26
+msgid "紹介（知人・外部）"
+msgstr "Referral (acquaintance/external)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__12
+msgid "組織設計"
+msgstr "Organizational Design"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__4
+msgid "経営者"
+msgstr "Proprietor"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__transaction_category__continuation
+msgid "継続"
+msgstr "Continuation"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__21
+msgid "美術家・彫刻家・書道家他"
+msgstr "Artists, sculptors, calligraphers, etc."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__17
+msgid "著述家（脚本家、評論家他）"
+msgstr "Author (screenwriter, critic, etc.)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__rating__3
+msgid "見込み有り"
+msgstr "Probable"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__rating__6
+msgid "見込み無"
+msgstr "Improbable"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__rating__4
+msgid "見込み無し"
+msgstr "Improbable"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__16
+msgid "記者・ジャーナリスト"
+msgstr "Reporters and Journalists"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__manufacturing_department_status__1
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__under_investigation
+msgid "調査中"
+msgstr "Under investigation"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__transaction_category__sundries
+msgid "諸口"
+msgstr "Miscellaneous"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__24
+msgid "警察官・消防士他"
+msgstr "Police officers, firefighters, etc."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__36
+msgid "販売代行エージェント"
+msgstr "Sales agent"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__type__7
+msgid "購入方法について"
+msgstr "How to purchase"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__send_catalog__send
+msgid "送付"
+msgstr "Forwarding"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__23
+msgid "通りがかり"
+msgstr "Passing"
+
+#. module: rtw_sf
+#: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__report_date_only
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_2
+#: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_list_report_new
+msgid "通報日"
+msgstr "Date of report"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__1
+msgid "通常営業"
+msgstr "Business as usual"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__fare_payment_terms__2
+msgid "運賃別途"
+msgstr "Fare not included"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__fare_payment_terms__3
+msgid "運賃込み(デポ入れまで)"
+msgstr "Freight included (to depot)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__fare_payment_terms__1
+msgid "運賃込み(設置まで)"
+msgstr "Freight included (to installation)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__fare_payment_terms__4
+msgid "運賃込み（設置まで）"
+msgstr "Freight included (to installation)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__discoverer__5
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reporter__5
+msgid "運送業者"
+msgstr "Carrier"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__type__3
+msgid "過剰要求/苦情"
+msgstr "Excessive demands/complaints "
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__12
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__12
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__12
+msgid "過剰要求・不満"
+msgstr "Excessive demands and dissatisfaction"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__4
+msgid "部品・部材送付（無償）"
+msgstr "Sending parts and materials (free of charge)"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__13
+msgid "部材部品の欠品"
+msgstr "Missing parts and components"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__origin__4
+msgid "配送中・配送時"
+msgstr "During shipping and delivery"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "配配メール"
+msgstr "Routing e-mail"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__rating__1
+msgid "重要顧客"
+msgstr "Key customer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__occurrence_status__3
+msgid "開梱時"
+msgstr "At the time of unpacking"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__39
+msgid "関係者販売"
+msgstr "Related party sales"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__25
+msgid "関係者販売等"
+msgstr "Related party sales, etc."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__7
+msgid "関西"
+msgstr "Kansai"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
+msgid "関連会社情報"
+msgstr "Affiliated Company Information"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__ownership__3
+msgid "関連子会社"
+msgstr "Affiliated Subsidiaries"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.customer_search_view_sf
+msgid "除外理由あり"
+msgstr "There is a reason for exclusion"
+
+#. module: rtw_sf
+#: model_terms:ir.ui.view,arch_db:rtw_sf.customer_search_view_sf
+msgid "除外理由なし"
+msgstr "No reason for exclusion"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__49
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__56
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source_roc__4
+msgid "雑誌"
+msgstr "Magazine"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__origin__6
+msgid "電子メール"
+msgstr "E-mail"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__lead_source__37
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__origin__7
+msgid "電話"
+msgstr "Phone"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__support__1
+msgid "電話・メール対応"
+msgstr "Telephone and e-mail support"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__ownership__2
+msgid "非公開"
+msgstr "Private"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__categorization__35
+msgid "非独占販売権ディーラー"
+msgstr "Non-exclusive distribution rights dealer"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__occupational_category__20
+msgid "音楽家・舞踊家・演芸家他"
+msgstr "Musicians, dancers, performers, etc."
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__region__3
+msgid "首都圏"
+msgstr "The capital city"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__address_confirmation_required__unknown
+msgid "（不達）不明"
+msgstr "(Undeliverable) Unknown"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__address_confirmation_required__moving
+msgid "（不達）転居"
+msgstr "(Non-delivery) Relocation"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__3
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__3
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__3
+msgid "（営業）得意先手配ミス"
+msgstr "(Sales) Mistake in arranging a client"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__2
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__2
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__2
+msgid "（営業）打合せ・接客トラブル"
+msgstr "(Sales) Meetings and customer service problems"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__1
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__1
+msgid "（営業）業務・手配ミス"
+msgstr "(Sales) Errors in operations and arrangements"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__4
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__4
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__4
+msgid "（工場）業務・手配ミス"
+msgstr "(Factory) Errors in operations and arrangements"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__13
+msgid "（工場）業務手配ミス"
+msgstr "(Factory) Mistake in business arrangement"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__5
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__5
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__5
+msgid "（工場）製品不良・製造上ミス"
+msgstr "(Factory) Product defects/manufacturing errors"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__8
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__8
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__8
+msgid "（環境）使用上の問題"
+msgstr "(Environment) Usage problems"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__7
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__7
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__7
+msgid "（素材）素材・製品の特性"
+msgstr "(Material) Material and product characteristics"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__6
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__6
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__6
+msgid "（配送）運送・設置トラブル"
+msgstr "(Delivery) Transportation and installation problems"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause__9
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__double_cause_by_quality_control__9
+#: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__reason__9
+msgid "（開発）設計要因"
+msgstr "(Development) Design Factors"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__9
+msgid "Ｒ家族"
+msgstr "R Family"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__related_attributes__8
+msgid "Ｒ社員"
+msgstr "R Employee"

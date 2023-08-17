@@ -1,0 +1,362 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_old_message
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-15 02:57+0000\n"
+"PO-Revision-Date: 2023-05-15 02:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_needaction
+msgid "Action Needed"
+msgstr "Action Needed"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_ids
+msgid "Activities"
+msgstr "Activities"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Activity Exception Decoration"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_state
+msgid "Activity State"
+msgstr "Activity State"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Activity Type Icon"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_attachment_count
+msgid "Attachment Count"
+msgstr "Attachment Count"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__body
+msgid "Body"
+msgstr "Body"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__content_id
+msgid "ContentId"
+msgstr "ContentId"
+
+#. module: rtw_old_message
+#: model:ir.model.fields.selection,name:rtw_old_message.selection__rtw_old_message__type__content_post
+msgid "ContentPost"
+msgstr "ContentPost"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__create_uid
+msgid "Created by"
+msgstr "Created by"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__create_date
+msgid "Created on"
+msgstr "Created on"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__created_by_id
+msgid "CreatedById"
+msgstr "CreatedById"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__created_date
+msgid "CreatedDate"
+msgstr "CreatedDate"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__feed_item_id
+msgid "FeedItemId"
+msgstr "FeedItemId"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_follower_ids
+msgid "Followers"
+msgstr "Followers"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Followers (Channels)"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Followers (Partners)"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Font awesome icon e.g. fa-tasks"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_crm_lead__id
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_exception_icon
+msgid "Icon"
+msgstr "Icon"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icon to indicate an exception activity."
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__message_needaction
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "If checked, new messages require your attention."
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__message_has_error
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "If checked, some messages have a delivery error."
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__inserted_by_id
+msgid "InsertedById"
+msgstr "InsertedById"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_is_follower
+msgid "Is Follower"
+msgstr "Is Follower"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__is_rich_text
+msgid "IsRichText"
+msgstr "IsRichText"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_crm_lead____last_update
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message____last_update
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__write_uid
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__write_date
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: rtw_old_message
+#: model:ir.model,name:rtw_old_message.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Lead/Opportunity"
+
+#. module: rtw_old_message
+#: model:ir.model.fields.selection,name:rtw_old_message.selection__rtw_old_message__type__link_post
+msgid "LinkPost"
+msgstr "LinkPost"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__link_url
+msgid "LinkUrl"
+msgstr "LinkUrl"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Main Attachment"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_has_error
+msgid "Message Delivery error"
+msgstr "Message Delivery error"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_ids
+msgid "Messages"
+msgstr "Messages"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "My Activity Deadline"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Next Activity Deadline"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_summary
+msgid "Next Activity Summary"
+msgstr "Next Activity Summary"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_type_id
+msgid "Next Activity Type"
+msgstr "Next Activity Type"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Number of Actions"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_has_error_counter
+msgid "Number of errors"
+msgstr "Number of errors"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Number of messages which requires an action"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Number of messages with delivery error"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Number of unread messages"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__parent_id
+msgid "ParentId"
+msgstr "ParentId"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__related_record_id
+msgid "RelatedRecordId"
+msgstr "RelatedRecordId"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__activity_user_id
+msgid "Responsible User"
+msgstr "Responsible User"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "SMS Delivery error"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__type
+msgid "Status"
+msgstr "Status"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__system_mod_stamp
+msgid "SystemModstamp"
+msgstr "SystemModstamp"
+
+#. module: rtw_old_message
+#: model:ir.model.fields.selection,name:rtw_old_message.selection__rtw_old_message__type__text_post
+msgid "TextPost"
+msgstr "TextPost"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__title
+msgid "Title"
+msgstr "Title"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Type of the exception activity on record."
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_unread
+msgid "Unread Messages"
+msgstr "Unread Messages"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Unread Messages Counter"
+
+#. module: rtw_old_message
+#: model:ir.model.fields.selection,name:rtw_old_message.selection__rtw_old_message__type__user_status
+msgid "UserStatus"
+msgstr "UserStatus"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,field_description:rtw_old_message.field_rtw_old_message__website_message_ids
+msgid "Website Messages"
+msgstr "Website Messages"
+
+#. module: rtw_old_message
+#: model:ir.model.fields,help:rtw_old_message.field_rtw_old_message__website_message_ids
+msgid "Website communication history"
+msgstr "Website communication history"
+
+#. module: rtw_old_message
+#: model_terms:ir.ui.view,arch_db:rtw_old_message.contract_list
+msgid "body"
+msgstr "Body"
+
+#. module: rtw_old_message
+#: model_terms:ir.ui.view,arch_db:rtw_old_message.contract_list
+msgid "created_by_id"
+msgstr "Created by id"
+
+#. module: rtw_old_message
+#: model_terms:ir.ui.view,arch_db:rtw_old_message.contract_list
+msgid "created_date"
+msgstr "Created date"
+
+#. module: rtw_old_message
+#: model_terms:ir.ui.view,arch_db:rtw_old_message.contract_list
+msgid "link_url"
+msgstr "Link url"
+
+#. module: rtw_old_message
+#: model:ir.actions.act_window,name:rtw_old_message.action_window
+#: model:ir.model.fields,field_description:rtw_old_message.field_crm_lead__old_messages
+#: model:ir.ui.menu,name:rtw_old_message.menu_root
+msgid "old message"
+msgstr "Old message"
+
+#. module: rtw_old_message
+#: model:ir.model,name:rtw_old_message.model_rtw_old_message
+msgid "old_message"
+msgstr "Old message"
+
+#. module: rtw_old_message
+#: model_terms:ir.ui.view,arch_db:rtw_old_message.contract_list
+msgid "title"
+msgstr "Title"
