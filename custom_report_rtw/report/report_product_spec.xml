@@ -41,6 +41,7 @@
                 <div t-foreach="o.order_line" t-as="l"
                   class="product-wrap"
                 >
+                  <t t-set="product_attribute_index" t-value="0" />
                   <div
                     class="product-container">
                     <div class="row" style="width:100%">
@@ -89,17 +90,27 @@
                       </t>
                     </div>
                     <div style="width:100%;margin:0 auto;font-size:14px;">
-                      <div t-foreach="l.product_id.config_image_ids"
+                      <div
+                        t-foreach="l.product_id.product_template_attribute_value_ids.filtered(lambda x: x.product_attribute_value_id.image)"
                         t-as="string_line"
                         class="product-config"
                       >
-                        <t t-if="string_line_index &lt; 4">
+                        <div
+                          t-foreach="string_line"
+                          t-as="line"
+                          t-if="line.product_attribute_value_id.image and product_attribute_index &lt; 4"
+                        >
+                          <t t-set="product_attribute_index"
+                            t-value="product_attribute_index + 1" />
                           <div
                             class="attribute-img"
-                            t-field="string_line.image_1920"
+                            t-field="line.product_attribute_value_id.image"
                             t-options='{"widget": "image"}' />
-                          <div class="mt-1" t-field="string_line.value_ids" />
-                        </t>
+                          <div class="mt-1">
+                            <span t-field="line.attribute_id.name" />: <span t-field="line.name" />
+                          </div>
+                        </div>
+                        <br />
                       </div>
                     </div>
                   </div>

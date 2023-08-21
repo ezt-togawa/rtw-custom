@@ -43,6 +43,10 @@ body {
     margin: 0 auto;
 }
 
+.attribute-img{
+    width:100%;
+}
+
 .attribute-img img {
     width: 100%;
 }
