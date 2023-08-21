@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_crm",
+    'name': "rtw_auto_send_mail",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
