@@ -15,16 +15,19 @@ class rtw_crm(models.Model):
         body = str(current_date) + '糸島への部材の入荷情報をご連絡します。' + '<br>' + '出力情報：入荷元／件数／部材名' + '<br>'
         itoshima_warehouse = self.env['stock.warehouse'].search([('name','=','糸島工場')])
         itoshima_operation_type = self.env['stock.picking.type'].search([('warehouse_id','=',itoshima_warehouse.id)])
+
         for type in itoshima_operation_type:
-            if type.name == 'Receipts':
+            if type.sequence_code == 'IN': #get RECEIPT
                 itoshima_picking_type = type
-        itoshima_stock_picking = self.env['stock.picking'].search([('picking_type_id','=',itoshima_picking_type.id)])
-        for picking in itoshima_stock_picking:
-            itoshima_stock_move = self.env['stock.move'].search([('picking_id','=',picking.id)])
-            if itoshima_stock_move:
-                for move in itoshima_stock_move:
-                    if move.state != 'done' and move.state !='cancelled' and move.state !='draft' and picking.scheduled_date.date() == tomorrow_date:
-                        body += picking.partner_id.display_name + '/' + str(move.product_uom_qty) + '/' + move.name + '<br>'
+
+        if itoshima_picking_type:
+            itoshima_stock_picking = self.env['stock.picking'].search([('picking_type_id','=',itoshima_picking_type.id)])
+            for picking in itoshima_stock_picking:
+                itoshima_stock_move = self.env['stock.move'].search([('picking_id','=',picking.id)])
+                if itoshima_stock_move:
+                    for move in itoshima_stock_move:
+                        if move.state != 'done' and move.state !='cancelled' and move.state !='draft' and picking.scheduled_date.date() == tomorrow_date:
+                            body += picking.partner_id.display_name + '/' + str(move.product_uom_qty) + '/' + move.name + '<br>'
 
         itoshima_filter_action_id = self.env['ir.actions.act_window'].search([('name','=','Stock Picking Itoshima Filter')]).id if self.env['ir.actions.act_window'].search([('name','=','Stock Picking Itoshima Filter')]) else ''
 

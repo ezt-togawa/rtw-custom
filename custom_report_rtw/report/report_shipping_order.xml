@@ -41,9 +41,10 @@
                     t-field="docs.name" />
                 </div>
                 <br />
-                <div>出荷日 <span t-esc="docs.date_order.strftime('%Y-%m-%d')" />
+                <div>出荷日 <span t-esc="docs.estimated_shipping_date" />
                 </div>
-                <div>入荷日 <span t-esc="docs.estimated_shipping_date" />
+                <div>入荷日 <span t-if="docs.calculate_planned_date"
+                    t-esc="docs.calculate_planned_date.strftime('%Y-%m-%d')" />
                 </div>
                 <div>配送手段 <span t-esc="docs.payment_term_id.name" />
                 </div>

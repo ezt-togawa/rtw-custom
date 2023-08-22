@@ -41,9 +41,10 @@
                     t-field="docs.name" />
                 </div>
                 <br />
-                <div>搬入日時 <span t-esc="docs.estimated_shipping_date" />
+                <div>搬入日時 <span t-if="docs.calculate_planned_date"
+                    t-esc="docs.calculate_planned_date.strftime('%Y-%m-%d')" />
                 </div>
-                <div>入荷日 <span t-esc="docs.preferred_delivery_date" />
+                <div>入荷日 <span t-esc="docs.shiratani_entry_date" />
                 </div>
                 <br />
                 <div>お届け先（物件名) <span t-field="docs.title" />

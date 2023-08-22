@@ -7,6 +7,16 @@ import math
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
     so_title = fields.Char(string="title")
+    calculate_planned_date = fields.Date(string="planned date" , compute="_compute_calculate_planned_date")
+
+    def _compute_calculate_planned_date(self):
+        max_planned_date = ''
+        for line in self.order_line:
+            if max_planned_date == '':
+                max_planned_date = line.date_planned
+            elif line.date_planned and line.date_planned > max_planned_date:
+                max_planned_date = line.date_planned
+        self.calculate_planned_date = max_planned_date
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
