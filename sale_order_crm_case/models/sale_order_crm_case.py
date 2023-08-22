@@ -19,6 +19,16 @@ class sale_order_case(models.Model):
                 vals['crm_id'] = rtw_sf_case.crm_id.id
         return super(sale_order_case, self).create(vals)
 
+    def open_form_view(self):
+        self.ensure_one()
+        return {
+            'name': 'Sale Order',
+            'res_model': 'sale.order',
+            'view_mode': 'form',
+            'res_id': self.id,
+            'type': 'ir.actions.act_window',
+        }
+
 class mrp_production_case(models.Model):
     _inherit = 'mrp.production'
 
@@ -62,3 +72,8 @@ class mrp_production_case(models.Model):
             else:
                 record.case_id = False
                 record.crm_id = False
+
+class rtw_sf_case_claim(models.Model):
+    _inherit = 'rtw_sf_case'
+
+    claim_no = fields.One2many('sale.order','case_id')

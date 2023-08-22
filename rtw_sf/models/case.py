@@ -262,17 +262,6 @@ class rtw_sf_case(models.Model):
     display_id = fields.Integer(related="id")
     report_date_only = fields.Date(compute="_get_report_day", string="通報日")
     report_delivery_date = fields.Date(compute="_get_delivery_date", string="納品日")
-    claim_no = fields.Char(string = 'クレーム注番',compute="_compute_claim_no")
-
-    def _compute_claim_no(self):
-        for rec in self:
-            claim_no = ''
-            menu_id = self.env['ir.ui.menu'].search([('name' ,'=','Sales'),('parent_id','=',False)]).id
-            sale_order = self.env['sale.order'].search([('case_id' , '=' ,rec.id)])
-            if sale_order:
-                for sale in sale_order:
-                    claim_no += f'<a href="/web#id={sale.id}&view_type=form&model=sale.order&menu_id={menu_id}">{sale.name}</a> '
-            rec.claim_no =claim_no
 
     def _get_delivery_date(self):
         for rec in self:
