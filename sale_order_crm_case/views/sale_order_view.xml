@@ -72,5 +72,32 @@
                 </xpath>
             </field>
         </record>
+        <record
+            id="view_crm_case_tree_custom" model="ir.ui.view">
+            <field name="name">crm.case.tree.custom</field>
+            <field name="model">rtw_sf_case</field>
+            <field name="inherit_id" ref="rtw_sf.rtw_sf_case_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='verification_results']" position="after">
+                    <page string="クレーム注番">
+                        <group>
+                            <field name="claim_no" style="overflow:auto" no_label="1" widget="one2many" >
+                                <tree class="o_sale_order" editable="bottom">
+                                    <field name="name" />
+                                    <field name="title" />
+                                    <field name="process" />
+                                    <field name="status" />
+                                    <field name="partner_id" />
+                                    <field name="company_id" />
+                                    <field name="state" />
+                                    <button name="open_form_view" type="object" string="View" class="oe_highlight"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
     </data>
 </odoo>
