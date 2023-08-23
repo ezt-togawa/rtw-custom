@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_crm_monthly_revenue",
+    'name': "monthly_revenue",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,12 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management', 'crm', 'contract','monthly_revenue'],
+    'depends': ['base', 'sale_management', 'crm', 'contract'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/crm_lead.xml',
+        'security/ir.model.access.csv',
+        'views/monthly_revenue.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode
