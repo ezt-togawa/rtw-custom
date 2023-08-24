@@ -9,13 +9,13 @@ class rtw_crm(models.Model):
 
     def find_min_max_date_deadline(self):
         min_date = self.env['crm.lead'].search(
-            [('date_deadline', '!=', False)], order='date_deadline asc', limit=1).date_deadline
+            [('opportunity_completion_date', '!=', False)], order='opportunity_completion_date asc', limit=1).opportunity_completion_date
         max_date = self.env['crm.lead'].search(
-            [('date_deadline', '!=', False)], order='date_deadline desc', limit=1).date_deadline.replace(day=1) + timedelta(days=32)
+            [('opportunity_completion_date', '!=', False)], order='opportunity_completion_date desc', limit=1).opportunity_completion_date
         return min_date, max_date
 
 
-    @api.onchange('expected_revenue','date_deadline')
+    @api.onchange('expected_revenue','opportunity_completion_date')
     def compute_monthly_revenue(self):
         min_date, max_date = self.find_min_max_date_deadline()
         current_date = min_date
@@ -23,8 +23,8 @@ class rtw_crm(models.Model):
             next_month = current_date.replace(day=1) + timedelta(days=32)
             end_of_month = current_date.replace(day=1)
             leads_in_month = self.env['crm.lead'].search([
-                ('date_deadline', '>=', (current_date.replace(day=1)+ timedelta(days=32) -timedelta(days=365)).replace(day=1)),
-                ('date_deadline', '<', (end_of_month + timedelta(days=32)).replace(day=1) ),
+                ('opportunity_completion_date', '>=', (current_date.replace(day=1)+ timedelta(days=32) -timedelta(days=365)).replace(day=1)),
+                ('opportunity_completion_date', '<', (end_of_month + timedelta(days=32)).replace(day=1) ),
                 ('active' ,'=',True),
                 ('type','=','opportunity')
             ])
@@ -49,8 +49,8 @@ class rtw_crm(models.Model):
             next_month = current_date.replace(day=1) + timedelta(days=32)
             end_of_month = current_date.replace(day=1)
             leads_in_month = self.env['crm.lead'].search([
-                ('date_deadline', '>=', (current_date.replace(day=1)+ timedelta(days=32) -timedelta(days=365)).replace(day=1)),
-                ('date_deadline', '<', (end_of_month + timedelta(days=32)).replace(day=1)),
+                ('opportunity_completion_date', '>=', (current_date.replace(day=1)+ timedelta(days=32) -timedelta(days=365)).replace(day=1)),
+                ('opportunity_completion_date', '<', (end_of_month + timedelta(days=32)).replace(day=1)),
                 ('active' ,'=',True),
                 ('type','=','opportunity')
             ])
