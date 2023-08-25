@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2019 Ecosoft Co., Ltd.
+  License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="purchase_order_report_xlsx_template" model="xlsx.template">
+        <field name="res_model">sale.order</field>
+        <field name="fname">purchase_order.xlsx</field>
+        <field name="name">注文書</field>
+        <field name="description">Purchase Order Report Excel</field>
+        <field name="export_action_id" eval="ref('action_purchase_order_export_xlsx')" />
+        <field name="input_instruction">
+            {
+                '__EXPORT__': {
+                    '注文書': {
+                        '_HEAD_': {
+                            'A4': 'sale_order_company_name${value or ""}',
+                            'B8': 'title${value or ""}',
+                            'B10':'sale_order_amount_untaxed${value or ""}',
+                            'B11':'sale_order_amount_tax${value or ""}',
+                            'B12':'sale_order_amount_total${value or ""}',
+                            'D5': 'sale_order_estimated_shipping_date',
+                            'D6': 'forwarding_address',
+                            'D7': 'note${value or ""}',
+                            'E13':'sale_order_total_list_price${value or ""}',
+                            'G13':'amount_untaxed${value or ""}',
+                            'G14':'name${value or ""}'
+                        },
+                        'order_line': {
+                            'A17': 'sale_order_index${value or ""}#{style=text;fill=grey}',
+                            'B17': 'sale_order_name${value or ""}#{style=text;fill=grey}',
+                            'C17': 'sale_order_number_and_size#{style=text;fill=grey}',
+                            'D17': 'sale_order_product_detail#{style=text;fill=grey}',
+                            'E17': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
+                            'F17': 'price_unit${value or 0}#{style=number;fill=grey}',
+                            'G17': 'price_subtotal${value or 0}#{style=number;fill=grey}',
+                        }
+                    }
+                }
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('purchase_order_report_xlsx_template')]" />
+    </function>
+</odoo>

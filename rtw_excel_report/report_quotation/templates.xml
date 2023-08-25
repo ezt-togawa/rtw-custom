@@ -14,7 +14,7 @@
                 '__EXPORT__': {
                     '御見積書': {
                         '_HEAD_': {
-                            'A3': 'sale_order_company_name${value or ""}',
+                            'A4': 'partner_id.name${value or ""}',
                             'B9': 'sale_order_amount_untaxed${value or ""}',
                             'B10':'sale_order_amount_tax${value or ""}',
                             'B11':'sale_order_amount_total${value or ""}',
@@ -23,28 +23,22 @@
                             'E5': 'sale_order_date_order${value or ""}',
                             'E9': 'sale_order_validity_date${value or ""}',
                             'E10': 'note${value or ""}',
-                            'G3': 'company_id.partner_id.display_name${value or ""}',
-                            'G4': 'company_id.partner_id.city${value or ""}',
-                            'G5': 'sale_order_zip${value or ""}',
-                            'G6': 'company_id.partner_id.street${value or ""}',
-                            'G7': 'sale_order_tel${value or ""}',
-                            'G8': 'sale_order_fax${value or ""}',
-                            'G9': 'user_id.name${value or ""}',
+                            'I9': 'user_id.name${value or ""}',
                             'I1': 'sale_order_current_date${value or ""}',
                             'I15': 'name${value or ""}#{style=number}',
                             'G14': 'sale_order_total_list_price${value or ""}',
                             'I14': 'amount_untaxed${value or ""}#{style=number}',
                         },
                         'order_line': {
-                            'A18': 'sale_order_index${value or ""}#{style=text;fill=grey}',
-                            'B18': 'sale_order_name${value or ""}#{style=text;fill=grey}',
-                            'C18': 'sale_order_number_and_size#{style=text;fill=grey}',
-                            'D18': 'sale_order_product_detail#{style=text;fill=grey}',
-                            'E18': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
-                            'F18': 'discount${value or 0}#{style=number;fill=grey}',
-                            'G18': 'product_template_id.list_price${value or 0}#{style=number;fill=grey}',
-                            'H18': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
-                            'I18': 'price_subtotal${value or 0}#{style=number;fill=grey}',
+                            'A19': 'sale_order_index${value or ""}#{style=text;fill=grey}',
+                            'B19': 'sale_order_name${value or ""}#{style=text;fill=grey}',
+                            'C19': 'sale_order_number_and_size#{style=text;fill=grey}',
+                            'D19': 'sale_order_product_detail#{style=text;fill=grey}',
+                            'E19': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
+                            'F19': 'discount${value or 0}#{style=number;fill=grey}',
+                            'G19': 'price_unit${value or 0}#{style=number;fill=grey}',
+                            'H19': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'I19': 'price_subtotal${value or 0}#{style=number;fill=grey}',
                         }
                     }
                 }

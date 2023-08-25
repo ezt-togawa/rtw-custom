@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'excel_import_export', 'sale_management', 'sale','sale_sourced_by_line'],
+    'depends': ['base', 'excel_import_export', 'sale_management', 'sale','sale_sourced_by_line','product','purchase'],
 
     # always loaded
     'data': [
@@ -31,8 +31,20 @@
         'report_quotation/templates.xml',
         'report_list_price_quotation/actions.xml',
         'report_list_price_quotation/templates.xml',
-        'views/views.xml',
-
+        'report_unit_price_quotation/actions.xml',
+        'report_unit_price_quotation/templates.xml',
+        'report_invoice/actions.xml',
+        'report_invoice/templates.xml',
+        'report_purchase_order/actions.xml',
+        'report_purchase_order/templates.xml',
+        'report_purchase_order_sheet/actions.xml',
+        'report_purchase_order_sheet/templates.xml',
+        'report_purchase_order_for_part/actions.xml',
+        'report_purchase_order_for_part/templates.xml',
+        'report_delivery_request_form/actions.xml',
+        'report_delivery_request_form/templates.xml',
+        'report_ship_order/actions.xml',
+        'report_ship_order/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

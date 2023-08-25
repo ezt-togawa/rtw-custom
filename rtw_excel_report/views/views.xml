@@ -19,6 +19,7 @@
           <field name="sale_order_total_list_price" invisible="1" />
           <field name="sale_order_total_discount" invisible="1" />
           <field name="sale_order_validity_date" invisible="1" />
+          <field name="sale_order_account_number" invisible="1" />
         </xpath>
       </field>
     </record>

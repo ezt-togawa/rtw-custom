@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2019 Ecosoft Co., Ltd.
+  License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="purchase_order_for_part_report_xlsx_template" model="xlsx.template">
+        <field name="res_model">sale.order</field>
+        <field name="fname">purchase_order_for_part.xlsx</field>
+        <field name="name">発注書(部材用）</field>
+        <field name="description">Purchase Order Sheet Report Excel</field>
+        <field name="export_action_id" eval="ref('action_purchase_order_for_part_export_xlsx')" />
+        <field name="input_instruction">
+            {
+                '__EXPORT__': {
+                    '発注書(部材用）': {
+                        '_HEAD_': {
+                            'C1': 'sale_order_send_to_company${value or ""}',
+                            'B7': 'sale_order_estimated_shipping_date${value or ""}',
+                            'B8': 'sale_order_preferred_delivery_date${value or ""}',
+                            'B5': 'name${value or ""}',
+                            'B11': 'company_id.partner_id.name',
+                            'B12': 'sale_order_detail_address_partner',
+                            'B13': 'partner_id.phone',
+                            'B14': 'shipping_to_text',
+                            'F11': 'note${value or ""}',
+                            'G9': 'user_id.name',
+                            'G1': 'sale_order_current_date',
+                            'G15': 'amount_untaxed${value or ""}',
+                        },
+                        'order_line': {
+                            'A18': 'sale_order_index${value or ""}#{style=text;fill=grey}',
+                            'B18': 'sale_order_name${value or ""}#{style=text;fill=grey}',
+                            'C18': 'sale_order_product_detail#{style=text;fill=grey}',
+                            'D18': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
+                            'E18': 'sale_order_text_piece_leg#{style=number;fill=grey}',
+                            'F18': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'G18': 'price_subtotal${value or 0}#{style=number;fill=grey}',
+                            'H18': ''
+                        }
+                    }
+                }
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('purchase_order_for_part_report_xlsx_template')]" />
+    </function>
+</odoo>
