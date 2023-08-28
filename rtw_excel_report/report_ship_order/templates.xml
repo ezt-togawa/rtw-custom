@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2019 Ecosoft Co., Ltd.
+  License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="ship_order_report_xlsx_template" model="xlsx.template">
+        <field name="res_model">stock.picking</field>
+        <field name="fname">ship_order.xlsx</field>
+        <field name="name">出荷依頼書</field>
+        <field name="description">Ship Order Report Excel</field>
+        <field name="export_action_id" eval="ref('action_ship_order_export_xlsx')" />
+        <field name="input_instruction">
+            {
+                '__EXPORT__': {
+                    '出荷依頼書': {
+                        '_HEAD_': {
+                            'C2': 'stock_picking_company_name${value or ""}',
+                            'B3': 'sale_id.name${value or ""}',
+                            'B5': 'stock_estimated_shipping_date${value or ""}',
+                            'B6': 'stock_scheduled_date${value or ""}',
+                            'B9': 'sale_id.title${value or ""}',
+                            'B10': 'stock_picking_partner_info${value or ""}',
+                            'B11': 'sale_id.partner_id.commercial_company_name${value or ""}',
+                            'B12': 'stock_partner_address${value or ""}',
+                            'B13': 'sale_id.partner_id.phone${value or ""}', 
+                            'B14': 'sale_id.shipping_to_text${value or ""}',
+                            'H12': 'sale_id.note${value or ""}',
+                            'I10': 'stock_printing_staff${value or ""}',
+                            'I1': 'stock_picking_current_date${value or ""}',
+                            'I15': 'sale_id.amount_untaxed${value or ""}',
+                        },
+                        'stock_move':{
+                            'A18':'stock_index${value or ""}#{style=text;fill=grey}',
+                            'B18':'product_name${value or ""}#{style=text;fill=grey}',
+                            'C18':'product_number_and_size#{style=text;fill=grey}',
+                            'D18':'product_attribute#{style=text;fill=grey}',
+                            'E18': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
+                            'F18': 'packages_number${value or 0}#{style=number;fill=grey}',
+                            'G18': 'stock_sai#{style=text;fill=grey}',
+                            'H18': 'stock_warehouse#{style=text;fill=grey}',
+                            'I18': 'stock_shiratani_date#{style=text;fill=grey}',
+                        }
+                    }
+                }
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('ship_order_report_xlsx_template')]" />
+    </function>
+</odoo>

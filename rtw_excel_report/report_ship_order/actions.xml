@@ -3,25 +3,25 @@
   Copyright 2019 Ecosoft Co., Ltd.
   License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
-    <record id="action_quotation_export_xlsx" model="ir.actions.act_window">
-        <field name="name">御見積書</field>
+    <record id="action_ship_order_export_xlsx" model="ir.actions.act_window">
+        <field name="name">出荷依頼書</field>
         <field name="res_model">export.xlsx.wizard</field>
         <field name="binding_view_types">list,form</field>
-        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="context">
             {
-            'template_domain': [('res_model', '=', 'sale.order'),
-            ('fname', '=', 'quotation.xlsx'),
+            'template_domain': [('res_model', '=', 'stock.picking'),
+            ('fname', '=', 'ship_order.xlsx'),
             ('gname', '=', False)],
             }
         </field>
     </record>
     <menuitem
-        id="menu_report_quotation"
+        id="menu_report_ship_order"
         parent="excel_import_export.menu_excel_import_export"
-        action="action_quotation_export_xlsx"
+        action="action_ship_order_export_xlsx"
         sequence="10"
     />
 </odoo>
