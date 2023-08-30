@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_delivery_confirmation" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_sourced_by_line.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
+                position="before">
+                <field name="delivery_confirmation" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+                <field name="delivery_confirmation" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
