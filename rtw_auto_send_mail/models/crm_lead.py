@@ -10,7 +10,7 @@ class rtw_crm(models.Model):
     def _send_mail(self):
         current_date = datetime.now().date()
         tomorrow_date = current_date + timedelta(days=1)
-        recipients = ['khanhpzo99@gmail.com']
+        recipients = ['t_ogawa@enzantrades.co.jp']
         subject = '【RTW-Odoo】入荷情報_' + str(tomorrow_date)
         body = str(tomorrow_date) + '糸島への部材の入荷情報をご連絡します。' + '<br>' + '出力情報：入荷元／件数／部材名' + '<br>'
         itoshima_warehouse = self.env['stock.warehouse'].search([('name','=','糸島工場')])
