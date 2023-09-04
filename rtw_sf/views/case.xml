@@ -81,8 +81,6 @@
                                 <field name="last_modified_by_id" string="LastModifiedById"/>
                                 <field name="last_modified_date" string="LastModifiedDate"/>
                                 <field name="progress_check" string="progress check"/>
-
-
                             </group>
                             <group>
                                 <!--                                <field name="status" string="Status"/>-->

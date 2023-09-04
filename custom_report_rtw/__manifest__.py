@@ -21,16 +21,24 @@
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale', 'account', 'product_spec_rtw',
-                'rtw_mrp_custom', 'rtw_product_attribute_value_images'],
+                'rtw_mrp_custom', 'rtw_product_attribute_value_images','excel_import_export'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'report/report_quotation.xml',
         'report/report_list_price_quotation.xml',
+        'report/report_unit_price.xml',
+        'report/report_delivery_order.xml',
+        'report/report_shipping_order.xml',
+        'report/purchase_order.xml',
+        'report/purchase_order_sheet.xml',
+        'report/purchase_order_sheet_for_part.xml',
+        'report/report_invoice.xml',
+        'report/report_product_spec.xml',
         'report/stock_picking.xml',
         'report/purchase.xml',
-        'report/spec_list.xml',
+        # 'report/spec_list.xml',
         'report/external_layout.xml',
         'report/internal_layout.xml',
         'report/header_footer.xml',

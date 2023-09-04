@@ -1,0 +1,127 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_crm_partner_non_edit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-15 02:56+0000\n"
+"PO-Revision-Date: 2023-05-15 02:56+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__city_d
+#: model_terms:ir.ui.view,arch_db:rtw_crm_partner_non_edit.view_crm_form_partner_non_edit
+msgid "City"
+msgstr "City"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__partner_name_d
+msgid "Company Name"
+msgstr "Company Name"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__contact_name_d
+msgid "Contact Name"
+msgstr "Contact Name"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__country_id_d
+#: model_terms:ir.ui.view,arch_db:rtw_crm_partner_non_edit.view_crm_form_partner_non_edit
+msgid "Country"
+msgstr "Country"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__function_d
+msgid "Job Position"
+msgstr "Job Position"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead____last_update
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model,name:rtw_crm_partner_non_edit.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Lead/Opportunity"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__mobile_d
+msgid "Mobile"
+msgstr "Mobile"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__state_id_d
+#: model_terms:ir.ui.view,arch_db:rtw_crm_partner_non_edit.view_crm_form_partner_non_edit
+msgid "State"
+msgstr "State"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__street_d
+msgid "Street"
+msgstr "Street"
+
+#. module: rtw_crm_partner_non_edit
+#: model_terms:ir.ui.view,arch_db:rtw_crm_partner_non_edit.view_crm_form_partner_non_edit
+msgid "Street 2..."
+msgstr "Street 2..."
+
+#. module: rtw_crm_partner_non_edit
+#: model_terms:ir.ui.view,arch_db:rtw_crm_partner_non_edit.view_crm_form_partner_non_edit
+msgid "Street..."
+msgstr "Street..."
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__street2_d
+msgid "Street2"
+msgstr "Street2"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,help:rtw_crm_partner_non_edit.field_crm_lead__partner_name_d
+msgid ""
+"The name of the future partner company that will be created while converting"
+" the lead into opportunity"
+msgstr "Name of the trading partner created when the lead is converted to a deal"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__title_d
+msgid "Title"
+msgstr "Title"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__website_d
+msgid "Website"
+msgstr "Website"
+
+#. module: rtw_crm_partner_non_edit
+#: model_terms:ir.ui.view,arch_db:rtw_crm_partner_non_edit.view_crm_form_partner_non_edit
+msgid "ZIP"
+msgstr "ZIP"
+
+#. module: rtw_crm_partner_non_edit
+#: model:ir.model.fields,field_description:rtw_crm_partner_non_edit.field_crm_lead__zip_d
+msgid "Zip"
+msgstr "Zip"
+
+#. module: rtw_crm_partner_non_edit
+#: model_terms:ir.ui.view,arch_db:rtw_crm_partner_non_edit.view_crm_list_sf2_partner_non_edit
+#: model_terms:ir.ui.view,arch_db:rtw_crm_partner_non_edit.view_crm_list_sf_partner_non_edit
+msgid "関連会社"
+msgstr "Affiliated company"

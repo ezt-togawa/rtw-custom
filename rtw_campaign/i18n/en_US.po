@@ -1,0 +1,76 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_campaign
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-15 02:54+0000\n"
+"PO-Revision-Date: 2023-05-15 02:54+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__actual_cost
+msgid "ActualCost"
+msgstr "ActualCost"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__amount_all_opportunities
+msgid "AmountAllOpportunities"
+msgstr "AmountAllOpportunities"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__amount_won_opportunities
+msgid "AmountWonOpportunities"
+msgstr "AmountWonOpportunities"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__budgeted_cost
+msgid "BudgetedCost"
+msgstr "BudgetedCost"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__currency_id
+msgid "Currency"
+msgstr "Currency"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__description
+msgid "Description"
+msgstr "Description"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign____last_update
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__start_date
+msgid "StartDate"
+msgstr "StartDate"
+
+#. module: rtw_campaign
+#: model:ir.model,name:rtw_campaign.model_utm_campaign
+msgid "UTM Campaign"
+msgstr "UTM Campaign"
+
+#. module: rtw_campaign
+#: model:ir.model.fields,field_description:rtw_campaign.field_utm_campaign__parent_id
+msgid "utm.campaign"
+msgstr "Utm.campaign"

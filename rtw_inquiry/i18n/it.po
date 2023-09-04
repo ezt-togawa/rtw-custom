@@ -1,0 +1,1502 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_inquiry
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-09 02:06+0000\n"
+"PO-Revision-Date: 2023-05-09 02:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.view_partner_form_sf_inq
+msgid "<span class=\"o_stat_text\">inquiry</span>"
+msgstr "<span class=\"o_stat_text\">inchiesta</span>"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_needaction
+msgid "Action Needed"
+msgstr "azione richiesta"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_ids
+msgid "Activities"
+msgstr "attività"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decorazione di testo che indica l'attività dell'eccezione."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_state
+msgid "Activity State"
+msgstr "stato attivo"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icona del tipo di attività"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_attachment_count
+msgid "Attachment Count"
+msgstr "numero di allegati"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.view_crm_form_sf
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.view_partner_form_sf_inq
+msgid "Create inquiry"
+msgstr "Creare un'indagine"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__create_uid
+msgid "Created by"
+msgstr "autore"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__create_date
+msgid "Created on"
+msgstr "giornata della creazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__created_by_id
+msgid "CreatedById"
+msgstr "autore"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__created_date
+msgid "CreatedDate"
+msgstr "giornata della creazione"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Design"
+msgstr "design"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:rtw_inquiry.field_res_partner__display_name
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__inq_type
+msgid "Field58__c"
+msgstr "classificazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__yousei
+msgid "Field59_yousei__c"
+msgstr "progresso"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__approval
+msgid "Field61__c"
+msgstr "approvazione basata sull'anzianità"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__progress
+msgid "Field62__c"
+msgstr "Rapporto sullo stato di avanzamento"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_follower_ids
+msgid "Followers"
+msgstr "seguace"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguace (canale)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguace (partner)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icona font awesome, ad es. fa-tasks"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__11
+msgid "G住宅ﾎﾟｲﾝﾄ"
+msgstr "Punti di alloggiamento G"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__3
+msgid "I'm home"
+msgstr "Sono a c"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__originator__1
+msgid "IC・設計・クライアント"
+msgstr "IC, design, cliente"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_crm_lead__id
+#: model:ir.model.fields,field_description:rtw_inquiry.field_res_partner__id
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_exception_icon
+msgid "Icon"
+msgstr "icona"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icona per indicare un'attività di eccezione."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__message_needaction
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Se è selezionata, i nuovi messaggi richiedono la vostra attenzione."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__message_has_error
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se è selezionata, alcuni messaggi presentano un errore di consegna."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_crm_lead__inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_res_partner__inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_res_users__inquiry
+msgid "Inquiry"
+msgstr "richiesta di informazioni"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_is_follower
+msgid "Is Follower"
+msgstr "Di seguito."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_crm_lead____last_update
+#: model:ir.model.fields,field_description:rtw_inquiry.field_res_partner____last_update
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry____last_update
+msgid "Last Modified on"
+msgstr "Ultimo aggiornamento."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento da."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__last_activity_date
+msgid "LastActivityDate"
+msgstr "Data dell'ultima attività"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__last_modified_by_id
+msgid "LastModifiedById"
+msgstr "Ultimo aggiornamento da."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__last_modified_date
+msgid "LastModifiedDate"
+msgstr "Ultimo aggiornamento."
+
+#. module: rtw_inquiry
+#: model:ir.model,name:rtw_inquiry.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Lead / Deal"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Attacco principale."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_has_error
+msgid "Message Delivery error"
+msgstr "errore di consegna del messaggio"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_ids
+msgid "Messages"
+msgstr "Messaggio."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "scadenza attività"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__name
+msgid "Name"
+msgstr "Oggetto."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Scadenza della prossima attività"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_summary
+msgid "Next Activity Summary"
+msgstr "Riassunto dell'attività successiva"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo di attività successiva."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Numero di azioni."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_has_error_counter
+msgid "Number of errors"
+msgstr "Numero di errori"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Numero di messaggi che richiedono un'azione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Numero di messaggi con errore di consegna"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Numero di messaggi non letti"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__9
+msgid "ONLINEサイト"
+msgstr "SITO ONLINE"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__owner_id
+msgid "OwnerId"
+msgstr "proprietario"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__8
+msgid "Passione"
+msgstr "Passione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__7
+msgid "Pen"
+msgstr "Penna"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q1_リードソース"
+msgstr "Q1 Fonte di piombo."
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q1_商品の満足度"
+msgstr "Q1 Soddisfazione per il prodotto"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q2_商品情報"
+msgstr "Q2 Informazioni sul prodotto."
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q2＿購入理由"
+msgstr "Q2 Ragioni d'acquisto"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q3＿Rを紹介したいか"
+msgstr "Q3 Vuole fare riferimento a R?"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q3＿営業スタッフの対応"
+msgstr "Q3 Responsabilità del personale di vendita"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q4_納品スタッフの作業・身だしなみ・あいさつ"
+msgstr "Q4 Lavoro del personale addetto alle consegne, aspetto personale e saluti"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q4＿購入理由"
+msgstr "Q4 Ragioni d'acquisto"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q5_メンテナンスの興味"
+msgstr "Q5 Interesse per la manutenzione"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q5＿販売・営業スタッフの対応"
+msgstr "Q5 Responsabilità del personale di vendita e marketing"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q6_DMの可否"
+msgstr "Q6 Disponibilità di DM"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q6_納品スタッフの作業・身だしなみ・あいさつ"
+msgstr "Q6 Lavoro del personale addetto alle consegne, aspetto personale e saluti"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q7_ご意見・ご要望"
+msgstr "Q7 Opinioni e richieste"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "Q8_DMの可否"
+msgstr "Q8 Disponibilità di DM"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__record_type_id
+msgid "RecordTypeId"
+msgstr "tipo di record"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__activity_user_id
+msgid "Responsible User"
+msgstr "responsabile (di un'area di lavoro, ma non necessariamente della supervisione di altro personale)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__8
+msgid "Rオーナー"
+msgstr "R Proprietario."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__9
+msgid "R営業"
+msgstr "R Vendite"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Errore di consegna degli SMS"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__5
+msgid "SNS・ソーシャルメディア"
+msgstr "Social network e social media"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__3
+msgid "SR予約"
+msgstr "SR Prenotazioni."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__system_mod_stamp
+msgid "SystemModstamp"
+msgstr "Data dell'ultimo aggiornamento del sistema"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__6
+msgid "TABROOM"
+msgstr "TABROOM"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo di attività di eccezione registrata."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_unread
+msgid "Unread Messages"
+msgstr "numero di messaggi non letti"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "contatore dei messaggi non letti"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__means__1
+msgid "WEBフォーム"
+msgstr "modulo web"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__inq_type__4
+msgid "WEB・広報関連"
+msgstr "Web e PR"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__website_message_ids
+msgid "Website Messages"
+msgstr "Messaggio del sito web"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,help:rtw_inquiry.field_rtw_sf_inquiry__website_message_ids
+msgid "Website communication history"
+msgstr "Storia della comunicazione del sito web"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__accounts
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "accounts"
+msgstr "cliente"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__admitted
+msgid "admitted"
+msgstr "accettazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__appearance
+msgid "appearance"
+msgstr "aspetto personale(a)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__appearance_2
+msgid "appearance_2"
+msgstr "aspetto personale(b)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__broad_category
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "broad_category"
+msgstr "categoria ampia"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__campaign_id
+msgid "campaign"
+msgstr "campagna"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "campaign_id"
+msgstr "campagna"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__classification
+msgid "classification"
+msgstr "Classificazione."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__comment
+msgid "comment"
+msgstr "Commento."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__confirm_user_information
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "confirm_user_information"
+msgstr "Conferma delle informazioni sull'utente"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__confirmation
+msgid "confirmation"
+msgstr "conferma"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__contact
+msgid "contact"
+msgstr "Contatto."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__contact_person
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_inquiry_list
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "contact_person"
+msgstr "Partner commerciale responsabile"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "created_by_id"
+msgstr "autore"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__crm_1
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_inquiry_list
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "crm_1"
+msgstr "Riunioni di lavoro correlate①"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__customer_testimonials
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "customer_testimonials"
+msgstr "Cosa dicono i nostri clienti."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__date_time
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "date_time"
+msgstr "data e ora"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__deign
+msgid "deign"
+msgstr "design"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__delivery_work
+msgid "delivery_work"
+msgstr "esecuzione (carico, scarico) e consegna del lavoro"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__description
+msgid "description"
+msgstr "Descrizione del lavoro e precauzioni"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__detail
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.view_crm_form_sf
+msgid "detail"
+msgstr "Contenuti"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__evaluation_of_delivery_staff
+msgid "evaluation_of_delivery_staff"
+msgstr "Valutazione del personale di consegna"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__event_information_notices
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "event_information_notices"
+msgstr "Avvisi informativi sugli eventi"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__glad_bought_it_before
+msgid "glad_bought_it_before"
+msgstr "Sono contento di averlo comprato prima."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__greeting1
+msgid "greeting1"
+msgstr "saluto（a）"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__greeting_2
+msgid "greeting_2"
+msgstr "saluto（ｂ）"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__handover_matters
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "handover_matters"
+msgstr "questioni da consegnare"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__image_atmosphere
+msgid "image_atmosphere"
+msgstr "Immagine Atmosfera"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__inet_reputation_and_wom
+msgid "inet_reputation_and_wom"
+msgstr "Reputazione online e passaparola"
+
+#. module: rtw_inquiry
+#: model:ir.model,name:rtw_inquiry.model_rtw_sf_inquiry
+#: model:ir.ui.menu,name:rtw_inquiry.menu_root
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.view_partner_form_sf_inq
+msgid "inquiry"
+msgstr "Richieste e questionari"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_crm_lead__inquiry_count
+#: model:ir.model.fields,field_description:rtw_inquiry.field_res_partner__inquiry_count
+#: model:ir.model.fields,field_description:rtw_inquiry.field_res_users__inquiry_count
+msgid "inquiry count"
+msgstr "Numero di richieste di informazioni"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "last_modified_by_id"
+msgstr "Ultimo aggiornamento da."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__lead_source
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "lead_source"
+msgstr "Fonte del piombo"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__magazine_site
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "magazine_site"
+msgstr "Nome della rivista/sito web"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__means
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "means"
+msgstr "mezzi"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__mid_category
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "mid_category"
+msgstr "(prodotto) classificazione"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_inquiry_list
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "name"
+msgstr "Oggetto."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__name_of_magazine_other
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "name_of_magazine_other"
+msgstr "Nome della rivista (altro)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__need_dm
+msgid "need_dm"
+msgstr "DM speranza"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__no
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__number
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "no"
+msgstr "No"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__non_response
+msgid "non_response"
+msgstr "non risposta"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__not_meet
+msgid "not_meet"
+msgstr "Non l'ho visto."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__not_meet_2
+msgid "not_meet_2"
+msgstr "Non l'ho visto."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__not_need_dm
+msgid "not_need_dm"
+msgstr "Non c'è bisogno di DM"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__order_no
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "order_no"
+msgstr "Numero d'ordine"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__originator
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "originator"
+msgstr "originatore"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__other
+msgid "other"
+msgstr "Altro.(4)"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_inquiry_list
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "owner_id"
+msgstr "proprietario"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__price
+msgid "price"
+msgstr "Prezzo"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_category_1
+msgid "product_category_1"
+msgstr "①Categoria di prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_category_2
+msgid "product_category_2"
+msgstr "②Categoria di prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_category_3
+msgid "product_category_3"
+msgstr "③Categoria di prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_category_4
+msgid "product_category_4"
+msgstr "④Categoria di prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_category_5
+msgid "product_category_5"
+msgstr "⑤Categoria di prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_category_6
+msgid "product_category_6"
+msgstr "⑥Categoria di prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_name1
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "product_name1"
+msgstr "①Nome del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_name2
+msgid "product_name2"
+msgstr "②Nome del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_name3
+msgid "product_name3"
+msgstr "③Nome del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_name4
+msgid "product_name4"
+msgstr "④Nome del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_name5
+msgid "product_name5"
+msgstr "⑤Nome del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__product_name6
+msgid "product_name6"
+msgstr "⑥Nome del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__proposal_ability
+msgid "proposal_ability"
+msgstr "Descrizione del prodotto e proposta"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__proposal_to_send_catalog
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "proposal_to_send_catalog"
+msgstr "Proposta di invio del catalogo"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__recommendation_from_a_friend
+msgid "recommendation_from_a_friend"
+msgstr "Raccomandazione di un amico"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__record_type_id_name
+msgid "record_type_id_name"
+msgstr "nome del tipo di record"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__report_progress
+msgid "report_progress"
+msgstr "Segnalazione dei progressi."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__request
+msgid "request"
+msgstr "applicazione"
+
+#. module: rtw_inquiry
+#: model:ir.actions.act_window,name:rtw_inquiry.action_window
+#: model:ir.ui.menu,name:rtw_inquiry.menu_inquiry_tree
+msgid "rtw_inquiry window"
+msgstr "Richieste e questionari"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__sales_staff_evaluation
+msgid "sales_staff_evaluation"
+msgstr "Valutazione del personale di vendita"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__sales_staff_response
+msgid "sales_staff_response"
+msgstr "Reattività del personale di vendita"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__satisfaction_level
+msgid "satisfaction_level"
+msgstr "Soddisfazione del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__score
+msgid "score"
+msgstr "Punteggio (grado di disponibilità a fare riferimento)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__sense_of_materials
+msgid "sense_of_materials"
+msgstr "senso di materialità"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__situation
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_inquiry_list
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "situation"
+msgstr "situazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__speed
+msgid "speed"
+msgstr "Velocità di risposta"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__sr_attracting
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "sr_attracting"
+msgstr "Attrazione SR"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__status_report
+msgid "status_report"
+msgstr "rapporto sulla situazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__summary
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "summary"
+msgstr "Panoramica."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__support
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "support"
+msgstr "supporto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__survey_no
+msgid "survey_no"
+msgstr "Questionario n."
+
+#. module: rtw_inquiry
+#: model:ir.model,name:rtw_inquiry.model_res_partner
+msgid "task"
+msgstr "compito"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__toi_no
+msgid "toi_no"
+msgstr "Richiesta n."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__use
+msgid "use"
+msgstr "facilità d'uso"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__vendor
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "vendor"
+msgstr "consegnatore"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__yes
+msgid "yes"
+msgstr "SÌ"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__other
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__inq_type__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__12
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__10
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__means__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__originator__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__4
+msgid "その他"
+msgstr "Altro."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__10
+msgid "ふるさと納税"
+msgstr "pagamento delle imposte a casa"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__evaluation_of_delivery_staff__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__sales_staff_evaluation__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__satisfaction_level__2
+msgid "やや不満"
+msgstr "alquanto insoddisfacente"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__evaluation_of_delivery_staff__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__sales_staff_evaluation__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__satisfaction_level__4
+msgid "やや満足"
+msgstr "un po' soddisfatti"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "アンケート"
+msgstr "sondaggio"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__event_sale
+msgid "イベント・セール"
+msgstr "Eventi e vendite"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__4
+msgid "インターネット"
+msgstr "Internet"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__2
+msgid "エルデコ"
+msgstr "Elle Deco"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__owners_desk
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "オーナーズデスク"
+msgstr "Scrivania del proprietario"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__originator__2
+msgid "オーナー・エンドユーザー"
+msgstr "Proprietario/utente finale"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__catalog
+msgid "カタログ依頼（メール・ＦＡＸ）"
+msgstr "Richieste di catalogo (e-mail e fax)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__2
+msgid "カタログ送付"
+msgstr "Invio di cataloghi"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__claim
+msgid "クレーム"
+msgstr "reclamo"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__6
+msgid "ゲーテ"
+msgstr "Goethe"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__3
+msgid "サンプル送付"
+msgstr "Inviare campioni"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__5
+msgid "シグネチャー"
+msgstr "firma"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__show_room
+msgid "ショールーム"
+msgstr "showroom"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__2
+msgid "スペアカバー・部材購入"
+msgstr "Acquisto di coperture e componenti di ricambio"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__4
+msgid "セール"
+msgstr "vendita"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__4
+msgid "セール商品内容"
+msgstr "Dettagli del prodotto in vendita"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__3
+msgid "セール実施予定の確認"
+msgstr "Conferma del calendario di attuazione della vendita."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__5
+msgid "ソファ"
+msgstr "Divano"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__6
+msgid "ダイニングテーブル"
+msgstr "tavolo da pranzo"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__7
+msgid "チェア"
+msgstr "sedia"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__classification__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__inq_type__3
+msgid "ツール・資料制作依頼"
+msgstr "Richieste di produzione di strumenti e materiali"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__5
+msgid "デザイン（特徴・コンセプト・デザイナーほか）"
+msgstr "Design (caratteristiche, concetto, designer, ecc.)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__5
+msgid "プレゼント・キャンペーン"
+msgstr "Regali e campagne"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__8
+msgid "ボード"
+msgstr "bordo"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__6
+msgid "メンテナンス"
+msgstr "manutenzione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__10
+msgid "メンテナンスキット紹介"
+msgstr "Introduzione al kit di manutenzione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__11
+msgid "メンテナンスキット販売"
+msgstr "Kit di manutenzione venduti"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__originator__4
+msgid "メーカー・サプライヤー"
+msgstr "Produttori/fornitori"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__means__2
+msgid "メール"
+msgstr "mail"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__9
+msgid "メール回答完了"
+msgstr "Risposta via e-mail completata"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__1
+msgid "モダンリビング"
+msgstr "vita moderna"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__12
+msgid "リビングテーブル"
+msgstr "tavolo da soggiorno"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__11
+msgid "不明"
+msgstr "sconosciuto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance_2__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__delivery_work__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__description__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting1__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting_2__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__proposal_ability__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__speed__2
+msgid "不満"
+msgstr "insoddisfazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__8
+msgid "仕様（価格・サイズ・重量・別注対応ほか）"
+msgstr "Specifiche (prezzo, dimensioni, peso, supporto per ordini speciali, ecc.)"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "件名："
+msgstr "Oggetto:"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__7
+msgid "供給（在庫・納期ほか）"
+msgstr "Fornitura (scorte, date di consegna, ecc.)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__9
+msgid "修理・張り替え"
+msgstr "Riparazione e tappezzeria"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__11
+msgid "取引条件の確認"
+msgstr "Conferma dei termini e delle condizioni commerciali."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__progress__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__report_progress__2
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__yousei__2
+msgid "受理"
+msgstr "accettazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__12
+msgid "商品クレーム"
+msgstr "dichiarazione del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__13
+msgid "商品不具合・破損"
+msgstr "Difetti/danni del prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__10
+msgid "商品名・品番確認"
+msgstr "Controllare il nome e il numero del prodotto"
+
+#. module: rtw_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "商品情報"
+msgstr "Informazioni sul prodotto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__16
+msgid "商品資料送付"
+msgstr "Invio di informazioni sui prodotti"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__merchandise
+msgid "商品関連"
+msgstr "Merceologia"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__magazine_site__4
+msgid "商店建築"
+msgstr "costruzione del negozio"
+
+#. module: rtw_inquiry
+#: model:ir.ui.menu,name:rtw_inquiry.menu_inquiry
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.view_crm_form_sf
+msgid "問合せ・アンケート"
+msgstr "Richieste e questionari"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__13
+msgid "営業引継ぎ"
+msgstr "rilevare la gestione di un'azienda"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__14
+msgid "営業日・営業時間"
+msgstr "Giorni e orari di funzionamento"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__7
+msgid "営業日時・時間"
+msgstr "Date e orari di apertura"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__inq_type__2
+msgid "営業活動"
+msgstr "attività commerciali"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance_2__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__delivery_work__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__description__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__evaluation_of_delivery_staff__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting1__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting_2__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__proposal_ability__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__sales_staff_evaluation__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__satisfaction_level__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__speed__1
+msgid "大変不満"
+msgstr "molto insoddisfatto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__evaluation_of_delivery_staff__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__sales_staff_evaluation__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__satisfaction_level__5
+msgid "大変満足"
+msgstr "molto soddisfacente"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__yousei__4
+msgid "完了"
+msgstr "completamento"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__7
+msgid "展示場・ショップ"
+msgstr "Sale espositive e negozi"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__progress__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__report_progress__5
+msgid "差し戻し"
+msgstr "rispedire"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__campaign
+msgid "広報・キャンペーン関連"
+msgstr "Relazioni pubbliche e campagna elettorale"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance_2__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__delivery_work__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__description__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting1__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting_2__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__proposal_ability__5
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__speed__5
+msgid "感動"
+msgstr "commuoversi (fino alle lacrime)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__progress__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__report_progress__3
+msgid "承認"
+msgstr "approvazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__progress__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__report_progress__1
+msgid "提出"
+msgstr "presentare (ad esempio una relazione o una tesi)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__9
+msgid "支払い・決済方法"
+msgstr "Metodi di pagamento e di liquidazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__14
+msgid "新規注文検討"
+msgstr "considerazione del nuovo ordine"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__11
+msgid "日常的なお手入れ"
+msgstr "Cura quotidiana"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance_2__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__delivery_work__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__description__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__evaluation_of_delivery_staff__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting1__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting_2__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__proposal_ability__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__sales_staff_evaluation__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__satisfaction_level__3
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__speed__3
+msgid "普通"
+msgstr "di solito"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__means__3
+msgid "来場"
+msgstr "presenza"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__18
+msgid "注文書送付"
+msgstr "invio del modulo d'ordine"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__15
+msgid "注文済商品"
+msgstr "merce ordinata"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__17
+msgid "注文（受注）"
+msgstr "Ordini (ricevuti)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance_2__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__appearance__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__delivery_work__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__description__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting1__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__greeting_2__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__proposal_ability__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__speed__4
+msgid "満足"
+msgstr "soddisfazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__yousei__1
+msgid "申請"
+msgstr "applicazione"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__6
+msgid "画像・資料提供"
+msgstr "Immagini e documenti forniti da"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__classification__1
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__inq_type__1
+msgid "社内業務改善"
+msgstr "Miglioramento delle operazioni interne"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__delivery_problems
+msgid "納品トラブル"
+msgstr "problemi di consegna"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__13
+msgid "納品方法の確認"
+msgstr "Conferma del metodo di consegna."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__12
+msgid "納品日の確認"
+msgstr "Conferma della data di consegna"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__21
+msgid "納品日変更"
+msgstr "Modifica della data di consegna"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__20
+msgid "納品日決定"
+msgstr "Data di consegna decisa"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__16
+msgid "納品済商品（メンテ）"
+msgstr "Beni consegnati (manutenzione)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__delivery_related
+msgid "納品関連"
+msgstr "Relativo alle consegne"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__1
+msgid "紹介（家具店・住宅関係者）"
+msgstr "Referenti (negozi di mobili e fornitori di alloggi)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__2
+msgid "紹介（家族・知人）"
+msgstr "Referenti (familiari e conoscenti)"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__progress__4
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__report_progress__4
+msgid "総務受理"
+msgstr "Accettazione degli Affari Generali"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__detail__14
+msgid "補修的なメンテ"
+msgstr "Manutenzione riparativa"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__15
+msgid "見積り依頼"
+msgstr "richiesta di offerta"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__22
+msgid "訪問"
+msgstr "visita"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__10
+msgid "資料請求"
+msgstr "richiesta di informazioni"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__8
+msgid "購入ルート"
+msgstr "percorso di acquisto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__situation__not_buy
+msgid "購入前"
+msgstr "Prima dell'acquisto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__situation__buy
+msgid "購入後"
+msgstr "Dopo l'acquisto"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__broad_category__buy_method
+msgid "購入方法"
+msgstr "Come acquistare"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__yousei__3
+msgid "進行中"
+msgstr "in corso"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields,field_description:rtw_inquiry.field_rtw_sf_inquiry__crm_2
+#: model_terms:ir.ui.view,arch_db:rtw_inquiry.rtw_sf_inquiry_form
+msgid "関連商談②"
+msgstr "Riunioni di lavoro collegate②"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__lead_source__3
+msgid "雑誌"
+msgstr "rivista"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__means__4
+msgid "電話"
+msgstr "Telefono."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__19
+msgid "電話回答完了"
+msgstr "Risposta telefonica completata"
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__support__1
+msgid "ＳＲ予約"
+msgstr "SR Prenotazioni."
+
+#. module: rtw_inquiry
+#: model:ir.model.fields.selection,name:rtw_inquiry.selection__rtw_sf_inquiry__mid_category__2
+msgid "ＳＲ展示品について"
+msgstr "Informazioni sulle mostre SR"

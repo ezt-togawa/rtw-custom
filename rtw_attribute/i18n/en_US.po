@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_attribute
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-15 02:53+0000\n"
+"PO-Revision-Date: 2023-05-15 02:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_attribute
+#: model:ir.ui.menu,name:rtw_attribute.menu_1_list
+msgid "product template attribute"
+msgstr "Product template attribute"
+
+#. module: rtw_attribute
+#: model:ir.actions.act_window,name:rtw_attribute.action_window
+msgid "rtw_attribute window"
+msgstr "Rtw attribute window"

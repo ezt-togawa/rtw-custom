@@ -20,13 +20,19 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'excel_import_export', 'sale_management'],
+    'depends': ['base', 'excel_import_export', 'sale_management', 'sale','sale_sourced_by_line'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'report/proforma.xml',
         'report/report.xml',
+        'report_quotation/actions.xml',
+        'report_quotation/templates.xml',
+        'report_list_price_quotation/actions.xml',
+        'report_list_price_quotation/templates.xml',
+        'views/views.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
