@@ -119,7 +119,7 @@ class calendar_event_rtw(models.Model):
                 rec.short_description = rec.description
             else:
                 rec.short_description = False
-    
+
     @api.model
     def _get_public_fields(self):
         res = super()._get_public_fields()
@@ -128,11 +128,11 @@ class calendar_event_rtw(models.Model):
         )
         return res
 
-    @api.onchange('sr', 'situation', 'start')
-    def _crm_set(self):
-        for rec in self:
-            if rec.opportunity_id:
-                rec.opportunity_id.last_event = rec.start
-                rec.opportunity_id.event_showroom = rec.sr.name
-                rec.opportunity_id.event_situations = dict(rec._fields['situation'].selection).get(rec.situation)
+    # @api.onchange('sr', 'situation', 'start')
+    # def _crm_set(self):
+    #     for rec in self:
+    #         if rec.opportunity_id:
+    #             rec.opportunity_id.last_event = rec.start
+    #             rec.opportunity_id.event_showroom = rec.sr.name
+    #             rec.opportunity_id.event_situations = dict(rec._fields['situation'].selection).get(rec.situation)
 
