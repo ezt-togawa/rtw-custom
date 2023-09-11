@@ -25,16 +25,16 @@ class rtw_crm(models.Model):
         sale_line_in_week_three = []
         for sale in sale_orders:
             for order_line in sale.order_line:
-                if order_line.date_planned and order_line.delivery_confirmation:
-                    if order_line.delivery_confirmation and order_line.date_planned >= datetime.now() and order_line.date_planned <= (datetime.now() + timedelta(days=7)):  # Planned date in 7 days
+                if order_line.date_planned:
+                    if not order_line.delivery_confirmation and order_line.date_planned >= datetime.now() and order_line.date_planned <= (datetime.now() + timedelta(days=7)):  # Planned date in 7 days
                         sale_line_in_week_one.append(
                             (sale.name + ' / ' + str(order_line.date_planned.date()) + ' / ' + str(sale.title) + ' / ' + order_line.product_id.name))
                     # Planned date in 7 days - 14days
-                    elif order_line.delivery_confirmation and order_line.date_planned > (datetime.now() + timedelta(days=7)) and order_line.date_planned <= (datetime.now() + timedelta(days=14)):
+                    elif not order_line.delivery_confirmation and order_line.date_planned > (datetime.now() + timedelta(days=7)) and order_line.date_planned <= (datetime.now() + timedelta(days=14)):
                         sale_line_in_week_two.append(
                             (sale.name + ' / ' + str(order_line.date_planned.date()) + ' / ' + str(sale.title) + ' / ' + order_line.product_id.name))
                     # Planned date in 14 days - 21 days
-                    elif order_line.delivery_confirmation and order_line.date_planned > (datetime.now() + timedelta(days=14)) and order_line.date_planned <= (datetime.now() + timedelta(days=21)):
+                    elif not order_line.delivery_confirmation and order_line.date_planned > (datetime.now() + timedelta(days=14)) and order_line.date_planned <= (datetime.now() + timedelta(days=21)):
                         sale_line_in_week_three.append(
                             (sale.name + ' / ' + str(order_line.date_planned.date()) + ' / ' + str(sale.title) + ' / ' + order_line.product_id.name))
 
