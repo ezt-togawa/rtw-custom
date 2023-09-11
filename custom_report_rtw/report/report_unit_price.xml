@@ -37,13 +37,11 @@
             </div>
             <div class="row" style="margin-top:-50px;font-weight:bold">
               <div class="col-4">
+                <div> 株式会社<span class="so_title"
+                    t-field="docs.company_id.partner_id.name" /> 御中</div>
                 <div>
                   <span
-                    t-field="docs.company_id.partner_id.name" /> 様 </div>
-                <div>
-                  <span
-                    t-field="docs.partner_id.name" />
-                </div>
+                    t-field="docs.partner_id.name" /> 様 </div>
                 <br />
                 <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
                   御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br /> <span class="mt-1"
@@ -127,7 +125,7 @@
                     <td t-esc="l_index+1" class="text-center">
                     </td>
                     <td>
-                      <span t-field="l.name" />
+                      <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
                       <br />
                       <span t-if="l.p_type" t-field="l.p_type" />
                     </td>

@@ -88,7 +88,10 @@
             </div>
             <div class="row py-2">
               <div class="col-4">
-                <div> 送り先: <span t-field="docs.partner_id.name" />
+                <div> 送り先: <span t-if="not docs.partner_id.parent_id" t-field="docs.partner_id.name" />
+                  <span
+                    t-if="docs.partner_id.parent_id"
+                    t-field="docs.partner_id.parent_id.name" />
                 </div>
                 <div> 住所: <span t-field="docs.partner_id.street" />
                 </div>
@@ -134,7 +137,7 @@
                     <td t-esc="l_index+1" class="text-center">
                     </td>
                     <td>
-                      <span t-field="l.name" />
+                      <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
                       <br />
                       <span t-if="l.p_type" t-field="l.p_type" />
                       <br />
