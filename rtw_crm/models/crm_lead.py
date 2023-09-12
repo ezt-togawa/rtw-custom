@@ -46,7 +46,7 @@ class rtw_crm(models.Model):
         ('27', '紹介(施主指定)'),
         ('28', '紹介（従業員）'),
         ('29', '海外展示会'),
-        ('30', 'ミラノサローネ'),
+        ('30', 'Milano Salone'),
         ('31', 'Architonic'),
         ('32', 'Archiproducts'),
         ('33', 'その他'),
