@@ -40,7 +40,7 @@ class rtw_crm(models.Model):
 
     def write(self , vals):
         result = super(rtw_crm,self).write(vals)
-        self.refresh()
+        # self.refresh()
         min_date, max_date = self.find_min_max_date_deadline()
         leads = self.search([])
         current_date = min_date
