@@ -38,26 +38,27 @@
             <div class="row" style="margin-top:-50px;font-weight:bold">
               <div class="col-4">
                 <div> 発注番号 <span class="so_title"
-                    t-field="docs.name" />
+                    t-field="docs.origin" />
                 </div>
                 <br />
-                <div>出荷日 <span t-esc="docs.estimated_shipping_date" />
+                <div>出荷日 <span t-esc="docs.calculate_estimated_shipping_date" />
                 </div>
-                <div>入荷日 <span t-if="docs.calculate_planned_date"
-                    t-esc="docs.calculate_planned_date.strftime('%Y-%m-%d')" />
+                <div>入荷日 <span t-if="docs.scheduled_date"
+                    t-esc="docs.scheduled_date.strftime('%Y-%m-%d')" />
                 </div>
-                <div>配送手段 <span t-esc="docs.payment_term_id.name" />
+                <div>配送手段 <span t-esc="docs.calculate_payment_term" />
                 </div>
                 <br />
-                <div>物件名 <span t-field="docs.name" />
+                <div>物件名 <span t-field="docs.calculate_name" />
                 <br />
                 <div>
-                    <span t-field="docs.partner_id.name" />
-                  <span t-field="docs.partner_id.site" />
-                  <span
+                    <span t-field="docs.partner_id.parent_id.name" />
+                <span
+                      t-field="docs.partner_id.site" />
+                <span
                       t-field="docs.partner_id.department" />
-                  <span
-                      t-field="docs.partner_id.user_id.name" /> ご依頼分 <span t-field="docs.name" />
+                <span
+                      t-field="docs.partner_id.name" />様 ご依頼分 <span t-field="docs.calculate_name" />
                   </div>
                 </div>
               </div>
@@ -85,12 +86,15 @@
                 <div> fax.06-4963-8778
                 </div>
                 <div>
-                  <span t-esc="docs.user_id.name" /> 印 </div>
+                  <span t-esc="docs.pic_name" /> 印 </div>
               </div>
             </div>
             <div class="row py-2">
               <div class="col-4">
-                <div> 送り先<span t-field="docs.partner_id.name" />
+                <div> 送り先 <span t-if="not docs.partner_id.parent_id" t-field="docs.partner_id.name" />
+                  <span
+                    t-if="docs.partner_id.parent_id"
+                    t-field="docs.partner_id.parent_id.name" />
                 </div>
                 <div> 住所 <span
                     t-field="docs.partner_id.street" />
@@ -101,7 +105,7 @@
                 </div>
               </div>
               <div class="col-4">
-                <div> 備考: <span t-field="docs.note" />
+                <div> 備考: <span t-field="docs.calculate_note" />
                 </div>
               </div>
               <div class="col-4">
@@ -110,12 +114,8 @@
             </div>
             <table
               class="table">
-              <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
+              <t t-foreach="docs.move_ids_without_package" t-as="l" t-groupby="10"
                 t-att-last="last">
-                <t t-set="total_subprice"
-                  t-value="total_subprice + l.price_subtotal" />
-                <t t-set="total_listprice"
-                  t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                 <t t-if="l_index == 0">
                   <thead>
                     <tr
@@ -137,7 +137,7 @@
                     <td t-esc="l_index+1" class="text-center">
                     </td>
                     <td>
-                      <span t-field="l.name" />
+                      <span t-field="l.product_id.name" />
                       <br />
                       <t t-if="l.p_type">
                         <span
@@ -170,12 +170,12 @@
                           t-esc="string_line.display_name" />
                                                 <br />
                       </t>
-                      <t t-foreach="l.config_session_id.custom_value_ids"
+                      <!-- <t t-foreach="l.config_session_id.custom_value_ids"
                         t-as="string_line"> ●<span
                           t-esc="string_line.display_name" />: <span
                           t-esc="string_line.value" />
                                                 <br />
-                      </t>
+                      </t> -->
                     </td>
                     <td class="text-center">
                       <div id="quote_qty">
@@ -204,10 +204,10 @@
                         t-field="l.warehouse_id.name" />
                     </td>
                     <td class="text-center">
-                      <t t-if="docs.shiratani_entry_date">
+                      <t t-if="l.shiratani_date">
                         <span
                           style="font-size:14px"
-                          t-esc="docs.shiratani_entry_date.strftime('%m/%d')" />
+                          t-esc="l.shiratani_date.strftime('%m/%d')" />
                       </t>
                     </td>
                   </tr>
@@ -216,7 +216,7 @@
             </table>
             <div class="d-flex justify-content-end">
               <span style="font-size:13px"
-                t-field="docs.name" />
+                t-field="docs.calculate_name" />
             </div>
           </div>
           <t t-call="custom_report_rtw.page_footer_layout"></t>
@@ -242,7 +242,7 @@
   <report
     string="出荷依頼書"
     id="report_shipping_order_rtw"
-    model="sale.order"
+    model="stock.picking"
     report_type="qweb-pdf"
     name="custom_report_rtw.report_shipping_order"
     file="custom_report_rtw.report_shipping_order"

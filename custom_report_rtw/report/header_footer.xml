@@ -277,7 +277,7 @@
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">発注書(部材用</span>
+                    <span style="font-size:20px" class="ml-2">発注書(部材用)</span>
                     <span style="font-size:16px" class="ml-5">株式会社 <span
                             t-esc="docs.partner_id.name" /> 御中</span>
                 </div>
@@ -298,6 +298,9 @@
                         alt="Logo" />
                     <span style="font-size:20px" class="ml-2">配送依頼書</span>
                     <span style="font-size:16px" class="ml-5">株式会社 <span
+                            t-if="docs.partner_id.parent_id"
+                            t-esc="docs.partner_id.parent_id.name" /><span
+                            t-if="not docs.partner_id.parent_id"
                             t-esc="docs.partner_id.name" /> 御中</span>
                 </div>
                 <div class="col-4 text-right mt-2">
@@ -317,6 +320,9 @@
                         alt="Logo" />
                     <span style="font-size:20px" class="ml-2">出荷依頼書</span>
                     <span style="font-size:16px" class="ml-5">株式会社 <span
+                            t-if="docs.partner_id.parent_id"
+                            t-esc="docs.partner_id.parent_id.name" /><span
+                            t-if="not docs.partner_id.parent_id"
                             t-esc="docs.partner_id.name" /> 御中</span>
                 </div>
                 <div class="col-4 text-right mt-2">
