@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="inspection_check_sheet"
+            model="stock.picking"
+            string="検品チェックシート(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.inspection_check_sheet_xls"
+            file="rtw_excel_report.inspection_check_sheet_xls"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

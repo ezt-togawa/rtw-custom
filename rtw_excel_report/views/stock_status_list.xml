@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="stock_status_list"
+            model="product.template"
+            string="在庫状況一覧(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.stock_status_list_xls"
+            file="rtw_excel_report.stock_status_list_xls"
+            attachment_use="False"
+        />
+    </data>
+</odoo>
