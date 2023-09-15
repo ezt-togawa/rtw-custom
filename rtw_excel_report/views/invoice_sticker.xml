@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="invoice_sticker"
+            model="stock.picking"
+            string="送り状シール(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.invoice_sticker_xls"
+            file="rtw_excel_report.invoice_sticker_xls"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

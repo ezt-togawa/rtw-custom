@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="shipping_list"
+            model="stock.picking"
+            string="出荷予定リスト(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.shipping_list_xls"
+            file="rtw_excel_report.shipping_list_xls"
+            attachment_use="False"
+        />
+    </data>
+</odoo>
