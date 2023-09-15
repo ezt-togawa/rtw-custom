@@ -15,10 +15,11 @@
           <field name="sale_order_current_date" invisible="1" />
           <field name="sale_order_estimated_shipping_date" invisible="1" />
           <field name="sale_order_date_order" invisible="1" />
-          <field name="sale_order_company_name" invisible="1" />
+          <field name="sale_order_company_owner" invisible="1" />
           <field name="sale_order_total_list_price" invisible="1" />
           <field name="sale_order_total_discount" invisible="1" />
           <field name="sale_order_validity_date" invisible="1" />
+          <field name="sale_order_account_number" invisible="1" />
         </xpath>
       </field>
     </record>

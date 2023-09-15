@@ -14,7 +14,9 @@
                 '__EXPORT__': {
                     '定価御見積書': {
                         '_HEAD_': {
-                            'A3': 'sale_order_company_name${value or ""}',
+                            'A2':'sale_order_send_to_company${value or ""}',
+                            'A3':'sale_order_company_owner${value or ""}',
+                            'B7':'title${value or ""}',
                             'B9': 'sale_order_amount_untaxed${value or ""}',
                             'B10':'sale_order_amount_tax${value or ""}',
                             'B11':'sale_order_amount_total${value or ""}',
@@ -25,13 +27,7 @@
                             'E7': 'forwarding_address${value or ""}',
                             'E9': 'sale_order_validity_date${value or ""}',
                             'E10': 'note${value or ""}',
-                            'F3': 'company_id.partner_id.display_name',
-                            'F4': 'company_id.partner_id.city',
-                            'F5': 'sale_order_zip',
-                            'F6': 'company_id.partner_id.street',
-                            'F7': 'sale_order_tel',
-                            'F8': 'sale_order_fax',
-                            'F9': 'user_id.name',
+                            'G8': 'user_id.name${value or ""}',
                             'G1': 'sale_order_current_date',
                             'G17': 'name${value or ""}',
                             'G14': 'sale_order_total_list_price${value or ""}',
@@ -44,7 +40,7 @@
                             'C20': 'sale_order_number_and_size#{style=text;fill=grey}',
                             'D20': 'sale_order_product_detail#{style=text;fill=grey}',
                             'E20': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
-                            'F20': 'product_template_id.list_price${value or 0}#{style=number;fill=grey}',
+                            'F20': 'price_unit${value or 0}#{style=number;fill=grey}',
                             'G20': 'price_subtotal${value or 0}#{style=number;fill=grey}',
                         }
                     }
