@@ -16,38 +16,35 @@
                         '_HEAD_': {
                             'A3': 'send_company${value or ""}',
                             'A4': 'to_receiver${value or ""}',
-                            'H9': 'printing_staff${value or ""}'
-                        },
-                        'sale_order':{
-                            'B7': 'title${value or ""}',
-                            'B9': 'sale_order_amount_untaxed${value or ""}',
-                            'B10':'sale_order_amount_tax${value or ""}',
-                            'B11':'sale_order_amount_total${value or ""}',
-                            'E3': 'sale_order_estimated_shipping_date${value or ""}',
-                            'E4': 'payment_term_id.name${value or ""}',
+                            'H9': 'printing_staff${value or ""}',
+                            'B7':'name${value or ""}',
+                            'B9': 'amount_untaxed${value or ""}',
+                            'B10':'amount_tax${value or ""}',
+                            'B11':'amount_total${value or ""}',
+                            'E3': 'acc_move_invoice_date_due${value or ""}',
+                            'E4': 'acc_move_payment_term${value or ""}',
                             'E5': 'partner_id.bank_ids.bank_id.name${value or ""}',
                             'E6': 'partner_id.bank_ids.bank_id.street${value or ""}',
-                            'E7': 'sale_order_account_number${value or ""}',
-                            'E9': 'sale_order_estimated_shipping_date${value or ""}',
-                            'E10':'forwarding_address${value or ""}',
-                            'E11':'note${value or ""}',
-                            'H1': 'sale_order_current_date',
-                            'G13': 'sale_order_total_list_price${value or ""}',
+                            'E7': 'bank_acc_number${value or ""}',
+                            'E9': 'acc_move_shipping_date${value or ""}',
+                            'E10': 'partner_id.street${value or ""}',
+                            'E11':'narration${value or ""}',
+                            'H1': 'acc_move_current_date',
+                            'G13': 'amount_total${value or ""}',
                             'I13': 'amount_untaxed${value or ""}',
                             'I14': 'name${value or ""}'
                         },
-
-                        'sale_order_line':{
-                            'A17': 'sale_order_index${value or ""}#{style=text;fill=grey}',
-                            'B17': 'sale_order_name${value or ""}#{style=text;fill=grey}',
-                            'C17': 'sale_order_number_and_size#{style=text;fill=grey}',
-                            'D17': 'sale_order_product_detail#{style=text;fill=grey}',
-                            'E17': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
+                        'account_move_line':{
+                            'A17': 'acc_line_index${value or ""}#{style=text;fill=grey}',
+                            'B17': 'product_id.product_tmpl_id.categ_id.name${value or ""}#{style=text;fill=grey}',
+                            'C17': 'acc_line_number_and_size#{style=text;fill=grey}',
+                            'D17': 'acc_line_product_detail#{style=text;fill=grey}',
+                            'E17': 'quantity${value or 0}#{style=number;fill=grey}',
                             'F17': 'price_unit${value or 0}#{style=number;fill=grey}',
-                            'G17': 'discount${value or 0}#{style=number;fill=grey}',
-                            'H17': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'G17': 'acc_line_discount${value or 0}#{style=number;fill=grey}',
+                            'H17': 'acc_line_sell_unit_price${value or 0}#{style=number;fill=grey}',
                             'I17': 'price_subtotal${value or 0}#{style=number;fill=grey}',
-                        }
+                        },
                     }
                 }
             }

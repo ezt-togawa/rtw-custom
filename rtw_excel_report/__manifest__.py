@@ -48,7 +48,17 @@
         'report_ship_order/templates.xml',
 
         'views/views.xml',
-        'views/product_spec.xml'
+        'views/product_spec.xml',
+        'views/work_progress_slip_list.xml',
+        'views/product_label_sticker.xml',
+        'views/inventory_import_list.xml',
+        'views/inspection_check_sheet.xml',
+        'views/stock_status_list.xml',
+        'views/shipping_list.xml',
+        'views/invoice_sticker.xml',
+        'views/scheduled_payment_list.xml',
+        'views/scheduled_arrival_list.xml',
+        'views/supplied_material_detail.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
