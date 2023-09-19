@@ -33,8 +33,9 @@ class MonthlyRevenue(models.Model):
                 ('opportunity_completion_date', '>=', (current_date.replace(day=1)+ timedelta(days=32) -timedelta(days=365)).replace(day=1)),
                 ('opportunity_completion_date', '<', (end_of_month + timedelta(days=32)).replace(day=1) ),
                 ('active' ,'=',True),
+                ('type','=','opportunity')
             ])
-            revenue_in_month = sum(leads_in_month.filtered(lambda lead: lead.stage_id.name == '受注成立').mapped('expected_revenue'))
+            revenue_in_month = sum(leads_in_month.filtered(lambda lead: lead.stage_id.probability == 100).mapped('expected_revenue'))
             existed_monthly_record = self.env['rtw_crm.monthly.revenue'].search([('date', '=', current_date.replace(day=1))])
             if existed_monthly_record:
                 existed_monthly_record.total_revenue = revenue_in_month
