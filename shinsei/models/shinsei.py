@@ -15,7 +15,6 @@ class shinsei(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin", "tier.validation"]
     _state_from = ["draft"]
     _state_to = ["approved"]
-
     _tier_validation_manual_config = False
 
     @api.model
@@ -23,6 +22,16 @@ class shinsei(models.Model):
         return self.env["res.users"].browse(self.env.uid)
 
     state = fields.Selection(
+        selection=_STATES,
+        string="Status",
+        index=True,
+        tracking=True,
+        required=True,
+        copy=False,
+        default="draft",
+    )
+
+    shinsei_state = fields.Selection(
         selection=_STATES,
         string="Status",
         index=True,
@@ -42,7 +51,7 @@ class shinsei(models.Model):
         index=True,
     )
     manager = fields.Many2one(
-        comodel_name="res.users",
+        comodel_name="hr.employee",
         string="manager",
         store=True,
         compute="_get_manager"
@@ -187,6 +196,6 @@ class shinsei(models.Model):
     def _get_manager(self):
         for rec in self:
             if rec.requested_by.employee_id.parent_id:
-                rec.manager = rec.requested_by.employee_id.parent_id.user_id
+                rec.manager = rec.requested_by.employee_id.parent_id
             else:
-                rec.manager = rec.requested_by
+                rec.manager = rec.requested_by.employee_id
