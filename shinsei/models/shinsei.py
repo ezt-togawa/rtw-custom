@@ -51,7 +51,7 @@ class shinsei(models.Model):
         index=True,
     )
     manager = fields.Many2one(
-        comodel_name="hr.employee",
+        comodel_name="res.users",
         string="manager",
         store=True,
         compute="_get_manager"
@@ -196,6 +196,9 @@ class shinsei(models.Model):
     def _get_manager(self):
         for rec in self:
             if rec.requested_by.employee_id.parent_id:
-                rec.manager = rec.requested_by.employee_id.parent_id
+                if rec.requested_by.employee_id.parent_id.user_id:
+                    rec.manager = rec.requested_by.employee_id.parent_id.user_id
+                else:
+                    rec.manager = rec.requested_by
             else:
-                rec.manager = rec.requested_by.employee_id
+                rec.manager = rec.requested_by
