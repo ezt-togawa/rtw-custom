@@ -26,7 +26,7 @@ class TierValidation_rtw(models.AbstractModel):
             return ''
 
     def _notify_shinsei_done(self):
-        recipients = ['t_ogawa@enzantrades.co.jp']
+        recipients = ['odoo_ml_01@ritzwell.com']
         body = '申請処理の完了通知' + '<br/><br/>' + '＜申請情報＞' + '<br/>' + '申請No: ' + str(self.id) + '<br/>' + '申請種別 :' + self.get_shinsei_type() + '<br/>' + '件名 :' + str(self.name) + '<br/>' + '申請日 :' + str(datetime.today().date()) + '<br/>' + '申請者 :' + (str(self.requested_by.name) if self.requested_by else '') + '<br/><br/>' + '※本メールはシステム自動配信です、返信は無効となります。'
         subscribe = "message_subscribe"
         post = "message_post"
