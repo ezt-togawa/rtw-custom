@@ -6,7 +6,7 @@
             string="商品ラベルシール(EXCEL)"
             report_type="xlsx"
             name="rtw_excel_report.product_label_sticker_xls"
-            file="rtw_excel_report.product_label_sticker_xls"
+            file="商品ラベルシール"
             attachment_use="False"
         />
     </data>

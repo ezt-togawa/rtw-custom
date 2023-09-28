@@ -10,13 +10,7 @@ class productSpec(models.AbstractModel):
         format_tick = workbook.add_format({'align': 'center','valign': 'vcenter','border':1,'bold':True})
         format_size = workbook.add_format({'align': 'left','valign': 'vcenter','font_size':16,'bold':True})
         format_wrap = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True, 'border': 1})
-
-        format_table = workbook.add_format({ 
-            'align': 'center',
-            'valign': 'vcenter',
-            'bg_color': '#CCCCCC',
-            'border':1
-            })
+        format_table = workbook.add_format({ 'align': 'center','valign': 'vcenter','bg_color': '#CCCCCC','border':1})
         
         #current time
         day = str(datetime.now().day)

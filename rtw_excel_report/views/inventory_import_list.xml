@@ -6,7 +6,7 @@
             string="棚卸記入リスト(EXCEL)"
             report_type="xlsx"
             name="rtw_excel_report.inventory_import_list_xls"
-            file="rtw_excel_report.inventory_import_list_xls"
+            file="棚卸記入リスト"
             attachment_use="False"
         />
     </data>

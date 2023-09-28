@@ -6,7 +6,7 @@
             string="仕掛品伝票一覧(EXCEL)"
             report_type="xlsx"
             name="rtw_excel_report.work_progress_slip_list_xls"
-            file="rtw_excel_report.work_progress_slip_list_xls"
+            file="仕掛品伝票一覧"
             attachment_use="False"
         />
     </data>

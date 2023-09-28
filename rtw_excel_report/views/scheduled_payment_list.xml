@@ -6,7 +6,7 @@
             string="支給予定リスト(EXCEL)"
             report_type="xlsx"
             name="rtw_excel_report.scheduled_payment_list_xls"
-            file="rtw_excel_report.scheduled_payment_list_xls"
+            file="支給予定リスト"
             attachment_use="False"
         />
     </data>

@@ -11,7 +11,7 @@ class productSpec(models.AbstractModel):
 
     def generate_xlsx_report(self, workbook, data, lines):
         format_wrap = workbook.add_format({'align': 'center','valign': 'top','text_wrap':True, 'border': 1,'font_size':10})
-        format_size10 = workbook.add_format({'align': 'center','valign': 'top','border': 1,'font_size':10,'text_wrap':True})
+        format_size10 = workbook.add_format({'align': 'center','valign': 'top','font_size':10,'text_wrap':True,'border': 1})
         format_left = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'border': 1,'font_size':10})
 
         format_current_date = workbook.add_format({'align': 'right','valign': 'right','text_wrap':True,'num_format': 'yyyy-mm-dd'})
@@ -31,7 +31,7 @@ class productSpec(models.AbstractModel):
         sheet_name = f"張地支給明細"  
         sheet = workbook.add_worksheet(sheet_name)
         sheet.set_column("A:A", width=7)  
-        sheet.set_column("B:B", width=14)  
+        sheet.set_column("B:B", width=15)  
         sheet.set_column("C:C", width=25)  
         sheet.set_column("D:D", width=25)  
         sheet.set_column("E:E", width=15)  
@@ -101,10 +101,12 @@ class productSpec(models.AbstractModel):
             sheet.merge_range(7,1,7,2,company_name, format_bold_left)
             sheet.write(9,1,confirmed_shipping_date, format_bold_left)
             
-            order_number=""
-            sale_title=""
-            lot=""
-            confirmed_shipping_date=""
+            order_number=" "
+            sale_title=" "
+            lot=" "
+            confirmed_shipping_date=" "
+            prod_tmpl=" "
+            package=0
             
             if stock_picking.confirmed_shipping_date:
                 confirmed_shipping_date=str(stock_picking.confirmed_shipping_date).split("-")[1] + " 月 " + str(stock_picking.confirmed_shipping_date).split("-")[2] + " 日 "
@@ -115,53 +117,103 @@ class productSpec(models.AbstractModel):
             if stock_picking.sale_id.name:
                 sale_title= stock_picking.sale_id.name
 
-            stock_move_lines=self.env["stock.move.line"].search([("picking_id", "=",stock_picking.id)])
+            stock_moves=self.env["stock.move"].search([("picking_id", "=",stock_picking.id)])
 
-            if stock_move_lines :
-                for line in stock_move_lines:
-                    prod_tmpl=""
-                    package=0
+            if stock_moves :
 
-                    if line.product_id.two_legs_scale and line.product_uom_qty:
-                        package= math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
-                    else:
-                        if line.product_uom_qty :
-                            package = line.product_uom_qty   
+                if stock_moves :
+                    for line in stock_moves:
+                        
+                        if line.product_id.two_legs_scale and line.product_uom_qty:
+                            package= math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
+                        else:
+                            if line.product_uom_qty :
+                                package = line.product_uom_qty   
 
-                    if line.product_id.product_tmpl_id.name:
-                        prod_tmpl=line.product_id.product_tmpl_id.name
+                        if line.product_id.product_tmpl_id.name:
+                            prod_tmpl=line.product_id.product_tmpl_id.name
 
-                    stock_inventory_lines=self.env["stock.inventory.line"].search([("product_id", "=",line.product_id.id)])
-                    #has lot
-                    if stock_inventory_lines:
-                        lot=""
-                        for line in stock_inventory_lines:
-                            if line.prod_lot_id.name:
-                                lot += line.prod_lot_id.name +'\n'
-                            else:
-                                sheet.merge_range(row_no_merge, 5 , row_no_merge, 6 ,' ', format_size10)
-                        lot=lot.rstrip("\n")
-                        sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
-                    else:
-                        sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , ' ', format_size10)
-                    
+                        stock_inventory_lines=self.env["stock.inventory.line"].search([("product_id", "=",line.product_id.id)])
+                        #has lot
+                        if stock_inventory_lines:
+                            for line in stock_inventory_lines:
+                                if line.prod_lot_id.name:
+                                    lot += line.prod_lot_id.name +'\n'
+                                else:
+                                    sheet.merge_range(row_no_merge, 5 , row_no_merge, 6 ,1, format_size10)
+                            lot=lot.rstrip("\n")
+                            sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
+                        else:
+                            sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
+                        
+                        sheet.write(row_no_merge, 3, prod_tmpl, format_left)
+                        sheet.write(row_no_merge , 7, package, format_wrap)
+
+                        row_no_merge += 1
+                else:
+                    sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
                     sheet.write(row_no_merge, 3, prod_tmpl, format_left)
                     sheet.write(row_no_merge , 7, package, format_wrap)
 
-                    row_no_merge += 1
+                merge_to=merge_to + len(stock_moves)-1
+                if(len(stock_moves)==1):
+                    sheet.write(row_remember , 0, index+1, format_wrap)
+                    sheet.write(row_remember , 1, order_number, format_wrap)
+                    sheet.write(row_remember , 2, sale_title, format_wrap)
+                    sheet.write(row_remember , 4, confirmed_shipping_date, format_wrap)
+                else:
+                    sheet.merge_range(row_remember , 0, merge_to,0, index+1, format_wrap)
+                    sheet.merge_range(row_remember , 1, merge_to,1, order_number, format_wrap)
+                    sheet.merge_range(row_remember , 2, merge_to,2, sale_title, format_wrap)
+                    sheet.merge_range(row_remember , 4, merge_to,4, confirmed_shipping_date, format_wrap)
+            else :
+                stock_move_lines=self.env["stock.move.line"].search([("picking_id", "=",stock_picking.id)])
+                if stock_move_lines :
+                    for line in stock_move_lines:
+                        
+                        if line.product_id.two_legs_scale and line.product_uom_qty:
+                            package= math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
+                        else:
+                            if line.product_uom_qty :
+                                package = line.product_uom_qty 
 
-            merge_to=merge_to + len(stock_move_lines)-1
+                        if line.product_id.product_tmpl_id.name:
+                            prod_tmpl=line.product_id.product_tmpl_id.name
 
-            if(len(stock_move_lines)==1):
-                sheet.write(row_remember , 0, index+1, format_wrap)
-                sheet.write(row_remember , 1, order_number, format_wrap)
-                sheet.write(row_remember , 2, sale_title, format_wrap)
-                sheet.write(row_remember , 4, confirmed_shipping_date, format_wrap)
-            else:
-                sheet.merge_range(row_remember , 0, merge_to,0, index+1, format_wrap)
-                sheet.merge_range(row_remember , 1, merge_to,1, order_number, format_wrap)
-                sheet.merge_range(row_remember , 2, merge_to,2, sale_title, format_wrap)
-                sheet.merge_range(row_remember , 4, merge_to,4, confirmed_shipping_date, format_wrap)
+                        stock_inventory_lines=self.env["stock.inventory.line"].search([("product_id", "=",line.product_id.id)])
+                        #has lot
+                        if stock_inventory_lines:
+                            for line in stock_inventory_lines:
+                                if line.prod_lot_id.name:
+                                    lot += line.prod_lot_id.name +'\n'
+                                else:
+                                    sheet.merge_range(row_no_merge, 5 , row_no_merge, 6 ,1, format_size10)
+                            lot=lot.rstrip("\n")
+                            sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
+                        else:
+                            sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
+                        
+                        sheet.write(row_no_merge, 3, prod_tmpl, format_left)
+                        sheet.write(row_no_merge , 7, package, format_wrap)
+
+                        row_no_merge += 1
+                else:
+                    sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
+                    sheet.write(row_no_merge, 3, prod_tmpl, format_left)
+                    sheet.write(row_no_merge , 7, package, format_wrap)
+
+                merge_to=merge_to + len(stock_move_lines)-1
+
+                if(len(stock_move_lines)==1):
+                    sheet.write(row_remember , 0, index+1, format_wrap)
+                    sheet.write(row_remember , 1, order_number, format_wrap)
+                    sheet.write(row_remember , 2, sale_title, format_wrap)
+                    sheet.write(row_remember , 4, confirmed_shipping_date, format_wrap)
+                else:
+                    sheet.merge_range(row_remember , 0, merge_to,0, index+1, format_wrap)
+                    sheet.merge_range(row_remember , 1, merge_to,1, order_number, format_wrap)
+                    sheet.merge_range(row_remember , 2, merge_to,2, sale_title, format_wrap)
+                    sheet.merge_range(row_remember , 4, merge_to,4, confirmed_shipping_date, format_wrap)
 
             merge_to = merge_to + 1 
             row_remember = merge_to 

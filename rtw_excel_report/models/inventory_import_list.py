@@ -10,12 +10,9 @@ class productSpec(models.AbstractModel):
         format_wrap = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True, 'border': 1})
         format_left = workbook.add_format({'align': 'left','text_wrap':True})
         format_left_has_border = workbook.add_format({'align': 'left','valign': 'vcenter','text_wrap':True, 'border': 1})
-
         format_right = workbook.add_format({'align': 'right','text_wrap':True})
         format_right_has_border = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True, 'border': 1})
-
         format_name_company = workbook.add_format({'align': 'center','bottom':1})
-
         format_sheet_title = workbook.add_format({ 'align': 'center','valign': 'vcenter','font_size':16,'bold': True})
         format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#CCCCCC', 'border': 1})
         

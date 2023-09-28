@@ -70,11 +70,7 @@ class productSpec(models.AbstractModel):
 
                     date_planned_finished=""
                     if mrp_prod.date_planned_finished:
-                        datetime_str = str(mrp_prod.date_planned_finished)
-                        if "." in datetime_str:  # 2023-06-12 10:14:34.315388
-                            date_planned_finished = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S.%f").strftime("%Y/%m/%d")
-                        else:  # 2023-06-12 10:14:34
-                            date_planned_finished =  datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S").strftime("%Y/%m/%d")
+                        date_planned_finished =  mrp_prod.date_planned_finished.strftime("%Y/%m/%d")
                     sheet.write(row, 2,date_planned_finished, format_date)
 
                     # p_type = ""
@@ -101,30 +97,28 @@ class productSpec(models.AbstractModel):
                     else:
                         sheet.write(row, 6, "未", format_wrap)
 
-                    materials=self.env["stock.move"].search(
-                            [("reference", "=", mrp_prod.name)]
-                        )
+                    materials=self.env["stock.move"].search([("reference", "=", mrp_prod.name)])
                     material_code = ""
                     material_name = ""
                     material_lot = ""
                     material_need_to_use=""
 
-                    for index2,material in enumerate(materials):
-                        if material.product_id != mrp_prod.product_id:
-                            material_code += material.product_id.default_code + "\n"
-                            material_name += material.product_id.product_tmpl_id.name + "\n"
-                            material_need_to_use += str(material.product_qty) + "\n"
-                            material_lots=self.env["stock.production.lot"].search(
-                                [("product_id", "=", material.product_id.id)]
-                            )
-                            if material_lots :
-                                for x in material_lots:
-                                    material_lot += x.name + "-"
-                                material_lot=material_lot.rstrip("-")
-                                material_lot +=  "\n"
-                            else:
-                                material_lot +=  "\n"
-                        
+                    if materials:
+                        for index2,material in enumerate(materials):
+                            if material.product_id != mrp_prod.product_id:
+                                    material_code += material.product_id.default_code + "\n"
+                                    material_name += material.product_id.product_tmpl_id.name + "\n"
+                                    material_need_to_use += str(material.product_qty) + "\n"
+
+                                    material_lots=self.env["stock.production.lot"].search([("product_id", "=", material.product_id.id)])
+                                    if material_lots :
+                                        for x in material_lots:
+                                            material_lot += x.name + "-"
+                                        material_lot=material_lot.rstrip("-")
+                                        material_lot +=  "\n"
+                                    else:
+                                        material_lot +=  "\n"
+                            
                     sheet.write(row, 7, material_code, format_left_has_border)
                     sheet.write(row, 8,material_name, format_left_has_border)
                     sheet.write(row, 9, material_lot,format_wrap)
