@@ -2,7 +2,6 @@
 
 from odoo import models, fields, api
 
-
 class StockMoveContainer(models.Model):
     _name = 'stock.move.container'
     _description = 'stock.move.container'
@@ -17,9 +16,22 @@ class StockMoveContainer(models.Model):
         comodel_name="stock.move.pallet",
         inverse_name="container_id",
         string="PalletId", )
-    # picking_ids = fields.One2many("stock.picking", compute='_compute_picking_ids', string="PickingId")
-    #
-    # @api.depends('move_line_ids')
-    # def _compute_picking_ids(self):
-    #     for line in self:
-    #         line.picking_ids = line.move_line_ids.mapped('picking_id')
+    status = fields.Char('ステータス' ,compute="_compute_status")
+    note = fields.Text('備考')
+
+    def _compute_status(self):
+        for record in self:
+            status = "未完了"
+            stock_container_move_lines = []
+            stock_move_pallet_ids = self.env['stock.move.pallet'].search([('container_id','=',record.id)])
+            if stock_move_pallet_ids:
+                for pallet in stock_move_pallet_ids:
+                    stock_move_lines = self.env['stock.move.line'].search([('pallet_id','=',pallet.id)])
+                    for line in stock_move_lines:
+                        stock_container_move_lines.append(line)
+
+                all_done = all(line.state == 'done' for line in stock_container_move_lines)
+                if all_done:
+                    status="完了"
+            record.status= status
+
