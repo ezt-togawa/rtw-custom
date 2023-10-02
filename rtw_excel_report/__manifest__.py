@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'excel_import_export', 'sale_management', 'sale','sale_sourced_by_line','product','purchase'],
+    'depends': ['base', 'excel_import_export', 'sale_management', 'sale','sale_sourced_by_line','product','purchase','stock_move_container','stock_move_pallet'],
 
     # always loaded
     'data': [
@@ -35,7 +35,7 @@
         'report_unit_price_quotation/templates.xml',
         'report_invoice/actions.xml',
         'report_invoice/templates.xml',
-        
+
         'report_purchase_order/actions.xml',
         'report_purchase_order/templates.xml',
         'report_purchase_order_sheet/actions.xml',
@@ -58,7 +58,10 @@
         'views/invoice_sticker.xml',
         'views/scheduled_payment_list.xml',
         'views/scheduled_arrival_list.xml',
-        'views/supplied_material_detail.xml'
+        'views/supplied_material_detail.xml',
+
+        'report_stock_move_pallet/actions.xml',
+        'report_stock_move_pallet/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

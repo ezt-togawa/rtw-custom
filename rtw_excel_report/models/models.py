@@ -1325,3 +1325,50 @@ class StockMoveLineExcelReport(models.Model):
             index=index+1
             line.mrp_product_index=index
 
+class StockMoveContainerReport(models.Model):
+    _inherit = 'stock.move.container'
+
+    pallet_count = fields.Char('' , compute="_compute_pallet_count")
+
+    def _compute_pallet_count(self):
+        stock_move_pallet_count = len(self.env['stock.move.pallet'].search([('container_id','=',self.id)]))
+        self.pallet_count = str(stock_move_pallet_count) + ' PALLETS'
+
+class StockMovePalletReport(models.Model):
+    _inherit = 'stock.move.pallet'
+    _name = 'stock.move.pallet'
+
+    pallet_name_and_product = fields.Char('' , compute="_compute_pallet_name_and_product")
+    stock_pallet_index = fields.Char('' , compute="_compute_stock_pallet_index")
+    blank_cell1 = fields.Char('' , compute="_compute_blank_cell")
+    blank_cell2 = fields.Char('' , default='',compute="_compute_blank_cell")
+    blank_cell3 = fields.Char('' , default='',compute="_compute_blank_cell")
+    blank_cell4 = fields.Char('' , default='',compute="_compute_blank_cell")
+    blank_cell5 = fields.Char('' , default='',compute="_compute_blank_cell")
+    blank_cell6 = fields.Char('' , default='',compute="_compute_blank_cell")
+
+    def _compute_blank_cell(self):
+        self.blank_cell1 = ''
+        self.blank_cell2 = ''
+        self.blank_cell3 = ''
+        self.blank_cell4 = ''
+        self.blank_cell5 = ''
+        self.blank_cell6 = ''
+
+    def _compute_stock_pallet_index(self):
+      index = 0
+      for line in self:
+        index = index + 1
+        line.stock_pallet_index = str(index)
+
+    def _compute_pallet_name_and_product(self):
+        for record in self:
+            pallet_name_and_product = record.name
+            stock_move_lines = self.env['stock.move.line'].search([('pallet_id','=',record.id)])
+            for line in stock_move_lines:
+                product_detail = ''
+                product_template_attribute_values = line.product_id.product_template_attribute_value_ids
+                for attr in product_template_attribute_values:
+                    product_detail += '\t' + attr.display_name + '\n'
+                pallet_name_and_product += '\n' + '\t'+ line.product_id.name + '\n' + product_detail + '\t' + 'W' + str(line.product_id.width) + ' x' + ' D' + str(line.product_id.depth) + ' x' + ' H' + str(line.product_id.height) + ' mm' + '\n'
+            record.pallet_name_and_product = pallet_name_and_product

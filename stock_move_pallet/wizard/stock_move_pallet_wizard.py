@@ -13,7 +13,7 @@ class PalletLoading(models.TransientModel):
         res = super(PalletLoading, self).default_get(fields)
         move_line = self.env['stock.move.line'].browse(self.env.context.get('active_id')).exists()
         if move_line:
-            res.update(name="%s %s" % (move_line.move_id.sale_line_id.name, move_line.sale_id.name))
+            res.update(name="%s %s" % (move_line.move_id.sale_line_id.name if move_line.move_id.sale_line_id.name else move_line.move_id.product_id.name, move_line.sale_id.name if move_line.sale_id.name else ''))
         return res
 
     name = fields.Char('Name', required=True)
