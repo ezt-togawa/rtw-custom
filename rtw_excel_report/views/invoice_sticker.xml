@@ -6,7 +6,7 @@
             string="送り状シール(EXCEL)"
             report_type="xlsx"
             name="rtw_excel_report.invoice_sticker_xls"
-            file="rtw_excel_report.invoice_sticker_xls"
+            file="送り状シール"
             attachment_use="False"
         />
     </data>

@@ -6,7 +6,7 @@
             string="在庫状況一覧(EXCEL)"
             report_type="xlsx"
             name="rtw_excel_report.stock_status_list_xls"
-            file="rtw_excel_report.stock_status_list_xls"
+            file="在庫状況一覧"
             attachment_use="False"
         />
     </data>

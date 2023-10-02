@@ -6,7 +6,7 @@
             string="商品仕様書(EXCEL)"
             report_type="xlsx"
             name="rtw_excel_report.product_spec_xls"
-            file="rtw_excel_report.product_spec_xls"
+            file="商品仕様書"
             attachment_use="False"
         />
     </data>

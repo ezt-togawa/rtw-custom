@@ -197,11 +197,7 @@ class productSpec(models.AbstractModel):
                             row = 10 + count * 52
                             col = (index % 4) * 5
 
-                            sheet_main.insert_image(
-                                row,col,
-                                "test",
-                                {'image_data': img_io}
-                            )
+                            sheet_main.insert_image(row,col,"test",{'image_data': img_io})
 
                     attributes = sl.product_id.product_template_attribute_value_ids
                     attr=""
@@ -240,11 +236,7 @@ class productSpec(models.AbstractModel):
                                     col_attr_img += 2
                                 
                                 # image attribute 
-                                sheet_main.insert_image(
-                                    row_attr_img, col_attr_img,
-                                    "test",
-                                    {'image_data': img_io}
-                                )
+                                sheet_main.insert_image(row_attr_img, col_attr_img,"test",{'image_data': img_io})
                                 sheet.write(count, 5, " ", wrap_format)
                                 sheet.write(count, 6, " ", wrap_format)
                                 sheet.write(count, 7, " ", wrap_format)
@@ -254,7 +246,6 @@ class productSpec(models.AbstractModel):
                                     sheet.write(index, index2+9,attr_img.attribute_id.name + ":" + attr_img.product_attribute_value_id.name + "\n", bold)    
                     else:
                         sheet.write(index, 4, " ", wrap_format)
+                        
     def find_sale_order_line(self,order_id):
-        return self.env["sale.order.line"].search(
-                    [("order_id", "=", order_id)]
-                )
+        return self.env["sale.order.line"].search([("order_id", "=", order_id)])
