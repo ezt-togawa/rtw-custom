@@ -4,7 +4,7 @@
   License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <record id="action_quotation_export_xlsx" model="ir.actions.act_window">
-        <field name="name">Export Quotation</field>
+        <field name="name">御見積書</field>
         <field name="res_model">export.xlsx.wizard</field>
         <field name="binding_view_types">list,form</field>
         <field name="binding_model_id" ref="sale.model_sale_order" />

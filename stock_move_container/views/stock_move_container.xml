@@ -5,10 +5,24 @@
             <field name="model">stock.move.container</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="name"/>
-                    <field name="pallet_ids" widget="many2many_tags"/>
-<!--                    <field name="picking_ids" widget="many2many_tags"/>-->
+                    <field name="name" />
+                    <field name="pallet_ids" widget="many2many_tags" />
+                    <field name="status" />
                 </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="stock_move_container_form">
+            <field name="name">move_container_form</field>
+            <field name="model">stock.move.container</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="pallet_ids"/>
+                        <field name="status"/>
+                        <field name="note"/>
+                    </group>
+                </form>
             </field>
         </record>
 
@@ -16,12 +30,20 @@
             <field name="name">move_container_list</field>
             <field name="res_model">stock.move.container</field>
             <field name="view_id" ref="stock_move_container_list" />
-            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
+
+        <!-- <record model="ir.actions.act_window" id="stock_move_container_action_window">
+            <field name="name">move_container_form</field>
+            <field name="res_model">stock.move.container</field>
+            <field name="view_id" ref="stock_move_container_form" />
+            <field name="view_mode">form</field>
+        </record> -->
+
         <menuitem name="move_container"
-                  id="move_container_action_window_menu"
-                  action="stock_move_container_action_window"
-                  parent="stock.menu_stock_warehouse_mgmt"/>
+            id="move_container_action_window_menu"
+            action="stock_move_container_action_window"
+            parent="stock.menu_stock_warehouse_mgmt" />
     </data>
 </odoo>

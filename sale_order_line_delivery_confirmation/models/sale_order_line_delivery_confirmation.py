@@ -14,7 +14,7 @@ class rtw_crm(models.Model):
 
     def _send_delivery_confirmation_mail(self):
         current_date = datetime.now().date()
-        recipients = ['t_ogawa@enzantrades.co.jp']
+        recipients = ['odoo_ml_02@ritzwell.com']
         subject = '【RTW-Odoo】製品の納期予定の未確認情報_' + str(current_date)
         body = str(current_date) + '納期が未確認の製品をご連絡します。' + \
             '<br>' + '出力情報：受注番号／納期／Title／商品名' + '<br>'
