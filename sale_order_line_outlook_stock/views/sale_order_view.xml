@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_outlook_stock" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='depo_date']"
+                position="before">
+                <button
+                    name="outlook_link"
+                    string="見通し在庫"
+                    type="object"
+                    icon="fa-external-link"
+                    class="oe_stat_button"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form_bom_line_view" model="ir.ui.view">
+        <field name="name">mrp.bom.line.tree.view</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_tree_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="/tree/field[@name='product_qty']"
+                position="after">
+                <field name="bom_product_template_attribute_value_ids" string="Apply on Variants" widget="many2many_tags" options="{'no_create': True}" groups="product.group_product_variant"/>
+                <field name="virtual_available" string="見通し数" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form_bom_line_view_filter" model="ir.ui.view">
+        <field name="name">mrp.bom.line.tree.view</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_view_filter" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//search"
+                position="inside">
+                <field name="bom_product_template_attribute_value_ids" group="product.group_product_variant"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
