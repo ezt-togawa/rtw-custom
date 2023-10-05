@@ -101,6 +101,7 @@ class MrpProduction(models.Model):
 
     def _inverse_production_memo(self):
         for record in self:
+                sale_order_line = []
                 search_criteria = [ #limit 10 times
                     ('move_ids', 'in', record.move_dest_ids.id),
                     ('move_ids', 'in', record.move_dest_ids.move_dest_ids.id),
