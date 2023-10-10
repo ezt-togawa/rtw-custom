@@ -23,7 +23,7 @@
                             'B11': 'sale_id.partner_id.commercial_company_name${value or ""}',
                             'B12': 'stock_partner_address${value or ""}',
                             'B13': 'sale_id.partner_id.phone${value or ""}', 
-                            'B14': 'sale_id.shipping_to_text${value or ""}',
+                            'B14': '${value or ""}',
                             'H12': 'sale_id.note${value or ""}',
                             'I10': 'stock_printing_staff${value or ""}',
                             'I1': 'stock_picking_current_date${value or ""}',

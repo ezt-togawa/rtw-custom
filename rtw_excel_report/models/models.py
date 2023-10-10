@@ -135,6 +135,31 @@ class SaleOrderExcelReport(models.Model):
         string='Ritzwell staff',
     )
 
+
+    sale_order_title= fields.Char(
+        compute='_compute_sale_order_title',
+        string='Title',
+    )
+
+    sale_order_company_name= fields.Char(
+        compute='_compute_sale_order_company_name',
+        string='Company name',
+    )
+
+    def _compute_sale_order_title(self):
+        for line in self:
+            if line.title:
+                line.sale_order_title=line.title
+            else:
+                line.sale_order_title=""
+
+    def _compute_sale_order_company_name(self):
+        for line in self:
+            if line.partner_id.commercial_company_name:
+                line.sale_order_company_name =  line.partner_id.commercial_company_name 
+            else:
+                line.sale_order_company_name =  line.partner_id.name 
+
     def _compute_sale_order_ritzwell_staff(self):
         for line in self:
             if line.user_id.name:
@@ -428,6 +453,22 @@ class SaleOrderLineExcelReport(models.Model):
         string="Voucher Class",
     )
 
+    sale_order_config_session = fields.Char(
+        compute="_compute_sale_order_config_session",
+        string="Config Session",
+    )
+
+    def _compute_sale_order_config_session(self):
+        config_session = ""
+        for line in self:
+            if line.p_type == "special" or line.p_type == "custom":
+                if line.config_session_id:
+                    cfg_session_cus = self.env["public.product.config.session.custom.value"].search([("cfg_session_id", "=", line.config_session_id)])
+                    if cfg_session_cus :
+                        for val in cfg_session_cus:
+                            config_session = val.attribute_id.product_name + ":" + val.value
+            line.sale_order_config_session = config_session
+
     def _compute_sale_order_voucher_class(self):
         for line in self:
             line.sale_order_voucher_class = "受注引当"
@@ -704,6 +745,10 @@ class StockPickingExcelReport(models.Model):
         "Partner tel phone",
         compute="_compute_to_sale_order",
     )
+    stock_picking_sipping_to= fields.Char(
+        "Partner sipping to",
+        compute="_compute_to_sale_order",
+    )
 
     stock_picking_witness_name_phone= fields.Char(
         "Staff phone",
@@ -848,6 +893,18 @@ class StockPickingExcelReport(models.Model):
             elif not record.sale_id.partner_id.phone and record.sale_id.partner_id.mobile:
                 partner_tel_phone = record.sale_id.partner_id.mobile
             record.stock_picking_partner_tel_phone = partner_tel_phone
+
+            sipping_to = ""
+            if record.sale_id.sipping_to:
+                if record.sale_id.sipping_to =="depo":
+                    sipping_to = "デポ入れまで"
+                if record.sale_id.sipping_to =="inst":
+                    sipping_to = "搬入設置まで"
+                if record.sale_id.sipping_to =="inst_depo":
+                    sipping_to = "搬入設置（デポ入）"
+                if record.sale_id.sipping_to =="direct":
+                    sipping_to = "直送"
+            record.stock_picking_sipping_to = sipping_to
 
             witness_name_phone = ""
             if record.sale_id.witness:
@@ -1067,7 +1124,6 @@ class AccountMoveExcelReport(models.Model):
 
     def _compute_acc_move_amount_untaxed(self):
         for line in self:
-                print(11111111111111111,line )
                 line.acc_move_amount_untaxed= line.currency_id.symbol + str(
                 line.amount_untaxed if line.amount_untaxed else 0
             )
@@ -1285,24 +1341,30 @@ class AccountMoveLineExcelReport(models.Model):
             else:
                 line.acc_line_sell_unit_price=line.price_unit
 
-    # printing_staff= fields.Char(
-    #     "Printing staff",
-    #     compute="_compute_printing_staff",
-    # )
-
-    # def _compute_send_company(self):
-    #     for line in self:
-    #         if line.partner_id.commercial_company_name:
-    #             line.send_company= "株式会社 " + line.partner_id.commercial_company_name+ " 御中"
-    #         else:
-    #             line.send_company=""
-
 class MrpProductionExcelReport(models.Model):
     _inherit = "mrp.production"
+
+    sale_order = fields.One2many(
+        "sale.order",
+        "origin",
+        string="Sale order",
+        copy=True,
+        auto_join=True,
+        compute="_compute_sale_order",
+    )
 
     mrp_product_index= fields.Char(
         "Mrp product index",
         compute="_compute_stock_mrp_production",
+    )
+
+    order_line=fields.One2many(
+        "sale.order.line",
+        "order_id",
+        string="Sale order line",
+        copy=True,
+        auto_join=True,
+        compute="_compute_order_line",
     )
 
     def _compute_stock_mrp_production(self):
@@ -1311,6 +1373,16 @@ class MrpProductionExcelReport(models.Model):
             index=index+1
             line.mrp_product_index=index
 
+    def _compute_order_line(self):
+        for line in self:
+            sale_orders=self.env["sale.order"].search([("name", "=", line.origin)])
+            line.order_line=self.env["sale.order.line"].search([("order_id", "in", sale_orders.ids)])
+
+        
+    def _compute_sale_order(self):
+        for line in self: 
+            line.sale_order=self.env["sale.order"].search([("name", "=", line.origin)])
+        
 class StockMoveLineExcelReport(models.Model):
     _inherit = "stock.move.line"
 
@@ -1325,50 +1397,4 @@ class StockMoveLineExcelReport(models.Model):
             index=index+1
             line.mrp_product_index=index
 
-class StockMoveContainerReport(models.Model):
-    _inherit = 'stock.move.container'
 
-    pallet_count = fields.Char('' , compute="_compute_pallet_count")
-
-    def _compute_pallet_count(self):
-        stock_move_pallet_count = len(self.env['stock.move.pallet'].search([('container_id','=',self.id)]))
-        self.pallet_count = str(stock_move_pallet_count) + ' PALLETS'
-
-class StockMovePalletReport(models.Model):
-    _inherit = 'stock.move.pallet'
-    _name = 'stock.move.pallet'
-
-    pallet_name_and_product = fields.Char('' , compute="_compute_pallet_name_and_product")
-    stock_pallet_index = fields.Char('' , compute="_compute_stock_pallet_index")
-    blank_cell1 = fields.Char('' , compute="_compute_blank_cell")
-    blank_cell2 = fields.Char('' , default='',compute="_compute_blank_cell")
-    blank_cell3 = fields.Char('' , default='',compute="_compute_blank_cell")
-    blank_cell4 = fields.Char('' , default='',compute="_compute_blank_cell")
-    blank_cell5 = fields.Char('' , default='',compute="_compute_blank_cell")
-    blank_cell6 = fields.Char('' , default='',compute="_compute_blank_cell")
-
-    def _compute_blank_cell(self):
-        self.blank_cell1 = ''
-        self.blank_cell2 = ''
-        self.blank_cell3 = ''
-        self.blank_cell4 = ''
-        self.blank_cell5 = ''
-        self.blank_cell6 = ''
-
-    def _compute_stock_pallet_index(self):
-      index = 0
-      for line in self:
-        index = index + 1
-        line.stock_pallet_index = str(index)
-
-    def _compute_pallet_name_and_product(self):
-        for record in self:
-            pallet_name_and_product = record.name
-            stock_move_lines = self.env['stock.move.line'].search([('pallet_id','=',record.id)])
-            for line in stock_move_lines:
-                product_detail = ''
-                product_template_attribute_values = line.product_id.product_template_attribute_value_ids
-                for attr in product_template_attribute_values:
-                    product_detail += '\t' + attr.display_name + '\n'
-                pallet_name_and_product += '\n' + '\t'+ line.product_id.name + '\n' + product_detail + '\t' + 'W' + str(line.product_id.width) + ' x' + ' D' + str(line.product_id.depth) + ' x' + ' H' + str(line.product_id.height) + ' mm' + '\n'
-            record.pallet_name_and_product = pallet_name_and_product
