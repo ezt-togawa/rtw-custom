@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="rtw_product_configurator_ctm.list">
+      <field name="name">rtw_product_configurator_ctm list</field>
+      <field name="model">rtw_product_configurator_ctm.rtw_product_configurator_ctm</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="rtw_product_configurator_ctm.action_window">
+      <field name="name">rtw_product_configurator_ctm window</field>
+      <field name="res_model">rtw_product_configurator_ctm.rtw_product_configurator_ctm</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="rtw_product_configurator_ctm.action_server">
+      <field name="name">rtw_product_configurator_ctm server</field>
+      <field name="model_id" ref="model_rtw_product_configurator_ctm_rtw_product_configurator_ctm"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="rtw_product_configurator_ctm" id="rtw_product_configurator_ctm.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="rtw_product_configurator_ctm.menu_1" parent="rtw_product_configurator_ctm.menu_root"/>
+    <menuitem name="Menu 2" id="rtw_product_configurator_ctm.menu_2" parent="rtw_product_configurator_ctm.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="rtw_product_configurator_ctm.menu_1_list" parent="rtw_product_configurator_ctm.menu_1"
+              action="rtw_product_configurator_ctm.action_window"/>
+    <menuitem name="Server to list" id="rtw_product_configurator_ctm" parent="rtw_product_configurator_ctm.menu_2"
+              action="rtw_product_configurator_ctm.action_server"/>
+-->
+  </data>
+</odoo>
