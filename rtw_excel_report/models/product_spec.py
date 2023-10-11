@@ -70,18 +70,19 @@ class productSpec(models.AbstractModel):
         row_title_name_db=5
         col_title_name_db=1
 
-        for count in range(r):
-            for sale_order in lines:
-                if sale_order.title:
-                    sheet_main.merge_range(row_title_name_db, col_title_name_db, row_title_name_db, col_title_name_db+1,sale_order.title, merge_format)
-                else:
-                    sheet_main.merge_range(row_title_name_db, col_title_name_db, row_title_name_db, col_title_name_db+1," ", merge_format)
-                
-            sheet_main.insert_image(row_logo,0,"logo",{'image_data': img_io})
-            sheet_main.merge_range(row_title, col_title, row_title, col_title+1, "商品仕様書", merge_format)
-            sheet_main.write(row_print_time, col_print_time,current_date , merge_format)
-            sheet_main.write(col_title_name, 0,"商品", merge_format)
+        order_title =""
+        for sale_order in lines:
+            if sale_order.title:
+                order_title=sale_order.title
+        sheet_main.merge_range(row_title_name_db, col_title_name_db, row_title_name_db, col_title_name_db+1,order_title, merge_format)
 
+        sheet_main.insert_image(row_logo,0,"logo",{'image_data': img_io})
+        sheet_main.merge_range(row_title, col_title, row_title, col_title+1, "商品仕様書", merge_format)
+        sheet_main.write(row_print_time, col_print_time,current_date , merge_format)
+        sheet_main.write(col_title_name, 0,"商品", merge_format)
+
+        for count in range(r):
+                
             sheet_main.merge_range(count*52 + 8, 0, count*52+9, 0, "=data!A"+str(count * 4+1), merge_format)
             sheet_main.merge_range(count*52 + 8, 5, count*52+9, 5, "=data!A"+str(count* 4+2), merge_format)
             sheet_main.merge_range(count*52 + 8, 10, count*52+9, 10, "=data!A"+str(count * 4+3), merge_format)
@@ -107,7 +108,7 @@ class productSpec(models.AbstractModel):
             sheet_main.merge_range((count * 52) + 23, 10, count * 52 + 30, 13, "=data!E" + str(count * 4 + 3), wrap_format)
             sheet_main.merge_range((count * 52) + 23, 15, count * 52 + 30, 18, "=data!E" + str(count * 4 + 4), wrap_format)
             
-            #attribute image
+            # #attribute image
             sheet_main.merge_range((count * 52) + 31, 0, count * 52 + 36, 1, "=data!F" + str(count * 4 + 1), merge_format)
             sheet_main.merge_range((count * 52) + 31, 5, count * 52 + 36, 6, "=data!F" + str(count * 4 + 2), merge_format)
             sheet_main.merge_range((count * 52) + 31, 10, count * 52 + 36, 11, "=data!F" + str(count * 4 + 3), merge_format)
@@ -128,7 +129,7 @@ class productSpec(models.AbstractModel):
             sheet_main.merge_range((count * 52) + 39, 12, count * 52 + 44, 13, "=data!I" + str(count * 4 + 3), merge_format)
             sheet_main.merge_range((count * 52) + 39, 17, count * 52 + 44, 18, "=data!I" + str(count * 4 + 4), merge_format)
 
-            #attribute detail 
+            # #attribute detail 
             sheet_main.merge_range((count * 52) + 37, 0, count * 52 + 38, 1, "=data!J" + str(count * 4 + 1), merge_format)
             sheet_main.merge_range((count * 52) + 37, 5, count * 52 + 38, 6, "=data!J" + str(count * 4 + 2), merge_format)
             sheet_main.merge_range((count * 52) + 37, 10, count * 52 + 38, 11, "=data!J" + str(count * 4 + 3), merge_format)
@@ -158,11 +159,9 @@ class productSpec(models.AbstractModel):
             sheet.write(count, 10, " ", wrap_format)
             sheet.write(count, 11, " ", wrap_format)
             sheet.write(count, 12, " ", wrap_format)
-        # count = 0  
-        for sale_order in lines:
-            if sale_order.title:
-                sheet_main.merge_range(5, 1, 5, 2,sale_order.title, merge_format)
+        count = 0  
 
+        for sale_order in lines:
             sale_order_lines=self.find_sale_order_line(sale_order.id)
             if sale_order_lines :
                 for index,sl in enumerate(sale_order_lines):
@@ -198,7 +197,7 @@ class productSpec(models.AbstractModel):
                             col = (index % 4) * 5
 
                             sheet_main.insert_image(row,col,"test",{'image_data': img_io})
-
+                            
                     attributes = sl.product_id.product_template_attribute_value_ids
                     attr=""
                     if attributes:

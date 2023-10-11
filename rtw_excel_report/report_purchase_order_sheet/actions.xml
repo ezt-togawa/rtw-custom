@@ -6,13 +6,13 @@
     <record id="action_purchase_order_sheet_export_xlsx" model="ir.actions.act_window">
         <field name="name">発注書</field>
         <field name="res_model">export.xlsx.wizard</field>
-        <field name="binding_view_types">list,form</field>
-        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_view_types">form</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production" />
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="context">
             {
-            'template_domain': [('res_model', '=', 'sale.order'),
+            'template_domain': [('res_model', '=', 'mrp.production'),
             ('fname', '=', 'purchase_order_sheet.xlsx'),
             ('gname', '=', False)],
             }
@@ -25,3 +25,4 @@
         sequence="10"
     />
 </odoo>
+

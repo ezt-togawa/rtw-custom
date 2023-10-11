@@ -20,7 +20,7 @@ class productSpec(models.AbstractModel):
         year = str(datetime.now().year)
         current_date = year + " 年" + month + "月 " + day + "日 "
 
-        sheet_name = f"支給予定リスト"  
+        sheet_name = "支給予定リスト"  
         sheet = workbook.add_worksheet(sheet_name)
 
         sheet.set_column("A:A", width=4)  

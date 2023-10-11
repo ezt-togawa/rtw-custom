@@ -4,7 +4,7 @@
   License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <record id="purchase_order_sheet_report_xlsx_template" model="xlsx.template">
-        <field name="res_model">sale.order</field>
+        <field name="res_model">mrp.production</field>
         <field name="fname">purchase_order_sheet.xlsx</field>
         <field name="name">発注書</field>
         <field name="description">Purchase Order Sheet Report Excel</field>
@@ -13,21 +13,22 @@
             {
                 '__EXPORT__': {
                     '発注書': {
-                        '_HEAD_': {
+                        'sale_order':{
                             'C2': 'sale_order_send_to_company${value or ""}',
                             'B4': 'name${value or ""}',
                             'B6': 'sale_order_estimated_shipping_date${value or ""}',
                             'B7': 'sale_order_preferred_delivery_date${value or ""}',
-                            'B9':  'title${value or ""}',
-                            'B11': 'partner_id.commercial_company_name${value or ""}',
+                            'B9': 'title${value or ""}',
+                            'B11': 'sale_order_company_name${value or ""}',
                             'B12': 'sale_order_detail_address_partner',
                             'B13': 'partner_id.phone${value or ""}',
                             'B14': 'shipping_to_text${value or ""}',
-                            'H12': 'note${value or ""}',
-                            'I10':  'user_id.name${value or ""}',
-                            'I1':  'sale_order_current_date',
-                            'I16': 'amount_untaxed${value or ""}',
+                            'I12': 'note${value or ""}',
+                            'J10':  'user_id.name${value or ""}',
+                            'J1':  'sale_order_current_date',
+                            'J16': 'amount_untaxed${value or ""}',
                         },
+                        
                         'order_line': {
                             'A20': 'sale_order_index${value or ""}#{style=text;fill=grey}',
                             'B20': 'sale_order_name${value or ""}#{style=text;fill=grey}',
@@ -37,7 +38,8 @@
                             'F20': 'sale_order_text_piece_leg${value or ""}#{style=text;fill=grey}', 
                             'G20': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
                             'H20': 'price_subtotal${value or 0}#{style=number;fill=grey}',
-                            'I20': '#{style=text;fill=grey}',
+                            'I20': 'sale_order_config_session${value or ""}#{style=text;fill=grey}',
+                            'J20': '#{style=text;fill=grey}',
                         }
                     }
                 }
