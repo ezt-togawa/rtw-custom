@@ -10,7 +10,7 @@
             <xpath
                 expr="//search//field[@name='attribute_line_ids']"
                 position="attributes">
-                <attribute name="string">属性1</attribute>
+                <attribute name="string">属性１</attribute>
             </xpath>
             <xpath
                 expr="//search//field[@name='attribute_line_ids']"
