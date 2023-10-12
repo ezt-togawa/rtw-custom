@@ -17,11 +17,8 @@ class productLabelSticker(models.AbstractModel):
             stock_moves=self.env["stock.move"].search([("picking_id", "=", stock_picking.id)])
             if stock_moves:
                 for index,line in enumerate(stock_moves):
-                    prod_code=""
                     prod_name=""
                     p_detail=""
-                    if line.product_id.default_code:
-                        prod_code= "[" + line.product_id.default_code +  "]" 
                     if line.product_id.product_tmpl_id.name:
                         prod_name=line.product_id.product_tmpl_id.name
 

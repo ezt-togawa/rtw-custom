@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="rtw_location_item_excel_prod_label_form" model="ir.ui.view">
+            <field name="name">location_item_excel_prod_label.form</field>
+            <field name="model">mrp.location_item_excel_prod_label</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <h2> 印字スタート位置設定：</h2>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="location_item_row" string="位置選択" widget="integer"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

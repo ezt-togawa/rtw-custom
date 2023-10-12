@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mrp_location_item_excel_prod_label,mrp_location_item_excel_prod_label,model_mrp_location_item_excel_prod_label,base.group_user,1,1,1,1
