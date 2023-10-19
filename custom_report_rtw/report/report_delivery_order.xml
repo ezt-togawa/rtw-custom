@@ -51,7 +51,8 @@
                 <br />
                 <div>
                     <span t-field="docs.partner_id.parent_id.name" />
-                  <span t-field="docs.partner_id.site" />
+                  <span
+                      t-field="docs.partner_id.site" />
                   <span
                       t-field="docs.partner_id.department" />
                   <span
@@ -101,7 +102,8 @@
                 </div>
                 <br />
                 <br />
-                <div> 搬入立会人: <span t-field="docs.calculate_witness" /> <span t-field="docs.calculate_witness_phone" />
+                <div> 搬入立会人: <span t-field="docs.calculate_witness" /> <span
+                    t-field="docs.calculate_witness_phone" />
                 </div>
               </div>
               <div class="col-4">
@@ -137,16 +139,30 @@
                     <td t-esc="l_index+1" class="text-center">
                     </td>
                     <td>
-                      <span t-field="l.product_id.name" />
+                      <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
                       <br />
-                      <t t-if="l.p_type">
-                        <span
-                          t-field="l.p_type" />
+                      <t t-if="l.p_type == 'special'">
+                        <span>別注</span>
+                      </t>
+                      <t t-elif="l.p_type == 'custom'">
+                        <span>特注</span>
                       </t>
                     </td>
                     <td>
-                      <div t-if="l.product_id.product_no"
-                        t-field="l.product_id.product_no" />
+                      <div>
+                        <t t-if="l.sale_line_id.pack_parent_line_id">
+                          <span
+                            t-field="l.sale_line_id.pack_parent_line_id.product_id.product_no" />
+                          <span> / </span>
+                          <span
+                            t-field="l.product_id.name"
+                          />
+                        </t>
+                        <t t-else="else">
+                          <span t-if="l.product_id.product_no"
+                            t-field="l.product_id.product_no" />
+                        </t>
+                      </div>
                       <t t-if="l.product_id.width > 0">W<span
                           t-field="l.product_id.width" />
                       </t>

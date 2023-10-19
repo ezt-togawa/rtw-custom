@@ -38,6 +38,18 @@ class StockPicking(models.Model):
 class StockMove(models.Model):
   _inherit = 'stock.move'
   calculate_packages = fields.Integer('Packages' , compute="_compute_calculate_packages")
+  calculate_product_pack = fields.Char(
+      string="Calculate product pack",
+      compute="_compute_calculate_product_pack",
+      default=""
+  )
+
+  def _compute_calculate_product_pack(self):
+    for line in self:
+        if line.sale_line_id.pack_parent_line_id:
+            line.calculate_product_pack = ' / ' + line.sale_line_id.pack_parent_line_id.product_id.name
+        else:
+            line.calculate_product_pack = ''
 
   def _compute_calculate_packages(self):
     for move in self:
