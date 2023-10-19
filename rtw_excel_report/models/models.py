@@ -1045,21 +1045,13 @@ class StockMoveExcelReport(models.Model):
                 line.product_name = line.product_id.product_tmpl_id.categ_id.name + "\n" + p_type
 
             size_detail = ""
-            product_pack_ids = line.product_id.product_tmpl_id.mapped('pack_line_ids')
-            if line.product_id.product_tmpl_id.product_no:
-                size_detail += str(line.product_id.product_tmpl_id.product_no)
-                if product_pack_ids:
-                    size_detail += ' / '
-                    product_pack_names = []
-                    for pack in product_pack_ids:
-                        product_pack_names.append(pack.product_id.name)
-                    size_detail += ', '.join(product_pack_names)
+            if line.sale_line_id.pack_parent_line_id:
+                size_detail += str(line.sale_line_id.pack_parent_line_id.product_id.product_no)
             else:
-                if product_pack_ids:
-                    product_pack_names = []
-                    for pack in product_pack_ids:
-                        product_pack_names.append(pack.product_id.name)
-                    size_detail += ', '.join(product_pack_names)
+                size_detail += str(line.product_id.product_tmpl_id.product_no)
+
+            if line.sale_line_id.pack_parent_line_id:
+                size_detail += ' / ' + line.product_id.name
             size_detail += '\n'
 
             if line.product_id.product_tmpl_id.width==0 or line.product_id.product_tmpl_id.width :

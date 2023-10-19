@@ -54,6 +54,10 @@ class sale_order_line_product_pack(models.Model):
 class product_pack(models.Model):
     _inherit = "product.pack.line"
 
+    _sql_constraints = [
+
+    ]
+
     def get_sale_order_line_vals(self, line, order):
           self.ensure_one()
           quantity = self.quantity * line.product_uom_qty
