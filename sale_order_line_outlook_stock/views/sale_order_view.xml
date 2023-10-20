@@ -61,6 +61,7 @@
             <xpath
                 expr="/tree/field[@name='product_qty']"
                 position="after">
+                <field name="id" invisible="1" />
                 <field name="bom_product_template_attribute_value_ids" string="Apply on Variants"
                     widget="many2many_tags" options="{'no_create': True}"
                     groups="product.group_product_variant" />
@@ -83,8 +84,8 @@
             <xpath
                 expr="//search"
                 position="inside">
-                <field name="bom_product_template_attribute_value_ids"
-                    group="product.group_product_variant" />
+                <field name="bom_product_template_attribute_value_ids" />
+                <field name="id" string="選択構成品ID一覧" />
                 <filter string="在庫可能品" name="product_type"
                     domain="[('product_id.type', '=', 'product')]" />
             </xpath>
