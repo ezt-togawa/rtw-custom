@@ -54,10 +54,6 @@ class sale_order_line_product_pack(models.Model):
 class product_pack(models.Model):
     _inherit = "product.pack.line"
 
-    _sql_constraints = [
-
-    ]
-
     def get_sale_order_line_vals(self, line, order):
           self.ensure_one()
           quantity = self.quantity * line.product_uom_qty
@@ -95,3 +91,18 @@ class product_pack(models.Model):
               }
           )
           return vals
+
+class product_template_product_pack(models.Model):
+    _inherit = 'product.template'
+
+    def write(self, vals):
+        _vals = vals.copy()
+        list_vals = []
+        if vals.get("pack_line_ids", False):
+            print(vals.get("pack_line_ids", False))
+            for val in vals.get("pack_line_ids", False):
+                if not val[0] == 4:
+                    list_vals.append(val)
+            self.product_variant_ids.write({"pack_line_ids": list_vals})
+            _vals.pop("pack_line_ids")
+        return super().write(_vals)
