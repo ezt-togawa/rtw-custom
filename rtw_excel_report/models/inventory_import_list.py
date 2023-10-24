@@ -30,7 +30,7 @@ class productSpec(models.AbstractModel):
 
         #create sheet
         for index,name_company in enumerate(unique_company_name):
-            sheet_name = f"仕掛品伝票一覧 - {name_company}"  
+            sheet_name = f"棚卸記入リスト - {name_company}"  
             sheet = workbook.add_worksheet(sheet_name)
 
             sheet.set_column("A:A", width=8)  
@@ -49,14 +49,11 @@ class productSpec(models.AbstractModel):
             sheet.write(3, 0, "保管場所", format_name_company)
             sheet.merge_range(3, 1,3,2,name_company, format_name_company)
 
-            sheet.merge_range(3, 1,3,2,name_company, format_name_company)
-            sheet.merge_range(3, 1,3,2,name_company, format_name_company)
-
             sheet.write(3, 6, "担当（", format_right)
             sheet.merge_range(3, 7,3,8, "", format)
             sheet.write(3, 9, ")", format_left)
 
-        #     #table title
+            #table title
             sheet.merge_range(5, 0,6,0, "№", format_table)
             sheet.merge_range(5, 1,6,1, "部材コード", format_table)
             sheet.merge_range(5, 2,6,2, "部材名", format_table)

@@ -35,7 +35,7 @@
         'report_unit_price_quotation/templates.xml',
         'report_invoice/actions.xml',
         'report_invoice/templates.xml',
-
+        
         'report_purchase_order/actions.xml',
         'report_purchase_order/templates.xml',
         'report_purchase_order_sheet/actions.xml',
@@ -46,7 +46,7 @@
         'report_delivery_request_form/templates.xml',
         'report_ship_order/actions.xml',
         'report_ship_order/templates.xml',
-
+    
         'views/views.xml',
         'views/product_spec.xml',
         'views/work_progress_slip_list.xml',

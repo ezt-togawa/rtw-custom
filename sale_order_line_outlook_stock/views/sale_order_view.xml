@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_outlook_stock" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='depo_date']"
+                position="before">
+                <button
+                    name="outlook_link"
+                    string="見通し在庫"
+                    type="object"
+                    icon="fa-external-link"
+                    class="oe_stat_button"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="mrp_bom_line_view_form_outlook_stock" model="ir.ui.view">
+        <field name="name">mrp.bom.line.view.form</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="arch" type="xml">
+            <form string="Bill of Material line">
+                <sheet>
+                    <group>
+                        <group string="Component">
+                            <field name="product_id" />
+                            <field name="parent_product_tmpl_id" invisible="1" />
+                            <label for="product_qty" string="Quantity" />
+                            <div class="o_row">
+                                <field name="product_qty" />
+                                <field name="product_uom_category_id" invisible="1" />
+                                <field name="product_uom_id"
+                                    options="{'no_open':True,'no_create':True}"
+                                    groups="uom.group_uom" />
+                            </div>
+                            <field name="possible_bom_product_template_attribute_value_ids"
+                                invisible="1" />
+                            <field name="bom_product_template_attribute_value_ids"
+                                widget="many2many_tags" options="{'no_create': True}"
+                                groups="product.group_product_variant" />
+                        </group>
+                        <group string="Operation">
+                            <field name="company_id" invisible="1" />
+                            <field name="sequence" groups="base.group_no_one" />
+                            <field name="allowed_operation_ids" invisible="1" />
+                            <field name="operation_id" groups="mrp.group_mrp_routings" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_order_form_bom_line_view" model="ir.ui.view">
+        <field name="name">mrp.bom.line.tree.view</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_tree_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="/tree/field[@name='product_qty']"
+                position="after">
+                <field name="id" invisible="1" />
+                <field name="bom_product_template_attribute_value_ids" string="Apply on Variants"
+                    widget="many2many_tags" options="{'no_create': True}"
+                    groups="product.group_product_variant" />
+                <field name="virtual_available" string="見通し数" />
+                <button
+                    name="bom_lines_link"
+                    string="View File"
+                    type="object"
+                    icon="fa-external-link"
+                    class="oe_stat_button"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form_bom_line_view_filter" model="ir.ui.view">
+        <field name="name">mrp.bom.line.tree.view</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_view_filter" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//search"
+                position="inside">
+                <field name="bom_product_template_attribute_value_ids" />
+                <field name="id" string="選択構成品ID一覧" />
+                <filter string="在庫可能品" name="product_type"
+                    domain="[('product_id.type', '=', 'product')]" />
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

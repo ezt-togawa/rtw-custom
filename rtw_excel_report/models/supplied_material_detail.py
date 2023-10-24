@@ -120,41 +120,31 @@ class productSpec(models.AbstractModel):
             stock_moves=self.env["stock.move"].search([("picking_id", "=",stock_picking.id)])
 
             if stock_moves :
+                for line in stock_moves:
+                    
+                    if line.product_id.two_legs_scale and line.product_uom_qty:
+                        package= math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
+                    else:
+                        if line.product_uom_qty :
+                            package = line.product_uom_qty   
 
-                if stock_moves :
-                    for line in stock_moves:
-                        
-                        if line.product_id.two_legs_scale and line.product_uom_qty:
-                            package= math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
-                        else:
-                            if line.product_uom_qty :
-                                package = line.product_uom_qty   
+                    if line.product_id.product_tmpl_id.name:
+                        prod_tmpl=line.product_id.product_tmpl_id.name
 
-                        if line.product_id.product_tmpl_id.name:
-                            prod_tmpl=line.product_id.product_tmpl_id.name
-
-                        stock_inventory_lines=self.env["stock.inventory.line"].search([("product_id", "=",line.product_id.id)])
-                        #has lot
-                        if stock_inventory_lines:
-                            for line in stock_inventory_lines:
-                                if line.prod_lot_id.name:
-                                    lot += line.prod_lot_id.name +'\n'
-                                else:
-                                    sheet.merge_range(row_no_merge, 5 , row_no_merge, 6 ,1, format_size10)
-                            lot=lot.rstrip("\n")
-                            sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
-                        else:
-                            sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
-                        
-                        sheet.write(row_no_merge, 3, prod_tmpl, format_left)
-                        sheet.write(row_no_merge , 7, package, format_wrap)
-
-                        row_no_merge += 1
-                else:
+                    stock_inventory_lines=self.env["stock.inventory.line"].search([("product_id", "=",line.product_id.id)])
+                    #has lot
+                    for line in stock_inventory_lines:
+                        if line.prod_lot_id.name:
+                            lot += line.prod_lot_id.name +'\n'
+                    lot=lot.rstrip("\n")
                     sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
+    
+                    
                     sheet.write(row_no_merge, 3, prod_tmpl, format_left)
                     sheet.write(row_no_merge , 7, package, format_wrap)
 
+                    row_no_merge += 1
+    
                 merge_to=merge_to + len(stock_moves)-1
                 if(len(stock_moves)==1):
                     sheet.write(row_remember , 0, index+1, format_wrap)
@@ -168,8 +158,8 @@ class productSpec(models.AbstractModel):
                     sheet.merge_range(row_remember , 4, merge_to,4, confirmed_shipping_date, format_wrap)
             else :
                 stock_move_lines=self.env["stock.move.line"].search([("picking_id", "=",stock_picking.id)])
-                if stock_move_lines :
-                    for line in stock_move_lines:
+                # if stock_move_lines :
+                for line in stock_move_lines:
                         
                         if line.product_id.two_legs_scale and line.product_uom_qty:
                             package= math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
@@ -182,25 +172,16 @@ class productSpec(models.AbstractModel):
 
                         stock_inventory_lines=self.env["stock.inventory.line"].search([("product_id", "=",line.product_id.id)])
                         #has lot
-                        if stock_inventory_lines:
-                            for line in stock_inventory_lines:
-                                if line.prod_lot_id.name:
-                                    lot += line.prod_lot_id.name +'\n'
-                                else:
-                                    sheet.merge_range(row_no_merge, 5 , row_no_merge, 6 ,1, format_size10)
-                            lot=lot.rstrip("\n")
-                            sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
-                        else:
-                            sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
-                        
+                        for line in stock_inventory_lines:
+                            if line.prod_lot_id.name:
+                                lot += line.prod_lot_id.name +'\n'
+                        lot=lot.rstrip("\n")
+                        sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
+                    
                         sheet.write(row_no_merge, 3, prod_tmpl, format_left)
                         sheet.write(row_no_merge , 7, package, format_wrap)
 
                         row_no_merge += 1
-                else:
-                    sheet.merge_range(row_no_merge, 5 ,row_no_merge, 6 , lot, format_size10)
-                    sheet.write(row_no_merge, 3, prod_tmpl, format_left)
-                    sheet.write(row_no_merge , 7, package, format_wrap)
 
                 merge_to=merge_to + len(stock_move_lines)-1
 

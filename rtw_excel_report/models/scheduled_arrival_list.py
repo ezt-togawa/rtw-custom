@@ -18,7 +18,7 @@ class productSpec(models.AbstractModel):
         year = str(datetime.now().year)
         current_date = year + " 年" + month + "月 " + day + "日 "
 
-        sheet_name = f"入荷予定リスト"  
+        sheet_name = "入荷予定リスト"  
         sheet = workbook.add_worksheet(sheet_name)
 
         sheet.set_column("A:A", width=2)  
@@ -45,7 +45,6 @@ class productSpec(models.AbstractModel):
         sheet.merge_range(5, 2,6,2, "発注"+"\n"+ "番号", format_table)
         sheet.merge_range(5, 3,6,3, "発注先", format_table)
         sheet.merge_range(5, 4,6,5, "部材名", format_table)
-        sheet.merge_range(5, 5,6,5,"発注数" , format_table)
         sheet.merge_range(5, 6,6,6, "発注数" , format_table)
         sheet.merge_range(5, 7,6,7, "入荷"+"\n"+ "残数" , format_table)
         sheet.merge_range(5, 8,6,8, "入荷"+"\n"+ "予定数", format_table)

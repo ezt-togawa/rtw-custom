@@ -1,5 +1,4 @@
 from odoo import models
-from datetime import datetime 
 
 class productSpec(models.AbstractModel):
     _name = 'report.rtw_excel_report.inspection_check_sheet_xls'
@@ -12,12 +11,6 @@ class productSpec(models.AbstractModel):
         format_wrap = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True, 'border': 1})
         format_table = workbook.add_format({ 'align': 'center','valign': 'vcenter','bg_color': '#CCCCCC','border':1})
         
-        #current time
-        day = str(datetime.now().day)
-        month = str(datetime.now().month)
-        year = str(datetime.now().year)
-        current_date = year + " 年 " + month + " 月 " + day + " 日 "
-
         for stock_picking in lines :
             stock_move_lines=self.env["stock.move.line"].search([("picking_id", "=", stock_picking.id)])
             if stock_move_lines:

@@ -73,16 +73,9 @@ class productSpec(models.AbstractModel):
                         date_planned_finished =  mrp_prod.date_planned_finished.strftime("%Y/%m/%d")
                     sheet.write(row, 2,date_planned_finished, format_date)
 
-                    # p_type = ""
-                    # if mrp_prod.p_type:
-                    #     if mrp_prod.p_type == "special":
-                    #         p_type = "別注"
-                    #     elif mrp_prod.p_type == "custom":
-                    #         p_type = "特注"
                     p_name=""
                     if mrp_prod.product_id.product_tmpl_id.categ_id.name:
                         p_name=mrp_prod.product_id.product_tmpl_id.categ_id.name 
-                        # p_name=mrp_prod.product_id.product_tmpl_id.categ_id.name + "\n" + p_type
                     sheet.write(row, 3, p_name, format_left_has_border)
                 
                     sheet.write(row, 4, mrp_prod.product_qty, format_right_has_border)
@@ -106,14 +99,18 @@ class productSpec(models.AbstractModel):
                     if materials:
                         for index2,material in enumerate(materials):
                             if material.product_id != mrp_prod.product_id:
-                                    material_code += material.product_id.default_code + "\n"
-                                    material_name += material.product_id.product_tmpl_id.name + "\n"
-                                    material_need_to_use += str(material.product_qty) + "\n"
+                                    if material.product_id.default_code :
+                                        material_code += material.product_id.default_code + "\n"
+                                    if  material.product_id.product_tmpl_id.name  :
+                                        material_name += material.product_id.product_tmpl_id.name + "\n"
+                                    if  material.product_qty  :
+                                        material_need_to_use += str(material.product_qty) + "\n"
 
                                     material_lots=self.env["stock.production.lot"].search([("product_id", "=", material.product_id.id)])
                                     if material_lots :
                                         for x in material_lots:
-                                            material_lot += x.name + "-"
+                                            if x.name:
+                                                material_lot += x.name + "-"
                                         material_lot=material_lot.rstrip("-")
                                         material_lot +=  "\n"
                                     else:

@@ -17,7 +17,7 @@ odoo.define('sale_layout_category_hide_detail.boolean_fa_icon_widget', function 
         },
         supportedFieldTypes: ['boolean'],
 
-        //--------------------------------------------------------------------------
+        //--------------------------------------ttttttttttttttttttttttttt------------------------------------
         // Public
         //--------------------------------------------------------------------------
 
