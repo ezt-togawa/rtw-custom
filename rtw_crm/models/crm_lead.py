@@ -8,7 +8,7 @@ class rtw_crm(models.Model):
     _inherit = 'crm.lead'
 
     # crm_seq = fields.Char('Opportunity No', readonly=True, copy=False)
-    crm_seq = fields.Char('Opportunity No', copy=False, default=lambda self: _("New"), store=True)
+    crm_seq = fields.Char('Opportunity No', copy=False, default=lambda self: _("OP-99999"), store=True)
     stage_sort_order = fields.Integer('StageSortOrder')  # 受注段階コード H列
     # expected_revenue = fields.Monetary('ExpectedRevenue')  # 予想売上高 K列
     reference_price = fields.Monetary(compute="_get_reference_price", currency_field='company_currency', store=True,
@@ -878,8 +878,8 @@ class rtw_crm(models.Model):
     @api.model
     def create(self, vals):
 
-        if vals.get('crm_seq', 'New') == 'New':
-            vals['crm_seq'] = self.env['ir.sequence'].next_by_code('crm.lead') or 'New'
+        if vals.get('crm_seq', 'OP-99999') == 'OP-99999':
+            vals['crm_seq'] = self.env['ir.sequence'].next_by_code('crm.lead') or 'OP-99999'
 
         result = super(rtw_crm, self).create(vals)
 
