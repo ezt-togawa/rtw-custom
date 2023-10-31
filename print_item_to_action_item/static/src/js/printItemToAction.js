@@ -5,7 +5,20 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
 
     patch(components.ActionMenus, 'print_item_to_action_item.ChangeProp', {
         async willStart() {
+            return this._super(...arguments).then(() => {
+                return this._loadData();
+            });
+        },
+
+        async willUpdateProps(nextProps) {
+            return this._super(nextProps).then(() => {
+                return this._updateData(nextProps);
+            });
+        },
+
+        async _loadData() {
             var breadcrumbElement = document.querySelector('.breadcrumb');
+            if (breadcrumbElement === null) return
             let location_now = ""
             if (breadcrumbElement) {
                 location_now = breadcrumbElement.textContent?.trim();
@@ -86,7 +99,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         })
                         this.props.items.action = [...this.props.items.action, ...actionItemsChange]
                     }
-                    this.props.items.print = this.props.items.print.filter(val => !val.display_name.includes('(EXCEL)'));
+                    this.props.items.print = this.props.items.print.filter(val => !val.display_name.includes('(EXCEL)') && !val.name.includes('発注書')&& !val.name.includes('発注書(部材用）'))
                 }
 
                 // task_inventory_delivery_list = ["出荷予定リスト"]
@@ -224,8 +237,10 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
             this.printItems = await this._setPrintItems(this.props);
         },
 
-        async willUpdateProps(nextProps) {
+        async _updateData(nextProps) {
             var breadcrumbElement = document.querySelector('.breadcrumb');
+            if (breadcrumbElement === null) return
+
             let location_now = ""
             if (breadcrumbElement) {
                 location_now = breadcrumbElement.textContent?.trim();
@@ -280,7 +295,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                 if (filterActionItems) {
                     nextProps.items.action = [...nextProps.items.action, ...filterActionItems]
                 }
-                nextProps.items.print = nextProps.items.print.filter(val => !val.display_name.includes('(EXCEL)'));
+                nextProps.items.print = nextProps.items.print.filter(val => !val.display_name.includes('(EXCEL)') && !val.name.includes('発注書')&& !val.name.includes('発注書(部材用）'));
             }
 
             // let task_manfac_form = ["商品ラベルシール"]
