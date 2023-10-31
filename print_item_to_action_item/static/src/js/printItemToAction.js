@@ -5,7 +5,20 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
 
     patch(components.ActionMenus, 'print_item_to_action_item.ChangeProp', {
         async willStart() {
+            return this._super(...arguments).then(() => {
+                return this._loadData();
+            });
+        },
+
+        async willUpdateProps(nextProps) {
+            return this._super(nextProps).then(() => {
+                return this._updateData(nextProps);
+            });
+        },
+
+        async _loadData() {
             var breadcrumbElement = document.querySelector('.breadcrumb');
+            if (breadcrumbElement === null) return
             let location_now = ""
             if (breadcrumbElement) {
                 location_now = breadcrumbElement.textContent?.trim();
@@ -224,8 +237,10 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
             this.printItems = await this._setPrintItems(this.props);
         },
 
-        async willUpdateProps(nextProps) {
+        async _updateData(nextProps) {
             var breadcrumbElement = document.querySelector('.breadcrumb');
+            if (breadcrumbElement === null) return
+
             let location_now = ""
             if (breadcrumbElement) {
                 location_now = breadcrumbElement.textContent?.trim();
