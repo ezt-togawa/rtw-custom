@@ -68,7 +68,7 @@
                 <field name="virtual_available" string="見通し数" />
                 <button
                     name="bom_lines_link"
-                    string="View File"
+                    string="View"
                     type="object"
                     icon="fa-external-link"
                     class="oe_stat_button"
@@ -82,15 +82,14 @@
         <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_view_filter" />
         <field name="arch" type="xml">
             <xpath
-                expr="//search"
-                position="inside">
-                <field name="bom_product_template_attribute_value_ids" />
-                <field name="id" string="選択構成品ID一覧" />
+                expr="//search/field[@name='bom_id']"
+                position="before">
                 <filter string="在庫可能品" name="product_type"
                     domain="[('product_id.type', '=', 'product')]" />
+                <field name="id"
+                    string="選択構成品ID一覧" />
+                <field name="bom_product_template_attribute_value_ids" />
             </xpath>
-
         </field>
     </record>
-
 </odoo>

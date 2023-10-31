@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sale_order_line_outlook_stock",
+    'name': "rtw_product_pricelist",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,11 +20,11 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['web','base', 'sale_management', 'stock' , 'sale','sale_sourced_by_line','mrp','mrp_bom_component_menu','product','product_configurator'],
+    'depends': ['base', 'sale_management', 'stock' ,'product','product_configurator','product_configurator_sale','account'],
 
     # always loaded
     'data': [
-        'views/sale_order_view.xml',
+        'views/product_pricelist.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
