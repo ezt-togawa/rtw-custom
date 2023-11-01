@@ -20,11 +20,11 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management', 'stock' , 'sale','sale_sourced_by_line','mrp','mrp_bom_component_menu','product','product_configurator'],
+    'depends': ['web','base', 'sale_management', 'stock' , 'sale','sale_sourced_by_line','mrp','mrp_bom_component_menu','product','product_configurator'],
 
     # always loaded
     'data': [
-        'views/sale_order_view.xml'
+        'views/sale_order_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
