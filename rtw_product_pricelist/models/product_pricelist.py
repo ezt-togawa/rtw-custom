@@ -44,8 +44,8 @@ class rtw_product_pricelist(models.Model):
                 item.name = _("Variant: %s") % (item.product_id.with_context(
                     display_default_code=False).display_name)
             elif item.product_template_attribute_value_id and item.applied_on == '4_product_attribute':
-                item.name = _("Product Attribute: %s") % (item.product_template_attribute_value_id.attribute_id.name +
-                                                          ' : ' + item.product_template_attribute_value_id.product_attribute_value_id.name)
+                item.name = (item.product_template_attribute_value_id.product_tmpl_id.name + ' : ' + item.product_template_attribute_value_id.attribute_id.name +
+                             ' (' + item.product_template_attribute_value_id.product_attribute_value_id.name + ' : ' + str(item.fixed_price) + ')')
             else:
                 item.name = _("All Products")
         return res
@@ -60,14 +60,12 @@ class rtw_product_attribute_value(models.Model):
     ):
         sale_order_id = None
         pricelist_2 = None
-        print('>>>>>>>>>>>>>>>>>> ctx', self.env.context)
         if 'default_order_id' in self.env.context:
             sale_order_id = self.env.context.get('default_order_id')
 
         sale_order = self.env['sale.order'].search(
             [('id', '=', sale_order_id)])
         sale_order_price_list = sale_order.pricelist_id
-        print('>>>>>>>>>>>>>>>>> sale_order_price_list', sale_order_price_list)
         pricelist_items = self.env['product.pricelist.item'].search(
             [('pricelist_id', '=', sale_order_price_list.id), ('applied_on', '=', '4_product_attribute')])
         extra_prices = {}
@@ -89,9 +87,6 @@ class rtw_product_attribute_value(models.Model):
                 pricelist=pricelist_2.id).fixed_price
             for av in pricelist_items
         }
-        print('>>>>>>>>> pricelist_items', pricelist_items)
-        print('>>>>>>>>> extra_prices', extra_prices)
-        print('>>>>>>>>> extra_prices_2', extra_prices_2)
 
         remaining_av_ids = pt_attr_value_ids - related_product_av_ids
 
@@ -111,7 +106,6 @@ class rtw_product_attribute_value(models.Model):
             attr_val_id = line.product_template_attribute_value_id.product_attribute_value_id
             if attr_val_id.id in extra_prices:
                 extra_prices[attr_val_id.id] = line.fixed_price
-        print('>>>>>>> extra_prices', extra_prices)
         return extra_prices
 
 
@@ -162,6 +156,7 @@ class rtw_product_config_session(models.Model):
                 pricelist=pricelist_2.id).fixed_price
             for av in pricelist_items
         }
+
         for key, value in extra_prices_price_list_variant.items():
             if key in extra_prices:
                 extra_prices[key] = value
@@ -323,7 +318,6 @@ class rtw_product_configurator(models.TransientModel):
         More importantly it sets metadata on the context
         variable so the fields_get and fields_view_get methods can generate the
         appropriate dynamic content"""
-        print('>>>>>>>>>>>> action next step', self)
         wizard_action = self.with_context(
             allow_preset_selection=False,
             default_order_id=self.env.context.get('default_order_id')
