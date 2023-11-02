@@ -45,7 +45,7 @@ class rtw_product_pricelist(models.Model):
                     display_default_code=False).display_name)
             elif item.product_template_attribute_value_id and item.applied_on == '4_product_attribute':
                 item.name = (item.product_template_attribute_value_id.product_tmpl_id.name + ' : ' + item.product_template_attribute_value_id.attribute_id.name +
-                             ' (' + item.product_template_attribute_value_id.product_attribute_value_id.name + ' : ' + str(item.fixed_price) + ')')
+                             ' (' + item.product_template_attribute_value_id.product_attribute_value_id.name + ')')
             else:
                 item.name = _("All Products")
         return res
@@ -67,7 +67,7 @@ class rtw_product_attribute_value(models.Model):
             [('id', '=', sale_order_id)])
         sale_order_price_list = sale_order.pricelist_id
         pricelist_items = self.env['product.pricelist.item'].search(
-            [('pricelist_id', '=', sale_order_price_list.id), ('applied_on', '=', '4_product_attribute')])
+            [('pricelist_id', '=', sale_order_price_list.id), ('applied_on', '=', '4_product_attribute'),('product_template_attribute_value_id.product_tmpl_id','=',product_tmpl_id)])
         extra_prices = {}
 
         if not pricelist:
@@ -127,7 +127,7 @@ class rtw_product_config_session(models.Model):
             [('id', '=', sale_order_id)])
         sale_order_price_list = sale_order.pricelist_id
         pricelist_items = self.env['product.pricelist.item'].search(
-            [('pricelist_id', '=', sale_order_price_list.id), ('applied_on', '=', '4_product_attribute')])
+            [('pricelist_id', '=', sale_order_price_list.id), ('applied_on', '=', '4_product_attribute'),('product_template_attribute_value_id.product_tmpl_id','=',self.product_tmpl_id.id)])
 
         if sale_order_price_list:
             pricelist_2 = sale_order_price_list
