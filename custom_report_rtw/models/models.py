@@ -38,22 +38,40 @@ class StockPicking(models.Model):
 class StockMove(models.Model):
   _inherit = 'stock.move'
   calculate_packages = fields.Integer('Packages' , compute="_compute_calculate_packages")
-  calculate_product_pack = fields.Char(
-      string="Calculate product pack",
-      compute="_compute_calculate_product_pack",
-      default=""
-  )
-
-  def _compute_calculate_product_pack(self):
-    for line in self:
-        if line.sale_line_id.pack_parent_line_id:
-            line.calculate_product_pack = ' / ' + line.sale_line_id.pack_parent_line_id.product_id.name
-        else:
-            line.calculate_product_pack = ''
-
+ 
   def _compute_calculate_packages(self):
     for move in self:
         if move.product_id.two_legs_scale:
             move.calculate_packages = math.ceil(move.product_uom_qty / move.product_id.two_legs_scale)
         else:
             move.calculate_packages = move.product_uom_qty
+
+class MrpProduction(models.Model):
+    _inherit = 'mrp.production'
+
+    order_line=fields.One2many(
+        "sale.order.line",
+        "order_id",
+        string="Sale order line",
+        copy=True,
+        auto_join=True,
+        compute="_compute_get_sale_order_line",
+    )
+    sale_order=fields.One2many(
+        "sale.order",
+        "name",
+        string="Sale order line",
+        copy=True,
+        auto_join=True,
+        compute="_compute_get_sale_order",
+    )
+
+    def _compute_get_sale_order(self):
+        sale_order = self.env['sale.order'].search([('name','=',self.origin)])
+        self.sale_order=sale_order
+
+    def _compute_get_sale_order_line(self):        
+        sale_order = self.env['sale.order'].search([('name','=',self.origin)])
+        order_lines = self.env["sale.order.line"].search([("order_id", "in", sale_order.ids)])
+        
+        self.order_line = order_lines
