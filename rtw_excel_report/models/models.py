@@ -458,7 +458,7 @@ class SaleOrderLineExcelReport(models.Model):
 
     def _compute_sale_order_config_session(self):
         for line in self:
-            
+
             print('line.product_id.id',line.product_id.id)
             print('line.order_id.name',line.order_id.name)
 
@@ -1549,12 +1549,16 @@ class StockMoveContainerReport(models.Model):
     _inherit = "stock.move.container"
 
     pallet_count = fields.Char("", compute="_compute_pallet_count")
+    note_eng = fields.Char('', compute="_compute_note_eng")
 
     def _compute_pallet_count(self):
         stock_move_pallet_count = len(
-            self.env["stock.move.pallet"].search([("container_id", "=", self.id)])
-        )
-        self.pallet_count = str(stock_move_pallet_count) + " PALLETS"
+            self.env['stock.move.pallet'].search([('container_id', '=', self.id)]))
+        self.pallet_count = str(stock_move_pallet_count) + ' PALLETS'
+
+    def _compute_note_eng(self):
+        stock_move_container = self.env['stock.move.container'].with_context(lang='en_US').search([('id','=',self.id)])
+        self.note_eng = stock_move_container.note
 
 
 class StockMovePalletReport(models.Model):
@@ -1589,7 +1593,7 @@ class StockMovePalletReport(models.Model):
     def _compute_pallet_name_and_product(self):
         for record in self:
             pallet_name_and_product = record.name
-            stock_move_lines = self.env["stock.move.line"].search(
+            stock_move_lines = self.env["stock.move.line"].with_context(lang='en_US').search(
                 [("pallet_id", "=", record.id)]
             )
             for line in stock_move_lines:
