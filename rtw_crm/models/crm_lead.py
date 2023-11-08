@@ -857,13 +857,13 @@ class rtw_crm(models.Model):
     @api.onchange('stage_id')
     def _set_opportunity_completion_date(self):
         if not self.opportunity_completion_date:
-            if self.stage_id.name == "受注成立" or self.stage_id.name == "ロスト":
+            if self.stage_id.probability == 100 or self.stage_id.probability == 0:
                 self.opportunity_completion_date = fields.datetime.now()
         elif self.opportunity_completion_date:
-            if self.stage_id.name != "受注成立" or self.stage_id.name != "ロスト":
+            if self.stage_id.probability != 100 or self.stage_id.probability != 0:
                 self.opportunity_completion_date = False
-            if self._origin.stage_id.name != self.stage_id.name:
-                if self.stage_id.name == "受注成立" or self.stage_id.name == "ロスト":
+            if self._origin.stage_id.probability != self.stage_id.probability:
+                if self.stage_id.probability == 100 or self.stage_id.probability == 0:
                     self.opportunity_completion_date = fields.datetime.now()
 
     @api.depends('expected_revenue', 'rate')
