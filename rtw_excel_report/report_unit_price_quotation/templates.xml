@@ -28,7 +28,7 @@
                             'H1': 'sale_order_current_date',
                             'I14': 'name${value or ""}'
                         },
-                        'list_order_line': {
+                        'order_line': {
                             'A17': 'sale_order_index${value or ""}#{style=text;fill=grey}',
                             'B17': 'sale_order_name${value or ""}#{style=text;fill=grey}',
                             'C17': 'sale_order_number_and_size#{style=text;fill=grey}',

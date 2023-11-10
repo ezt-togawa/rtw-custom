@@ -7,12 +7,12 @@
         <field name="name">発注書(部材用）</field>
         <field name="res_model">export.xlsx.wizard</field>
         <field name="binding_view_types">form</field>
-        <field name="binding_model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_model_id" ref="purchase.model_purchase_order" />
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="context">
             {
-            'template_domain': [('res_model', '=', 'mrp.production'),
+            'template_domain': [('res_model', '=', 'purchase.order'),
             ('fname', '=', 'purchase_order_for_part.xlsx'),
             ('gname', '=', False)],
             }

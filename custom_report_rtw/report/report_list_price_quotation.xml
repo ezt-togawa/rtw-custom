@@ -120,7 +120,7 @@
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody">
-                                <tr t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l"
+                                <tr t-foreach="docs.order_line" t-as="l"
                                     style="border-bottom:solid 1px #595959;font-size:12px;">
                                     <t t-set="total_subprice"
                                         t-value="total_subprice + l.price_subtotal" />

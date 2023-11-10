@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_invoice_2">
+    <template id="report_invoice_3">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="custom_report_rtw.so_ex_layout">
@@ -45,7 +45,7 @@
                                 <br />
                                 <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
                                     下記の通り、ご請求申し上げます。<br /> <span class="mt-1"
-                                        style="font-size:16px"> 件名 <span t-esc="docs.title" />
+                                        style="font-size:16px"> 件名 <span t-esc="docs.name" />
                                     </span>
                                 </div>
                                 <br />
@@ -63,10 +63,10 @@
                             </div>
                             <div class="col-4">
                                 <div>お支払期限: <span
-                                        t-if="docs.estimated_shipping_date"
-                                        t-esc="docs.estimated_shipping_date.strftime('%Y-%m-%d')" />
+                                        t-if="docs.invoice_date_due"
+                                        t-esc="docs.invoice_date_due.strftime('%Y-%m-%d')" />
                                 </div>
-                                <div> お支払内容 : <span t-field="docs.payment_term_id.name" />
+                                <div> お支払内容 : <span t-field="docs.invoice_payment_term_id.name" />
                                 </div>
                                 <div> お振込先: <span t-esc="docs.partner_id.bank_ids.bank_id.name" />
                                 <div
@@ -81,11 +81,11 @@
                                 </div>
                                 <br />
                                 <div>納品日: <span
-                                        t-field="docs.estimated_shipping_date" />
+                                        t-field="docs.date" />
                                 </div>
-                                <div> 納品場所: <span t-field="docs.forwarding_address" />
+                                <div> 納品場所: <span t-field="docs.partner_id.street" />
                                 <div> 備考: <span
-                                            t-field="docs.note" />
+                                            t-field="docs.narration" />
                                     </div>
                                 </div>
                             </div>
@@ -115,12 +115,12 @@
                         </div>
                         <table
                             class="table mt-1">
-                            <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
+                            <t t-foreach="docs.account_move_line" t-as="l" t-groupby="10"
                                 t-att-last="last">
-                                <t t-set="total_subprice"
+                                <!-- <t t-set="total_subprice"
                                     t-value="total_subprice + l.price_subtotal" />
                                 <t t-set="total_listprice"
-                                    t-value="total_listprice + l.price_unit * l.product_uom_qty" />
+                                    t-value="total_listprice + l.price_unit * l.product_uom_qty" /> -->
                                 <t t-if="l_index == 0">
                                     <thead>
                                         <tr
@@ -144,7 +144,6 @@
                                         <td>
                                             <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
                                             <br />
-                                            <span t-if="l.p_type" t-field="l.p_type" />
                                         </td>
                                         <td>
                                             <div t-if="l.product_id.product_no"
@@ -171,18 +170,12 @@
                                                 t-as="string_line"> ● <span
                                                     t-esc="string_line.display_name" />
                                                 <br />
-                                            </t>
-                                            <t t-foreach="l.config_session_id.custom_value_ids"
-                                                t-as="string_line"> ●<span
-                                                    t-esc="string_line.display_name" />: <span
-                                                    t-esc="string_line.value" />
-                                                <br />
-                                            </t>
+                                        </t>
                                         </td>
                                         <td class="text-center">
                                             <div id="quote_qty" style="font-size:16px">
                                                 <span
-                                                    t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                                                    t-esc="'{0:,.0f}'.format(l.quantity)" />
                                             </div>
                                         </td>
                                         <td class="text-center">
@@ -223,7 +216,7 @@
             </t>
         </t>
     </template>
-    <record id="paperformat_invoice_report" model="report.paperformat">
+    <record id="paperformat_invoice_report_3" model="report.paperformat">
         <field name="name">Invoice</field>
         <field name="default" eval="False" />
         <field name="format">custom</field>
@@ -240,12 +233,12 @@
     </record>
     <report
         string="請求書"
-        id="report_invoice_rtw_2"
-        model="sale.order"
+        id="report_invoice_rtw_3"
+        model="account.move"
         report_type="qweb-pdf"
-        name="custom_report_rtw.report_invoice_2"
-        file="custom_report_rtw.report_invoice_2"
-        paperformat="paperformat_invoice_report"
+        name="custom_report_rtw.report_invoice_3"
+        file="custom_report_rtw.report_invoice_3"
+        paperformat="paperformat_invoice_report_3"
     />
 
 </odoo>

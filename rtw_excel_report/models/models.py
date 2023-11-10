@@ -126,6 +126,11 @@ class SaleOrderExcelReport(models.Model):
         string="Sale order name",
     )
 
+    sale_order_info_cus = fields.Char(
+        compute="_compute_sale_order_info_cus",
+        string="Sale order name",
+    )
+
     def _compute_sale_order_name(self):
         for line in self:
             if line.name:
@@ -151,9 +156,22 @@ class SaleOrderExcelReport(models.Model):
                 sale_order_company_name += " " + line.partner_id.department
             if line.partner_id.user_id.name:
                 sale_order_company_name += " " + line.partner_id.user_id.name + " ご依頼分"
-            if line.name:
-                sale_order_company_name += " " + line.name
             line.sale_order_company_name = sale_order_company_name
+
+    def _compute_sale_order_info_cus(self):
+        for line in self:
+            info_cus = ""
+            if line.partner_id.name:
+                info_cus = line.partner_id.name
+            if line.partner_id.site:
+                info_cus = line.partner_id.site
+            if line.partner_id.department:
+                info_cus += " " + line.partner_id.department
+            if line.partner_id.user_id.name:
+                info_cus += " " + line.partner_id.user_id.name + " "
+            if line.name:
+                info_cus += "ご依頼分" + line.name
+            line.sale_order_info_cus = info_cus
 
     def _compute_sale_order_ritzwell_staff(self):
         for line in self:
@@ -458,34 +476,18 @@ class SaleOrderLineExcelReport(models.Model):
 
     def _compute_sale_order_config_session(self):
         for line in self:
-
-            print('line.product_id.id',line.product_id.id)
-            print('line.order_id.name',line.order_id.name)
-
-            mrps = self.env["mrp.production"].search(
-                [
-                    ("product_id", "=", line.product_id.id),
-                    ("origin", "=", line.order_id.name),
-                ]
-            )
-
-            print(1111111111,mrps)
-            if mrps:
-                for mrp in mrps:
-                    if mrp.production_type:
-                        soup = BeautifulSoup(mrp.production_type, "html.parser")
-                        text_elements = [
-                            element.get_text() for element in soup.find_all(text=True)
-                        ]
-                        production_type = ""
-                        if len(text_elements) > 0:
-                            for val in text_elements:
-                                production_type += val + "\n"
-                        line.sale_order_config_session = production_type
-                    else:
-                        line.sale_order_config_session = ""
-            else:
-                line.sale_order_config_session = ""
+            config=""
+            if line.p_type:
+                if line.p_type =="special":
+                    config += "別注" +"\n"
+                if line.p_type =="custom":
+                    config += "特注" +"\n"
+            configCus=line.config_session_id.custom_value_ids
+            if configCus:
+                for cfg in configCus:
+                    config += cfg.display_name + ":" + cfg.value + "\n"
+            config.rstrip("\n")
+            line.sale_order_config_session=config
 
     def _compute_sale_order_voucher_class(self):
         for line in self:

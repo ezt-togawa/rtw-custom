@@ -6,7 +6,7 @@
     <record id="action_invoice_export_xlsx" model="ir.actions.act_window">
         <field name="name">請求書</field>
         <field name="res_model">export.xlsx.wizard</field>
-        <field name="binding_view_types">list,form</field>
+        <field name="binding_view_types">form</field>
         <field name="binding_model_id" ref="account.model_account_move" />
         <field name="view_mode">form</field>
         <field name="target">new</field>
