@@ -42,7 +42,7 @@ class productSpec(models.AbstractModel):
             sheet.set_column("H:H", width=20)  
             sheet.set_column("I:I", width=30)  
             sheet.set_column("J:J", width=18)  
-            sheet.set_column("K:K", width=16)  
+            sheet.set_column("K:K", width=17)  
 
             sheet.merge_range(1, 5,1,7, "≪仕掛品伝票一覧≫ ", format_sheet_title)
             sheet.write(0,10, current_date, format_left)
@@ -74,8 +74,8 @@ class productSpec(models.AbstractModel):
                     sheet.write(row, 2,date_planned_finished, format_date)
 
                     p_name=""
-                    if mrp_prod.product_id.product_tmpl_id.categ_id.name:
-                        p_name=mrp_prod.product_id.product_tmpl_id.categ_id.name 
+                    if mrp_prod.product_id.product_tmpl_id.product_no:
+                        p_name=mrp_prod.product_id.product_tmpl_id.product_no 
                     sheet.write(row, 3, p_name, format_left_has_border)
                 
                     sheet.write(row, 4, mrp_prod.product_qty, format_right_has_border)

@@ -13,22 +13,23 @@
             {
                 '__EXPORT__': {
                     '発注書': {
+                        '_HEAD_': {
+                            'I12': 'mrp_note${value or ""}',
+                        },
                         'sale_order':{
                             'C2': 'sale_order_send_to_company${value or ""}',
-                            'B4': 'name${value or ""}',
+                            'B4': 'sale_order_name${value or ""}',
                             'B6': 'sale_order_estimated_shipping_date${value or ""}',
                             'B7': 'sale_order_preferred_delivery_date${value or ""}',
                             'B9': 'title${value or ""}',
-                            'B11': 'sale_order_company_name${value or ""}',
-                            'B12': 'sale_order_detail_address_partner',
-                            'B13': 'partner_id.phone${value or ""}',
-                            'B14': 'shipping_to_text${value or ""}',
-                            'I12': 'note${value or ""}',
+                            'B10': 'sale_order_info_cus${value or ""}',
+                            'B12': 'sale_order_company_name${value or ""}',
+                            'B13': 'sale_order_detail_address_partner',
+                            'B14': 'partner_id.phone${value or ""}',
                             'J10':  'user_id.name${value or ""}',
                             'J1':  'sale_order_current_date',
                             'J16': 'amount_untaxed${value or ""}',
                         },
-                        
                         'order_line': {
                             'A20': 'sale_order_index${value or ""}#{style=text;fill=grey}',
                             'B20': 'sale_order_name${value or ""}#{style=text;fill=grey}',

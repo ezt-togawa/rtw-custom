@@ -109,7 +109,7 @@
                         </div>
                         <table
                             class="table">
-                            <t t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l" t-groupby="10"
+                            <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
                                 t-att-last="last">
                                 <t t-set="total_subprice"
                                     t-value="total_subprice + l.price_subtotal" />
@@ -234,7 +234,7 @@
     </record>
     <report
         string="御見積書"
-        id="report_quotation_rtw"
+        id="report_quotation_rtw2"
         model="sale.order"
         report_type="qweb-pdf"
         name="custom_report_rtw.report_quotation"
