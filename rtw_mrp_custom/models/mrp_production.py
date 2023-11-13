@@ -26,17 +26,22 @@ class rtw_mrp_production_revised_edition(models.Model):
 
     def _compute_display_name(self):
         for record in self:
-            project_name = ''
-            shipping_date = ''
+            # record.display_name = record.name
+            product_no = ''
+            date_planned = ''
+            sale_order_no = ''
             if record.origin:
-                production = self.env['mrp.production'].browse(record.id) #GET PRODUCTION
+                record.display_name = ''
                 sale_order = self.env['sale.order'].search([ #GET SALE_ORDER By order_id
-                    ('name','=', production.origin)
+                    ('name','=', record.sale_reference)
                 ], limit=1)
-                if sale_order and sale_order.title:
-                    project_name =f'/{sale_order.title}'
-                if sale_order and sale_order.preferred_delivery_date:
-                    shipping_date =f'/{sale_order.preferred_delivery_date}'
-                record.display_name = f'{record.origin}{project_name}{shipping_date}'
+                if record.product_id.product_no:
+                    product_no = f'/{record.product_id.product_no}'
+                if sale_order:
+                    if sale_order.estimated_shipping_date:
+                        date_planned = '/' + str(sale_order.estimated_shipping_date)
+                    # if self.env['sale.order.line'].search([('order_id','=',sale_order.id),('product_id','=',record.product_id.id)], order='date_planned desc', limit=1):
+                    #     date_planned = '/' + self.env['sale.order.line'].search([('order_id','=',sale_order.id),('product_id','=',record.product_id.id)], order='date_planned desc', limit=1).date_planned.strftime('%Y-%m-%d')
+                    record.display_name = f'{record.sale_reference}{product_no}{date_planned}'
             else:
                 record.display_name = ''
