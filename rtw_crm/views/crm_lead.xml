@@ -266,7 +266,7 @@
                         </group>
                     </page>
                     <page string="ケース">
-                        <field name="case_ids"/>
+                        <field name="case_ids" readonly="1"/>
                     </page>
 <!--                    <page string="活動">-->
 <!--                        <field name="calendar_ids">-->
