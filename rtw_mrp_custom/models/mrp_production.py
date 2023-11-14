@@ -30,8 +30,7 @@ class rtw_mrp_production_revised_edition(models.Model):
             product_no = ''
             date_planned = ''
             sale_order_no = ''
-            if record.origin:
-                record.display_name = ''
+            if record.sale_reference:
                 sale_order = self.env['sale.order'].search([ #GET SALE_ORDER By order_id
                     ('name','=', record.sale_reference)
                 ], limit=1)
@@ -44,4 +43,6 @@ class rtw_mrp_production_revised_edition(models.Model):
                     #     date_planned = '/' + self.env['sale.order.line'].search([('order_id','=',sale_order.id),('product_id','=',record.product_id.id)], order='date_planned desc', limit=1).date_planned.strftime('%Y-%m-%d')
                     record.display_name = f'{record.sale_reference}{product_no}{date_planned}'
             else:
-                record.display_name = ''
+                if record.product_id.product_no:
+                    product_no = f'/{record.product_id.product_no}'
+                record.display_name = f'{record.name}{product_no}'
