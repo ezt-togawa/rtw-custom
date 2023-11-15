@@ -1,9 +1,6 @@
 from odoo import models, fields
 from datetime import datetime
-from bs4 import BeautifulSoup
 import math
-
-
 class SaleOrderExcelReport(models.Model):
     _inherit = "sale.order"
 
@@ -404,8 +401,6 @@ class SaleOrderExcelReport(models.Model):
                 record.sale_order_send_to_company = (
                     "株式会社 " + record.partner_id.name + " 御中"
                 )
-
-
 class SaleOrderLineExcelReport(models.Model):
     _inherit = "sale.order.line"
 
@@ -635,138 +630,6 @@ class SaleOrderLineExcelReport(models.Model):
                 )
             else:
                 line.sale_order_name = ""
-
-
-class ProductTemplateExcelReport(models.Model):
-    _inherit = "product.template"
-
-    purchase_order_lines = fields.One2many(
-        "purchase.order.line",
-        "product_id",
-        string="Purchase order line",
-        copy=True,
-        auto_join=True,
-        compute="_compute_purchase_order_lines",
-    )
-
-    sale_order_line = fields.One2many(
-        "sale.order.line",
-        "product_id",
-        string="Sale order line",
-        copy=True,
-        auto_join=True,
-        compute="_compute_sale_order_line",
-    )
-
-    sale_order_line_not_in_purchase_orders = fields.Many2many(
-        "sale.order.line",
-        string="Sale Order Line Not in Purchase Orders",
-        compute="_compute_sale_order_line_not_in_purchase_orders",
-    )
-
-    # sale_order_not_in_purchase_orders = fields.Many2many(
-    #     "sale.order",
-    #     string="Sale Order Not in Purchase Orders",
-    #     compute="_compute_sale_order_not_in_purchase_orders",
-    # )
-
-    current_date = fields.Date(
-        "current date",
-        compute="_compute_current_date",
-    )
-
-    product_name = fields.Char(
-        "Product name",
-        compute="_compute_product_name",
-    )
-
-    stock_quant_on_hand = fields.Char(
-        "Quantity on hand",
-        compute="_compute_stock_quant_on_hand",
-    )
-
-    def _compute_stock_quant_on_hand(self):
-        for record in self:
-            prod = self.env["product.product"].search(
-                [("product_tmpl_id", "=", record.id)]
-            )
-            if prod:
-                prod_qty = self.env["stock.quant"].search(
-                    [("product_id", "=", prod.id)]
-                )
-                if prod_qty:
-                    for p in prod_qty:
-                        if p.quantity > 0:
-                            record.stock_quant_on_hand = p.quantity
-
-    def _compute_product_name(self):
-        for record in self:
-            record.product_name = record.name
-
-    def _compute_current_date(self):
-        for record in self:
-            record.current_date = fields.Date.today()
-
-    def _compute_purchase_order_lines(self):
-        for record in self:
-            record.purchase_order_lines = self.env["purchase.order.line"].search(
-                [("product_id.product_tmpl_id", "=", record.id)]
-            )
-
-    def _compute_sale_order_line(self):
-        for record in self:
-            record.sale_order_line = self.env["sale.order.line"].search(
-                [("product_id.product_tmpl_id", "=", record.id)]
-            )
-
-    def _compute_sale_order_line_not_in_purchase_orders(self):
-        for record in self:
-            sale_order_lines = self.env["sale.order.line"].search(
-                [("product_id.product_tmpl_id", "=", record.id)]
-            )
-            sale_orders = self.env["sale.order"].search(
-                [("order_line.id", "in", sale_order_lines.ids)]
-            )
-
-            filtered_sale_orders = sale_orders.filtered(
-                lambda so: all(
-                    so.name != po.origin for po in self.env["purchase.order"].search([])
-                )
-            )
-
-            filtered_sale_order_line = sale_order_lines.filtered(
-                lambda sol: sol.order_id.id
-                in filtered_sale_orders.ids
-                # and sol.order_id.name ==  mp.origin for mp in self.env["mrp.production"].search([])
-            )
-
-            record.sale_order_line_not_in_purchase_orders = filtered_sale_order_line
-
-
-class PurChaseOrderLineExcelReport(models.Model):
-    _inherit = "purchase.order.line"
-
-    purchase_line_date_planned = fields.Char(
-        "Date planned",
-        compute="_compute_report_stock_status_list",
-    )
-
-    def _compute_report_stock_status_list(self):
-        for line in self:
-            if line.date_planned:
-                datetime_str = str(line.date_planned)
-                if "." in datetime_str:  # 2023-06-12 10:14:34.315388
-                    line.purchase_line_date_planned = datetime.strptime(
-                        datetime_str, "%Y-%m-%d %H:%M:%S.%f"
-                    ).strftime("%Y-%m-%d")
-                else:  # 2023-06-12 10:14:34
-                    line.purchase_line_date_planned = datetime.strptime(
-                        datetime_str, "%Y-%m-%d %H:%M:%S"
-                    ).strftime("%Y-%m-%d")
-            else:
-                line.purchase_line_date_planned = ""
-
-
 class StockPickingExcelReport(models.Model):
     _inherit = "stock.picking"
 
@@ -774,8 +637,6 @@ class StockPickingExcelReport(models.Model):
         "stock.move",
         "picking_id",
         string="Stock move line",
-        copy=True,
-        auto_join=True,
         compute="_compute_stock_move",
     )
 
@@ -783,8 +644,6 @@ class StockPickingExcelReport(models.Model):
         "stock.move.line",
         "picking_id",
         string="Stock move line",
-        copy=True,
-        auto_join=True,
         compute="_compute_stock_move_line",
     )
 
@@ -847,11 +706,6 @@ class StockPickingExcelReport(models.Model):
         compute="_compute_to_sale_order",
     )
 
-    stock_partner_address = fields.Char(
-        "Partner address",
-        compute="_compute_to_sale_order",
-    )
-
     stock_printing_staff = fields.Char(
         "Printing staff",
         compute="_compute_to_sale_order",
@@ -861,38 +715,14 @@ class StockPickingExcelReport(models.Model):
         "Shiratani date",
         compute="_compute_to_sale_order",
     )
-
-    stock_picking_p_qty = fields.Char(
-        "Picking product qty",
-        compute="_compute_stock_move",
-    )
-
-    stock_picking_p_summary = fields.Char(
-        "Picking product summary",
-        compute="_compute_p_summary",
-    )
-
-    def _compute_p_summary(self):
-        prod_summary = ""
-        for line in self:
-            prod = self.env["product.product"].search([("id", "=", line.product_id.id)])
-            attribute = prod.product_template_attribute_value_ids
-            if attribute:
-                for attr in attribute:
-                    prod_summary += (
-                        attr.attribute_id.name
-                        + ":"
-                        + attr.product_attribute_value_id.name
-                        + "\n"
-                    )
-            line.stock_picking_p_summary = prod_summary
-
+    
     def _compute_stock_move(self):
         for line in self:
-            prod = self.env["stock.move"].search([("picking_id", "=", line.id)])
-            if prod:
-                line.stock_picking_p_qty = prod[0].product_qty
-                line.stock_move = prod
+            prod=self.env["stock.move"].search(
+                [("picking_id", "=", line.id)]
+            )
+            if prod :
+                line.stock_move=prod
 
     def _compute_stock_move_line(self):
         for line in self:
@@ -1044,23 +874,8 @@ class StockPickingExcelReport(models.Model):
             else:
                 record.stock_scheduled_date = ""
 
-            partner_address = ""
-            if record.sale_id.partner_id.zip:
-                partner_address += record.sale_id.partner_id.zip + " "
-            if record.sale_id.partner_id.street:
-                partner_address += record.sale_id.partner_id.street + " "
-            if record.sale_id.partner_id.street2:
-                partner_address += record.sale_id.partner_id.street2 + " "
-            if record.sale_id.partner_id.city:
-                partner_address += record.sale_id.partner_id.city + " "
-            if record.sale_id.partner_id.state_id.name:
-                partner_address += record.sale_id.partner_id.state_id.name
-            record.stock_partner_address = "〒" + partner_address
-
             if record.sale_id.user_id.name:
                 record.stock_printing_staff = record.sale_id.user_id.name + "  印"
-
-
 class StockMoveExcelReport(models.Model):
     _inherit = "stock.move"
 
@@ -1173,32 +988,24 @@ class StockMoveExcelReport(models.Model):
             line.stock_sai = line.product_id.product_tmpl_id.sai
             line.stock_warehouse = line.warehouse_id.name
             line.stock_shiratani_date = line.sale_line_id.shiratani_date
-
-
 class AccountMoveExcelReport(models.Model):
     _inherit = "account.move"
 
     sale_order_line = fields.One2many(
         "sale.order.line",
         string="Sale order line",
-        copy=True,
-        auto_join=True,
         compute="_compute_sale_order_line",
     )
 
     account_move_line = fields.One2many(
         "account.move.line",
         string="Account move line",
-        copy=True,
-        auto_join=True,
         compute="_compute_account_move_line",
     )
 
     sale_order = fields.One2many(
         "sale.order",
         string="Sale order",
-        copy=True,
-        auto_join=True,
         compute="_compute_sale_order",
     )
 
@@ -1217,65 +1024,16 @@ class AccountMoveExcelReport(models.Model):
         compute="_compute_printing_staff",
     )
 
-    acc_move_amount_untaxed = fields.Char(
-        "Account move amount untaxed",
-        compute="_compute_acc_move_amount_untaxed",
-    )
-
-    def _compute_acc_move_amount_untaxed(self):
-        for line in self:
-            line.acc_move_amount_untaxed = line.currency_id.symbol + str(
-                line.amount_untaxed if line.amount_untaxed else 0
-            )
-
-    acc_move_amount_tax = fields.Char(
-        "account move amount_tax",
-        compute="_compute_acc_move_amount_tax",
-    )
-
-    def _compute_acc_move_amount_tax(self):
-        for line in self:
-            line.acc_move_amount_tax = line.currency_id.symbol + str(
-                line.amount_tax if line.amount_tax else 0
-            )
-
-    acc_move_amount_total = fields.Char(
-        "account move amount_tax",
-        compute="_compute_acc_move_amount_total",
-    )
-
-    def _compute_acc_move_amount_total(self):
-        for line in self:
-            line.acc_move_amount_total = line.currency_id.symbol + str(
-                line.amount_total if line.amount_total else 0
-            )
-
     acc_move_payment_term = fields.Char(
         "Account move payment term",
         compute="_compute_acc_move_payment_term",
     )
 
-    def _compute_acc_move_payment_term(self):
-        for line in self:
-            line.acc_move_payment_term = (
-                line.invoice_payment_term_id.name
-                if line.invoice_payment_term_id.name
-                else ""
-            )
-
     bank_acc_number = fields.Char(
-        "Bank account number",
-        compute="_compute_bank_acc_number",
-    )
-
-    def _compute_bank_acc_number(self):
-        for line in self:
-            line.bank_acc_number = (
-                "(普) " + line.partner_id.bank_ids.acc_number
-                if line.partner_id.bank_ids.acc_number
-                else ""
-            )
-
+            "Bank account number",
+            compute="_compute_bank_acc_number",
+        )
+    
     acc_move_invoice_date_due = fields.Char(
         "Acc move confirm date",
         compute="_compute_acc_move_confirm_date",
@@ -1290,6 +1048,22 @@ class AccountMoveExcelReport(models.Model):
         "Acc move confirm date",
         compute="_compute_acc_move_confirm_date",
     )
+    
+    def _compute_acc_move_payment_term(self):
+        for line in self:
+            line.acc_move_payment_term = (
+                line.invoice_payment_term_id.name
+                if line.invoice_payment_term_id.name
+                else ""
+            )
+    
+    def _compute_bank_acc_number(self):
+        for line in self:
+            line.bank_acc_number = (
+                "(普) " + line.partner_id.bank_ids.acc_number
+                if line.partner_id.bank_ids.acc_number
+                else ""
+            )
 
     def _compute_acc_move_confirm_date(self):
         for line in self:
@@ -1362,8 +1136,6 @@ class AccountMoveExcelReport(models.Model):
     def _compute_account_move_line(self):
         for line in self:
             line.account_move_line = line.invoice_line_ids
-
-
 class AccountMoveLineExcelReport(models.Model):
     _inherit = "account.move.line"
 
@@ -1372,28 +1144,31 @@ class AccountMoveLineExcelReport(models.Model):
         string="Account line index",
     )
 
+    acc_line_number_and_size = fields.Char(
+        compute="_compute_acc_line_number_and_size",
+        string="品番・サイズ",
+    )
+    
+    acc_line_product_detail = fields.Char(
+        compute="_compute_acc_line_product_detail",
+        string="仕様・詳細",
+    )
+
+    acc_line_discount = fields.Char(
+        compute="_compute_acc_line_discount",
+        string="discount",
+    )
+
+    acc_line_sell_unit_price = fields.Float(
+        compute="_compute_acc_line_sell_unit_price",
+        string="sell unit price",
+    )
+
     def _compute_acc_line_index(self):
         index = 0
         for line in self:
             index = index + 1
             line.acc_line_index = index
-
-    acc_line_name = fields.Char(
-        compute="_compute_acc_line_name",
-        string="Acc line name",
-    )
-
-    def _compute_acc_line_name(self):
-        for line in self:
-            if line.product_id.product_tmpl_id.categ_id.name:
-                line.acc_line_name = str(line.product_id.product_tmpl_id.categ_id.name)
-            else:
-                line.acc_line_name = ""
-
-    acc_line_number_and_size = fields.Char(
-        compute="_compute_acc_line_number_and_size",
-        string="品番・サイズ",
-    )
 
     def _compute_acc_line_number_and_size(self):
         for line in self:
@@ -1429,11 +1204,6 @@ class AccountMoveLineExcelReport(models.Model):
                 )
             line.acc_line_number_and_size = product_number_and_size
 
-    acc_line_product_detail = fields.Char(
-        compute="_compute_acc_line_product_detail",
-        string="仕様・詳細",
-    )
-
     def _compute_acc_line_product_detail(self):
         for line in self:
             product_detail = ""
@@ -1444,23 +1214,13 @@ class AccountMoveLineExcelReport(models.Model):
             for attr in product_template_attribute_values:
                 product_detail += attr.display_name + "\n"
             line.acc_line_product_detail = product_detail
-
-    acc_line_discount = fields.Char(
-        compute="_compute_acc_line_discount",
-        string="discount",
-    )
-
+    
     def _compute_acc_line_discount(self):
         for line in self:
             if line.discount:
                 line.acc_line_discount = line.discount + " %"
             else:
                 line.acc_line_discount = "0 %"
-
-    acc_line_sell_unit_price = fields.Float(
-        compute="_compute_acc_line_sell_unit_price",
-        string="sell unit price",
-    )
 
     def _compute_acc_line_sell_unit_price(self):
         for line in self:
@@ -1470,8 +1230,6 @@ class AccountMoveLineExcelReport(models.Model):
                 )
             else:
                 line.acc_line_sell_unit_price = line.price_unit
-
-
 class MrpProductionExcelReport(models.Model):
     _inherit = "mrp.production"
 
@@ -1479,28 +1237,19 @@ class MrpProductionExcelReport(models.Model):
         "sale.order",
         "origin",
         string="Sale order",
-        copy=True,
-        auto_join=True,
         compute="_compute_sale_order",
-    )
-
-    mrp_product_index = fields.Char(
-        "Mrp product index",
-        compute="_compute_stock_mrp_production",
-    )
-
-    mrp_note = fields.Char(
-        "Mrp note",
-        compute="_compute_mrp_note",
     )
 
     order_line = fields.One2many(
         "sale.order.line",
         "order_id",
         string="Sale order line",
-        copy=True,
-        auto_join=True,
         compute="_compute_order_line",
+    )
+
+    mrp_note = fields.Char(
+        "Mrp note",
+        compute="_compute_mrp_note",
     )
 
     def _compute_mrp_note(self):
@@ -1511,12 +1260,6 @@ class MrpProductionExcelReport(models.Model):
             if line.production_memo:
                 note += line.production_memo
             line.mrp_note = note
-
-    def _compute_stock_mrp_production(self):
-        index = 0
-        for line in self:
-            index = index + 1
-            line.mrp_product_index = index
 
     def _compute_order_line(self):
         for line in self:
@@ -1530,23 +1273,6 @@ class MrpProductionExcelReport(models.Model):
             line.sale_order = self.env["sale.order"].search(
                 [("name", "=", line.origin)]
             )
-
-
-class StockMoveLineExcelReport(models.Model):
-    _inherit = "stock.move.line"
-
-    mrp_product_index = fields.Char(
-        "Mrp product index",
-        compute="_compute_stock_mrp_production",
-    )
-
-    def _compute_stock_mrp_production(self):
-        index = 0
-        for line in self:
-            index = index + 1
-            line.mrp_product_index = index
-
-
 class StockMoveContainerReport(models.Model):
     _inherit = "stock.move.container"
 
@@ -1561,8 +1287,6 @@ class StockMoveContainerReport(models.Model):
     def _compute_note_eng(self):
         stock_move_container = self.env['stock.move.container'].with_context(lang='en_US').search([('id','=',self.id)])
         self.note_eng = stock_move_container.note
-
-
 class StockMovePalletReport(models.Model):
     _inherit = "stock.move.pallet"
     _name = "stock.move.pallet"
@@ -1624,38 +1348,195 @@ class StockMovePalletReport(models.Model):
                     + "\n"
                 )
             record.pallet_name_and_product = pallet_name_and_product
-
 class PurchaseOrderExcelReport(models.Model):
     _inherit = "purchase.order"
 
-    purchase_to_sale_order = fields.One2many(
-        "sale.order",
-        "origin",
-        string="Sale order",
-        copy=True,
-        auto_join=True,
-        compute="_compute_sale_order",
-    )
-
-    purchase_to_order_line = fields.One2many(
-        "sale.order.line",
+    purchase_order_line = fields.One2many(
+        "purchase.order.line",
         "order_id",
         string="Sale order line",
-        copy=True,
-        auto_join=True,
-        compute="_compute_order_line",
+        compute="_compute_purchase_order_line",
     )
 
-    def _compute_order_line(self):
-        for line in self:
-            sale_orders = self.env["sale.order"].search([("name", "=", line.origin)])
-            line.purchase_to_order_line = self.env["sale.order.line"].search(
-                [("order_id", "in", sale_orders.ids)]
-            )
+    purchase_order_company = fields.Char(
+        "Mrp product index",
+        compute="_compute_purchase_order_company",
+    )
 
-    def _compute_sale_order(self):
-        for line in self:
-            line.purchase_to_sale_order = self.env["sale.order"].search(
-                [("name", "=", line.origin)]
-            )
+    purchase_order_current_date = fields.Char(
+        compute="_compute_purchase_order_current_date",
+        string="Current Date",
+    )
 
+    purchase_order_printing_staff = fields.Char(
+        compute="_compute_purchase_order_printing_staff",
+        string="Printing Staff",
+    )
+
+    purchase_order_detail_address_partner = fields.Char(
+        compute="_compute_purchase_order_detail_address_partner",
+        string="Detail Address Partner",
+    )
+
+    purchase_line_date_planned = fields.Char(
+        "Date planned",
+        compute="_compute_report_date",
+    )
+
+    purchase_line_date_order = fields.Char(
+        "Date planned",
+        compute="_compute_report_date",
+    )
+
+    def _compute_report_date(self):
+        for line in self:
+            date_planned=line.date_planned
+            date_order=line.date_order
+            if date_planned:
+                line.purchase_line_date_planned = (
+                    str(date_planned.year)
+                    + "年"
+                    + str(date_planned.month)
+                    + "月"
+                    + str(date_planned.day)
+                    + "日"
+                )
+            else:
+                line.purchase_line_date_planned = ""
+
+            if date_order:
+                line.purchase_line_date_order = (
+                    str(date_order.year)
+                    + "年"
+                    + str(date_order.month)
+                    + "月"
+                    + str(date_order.day)
+                    + "日"
+                )
+            else:
+                line.purchase_line_date_order = ""
+    
+    def _compute_purchase_order_detail_address_partner(self):
+        details = ""
+        for line in self:
+            if line.partner_id.zip:
+                details += "〒" + line.partner_id.zip + " "
+            if line.partner_id.street:
+                details += line.partner_id.street + " "
+            if line.partner_id.street2:
+                details += line.partner_id.street2 + " "
+            if line.partner_id.city:
+                details += line.partner_id.city + " "
+            if line.partner_id.state_id.name:
+                details += line.partner_id.state_id.name + " "
+            if line.partner_id.country_id.name:
+                details += line.partner_id.country_id.name + " "
+            line.purchase_order_detail_address_partner =  details
+
+    def _compute_purchase_order_printing_staff(self):
+        for line in self:
+            if line.user_id.name:
+                line.purchase_order_printing_staff = line.user_id.name + "  印"
+            else:
+                line.purchase_order_printing_staff = ""
+
+    def _compute_purchase_order_current_date(self):
+        day = str(datetime.now().day)
+        month = str(datetime.now().month)
+        year = str(datetime.now().year)
+        for record in self:
+            record.purchase_order_current_date = year + " 年 " + month + " 月 " + day + " 日 "
+
+    def _compute_purchase_order_company(self):
+        for record in self:
+            if record.partner_id.commercial_company_name:
+                record.purchase_order_company = (
+                    "株式会社 " + record.partner_id.commercial_company_name + " 御中"
+                )
+            else:
+                record.purchase_order_company = (
+                    "株式会社 " + record.partner_id.name + " 御中"
+                )
+
+    def _compute_purchase_order_line(self):
+        for line in self:
+            purchase_order = self.env["purchase.order"].search([("id", "=", line.id)])
+            line.purchase_order_line = self.env["purchase.order.line"].search(
+                [("order_id", "in", purchase_order.ids)]
+            )
+class PurChaseOrderLineExcelReport(models.Model):
+    _inherit = "purchase.order.line"
+        
+    purchase_order_index = fields.Integer(
+        compute="_compute_purchase_order_index",
+        string="index",
+    )
+
+    purchase_order_product_detail = fields.Char(
+        compute="_compute_purchase_order_product_detail",
+        string="仕様・詳細",
+    )
+
+    purchase_order_text_piece_leg = fields.Char(
+        compute="_compute_purchase_order_text_piece_leg",
+        string="Text piece leg",
+    )
+
+    purchase_order_sell_unit_price = fields.Float(
+        compute="_compute_purchase_order_sell_unit_price",
+        string="販売単価",
+    )
+
+    purchase_order_config_session = fields.Char(
+        compute="_compute_purchase_order_config_session",
+        string="Config Session",
+    )
+    
+    def _compute_purchase_order_index(self):
+        index = 0
+        for line in self:
+            index = index + 1
+            line.purchase_order_index = index
+    
+    def _compute_purchase_order_product_detail(self):
+        for line in self:
+            attr = ""
+            attributes = line.product_id.product_template_attribute_value_ids
+            if attributes:
+                for attribute in attributes:
+                    attr += (
+                        attribute.attribute_id.name
+                        + ":"
+                        + attribute.product_attribute_value_id.name
+                        + "\n"
+                    )
+            line.purchase_order_product_detail = attr
+
+    def _compute_purchase_order_text_piece_leg(self):
+        for line in self:
+            line.purchase_order_text_piece_leg = "脚"
+
+    def _compute_purchase_order_sell_unit_price(self):
+        for line in self:
+            # if line.discount > 0:
+            #     line.purchase_order_sell_unit_price = (
+            #         line.price_unit - line.price_unit * line.discount / 100
+            #     )
+            # else:
+                line.purchase_order_sell_unit_price = line.price_unit
+
+    def _compute_purchase_order_config_session(self):
+        for line in self:
+            config=""
+            if line.p_type:
+                if line.p_type =="special":
+                    config += "別注" +"\n"
+                if line.p_type =="custom":
+                    config += "特注" +"\n"
+            configCus=line.config_session_id.custom_value_ids
+            if configCus:
+                for cfg in configCus:
+                    config += cfg.display_name + ":" + cfg.value + "\n"
+            config.rstrip("\n")
+            line.purchase_order_config_session=config
+            

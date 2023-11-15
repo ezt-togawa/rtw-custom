@@ -21,7 +21,7 @@
           </t>
           <t t-call="custom_report_rtw.SO_purchase_order_sheet_for_part_header_layout"></t>
           <div class="page">
-            <t t-foreach="docs.purchase_to_sale_order" t-as="so">
+            <t t-foreach="docs" t-as="so">
               <t
                 t-set="type">quotation</t>
               <t t-set="address">
@@ -42,9 +42,9 @@
                       t-field="so.name" />
                   </div>
                   <br />
-                  <div>送り先着日 <span t-esc="so.estimated_shipping_date" />
+                  <div>送り先着日 <span t-esc="so.date_planned" t-options='{"widget": "date"}'/>
                   </div>
-                  <div>出荷希望日 <span t-esc="so.preferred_delivery_date" />
+                  <div>出荷希望日 <span t-esc="so.date_order" t-options='{"widget": "date"}'/>
                   </div>
                   <br />
                 </div>
@@ -121,7 +121,7 @@
               </div>
               <table
                 class="table">
-                <t t-foreach="docs.purchase_to_order_line" t-as="l" t-groupby="10"
+                <t t-foreach="docs.purchase_order_line" t-as="l" t-groupby="10"
                   t-att-last="last">
                   <t t-set="total_subprice"
                     t-value="total_subprice + l.price_subtotal" />
@@ -139,7 +139,7 @@
                         <th class="text-center" style="width:3%"></th>
                         <th class="text-center">単価</th>
                         <th class="text-center" style="width:10%">発注金額</th>
-                        <th class="text-center" style="width:10%">メモ</th>
+                        <th class="text-center" style="width:10%">Custom</th>
                       </tr>
                     </thead>
                   </t>
@@ -150,7 +150,7 @@
                       <td>
                         <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
                         <br />
-                        <span t-if="l.p_type" t-field="l.p_type" />
+                        <!-- <span t-if="l.p_type" t-field="l.p_type" /> -->
                         <br />
                         <t t-if="l.product_id.width > 0">W<span
                             t-field="l.product_id.width" />
@@ -209,17 +209,17 @@
                           t-field="l.price_subtotal" />
                       </td>
                       <td>
-                        <t t-if="l.p_type">
+                        <!-- <t t-if="l.p_type">
                           <span
                             t-field="l.p_type" />
-                          <br />
+                          <br /> 
                         </t>
                         <t t-foreach="l.config_session_id.custom_value_ids"
                           t-as="string_line"> ●<span
                             t-esc="string_line.display_name" />: <span
                             t-esc="string_line.value" />
                                                 <br />
-                        </t>
+                        </t>-->
                       </td>
                     </tr>
                   </tbody>

@@ -272,8 +272,7 @@
         </t>
     </template>
     <template id="SO_purchase_order_sheet_for_part_header_layout">
-        <t t-foreach="docs.purchase_to_sale_order" t-as="so">
-
+        <t t-foreach="docs" t-as="so">
             <div t-attf-class="header" t-att-style="report_header_style">
                 <div class="row" style="font-weight:bold">
                     <div class="col-8 mb4">
