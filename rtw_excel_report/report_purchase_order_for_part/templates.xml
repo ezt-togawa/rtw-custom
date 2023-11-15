@@ -13,27 +13,27 @@
             {
                 '__EXPORT__': {
                     '発注書(部材用）': {
-                        'purchase_to_sale_order': {
-                            'C1': 'sale_order_send_to_company${value or ""}',
-                            'B7': 'sale_order_estimated_shipping_date${value or ""}',
-                            'B8': 'sale_order_preferred_delivery_date${value or ""}',
+                        '_HEAD_': {
+                            'C1': 'purchase_order_company${value or ""}',
                             'B5': 'name${value or ""}',
-                            'B11': 'sale_order_company_name${value or ""}',
-                            'B12': 'sale_order_detail_address_partner',
+                            'B7': 'purchase_line_date_planned${value or ""}',
+                            'B8': 'purchase_line_date_order${value or ""}',
+                            'B11': 'purchase_order_company${value or ""}',
+                            'B12': 'purchase_order_detail_address_partner',
                             'B13': 'partner_id.phone${value or ""}',
-                            'H9': 'sale_order_printing_staff${value or ""}',
-                            'H1': 'sale_order_current_date',
+                            'H1': 'purchase_order_current_date',
+                            'H9': 'purchase_order_printing_staff${value or ""}',
                             'H15': 'amount_untaxed${value or ""}',
                         },
-                        'purchase_to_order_line': {
-                            'A19': 'sale_order_index${value or ""}#{style=text;fill=grey}',
-                            'B19': 'sale_order_name${value or ""}#{style=text;fill=grey}',
-                            'C19': 'sale_order_product_detail#{style=text;fill=grey}',
+                        'purchase_order_line': {
+                            'A19': 'purchase_order_index${value or ""}#{style=text;fill=grey}',
+                            'B19': 'name${value or ""}#{style=text;fill=grey}',
+                            'C19': 'purchase_order_product_detail#{style=text;fill=grey}',
                             'D19': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
-                            'E19': 'sale_order_text_piece_leg#{style=number;fill=grey}',
-                            'F19': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'E19': 'purchase_order_text_piece_leg#{style=number;fill=grey}',
                             'G19': 'price_subtotal${value or 0}#{style=number;fill=grey}',
-                            'H19': 'sale_order_config_session${value or ""}#{style=text;fill=grey}',
+                            'F19': 'purchase_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'H19': '${value or ""}#{style=text;fill=grey}',
                         }
                     }
                 }

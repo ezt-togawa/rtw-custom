@@ -148,7 +148,7 @@
                         <th class="text-center" style="width:3%"></th>
                         <th class="text-center" style="width:5%">単価</th>
                         <th class="text-center" style="width:10%">発注金額</th>
-                        <th class="text-center" style="width:10%">Config</th>
+                        <th class="text-center" style="width:10%">Custom</th>
                         <th class="text-center" style="width:10%">メモ</th>
                       </tr>
                     </thead>
