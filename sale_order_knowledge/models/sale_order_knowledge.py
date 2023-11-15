@@ -6,7 +6,7 @@ class sale_order_knowledge(models.Model):
     _inherit = 'sale.order'
 
     def knowledge_supplement(self):
-        knowledge_id = 2 ## REPLACE WITH ID OF APPROPIATE KNOWLEDGE
+        knowledge_id = 38 ## REPLACE WITH ID OF APPROPIATE KNOWLEDGE
         self.ensure_one()
         action = self.env.ref("sale_order_knowledge.action_page_2")
         form = self.env.ref("sale_order_knowledge.view_wiki_form_2")
@@ -18,7 +18,7 @@ class sale_order_knowledge(models.Model):
         return action
 
     def knowledge_special(self):
-        knowledge_id = 3 ## REPLACE WITH ID OF APPROPIATE KNOWLEDGE
+        knowledge_id = 39 ## REPLACE WITH ID OF APPROPIATE KNOWLEDGE
         self.ensure_one()
         action = self.env.ref("sale_order_knowledge.action_page_2")
         form = self.env.ref("sale_order_knowledge.view_wiki_form_2")
