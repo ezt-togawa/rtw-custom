@@ -1369,6 +1369,11 @@ class PurchaseOrderExcelReport(models.Model):
         compute="_compute_purchase_order_company",
     )
 
+    purchase_order_address = fields.Char(
+        "Mrp product index",
+        compute="_compute_purchase_order_address",
+    )
+
     purchase_order_current_date = fields.Char(
         compute="_compute_purchase_order_current_date",
         string="Current Date",
@@ -1463,6 +1468,21 @@ class PurchaseOrderExcelReport(models.Model):
                 record.purchase_order_company = (
                     "株式会社 " + record.partner_id.name + " 御中"
                 )
+
+    def _compute_purchase_order_address(self):
+        for record in self:
+            address = ""
+            if record.picking_type_id.warehouse_id.partner_id.zip:
+                address += "〒" + record.picking_type_id.warehouse_id.partner_id.zip +" "
+            if record.picking_type_id.warehouse_id.partner_id.street:
+                address += record.picking_type_id.warehouse_id.partner_id.street +" "
+            if record.picking_type_id.warehouse_id.partner_id.city:
+                address += record.picking_type_id.warehouse_id.partner_id.city +" "
+            if record.picking_type_id.warehouse_id.partner_id.state_id.name:
+                address += record.picking_type_id.warehouse_id.partner_id.state_id.name +" "
+            if record.picking_type_id.warehouse_id.partner_id.country_id.name:
+                address += record.picking_type_id.warehouse_id.partner_id.country_id.name 
+            record.purchase_order_address =address
 
     def _compute_purchase_order_line(self):
         for line in self:

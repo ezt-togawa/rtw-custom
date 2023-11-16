@@ -18,7 +18,7 @@
                             'B5': 'name${value or ""}',
                             'B7': 'purchase_line_date_planned${value or ""}',
                             'B8': 'purchase_line_date_order${value or ""}',
-                            'B11': 'purchase_order_company${value or ""}',
+                            'B11': 'purchase_order_address${value or ""}',
                             'B12': 'purchase_order_detail_address_partner',
                             'B13': 'partner_id.phone${value or ""}',
                             'H1': 'purchase_order_current_date',
