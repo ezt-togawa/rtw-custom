@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="order_tree_updated_date" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="write_date" optional="hide" string="更新日" />
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="write_uid" optional="hide" string="更新者" />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sales_order_filter_updated_date" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="write_uid" />
+                    <filter string="更新日" name="filter_write_date" date="write_date" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
