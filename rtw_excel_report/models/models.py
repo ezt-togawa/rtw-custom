@@ -827,6 +827,12 @@ class StockPickingExcelReport(models.Model):
                     sipping_to = "搬入設置（デポ入）"
                 if record.sale_id.sipping_to == "direct":
                     sipping_to = "直送"
+                if record.sale_id.sipping_to == 'container':
+                    record.sipping_to = 'オランダコンテナ出荷'
+                if record.sale_id.sipping_to == 'pick_up':
+                    record.sipping_to = '引取'
+                if record.sale_id.sipping_to == 'bring_in':
+                    record.sipping_to = '持込'
             record.stock_picking_sipping_to = sipping_to
 
             witness_name_phone = ""

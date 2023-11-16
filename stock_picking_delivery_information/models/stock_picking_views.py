@@ -48,6 +48,12 @@ class StockPicking(models.Model):
                     record.sipping_to = '搬入設置（デポ入)'
                 elif sale_order.sipping_to == 'direct':
                     record.sipping_to = '直送'
+                elif sale_order.sipping_to == 'container':
+                    record.sipping_to = 'オランダコンテナ出荷'
+                elif sale_order.sipping_to == 'pick_up':
+                    record.sipping_to = '引取'
+                elif sale_order.sipping_to == 'bring_in':
+                    record.sipping_to = '持込'
                 else:
                     record.sipping_to = ''
 
