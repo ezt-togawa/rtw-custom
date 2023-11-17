@@ -23,7 +23,7 @@
                             'E6': 'forwarding_address${value or ""}',
                             'E7': 'payment_term_id.name${value or ""}',
                             'E9': 'sale_order_validity_date${value or ""}',
-                            'E10': 'note${value or ""}',
+                            'E10': 'special_note${value or ""}',
                             'H9': 'user_id.name${value or ""}',
                             'H1': 'sale_order_current_date',
                             'I14': 'name${value or ""}'

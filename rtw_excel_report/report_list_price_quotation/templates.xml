@@ -26,7 +26,7 @@
                             'E6': 'payment_term_id.name${value or ""}',
                             'E7': 'forwarding_address${value or ""}',
                             'E9': 'sale_order_validity_date${value or ""}',
-                            'E10': 'note${value or ""}',
+                            'E10': 'special_note${value or ""}',
                             'G8': 'user_id.name${value or ""}',
                             'G1': 'sale_order_current_date',
                             'G17': 'name${value or ""}',
