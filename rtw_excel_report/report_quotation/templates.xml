@@ -29,7 +29,7 @@
                             'G14': 'sale_order_total_list_price${value or ""}',
                             'I14': 'amount_untaxed${value or ""}#{style=number}',
                         },
-                        'order_line': {
+                        'list_order_line': {
                             'A19': 'sale_order_index${value or ""}#{style=text;fill=grey}',
                             'B19': 'sale_order_name${value or ""}#{style=text;fill=grey}',
                             'C19': 'sale_order_number_and_size#{style=text;fill=grey}',

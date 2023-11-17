@@ -197,6 +197,8 @@
                     <td>
                       <div t-if="l.product_id.product_no"
                         t-field="l.product_id.product_no" />
+                      <div t-if="l.product_id.calculate_product_pack"
+                        t-field="l.product_id.calculate_product_pack" />
                       <t t-if="l.product_id.width > 0">W<span
                           t-field="l.product_id.width" />
                       </t>

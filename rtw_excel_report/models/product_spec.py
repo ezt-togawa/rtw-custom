@@ -164,7 +164,7 @@ class productSpec(models.AbstractModel):
         for sale_order in lines:
             sale_order_lines=self.find_sale_order_line(sale_order.id)
             if sale_order_lines :
-                for index,sl in enumerate(sale_order_lines):
+                for index,sl in enumerate(sale_order_lines.filtered(lambda x: not x.is_pack_outside)):
                     prod_name=""
                     p_type=""
                     if sl.product_id.product_tmpl_id.categ_id.name:

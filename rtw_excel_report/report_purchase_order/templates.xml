@@ -26,7 +26,7 @@
                             'G13':'amount_untaxed${value or ""}',
                             'G14':'name${value or ""}'
                         },
-                        'order_line': {
+                        'list_order_line': {
                             'A17': 'sale_order_index${value or ""}#{style=text;fill=grey}',
                             'B17': 'sale_order_name${value or ""}#{style=text;fill=grey}',
                             'C17': 'sale_order_number_and_size#{style=text;fill=grey}',
