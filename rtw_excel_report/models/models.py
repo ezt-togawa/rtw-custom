@@ -135,6 +135,16 @@ class SaleOrderExcelReport(models.Model):
             else:
                 line.sale_order_name = ""
 
+    list_order_line = fields.One2many(
+        'sale.order.line',
+        compute = '_compute_list_order_line',
+        string = 'List order line'
+    )
+
+    def _compute_list_order_line(self):
+        for record in self:
+            record.list_order_line = record.order_line.filtered(lambda x: not x.is_pack_outside)
+
     def _compute_sale_order_title(self):
         for line in self:
             if line.title:
@@ -603,30 +613,11 @@ class SaleOrderLineExcelReport(models.Model):
                     p_type = "別注"
                 elif line.p_type == "custom":
                     p_type = "特注"
-
-            size_detail = ""
-            if line.product_id.product_tmpl_id.width:
-                size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-
-            if line.product_id.product_tmpl_id.depth:
-                size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-
-            if line.product_id.product_tmpl_id.height:
-                size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-
-            if line.product_id.product_tmpl_id.sh:
-                size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-
-            if line.product_id.product_tmpl_id.ah:
-                size_detail += "AH" + str(line.product_id.product_tmpl_id.ah) + "*"
-
             if line.product_id.product_tmpl_id.categ_id.name:
                 line.sale_order_name = (
                     str(line.product_id.product_tmpl_id.categ_id.name)
                     + "\n"
                     + p_type
-                    + "\n"
-                    + size_detail
                 )
             else:
                 line.sale_order_name = ""
@@ -884,6 +875,27 @@ class StockPickingExcelReport(models.Model):
                 record.stock_printing_staff = record.sale_id.user_id.name + "  印"
 class StockMoveExcelReport(models.Model):
     _inherit = "stock.move"
+    calculate_packages = fields.Integer('Packages' , compute="_compute_calculate_packages")
+
+    calculate_product_pack = fields.Char(
+        string="Calculate product pack",
+        compute="_compute_calculate_product_pack",
+        default=""
+    )
+
+    def _compute_calculate_product_pack(self):
+        for line in self:
+            if line.sale_line_id.pack_parent_line_id:
+                line.calculate_product_pack = ' / ' + line.sale_line_id.pack_parent_line_id.product_id.name
+            else:
+                line.calculate_product_pack = ''
+
+    def _compute_calculate_packages(self):
+        for move in self:
+            if move.product_id.two_legs_scale:
+                move.calculate_packages = math.ceil(move.product_uom_qty / move.product_id.two_legs_scale)
+            else:
+                move.calculate_packages = move.product_uom_qty
 
     stock_index = fields.Char(
         "Stock index",
@@ -954,8 +966,22 @@ class StockMoveExcelReport(models.Model):
                 )
 
             size_detail = ""
+            product_pack_ids = line.product_id.product_tmpl_id.mapped('pack_line_ids')
             if line.product_id.product_tmpl_id.product_no:
-                size_detail += str(line.product_id.product_tmpl_id.product_no) + "\n"
+                size_detail += str(line.product_id.product_tmpl_id.product_no)
+                if product_pack_ids:
+                    size_detail += ' / '
+                    product_pack_names = []
+                    for pack in product_pack_ids:
+                        product_pack_names.append(pack.product_id.name)
+                    size_detail += ', '.join(product_pack_names)
+            else:
+                if product_pack_ids:
+                    product_pack_names = []
+                    for pack in product_pack_ids:
+                        product_pack_names.append(pack.product_id.name)
+                    size_detail += ', '.join(product_pack_names)
+            size_detail += '\n'
 
             if line.product_id.product_tmpl_id.width:
                 size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
@@ -1369,6 +1395,11 @@ class PurchaseOrderExcelReport(models.Model):
         compute="_compute_purchase_order_company",
     )
 
+    purchase_order_address_zip_city = fields.Char(
+        "Mrp product index",
+        compute="_compute_purchase_order_address_zip_city",
+    )
+
     purchase_order_current_date = fields.Char(
         compute="_compute_purchase_order_current_date",
         string="Current Date",
@@ -1463,6 +1494,17 @@ class PurchaseOrderExcelReport(models.Model):
                 record.purchase_order_company = (
                     "株式会社 " + record.partner_id.name + " 御中"
                 )
+
+    def _compute_purchase_order_address_zip_city(self):
+        for record in self:
+            address = ""
+            if record.picking_type_id.warehouse_id.partner_id.city:
+                address += record.picking_type_id.warehouse_id.partner_id.city +" "
+            if record.picking_type_id.warehouse_id.partner_id.state_id.name:
+                address += record.picking_type_id.warehouse_id.partner_id.state_id.name +" "
+            if record.picking_type_id.warehouse_id.partner_id.zip:
+                address += "〒" + record.picking_type_id.warehouse_id.partner_id.zip +" "
+            record.purchase_order_address_zip_city =address
 
     def _compute_purchase_order_line(self):
         for line in self:

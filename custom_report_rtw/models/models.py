@@ -53,16 +53,12 @@ class MrpProduction(models.Model):
         "sale.order.line",
         "order_id",
         string="Sale order line",
-        copy=True,
-        auto_join=True,
         compute="_compute_get_sale_order_line",
     )
     sale_order=fields.One2many(
         "sale.order",
         "name",
         string="Sale order line",
-        copy=True,
-        auto_join=True,
         compute="_compute_get_sale_order",
     )
 
