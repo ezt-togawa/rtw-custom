@@ -34,7 +34,7 @@
                             'G15': 'sale_order_total_discount',
                             'G16': 'amount_untaxed${value or ""}',
                         },
-                        'order_line': {
+                        'list_order_line': {
                             'A20': 'sale_order_index${value or ""}#{style=text;fill=grey}',
                             'B20': 'sale_order_name${value or ""}#{style=text;fill=grey}',
                             'C20': 'sale_order_number_and_size#{style=text;fill=grey}',

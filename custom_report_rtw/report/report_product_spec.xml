@@ -38,7 +38,7 @@
             </div>
             <table class="table table-condensed">
               <div>
-                <div t-foreach="o.order_line" t-as="l"
+                <div t-foreach="o.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l"
                   class="product-wrap"
                 >
                   <t t-set="product_attribute_index" t-value="0" />
