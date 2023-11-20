@@ -128,6 +128,17 @@ class SaleOrderExcelReport(models.Model):
         string="Sale order name",
     )
 
+    list_order_line = fields.One2many(
+        'sale.order.line',
+        compute = '_compute_list_order_line',
+        string = 'List order line'
+    )
+
+    check_oversea = fields.Char(
+        "checkout oversea",
+        compute="_compute_check_oversea",
+    )
+
     def _compute_sale_order_name(self):
         for line in self:
             if line.name:
@@ -135,11 +146,12 @@ class SaleOrderExcelReport(models.Model):
             else:
                 line.sale_order_name = ""
 
-    list_order_line = fields.One2many(
-        'sale.order.line',
-        compute = '_compute_list_order_line',
-        string = 'List order line'
-    )
+    def _compute_check_oversea(self):
+        for record in self:
+            if record.overseas:
+                record.check_oversea = "海外 "
+            else:
+                record.check_oversea = ""
 
     def _compute_list_order_line(self):
         for record in self:
@@ -707,6 +719,11 @@ class StockPickingExcelReport(models.Model):
         compute="_compute_to_sale_order",
     )
     
+    check_oversea = fields.Char(
+        "checkout oversea",
+        compute="_compute_to_sale_order",
+    )
+    
     def _compute_stock_move(self):
         for line in self:
             prod=self.env["stock.move"].search(
@@ -723,6 +740,11 @@ class StockPickingExcelReport(models.Model):
 
     def _compute_to_sale_order(self):
         for record in self:
+            if record.sale_id.overseas:
+                record.check_oversea = "海外 "
+            else:
+                record.check_oversea = ""
+
             if record.sale_id.partner_id.commercial_company_name:
                 record.stock_picking_company_name = (
                     "株式会社 " + record.sale_id.partner_id.commercial_company_name + " 御中"

@@ -60,9 +60,10 @@
                       </div>
                   </div>
                 </div>
-                <div
-                  class="col-4">
-
+                <div class="col-4">
+                  <div style="text-align:end;font-size:13px;">
+                    <t t-if="so.overseas"> 海外 </t>
+                  </div>
                 </div>
                 <div class="col-4" name="company_address">
                   <div>
