@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2019 Ecosoft Co., Ltd.
+  License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="quotation_oversea_report_xlsx_template" model="xlsx.template">
+        <field name="res_model">sale.order</field>
+        <field name="fname">quotation_oversea.xlsx</field>
+        <field name="name">御見積書（海外）</field>
+        <field name="description">Quotation Oversea Report Excel</field>
+        <field name="export_action_id" eval="ref('action_quotation_oversea_export_xlsx')" />
+        <field name="input_instruction">
+            {
+                '__EXPORT__': {
+                    '御見積書（海外）': {
+                        '_HEAD_': {
+                            'A4': 'sale_order_company_owner${value or ""}',
+                            'B9': 'sale_order_amount_untaxed${value or ""}',
+                            'B10':'sale_order_amount_tax${value or ""}',
+                            'B11':'sale_order_amount_total${value or ""}',
+                            'E3': 'sale_order_estimated_shipping_date${value or ""}',
+                            'E4': 'workdays${value or ""}',
+                            'E5': 'sale_order_date_order${value or ""}',
+                            'E9': 'sale_order_validity_date${value or ""}',
+                            'E10': 'note${value or ""}',
+                            'I9': 'user_id.name${value or ""}',
+                            'I1': 'sale_order_current_date${value or ""}',
+                            'I15': 'name${value or ""}#{style=number}',
+                            'G14': 'sale_order_total_list_price${value or ""}',
+                            'I14': 'amount_untaxed${value or ""}#{style=number}',
+                        },
+                        'list_order_line': {
+                            'A19': 'sale_order_index${value or ""}#{style=text;fill=grey}',
+                            'B19': 'sale_order_name${value or ""}#{style=text;fill=grey}',
+                            'C19': 'sale_order_number_and_size#{style=text;fill=grey}',
+                            'D19': 'sale_order_product_detail#{style=text;fill=grey}',
+                            'E19': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
+                            'F19': 'discount${value or 0}#{style=number;fill=grey}',
+                            'G19': 'price_unit${value or 0}#{style=number;fill=grey}',
+                            'H19': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'I19': 'price_subtotal${value or 0}#{style=number;fill=grey}',
+                        }
+                    },
+                }
+        }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('quotation_oversea_report_xlsx_template')]" />
+    </function>
+</odoo>

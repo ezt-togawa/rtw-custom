@@ -180,9 +180,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     })
 
                     this.props.items.action = [...action, ...excel]
-                    const print_items = ['定価見積書', '単価見積り書', '注文書', '御見積書', "商品仕様書"]
-                    let filter_print_items = this.props.items.print.filter(val => print_items.includes(val.name))
-                    this.props.items.print = filter_print_items.filter(val => val.display_name !== "商品仕様書(EXCEL)")
+                    this.props.items.print = prints.filter(val => val.display_name !== "商品仕様書(EXCEL)")
                 }
 
                 // task_inventory_manfac_form= ["商品ラベルシール"]
