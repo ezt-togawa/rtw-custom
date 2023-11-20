@@ -80,7 +80,7 @@
                                 <div>見積有効期限： <span
                                         t-field="docs.validity_date" />
                                 </div>
-                                <div> 備考: <span t-field="docs.note" />
+                                <div> 備考: <span t-field="docs.special_note" />
                                 </div>
                             </div>
                             <div class="col-4" name="company_address">
