@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2019 Ecosoft Co., Ltd.
+  License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="inspection_order_form_report_xlsx_template" model="xlsx.template">
+        <field name="res_model">mrp.production</field>
+        <field name="fname">inspection_order_form.xlsx</field>
+        <field name="name">検品発注書</field>
+        <field name="description">Inspection Order Form Report Excel</field>
+        <field name="export_action_id" eval="ref('action_inspection_order_form_export_xlsx')" />
+        <field name="input_instruction">
+            {
+                '__EXPORT__': {
+                    '検品発注書': {
+                        '_HEAD_': {
+                            'I12': 'mrp_note${value or ""}',
+                        },
+                        'sale_order':{
+                            'C2': 'sale_order_send_to_company${value or ""}',
+                            'B4': 'sale_order_name${value or ""}',
+                            'B6': 'sale_order_estimated_shipping_date${value or ""}',
+                            'B7': 'sale_order_preferred_delivery_date${value or ""}',
+                            'B9': 'title${value or ""}',
+                            'B10': 'sale_order_info_cus${value or ""}',
+                            'B12': 'sale_order_company_name${value or ""}',
+                            'B13': 'sale_order_detail_address_partner',
+                            'B14': 'partner_id.phone${value or ""}',
+                            'J10':  'user_id.name${value or ""}',
+                            'J1':  'sale_order_current_date',
+                            'J16': 'amount_untaxed${value or ""}',
+                        },
+                        'order_line': {
+                            'A20': 'sale_order_index${value or ""}#{style=text;fill=grey}',
+                            'B20': 'sale_order_name${value or ""}#{style=text;fill=grey}',
+                            'C20': 'sale_order_product_detail#{style=text;fill=grey}',
+                            'D20': 'sale_order_product_summary#{style=text;fill=grey}',
+                            'E20': 'product_uom_qty${value or 0}#{style=number;fill=grey}', 
+                            'F20': 'sale_order_text_piece_leg${value or ""}#{style=text;fill=grey}', 
+                            'G20': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'H20': 'price_subtotal${value or 0}#{style=number;fill=grey}',
+                            'I20': 'sale_order_config_session${value or ""}#{style=text;fill=grey}',
+                            'J20': '#{style=text;fill=grey}',
+                        }
+                    }
+                }
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('inspection_order_form_report_xlsx_template')]" />
+    </function>
+</odoo>

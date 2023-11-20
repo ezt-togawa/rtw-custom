@@ -271,6 +271,27 @@
             </div>
         </t>
     </template>
+    <template id="SO_inspection_order_form_header_layout">
+        <t t-foreach="docs.sale_order" t-as="so">
+            <div t-attf-class="header" t-att-style="report_header_style">
+                <div class="row" style="font-weight:bold">
+                    <div class="col-8 mb4">
+                        <img
+                            src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                            style="max-height: 45px;"
+                            alt="Logo" />
+                        <span style="font-size:20px" class="ml-2">検品発注書</span>
+                        <span style="font-size:16px" class="ml-5">株式会社 <span
+                                t-esc="so.partner_id.name" /> 御中</span>
+                    </div>
+                    <div class="col-4 text-right mt-2">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t
+                            t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </div>
+                </div>
+            </div>
+        </t>
+    </template>
     <template id="SO_purchase_order_sheet_for_part_header_layout">
         <t t-foreach="docs" t-as="so">
             <div t-attf-class="header" t-att-style="report_header_style">
