@@ -40,8 +40,12 @@
         
         'report_purchase_order/actions.xml',
         'report_purchase_order/templates.xml',
+
         'report_purchase_order_sheet/actions.xml',
         'report_purchase_order_sheet/templates.xml',
+        'report_inspection_order_form/actions.xml',
+        'report_inspection_order_form/templates.xml',
+        
         'report_purchase_order_for_part/actions.xml',
         'report_purchase_order_for_part/templates.xml',
         'report_delivery_request_form/actions.xml',

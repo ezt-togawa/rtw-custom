@@ -33,6 +33,7 @@
         'report/report_shipping_order.xml',
         'report/purchase_order.xml',
         'report/purchase_order_sheet.xml',
+        'report/inspection_order_form.xml',
         'report/purchase_order_sheet_for_part.xml',
         'report/report_invoice.xml',
         'report/report_product_spec.xml',
