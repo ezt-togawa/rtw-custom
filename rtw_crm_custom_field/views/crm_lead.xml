@@ -31,8 +31,6 @@
           <field name="priority" optional="hide" />
           <field name="activity_user_id" optional="hide" string="Activity by"
             widget="many2one_avatar_user" />
-          <field name="activity_date_deadline_my" string="My Deadline" widget="remaining_days"
-            options="{'allow_order': '1'}" invisible="1" />
           <field name="campaign_id" optional="hide" />
           <field name="medium_id" optional="hide" />
           <field name="source_id" optional="hide" />
