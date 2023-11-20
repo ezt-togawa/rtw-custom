@@ -36,6 +36,7 @@
         'report/purchase_order_sheet_for_part.xml',
         'report/report_invoice.xml',
         'report/report_product_spec.xml',
+        'report/report_quotation_oversea.xml',
         'report/stock_picking.xml',
         'report/purchase.xml',
         # 'report/spec_list.xml',

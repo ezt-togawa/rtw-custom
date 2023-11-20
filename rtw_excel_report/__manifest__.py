@@ -29,6 +29,8 @@
         'report/report.xml',
         'report_quotation/actions.xml',
         'report_quotation/templates.xml',
+        'report_quotation_oversea/actions.xml',
+        'report_quotation_oversea/templates.xml',
         'report_list_price_quotation/actions.xml',
         'report_list_price_quotation/templates.xml',
         'report_unit_price_quotation/actions.xml',
