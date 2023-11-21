@@ -45,7 +45,8 @@
                                 <br />
                                 <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
                                     下記の通り、ご請求申し上げます。<br /> <span class="mt-1"
-                                        style="font-size:16px"> 件名 <span t-esc="docs.name" />
+                                        style="font-size:16px"> 件名 <span
+                                            t-esc="docs.sale_order.title" />
                                     </span>
                                 </div>
                                 <br />
@@ -64,24 +65,21 @@
                             <div class="col-4">
                                 <div>お支払期限: <span
                                         t-if="docs.invoice_date_due"
-                                        t-esc="docs.invoice_date_due.strftime('%Y-%m-%d')" />
+                                        t-esc="docs.acc_move_invoice_date_due" />
                                 </div>
-                                <div> お支払内容 : <span t-field="docs.invoice_payment_term_id.name" />
+                                <div> お支払内容 : <span t-field="docs.sale_order.payment_term_id.name" />
                                 </div>
-                                <div> お振込先: <span t-esc="docs.partner_id.bank_ids.bank_id.name" />
-                                <div
-                                        t-field="docs.partner_id.bank_ids.bank_id.street" />
-                                <div
-                                        t-field="docs.partner_id.bank_ids.bank_id.street2" />
-                                <div>
-                                    (普) <span
-                                            t-esc="docs.partner_id.bank_ids.acc_number" />
-
+                                <div class="d-flex">
+                                    <div> お振込先: </div>
+                                    <div>
+                                        <div>西日本シティ銀行 （0190）</div>
+                                        <div>筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）</div>
+                                        <div>（普）0272585</div>
                                     </div>
                                 </div>
                                 <br />
                                 <div>納品日: <span
-                                        t-field="docs.date" />
+                                        t-field="docs.sale_order.sale_order_preferred_delivery_date" />
                                 </div>
                                 <div> 納品場所: <span t-field="docs.partner_id.street" />
                                 <div> 備考: <span
@@ -142,7 +140,8 @@
                                         <td t-esc="l_index+1" class="text-center">
                                         </td>
                                         <td>
-                                            <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                                            <span
+                                                t-field="l.product_id.product_tmpl_id.categ_id.name" />
                                             <br />
                                         </td>
                                         <td>
@@ -170,7 +169,7 @@
                                                 t-as="string_line"> ● <span
                                                     t-esc="string_line.display_name" />
                                                 <br />
-                                        </t>
+                                            </t>
                                         </td>
                                         <td class="text-center">
                                             <div id="quote_qty" style="font-size:16px">
@@ -207,8 +206,11 @@
                                     t-esc="docs.amount_untaxed" /></div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <span style="font-size:13px"
-                                t-field="docs.name" />
+                            <t t-if="docs.state=='draft'"> Draft Invoice <span
+                                    t-if="docs.name != '/'" t-field="docs.name" />
+                            </t>
+                            <t t-if="docs.state=='posted'"> Invoice <span t-field="docs.name" />
+                            </t>
                         </div>
                         <t t-call="custom_report_rtw.page_footer_layout"></t>
                     </div>
