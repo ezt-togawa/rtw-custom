@@ -64,7 +64,9 @@
                 </div>
               </div>
               <div class="col-4">
-
+                <div style="text-align:end;font-size:13px;">
+                  <t t-if="docs.sale_id.overseas"> 海外 </t>
+                </div>
               </div>
               <div class="col-4" name="company_address">
                 <div>
@@ -170,8 +172,8 @@
                     <td>
                       <div t-if="l.product_id.product_no"
                         t-field="l.product_id.product_no" />
-                      <div t-if="l.product_id.calculate_product_pack"
-                        t-field="l.product_id.calculate_product_pack" />
+                      <div t-if="l.calculate_product_pack"
+                        t-field="l.calculate_product_pack" />
                       <t t-if="l.product_id.width > 0">W<span
                           t-field="l.product_id.width" />
                       </t>

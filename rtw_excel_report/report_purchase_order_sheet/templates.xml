@@ -26,8 +26,9 @@
                             'B12': 'sale_order_company_name${value or ""}',
                             'B13': 'sale_order_detail_address_partner',
                             'B14': 'partner_id.phone${value or ""}',
+                            'I2': 'check_oversea${value or ""}',
                             'J10':  'user_id.name${value or ""}',
-                            'J1':  'sale_order_current_date',
+                            'J1':  'sale_order_current_date${value or ""}',
                             'J16': 'amount_untaxed${value or ""}',
                         },
                         'order_line': {
