@@ -1102,6 +1102,21 @@ class AccountMoveExcelReport(models.Model):
         "Acc move confirm date",
         compute="_compute_acc_move_confirm_date",
     )
+
+    acc_move_invoice_name = fields.Char(
+        "Acc move invoice name",
+        compute="_compute_acc_move_invoice_name",
+    )
+    
+    def _compute_acc_move_invoice_name(self):
+        for line in self:
+            if line.state == "draft":
+                if line.name =='/':
+                    line.acc_move_invoice_name= "Draft Invoice"
+                else:
+                    line.acc_move_invoice_name= "Draft Invoice " + line.name
+            if line.state == "posted":
+                line.acc_move_invoice_name= "Invoice " + line.name
     
     def _compute_acc_move_payment_term(self):
         for line in self:
