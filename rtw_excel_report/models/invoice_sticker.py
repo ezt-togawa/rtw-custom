@@ -5,13 +5,17 @@ class productLabelSticker(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
-        merge_format = workbook.add_format({'align': 'left','valign': 'vcenter'})
-        format_p_name = workbook.add_format({'align': 'left','valign': 'vcenter','font_size':28})
-        format_sale_title = workbook.add_format({'align': 'left','valign': 'vcenter','font_size':14})
-        format_top = workbook.add_format({'align': 'left','valign': 'top'})
-        format_date = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', })
-        ship_date = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd','font_size':10 })
-        depo_date = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', 'font_size':12})
+        # apply default font for workbook
+        font_name = 'HGPｺﾞｼｯｸM'
+        font_family = workbook.add_format({'font_name': font_name})
+
+        merge_format = workbook.add_format({'align': 'left','valign': 'vcenter','font_name': font_name})
+        format_p_name = workbook.add_format({'align': 'left','valign': 'vcenter','font_size':28,'font_name': font_name})
+        format_sale_title = workbook.add_format({'align': 'left','valign': 'vcenter','font_size':14,'font_name': font_name})
+        format_top = workbook.add_format({'align': 'left','valign': 'top','font_name': font_name})
+        format_date = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd','font_name': font_name})
+        ship_date = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd','font_size':10 ,'font_name': font_name})
+        depo_date = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', 'font_size':12,'bold':True,'font_name': font_name})
 
         for stock_picking in lines :
             stock_moves=self.env["stock.move"].search([("picking_id", "=", stock_picking.id)])
@@ -34,7 +38,7 @@ class productLabelSticker(models.AbstractModel):
                     sheet_name = f"{prod_name}_{index}"
                     sheet_name=sheet_name.replace(" ", "")
                     sheet_main= workbook.add_worksheet(sheet_name)
-        
+                    sheet_main.set_column("A:Z", None,cell_format=font_family)
                     sheet_data= workbook.add_worksheet(f"data_{index}")
 
                     row_offset = 0  

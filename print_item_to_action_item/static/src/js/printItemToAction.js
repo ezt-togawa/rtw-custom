@@ -49,8 +49,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     let excel = ["出荷予定リスト(EXCEL)", "支給予定リスト(EXCEL)", "入荷予定リスト(EXCEL)"]
                     let isExcelTemplate2AtAction = action.some(val => excel.includes(val.display_name));
                     if (isExcelTemplate2AtAction) {
-                        this.props.items.action = action.filter(val=> val.display_name !=="検品チェックシート(EXCEL)" && val.display_name !=="送り状シール(EXCEL)" && val.display_name !=="支給部材明細(EXCEL)");
-                    }else{
+                        this.props.items.action = action.filter(val => val.display_name !== "検品チェックシート(EXCEL)" && val.display_name !== "送り状シール(EXCEL)" && val.display_name !== "支給部材明細(EXCEL)");
+                    } else {
                         let excelArray = prints.filter(val => {
                             if (excel.includes(val.display_name)) {
                                 val.name = val.name.split("(")[0]
@@ -61,7 +61,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         })
                         this.props.items.action = [...action, ...excelArray];
                     }
-                    
+
                     let pdf = ['配送作業依頼書', '出荷依頼書']
                     this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !pdf.includes(val.name))
                 }
@@ -78,8 +78,9 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     let action = [...data_sale_order_list.action]
                     let prints = [...data_sale_order_list.print]
 
-                    this.props.items.print = prints.filter(val => val.name === "Quotation / Order")
-                    this.props.items.action = [...action]
+                    this.props.items.print = prints.filter(val => val.name === "Quotation / Order" || val.name === "見積 / オーダ")
+                    let showExcel = action.filter(val => val.name !== "商品仕様書")
+                    this.props.items.action = [...showExcel]
                 }
 
                 // task_invoice_list
@@ -117,7 +118,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     this.props.items.action = [...action, ...excelArray];
-                    let pdf = ["仕掛品伝票一覧", "商品ラベルシール", "発注書"]
+                    let pdf = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "検品発注書"]
                     this.props.items.print = prints.filter(val => !pdf.includes(val.name));
                 }
 
@@ -155,7 +156,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     }
                     let prints = [...data_purchase_list.print]
                     this.props.items.print = prints.filter(val => val.display_name !== "発注書(部材用）");
-                }    
+                }
             }
 
             if (view_type_now === 'form') {
@@ -244,8 +245,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     let excel = ["送り状シール(EXCEL)", "支給部材明細(EXCEL)", "検品チェックシート(EXCEL)"]
                     let isExcelTemplate2AtAction = action.some(val => excel.includes(val.display_name));
                     if (isExcelTemplate2AtAction) {
-                        this.props.items.action = action.filter(val=> val.display_name !=="出荷予定リスト(EXCEL)" && val.display_name !=="支給予定リスト(EXCEL)" && val.display_name !=="入荷予定リスト(EXCEL)");
-                    }else{
+                        this.props.items.action = action.filter(val => val.display_name !== "出荷予定リスト(EXCEL)" && val.display_name !== "支給予定リスト(EXCEL)" && val.display_name !== "入荷予定リスト(EXCEL)");
+                    } else {
                         let excelArray = prints.filter(val => {
                             if (excel.includes(val.display_name)) {
                                 val.name = val.name.split("(")[0]
@@ -282,8 +283,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     let excel = ["出荷予定リスト(EXCEL)", "支給予定リスト(EXCEL)", "入荷予定リスト(EXCEL)"]
                     let isExcelTemplate2AtAction = action.some(val => excel.includes(val.display_name));
                     if (isExcelTemplate2AtAction) {
-                        nextProps.items.action = action.filter(val=> val.display_name !=="検品チェックシート(EXCEL)" && val.display_name !=="送り状シール(EXCEL)" && val.display_name !=="支給部材明細(EXCEL)");
-                    }else{
+                        nextProps.items.action = action.filter(val => val.display_name !== "検品チェックシート(EXCEL)" && val.display_name !== "送り状シール(EXCEL)" && val.display_name !== "支給部材明細(EXCEL)");
+                    } else {
                         let excelArray = prints.filter(val => {
                             if (excel.includes(val.display_name)) {
                                 val.name = val.name.split("(")[0]
@@ -302,8 +303,9 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                 if (this.env.view.model == "sale.order") {
                     let action = [...data_sale_order_list.action]
                     let prints = [...data_sale_order_list.print]
-                    nextProps.items.print = prints.filter(val => val.name === "Quotation / Order")
-                    nextProps.items.action = [...action]
+                    nextProps.items.print = prints.filter(val => val.name === "Quotation / Order" || val.name === "見積 / オーダ")
+                    let showExcel = action.filter(val => val.name !== "商品仕様書")
+                    nextProps.items.action = [...showExcel]
                 }
 
                 // let task_invoice_list
@@ -328,7 +330,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     nextProps.items.action = [...action, ...excelArray];
-                    let pdf = ["仕掛品伝票一覧", "商品ラベルシール", "発注書"]
+                    let pdf = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", , "検品発注書"]
                     nextProps.items.print = prints.filter(val => !pdf.includes(val.name));
                 }
 
@@ -350,10 +352,10 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                 }
 
                 // task_purchase_order_for_part = ["発注書(部材用）"]
-                if (this.env.view.model == "purchase.order") {                    
+                if (this.env.view.model == "purchase.order") {
                     let prints = [...data_purchase_list.print]
                     nextProps.items.print = prints.filter(val => val.display_name !== "発注書(部材用）");
-                }   
+                }
             }
 
             this.actionItems = await this._setActionItems(nextProps);

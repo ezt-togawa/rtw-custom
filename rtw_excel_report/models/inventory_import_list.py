@@ -6,15 +6,21 @@ class productSpec(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
-        format = workbook.add_format({'align': 'center','valign': 'vcenter'})
-        format_wrap = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True, 'border': 1})
-        format_left = workbook.add_format({'align': 'left','text_wrap':True})
-        format_left_has_border = workbook.add_format({'align': 'left','valign': 'vcenter','text_wrap':True, 'border': 1})
-        format_right = workbook.add_format({'align': 'right','text_wrap':True})
-        format_right_has_border = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True, 'border': 1})
-        format_name_company = workbook.add_format({'align': 'center','bottom':1})
-        format_sheet_title = workbook.add_format({ 'align': 'center','valign': 'vcenter','font_size':16,'bold': True})
-        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#CCCCCC', 'border': 1})
+        # apply default font for workbook
+        font_name = 'HGPｺﾞｼｯｸM'
+        font_family = workbook.add_format({'font_name': font_name})
+        
+        format = workbook.add_format({'align': 'center','valign': 'vcenter','font_name': font_name})
+        format_sheet_title = workbook.add_format({ 'align': 'center','valign': 'vcenter','font_size':18,'font_name': font_name})
+        format_current_date = workbook.add_format({'align': 'left','text_wrap':True,'font_name': font_name,'font_size':10})
+        format_name_company = workbook.add_format({'align': 'center','bottom':1,'font_name': font_name,'font_size':10})
+        format_left = workbook.add_format({'align': 'left','text_wrap':True,'font_name': font_name,'font_size':10})
+        format_right = workbook.add_format({'align': 'right','text_wrap':True,'font_name': font_name,'font_size':10})
+        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#CCCCCC', 'border': 1,'font_name': font_name,'font_size':9})
+
+        format_wrap = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True, 'border': 1,'font_name': font_name,'font_size':9})
+        format_left_has_border = workbook.add_format({'align': 'left','valign': 'vcenter','text_wrap':True, 'border': 1,'font_name': font_name,'font_size':9})
+        format_right_has_border = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True, 'border': 1,'font_name': font_name,'font_size':9})
         
         #current time
         day = str(datetime.now().day)
@@ -33,19 +39,20 @@ class productSpec(models.AbstractModel):
             sheet_name = f"棚卸記入リスト - {name_company}"  
             sheet = workbook.add_worksheet(sheet_name)
 
-            sheet.set_column("A:A", width=8)  
-            sheet.set_column("B:B", width=12)  
-            sheet.set_column("C:C", width=26)  
-            sheet.set_column("D:D", width=14)  
-            sheet.set_column("E:E", width=16)  
-            sheet.set_column("F:F", width=14)
-            sheet.set_column("G:G", width=15)  
-            sheet.set_column("H:H", width=15)  
-            sheet.set_column("I:I", width=15)  
-            sheet.set_column("J:J", width=20)  
+            sheet.set_column("A:A", width=8,cell_format=font_family) 
+            sheet.set_column("B:B", width=12,cell_format=font_family) 
+            sheet.set_column("C:C", width=26,cell_format=font_family) 
+            sheet.set_column("D:D", width=14,cell_format=font_family) 
+            sheet.set_column("E:E", width=16,cell_format=font_family) 
+            sheet.set_column("F:F", width=14,cell_format=font_family)
+            sheet.set_column("G:G", width=15,cell_format=font_family) 
+            sheet.set_column("H:H", width=15,cell_format=font_family) 
+            sheet.set_column("I:I", width=15,cell_format=font_family) 
+            sheet.set_column("J:J", width=20,cell_format=font_family) 
+            sheet.set_column("K:Z", None,cell_format=font_family)
 
             sheet.merge_range(1,3,1,5, "≪棚卸記入リスト≫ ", format_sheet_title)
-            sheet.write(0,9, current_date, format_left)
+            sheet.write(0,9, current_date, format_current_date)
             sheet.write(3, 0, "保管場所", format_name_company)
             sheet.merge_range(3, 1,3,2,name_company, format_name_company)
 

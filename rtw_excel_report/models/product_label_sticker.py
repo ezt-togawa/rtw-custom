@@ -5,19 +5,29 @@ class productLabelSticker(models.AbstractModel):
     _inherit = "report.report_xlsx.abstract"
 
     def generate_xlsx_report(self, workbook, data, lines):
-        sheet_main = workbook.add_worksheet("商品ラベルシール")
-        sheet_main.set_column("A:A", width=0)
-        sheet_main.set_column("B:B", width=15)
-        sheet_main.set_column("D:D", width=5)
-        sheet_main.set_column("F:F", width=15)
-        sheet_main.set_column("G:G", width=4)
-        sheet_main.set_column("J:J", width=5)
-        sheet_main.set_column("H:H", width=15)
-        sheet_main.set_column("L:L", width=15)
-        sheet_main.set_column("M:M", width=0)
+        # apply default font for workbook
+        font_name = 'HGPｺﾞｼｯｸM'
+        font_family = workbook.add_format({'font_name': font_name})
 
-        format_title = workbook.add_format({"align": "center", "valign": "vcenter", "font_size": 26,"shrink": True })
-        format_detail_prod = workbook.add_format({"align": "center", "valign": "vcenter", "font_size": 16,"shrink": True})
+        # different format  width font 
+        format_title = workbook.add_format({"align": "center", "valign": "vcenter", "font_size": 26,"shrink": True ,'font_name': font_name})
+        format_detail_prod = workbook.add_format({"align": "center", "valign": "vcenter", "font_size": 16,"shrink": True,'font_name': font_name})
+
+        sheet_main = workbook.add_worksheet("商品ラベルシール")
+        sheet_main.set_column("A:A", width=0,cell_format=font_family) 
+        sheet_main.set_column("B:B", width=15,cell_format=font_family) 
+        sheet_main.set_column("C:C", None,cell_format=font_family)  
+        sheet_main.set_column("D:D", width=5,cell_format=font_family) 
+        sheet_main.set_column("E:E", None,cell_format=font_family)  
+        sheet_main.set_column("F:F", width=15,cell_format=font_family) 
+        sheet_main.set_column("G:G", width=4,cell_format=font_family) 
+        sheet_main.set_column("H:H", width=15,cell_format=font_family) 
+        sheet_main.set_column("I:I", None,cell_format=font_family)  
+        sheet_main.set_column("J:J", width=5,cell_format=font_family)
+        sheet_main.set_column("K:K", None,cell_format=font_family)  
+        sheet_main.set_column("L:L", width=15,cell_format=font_family) 
+        sheet_main.set_column("M:M", width=0,cell_format=font_family) 
+        sheet_main.set_column("N:Z", None,cell_format=font_family) 
 
         location_item_row = 1
 

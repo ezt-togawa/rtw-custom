@@ -1,19 +1,24 @@
 from odoo import models
 from datetime import datetime 
-
 class productSpec(models.AbstractModel):
     _name = 'report.rtw_excel_report.scheduled_payment_list_xls'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
-        format_wrap = workbook.add_format({'align': 'center','valign': 'top','text_wrap':True, 'border': 1})
-        format_size10 = workbook.add_format({'align': 'center','valign': 'top','border': 1,'font_size':10,'text_wrap':True})
-        format_date = workbook.add_format({'align': 'center','valign': 'top','text_wrap':True,'num_format': 'yyyy-mm-dd', 'border': 1})
-        format_current_date = workbook.add_format({'align': 'right','valign': 'center','text_wrap':True,'num_format': 'yyyy-mm-dd'})
-        format_left = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'border': 1})
-        format_sheet_title = workbook.add_format({ 'align': 'center','valign': 'vcenter','font_size':16,'bold': True})
-        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','border':1,'top':1,'text_wrap':True})
+        # apply default font for workbook
+        font_name = 'HGPｺﾞｼｯｸM'
+        font_family = workbook.add_format({'font_name': font_name})
+
+        # different format  width font 
+        format_sheet_title = workbook.add_format({ 'align': 'center','valign': 'vcenter','font_size':18,'font_name': font_name})
+        format_current_date = workbook.add_format({'align': 'right','valign': 'center','text_wrap':True,'num_format': 'yyyy-mm-dd','font_size':10,'font_name': font_name})
         
+        format_wrap = workbook.add_format({'align': 'center','valign': 'top','text_wrap':True, 'border': 1,'font_size':9,'font_name': font_name})
+        format_size10 = workbook.add_format({'align': 'center','valign': 'top','border': 1,'font_size':9,'text_wrap':True,'font_name': font_name})
+        format_date = workbook.add_format({'align': 'center','valign': 'top','text_wrap':True,'num_format': 'yyyy-mm-dd', 'border': 1,'font_size':9,'font_name': font_name})
+        format_left = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'border': 1,'font_size':9,'font_name': font_name})
+        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','border':1,'top':1,'text_wrap':True,'font_size':9,'font_name': font_name})
+
         #current time
         day = str(datetime.now().day)
         month = str(datetime.now().month)
@@ -23,20 +28,21 @@ class productSpec(models.AbstractModel):
         sheet_name = "支給予定リスト"  
         sheet = workbook.add_worksheet(sheet_name)
 
-        sheet.set_column("A:A", width=4)  
-        sheet.set_column("B:B", width=10)  
-        sheet.set_column("C:C", width=14)  
-        sheet.set_column("D:D", width=14)  
-        sheet.set_column("E:E", width=32)  
-        sheet.set_column("F:F", width=18)
-        sheet.set_column("G:G", width=18)  
-        sheet.set_column("H:H", width=18)  
-        sheet.set_column("I:I", width=14) 
-        sheet.set_column("J:J", width=12) 
-        sheet.set_column("K:K", width=10)  
-        sheet.set_column("L:L", width=10) 
-        sheet.set_column("M:M", width=10)  
-        sheet.set_column("M:M", width=10)  
+        sheet.set_column("A:A", width=4,cell_format=font_family)
+        sheet.set_column("B:B", width=10,cell_format=font_family)
+        sheet.set_column("C:C", width=14,cell_format=font_family)
+        sheet.set_column("D:D", width=14,cell_format=font_family)
+        sheet.set_column("E:E", width=32,cell_format=font_family)
+        sheet.set_column("F:F", width=18,cell_format=font_family)
+        sheet.set_column("G:G", width=18,cell_format=font_family)
+        sheet.set_column("H:H", width=18,cell_format=font_family)
+        sheet.set_column("I:I", width=14,cell_format=font_family)
+        sheet.set_column("J:J", width=12,cell_format=font_family)
+        sheet.set_column("K:K", width=10,cell_format=font_family)
+        sheet.set_column("L:L", width=10,cell_format=font_family) 
+        sheet.set_column("M:M", width=10,cell_format=font_family)
+        sheet.set_column("M:M", width=10,cell_format=font_family)
+        sheet.set_column("N:Z", None,cell_format=font_family) 
 
         sheet.merge_range(1,5,1,8, "≪支給予定リスト≫", format_sheet_title)
         sheet.merge_range(0,12,0,13, current_date, format_current_date)

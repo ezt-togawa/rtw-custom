@@ -2,8 +2,7 @@
 <odoo>
     <template id="report_quotation_oversea">
         <t t-call="web.html_container">
-
-            <t t-call="custom_report_rtw.SO_header_layout"></t>
+            <t t-call="custom_report_rtw.SO_header_layout_oversea"></t>
             <t t-foreach="docs" t-as="o">
                 <t t-call="custom_report_rtw.so_ex_layout">
                     <t t-set="total_subprice" t-value="0" />
@@ -21,7 +20,7 @@
                             <t t-set="company" t-value="res_company" />
                         </t>
                     </t>
-                    <div class="page">
+                    <div class="page size13">
                         <t
                             t-set="type">quotation</t>
                         <t t-set="address">
@@ -36,9 +35,9 @@
                         <div t-if="docs.company_id.logo or docs.company_id.report_header"
                             class="row zero_min_height">
                         </div>
-                        <div class="row" style="margin-top:-50px;font-weight:bold">
+                        <div class="row size13" style="margin-top:-50px;">
                             <div class="col-4">
-                                <div> 株式会社<span class="so_title"
+                                <div> 株式会社<span
                                         t-field="docs.company_id.partner_id.name" /> 御中</div>
                                 <div>
                                     <span
@@ -51,7 +50,7 @@
                                 <br />
                                 <div>税抜合計: <span t-field="docs.amount_untaxed" />
                                 </div>
-                                <div class="so_title">消費税: <span t-field="docs.amount_tax" />
+                                <div>消費税: <span t-field="docs.amount_tax" />
                                 </div>
                                 <div class="so_price total-price">
                                     <span>税込合計</span>
@@ -62,25 +61,23 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div>納品希望日： <span t-if="docs.estimated_shipping_date"
-                                        t-esc="docs.estimated_shipping_date.strftime('%Y-%m-%d')" />
+                                <div>納品希望日： <span t-if="docs.sale_order_estimated_shipping_date"
+                                        t-esc="docs.sale_order_estimated_shipping_date" />
                                 </div>
                                 <div> 製作日数： <span t-if="docs.workdays"
                                         t-esc="docs.workdays" />
                                 </div>
-                                <div> 発注期限： <span t-esc="docs.date_order.strftime('%Y-%m-%d')" />
+                                <div> 発注期限： <span t-esc="docs.sale_order_date_order" />
                                 </div>
-                                <div>
-                                    納品場所：
+                                <div> 納品場所：<span t-esc="docs.payment_term_id.name " />
                                 </div>
-                                <div>
-                                    支払条件：
+                                <div> 支払条件：<span t-esc="docs.forwarding_address " />
                                 </div>
                                 <br />
                                 <div>見積有効期限： <span
-                                        t-field="docs.validity_date" />
+                                        t-field="docs.sale_order_validity_date" />
                                 </div>
-                                <div> 備考: <span t-field="docs.note" />
+                                <div> 備考: <span t-field="docs.special_note" />
                                 </div>
                             </div>
                             <div class="col-4" name="company_address">
@@ -118,8 +115,7 @@
                                     t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                                 <t t-if="l_index == 0">
                                     <thead>
-                                        <tr
-                                            style="background-color:#595959;color:#ffffff;padding:5px 0px 10px 0px;font-size:13px;">
+                                        <tr class="table-title bold">
                                             <th class="text-center" style="width:1%">№</th>
                                             <th class="text-center" style="width:18%">品名</th>
                                             <th class="text-center" style="width:20%">品番・サイズ</th>
@@ -133,16 +129,16 @@
                                     </thead>
                                 </t>
                                 <tbody class="invoice_tbody">
-                                    <tr style="border-bottom:solid 1px #595959;font-size:12px;">
-                                        <td t-esc="l_index+1" class="text-center">
+                                    <tr class="size15 table-border-bottom">
+                                        <td t-esc="l_index+1" class="text-center size12">
                                         </td>
-                                        <td>
+                                        <td class="size11">
                                             <span
                                                 t-field="l.product_id.product_tmpl_id.categ_id.name" />
                                             <br />
                                             <span t-if="l.p_type" t-field="l.p_type" />
                                         </td>
-                                        <td>
+                                        <td class="size13">
                                             <div t-if="l.product_id.product_no"
                                                 t-field="l.product_id.product_no" />
                                             <t t-if="l.product_id.width > 0">W<span
@@ -161,7 +157,7 @@
                                                     t-field="l.product_id.ah" />
                                             </t>
                                         </td>
-                                        <td>
+                                        <td class="size12">
                                             <t
                                                 t-foreach="l.product_id.product_template_attribute_value_ids"
                                                 t-as="string_line"> ● <span
@@ -181,9 +177,9 @@
                                                     t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="size11">
                                             <span t-esc="'{0:,.2f}'.format(l.discount)" />% </td>
-                                        <td class="text-center">
+                                        <td class="text-center size12">
                                             <span
                                                 style="font-size:16px"
                                                 t-esc="'{0:,.0f}'.format(l.price_unit)" />
@@ -201,17 +197,16 @@
                                 </tbody>
                             </t>
                         </table>
-                        <div class="d-flex justify-content-end">
+                        <div
+                            class="d-flex justify-content-end">
                             <div
                                 class="pr-4">定価合計 : <span
-                                    t-esc="total_listprice" />
-                            </div>
+                                    t-esc="total_listprice" /></div>
                             <div>販売価格合計 : <span
                                     t-esc="docs.amount_untaxed" /></div>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <span style="font-size:13px"
-                                t-field="docs.name" />
+                        <div class="d-flex justify-content-end size12">
+                            <span t-field="docs.name" />
                         </div>
                         <div style="page-break-before: always;">
                             <div class="text-center">
@@ -220,7 +215,8 @@
                                     alt="Logo" />
                             </div>
                             <div class="text-center"
-                                style="font-size: 14px; text-decoration: underline;">www.ritzwell.com</div>
+                                style="font-size: 14px; text-decoration: underline;">
+                                www.ritzwell.com</div>
                             <span style="font-size:14px">
                                 <bold>MAIN OFFICE</bold>
                             </span>
@@ -228,13 +224,16 @@
                                 <span style="font-size:11px;padding:0;margin:0;">RITZWELL &amp; CO.</span>
                             </div>
                             <div>
-                                <span style="font-size:11px;padding:0;margin:0;">5-2-9 ITAZUKE HAKATA-KU</span>
+                                <span style="font-size:11px;padding:0;margin:0;">5-2-9 ITAZUKE
+                                    HAKATA-KU</span>
                             </div>
                             <div>
-                                <span style="font-size:11px;padding:0;margin:0;">FUKUOKA,812-0888 JAPAN</span>
+                                <span style="font-size:11px;padding:0;margin:0;">FUKUOKA,812-0888
+                                    JAPAN</span>
                             </div>
                             <div>
-                                <span style="font-size:11px;padding:0;margin:0;">TEL: +81 92 584 2240
+                                <span style="font-size:11px;padding:0;margin:0;">TEL: +81 92 584
+                                    2240
                                     FAX: +81 92 584 2241</span>
                             </div>
                             <div style="margin-bottom:22px;">
@@ -246,100 +245,170 @@
                                 </span>
                             </div>
                             <div style="padding-left:40px;vertical-align: middle;padding-top:15px">
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;width:80px;text-align:center;">
                                         <span>Cancellation</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">Buyer’s cancellation or changes in
-                                            specifications after confirmation of receipt of order will incur
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">Buyer’s
+                                            cancellation or changes in
+                                            specifications after confirmation of receipt of order
+                                            will incur
                                             a fifty (50) percent cancellation fee.
-                                            Orders for built-to-order and custom-tailored products cannot be
+                                            Orders for built-to-order and custom-tailored products
+                                            cannot be
                                             cancelled.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Packing</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">The make-up, packing, packaging and marking shall be at Seller’s option.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">The
+                                            make-up, packing, packaging and marking shall be at
+                                            Seller’s option.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
                                     <div style="padding-right:10px;width:80px;text-align:center;">
                                         <span>Shipment</span>
                                     </div>
-                                    <div  style="max-width:95%">
-                                        <span style="font-size:9px ; word-wrap: break-word;">The date of a bill of landing shall be accepted as the conclusive date of shipment. Any shipment made within fifteen (15) days after date specified for shipment shall be deemed as a contracted delivery. Partial shipment and / or transshipment shall be permitted and, in such case, each shipment shall be considered as a separate contract.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">The
+                                            date of a bill of landing shall be accepted as the
+                                            conclusive date of shipment. Any shipment made within
+                                            fifteen (15) days after date specified for shipment
+                                            shall be deemed as a contracted delivery. Partial
+                                            shipment and / or transshipment shall be permitted and,
+                                            in such case, each shipment shall be considered as a
+                                            separate contract.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Inspection</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">Seller shall, before shipment, make inspection of the goods especially in respect of specification, quality and condition of the goods. Unless otherwise arranged, the inspection by Seller shall be final in all respects regarding the goods.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">Seller
+                                            shall, before shipment, make inspection of the goods
+                                            especially in respect of specification, quality and
+                                            condition of the goods. Unless otherwise arranged, the
+                                            inspection by Seller shall be final in all respects
+                                            regarding the goods.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Patents</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">Buyer shall hold Seller harmless from liability, loss or expense in connection with any alleged infringement with regard to any patent, trademark, copyright, design, pattern, etc., in any country.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">Buyer
+                                            shall hold Seller harmless from liability, loss or
+                                            expense in connection with any alleged infringement with
+                                            regard to any patent, trademark, copyright, design,
+                                            pattern, etc., in any country.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Warranty</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">Seller warrants that the goods are free from any defects of design, material and workmanship and conform to its specifications. Once after having delivered the goods to Buyer, Buyer is responsible to give all dealers and customers necessary or adequate instructions for proper use of the goods and prevention of misuse thereof.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">Seller
+                                            warrants that the goods are free from any defects of
+                                            design, material and workmanship and conform to its
+                                            specifications. Once after having delivered the goods to
+                                            Buyer, Buyer is responsible to give all dealers and
+                                            customers necessary or adequate instructions for proper
+                                            use of the goods and prevention of misuse thereof.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Claim</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">Buyer’s claim of whatever nature arising under the contract shall be notified to Seller by email or fax within seven (7) days after arrival of the goods at the destination specified in the bills of lading. Full particulars of such claim, together with sworn surveyor’s report shall be made in writing and forwarded by registered airmail within fifteen (15) days after notification</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">Buyer’s
+                                            claim of whatever nature arising under the contract
+                                            shall be notified to Seller by email or fax within seven
+                                            (7) days after arrival of the goods at the destination
+                                            specified in the bills of lading. Full particulars of
+                                            such claim, together with sworn surveyor’s report shall
+                                            be made in writing and forwarded by registered airmail
+                                            within fifteen (15) days after notification</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Force Majeure</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">In the event of Act of God, government orders or restraints, war or warlike conditions, blockage, hostilities, revolution, strikes, lockout, civil commotions, fire, flood, epidemics, breakdown or accident or course of preparation or transportation of the goods, or of any other occurrence beyond Seller’s control, Seller shall not be liable for non-delivery or delay in performance of the contract caused directly or indirectly thereby, in which case Buyer shall accept the delayed shipment or the cancellation of all or any part of the contract.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">In the
+                                            event of Act of God, government orders or restraints,
+                                            war or warlike conditions, blockage, hostilities,
+                                            revolution, strikes, lockout, civil commotions, fire,
+                                            flood, epidemics, breakdown or accident or course of
+                                            preparation or transportation of the goods, or of any
+                                            other occurrence beyond Seller’s control, Seller shall
+                                            not be liable for non-delivery or delay in performance
+                                            of the contract caused directly or indirectly thereby,
+                                            in which case Buyer shall accept the delayed shipment or
+                                            the cancellation of all or any part of the contract.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Arbitration</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">All disputes, controversies, or differences which may arise between the parties hereto, out of or in relation to or in connection with the contract, shall be finally settled by arbitration in Japan in accordance with the Commercial Arbitration Rules of The Japan Commercial Arbitration Association. The award rendered by the arbitrator shall be final and binding upon both parties.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">All
+                                            disputes, controversies, or differences which may arise
+                                            between the parties hereto, out of or in relation to or
+                                            in connection with the contract, shall be finally
+                                            settled by arbitration in Japan in accordance with the
+                                            Commercial Arbitration Rules of The Japan Commercial
+                                            Arbitration Association. The award rendered by the
+                                            arbitrator shall be final and binding upon both parties.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Trade Terms</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">All trade terms provided in the contract shall be interpreted in accordance with the latest Incoterms of the International Chamber of Commerce.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">All
+                                            trade terms provided in the contract shall be
+                                            interpreted in accordance with the latest Incoterms of
+                                            the International Chamber of Commerce.</span>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="font-size:9px;margin-right:20px;padding-bottom:15px;">
-                                    <div  style="padding-right:10px;;width:80px;text-align:center;">
+                                <div class="d-flex"
+                                    style="font-size:11px;margin-right:20px;padding-bottom:15px;">
+                                    <div style="padding-right:10px;;width:80px;text-align:center;">
                                         <span>Governing Law</span>
                                     </div>
-                                    <div style="max-width:95%" >
-                                        <span style="font-size:9px ; word-wrap: break-word;">The contract shall be governed as to all matters, including validity, construction and performance by and under the laws of Japan.</span>
+                                    <div style="max-width:95%">
+                                        <span style="font-size:10px ; word-wrap: break-word;">The
+                                            contract shall be governed as to all matters, including
+                                            validity, construction and performance by and under the
+                                            laws of Japan.</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>    
+                        </div>
+
+
                     </div>
                     <t t-call="custom_report_rtw.page_footer_layout"></t>
                 </t>

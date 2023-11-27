@@ -1,123 +1,184 @@
-div.stamp {
-    -moz-transform: rotate(-15deg);
-    /*−30度回転（Mozilla系ブラウザ e.g.: Firefox）*/
-    -webkit-transform: rotate(-15deg);
-    /*−30度回転（Webkit系ブラウザ e.g.: Safari, Google Chrome）*/
-    -o-transform: rotate(-15deg);
-    /*−30度回転（Opera系ブラウザ e.g.: Opera）*/
-    -ms-transform: rotate(-15deg);
-    /*−30度回転（Microsoft系ブラウザ e.g.: Internet Explore）*/
-    color: red;
-    font-weight: bold;
-    border-style: solid;
-    border-width: medium;
-    border-color: red;
-    width: 5em;
-    padding: 0em 0.5em 0em 0.5em;
-}
-
-.so_title {
-    font-size: 20px
-}
-
-.so_price {
-    font-size: 24px
+@font-face {
+  font-family: "HGRGM";
+  src: url("../font/HGRGM_0.TTC") format("TTC");
 }
 
 body {
-    background: transparent !important;
+  font-family: "HGRGM", sans-serif;
+}
+
+div.stamp {
+  -moz-transform: rotate(-15deg);
+  /*−30度回転（Mozilla系ブラウザ e.g.: Firefox）*/
+  -webkit-transform: rotate(-15deg);
+  /*−30度回転（Webkit系ブラウザ e.g.: Safari, Google Chrome）*/
+  -o-transform: rotate(-15deg);
+  /*−30度回転（Opera系ブラウザ e.g.: Opera）*/
+  -ms-transform: rotate(-15deg);
+  /*−30度回転（Microsoft系ブラウザ e.g.: Internet Explore）*/
+  color: red;
+  font-weight: bold;
+  border-style: solid;
+  border-width: medium;
+  border-color: red;
+  width: 5em;
+  padding: 0em 0.5em 0em 0.5em;
+}
+
+.so_title {
+  font-size: 20px;
+}
+
+.so_price {
+  font-size: 24px;
+}
+
+body {
+  background: transparent !important;
 }
 
 .total-price {
-    background-color: #B81E22;
-    color: #fff;
-    font-weight: 500;
-    padding: 2px 0px;
+  background-color: #b81e22;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px 0px;
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 
 .product-image {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
-.attribute-img{
-    width:100%;
+.attribute-img {
+  width: 100%;
 }
 
 .attribute-img img {
-    width: 100%;
+  width: 100%;
 }
 
 .product-img img {
-    width: 100%;
+  width: 100%;
 }
 
 .product-img {
-    width: 100%;
-    padding: 5px 0px;
+  width: 100%;
+  padding: 5px 0px;
 }
 
 .product-quantity {
-    font-size: 20px;
-    position:relative;
+  font-size: 18px;
+  position: relative;
 }
 
-.quantity{
-    position:absolute;
-    left:65%;
-    top:20%;
+.quantity {
+  position: absolute;
+  left: 65%;
+  top: 20%;
 }
 
 .name {
-    /* display: inline-block; */
-    /* width:80%; */
+  /* display: inline-block; */
+  /* width:80%; */
 }
 
 .custom-row {
-    width: 10in;
-    height: auto;
-    min-height: .25in;
-    display: -webkit-box;
-    display: -webkit-flex;
-    -webkit-flex-wrap: wrap;
-    position: static;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  width: 10in;
+  height: auto;
+  min-height: 0.25in;
+  display: -webkit-box;
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  position: static;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .product-container {
-    width: 100%;
-    margin: 5px 2px;
-    border: 1px gray solid !important;
-    padding: 5px;
+  width: 100%;
+  margin: 5px 2px;
+  border: 1px gray solid !important;
+  padding: 5px;
 }
 
 .product-config {
-    display: inline-block;
-    vertical-align: top;
-    width: 50%;
-    /* padding:5px; */
-    box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  /* padding:5px; */
+  box-sizing: border-box;
 }
 
 .product-config:not(:has(img[src])) {
-    display: none !important;
-  }
+  display: none !important;
+}
 
 .product-wrap {
-    display: inline-block;
-    vertical-align: top;
-    width: 33.3%;
-    padding: 5px;
-    box-sizing: border-box;
-    height:inherit;
+  display: inline-block;
+  vertical-align: top;
+  width: 33.3%;
+  padding: 5px;
+  box-sizing: border-box;
+  height: inherit;
 }
 
 .string-line {
-    padding: 10px 0px;
-    font-size: 14px;
+  padding: 10px 0px;
+  font-size: 12px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.size19 {
+  font-size: 19px;
+}
+.size18 {
+  font-size: 18px;
+}
+.size17 {
+  font-size: 17px;
+}
+.size12 {
+  font-size: 12px;
+}
+
+.size15 {
+  font-size: 15px;
+}
+.size13 {
+  font-size: 13px;
+}
+.size20 {
+  font-size: 20px;
+}
+.size16 {
+  font-size: 16px;
+}
+.size14 {
+  font-size: 14px;
+}
+.size11 {
+  font-size: 11px;
+}
+
+.letter-spacing {
+  letter-spacing: 30px;
+}
+
+.table-title {
+  color: #fff;
+  background-color: #595959;
+  font-size: 11px;
+  padding: 5px 0px 10px 0px;
+}
+
+
+.table-border-bottom{
+  border-bottom:1px solid black;
 }
