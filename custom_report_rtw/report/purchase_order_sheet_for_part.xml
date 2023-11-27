@@ -21,206 +21,190 @@
           </t>
           <t t-call="custom_report_rtw.SO_purchase_order_sheet_for_part_header_layout"></t>
           <div class="page">
-            <t
-              t-set="type">quotation</t>
-            <t t-set="address">
-              <div t-field="docs.partner_id"
-                t-options='{"widget": "contact", "fields": ["address", "name"],
+            <t t-foreach="docs" t-as="po">
+              <t
+                t-set="type">quotation</t>
+              <t t-set="address">
+                <div t-field="po.partner_id"
+                  t-options='{"widget": "contact", "fields": ["address", "name"],
                         "no_marker": True}' />
-              <p t-if="docs.partner_id.vat"><t
-                  t-esc="docs.company_id.country_id.vat_label or 'Tax ID'" />: <span
-                  t-field="docs.partner_id.vat" />
-              </p>
-            </t>
-            <div t-if="docs.company_id.logo or docs.company_id.report_header"
-              class="row zero_min_height">
-            </div>
-            <div class="row" style="margin-top:-50px;font-weight:bold">
-              <div class="col-4">
-                <div> 発注番号 <span class="so_title"
-                    t-field="docs.name" />
+                <p t-if="po.partner_id.vat"><t
+                    t-esc="po.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                    t-field="po.partner_id.vat" />
+                </p>
+              </t>
+              <div t-if="po.company_id.logo or po.company_id.report_header"
+                class="row zero_min_height">
+              </div>
+              <div class="row" style="margin-top:-50px;font-weight:bold">
+                <div class="col-4">
+                  <div> 発注番号 <span class="so_title"
+                      t-field="po.name" />
+                  </div>
+                  <br />
+                  <div>送り先着日 <span t-esc="po.date_planned" t-options='{"widget": "date"}'/>
+                  </div>
+                  <div>出荷希望日 <span t-esc="po.date_order" t-options='{"widget": "date"}'/>
+                  </div>
+                  <br />
                 </div>
-                <br />
-                <div>送り先着日 <span t-esc="docs.estimated_shipping_date" />
+                <div class="col-4"></div>
+                <div class="col-4" name="company_address">
+                  <div>
+                    <img style="width:50%"
+                      src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                      alt="Logo" />
+                  </div>
+                  <div>
+                    株式会社リッツウェル
+                  </div>
+                  <div>
+                    大阪オフィス
+                  </div>
+                  <div>〒542-0081</div>
+                  <div>
+                    大阪市中央区南船場4-7-6 B1F
+                  </div>
+                  <div> tel.06-4963-8777
+                  </div>
+                  <div> fax.06-4963-8778
+                  </div>
+                  <div>
+                    <span t-esc="po.user_id.name" /> 印 </div>
                 </div>
-                <div>出荷希望日 <span t-esc="docs.preferred_delivery_date" />
-                </div>
-                <br />
-                <div>物件名: <span t-field="docs.title" />
-                <br />
-                <div>
-                    <span t-field="docs.partner_id.name" />
-                    <span t-field="docs.partner_id.site" />
-                    <span
-                      t-field="docs.partner_id.department" />
-                    <span
-                      t-field="docs.partner_id.user_id.name" /> ご依頼分 <span t-field="docs.name" />
+              </div>
+              <div class="row py-2">
+                <div class="col-4">
+                  <div> 送り先: <t t-if="po.picking_type_id.warehouse_id.name">
+                      <span t-field="po.picking_type_id.warehouse_id.name" />
+                    </t>
+                  </div>
+                  <div> 住所: <t
+                      t-if="po.picking_type_id.warehouse_id.partner_id.street">
+                      <span t-field="po.picking_type_id.warehouse_id.partner_id.street" />
+                    </t>
+                    <div>
+                      <t
+                        t-if="po.picking_type_id.warehouse_id.partner_id.city">
+                        <span t-field="po.picking_type_id.warehouse_id.partner_id.city" />
+                      </t>
+                      <t
+                        t-if="po.picking_type_id.warehouse_id.partner_id.state_id.name">
+                        <span t-field="po.picking_type_id.warehouse_id.partner_id.state_id.name" />
+                        <t t-if="po.picking_type_id.warehouse_id.partner_id.zip"> 〒 <span
+                            t-field="po.picking_type_id.warehouse_id.partner_id.zip" />
+                        </t>
+                      </t>
+                    </div>
+                    <div>
+                      <t
+                        t-if="po.picking_type_id.warehouse_id.partner_id.country_id.name">
+                        <span t-field="po.picking_type_id.warehouse_id.partner_id.country_id.name" />
+                      </t>
+                    </div>
+                  </div>
+                  <div> TEL: <t
+                      t-if="po.picking_type_id.warehouse_id.partner_id.phone">
+                      <span t-field="po.picking_type_id.warehouse_id.partner_id.phone" />
+                    </t>
                   </div>
                 </div>
-              </div>
-              <div
-                class="col-4">
-
-              </div>
-              <div class="col-4" name="company_address">
-                <div>
-                  <img style="width:50%"
-                    src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
-                    alt="Logo" />
+                <div class="col-4">
+                  <div> 送り先注記:<!-- <span t-field="docs.remark" />                   
+                    <br />
+                    <span
+                      t-field="docs.production_memo" /> -->
+                  </div>
                 </div>
-                <div>
-                  株式会社リッツウェル
-                </div>
-                <div>
-                  大阪オフィス
-                </div>
-                <div>〒542-0081</div>
-                <div>
-                  大阪市中央区南船場4-7-6 B1F
-                </div>
-                <div> tel.06-4963-8777
-                </div>
-                <div> fax.06-4963-8778
-                </div>
-                <div>
-                  <span t-esc="docs.user_id.name" /> 印 </div>
-              </div>
-            </div>
-            <div class="row py-2">
-              <div class="col-4">
-                <div> 送り先: <span t-if="not docs.partner_id.parent_id" t-field="docs.partner_id.name" />
-                  <span t-if="docs.partner_id.parent_id"
-                    t-field="docs.partner_id.parent_id.name" />
-                </div>
-                <div> 住所: <span t-field="docs.partner_id.street" />
-                </div>
-                <div> TEL: <span t-field="docs.partner_id.phone" />
-                </div>
-                <div> 送り先注記: <span t-field="docs.shipping_to_text" />
+                <div class="col-4">
                 </div>
               </div>
-              <div class="col-4">
-                <div> 備考: <span t-field="docs.note" />
-                </div>
-              </div>
-              <div class="col-4">
-              </div>
-            </div>
-            <table
-              class="table">
-              <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
-                t-att-last="last">
-                <t t-set="total_subprice"
-                  t-value="total_subprice + l.price_subtotal" />
-                <t t-set="total_listprice"
-                  t-value="total_listprice + l.price_unit * l.product_uom_qty" />
-                <t t-if="l_index == 0">
-                  <thead>
-                    <tr
-                      style="background-color:#595959;color:#ffffff;padding:5px 0px 10px 0px;font-size:13px;">
-                      <th class="text-center" style="width:2%">№</th>
-                      <th class="text-center" style="width:20%">品名</th>
-                      <th class="text-center" style="width:25%">仕様・詳細</th>
-                      <th class="text-center" style="width:10%">摘要</th>
-                      <th class="text-center" style="width:7%">数量</th>
-                      <th class="text-center" style="width:3%"></th>
-                      <th class="text-center">単価</th>
-                      <th class="text-center" style="width:10%">発注金額</th>
-                      <th class="text-center" style="width:10%">メモ</th>
-                    </tr>
-                  </thead>
-                </t>
-                <tbody class="invoice_tbody">
-                  <tr style="border-bottom:solid 1px #595959;font-size:12px;">
-                    <td t-esc="l_index+1" class="text-center">
-                    </td>
-                    <td>
-                      <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                      <br />
-                      <span t-if="l.p_type" t-field="l.p_type" />
-                      <br />
-                      <t t-if="l.product_id.width > 0">W<span
-                          t-field="l.product_id.width" />
-                      </t>
-                      <t
-                        t-if="l.product_id.depth > 0">*D<span
-                          t-field="l.product_id.depth" />
-                      </t>
-                      <t
-                        t-if="l.product_id.height > 0">*H<span
-                          t-field="l.product_id.height" />
-                      </t>
-                      <t
-                        t-if="l.product_id.sh > 0"> SH<span
-                          t-field="l.product_id.sh" />
-                      </t>
-                      <t
-                        t-if="l.product_id.ah > 0"> AH<span
-                          t-field="l.product_id.ah" />
-                      </t>
-                    </td>
-                    <td>
-                      <t
-                        t-foreach="l.product_id.product_template_attribute_value_ids"
-                        t-as="string_line"> ● <span
-                          t-esc="string_line.display_name" />
-                                                <br />
-                      </t>
-                      <t t-foreach="l.config_session_id.custom_value_ids"
-                        t-as="string_line"> ●<span
-                          t-esc="string_line.display_name" />: <span
-                          t-esc="string_line.value" />
-                                                <br />
-                      </t>
-                    </td>
-                    <td>
-                      <t
-                        t-foreach="l.product_id.product_template_attribute_value_ids"
-                        t-as="string_line">
-                        <span
-                          t-esc="string_line.attribute_id.name" />
+              <table
+                class="table">
+                <t t-foreach="docs.purchase_order_line" t-as="l" t-groupby="10"
+                  t-att-last="last">
+                  <t t-set="total_subprice"
+                    t-value="total_subprice + l.price_subtotal" />
+                  <t t-set="total_listprice"
+                    t-value="total_listprice + l.price_unit * l.product_uom_qty" />
+                  <t t-if="l_index == 0">
+                    <thead>
+                      <tr
+                        style="background-color:#595959;color:#ffffff;padding:5px 0px 10px 0px;font-size:13px;">
+                        <th class="text-center" style="width:2%">№</th>
+                        <th class="text-center" style="width:20%">品名</th>
+                        <th class="text-center" style="width:25%">仕様・詳細</th>
+                        <th class="text-center" style="width:7%">数量</th>
+                        <th class="text-center" style="width:3%"></th>
+                        <th class="text-center">単価</th>
+                        <th class="text-center" style="width:10%">発注金額</th>
+                        <th class="text-center" style="width:10%">Custom</th>
+                      </tr>
+                    </thead>
+                  </t>
+                  <tbody class="invoice_tbody">
+                    <tr style="border-bottom:solid 1px #595959;font-size:12px;">
+                      <td t-esc="l_index+1" class="text-center">
+                      </td>
+                      <td>
+                        <span t-field="l.name" />
                         <br />
-                      </t>
-                    </td>
-                    <td class="text-center">
-                      <div id="quote_qty">
+                      </td>
+                      <td>
+                        <t
+                          t-foreach="l.product_id.product_template_attribute_value_ids"
+                          t-as="string_line">
+                          <span
+                            t-esc="string_line.attribute_id.name" />: <span
+                            t-esc="string_line.product_attribute_value_id.name" />
+                          <br />
+                        </t>
+                      </td>
+                      <td class="text-center">
+                        <div id="quote_qty">
+                          <span
+                            t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <span>
+                          脚
+                        </span>
+                      </td>
+                      <td class="text-center">
                         <span
-                          style="font-size:16px"
-                          t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
-                      </div>
-                    </td>
-                    <td class="text-center">
-                      <span
-                        style="font-size:16px">
-                        脚
-                      </span>
-                    </td>
-                    <td class="text-center">
-                      <span
-                        style="font-size:14px"
-                        t-field="l.price_unit" />
-                    </td>
-                    <td class="text-center">
-                      <span
-                        style="font-size:16px"
-                        t-field="l.price_subtotal" />
-                    </td>
-                    <td>
-                      <span
-                        t-field="l.memo" />
-                    </td>
-                  </tr>
-                </tbody>
-              </t>
-            </table>
-            <div class="d-flex justify-content-end">
-              <div>販売価格合計 : <span
-                  t-esc="docs.amount_untaxed" /></div>
-            </div>
-            <div class="d-flex justify-content-end">
-              <span style="font-size:13px"
-                t-field="docs.name" />
-            </div>
+                          t-field="l.price_subtotal" />
+                      </td>
+                      <td class="text-center">
+                        <span
+                          t-field="l.price_unit" />
+                      </td>
+                      <td>
+                        <!-- <t t-if="l.p_type">
+                          <span
+                            t-field="l.p_type" />
+                          <br /> 
+                        </t>
+                        <t t-foreach="l.config_session_id.custom_value_ids"
+                          t-as="string_line"> ●<span
+                            t-esc="string_line.display_name" />: <span
+                            t-esc="string_line.value" />
+                                                <br />
+                        </t>-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </t>
+              </table>
+              <div class="d-flex justify-content-end">
+                <div>販売価格合計 : <span
+                    t-esc="po.amount_untaxed" /></div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <span style="font-size:13px"
+                  t-field="po.name" />
+              </div>
+            </t>
           </div>
           <t t-call="custom_report_rtw.page_footer_layout"></t>
         </t>
@@ -244,8 +228,8 @@
   </record>
   <report
     string="発注書(部材用）"
-    id="report_purchase_order_sheet_for_part_rtw"
-    model="sale.order"
+    id="report_purchase_order_sheet_for_part_rtw111"
+    model="purchase.order"
     report_type="qweb-pdf"
     name="custom_report_rtw.report_purchase_order_sheet_for_part"
     file="custom_report_rtw.report_purchase_order_sheet_for_part"

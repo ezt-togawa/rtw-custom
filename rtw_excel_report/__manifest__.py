@@ -29,24 +29,30 @@
         'report/report.xml',
         'report_quotation/actions.xml',
         'report_quotation/templates.xml',
+        'report_quotation_oversea/actions.xml',
+        'report_quotation_oversea/templates.xml',
         'report_list_price_quotation/actions.xml',
         'report_list_price_quotation/templates.xml',
         'report_unit_price_quotation/actions.xml',
         'report_unit_price_quotation/templates.xml',
         'report_invoice/actions.xml',
         'report_invoice/templates.xml',
-        
+
         'report_purchase_order/actions.xml',
         'report_purchase_order/templates.xml',
+
         'report_purchase_order_sheet/actions.xml',
         'report_purchase_order_sheet/templates.xml',
+        'report_inspection_order_form/actions.xml',
+        'report_inspection_order_form/templates.xml',
+
         'report_purchase_order_for_part/actions.xml',
         'report_purchase_order_for_part/templates.xml',
         'report_delivery_request_form/actions.xml',
         'report_delivery_request_form/templates.xml',
         'report_ship_order/actions.xml',
         'report_ship_order/templates.xml',
-    
+
         'views/views.xml',
         'views/product_spec.xml',
         'views/work_progress_slip_list.xml',
@@ -59,9 +65,10 @@
         'views/scheduled_payment_list.xml',
         'views/scheduled_arrival_list.xml',
         'views/supplied_material_detail.xml',
+        'views/stock_move_pallet.xml',
 
-        'report_stock_move_pallet/actions.xml',
-        'report_stock_move_pallet/templates.xml',
+        # 'report_stock_move_pallet/actions.xml',
+        # 'report_stock_move_pallet/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

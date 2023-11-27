@@ -1,0 +1,13 @@
+<odoo>
+  <data>
+      <report
+          id="shipping_instruction"
+          model="stock.move.container"
+          string="SHIPPING INSTRUCTION (EXCEL)"
+          report_type="xlsx"
+          name="rtw_excel_report.shipping_instruction_xls"
+          file="SHIPPING INSTRUCTION"
+          attachment_use="False"
+      />
+  </data>
+</odoo>

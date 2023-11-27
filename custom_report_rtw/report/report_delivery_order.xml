@@ -38,7 +38,7 @@
             <div class="row" style="margin-top:-50px;font-weight:bold">
               <div class="col-4">
                 <div> 発注番号 <span class="so_title"
-                    t-field="docs.calculate_name" />
+                    t-field="docs.origin" />
                 </div>
                 <br />
                 <div>搬入日時 <span t-if="docs.scheduled_date"
@@ -56,7 +56,7 @@
                   <span
                       t-field="docs.partner_id.department" />
                   <span
-                      t-field="docs.partner_id.name" />様 ご依頼分 <span t-field="docs.calculate_name" />
+                      t-field="docs.partner_id.name" />様 ご依頼分 <span t-field="docs.origin" />
                   </div>
                 </div>
               </div>
@@ -88,11 +88,28 @@
               </div>
             </div>
             <div class="row py-2">
-              <div class="col-4">
-                <div> 住所: <t t-if="docs.partner_id.zip"> 〒<span t-field="docs.partner_id.zip" />
+              <div class="col-6">
+                <div> 住所 <t t-if="docs.partner_id.zip"> 〒<span t-field="docs.partner_id.zip" /></t>
+                  <t
+                    t-if="docs.partner_id.street">
+                    <span t-field="docs.partner_id.street" />
                   </t>
-                  <span
-                    t-field="docs.partner_id.street" />
+                  <t
+                    t-el="docs.partner_id.street2">
+                    <span t-field="docs.partner_id.street2" />
+                  </t>
+                  <t
+                    t-if="docs.partner_id.city">
+                    <span t-field="docs.partner_id.city" />
+                  </t>
+                  <t
+                    t-if="docs.partner_id.state_id.name">
+                    <span t-field="docs.partner_id.state_id.name" />
+                  </t>
+                  <t
+                    t-if="docs.partner_id.country_id.name">
+                    <span t-field="docs.partner_id.country_id.name" />
+                  </t>
                 </div>
                 <div> TEL／携帯 <span t-field="docs.partner_id.phone" />
                   <t
@@ -101,17 +118,46 @@
                   </t>
                 </div>
                 <br />
+                <div class="row">
+                  <div class="col-6">
+                    <div> 配送 <t
+                        t-if="docs.sipping_to"> : <span
+                          t-field="docs.sipping_to" />
+                      </t>
+                    </div>
+                    <div> デポ <t
+                        t-if="docs.sale_id.waypoint.name"> : <span
+                          t-field="docs.sale_id.waypoint.name" />
+                      </t>
+                    </div>
+                    <div> 配送ラベル <t
+                        t-if="docs.sale_id.shipping_to_text"> : <span
+                          t-field="docs.sale_id.shipping_to_text" />
+                      </t>
+                    </div>
+                    <div> 設置先〒 <t
+                        t-if="docs.sale_id.forwarding_address_zip"> : <span
+                          t-field="docs.sale_id.forwarding_address_zip" />
+                      </t>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div> 設置先 <t
+                        t-if="docs.sale_id.forwarding_address"> : <span
+                          t-field="docs.sale_id.forwarding_address" />
+                      </t>
+                    </div>
+                  </div>
+                </div>
+                <br />
                 <br />
                 <div> 搬入立会人: <span t-field="docs.calculate_witness" /> <span
                     t-field="docs.calculate_witness_phone" />
                 </div>
               </div>
-              <div class="col-4">
-                <div> 備考: <span t-field="docs.calculate_note" />
+              <div class="col-6">
+                <div> 送り状注記: <span t-field="docs.note" />
                 </div>
-              </div>
-              <div class="col-4">
-
               </div>
             </div>
             <table
@@ -149,20 +195,10 @@
                       </t>
                     </td>
                     <td>
-                      <div>
-                        <t t-if="l.sale_line_id.pack_parent_line_id">
-                          <span
-                            t-field="l.sale_line_id.pack_parent_line_id.product_id.product_no" />
-                          <span> / </span>
-                          <span
-                            t-field="l.product_id.name"
-                          />
-                        </t>
-                        <t t-else="else">
-                          <span t-if="l.product_id.product_no"
-                            t-field="l.product_id.product_no" />
-                        </t>
-                      </div>
+                      <div t-if="l.product_id.product_no"
+                        t-field="l.product_id.product_no" />
+                      <div t-if="l.calculate_product_pack"
+                        t-field="l.calculate_product_pack" />
                       <t t-if="l.product_id.width > 0">W<span
                           t-field="l.product_id.width" />
                       </t>
@@ -227,10 +263,12 @@
               </t>
             </table>
             <div class="d-flex justify-content-end mr-5"> 配送金額合計（税抜）
-            </div>
-            <div class="d-flex justify-content-end">
               <span style="font-size:13px"
-                t-field="docs.calculate_name" />
+                t-field="docs.sale_id.amount_untaxed" />
+            </div>
+            <div class="d-flex justify-content-end mr-5">
+              <span style="font-size:13px"
+                t-field="docs.sale_id.name" />
             </div>
           </div>
           <t t-call="custom_report_rtw.page_footer_layout"></t>

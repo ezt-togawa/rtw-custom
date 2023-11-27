@@ -38,7 +38,7 @@
             </div>
             <table class="table table-condensed">
               <div>
-                <div t-foreach="o.order_line" t-as="l"
+                <div t-foreach="o.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l"
                   class="product-wrap"
                 >
                   <t t-set="product_attribute_index" t-value="0" />
@@ -52,8 +52,13 @@
                           t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
                       </div>
                       <div class="col-10 name">
-                        <span style="font-size:14px;" t-field="l.product_id.name" />
-                        <div> 単価: <span t-field="l.price_unit" />
+                        <t t-if="l.product_id.product_tmpl_id.categ_id.name">  
+                          <span style="font-size:14px;" t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                      </t>
+                        <div>
+                          <t t-if="l.product_id.product_tmpl_id.product_no">  
+                            <span style="font-size:14px;" t-field="l.product_id.product_tmpl_id.product_no" />
+                        </t>
                         </div>
                       </div>
                     </div>

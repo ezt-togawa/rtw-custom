@@ -4,7 +4,7 @@
   License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
     <record id="purchase_order_for_part_report_xlsx_template" model="xlsx.template">
-        <field name="res_model">mrp.production</field>
+        <field name="res_model">purchase.order</field>
         <field name="fname">purchase_order_for_part.xlsx</field>
         <field name="name">発注書(部材用）</field>
         <field name="description">Purchase Order Sheet Report Excel</field>
@@ -13,29 +13,29 @@
             {
                 '__EXPORT__': {
                     '発注書(部材用）': {
-                        'sale_order': {
-                            'C1': 'sale_order_send_to_company${value or ""}',
-                            'B7': 'sale_order_estimated_shipping_date${value or ""}',
-                            'B8': 'sale_order_preferred_delivery_date${value or ""}',
+                        '_HEAD_': {
+                            'C1': 'purchase_order_company${value or ""}',
                             'B5': 'name${value or ""}',
-                            'B11': 'sale_order_company_name${value or ""}',
-                            'B12': 'sale_order_detail_address_partner',
-                            'B13': 'partner_id.phone${value or ""}',
-                            'B14': 'shipping_to_text${value or ""}',
-                            'G11': 'note${value or ""}',
-                            'H9': 'sale_order_printing_staff${value or ""}',
-                            'H1': 'sale_order_current_date',
+                            'B7': 'purchase_line_date_planned${value or ""}',
+                            'B8': 'purchase_line_date_order${value or ""}',
+                            'B11': 'picking_type_id.warehouse_id.name${value or ""}',
+                            'B12': 'picking_type_id.warehouse_id.partner_id.street${value or ""}',
+                            'B13': 'purchase_order_address_zip_city${value or ""}',
+                            'B14':  'picking_type_id.warehouse_id.partner_id.country_id.name${value or ""}',
+                            'B15': 'picking_type_id.warehouse_id.partner_id.phone${value or ""}',
+                            'H1': 'purchase_order_current_date${value or ""}',
+                            'H9': 'purchase_order_printing_staff${value or ""}',
                             'H15': 'amount_untaxed${value or ""}',
                         },
-                        'order_line': {
-                            'A19': 'sale_order_index${value or ""}#{style=text;fill=grey}',
-                            'B19': 'sale_order_name${value or ""}#{style=text;fill=grey}',
-                            'C19': 'sale_order_product_detail#{style=text;fill=grey}',
+                        'purchase_order_line': {
+                            'A19': 'purchase_order_index${value or ""}#{style=text;fill=grey}',
+                            'B19': 'name${value or ""}#{style=text;fill=grey}',
+                            'C19': 'purchase_order_product_detail#{style=text;fill=grey}',
                             'D19': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
-                            'E19': 'sale_order_text_piece_leg#{style=number;fill=grey}',
-                            'F19': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'E19': 'purchase_order_text_piece_leg#{style=number;fill=grey}',
                             'G19': 'price_subtotal${value or 0}#{style=number;fill=grey}',
-                            'H19': 'sale_order_config_session${value or ""}#{style=text;fill=grey}',
+                            'F19': 'purchase_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
+                            'H19': '${value or ""}#{style=text;fill=grey}',
                         }
                     }
                 }

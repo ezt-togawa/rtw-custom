@@ -14,18 +14,18 @@
                 '__EXPORT__': {
                     'SHIPPING INSTRUCTION': {
                         '_HEAD_': {
-                            'B22':'note',
+                            'B22':'note_eng',
                             'B25':'pallet_count'
                         },
                         'pallet_ids':{
-                            'A27':'stock_pallet_index#{fill=grey}',
-                            'B27':'pallet_name_and_product#{fill=grey}',
-                            'C27':'blank_cell1#{fill=grey}',
-                            'D27':'blank_cell2#{fill=grey}',
-                            'E27':'blank_cell3#{fill=grey}',
-                            'F27':'blank_cell4#{fill=grey}',
-                            'G27':'blank_cell5#{fill=grey}',
-                            'H27':'blank_cell6#{fill=grey}',
+                            'A27':'stock_pallet_index#{fill=light_grey}',
+                            'B27':'pallet_name_and_product#{fill=light_grey}',
+                            'C27':'blank_cell1#{fill=light_grey}',
+                            'D27':'blank_cell2#{fill=light_grey}',
+                            'E27':'blank_cell3#{fill=light_grey}',
+                            'F27':'blank_cell4#{fill=light_grey}',
+                            'G27':'blank_cell5#{fill=light_grey}',
+                            'H27':'blank_cell6#{fill=light_grey}',
                         }
                     }
                 }

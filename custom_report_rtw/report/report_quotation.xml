@@ -80,7 +80,7 @@
                                 <div>見積有効期限： <span
                                         t-field="docs.validity_date" />
                                 </div>
-                                <div> 備考: <span t-field="docs.note" />
+                                <div> 備考: <span t-field="docs.special_note" />
                                 </div>
                             </div>
                             <div class="col-4" name="company_address">
@@ -234,7 +234,7 @@
     </record>
     <report
         string="御見積書"
-        id="report_quotation_rtw"
+        id="report_quotation_rtw2"
         model="sale.order"
         report_type="qweb-pdf"
         name="custom_report_rtw.report_quotation"

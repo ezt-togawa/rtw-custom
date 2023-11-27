@@ -39,6 +39,7 @@ class productSpec(models.AbstractModel):
 
         bold = workbook.add_format({'bold': True})
         wrap_format = workbook.add_format({'text_wrap': True,'align': 'center','valign': 'vcenter'})
+        product_no_format = workbook.add_format({'align': 'center','valign': 'left'})
         merge_format = workbook.add_format({'align': 'center','valign': 'vcenter'})
         merge_format_left = workbook.add_format({'align': 'left','valign': 'vcenter'})
         
@@ -79,7 +80,7 @@ class productSpec(models.AbstractModel):
         sheet_main.insert_image(row_logo,0,"logo",{'image_data': img_io})
         sheet_main.merge_range(row_title, col_title, row_title, col_title+1, "商品仕様書", merge_format)
         sheet_main.write(row_print_time, col_print_time,current_date , merge_format)
-        sheet_main.write(col_title_name, 0,"商品", merge_format)
+        sheet_main.write(col_title_name, 0,"件名", merge_format)
 
         for count in range(r):
                 
@@ -93,10 +94,10 @@ class productSpec(models.AbstractModel):
             sheet_main.merge_range((count * 52) + 8, 11, count * 52 + 8, 13, "=data!B" + str(count * 4 + 3), merge_format_left)
             sheet_main.merge_range((count * 52) + 8, 16, count * 52 + 8, 18, "=data!B" + str(count * 4 + 4), merge_format_left)
             
-            sheet_main.merge_range((count * 52) + 9, 1, count * 52 + 9, 3, "=data!C" + str(count * 4 + 1), merge_format)
-            sheet_main.merge_range((count * 52) + 9,6, count * 52 + 9, 8, "=data!C" + str(count * 4 + 2), merge_format)
-            sheet_main.merge_range((count * 52) + 9,11, count * 52 + 9, 13, "=data!C" + str(count * 4 + 3), merge_format)
-            sheet_main.merge_range((count * 52) + 9,16, count * 52 + 9, 18, "=data!C" + str(count * 4 + 4), merge_format)
+            sheet_main.merge_range((count * 52) + 9, 1, count * 52 + 9, 3, "=data!C" + str(count * 4 + 1), product_no_format)
+            sheet_main.merge_range((count * 52) + 9,6, count * 52 + 9, 8, "=data!C" + str(count * 4 + 2), product_no_format)
+            sheet_main.merge_range((count * 52) + 9,11, count * 52 + 9, 13, "=data!C" + str(count * 4 + 3), product_no_format)
+            sheet_main.merge_range((count * 52) + 9,16, count * 52 + 9, 18, "=data!C" + str(count * 4 + 4), product_no_format)
 
             sheet_main.merge_range((count * 52) + 10, 0, count * 52 + 22, 3, "=data!D" + str(count * 4 + 1), merge_format)
             sheet_main.merge_range((count * 52) + 10, 5, count * 52 + 22, 8, "=data!D" + str(count * 4 + 2), merge_format)
@@ -164,20 +165,26 @@ class productSpec(models.AbstractModel):
         for sale_order in lines:
             sale_order_lines=self.find_sale_order_line(sale_order.id)
             if sale_order_lines :
-                for index,sl in enumerate(sale_order_lines):
-                    prod_name=""
+                for index,sl in enumerate(sale_order_lines.filtered(lambda x: not x.is_pack_outside)):
+                    categ_name=""
                     p_type=""
+                    prod_no=""
+                    qty=0
                     if sl.product_id.product_tmpl_id.categ_id.name:
-                        prod_name = sl.product_id.product_tmpl_id.categ_id.name 
+                        categ_name = sl.product_id.product_tmpl_id.categ_id.name 
                     if sl.p_type:
                         if sl.p_type == "special":
                             p_type = "別注"
                         elif sl.p_type == "custom":
-                            p_type = "特注"    
+                            p_type = "特注"  
+                    if sl.product_id.product_tmpl_id.product_no  :
+                        prod_no=sl.product_id.product_tmpl_id.product_no 
+                    if sl.product_uom_qty :
+                        qty=int(sl.product_uom_qty)
 
-                    sheet.write(index, 0,sl.product_uom_qty, bold)
-                    sheet.write(index, 1, prod_name + " " + p_type, wrap_format)
-                    sheet.write(index, 2,"ダイアナ:" + str(sl.price_total), bold)
+                    sheet.write(index, 0,qty, bold)
+                    sheet.write(index, 1, categ_name + " " + p_type, wrap_format)
+                    sheet.write(index, 2,prod_no, product_no_format)
 
                     if sl.product_id.image_256:
                         image_product_db = base64.b64decode(sl.product_id.image_256)
@@ -199,11 +206,29 @@ class productSpec(models.AbstractModel):
                             sheet_main.insert_image(row,col,"test",{'image_data': img_io})
                             
                     attributes = sl.product_id.product_template_attribute_value_ids
+
+                    size_detail = ''
+                    if sl.product_id.product_tmpl_id.width:
+                        size_detail += "W" + str(sl.product_id.product_tmpl_id.width) + "*"
+
+                    if sl.product_id.product_tmpl_id.depth:
+                        size_detail += "D" + str(sl.product_id.product_tmpl_id.depth) + "*"
+
+                    if sl.product_id.product_tmpl_id.height:
+                        size_detail += "H" + str(sl.product_id.product_tmpl_id.height) + "*"
+
+                    if sl.product_id.product_tmpl_id.sh:
+                        size_detail += "SH" + str(sl.product_id.product_tmpl_id.sh) + "*"
+
+                    if sl.product_id.product_tmpl_id.ah:
+                        size_detail += "AH" + str(sl.product_id.product_tmpl_id.ah) + "*"
+
                     attr=""
                     if attributes:
                         for attribute in attributes :
-                            attr += attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n"
-                            sheet.write(index, 4, attr, wrap_format)
+                            attr += attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" 
+                        attr += size_detail
+                        sheet.write(index, 4, attr, wrap_format)
                         
                         # take first 4 element of record
                         attrs_has_img = [x for x in sl.product_id.product_template_attribute_value_ids if x.product_attribute_value_id.image][:4]

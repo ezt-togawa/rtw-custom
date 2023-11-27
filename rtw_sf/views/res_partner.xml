@@ -100,7 +100,7 @@
                 <xpath expr="//page[@name='internal_notes']" position="after">
                     <page name="case" string="case">
                         <group>
-                            <field name="case"/>
+                            <field name="case" readonly="1"/>
                         </group>
                         <group>
 

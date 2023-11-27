@@ -21,12 +21,12 @@
                             'B12':'sale_order_amount_total${value or ""}',
                             'D5': 'sale_order_estimated_shipping_date',
                             'D6': 'forwarding_address${value or ""}',
-                            'D7': 'note${value or ""}',
+                            'D7': 'special_note${value or ""}',
                             'E13':'sale_order_total_list_price${value or ""}',
                             'G13':'amount_untaxed${value or ""}',
                             'G14':'name${value or ""}'
                         },
-                        'order_line': {
+                        'list_order_line': {
                             'A17': 'sale_order_index${value or ""}#{style=text;fill=grey}',
                             'B17': 'sale_order_name${value or ""}#{style=text;fill=grey}',
                             'C17': 'sale_order_number_and_size#{style=text;fill=grey}',

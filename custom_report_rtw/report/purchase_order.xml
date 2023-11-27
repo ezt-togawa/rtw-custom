@@ -64,7 +64,7 @@
                 </div>
                 <div> 納品場所: <span t-field="docs.forwarding_address" />
                 </div>
-                <div> 備考: <span t-field="docs.note" />
+                <div> 備考: <span t-field="docs.special_note" />
                 </div>
               </div>
               <div class="col-4" name="company_address">
@@ -96,7 +96,7 @@
             </div>
             <table
               class="table">
-              <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
+              <t t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l" t-groupby="10"
                 t-att-last="last">
                 <t t-set="total_subprice"
                   t-value="total_subprice + l.price_subtotal" />

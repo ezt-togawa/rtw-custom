@@ -48,18 +48,17 @@ class MrpProduction(models.Model):
                 production_type = ''
                 production_memo = ''
                 sale_order_line = False
-
                 search_criteria = [ #limit 10 times
-                    ('move_ids', 'in', record.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
                 ]
 
                 for search in search_criteria: #find sale_order_line
@@ -103,16 +102,16 @@ class MrpProduction(models.Model):
         for record in self:
                 sale_order_line = []
                 search_criteria = [ #limit 10 times
-                    ('move_ids', 'in', record.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
-                    ('move_ids', 'in', record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.id),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
                 ]
 
                 for search in search_criteria: #find sale_order_line

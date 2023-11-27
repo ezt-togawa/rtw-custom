@@ -17,22 +17,21 @@
                             'A3': 'send_company${value or ""}',
                             'A4': 'to_receiver${value or ""}',
                             'H9': 'printing_staff${value or ""}',
-                            'B7':'name${value or ""}',
                             'B9': 'amount_untaxed${value or ""}',
                             'B10':'amount_tax${value or ""}',
                             'B11':'amount_total${value or ""}',
                             'E3': 'acc_move_invoice_date_due${value or ""}',
-                            'E4': 'acc_move_payment_term${value or ""}',
-                            'E5': 'partner_id.bank_ids.bank_id.name${value or ""}',
-                            'E6': 'partner_id.bank_ids.bank_id.street${value or ""}',
-                            'E7': 'bank_acc_number${value or ""}',
-                            'E9': 'acc_move_shipping_date${value or ""}',
                             'E10': 'partner_id.street${value or ""}',
                             'E11':'narration${value or ""}',
                             'H1': 'acc_move_current_date',
                             'G13': 'amount_total${value or ""}',
                             'I13': 'amount_untaxed${value or ""}',
-                            'I14': 'name${value or ""}'
+                            'I14': 'acc_move_invoice_name${value or ""}'
+                        },
+                        'sale_order':{
+                            'B7':'title${value or ""}',
+                            'E4': 'payment_term_id.name${value or ""}',
+                            'E9': 'sale_order_preferred_delivery_date${value or ""}',
                         },
                         'account_move_line':{
                             'A17': 'acc_line_index${value or ""}#{style=text;fill=grey}',
