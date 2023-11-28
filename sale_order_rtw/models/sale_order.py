@@ -19,13 +19,14 @@ class sale_order_rtw(models.Model):
     ],
         string="process", default='draft')
     preferred_delivery_date = fields.Date(string="Preferred delivery date", tracking=True)
+    warehouse_arrive_date = fields.Date(string="Warehouse arrive date", tracking=True)
     preferred_delivery_period = fields.Char(string="Preferred delivery period")
     forwarding_address_zip = fields.Char("forwarding address zip")
     forwarding_address = fields.Text(
         string="forwarding address",
         required=False,
     )
-    shiratani_entry_date = fields.Date(string="Shiratani entry Date")
+    shiratani_entry_date = fields.Date(string="Shiratani entry Date", tracking=True)
     depo_date = fields.Date(string="Depo Date")
     customer_order_number = fields.Char('Customer Order Number')
     items_under_consideration = fields.Boolean('Items under consideration', default=0)
@@ -82,3 +83,17 @@ class sale_order_rtw(models.Model):
             self.shipping_to_text = 'デポ入れまで'
         if self.sipping_to == "inst":
             self.shipping_to_text = '搬入設置まで'
+    
+    @api.onchange('shiratani_entry_date')
+    def update_order_lines_shiratani_date(self):
+        for order in self:
+            order.order_line.update({
+                'shiratani_date': order.shiratani_entry_date
+            })
+
+    @api.onchange('warehouse_arrive_date')
+    def update_order_lines_depo_date(self):
+        for order in self:
+            order.order_line.update({
+                'depo_date': order.warehouse_arrive_date
+            })
