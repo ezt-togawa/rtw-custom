@@ -61,9 +61,9 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         })
                         this.props.items.action = [...action, ...excelArray];
                     }
-
-                    let pdf = ['配送作業依頼書', '出荷依頼書']
-                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !pdf.includes(val.name))
+                    
+                    hidePrint = ['配送作業依頼書', '出荷依頼書','Delivery Slip','配送伝票']
+                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name))
                 }
 
                 // sale_order_view_list
@@ -77,10 +77,9 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     }
                     let action = [...data_sale_order_list.action]
                     let prints = [...data_sale_order_list.print]
-
-                    this.props.items.print = prints.filter(val => val.name === "Quotation / Order" || val.name === "見積 / オーダ")
-                    let showExcel = action.filter(val => val.name !== "商品仕様書")
-                    this.props.items.action = [...showExcel]
+                    hidePrint = ["Quotation / Order", "見積 / オーダ", "商品仕様書(EXCEL)", "御見積書", "定価見積書", "単価見積り書", "注文書", "商品仕様書", "御見積書（海外）"]
+                    this.props.items.print = prints.filter(val => !hidePrint.includes(val.name))
+                    this.props.items.action = [...action]
                 }
 
                 // task_invoice_list
@@ -95,7 +94,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     let action = [...data_account_move_list.action]
                     let prints = [...data_account_move_list.print]
 
-                    this.props.items.print = prints.filter(val => val.name !== "請求書")
+                    hidePrint = ["Invoices", "Original Bills", "Invoices without Payment", "Multiple Invoice Copies","invoice", "Invoice", "請求書", "未払請求書", "オリジナル手形"]
+                    this.props.items.print = prints.filter(val => !hidePrint.includes(val.name))
                 }
 
                 // task_inventory_manfac_list = ["仕掛品伝票一覧"]
@@ -118,8 +118,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     this.props.items.action = [...action, ...excelArray];
-                    let pdf = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "検品発注書"]
-                    this.props.items.print = prints.filter(val => !pdf.includes(val.name));
+                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ"]
+                    this.props.items.print = prints.filter(val => !hidePrint.includes(val.name));
                 }
 
                 // task_inventory_reporting = ["棚卸記入リスト"]
@@ -179,9 +179,24 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                             return val
                         }
                     })
-
                     this.props.items.action = [...action, ...excel]
-                    this.props.items.print = prints.filter(val => val.display_name !== "商品仕様書(EXCEL)")
+                    hidePrint = ["Quotation / Order", "見積 / オーダ", "商品仕様書(EXCEL)"]
+                    this.props.items.print = prints.filter(val => !hidePrint.includes(val.name))
+                }
+
+                // task_invoice_form
+                if (this.env.view.model == "account.move") {
+
+                    if (data_account_move_list === null) {
+                        data_account_move_list = {
+                            action: [...this.props.items.action],
+                            print: [...this.props.items.print],
+                        };
+                    }
+                    let action = [...data_account_move_list.action]
+                    let prints = [...data_account_move_list.print]
+                    hidePrint = ["Invoices", "Original Bills", "Invoices without Payment", "Multiple Invoice Copies", "invoice", "Invoice", "未払請求書", "オリジナル手形"]
+                    this.props.items.print = prints.filter(val => !hidePrint.includes(val.name) && val.report_name === "custom_report_rtw.report_invoice_3")
                 }
 
                 // task_inventory_manfac_form= ["商品ラベルシール"]
@@ -205,7 +220,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     this.props.items.action = [...action, ...excel]
-                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)'));
+                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && val.name !== "Production Order" && val.name !== "製造オーダ")
                 }
 
                 // task_template = ["在庫状況一覧"]
@@ -257,7 +272,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         })
                         this.props.items.action = [...action, ...excelArray];
                     }
-                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)'))
+                    hidePrint = ['Delivery Slip','配送伝票']
+                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name) )
                 }
             }
             this.actionItems = await this._setActionItems(this.props);
@@ -265,14 +281,6 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
         },
 
         async _updateData(nextProps) {
-            var breadcrumbElement = document.querySelector('.breadcrumb');
-            if (breadcrumbElement === null) return
-            let location_now = ""
-            if (breadcrumbElement) {
-                location_now = breadcrumbElement.textContent?.trim();
-            } else {
-                location_now = this.env.action.name || this.env.action.display_name
-            }
             let view_type_now = this.env.view.type
             if (view_type_now === "list") {
                 if (this.env.view.model == "stock.picking") {
@@ -295,23 +303,25 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         })
                         nextProps.items.action = [...action, ...excelArray];
                     }
-                    let pdf = ['配送作業依頼書', '出荷依頼書']
-                    nextProps.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !pdf.includes(val.name))
+                    hidePrint = ['配送作業依頼書', '出荷依頼書','Delivery Slip','配送伝票']
+                    nextProps.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name))
                 }
 
                 // let task_sale_order_list
                 if (this.env.view.model == "sale.order") {
                     let action = [...data_sale_order_list.action]
                     let prints = [...data_sale_order_list.print]
-                    nextProps.items.print = prints.filter(val => val.name === "Quotation / Order" || val.name === "見積 / オーダ")
-                    let showExcel = action.filter(val => val.name !== "商品仕様書")
-                    nextProps.items.action = [...showExcel]
+                    hidePrint = ["Quotation / Order", "見積 / オーダ", "商品仕様書(EXCEL)", "御見積書", "定価見積書", "単価見積り書", "注文書", "商品仕様書", "御見積書（海外）"]
+                    nextProps.items.print = prints.filter(val => !hidePrint.includes(val.name))
+                    nextProps.items.action = [...action]
                 }
 
                 // let task_invoice_list
                 if (this.env.view.model == "account.move") {
                     let prints = [...data_account_move_list.print]
-                    nextProps.items.print = prints.filter(val => val.name !== "請求書")
+
+                    hidePrint = ["Invoices", "Original Bills", "Invoices without Payment", "Multiple Invoice Copies","invoice", "Invoice", "請求書", "未払請求書", "オリジナル手形"]
+                    nextProps.items.print = prints.filter(val => !hidePrint.includes(val.name))
                 }
 
                 // let task_manfac_list = ["仕掛品伝票一覧"]
@@ -330,8 +340,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     nextProps.items.action = [...action, ...excelArray];
-                    let pdf = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", , "検品発注書"]
-                    nextProps.items.print = prints.filter(val => !pdf.includes(val.name));
+                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ"]
+                    nextProps.items.print = prints.filter(val => !hidePrint.includes(val.name));
                 }
 
                 // let task_reporting = ["棚卸記入リスト"]
