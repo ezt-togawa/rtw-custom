@@ -14,7 +14,7 @@
                 '__EXPORT__': {
                     '定価御見積書': {
                         '_HEAD_': {
-                            'A2':'sale_order_send_to_company${value or ""}',
+                            'A2':'sale_order_send_to_company2${value or ""}',
                             'A3':'sale_order_company_owner${value or ""}',
                             'B7':'title${value or ""}',
                             'B9': 'sale_order_amount_untaxed${value or ""}',

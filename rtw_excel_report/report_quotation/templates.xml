@@ -14,13 +14,17 @@
                 '__EXPORT__': {
                     '御見積書': {
                         '_HEAD_': {
+                            'A3': 'sale_order_send_to_company2${value or ""}',
                             'A4': 'sale_order_company_owner${value or ""}',
+                            'B7':'title${value or ""}',
                             'B9': 'sale_order_amount_untaxed${value or ""}',
                             'B10':'sale_order_amount_tax${value or ""}',
                             'B11':'sale_order_amount_total${value or ""}',
                             'E3': 'sale_order_estimated_shipping_date${value or ""}',
                             'E4': 'workdays${value or ""}',
                             'E5': 'sale_order_date_order${value or ""}',
+                            'E6': 'payment_term_id.name${value or ""}',
+                            'E7': 'forwarding_address${value or ""}',
                             'E9': 'sale_order_validity_date${value or ""}',
                             'E10':'special_note${value or ""}',
                             'I9': 'user_id.name${value or ""}',

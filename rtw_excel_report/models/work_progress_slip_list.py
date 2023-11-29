@@ -6,15 +6,21 @@ class productSpec(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
-        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#CCCCCC', 'border': 1})
-        format_table_left = workbook.add_format({'align': 'left','valign': 'vcenter','bg_color': '#CCCCCC', 'border': 1})
-        format_wrap = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True, 'border': 1})
-        format_date = workbook.add_format({'align': 'left','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', 'bottom': 1})
-        format_left = workbook.add_format({'align': 'left','text_wrap':True})
-        format_left_has_border = workbook.add_format({'align': 'left','valign': 'vcenter','text_wrap':True, 'border': 1})
-        format_right_has_border = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True, 'border': 1})
-        format_name_company = workbook.add_format({'align': 'center','bottom':1})
-        format_sheet_title = workbook.add_format({ 'align': 'center','valign': 'vcenter','font_size':18,'bold': True})
+        # apply default font for workbook
+        font_name = 'HGPｺﾞｼｯｸM'
+        font_family = workbook.add_format({'font_name': font_name})
+
+        # different format  width font 
+        format_sheet_title = workbook.add_format({ 'align': 'center','valign': 'vcenter','font_size':18,'font_name': font_name})
+        format_name_company = workbook.add_format({'align': 'center','bottom':1,'font_name': font_name,'font_size':10})
+        format_left = workbook.add_format({'align': 'left','text_wrap':True,'font_name': font_name,'font_size':10})
+
+        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#CCCCCC', 'border': 1,'font_name': font_name,'font_size':9})
+        format_table_left = workbook.add_format({'align': 'left','valign': 'vcenter','bg_color': '#CCCCCC', 'border': 1,'font_name': font_name,'font_size':9})
+        format_wrap = workbook.add_format({'align': 'center','valign': 'vcenter','text_wrap':True, 'border': 1,'font_name': font_name,'font_size':9})
+        format_left_has_border = workbook.add_format({'align': 'left','valign': 'vcenter','text_wrap':True, 'border': 1,'font_name': font_name,'font_size':9})
+        format_right_has_border = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True, 'border': 1,'font_name': font_name,'font_size':9})
+        format_date = workbook.add_format({'align': 'left','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', 'bottom': 1,'font_name': font_name,'font_size':9})
     
         #current time
         day = str(datetime.now().day)
@@ -32,17 +38,18 @@ class productSpec(models.AbstractModel):
         for index,name_company in enumerate(unique_name_company):
             sheet_name = f"仕掛品伝票一覧 - {name_company}"  
             sheet = workbook.add_worksheet(sheet_name)
-            sheet.set_column("A:A", width=8)  
-            sheet.set_column("B:B", width=18)  
-            sheet.set_column("C:C", width=15)  
-            sheet.set_column("D:D", width=30)  
-            sheet.set_column("E:E", width=15)  
-            sheet.set_column("F:F", width=15)
-            sheet.set_column("G:G", width=15)  
-            sheet.set_column("H:H", width=20)  
-            sheet.set_column("I:I", width=30)  
-            sheet.set_column("J:J", width=18)  
-            sheet.set_column("K:K", width=17)  
+            sheet.set_column("A:A", width=8,cell_format=font_family)  
+            sheet.set_column("B:B", width=18,cell_format=font_family)  
+            sheet.set_column("C:C", width=15,cell_format=font_family)  
+            sheet.set_column("D:D", width=30,cell_format=font_family)  
+            sheet.set_column("E:E", width=15,cell_format=font_family)  
+            sheet.set_column("F:F", width=15,cell_format=font_family)
+            sheet.set_column("G:G", width=15,cell_format=font_family)  
+            sheet.set_column("H:H", width=20,cell_format=font_family)  
+            sheet.set_column("I:I", width=30,cell_format=font_family)  
+            sheet.set_column("J:J", width=18,cell_format=font_family)  
+            sheet.set_column("K:K", width=17,cell_format=font_family) 
+            sheet.set_column("L:Z", None,cell_format=font_family) 
 
             sheet.merge_range(1, 5,1,7, "≪仕掛品伝票一覧≫ ", format_sheet_title)
             sheet.write(0,10, current_date, format_left)

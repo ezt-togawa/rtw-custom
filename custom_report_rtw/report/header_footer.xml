@@ -115,65 +115,49 @@
     </template>
     <template id="SO_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row" style="font-weight:bold">
+            <div class="row">
                 <div class="col-6 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">御見積書</span>
+                    <span class="ml-2 size20">御見積書</span>
                 </div>
-                <div class="col-6 text-right mt-2">
+                <div class="col-6 text-right mt-2 size12">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>
             </div>
-            <!-- <div t-if="page==1" class="row">
-                <div class="col-4">
-                    <div><span class="so_title" t-field="o.partner_id.name" /> 様 </div>
-                    <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
-                        御依頼の件、下記の通りお見積り致しました。 <br /> ご査収の程宜しくお願い致します。 </div>
-                    <div>税抜合計: <span class="" t-field="o.amount_untaxed" />
-                    </div>
-                    <div>消費税: <span class="" t-field="o.amount_tax" />
-                    </div>
-                    <div>税込合計: <span class="so_price" t-field="o.amount_total" />
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div>納品希望日： <span t-field="o.preferred_delivery_date" />
-                    </div>
-                    <div>製作日数：</div>
-                    <div>発注期限：</div>
-                    <div>納品場所：</div>
-                    <div>支払条件：</div>
-                    <div>見積有効期限： <span t-field="o.validity_date" />
-                    </div>
-                </div>
-                <div class="col-4" name="company_address">
-                    <div t-field="company.partner_id"
-                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
-                    />
-                    <div>tel: <span t-field="company.partner_id.phone" />
-                    </div>
-                    <div>fax: <span t-field="company.partner_id.fax" />
-                    </div>
-                    <span t-field="company.partner_id.display_name" />
-                </div>
-            </div> -->
         </div>
     </template>
-    <template id="SO_list_price_header_layout">
+    <template id="SO_header_layout_oversea">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row" style="font-weight:bold">
+            <div class="row">
                 <div class="col-6 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">定価御見積書</span>
+                    <span class="ml-2 size20">御見積書（海外）</span>
                 </div>
-                <div class="col-6 text-right mt-2">
+                <div class="col-6 text-right mt-2 size12">
+                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                        t-esc="time.strftime('%m')" /> 月 <t
+                        t-esc="time.strftime('%d')" /> 日 </div>
+            </div>
+        </div>
+    </template>
+    <template id="SO_list_price_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row">
+                <div class="col-6 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                        style="max-height: 45px;"
+                        alt="Logo" />
+                    <span class="ml-2 size20">定価御見積書</span>
+                </div>
+                <div class="col-6 text-right mt-2 size12">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>
@@ -182,15 +166,15 @@
     </template>
     <template id="SO_unit_price_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row" style="font-weight:bold">
+            <div class="row">
                 <div class="col-6 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">単価御見積書</span>
+                    <span class="ml-2 size20">単価御見積書</span>
                 </div>
-                <div class="col-6 text-right mt-2">
+                <div class="col-6 text-right mt-2 size12">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>
@@ -199,16 +183,15 @@
     </template>
     <template id="SO_invoice_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row" style="font-weight:bold">
+            <div class="row">
                 <div class="col-6 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">御請求書
-                    </span>
+                    <span class="ml-2 size20">御請求書</span>
                 </div>
-                <div class="col-6 text-right mt-2">
+                <div class="col-6 text-right mt-2 size12">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>
@@ -223,8 +206,7 @@
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">単価御見積書
-                    </span>
+                    <span class="ml-2 size20">単価御見積書</span>
                 </div>
                 <div class="col-6 text-right mt-2">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
@@ -235,15 +217,15 @@
     </template>
     <template id="SO_purchase_order_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row" style="font-weight:bold">
+            <div class="row">
                 <div class="col-6 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">注文書</span>
+                    <span class="ml-2 size20">注文書</span>
                 </div>
-                <div class="col-6 text-right mt-2">
+                <div class="col-6 text-right mt-2 size12">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>
@@ -253,17 +235,17 @@
     <template id="SO_purchase_order_sheet_header_layout">
         <t t-foreach="docs.sale_order" t-as="so">
             <div t-attf-class="header" t-att-style="report_header_style">
-                <div class="row" style="font-weight:bold">
-                    <div class="col-8 mb4">
+                <div class="row">
+                    <div class="col-8">
                         <img
                             src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                             style="max-height: 45px;"
                             alt="Logo" />
-                        <span style="font-size:20px" class="ml-2">発注書</span>
-                        <span style="font-size:16px" class="ml-5">株式会社 <span
-                                t-esc="so.partner_id.name" /> 御中</span>
+                        <span class="ml-2 size20"> 発注書 </span>
+                        <span class="ml-5 size15"> 株式会社 <span
+                                t-esc="so.partner_id.name" /> 御中 </span>
                     </div>
-                    <div class="col-4 text-right mt-2">
+                    <div class="col-4 text-right mt-2 size12">
                         <t t-esc="time.strftime('%Y')" /> 年 <t
                             t-esc="time.strftime('%m')" /> 月 <t
                             t-esc="time.strftime('%d')" /> 日 </div>
@@ -274,14 +256,14 @@
     <template id="SO_inspection_order_form_header_layout">
         <t t-foreach="docs.sale_order" t-as="so">
             <div t-attf-class="header" t-att-style="report_header_style">
-                <div class="row" style="font-weight:bold">
+                <div class="row">
                     <div class="col-8 mb4">
                         <img
                             src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                             style="max-height: 45px;"
                             alt="Logo" />
-                        <span style="font-size:20px" class="ml-2">検品発注書</span>
-                        <span style="font-size:16px" class="ml-5">株式会社 <span
+                        <span class="ml-2 size20">検品発注書</span>
+                        <span class="ml-5 size15">株式会社 <span
                                 t-esc="so.partner_id.name" /> 御中</span>
                     </div>
                     <div class="col-4 text-right mt-2">
@@ -295,14 +277,14 @@
     <template id="SO_purchase_order_sheet_for_part_header_layout">
         <t t-foreach="docs" t-as="so">
             <div t-attf-class="header" t-att-style="report_header_style">
-                <div class="row" style="font-weight:bold">
+                <div class="row">
                     <div class="col-8 mb4">
                         <img
                             src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                             style="max-height: 45px;"
                             alt="Logo" />
-                        <span style="font-size:20px" class="ml-2">発注書(部材用)</span>
-                        <span style="font-size:16px" class="ml-5"> 株式会社 <t
+                        <span class="ml-2 size20">発注書(部材用)</span>
+                        <span class="ml-5 size15"> 株式会社 <t
                                 t-if="so.partner_id.commercial_company_name">
                                 <span t-esc="so.partner_id.commercial_company_name" />
                             </t>
@@ -312,7 +294,7 @@
                             </t>
                             御中 </span>
                     </div>
-                    <div class="col-4 text-right mt-2">
+                    <div class="col-4 text-right mt-2 size12">
                         <t t-esc="time.strftime('%Y')" /> 年 <t
                             t-esc="time.strftime('%m')" /> 月 <t
                             t-esc="time.strftime('%d')" /> 日 </div>
@@ -322,20 +304,20 @@
     </template>
     <template id="SO_delivery_order_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row" style="font-weight:bold">
+            <div class="row">
                 <div class="col-8 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">配送依頼書</span>
-                    <span style="font-size:16px" class="ml-5">株式会社 <span
+                    <span class="ml-2 size20">配送依頼書</span>
+                    <span class="ml-5 size15">株式会社 <span
                             t-if="docs.partner_id.parent_id"
                             t-esc="docs.partner_id.parent_id.name" /><span
                             t-if="not docs.partner_id.parent_id"
                             t-esc="docs.partner_id.name" /> 御中</span>
                 </div>
-                <div class="col-4 text-right mt-2">
+                <div class="col-4 text-right mt-2 size12">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>
@@ -344,20 +326,20 @@
     </template>
     <template id="SO_shipping_order_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row" style="font-weight:bold">
+            <div class="row">
                 <div class="col-8 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">出荷依頼書</span>
-                    <span style="font-size:16px" class="ml-5">株式会社 <span
+                    <span class="ml-2 size20">出荷依頼書</span>
+                    <span class="ml-5 size15">株式会社 <span
                             t-if="docs.partner_id.parent_id"
                             t-esc="docs.partner_id.parent_id.name" /><span
                             t-if="not docs.partner_id.parent_id"
                             t-esc="docs.partner_id.name" /> 御中</span>
                 </div>
-                <div class="col-4 text-right mt-2">
+                <div class="col-4 text-right mt-2 size12">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>
@@ -366,16 +348,15 @@
     </template>
     <template id="SO_product_spec_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row" style="font-weight:bold">
+            <div class="row">
                 <div class="col-6 mb4">
                     <img
                         src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                         style="max-height: 45px;"
                         alt="Logo" />
-                    <span style="font-size:20px" class="ml-2">商品仕様書
-                    </span>
+                    <span class="ml-2 size20">商品仕様書</span>
                 </div>
-                <div class="col-6 text-right mt-2">
+                <div class="col-6 text-right mt-2 size12">
                     <t t-esc="time.strftime('%Y')" /> 年 <t
                         t-esc="time.strftime('%m')" /> 月 <t
                         t-esc="time.strftime('%d')" /> 日 </div>

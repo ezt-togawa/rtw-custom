@@ -32,8 +32,8 @@
                   t-field="docs.partner_id.vat" />
               </p>
             </t>
-            <div style="margin-top:-50px;font-weight:bold">
-              <div class="so_title"> 件名 <span t-esc="docs.title" />
+            <div style="margin-top:-50px">
+              <div class="size14"> 件名 <span class="size16" t-esc="docs.title" />
               </div>
             </div>
             <table class="table table-condensed">
@@ -45,20 +45,18 @@
                   <div
                     class="product-container">
                     <div class="row" style="width:100%">
-                      <div class="col-2 product-quantity"
-                      >
+                      <div class="col-2 product-quantity">
                         <div
                           class="quantity"
                           t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
                       </div>
                       <div class="col-10 name">
-                        <t t-if="l.product_id.product_tmpl_id.categ_id.name">  
-                          <span style="font-size:14px;" t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                      </t>
-                        <div>
-                          <t t-if="l.product_id.product_tmpl_id.product_no">  
-                            <span style="font-size:14px;" t-field="l.product_id.product_tmpl_id.product_no" />
-                        </t>
+                        <span class="size12"
+                          t-if="l.product_id.product_tmpl_id.categ_id.name"
+                          t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                        <div class="size14">
+                          <span t-if="l.product_id.product_tmpl_id.product_no"
+                            t-field="l.product_id.product_tmpl_id.product_no" />
                         </div>
                       </div>
                     </div>
@@ -94,7 +92,7 @@
                           t-field="l.product_id.ah" />
                       </t>
                     </div>
-                    <div style="width:100%;margin:0 auto;font-size:14px;">
+                    <div style="width:100%;margin:0 auto;font-size:12px;">
                       <div
                         t-foreach="l.product_id.product_template_attribute_value_ids.filtered(lambda x: x.product_attribute_value_id.image)"
                         t-as="string_line"
