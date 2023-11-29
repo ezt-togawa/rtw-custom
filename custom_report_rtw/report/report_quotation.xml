@@ -20,7 +20,7 @@
                         </t>
                     </t>
                     <t t-call="custom_report_rtw.SO_header_layout"></t>
-                    <div class="page">
+                    <div class="page size13">
                         <t
                             t-set="type">quotation</t>
                         <t t-set="address">
@@ -35,9 +35,9 @@
                         <div t-if="docs.company_id.logo or docs.company_id.report_header"
                             class="row zero_min_height">
                         </div>
-                        <div class="row" style="margin-top:-50px;font-weight:bold">
+                        <div class="row size13" style="margin-top:-50px;">
                             <div class="col-4">
-                                <div> 株式会社<span class="so_title"
+                                <div> 株式会社<span 
                                         t-field="docs.company_id.partner_id.name" /> 御中</div>
                                 <div>
                                     <span
@@ -51,7 +51,7 @@
                                 <br />
                                 <div>税抜合計: <span t-field="docs.amount_untaxed" />
                                 </div>
-                                <div class="so_title">消費税: <span t-field="docs.amount_tax" />
+                                <div >消費税: <span t-field="docs.amount_tax" />
                                 </div>
                                 <div class="so_price total-price">
                                     <span>税込合計</span>
@@ -62,23 +62,23 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div>納品希望日： <span t-if="docs.estimated_shipping_date"
-                                        t-esc="docs.estimated_shipping_date.strftime('%Y-%m-%d')" />
+                                <div>納品希望日： <span t-if="docs.sale_order_estimated_shipping_date"
+                                        t-esc="docs.sale_order_estimated_shipping_date" />
                                 </div>
                                 <div> 製作日数： <span t-if="docs.workdays"
                                         t-esc="docs.workdays" />
                                 </div>
-                                <div> 発注期限： <span t-esc="docs.date_order.strftime('%Y-%m-%d')" />
+                                <div> 発注期限： <span t-esc="docs.sale_order_date_order" />
                                 </div>
                                 <div>
-                                    納品場所：
+                                    納品場所：<span t-esc="docs.payment_term_id.name " />
                                 </div>
                                 <div>
-                                    支払条件：
+                                    支払条件：<span t-esc="docs.forwarding_address " />
                                 </div>
                                 <br />
                                 <div>見積有効期限： <span
-                                        t-field="docs.validity_date" />
+                                        t-field="docs.sale_order_validity_date" />
                                 </div>
                                 <div> 備考: <span t-field="docs.special_note" />
                                 </div>
@@ -117,8 +117,7 @@
                                     t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                                 <t t-if="l_index == 0">
                                     <thead>
-                                        <tr
-                                            style="background-color:#595959;color:#ffffff;padding:5px 0px 10px 0px;font-size:13px;">
+                                        <tr class="table-title bold">
                                             <th class="text-center" style="width:1%">№</th>
                                             <th class="text-center" style="width:18%">品名</th>
                                             <th class="text-center" style="width:20%">品番・サイズ</th>
@@ -132,15 +131,15 @@
                                     </thead>
                                 </t>
                                 <tbody class="invoice_tbody">
-                                    <tr style="border-bottom:solid 1px #595959;font-size:12px;">
-                                        <td t-esc="l_index+1" class="text-center">
+                                    <tr class="size15 table-border-bottom">
+                                        <td t-esc="l_index+1" class="text-center size12">
                                         </td>
-                                        <td>
+                                        <td class="size11">
                                             <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
                                             <br />
                                             <span t-if="l.p_type" t-field="l.p_type" />
                                         </td>
-                                        <td>
+                                        <td class="size13">
                                             <div t-if="l.product_id.product_no"
                                                 t-field="l.product_id.product_no" />
                                             <t t-if="l.product_id.width > 0">W<span
@@ -159,7 +158,7 @@
                                                     t-field="l.product_id.ah" />
                                             </t>
                                         </td>
-                                        <td>
+                                        <td class="size12">
                                             <t
                                                 t-foreach="l.product_id.product_template_attribute_value_ids"
                                                 t-as="string_line"> ● <span
@@ -179,9 +178,9 @@
                                                     t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="size11">
                                             <span t-esc="'{0:,.2f}'.format(l.discount)" />% </td>
-                                        <td class="text-center">
+                                        <td class="text-center size12">
                                             <span
                                                 style="font-size:16px"
                                                 t-esc="'{0:,.0f}'.format(l.price_unit)" />
@@ -207,9 +206,8 @@
                             <div>販売価格合計 : <span
                                     t-esc="docs.amount_untaxed" /></div>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <span style="font-size:13px"
-                                t-field="docs.name" />
+                        <div class="d-flex justify-content-end size12">
+                            <span t-field="docs.name" />
                         </div>
                     </div>
                     <t t-call="custom_report_rtw.page_footer_layout"></t>

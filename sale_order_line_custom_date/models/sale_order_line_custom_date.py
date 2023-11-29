@@ -12,14 +12,16 @@ class sale_order_line_custom_date(models.Model):
         ('special', '別注'),
         ('custom', '特注'),
     ],string = "製品タイプ")
-#     _description = 'sale_order_line_custom_date.sale_order_line_custom_date'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    @api.onchange('product_id')
+    def date_default(self):
+        for l in self:
+            if l.order_id.shiratani_entry_date :
+                l.shiratani_date=l.order_id.shiratani_entry_date
+            else:
+                l.shiratani_date=False
+
+            if l.order_id.warehouse_arrive_date :
+                l.depo_date=l.order_id.warehouse_arrive_date
+            else:
+                l.depo_date=False

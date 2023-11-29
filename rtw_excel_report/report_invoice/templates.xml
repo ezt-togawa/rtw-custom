@@ -18,7 +18,7 @@
                             'A4': 'to_receiver${value or ""}',
                             'H9': 'printing_staff${value or ""}',
                             'B9': 'amount_untaxed${value or ""}',
-                            'B10':'amount_tax${value or ""}',
+                            'B10':'amount_tax${value or 0}',
                             'B11':'amount_total${value or ""}',
                             'E3': 'acc_move_invoice_date_due${value or ""}',
                             'E10': 'partner_id.street${value or ""}',
