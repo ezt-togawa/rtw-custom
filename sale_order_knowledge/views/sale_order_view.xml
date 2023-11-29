@@ -8,38 +8,58 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[1]" position="replace">
                     <group>
-                        <group>
-                            <label for="overseas" />
-                            <div>
-                                <field name="overseas" />
-                                <field
-                                    name="shipping_type"
-                                    widget="selection_badge"
-                                    attrs="{'invisible': [('overseas', '=', False)]}" />
+                        <div class="d-flex">
+                            <group class="col-6">
+                                <label for="overseas" />
+                                <div>
+                                    <field name="overseas" />
+                                    <field
+                                        name="shipping_type"
+                                        widget="selection_badge"
+                                        attrs="{'invisible': [('overseas', '=', False)]}" />
+                                </div>
+                                <field name="status" string="status" widget="selection_badge" />
+                                <field name="customer_order_number" string="Customer Order Number" />
+                            </group>
+                            <div class="d-flex col-6" style="padding:0">
+                                <div style="border-right:1px solid #dddddd;width:150px;height:fit-content;">
+                                    <div>
+                                        <strong>配送補足</strong>
+                                    </div>
+                                    <div>
+                                        <strong>別注/特注補足</strong>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <button
+                                            name="knowledge_special"
+                                            type="object"
+                                            class="oe_stat_button"
+                                            style="color: #7C7BAD;padding:0;padding-left:6px; "
+                                        >
+                                            <attribute name="string">
+                                                <field name="knowledge_supplement_name"
+                                                    string="Knowledge Supplement Name" />
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button
+                                            name="knowledge_special"
+                                            type="object"
+                                            class="oe_stat_button"
+                                            style="color: #7C7BAD;padding:0;padding-left:6px;"
+                                        >
+                                            <attribute name="string">
+                                                <field name="knowledge_special_name"
+                                                    string="Knowledge Special Name" />
+                                            </attribute>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <field name="status" string="status" widget="selection_badge" />
-                            <field name="customer_order_number" string="Customer Order Number" />
-                        </group>
-                        <group>
-                            <label for="knowledge_supplement" string="配送補足" />
-                            <button
-                                string="路線便配送"
-                                name="knowledge_supplement"
-                                type="object"
-                                icon="fa-external-link"
-                                class="oe_stat_button"
-                                style="color: #7C7BAD;padding-top:0px;"
-                            />
-                            <label for="knowledge_special" string="別注/特注補足" />
-                            <button
-                                string="別注/特注要綱"
-                                name="knowledge_special"
-                                type="object"
-                                icon="fa-external-link"
-                                class="oe_stat_button"
-                                style="color: #7C7BAD;padding-top:0px;"
-                            />
-                        </group>
+                        </div>
                     </group>
                 </xpath>
             </field>
