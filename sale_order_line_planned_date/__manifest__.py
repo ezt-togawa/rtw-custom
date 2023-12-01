@@ -20,12 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management', 'stock' , 'sale','sale_sourced_by_line'],
+    'depends': ['base', 'sale_management', 'stock' , 'sale','sale_sourced_by_line','mrp'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/sale_order_view.xml'
+        'views/sale_order_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
