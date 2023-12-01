@@ -118,7 +118,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     this.props.items.action = [...action, ...excelArray];
-                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ"]
+                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ","Finished Product Label (ZPL)","Finished Product Label (PDF)","完成品ラベル(PDF)","Mrp order","mrp order"]
                     this.props.items.print = prints.filter(val => !hidePrint.includes(val.name));
                 }
 
@@ -220,7 +220,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     this.props.items.action = [...action, ...excel]
-                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && val.name !== "Production Order" && val.name !== "製造オーダ")
+                    hidePrint = ["Production Order", "製造オーダ","Finished Product Label (ZPL)","Finished Product Label (PDF)","完成品ラベル(PDF)","Mrp order","mrp order"]
+                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name))
                 }
 
                 // task_template = ["在庫状況一覧"]
@@ -340,7 +341,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     nextProps.items.action = [...action, ...excelArray];
-                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ"]
+                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ","Finished Product Label (ZPL)","Finished Product Label (PDF)","完成品ラベル(PDF)","Mrp order","mrp order"]
                     nextProps.items.print = prints.filter(val => !hidePrint.includes(val.name));
                 }
 
