@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api
 
-knowledge_supplement_id = 39
+knowledge_supplement_id = 38
 knowledge_special_id = 39
 class sale_order_knowledge(models.Model):
     _inherit = 'sale.order'
