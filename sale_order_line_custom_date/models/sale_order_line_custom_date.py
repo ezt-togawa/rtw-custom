@@ -25,3 +25,13 @@ class sale_order_line_custom_date(models.Model):
                 l.depo_date=l.order_id.warehouse_arrive_date
             else:
                 l.depo_date=False
+
+    def _prepare_add_missing_fields(self, values):
+        res = super(sale_order_line_custom_date,
+                    self)._prepare_add_missing_fields(values)
+        sale_order = self.env['sale.order'].search(
+            [('id', '=', values['order_id'])])
+        if sale_order:
+            res['shiratani_date'] = sale_order.shiratani_entry_date
+            res['depo_date'] = sale_order.warehouse_arrive_date
+        return res
