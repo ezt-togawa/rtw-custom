@@ -9,7 +9,19 @@
                 position="attributes">
                 <attribute name="string">予定日</attribute>
             </xpath>
-
+            <xpath expr="//div[@class='oe_button_box']"
+                position="after">
+                <field name="error_context" invisible="1" />
+                <div attrs="{'invisible':[('error_context','=',False)]}"
+                    style="float:right;"
+                    class="alert alert-danger" role="alert">予定日が前倒しで指定されています</div>
+            </xpath>
+            <xpath expr="//notebook"
+                position="before">
+                <div attrs="{'invisible':[('error_context','=',False)]}"
+                    style="float:right;"
+                    class="alert alert-danger" role="alert">予定日が前倒しで指定されています</div>
+            </xpath>
         </field>
     </record>
 </odoo>
