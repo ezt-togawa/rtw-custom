@@ -61,8 +61,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         })
                         this.props.items.action = [...action, ...excelArray];
                     }
-                    
-                    hidePrint = ['配送作業依頼書', '出荷依頼書','Delivery Slip','配送伝票']
+
+                    hidePrint = ['配送作業依頼書', '出荷依頼書', 'Delivery Slip', '配送伝票']
                     this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name))
                 }
 
@@ -94,7 +94,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     let action = [...data_account_move_list.action]
                     let prints = [...data_account_move_list.print]
 
-                    hidePrint = ["Invoices", "Original Bills", "Invoices without Payment", "Multiple Invoice Copies","invoice", "Invoice", "請求書", "未払請求書", "オリジナル手形"]
+                    hidePrint = ["Invoices", "Original Bills", "Invoices without Payment", "Multiple Invoice Copies", "invoice", "Invoice", "請求書", "未払請求書", "オリジナル手形"]
                     this.props.items.print = prints.filter(val => !hidePrint.includes(val.name))
                 }
 
@@ -118,7 +118,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     this.props.items.action = [...action, ...excelArray];
-                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ","Finished Product Label (ZPL)","Finished Product Label (PDF)","完成品ラベル(PDF)","Mrp order","mrp order"]
+                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ", "Finished Product Label (ZPL)", "Finished Product Label (PDF)", "完成品ラベル(PDF)", "Mrp order", "mrp order"]
                     this.props.items.print = prints.filter(val => !hidePrint.includes(val.name));
                 }
 
@@ -179,9 +179,34 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                             return val
                         }
                     })
-                    this.props.items.action = [...action, ...excel]
-                    hidePrint = ["Quotation / Order", "見積 / オーダ", "商品仕様書(EXCEL)"]
-                    this.props.items.print = prints.filter(val => !hidePrint.includes(val.name))
+                    let showActionItem = [...action, ...excel]
+                    let sortAction = ['', '', '', '', '', '', '', '', '', '']
+                    showActionItem.filter(val => {
+                        if (val.name === "Generate a Payment Link" || val.name === "支払用リンクを生成") sortAction[0] = val
+                        if (val.name === "Share" || val.name === "共有") sortAction[1] = val
+                        if (val.name === "Mark Quotation as Sent" || val.name === "見積もりを送信済みとしてマーク") sortAction[2] = val
+                        if (val.name === "御見積書") sortAction[3] = val
+                        if (val.name === "御見積書（海外）") sortAction[4] = val
+                        if (val.name === "定価見積書") sortAction[5] = val
+                        if (val.name === "単価見積り書") sortAction[6] = val
+                        if (val.name === "注文書") sortAction[7] = val
+                        if (val.name === "商品仕様書") sortAction[8] = val
+                        if (val.name === "Send a Cart Recovery Email" || val.name === "カートリカバリEメールを送信") sortAction[9] = val
+                    })
+                    this.props.items.action = sortAction
+
+                    hidePrint = ["Quotation / Order", "見積 / オーダ"]
+                    let showPrint = prints.filter(val => !hidePrint.includes(val.name) && val.display_name !== "商品仕様書(EXCEL)")
+                    let sortPrint = ['', '', '', '', '', '']
+                    showPrint.filter(val => {
+                        if (val.name === "御見積書") sortPrint[0] = val
+                        if (val.name === "御見積書（海外）") sortPrint[1] = val
+                        if (val.name === "定価見積書") sortPrint[2] = val
+                        if (val.name === "単価見積り書") sortPrint[3] = val
+                        if (val.name === "注文書") sortPrint[4] = val
+                        if (val.name === "商品仕様書") sortPrint[5] = val
+                    })
+                    this.props.items.print = sortPrint
                 }
 
                 // task_invoice_form
@@ -220,7 +245,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     this.props.items.action = [...action, ...excel]
-                    hidePrint = ["Production Order", "製造オーダ","Finished Product Label (ZPL)","Finished Product Label (PDF)","完成品ラベル(PDF)","Mrp order","mrp order"]
+                    hidePrint = ["Production Order", "製造オーダ", "Finished Product Label (ZPL)", "Finished Product Label (PDF)", "完成品ラベル(PDF)", "Mrp order", "mrp order"]
                     this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name))
                 }
 
@@ -273,8 +298,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         })
                         this.props.items.action = [...action, ...excelArray];
                     }
-                    hidePrint = ['Delivery Slip','配送伝票']
-                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name) )
+                    hidePrint = ['Delivery Slip', '配送伝票']
+                    this.props.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name))
                 }
             }
             this.actionItems = await this._setActionItems(this.props);
@@ -304,7 +329,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         })
                         nextProps.items.action = [...action, ...excelArray];
                     }
-                    hidePrint = ['配送作業依頼書', '出荷依頼書','Delivery Slip','配送伝票']
+                    hidePrint = ['配送作業依頼書', '出荷依頼書', 'Delivery Slip', '配送伝票']
                     nextProps.items.print = prints.filter(val => !val.display_name.includes('(EXCEL)') && !hidePrint.includes(val.name))
                 }
 
@@ -321,7 +346,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                 if (this.env.view.model == "account.move") {
                     let prints = [...data_account_move_list.print]
 
-                    hidePrint = ["Invoices", "Original Bills", "Invoices without Payment", "Multiple Invoice Copies","invoice", "Invoice", "請求書", "未払請求書", "オリジナル手形"]
+                    hidePrint = ["Invoices", "Original Bills", "Invoices without Payment", "Multiple Invoice Copies", "invoice", "Invoice", "請求書", "未払請求書", "オリジナル手形"]
                     nextProps.items.print = prints.filter(val => !hidePrint.includes(val.name))
                 }
 
@@ -341,7 +366,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         }
                     })
                     nextProps.items.action = [...action, ...excelArray];
-                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ","Finished Product Label (ZPL)","Finished Product Label (PDF)","完成品ラベル(PDF)","Mrp order","mrp order"]
+                    hidePrint = ["仕掛品伝票一覧", "商品ラベルシール", "発注書", "Production Order", "製造オーダ", "Finished Product Label (ZPL)", "Finished Product Label (PDF)", "完成品ラベル(PDF)", "Mrp order", "mrp order"]
                     nextProps.items.print = prints.filter(val => !hidePrint.includes(val.name));
                 }
 
