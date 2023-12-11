@@ -1,0 +1,26 @@
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
+<odoo>
+    <data>
+        <record id="sale_view_order_form_hide_opportunity_id" model="ir.ui.view">
+            <field name="name">move_combo_box_above_customer</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_crm.sale_view_inherit123" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='opportunity_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_view_order_form_move_opportunity_id" model="ir.ui.view">
+            <field name="name">move_combo_box_above_customer_2</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="before">
+                     <field name="opportunity_id" help="Log in the chatter from which opportunity the order originates" groups="base.group_no_one"/> 
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
