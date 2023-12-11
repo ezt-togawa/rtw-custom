@@ -1888,7 +1888,7 @@ msgstr ""
 #. module: rtw_sf
 #: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
 msgid "opt_out_email"
-msgstr "メール送信除外"
+msgstr "メール配信停止"
 
 #. module: rtw_sf
 #: model_terms:ir.ui.view,arch_db:rtw_sf.rtw_sf_case_form
