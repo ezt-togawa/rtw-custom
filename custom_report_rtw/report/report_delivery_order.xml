@@ -41,27 +41,27 @@
                     t-field="docs.origin" />
                 </div>
                 <br />
-                <div class="d-flex">
-                  <div style="width:55px;">搬入日時 </div>
-                  <span class="size14" t-if="docs.stock_picking_scheduled_date"
+                <div class="d-flex"> 搬入日時 <t t-esc="' '" />
+                  <span class="size14"
+                    t-if="docs.stock_picking_scheduled_date"
                     t-esc="docs.stock_picking_scheduled_date" />
                 </div>
-                <div class="d-flex">
-                  <div style="width:55px;">入荷日 </div>
-                  <span class="size14" t-if="docs.stock_picking_scheduled_date"
+                <div class="d-flex"> 入荷日 <t t-esc="' '" />
+                  <span class="size14"
+                    t-if="docs.stock_picking_scheduled_date"
                     t-esc="docs.stock_picking_scheduled_date" />
                 </div>
                 <br />
-                <div>お届け先（物件名) <span class="size14" t-field="docs.calculate_name" />
-                </div>
-                <div style="margin-left:100px;">
-                  <span t-field="docs.partner_id.parent_id.name" />
-                  <span
-                    t-field="docs.partner_id.site" />
-                  <span
-                    t-field="docs.partner_id.department" />
-                  <span
-                    t-field="docs.partner_id.name" />様 ご依頼分 <span t-field="docs.origin" />
+                <div class="d-flex">
+                  <div>
+                    お届け先（物件名)
+                  </div>
+                  <div>
+                    <span class="size14" t-field="docs.calculate_name" />
+                    <div >
+                      <span t-field="docs.stock_picking_partner_info" />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-4">
@@ -87,7 +87,8 @@
                 <div> fax.06-4963-8778
                 </div>
                 <div>
-                  <span class="size12" t-esc="docs.pic_name" /> 印 </div>
+                  <span class="size12" t-esc="docs.stock_picking_printing_staff" />
+                </div>
               </div>
             </div>
             <div class="row py-2 size13">
@@ -124,8 +125,8 @@
                 <div class="row">
                   <div class="col-6">
                     <div> 配送 <t
-                        t-if="docs.sipping_to"> : <span
-                          t-field="docs.sipping_to" />
+                        t-if="docs.stock_picking_sipping_to"> : <span
+                          t-field="docs.stock_picking_sipping_to" />
                       </t>
                     </div>
                     <div> デポ <t
