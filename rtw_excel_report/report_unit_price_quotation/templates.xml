@@ -26,6 +26,13 @@
                             'E10': 'special_note${value or ""}',
                             'H9': 'user_id.name${value or ""}',
                             'H1': 'sale_order_current_date',
+                            'H3': 'hr_employee_company${value or ""}',
+                            'H4': 'hr_employee_department${value or ""}',
+                            'H5': 'hr_employee_zip${value or ""}',
+                            'H6': 'hr_employee_info${value or ""}',
+                            'H7': 'hr_employee_tel${value or ""}',
+                            'H8': 'hr_employee_fax${value or ""}',
+                            'H9': 'hr_employee_printer${value or ""}',
                             'I14': 'name${value or ""}'
                         },
                         'list_order_line': {

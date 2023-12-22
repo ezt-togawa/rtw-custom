@@ -87,21 +87,25 @@
                     alt="Logo" />
                 </div>
                 <div class="size12">
-                  株式会社リッツウェル
+                  <span t-esc="docs.hr_employee_company" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_department" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_zip" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_info" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_tel" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_fax" />
                 </div>
                 <div class="size12">
-                  大阪オフィス
-                </div>
-                <div>〒542-0081</div>
-                <div>
-                  大阪市中央区南船場4-7-6 B1F
-                </div>
-                <div> tel.06-4963-8777
-                </div>
-                <div> fax.06-4963-8778
-                </div>
-                <div>
-                  <span t-esc="docs.sale_order_printing_staff" />
+                  <span t-esc="docs.hr_employee_printer" />
                 </div>
               </div>
             </div>

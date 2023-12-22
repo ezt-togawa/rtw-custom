@@ -87,28 +87,32 @@
                                 <div>備考: <span t-field="docs.special_note" />
                                 </div>
                             </div>
-                            <div class="col-4" name="company_address">
+                            <div class="col-4 size11" name="company_address">
                                 <div>
                                     <img style="width:50%"
                                         src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
                                         alt="Logo" />
                                 </div>
-                                <div>
-                                    株式会社リッツウェル
+                                <div class="size12">
+                                    <span t-esc="docs.hr_employee_company" />
                                 </div>
                                 <div>
-                                    大阪オフィス
-                                </div>
-                                <div>〒542-0081</div>
-                                <div>
-                                    大阪市中央区南船場4-7-6 B1F
-                                </div>
-                                <div> tel.06-4963-8777
-                                </div>
-                                <div> fax.06-4963-8778
+                                    <span t-esc="docs.hr_employee_department" />
                                 </div>
                                 <div>
-                                    <span t-esc="docs.sale_order_printing_staff" />
+                                    <span t-esc="docs.hr_employee_zip" />
+                                </div>
+                                <div>
+                                    <span t-esc="docs.hr_employee_info" />
+                                </div>
+                                <div>
+                                    <span t-esc="docs.hr_employee_tel" />
+                                </div>
+                                <div>
+                                    <span t-esc="docs.hr_employee_fax" />
+                                </div>
+                                <div class="size12">
+                                    <span t-esc="docs.hr_employee_printer" />
                                 </div>
                             </div>
                         </div>
