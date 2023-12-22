@@ -124,9 +124,13 @@
                     <span class="ml-2 size20">御見積書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -141,9 +145,13 @@
                     <span class="ml-2 size20">御見積書（海外）</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -158,9 +166,13 @@
                     <span class="ml-2 size20">定価御見積書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -175,9 +187,13 @@
                     <span class="ml-2 size20">単価御見積書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -192,9 +208,13 @@
                     <span class="ml-2 size20">御請求書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -209,9 +229,13 @@
                     <span class="ml-2 size20">単価御見積書</span>
                 </div>
                 <div class="col-6 text-right mt-2">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -226,9 +250,13 @@
                     <span class="ml-2 size20">注文書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -242,13 +270,22 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20"> 発注書 </span>
-                        <span class="ml-5 size15"> 株式会社 <span
-                                t-esc="so.partner_id.name" /> 御中 </span>
+                        <t t-if="docs.lang_code == 'en_US'">
+                            <div>御中 <span t-field="docs.company_id.partner_id.name" /> 株式会社</div>
+                        </t>
+                        <t t-else="">
+                            <div> 株式会社 <span t-field="docs.company_id.partner_id.name" /> 御中</div>
+                        </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
-                        <t t-esc="time.strftime('%Y')" /> 年 <t
-                            t-esc="time.strftime('%m')" /> 月 <t
-                            t-esc="time.strftime('%d')" /> 日 </div>
+                        <t t-if="docs.lang_code == 'en_US'">
+                            <t t-esc="time.strftime('%Y')" /> - <t t-esc="time.strftime('%m')" /> - <t
+                                t-esc="time.strftime('%d')" />
+                        </t>
+                        <t t-else="">
+                            <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                                t-esc="time.strftime('%d')" /> 日 </t>
+                    </div>
                 </div>
             </div>
         </t>
@@ -263,13 +300,21 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20">検品発注書</span>
-                        <span class="ml-5 size15">株式会社 <span
-                                t-esc="so.partner_id.name" /> 御中</span>
+                        <t t-if="docs.lang_code == 'en_US'">
+                            <div>御中 <span t-field="docs.company_id.partner_id.name" /> 株式会社</div>
+                        </t>
+                        <t t-else="">
+                            <div> 株式会社 <span t-field="docs.company_id.partner_id.name" /> 御中</div>
+                        </t>
                     </div>
                     <div class="col-4 text-right mt-2">
-                        <t t-esc="time.strftime('%Y')" /> 年 <t
-                            t-esc="time.strftime('%m')" /> 月 <t
-                            t-esc="time.strftime('%d')" /> 日 </div>
+                        <t t-if="docs.lang_code == 'en_US'">
+                            <t t-esc="time.strftime('%Y-%m-%d')" />
+                        </t>
+                        <t t-else="">
+                            <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                                t-esc="time.strftime('%d')" /> 日 </t>
+                    </div>
                 </div>
             </div>
         </t>
@@ -284,20 +329,37 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20">発注書(部材用)</span>
-                        <span class="ml-5 size15"> 株式会社 <t
-                                t-if="so.partner_id.commercial_company_name">
-                                <span t-esc="so.partner_id.commercial_company_name" />
-                            </t>
+                        <t t-if="docs.lang_code == 'en_US'">
+                            <span class="ml-5 size15"> 御中<t
+                                    t-if="so.partner_id.commercial_company_name">
+                                    <span t-esc="so.partner_id.commercial_company_name" />
+                                </t>
                             <t
-                                t-else="">
-                                <span t-esc="so.partner_id.name" />
-                            </t>
-                            御中 </span>
+                                    t-else="">
+                                    <span t-esc="so.partner_id.name" />
+                                </t>
+                                株式会社 </span>
+                        </t>
+                        <t t-else="">
+                            <span class="ml-5 size15"> 株式会社 <t
+                                    t-if="so.partner_id.commercial_company_name">
+                                    <span t-esc="so.partner_id.commercial_company_name" />
+                                </t>
+                            <t
+                                    t-else="">
+                                    <span t-esc="so.partner_id.name" />
+                                </t>
+                                御中 </span>
+                        </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
-                        <t t-esc="time.strftime('%Y')" /> 年 <t
-                            t-esc="time.strftime('%m')" /> 月 <t
-                            t-esc="time.strftime('%d')" /> 日 </div>
+                        <t t-if="docs.lang_code == 'en_US'">
+                            <t t-esc="time.strftime('%Y-%m-%d')" />
+                        </t>
+                        <t t-else="">
+                            <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                                t-esc="time.strftime('%d')" /> 日 </t>
+                    </div>
                 </div>
             </div>
         </t>
@@ -311,16 +373,29 @@
                         style="max-height: 45px;"
                         alt="Logo" />
                     <span class="ml-2 size20">配送依頼書</span>
-                    <span class="ml-5 size15">株式会社 <span
-                            t-if="docs.partner_id.parent_id"
-                            t-esc="docs.partner_id.parent_id.name" /><span
-                            t-if="not docs.partner_id.parent_id"
-                            t-esc="docs.partner_id.name" /> 御中</span>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <span class="ml-5 size15">御中 <span
+                                t-if="docs.partner_id.parent_id"
+                                t-esc="docs.partner_id.parent_id.name" /><span
+                                t-if="not docs.partner_id.parent_id"
+                                t-esc="docs.partner_id.name" /> 株式会社</span>
+                    </t>
+                    <t t-else="">
+                        <span class="ml-5 size15">株式会社 <span
+                                t-if="docs.partner_id.parent_id"
+                                t-esc="docs.partner_id.parent_id.name" /><span
+                                t-if="not docs.partner_id.parent_id"
+                                t-esc="docs.partner_id.name" /> 御中</span>
+                    </t>
                 </div>
                 <div class="col-4 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -333,16 +408,29 @@
                         style="max-height: 45px;"
                         alt="Logo" />
                     <span class="ml-2 size20">出荷依頼書</span>
-                    <span class="ml-5 size15">株式会社 <span
-                            t-if="docs.partner_id.parent_id"
-                            t-esc="docs.partner_id.parent_id.name" /><span
-                            t-if="not docs.partner_id.parent_id"
-                            t-esc="docs.partner_id.name" /> 御中</span>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <span class="ml-5 size15">御中 <span
+                                t-if="docs.partner_id.parent_id"
+                                t-esc="docs.partner_id.parent_id.name" /><span
+                                t-if="not docs.partner_id.parent_id"
+                                t-esc="docs.partner_id.name" /> 株式会社</span>
+                    </t>
+                    <t t-else="">
+                        <span class="ml-5 size15">株式会社 <span
+                                t-if="docs.partner_id.parent_id"
+                                t-esc="docs.partner_id.parent_id.name" /><span
+                                t-if="not docs.partner_id.parent_id"
+                                t-esc="docs.partner_id.name" /> 御中</span>
+                    </t>
                 </div>
                 <div class="col-4 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>
@@ -357,9 +445,13 @@
                     <span class="ml-2 size20">商品仕様書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <t t-esc="time.strftime('%Y')" /> 年 <t
-                        t-esc="time.strftime('%m')" /> 月 <t
-                        t-esc="time.strftime('%d')" /> 日 </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
             </div>
         </div>
     </template>

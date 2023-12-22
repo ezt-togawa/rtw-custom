@@ -72,7 +72,8 @@
                   <div> fax.06-4963-8778
                   </div>
                   <div>
-                    <span t-if="po.user_id.name"  t-esc="po.user_id.name" > 印 </span></div>
+                    <span t-if="po.purchase_print_staff" t-esc="po.purchase_print_staff"> </span>
+                  </div>
                 </div>
               </div>
               <div class="row py-2">
@@ -83,32 +84,38 @@
                       </t>
                     </t>
                   </div>
-                  <div> 住所: <t class="size14">
-                      <t
-                        t-if="po.picking_type_id.warehouse_id.partner_id.street">
-                        <span t-field="po.picking_type_id.warehouse_id.partner_id.street" />
-                      </t>
-
-                      <div style="margin-left:32px">
+                  <div class="d-flex">
+                    <div>
+                      住所: 
+                    </div>
+                    <t class="size14">
+                      <div>
+                        <t
+                          t-if="po.picking_type_id.warehouse_id.partner_id.street">
+                          <span t-field="po.picking_type_id.warehouse_id.partner_id.street" />
+                        </t>
                         <div>
-                          <t
-                            t-if="po.picking_type_id.warehouse_id.partner_id.city">
-                            <span t-field="po.picking_type_id.warehouse_id.partner_id.city" />
-                          </t>
-                          <t
-                            t-if="po.picking_type_id.warehouse_id.partner_id.state_id.name">
-                            <span t-field="po.picking_type_id.warehouse_id.partner_id.state_id.name" />
-                            <t t-if="po.picking_type_id.warehouse_id.partner_id.zip"> 〒 <span
-                                t-field="po.picking_type_id.warehouse_id.partner_id.zip" />
+                          <div>
+                            <t
+                              t-if="po.picking_type_id.warehouse_id.partner_id.city">
+                              <span t-field="po.picking_type_id.warehouse_id.partner_id.city" />
                             </t>
-                          </t>
-                        </div>
-                        <div>
-                          <t
-                            t-if="po.picking_type_id.warehouse_id.partner_id.country_id.name">
-                            <span
-                              t-field="po.picking_type_id.warehouse_id.partner_id.country_id.name" />
-                          </t>
+                            <t
+                              t-if="po.picking_type_id.warehouse_id.partner_id.state_id.name">
+                              <span
+                                t-field="po.picking_type_id.warehouse_id.partner_id.state_id.name" />
+                              <t t-if="po.picking_type_id.warehouse_id.partner_id.zip"> 〒 <span
+                                  t-field="po.picking_type_id.warehouse_id.partner_id.zip" />
+                              </t>
+                            </t>
+                          </div>
+                          <div>
+                            <t
+                              t-if="po.picking_type_id.warehouse_id.partner_id.country_id.name">
+                              <span
+                                t-field="po.picking_type_id.warehouse_id.partner_id.country_id.name" />
+                            </t>
+                          </div>
                         </div>
                       </div>
                     </t>

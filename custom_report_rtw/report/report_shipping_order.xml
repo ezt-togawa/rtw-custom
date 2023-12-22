@@ -49,11 +49,15 @@
                 <div>配送手段 : <span class="size16">定期便</span>
                 </div>
                 <br />
-                <div>物件名 <span class="size14" t-field="docs.sale_id.title" /></div>
-                <div style="margin-left:40px">
-                  <span t-field="docs.stock_picking_partner_info" />
+                <div class="d-flex">
+                  <div>
+                    物件名: <t t-esc="' '"/>
+                  </div>
+                  <div>
+                    <div class="size14" t-field="docs.sale_id.title"  style="margin:0;;line-height:15px;"/>
+                    <div t-field="docs.stock_picking_partner_info" />
+                  </div>
                 </div>
-
               </div>
               <div class="col-4">
                 <div style="text-align:end;font-size:20px;">
@@ -81,7 +85,8 @@
                 <div> fax.06-4963-8778
                 </div>
                 <div class="size12">
-                  <span t-esc="docs.pic_name" /> 印 </div>
+                  <span t-esc="docs.stock_picking_printing_staff" />
+                </div>
               </div>
             </div>
             <div class="row py-2 size13">
@@ -220,7 +225,8 @@
                 </tbody>
               </t>
             </table>
-            <div class="d-flex justify-content-end mr-5 size12"> 配送金額合計（税抜） <span class="size13 bold"  t-field="docs.sale_id.amount_untaxed" />
+            <div class="d-flex justify-content-end mr-5 size12"> 配送金額合計（税抜） <span
+                class="size13 bold" t-field="docs.sale_id.amount_untaxed" />
             </div>
             <div class="d-flex justify-content-end mr-5 size12">
               <span t-field="docs.sale_id.name" />

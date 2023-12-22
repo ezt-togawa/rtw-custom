@@ -40,8 +40,13 @@
                 <div>
                   株式会社リッツウェル 宛
                 </div>
-                <div>
-                  <span t-field="docs.user_id.name" /> 様 </div>
+                <t t-if="docs.lang_code == 'en_US'">
+                  <div> Mr./Mrs. <t t-esc="' '" /> <span t-field="docs.user_id.name" /></div>
+                </t>
+                <t t-else="">
+                  <div>
+                    <span t-field="docs.user_id.name" /> 様 </div>
+                </t>
                 <br />
                 <div style="font-size:12px">下記の通り注文いたします。<br />
                   <span class="mt-1"> 件名 <span
@@ -51,14 +56,14 @@
                 <br />
                 <div>税抜合計: <span t-field="docs.amount_untaxed" />
                 </div>
-                <div >消費税: <span t-field="docs.amount_tax" />
+                <div>消費税: <span t-field="docs.amount_tax" />
                 </div>
                 <div class="so_price total-price">
-                    <span>税込合計</span>
-                    <span
-                        style="float:right"
-                        t-field="docs.amount_total">
-                    </span>
+                  <span>税込合計</span>
+                  <span
+                    style="float:right"
+                    t-field="docs.amount_total">
+                  </span>
                 </div>
               </div>
               <div class="col-4">
