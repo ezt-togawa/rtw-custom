@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# from odoo import models, fields, api
+from odoo import models, fields, api
 
 
 # class rtw_filter_menu(models.Model):
@@ -16,3 +16,8 @@
 #     def _value_pc(self):
 #         for record in self:
 #             record.value2 = float(record.value) / 100
+
+class IrFiltersCus(models.Model):
+    _inherit = 'ir.filters'
+    
+    name = fields.Char(string='Filter Name', translate=False, required=True)
