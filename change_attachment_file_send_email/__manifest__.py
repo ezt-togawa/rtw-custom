@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_crm_custom_field",
+    'name': "change_attachment_file_send_email",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,16 +20,9 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management', 'crm', 'contract'],
+    'depends': ['base','account'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/crm_lead.xml',
-        'views/templates.xml',
-    ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
     ],
 }

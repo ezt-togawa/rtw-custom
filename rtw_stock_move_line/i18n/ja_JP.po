@@ -44,7 +44,7 @@ msgstr "配達確認"
 #: model:ir.model.fields,field_description:rtw_stock_move_line.field_stock_move__depo_date
 #: model:ir.model.fields,field_description:rtw_stock_move_line.field_stock_move_line__depo_date
 msgid "Depo Date"
-msgstr ""
+msgstr "デポ希望日"
 
 #. module: rtw_stock_move_line
 #: model:ir.model.fields,field_description:rtw_stock_move_line.field_sale_order__display_name
@@ -104,7 +104,7 @@ msgstr "販売オーダ明細"
 #. module: rtw_stock_move_line
 #: model:ir.model.fields,field_description:rtw_stock_move_line.field_stock_move_line__shiratani_date
 msgid "Shiratani Date"
-msgstr ""
+msgstr "白谷到着日"
 
 #. module: rtw_stock_move_line
 #: model:ir.model.fields,field_description:rtw_stock_move_line.field_stock_move_line__mrp_state

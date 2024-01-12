@@ -37,9 +37,17 @@
                         </div>
                         <div class="row size13" style="margin-top:-50px;">
                             <div class="col-4">
-                                <div> 株式会社<span t-field="docs.company_id.partner_id.name" /> 御中</div>
-                                <div>
-                                    <span t-field="docs.partner_id.name" /> 様 </div>
+                                <t t-if="docs.lang_code == 'en_US'">
+                                    <div>御中 <span t-field="docs.company_id.partner_id.name" /> 株式会社 </div>
+                                    <div> Mr./Mrs. <t t-esc="' '" /> <span
+                                            t-field="docs.partner_id.name" />
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div> 株式会社 <span t-field="docs.company_id.partner_id.name" /> 御中 </div>
+                                    <div>
+                                        <span t-field="docs.partner_id.name" /> 様 </div>
+                                </t>
                                 <br />
                                 <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 下記の通り、ご請求申し上げます。<br /> <span
                                         class="mt-1"> 件名 <span class="size16"
@@ -105,7 +113,8 @@
                                 <div> fax.06-4963-8778
                                 </div>
                                 <div class="size12">
-                                    <span t-esc="docs.user_id.name" /> 印 </div>
+                                    <span t-esc="docs.acc_move_print_staff" />
+                                 </div>
                             </div>
                         </div>
                         <table

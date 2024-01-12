@@ -36,7 +36,7 @@
               <div t-if="so.company_id.logo or so.company_id.report_header"
                 class="row zero_min_height">
               </div>
-              <div class="row size13" style="margin-top:-50px;">
+              <div class="row size13" style="margin-top:-30px;">
                 <div class="col-4">
                   <div> 発注番号 <span class="size16"
                       t-field="so.name" />
@@ -47,16 +47,22 @@
                   <div> 出荷希望日 <span class="size14" t-esc="so.sale_order_preferred_delivery_date" />
                   </div>
                   <br />
-                  <div> 物件名: <span class="size16" t-field="so.title" />
-                    <br />
-                    <div class="size13"
-                      style="padding-left:21px">
-                      <span class="pl-4" t-field="so.partner_id.name" />
+                  <div class="d-flex">
+                    <div >
+                      物件名:
+                    </div>
+                    <div  >
+                      <div class="size16" >
+                        <p   style="line-height:16px; margin:0;" t-field="so.title" />
+                      </div>
+                      <div class="size13" >
+                        <span t-field="so.partner_id.name" />
                       <span
-                        t-field="so.partner_id.site" />
+                          t-field="so.partner_id.site" />
                       <span t-field="so.partner_id.department" />
                       <span
-                        t-field="so.partner_id.user_id.name" /> ご依頼分 <span t-field="so.name" />
+                          t-field="so.partner_id.user_id.name" /> ご依頼分 <span t-field="so.name" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -86,7 +92,8 @@
                   <div> fax.06-4963-8778
                   </div>
                   <div>
-                    <span t-esc="so.user_id.name" /> 印 </div>
+                    <span t-if="so.sale_order_printing_staff" t-esc="so.sale_order_printing_staff" />
+                  </div>
                 </div>
               </div>
               <div class="row py-2">

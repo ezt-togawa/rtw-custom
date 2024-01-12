@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE odoo [
+  <!ENTITY nbsp "entity-value">
+]>
 <odoo>
   <template id="report_unit_price">
     <t t-call="web.html_container">
@@ -37,9 +40,16 @@
             </div>
             <div class="row size13" style="margin-top:-50px;">
               <div class="col-4">
-                <div> 株式会社<span t-field="docs.company_id.partner_id.name" /> 御中</div>
-                <div>
-                  <span t-field="docs.partner_id.name" /> 様 </div>
+                <t t-if="docs.lang_code == 'en_US'">
+                  <div>御中 <span t-field="docs.company_id.partner_id.name" /> 株式会社</div>
+                  <div> Mr./Mrs. <t t-esc="' '" /><span t-field="docs.partner_id.name" />
+                  </div>
+                </t>
+                <t t-else="">
+                  <div> 株式会社 <span t-field="docs.company_id.partner_id.name" /> 御中</div>
+                  <div>
+                    <span t-field="docs.partner_id.name" /> 様 </div>
+                </t>
                 <br />
                 <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br /> 
                   <span
@@ -52,8 +62,8 @@
                 <div>納品希望日： <span class="size14" t-if="docs.sale_order_estimated_shipping_date"
                     t-esc="docs.sale_order_estimated_shipping_date" />
                 </div>
-                <div> 製作日数： <span t-if="docs.workdays"
-                    t-esc="docs.workdays" />
+                <div> 製作日数： <span t-if="docs.so_work_days"
+                    t-esc="docs.so_work_days" />
                 </div>
                 <div> 発注期限： <span class="size14" t-if="docs.sale_order_date_order"
                     t-esc="docs.sale_order_date_order" />
@@ -77,21 +87,26 @@
                     alt="Logo" />
                 </div>
                 <div class="size12">
-                  株式会社リッツウェル
+                  <span t-esc="docs.hr_employee_company" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_department" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_zip" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_info" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_tel" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_fax" />
                 </div>
                 <div class="size12">
-                  大阪オフィス
+                  <span t-esc="docs.hr_employee_printer" />
                 </div>
-                <div>〒542-0081</div>
-                <div>
-                  大阪市中央区南船場4-7-6 B1F
-                </div>
-                <div> tel.06-4963-8777
-                </div>
-                <div> fax.06-4963-8778
-                </div>
-                <div>
-                  <span t-esc="docs.user_id.name" /> 印 </div>
               </div>
             </div>
             <table

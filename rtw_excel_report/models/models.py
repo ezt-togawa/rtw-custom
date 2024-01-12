@@ -61,7 +61,7 @@ class SaleOrderExcelReport(models.Model):
         string="Account Number",
     )
     sale_order_preferred_delivery_date = fields.Char(
-        compute="_compute_sale_order_preferred_delivery_date",
+        compute="_compute_sale_order_format_date",
         string="Preferred Delivery Date",
     )
     sale_order_send_to_company = fields.Char(
@@ -143,6 +143,36 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_check_oversea",
     )
 
+    lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
+    yearUnit = fields.Char(string="Year", compute="_compute_year_unit")
+    monthUnit = fields.Char(string="Month", compute="_compute_month_unit")
+    dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
+
+    def _compute_lang_code(self):
+        for order in self:
+            order.lang_code = self.env.context.get('lang') or ''
+
+    def _compute_year_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.yearUnit = "-"
+            else:
+                record.yearUnit = "年"
+
+    def _compute_month_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.monthUnit = "-"
+            else:
+                record.monthUnit = "月"
+
+    def _compute_day_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.dayUnit = ""
+            else:
+                record.dayUnit = "日"
+
     def _compute_sale_order_name(self):
         for line in self:
             if line.name:
@@ -213,11 +243,11 @@ class SaleOrderExcelReport(models.Model):
                 if max_date_planned:
                     date_planned = (
                         str(max_date_planned.year)
-                        + "年"
+                        + line.yearUnit
                         + str(max_date_planned.month)
-                        + "月"
+                        + line.monthUnit
                         + str(max_date_planned.day)
-                        + "日"
+                        + line.dayUnit
                     )
                     line.sale_order_date_planned = date_planned
                 else:
@@ -250,8 +280,10 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_printing_staff(self):
         for line in self:
             if line.user_id.name:
-                line.sale_order_printing_staff = line.user_id.name + "  印"
-
+                line.sale_order_printing_staff = line.user_id.name + (" Seal" if line.lang_code == "en_US" else "  印")
+            else:
+                line.sale_order_printing_staff=""
+                
     def _compute_sale_order_detail_address_partner(self):
         details = ""
         for line in self:
@@ -315,7 +347,7 @@ class SaleOrderExcelReport(models.Model):
         month = str(datetime.now().month)
         year = str(datetime.now().year)
         for record in self:
-            record.sale_order_current_date = year + " 年 " + month + " 月 " + day + " 日 "
+            record.sale_order_current_date = year + " " + record.yearUnit + " " + month + " " + record.monthUnit +" " + day + " "+ record.dayUnit
 
     def _compute_sale_order_format_date(self):
         for record in self:
@@ -323,50 +355,64 @@ class SaleOrderExcelReport(models.Model):
             date_order = record.date_order
             validity_date = record.validity_date
             shiratani_entry_date = record.shiratani_entry_date
+            preferred_delivery_date = record.preferred_delivery_date
+
             if shipping_date:
                 record.sale_order_estimated_shipping_date = (
                     str(shipping_date.year)
-                    + "年"
+                    + record.yearUnit
                     + str(shipping_date.month)
-                    + "月"
+                    + record.monthUnit
                     + str(shipping_date.day)
-                    + "日"
+                    + record.dayUnit
                 )
             else:
                 record.sale_order_estimated_shipping_date = ""
             if date_order:
+
                 record.sale_order_date_order = (
                     str(date_order.year)
-                    + "年"
+                    + record.yearUnit
                     + str(date_order.month)
-                    + "月"
+                    + record.monthUnit
                     + str(date_order.day)
-                    + "日"
+                    + record.dayUnit
                 )
             else:
                 record.sale_order_date_order = ""
             if validity_date:
                 record.sale_order_validity_date = (
                     str(validity_date.year)
-                    + "年"
+                    + record.yearUnit
                     + str(validity_date.month)
-                    + "月"
+                    + record.monthUnit
                     + str(validity_date.day)
-                    + "日"
+                    + record.dayUnit
                 )
             else:
                 record.sale_order_validity_date = ""
             if shiratani_entry_date:
                 record.sale_order_shiratani_entry_date = (
                     str(shiratani_entry_date.year)
-                    + "年"
+                    + record.yearUnit
                     + str(shiratani_entry_date.month)
-                    + "月"
+                    + record.monthUnit
                     + str(shiratani_entry_date.day)
-                    + "日"
+                    + record.dayUnit
                 )
             else:
                 record.sale_order_shiratani_entry_date = ""
+            if preferred_delivery_date:
+                record.sale_order_preferred_delivery_date = (
+                    str(preferred_delivery_date.year)
+                    + record.yearUnit
+                    + str(preferred_delivery_date.month)
+                    + record.monthUnit
+                    + str(preferred_delivery_date.day)
+                    + record.dayUnit
+                )
+            else:
+                record.sale_order_preferred_delivery_date = ""
 
     def _compute_sale_order_company_owner(self):
         for record in self:
@@ -401,21 +447,6 @@ class SaleOrderExcelReport(models.Model):
                 )
             else:
                 record.sale_order_account_number = ""
-
-    def _compute_sale_order_preferred_delivery_date(self):
-        for record in self:
-            preferred_delivery_date = record.preferred_delivery_date
-            if preferred_delivery_date:
-                record.sale_order_preferred_delivery_date = (
-                    str(preferred_delivery_date.year)
-                    + "年"
-                    + str(preferred_delivery_date.month)
-                    + "月"
-                    + str(preferred_delivery_date.day)
-                    + "日"
-                )
-            else:
-                record.sale_order_preferred_delivery_date = ""
 
     def _compute_sale_order_send_to_company(self):
         for record in self:
@@ -765,6 +796,41 @@ class StockPickingExcelReport(models.Model):
         "checkout oversea",
         compute="_compute_to_sale_order",
     )
+
+    lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
+    yearUnit = fields.Char(string="Year", compute="_compute_year_unit")
+    monthUnit = fields.Char(string="Month", compute="_compute_month_unit")
+    dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
+    
+    def _compute_lang_code(self):
+        for order in self:
+            order.lang_code = self.env.context.get('lang') or ''
+
+    def _compute_year_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.yearUnit = "-"
+            else:
+                record.yearUnit = "年"
+
+    def _compute_month_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.monthUnit = "-"
+            else:
+                record.monthUnit = "月"
+
+    def _compute_day_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.dayUnit = ""
+            else:
+                record.dayUnit = "日"
+
+
+    def _compute_lang_code(self):
+        for sp in self:
+            sp.lang_code = self.env.context.get('lang') or ''
     
     def _compute_stock_move(self):
         for line in self:
@@ -797,11 +863,11 @@ class StockPickingExcelReport(models.Model):
             if record.sale_id.shiratani_entry_date:
                 record.stock_picking_shiratani_entry_date = (
                     str(record.sale_id.shiratani_entry_date.year)
-                    + "年"
+                    + record.yearUnit
                     + str(record.sale_id.shiratani_entry_date.month)
-                    + "月"
+                    + record.monthUnit
                     + str(record.sale_id.shiratani_entry_date.day)
-                    + "日"
+                    + record.dayUnit
                 )
             else:
                 record.stock_picking_shiratani_entry_date = ""
@@ -809,29 +875,30 @@ class StockPickingExcelReport(models.Model):
             if record.scheduled_date:
                 record.stock_picking_scheduled_date = (
                     str(record.scheduled_date.year)
-                    + "年"
+                    + record.yearUnit
                     + str(record.scheduled_date.month)
-                    + "月"
+                    + record.monthUnit
                     + str(record.scheduled_date.day)
-                    + "日"
+                    + record.dayUnit
                 )
             else:
                 record.stock_picking_scheduled_date = ""
 
-            partner_info = ""
+            partner_info = ""            
             if record.sale_id.partner_id.display_name:
                 if "," in record.sale_id.partner_id.display_name:
                     partner_info += (
                         record.sale_id.partner_id.display_name.split(",")[0]
                         + "-"
                         + record.sale_id.partner_id.display_name.split(",")[1]
-                        + " 様　ご依頼分-"
-                    )
+                        + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
+                                    )
                 else:
-                    partner_info += record.sale_id.partner_id.display_name + " 様　ご依頼分-"
+                    partner_info += record.sale_id.partner_id.display_name + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
             else:
                 if record.sale_id.partner_id.name:
-                    partner_info += record.sale_id.partner_id.name + " 様　ご依頼分-"
+                    partner_info += record.sale_id.partner_id.name + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
+                    
             if record.sale_id.partner_id.department:
                 partner_info += record.sale_id.partner_id.department + "-"
             if record.sale_id.partner_id.site:
@@ -889,6 +956,7 @@ class StockPickingExcelReport(models.Model):
                 if record.sale_id.sipping_to == 'bring_in':
                     record.sipping_to = '持込'
             record.stock_picking_sipping_to = sipping_to
+            
 
             witness_name_phone = ""
             if record.sale_id.witness:
@@ -899,25 +967,25 @@ class StockPickingExcelReport(models.Model):
 
             printing_staff = ""
             if record.sale_id.user_id.name:
-                printing_staff += record.sale_id.user_id.name + "  印"
+                printing_staff += record.sale_id.user_id.name + (" Seal" if record.lang_code == "en_US" else "  印")
             record.stock_picking_printing_staff = printing_staff
 
             day = str(datetime.now().day)
             month = str(datetime.now().month)
             year = str(datetime.now().year)
             record.stock_picking_current_date = (
-                year + " 年 " + month + " 月 " + day + " 日 "
+                year + " " + record.yearUnit + " " + month + " " + record.monthUnit +" " + day + " "+ record.dayUnit
             )
 
             estimated_shipping_date = record.sale_id.estimated_shipping_date
             if estimated_shipping_date:
                 record.stock_estimated_shipping_date = (
                     str(estimated_shipping_date.year)
-                    + "年"
+                    + record.yearUnit
                     + str(estimated_shipping_date.month)
-                    + "月"
+                    + record.monthUnit
                     + str(estimated_shipping_date.day)
-                    + "日"
+                    + record.dayUnit
                 )
             else:
                 record.stock_estimated_shipping_date = ""
@@ -926,17 +994,17 @@ class StockPickingExcelReport(models.Model):
             if scheduled_date:
                 record.stock_scheduled_date = (
                     str(scheduled_date.year)
-                    + "年"
+                    + record.yearUnit
                     + str(scheduled_date.month)
-                    + "月"
+                    + record.monthUnit
                     + str(scheduled_date.day)
-                    + "日"
+                    + record.dayUnit
                 )
             else:
                 record.stock_scheduled_date = ""
 
             if record.sale_id.user_id.name:
-                record.stock_printing_staff = record.sale_id.user_id.name + "  印"
+                record.stock_printing_staff = record.sale_id.user_id.name +  (" Seal" if record.lang_code == "en_US" else "  印")
 class StockMoveExcelReport(models.Model):
     _inherit = "stock.move"
     calculate_packages = fields.Integer('Packages' , compute="_compute_calculate_packages")
@@ -1162,6 +1230,52 @@ class AccountMoveExcelReport(models.Model):
         compute="_compute_acc_move_invoice_name",
     )
     
+    acc_move_print_staff = fields.Char(
+        "Acc move print staff",
+        compute="_compute_acc_move_print_staff"
+    )
+
+    lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
+    yearUnit = fields.Char(string="Year", compute="_compute_year_unit")
+    monthUnit = fields.Char(string="Month", compute="_compute_month_unit")
+    dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
+    
+    def _compute_lang_code(self):
+        for order in self:
+            order.lang_code = self.env.context.get('lang') or ''
+
+    def _compute_year_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.yearUnit = "-"
+            else:
+                record.yearUnit = "年"
+
+    def _compute_month_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.monthUnit = "-"
+            else:
+                record.monthUnit = "月"
+
+    def _compute_day_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.dayUnit = ""
+            else:
+                record.dayUnit = "日"
+
+    def _compute_lang_code(self):
+        for l in self:
+            l.lang_code = self.env.context.get('lang') or ''
+            
+    def _compute_acc_move_print_staff(self):
+        for l in self:
+            if l.user_id.name:
+                l.acc_move_print_staff = l.user_id.name +  (" Seal" if l.lang_code == "en_US" else "  印")
+            else:
+                l.acc_move_print_staff = ""
+                
     def _compute_acc_move_invoice_name(self):
         for line in self:
             if line.state == "draft":
@@ -1195,16 +1309,16 @@ class AccountMoveExcelReport(models.Model):
             day = str(datetime.now().day)
             month = str(datetime.now().month)
             year = str(datetime.now().year)
-            line.acc_move_current_date = year + " 年 " + month + " 月 " + day + " 日 "
+            line.acc_move_current_date = year + " " + line.yearUnit + " " + month + " " + line.monthUnit +" " + day + " "+ line.dayUnit
 
             if invoice_date_due:
                 line.acc_move_invoice_date_due = (
                     str(invoice_date_due.year)
-                    + "年"
+                    + line.yearUnit
                     + str(invoice_date_due.month)
-                    + "月"
+                    + line.monthUnit
                     + str(invoice_date_due.day)
-                    + "日"
+                    + line.dayUnit
                 )
             else:
                 line.acc_move_invoice_date_due = ""
@@ -1212,11 +1326,11 @@ class AccountMoveExcelReport(models.Model):
             if ship_date:
                 line.acc_move_shipping_date = (
                     str(ship_date.year)
-                    + "年"
+                    + line.yearUnit
                     + str(ship_date.month)
-                    + "月"
+                    + line.monthUnit
                     + str(ship_date.day)
-                    + "日"
+                    + line.dayUnit
                 )
             else:
                 line.acc_move_shipping_date = ""
@@ -1374,6 +1488,14 @@ class MrpProductionExcelReport(models.Model):
         "Mrp note",
         compute="_compute_mrp_note",
     )
+    
+    lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
+
+    def _compute_lang_code(self):
+        for l in self:
+            l.lang_code = self.env.context.get('lang') or ''
+            
+
 
     def _compute_mrp_note(self):
         note = ""
@@ -1515,6 +1637,52 @@ class PurchaseOrderExcelReport(models.Model):
         "Date planned",
         compute="_compute_report_date",
     )
+    
+    purchase_print_staff= fields.Char(
+        "purchase print staff",
+        compute="_compute_print_staff",
+    )        
+    
+    lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
+    yearUnit = fields.Char(string="Year", compute="_compute_year_unit")
+    monthUnit = fields.Char(string="Month", compute="_compute_month_unit")
+    dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
+    
+    def _compute_lang_code(self):
+        for order in self:
+            order.lang_code = self.env.context.get('lang') or ''
+            
+    def _compute_print_staff(self):
+        for l in self:
+            if l.user_id.name :
+                l.purchase_print_staff = l.user_id.name +  (" Seal" if l.lang_code == "en_US" else "  印")
+            else:
+                l.purchase_print_staff =""
+                
+    def _compute_year_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.yearUnit = "-"
+            else:
+                record.yearUnit = "年"
+
+    def _compute_month_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.monthUnit = "-"
+            else:
+                record.monthUnit = "月"
+
+    def _compute_day_unit(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.dayUnit = ""
+            else:
+                record.dayUnit = "日"
+
+    def _compute_lang_code(self):
+        for l in self:
+            l.lang_code = self.env.context.get('lang') or ''
 
     def _compute_report_date(self):
         for line in self:
@@ -1523,11 +1691,11 @@ class PurchaseOrderExcelReport(models.Model):
             if date_planned:
                 line.purchase_line_date_planned = (
                     str(date_planned.year)
-                    + "年"
+                    + line.yearUnit
                     + str(date_planned.month)
-                    + "月"
+                    + line.monthUnit
                     + str(date_planned.day)
-                    + "日"
+                    + line.dayUnit
                 )
             else:
                 line.purchase_line_date_planned = ""
@@ -1535,11 +1703,11 @@ class PurchaseOrderExcelReport(models.Model):
             if date_order:
                 line.purchase_line_date_order = (
                     str(date_order.year)
-                    + "年"
+                    + line.yearUnit
                     + str(date_order.month)
-                    + "月"
+                    + line.monthUnit
                     + str(date_order.day)
-                    + "日"
+                    + line.dayUnit
                 )
             else:
                 line.purchase_line_date_order = ""
@@ -1564,7 +1732,7 @@ class PurchaseOrderExcelReport(models.Model):
     def _compute_purchase_order_printing_staff(self):
         for line in self:
             if line.user_id.name:
-                line.purchase_order_printing_staff = line.user_id.name + "  印"
+                line.purchase_order_printing_staff = line.user_id.name +  (" Seal" if line.lang_code == "en_US" else "  ")
             else:
                 line.purchase_order_printing_staff = ""
 
