@@ -60,32 +60,34 @@ class SaleOrder(models.Model):
                         hr_employee = self.env['hr.employee'].search([('user_id','=',crm.user_id.id)])
                         if hr_employee:
                             for employee in hr_employee:
-                                so.hr_employee_company = employee.company_id.name or hr_defaults['hr_employee_company']
-                                so.hr_employee_department = employee.department_id.name or hr_defaults['hr_employee_department']
-                                
-                                if so.lang_code == 'en_US':
-                                    so.hr_employee_printer = employee.name +" Seal" or hr_defaults['hr_employee_printer']
+                                so.hr_employee_company = employee.company_id.name if employee.company_id else ''
+                                so.hr_employee_department = employee.department_id.name if employee.department_id else ''
+                                if employee.name:
+                                    if so.lang_code == 'en_US':
+                                        so.hr_employee_printer = employee.name +" Seal" 
+                                    else:
+                                        so.hr_employee_printer = employee.name +" 印" 
                                 else:
-                                    so.hr_employee_printer = employee.name +" 印" or hr_defaults['hr_employee_printer']
-
+                                    so.hr_employee_printer = ''
+                                    
                                 if employee.address_id:
                                     res_partner = self.env['res.partner'].search([('id','=',employee.address_id.id)])
                                     if res_partner:
                                         for res in res_partner:
-                                            so.hr_employee_zip = "〒" + res.zip or hr_defaults['hr_employee_zip']
+                                            so.hr_employee_zip = ("〒" + res.zip) if res.zip != False else ''
                                             so.hr_employee_info = f"{res.street or res.street2 or ''} {res.city or ''} {res.state_id.name or ''} \n {res.country_id.name or ''}".strip()
-                                            so.hr_employee_tel = "tel." + res.phone or hr_defaults['hr_employee_tel']
-                                            so.hr_employee_fax = "fax." + res.fax or hr_defaults['hr_employee_fax']
+                                            so.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
+                                            so.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
                                     else:
-                                        so.hr_employee_zip= hr_defaults['hr_employee_zip']
-                                        so.hr_employee_info= hr_defaults['hr_employee_info']
-                                        so.hr_employee_tel= hr_defaults['hr_employee_tel']
-                                        so.hr_employee_fax= hr_defaults['hr_employee_fax']
+                                        so.hr_employee_zip= ''
+                                        so.hr_employee_info=''
+                                        so.hr_employee_tel= ''
+                                        so.hr_employee_fax= ''
                                 else:
-                                    so.hr_employee_zip= hr_defaults['hr_employee_zip']
-                                    so.hr_employee_info= hr_defaults['hr_employee_info']
-                                    so.hr_employee_tel= hr_defaults['hr_employee_tel']
-                                    so.hr_employee_fax= hr_defaults['hr_employee_fax']
+                                    so.hr_employee_zip= ''
+                                    so.hr_employee_info= ''
+                                    so.hr_employee_tel= ''
+                                    so.hr_employee_fax= ''
                         else:
                             so.update(hr_defaults)
                     else:
