@@ -42,7 +42,7 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="rtw_record_type" id="rtw_record_type.menu_root" action="rtw_record_type.action_window"/>
+    <!-- <menuitem name="rtw_record_type" id="rtw_record_type.menu_root" action="rtw_record_type.action_window"/> -->
 
     <!-- menu categories -->
 <!--

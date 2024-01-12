@@ -12,6 +12,8 @@
             <field name="categ_id"/>
             <field name="attribute_line_ids" widget="many2many_tags"/>
             <field name="width" optional="hide"/>
+            <field name="height" optional="hide"/>
+            <field name="depth" optional="hide"/>
         </tree>
     </field>
 </record>

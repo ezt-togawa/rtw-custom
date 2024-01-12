@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="supplied_material_detail"
+            model="stock.picking"
+            string="支給部材明細(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.supplied_material_detail_xls"
+            file="支給部材明細"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

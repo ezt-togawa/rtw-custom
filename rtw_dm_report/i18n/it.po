@@ -1,0 +1,311 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_dm_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-15 02:55+0000\n"
+"PO-Revision-Date: 2023-05-15 02:55+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__city
+msgid "City"
+msgstr "Città"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__department
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__department
+msgid "Department"
+msgstr "Dipartimento"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "FAX"
+msgstr "FAX"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__first_name
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__first_name
+msgid "FirstName"
+msgstr "Nome"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__id
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead____last_update
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__last_name
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__last_name
+msgid "LastName"
+msgstr "Cognome"
+
+#. module: rtw_dm_report
+#: model:ir.model,name:rtw_dm_report.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Piombo/Opportunità"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__mailing_city
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__mailing_city
+msgid "MailingCity"
+msgstr "Città di spedizione"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__mailing_postal_code
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__mailing_postal_code
+msgid "MailingPostalCode"
+msgstr "Codice postale"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__mailing_state
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__mailing_state
+msgid "MailingState"
+msgstr "Stato di spedizione"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__mailing_street
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__mailing_street
+msgid "MailingStreet"
+msgstr "Indirizzo postale"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__mobile
+msgid "Mobile"
+msgstr "Mobile"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__phone
+msgid "Phone"
+msgstr "Telefono"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__parent_id
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__parent_id
+msgid "Related Company"
+msgstr "Azienda collegata"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__user_id
+msgid "Salesperson"
+msgstr "Addetto alle vendite"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__state_id
+msgid "State"
+msgstr "Stato"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__street
+msgid "Street"
+msgstr "Via"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__street2
+msgid "Street2"
+msgstr "Via2"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,help:rtw_dm_report.field_rtw_sf_inquiry__user_id
+msgid "The internal user in charge of this contact."
+msgstr "L'utente interno responsabile di questo contatto."
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__title
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__title
+msgid "Title"
+msgstr "Titolo"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__zip
+msgid "Zip"
+msgstr "Zip"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__calender
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__calender
+msgid "calender"
+msgstr "calandra"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__fax
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__fax
+msgid "fax"
+msgstr "fax"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__in_has
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__in_has
+msgid "in_has"
+msgstr "in ha"
+
+#. module: rtw_dm_report
+#: model:ir.model,name:rtw_dm_report.model_rtw_sf_inquiry
+msgid "inquiry"
+msgstr "Domanda/Questionario"
+
+#. module: rtw_dm_report
+#: model:ir.model.fields,field_description:rtw_dm_report.field_crm_lead__ny_card
+#: model:ir.model.fields,field_description:rtw_dm_report.field_rtw_sf_inquiry__ny_card
+msgid "ny_card"
+msgstr "ny card"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "カレンダ"
+msgstr "calendario"
+
+#. module: rtw_dm_report
+#: model:ir.ui.menu,name:rtw_dm_report.menu_inquiry_report
+#: model:ir.ui.menu,name:rtw_dm_report.menu_partner_report
+msgid "レポート"
+msgstr "rapporto"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "作成日時"
+msgstr "tempo di creazione"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "作成日時（SF）"
+msgstr "Data e ora di creazione (SF)"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+msgid "取引先所有者"
+msgstr "partner commerciale-proprietario"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "市町村"
+msgstr "comuni"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "年賀状"
+msgstr "Biglietto di auguri per il nuovo anno"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "役職"
+msgstr "posta"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "携帯電話"
+msgstr "telefono cellulare"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "番地1"
+msgstr "Indirizzo 1."
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "番地2"
+msgstr "Indirizzo 2."
+
+#. module: rtw_dm_report
+#: model:ir.actions.act_window,name:rtw_dm_report.action_crm_dm_tree
+#: model:ir.actions.act_window,name:rtw_dm_report.action_inquiry_dm_tree
+#: model:ir.actions.act_window,name:rtw_dm_report.action_partner_dm_tree
+#: model:ir.ui.menu,name:rtw_dm_report.menu_crm_dm
+#: model:ir.ui.menu,name:rtw_dm_report.menu_inquiry_dm
+#: model:ir.ui.menu,name:rtw_dm_report.menu_partner_dm
+msgid "送付リスト"
+msgstr "mailing list"
+
+#. module: rtw_dm_report
+#: model:ir.actions.act_window,name:rtw_dm_report.action_crm_need_dm_tree
+#: model:ir.ui.menu,name:rtw_dm_report.menu_crm_need_dm
+msgid "送付リスト（DMフラグ）"
+msgstr "Elenco di invio (flag DM)"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "部署"
+msgstr "reparto"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "郵便番号"
+msgstr "Codice postale"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_partner_dm_list
+msgid "郵送先 市町村"
+msgstr "Indirizzo postale Comune"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_partner_dm_list
+msgid "郵送先 番地"
+msgstr "Indirizzo postale Numero"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_partner_dm_list
+msgid "郵送先 郵便番号"
+msgstr "Indirizzo postale Codice postale"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_partner_dm_list
+msgid "郵送先 都道府県"
+msgstr "Indirizzo postale Stato/Provincia"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "都道府県"
+msgstr "prefetture"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "関連会社"
+msgstr "azienda associata"
+
+#. module: rtw_dm_report
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_crm_dm_list
+#: model_terms:ir.ui.view,arch_db:rtw_dm_report.view_inquiry_dm_list
+msgid "電話番号"
+msgstr "Numero di telefono"

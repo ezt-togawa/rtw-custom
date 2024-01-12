@@ -3,16 +3,27 @@
         <record id="view_mrp_production_form_rtw" model="ir.ui.view">
             <field name="name">rtw mrp production</field>
             <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="//header" position="inside">
-                    <button string="Create Revised Edition" name="create_revised_edition" type="object"
-                            class="oe_highlight"/>
+                    <button string="Create Revised Edition" name="create_revised_edition"
+                        type="object"
+                        class="oe_highlight" />
                 </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page string="Revised Edition" name="revised_edition">
-                        <field name="revised_edition_ids"/>
+                        <field name="revised_edition_ids" />
                     </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_production_calendar_custom" model="ir.ui.view">
+            <field name="name">rtw mrp production</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.view_production_calendar" />
+            <field name="arch" type="xml">
+                <xpath expr="//calendar" position="attributes">
+                    <attribute name="date_start">date_planned_finished</attribute>
                 </xpath>
             </field>
         </record>

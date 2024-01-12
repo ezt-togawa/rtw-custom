@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_view_order_shipping_type_form" model="ir.ui.view">
+            <field name="name">Sale Order Shipping Type</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='overseas']" position="replace">
+                    <label for="overseas" />
+                    <div>
+                        <field name="overseas" />
+                        <field
+                            name="shipping_type"
+                            widget="selection_badge"
+                            attrs="{'invisible': [('overseas', '=', False)]}" />
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_picking_shipping_type_form" model="ir.ui.view">
+            <field name="name">view.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_id']" position="after">
+                    <field name="overseas" invisible="1" />
+                    <field name="shipping_type" attrs="{'invisible': [('overseas', '=', False)]}" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

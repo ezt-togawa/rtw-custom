@@ -1,0 +1,3015 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_crm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-17 08:48+0000\n"
+"PO-Revision-Date: 2023-04-17 08:48+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__9
+msgid "(R)WEBフォーム"
+msgstr "(R)WEB Form"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__47
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__54
+msgid "(R)WEBページ"
+msgstr "(R)WEB Page"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__-
+msgid "-以下使用しない-"
+msgstr "-Not used below-"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__opportunity_type__1
+msgid "1.フェア"
+msgstr "1.Fair"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__installation_floor__1
+msgid "1F"
+msgstr "1F"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__opportunity_type__2
+msgid "2.フェア外一般邸"
+msgstr "2.General Residence Outside Fair"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__installation_floor__2
+msgid "2F"
+msgstr "2F"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__opportunity_type__3
+msgid "3.展示場/SR"
+msgstr "3.Exhibition Hall / SR"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__installation_floor__3
+msgid "3F"
+msgstr "3F"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__opportunity_type__4
+msgid "4.その他"
+msgstr "4.Other"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__installation_floor__4
+msgid "4F～"
+msgstr "4F～"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "<span class=\"o_stat_text\">Case</span>"
+msgstr "<span class=\"o_stat_text\">Case</span>"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__1
+msgid "ACTUS"
+msgstr "ACTUS"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__1
+msgid "ARLES"
+msgstr "ARLES"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot2__1
+msgid "ARLES(OT)"
+msgstr "ARLES(OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__2
+msgid "ARMSTRONG"
+msgstr "ARMSTRONG"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__3
+msgid "AVENUE"
+msgstr "AVENUE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__32
+msgid "Archiproducts"
+msgstr "Archiproducts"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__31
+msgid "Architonic"
+msgstr "Architonic"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__examination__archive
+msgid "Archive"
+msgstr "Archive"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__5
+msgid "B&B Italia Japan"
+msgstr "B&B Italia Japan"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__2
+msgid "BEATRIX(L)"
+msgstr "BEATRIX(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__1
+msgid "BEATRIX(M)"
+msgstr "BEATRIX(M)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st2__1
+msgid "BEATRIX(OT)"
+msgstr "BEATRIX(OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__beatrix_count
+msgid "BEATRIX_count__c"
+msgstr "Number of BEATRIX units"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__5
+msgid "BLAVA(EC)"
+msgstr "BLAVA(EC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__6
+msgid "BLAVA(HEC)"
+msgstr "BLAVA(HEC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st2__2
+msgid "BLAVA(OT)"
+msgstr "BLAVA(OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st1__2
+msgid "BLAVA（OT)"
+msgstr "BLAVA（OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_board1
+msgid "BOARD1__c"
+msgstr "Product List(BOARD1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_board2
+msgid "BOARD2__c"
+msgstr "Product List(BOARD2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__competition_b
+msgid "B__c"
+msgstr "Competition B"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__belong
+msgid "Belong"
+msgstr "Belong"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_sofa_bench1
+msgid "Bench1__c"
+msgstr "Product List（Bench1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_sofa_bench2
+msgid "Bench2__c"
+msgstr "Product List（Bench2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__6
+msgid "Bo concept"
+msgstr "Bo concept"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__branch
+msgid "Branch__c"
+msgstr "Branch"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st2__5
+msgid "C-LINE(ST)"
+msgstr "C-LINE(ST)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__4
+msgid "CARLOS"
+msgstr "CARLOS"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board2__4
+msgid "CB 718"
+msgstr "CB 718"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench2__6
+msgid "CB BENCH"
+msgstr "CB BENCH"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__5
+msgid "CB SOFA"
+msgstr "CB SOFA"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt1__2
+msgid "CB TABLE (L)"
+msgstr "CB TABLE (L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__2
+msgid "CB TABLE (S)"
+msgstr "CB TABLE (S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__2
+msgid "CB TABLE(L)"
+msgstr "CB TABLE(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__2
+msgid "CB TABLE(S)"
+msgstr "CB TABLE(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot1__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot2__2
+msgid "CB(OT)"
+msgstr "CB(OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__ac
+msgid "CHAI_2__c"
+msgstr "AC"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__7
+msgid "CLAUDE(EC)"
+msgstr "CLAUDE(EC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__1
+msgid "CM TABLE (L)"
+msgstr "CM TABLE (L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__1
+msgid "CM TABLE (S)"
+msgstr "CM TABLE (S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__10
+msgid "CM TABLE(L)"
+msgstr "CM TABLE(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__1
+msgid "CM TABLE(S)"
+msgstr "CM TABLE(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__3
+msgid "CR TABLE"
+msgstr "CR TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__11
+msgid "CR TABLE(S)"
+msgstr "CR TABLE(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__contact_id
+msgid "ContactId"
+msgstr "Business Partner Manager"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__contract_id
+msgid "ContractId"
+msgstr "Contract"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "Create case"
+msgstr "Create case"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__created_by_id
+msgid "CreatedById"
+msgstr "Author"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__created_date
+msgid "CreatedDate"
+msgstr "CreatedDate"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__6
+msgid "DIANA"
+msgstr "DIANA"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot2__3
+msgid "DIANA(OT)"
+msgstr "DIANA(OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__diana_count
+msgid "DIANA__c"
+msgstr "Number of DIANA units"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__14
+msgid "DM・ニュースレター"
+msgstr "DM・Newsletter"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__7
+msgid "DREXEL HERITAGE"
+msgstr "DREXEL HERITAGE"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "Determined_on_the_day"
+msgstr "Sure to be elected"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__Determined_on_the_day
+msgid "Determinedontheday__c"
+msgstr "Fixed on the day"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_d__1
+msgid "Dt"
+msgstr "Dt"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_dt1
+msgid "Dt1__c"
+msgstr "Product List(Dt1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_dt2
+msgid "Dt2__c"
+msgstr "Product List(Dt2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_d__3
+msgid "Dｾｯﾄ"
+msgstr "Dset"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__5
+msgid "E-mail"
+msgstr "E-mail"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_ec1
+msgid "EC1__c"
+msgstr "Product List(EC1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_ec2
+msgid "EC2_2__c"
+msgstr "Product List(EC2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_ec3
+msgid "EC3__c"
+msgstr "Product List(EC3)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__elevator_having
+msgid "EV__c"
+msgstr "EV Available"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__1
+msgid "EX TABLE"
+msgstr "EX TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__41
+msgid "Email"
+msgstr "Email"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__2
+msgid "FAX"
+msgstr "FAX"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__2
+msgid "FV TABLE"
+msgstr "FV TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__36
+msgid "Fax"
+msgstr "Fax"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_others
+msgid "Field14__c"
+msgstr "Merchandise and others（supplement）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__competition_a
+msgid "Field16__c"
+msgstr "CompetitionA"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__competition_other
+msgid "Field17__c"
+msgstr "Competition（other）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__competitive_product_d
+msgid "Field18__c"
+msgstr "Competing product(D)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__competitive_product_name
+msgid "Field19__c"
+msgstr "Competing product name"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__progress_check_date
+msgid "Field1__c"
+msgstr "Date of progress confirmation"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__competitive_product_other
+msgid "Field20__c"
+msgstr "Competing product（other）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__other_strengths
+msgid "Field21__c"
+msgstr "Strengths of Other Companies"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__fair
+msgid "Field22__c"
+msgstr "Fair"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__action1
+msgid "Field23__c"
+msgstr "Action①"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__action2
+msgid "Field24__c"
+msgstr "Action②"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__sample_sale
+msgid "Field25__c"
+msgstr "Sample sale"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__sample_sales_amount
+msgid "Field26__c"
+msgstr "Sample Sales Amount"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__memo_other
+msgid "Field28__c"
+msgstr "Memo（Number of units, etc.）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_chair1
+msgid "Field29__c"
+msgstr "Product List(chair1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__quote_number_by_hukusuke
+msgid "Field2__c"
+msgstr "FUKUSHU quotation number" 
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__our_strengths
+msgid "Field30__c"
+msgstr "Our Strengths"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__competitive_reason
+msgid "Field31__c"
+msgstr "Competitive Reasons"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__area
+msgid "Field32_del__c"
+msgstr "Area"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__fair_Year
+msgid "Field33__c"
+msgstr "Fair Year"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__overlap
+msgid "Field34__c"
+msgstr "Overlap"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__pre_contract_presentation
+msgid "Field34_plan2__c"
+msgstr "Pre-contract presentation"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__fair_advance_plan
+msgid "Field34_plan__c"
+msgstr "Pre-Fair Plan"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__memo
+msgid "Field35_del__c"
+msgstr "Memo"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__progress_check
+msgid "Field36__c"
+msgstr "Progress Check/Progress report"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__opportunity_type
+msgid "Field37__c"
+msgstr "Business meeting type"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__accuracy
+msgid "Field38__c"
+msgstr "Degree of accuracy（Before change）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_accuracy_changed_date
+msgid "Field39__c"
+msgstr "Date and time of last accuracy change"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__quote_number
+msgid "Field3_del__c"
+msgstr "Quote Number"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__result
+msgid "Field40__c"
+msgstr "Result"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__On_site_delivery_date
+msgid "Field43__c"
+msgstr "On-site delivery date"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__opportunity_number
+msgid "Field4__c"
+msgstr "Business negotiation number"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__questionnaire
+msgid "Field50__c"
+msgstr "Survey"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__letter_of_acceptance
+msgid "Field51__c"
+msgstr "Letter of acceptance"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__how_to_get_photos
+msgid "Field52__c"
+msgstr "How to get the photo"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__examination
+msgid "Field53__c"
+msgstr "Examination"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__cost
+msgid "Field54__c"
+msgstr "Cost"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__photographer
+msgid "Field55__c"
+msgstr "Photographer"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__shooting_date
+msgid "Field56__c"
+msgstr "Shooting Date"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__installation_floor
+msgid "Field57__c"
+msgstr "Installation floor"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__delivery_route_required_confirmation
+msgid "Field58__c"
+msgstr "Confirmation of delivery route required"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__lost
+msgid "Field59__c"
+msgstr "Lost"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__delivery_date_unknown
+msgid "Field5__c"
+msgstr "Delivery date unknown"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__project_details
+msgid "Field60__c"
+msgstr "Case Details"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__Use_Purpose
+msgid "Field61__c"
+msgstr "Usage(Other）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__reason_selection
+msgid "Field62__c"
+msgstr "Reasons for selection"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__Use_Purpose1
+msgid "Field63_purpose__c"
+msgstr "Usage①"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__facility_name
+msgid "Field64__c"
+msgstr "Facility Name"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__Use_Purpose2
+msgid "Field64_purpose__c"
+msgstr "Usage②"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__campaign
+msgid "Field65__c"
+msgstr "Campaign"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__Use_Purpose3
+msgid "Field65_purpose__c"
+msgstr "Usage③"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_other
+msgid "Field68__c"
+msgstr "Product List（Other）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__delivery_type
+msgid "Field6__c"
+msgstr "Destination type"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_rug
+msgid "Field70__c"
+msgstr "Product List（rug）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__opportunity_completion_date
+msgid "Field72__c"
+msgstr "Date of completion of business negotiations"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__rate
+msgid "Field74__c"
+msgstr "Ratio of wholesale price to retail price"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__dummy
+msgid "Field75__c"
+msgstr "Dummy"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__procurement_company
+msgid "Field77__c"
+msgstr "Procurement Company"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__address_no
+msgid "Field78__c"
+msgstr "Postal code"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__address
+msgid "Field79__c"
+msgstr "Address"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__order_amount
+msgid "Field7__c"
+msgstr "Order Amount Phone"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__tel
+msgid "Field80__c"
+msgstr "Phone"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__person_name
+msgid "Field81__c"
+msgstr "Name"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__furigana
+msgid "Field82__c"
+msgstr "Furigana"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__depot
+msgid "Field83__c"
+msgstr "Depot"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__depot_arrival_date
+msgid "Field84__c"
+msgstr "Depot Arrival Date"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__to_arrangement_depot
+msgid "Field85__c"
+msgstr "To the Arrangement Depot"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__special_remarks
+msgid "Field86__c"
+msgstr "Special remarks"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__omotesando_visit
+msgid "Field87__c"
+msgstr "Omotesando visit"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__fiscal_quarter
+msgid "FiscalQuarter"
+msgstr "Accounting quarter"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__fiscal_year
+msgid "FiscalYear"
+msgstr "Fiscal year"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__forecast_category
+msgid "ForecastCategory"
+msgstr "Prediction Category"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__forecast_category_name
+msgid "ForecastCategoryName"
+msgstr "Sales Forecast Analysis"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt1__3
+msgid "GO TABLE (L)"
+msgstr "GO TABLE (L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__4
+msgid "GO TABLE (S)"
+msgstr "GO TABLE (S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__3
+msgid "GO TABLE(L)"
+msgstr "GO TABLE(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__4
+msgid "GO TABLE(S)"
+msgstr "GO TABLE(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__8
+msgid "GRACE"
+msgstr "GRACE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__17
+msgid "G住宅ﾎﾟｲﾝﾄ"
+msgstr "Ghousing points"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__43
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__50
+msgid "IFFT2007(sozo_comm)"
+msgstr "IFFT2007(sozo_comm)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__other
+msgid "ITEM_other_08__c"
+msgstr "Other"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "Internal Notes"
+msgstr "Internal Notes"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__isclosed
+msgid "IsClosed"
+msgstr "Closed"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__is_won
+msgid "IsWon"
+msgstr "Conclusion of a contract"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board2__1
+msgid "JABARA(SB)"
+msgstr "JABARA(SB)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board1__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board2__2
+msgid "JABARA(TV)"
+msgstr "JABARA(TV)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__jabara_count
+msgid "JABARA__c"
+msgstr "JABARANumber of units"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__4
+msgid "JK TABLE (L)"
+msgstr "JK TABLE (L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__9
+msgid "JK TABLE(L)"
+msgstr "JK TABLE(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__5
+msgid "JK TABLE(S)"
+msgstr "JK TABLE(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__9
+msgid "JK(AC)"
+msgstr "JK(AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__9
+msgid "JK(EC)"
+msgstr "JK(EC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__10
+msgid "LE BEAU"
+msgstr "LE BEAU"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__7
+msgid "LEBEAU"
+msgstr "LEBEAU"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__9
+msgid "LF SOFA"
+msgstr "LF SOFA"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot2__4
+msgid "LF(OT)"
+msgstr "LF(OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__lf_set_count
+msgid "LF__c"
+msgstr "LFnumber of sets"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__11
+msgid "LOS"
+msgstr "LOS"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__12
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__12
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__12
+msgid "LUPIN(LC)"
+msgstr "LUPIN(LC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__8
+msgid "LW SOFA"
+msgstr "LW SOFA"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt1__5
+msgid "LW TABLE (L)"
+msgstr "LW TABLE (L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__6
+msgid "LW TABLE (S)"
+msgstr "LW TABLE (S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__5
+msgid "LW TABLE(L)"
+msgstr "LW TABLE(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__6
+msgid "LW TABLE(S)"
+msgstr "LW TABLE(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot2__5
+msgid "LW(OT)"
+msgstr "LW(OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__lw_set_count
+msgid "LW_5__c"
+msgstr "LWnumber of sets"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__competitive_product_l
+msgid "L__c"
+msgstr "Competing product(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead____last_update
+msgid "Last Modified on"
+msgstr "Last update"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_activity_date
+msgid "LastActivityDate"
+msgstr "Last activity date"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_amount_changed_history_id
+msgid "LastAmountChangedHistoryId"
+msgstr "LastAmountChangedHistory"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_close_date_changed_history_id
+msgid "LastCloseDateChangedHistoryId"
+msgstr "Last Completion Date Change History"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_event_comment
+msgid "LastEventComment__c"
+msgstr "LastEventComment"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_modified_by_id
+msgid "LastModifiedById"
+msgstr "LastModified"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_modified_date
+msgid "LastModifiedDate"
+msgstr "LastModifiedDate"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_stage_changed_date
+msgid "LastStageChangeDate"
+msgstr "LastStageChangeDate"
+
+#. module: rtw_crm
+#: model:ir.model,name:rtw_crm.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Lead/Opportunity"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__lead_source
+msgid "LeadSource"
+msgstr "LeadSource"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__l_set
+msgid "Lset__c"
+msgstr "Lset"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_l__2
+msgid "Lt"
+msgstr "Lt"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_lt1
+msgid "Lt1__c"
+msgstr "Product List(Lt1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_lt2
+msgid "Lt2__c"
+msgstr "Product List(Lt2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_l__4
+msgid "Lｾｯﾄ"
+msgstr "L set"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__3
+msgid "MC TABLE"
+msgstr "MC TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__4
+msgid "MCM TABLE"
+msgstr "MCM TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__5
+msgid "MM TABLE"
+msgstr "MM TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench2__4
+msgid "MO BENCH(M)"
+msgstr "MO BENCH(M)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench2__3
+msgid "MO BENCH(S)"
+msgstr "MO BENCH(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench2__5
+msgid "MO BENCH(SQ)"
+msgstr "MO BENCH(SQ)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board2__5
+msgid "MO SMALL DESK"
+msgstr "MO SMALL DESK"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st2__7
+msgid "MO STOOL(M)"
+msgstr "MO STOOL(M)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st2__6
+msgid "MO STOOL(S)"
+msgstr "MO STOOL(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__7
+msgid "MO TABLE (S)"
+msgstr "MO TABLE (S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__6
+msgid "MO TABLE(L)"
+msgstr "MO TABLE(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__7
+msgid "MO TABLE(OB)"
+msgstr "MO TABLE(OB)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__6
+msgid "MO TABLE(RO)"
+msgstr "MO TABLE(RO)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__7
+msgid "MO TABLE(S)"
+msgstr "MO TABLE(S)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__15
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__15
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__15
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench1__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench2__2
+msgid "MT BENCH(L)"
+msgstr "MT BENCH(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__14
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__14
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__14
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench2__1
+msgid "MT BENCH(M)"
+msgstr "MT BENCH(M)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__8
+msgid "MT TABLE"
+msgstr "MT TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__9
+msgid "Minotti"
+msgstr "Minotti"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__order_no
+msgid "NO__c"
+msgstr "Order No"
+
+#. module: rtw_crm
+#: code:addons/rtw_crm/models/crm_lead.py:0
+#, python-format
+msgid "New"
+msgstr "New"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__nextstep
+msgid "NextStep"
+msgstr "Next Step"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__9
+msgid "OEM"
+msgstr "OEM"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__9
+msgid "OS TABLE(040)"
+msgstr "OS TABLE(040)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__8
+msgid "OS TABLE(070)"
+msgstr "OS TABLE(070)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__13
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__13
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__13
+msgid "OSCAR"
+msgstr "OSCAR"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_sofa_ot2
+msgid "OT2__c"
+msgstr "Product List(sofaOT2)"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.rtw_sale_manage_list
+msgid "Odoo作成日"
+msgstr "Odoo Creation Date"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "On_site_delivery_date"
+msgstr "On-site delivery date"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.customer_search_view_rtw_leads
+#: model_terms:ir.ui.view,arch_db:rtw_crm.customer_search_view_rtw_oppo
+msgid "Opportunity"
+msgstr "Opportunity"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__crm_seq
+msgid "Opportunity No"
+msgstr "Opportunity No"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__10
+msgid "PLAZA"
+msgstr "PLAZA"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot2__6
+msgid "PLAZA(OT)"
+msgstr "PLAZA(OT)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__p_author
+msgid "P__c"
+msgstr "P Creator(Representative）"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__r_partner_id
+msgid "Partner"
+msgstr "Partner"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__presentation_flag
+msgid "Presentation Flag"
+msgstr "Presentation Flag"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__primary_partner_Account_id
+msgid "PrimaryPartnerAccountId"
+msgstr "PrimaryPartnerAccountId"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__examination__project
+msgid "Project"
+msgstr "Project"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__push_c
+msgid "Push_Counter__c"
+msgstr "Push C(Count the number of times the estimated completion date is changed to the following month or later.)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__9
+msgid "QX TABLE"
+msgstr "QX TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__3
+msgid "RIVAGE(EC)"
+msgstr "RIVAGE(EC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec2__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ec3__4
+msgid "RIVAGE(LC)"
+msgstr "RIVAGE(LC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st2__3
+msgid "RIVAGE(ST)"
+msgstr "RIVAGE(ST)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__18
+msgid "ROC"
+msgstr "ROC"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st1__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_st2__10
+msgid "RV TABLE"
+msgstr "RV TABLE"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__reference_price
+msgid "Reference Price"
+msgstr "Reference Price"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__38
+msgid "RitzwellWebフォーム"
+msgstr "RitzwellWeb Forms"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__result__4
+msgid "R×競×"
+msgstr "R×Competition×"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__result__3
+msgid "R×競〇"
+msgstr "R×Competition〇"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__result__2
+msgid "R△競△"
+msgstr "R△Competitions△"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__result__1
+msgid "R〇競×"
+msgstr "R〇Competition×"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__20
+msgid "Rオーナー(追加・リピート)"
+msgstr "R Owner(add・repeat)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__21
+msgid "Rオーナー（アフター）"
+msgstr "R Owner(after)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__budget_data
+msgid "SFDC_Budget__c"
+msgstr "Budget data"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.rtw_sale_manage_list
+msgid "SF作成日"
+msgstr "SF Creation Date"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__7
+msgid "SI TABLE(L)"
+msgstr "SI TABLE(L)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__10
+msgid "SNS"
+msgstr "SNS"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__8
+msgid "SRフェア"
+msgstr "SRfair"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__11
+msgid "SR・商談室"
+msgstr "SR・business negotiation room"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__6
+msgid "SR来場"
+msgstr "SRattendance"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_ot_st1
+msgid "ST1_1__c"
+msgstr "Product List(OT/ST1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_ot_st2
+msgid "ST2_2__c"
+msgstr "Product List(OT/ST2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_sofa_ot1
+msgid "Sofa_OT__c"
+msgstr "Product List(sofaOT1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__sr_status
+msgid "Sr Status"
+msgstr "Sr Status"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_st1
+msgid "St1__c"
+msgstr "Product List(St1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_st2
+msgid "St2__c"
+msgstr "Product List(St2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__stage_sort_order
+msgid "StageSortOrder"
+msgstr "StageSortOrder"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__system_mod_stamp
+msgid "SystemModstamp"
+msgstr "System last updated"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_other__1
+msgid "Sﾎﾞｰﾄﾞ"
+msgstr S Board
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__11
+msgid "TABROOM"
+msgstr "TABROOM"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__memo_trw
+msgid "TRW_2__c"
+msgstr "TRW Memo"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__trw_candidate
+msgid "TRW__c"
+msgstr "TRW Candidate"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__term
+msgid "Term__c"
+msgstr "Term"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "The Ritzwell Works"
+msgstr "The Ritzwell Works"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__8
+msgid "Time&Style"
+msgstr "Time&Style"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__tracking_deadline
+msgid "Tracking Deadline"
+msgstr "Estimated completion"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__crm_type
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__x_type
+msgid "Type"
+msgstr "Business meeting type"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board2__3
+msgid "UNO"
+msgstr "UNO"
+
+#. module: rtw_crm
+#: model:ir.actions.server,name:rtw_crm.ir_cron_update_crm_seq_ir_actions_server
+#: model:ir.cron,cron_name:rtw_crm.ir_cron_update_crm_seq
+#: model:ir.cron,name:rtw_crm.ir_cron_update_crm_seq
+msgid "Update CRM Sequence"
+msgstr "Update CRM Sequence"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "Use_Purpose"
+msgstr "Usage（Other）"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "Use_Purpose1"
+msgstr "Usage①\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "Use_Purpose2"
+msgstr "Usage②"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "Use_Purpose3"
+msgstr "Usage③"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_ot_st2__4
+msgid "VINCENT(ST)"
+msgstr "VINCENT(ST)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__website
+msgid "WEB__c"
+msgstr "WEB__c"
+
+#. module: rtw_crm
+#: model:ir.model.fields,help:rtw_crm.field_crm_lead__website
+msgid "Website of the contact"
+msgstr "Website of the contact"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__9
+msgid "Web検索サイト"
+msgstr "Web search site"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__million_amount
+msgid "X100_amount__c"
+msgstr "1,000,000 Amount"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__million_order_amount
+msgid "X100_amount_a__c"
+msgstr "1,000,000 Amount of orders received"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__total_million_order_count
+msgid "X100_count__c"
+msgstr "1,000,000 Total"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__million_order_count
+msgid "X100_count_a__c"
+msgstr "Number of million orders"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_sofa1
+msgid "X1__c"
+msgstr "Product List(sofa1)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_sofa2
+msgid "X2_2__c"
+msgstr "Product List(sofa2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_chair2
+msgid "X2_5__c"
+msgstr "Product List(chair2)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_chair3
+msgid "X3_4__c"
+msgstr "Product List(chair3)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_sofa3
+msgid "X3__c"
+msgstr "Product List(sofa3)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__product_list_chair4
+msgid "X4_1__c"
+msgstr "Product List(chair4)"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__year
+msgid "Year__c"
+msgstr "Year"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "accuracy"
+msgstr "Accuracy (before change)"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "action1"
+msgstr "Action①"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "action2"
+msgstr "Action②"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "address"
+msgstr "Address"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "address_no"
+msgstr "〒"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__3
+msgid "arflex"
+msgstr "Arflex"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "branch"
+msgstr "Branch"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "budget_data"
+msgstr "Budget_data"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__calendar_ids
+msgid "calendar"
+msgstr "Calendar"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "campaign_id"
+msgstr "Campaign"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__case_ids
+msgid "case"
+msgstr "Case"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__case_count
+msgid "case count"
+msgstr "Case count"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__4
+msgid "cassina ixc."
+msgstr "Cassina ixc."
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "competition_a"
+msgstr "Competition_a"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "competition_b"
+msgstr "Competition_b"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "competition_other"
+msgstr "Competition（Other）"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "competitive_product_d"
+msgstr "Competitive product(D)"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "competitive_product_l"
+msgstr "Competitive product(L)"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "competitive_product_name"
+msgstr "Competitive product name\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "competitive_product_other"
+msgstr "Competitive product（Other）"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "competitive_reason"
+msgstr "Competitive reason"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "contract_id"
+msgstr "Contract"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "cost"
+msgstr "Cost"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "crm_type"
+msgstr "Business meeting type"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "delivery_date_unknown"
+msgstr "Delivery date unknown\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "delivery_route_required_confirmation"
+msgstr "Deliveryroute required confirmation"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "delivery_type"
+msgstr "Delivery type\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "depot"
+msgstr "Depot"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "depot_arrival_date"
+msgstr "Depot arrival date"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "description"
+msgstr "Description"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "dummy"
+msgstr "Dummy"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "elevator_having"
+msgstr "Elevator having"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "examination"
+msgstr "Examination"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "facility_name"
+msgstr "《Facility name》\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "fair"
+msgstr "Fair"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "fair_advance_plan"
+msgstr "Fair advance plan"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "forecast_category_name"
+msgstr "Sales Forecast Classification\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "furigana"
+msgstr "Furigana"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "how_to_get_photos"
+msgstr "How to get photos"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "installation_floor"
+msgstr "Installation floor"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__last_amount_changed_datetime
+msgid "lastamountchangedatetime__c"
+msgstr "Date of last price change"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "lead_source"
+msgstr "Lead source\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "letter_of_acceptance"
+msgstr "Letter of acceptance"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "lost"
+msgstr "Lost"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "memo"
+msgstr "Memo"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "memo_trw"
+msgstr "Memo_trw"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "million_amount"
+msgstr "Million amount"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "million_order_amount"
+msgstr "Million order amount"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "million_order_count"
+msgstr "Million order count"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "nextstep"
+msgstr "Next Step\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "omotesando_visit"
+msgstr "Omotesando visit\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "opportunity_completion_date"
+msgstr "Opportunity completion date"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "order_amount"
+msgstr "Order amount"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "other_strengths"
+msgstr "Other strengths"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "our_strengths"
+msgstr "Our strengths"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "overlap"
+msgstr "Overlap"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.customer_search_view_rtw_leads
+#: model_terms:ir.ui.view,arch_db:rtw_crm.customer_search_view_rtw_oppo
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "p_author"
+msgstr "P author(representative）"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "person_name"
+msgstr "Person name"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "photographer"
+msgstr "Photographer"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "pre_contract_presentation"
+msgstr "Pre contract presentation"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "presentation"
+msgstr "Presentation"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__presentation
+msgid "presentation__c"
+msgstr "Normal presentation"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "previous_amount"
+msgstr "Amount immediately before\t"
+
+#. module: rtw_crm
+#: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__previous_amount
+msgid "previousamount__c"
+msgstr "Amount immediately before"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "probability"
+msgstr "Probability（％）"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "procurement_company"
+msgstr "Procurement company\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "progress_check"
+msgstr "Progress Check/Progress report\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "progress_check_date"
+msgstr "Date of progress confirmation\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "push_c"
+msgstr "Push C"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "questionnaire"
+msgstr "Survey"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "quote_number_by_hukusuke"
+msgstr "Quote number by hukusuke\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "rate"
+msgstr "Rate\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "reference_price"
+msgstr "Reference price\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "result"
+msgstr "Result"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "sample_sale"
+msgstr "Sample sale\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "sample_sales_amount"
+msgstr "Sample sales amount\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "shooting_date"
+msgstr "Shooting date"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "special_remarks"
+msgstr "Special remarks"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "tel"
+msgstr "Tel"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "term"
+msgstr "Term"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "to_arrangement_depot"
+msgstr "To arrangement depot\t"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "total_million_order_count"
+msgstr "Total million order count"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "trw_candidate"
+msgstr "TRW candidate"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "website"
+msgstr "《Website》"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "year"
+msgstr "Year"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__examination__trw
+msgid "★TRW"
+msgstr "★TRW"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__13
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__23
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_d__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__17
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__delivery_type__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__how_to_get_photos__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__33
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_rug__3
+msgid "その他"
+msgstr "Other"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__19
+msgid "その他コントラクト"
+msgstr "Other Contracts"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__6
+msgid "その他部材"
+msgstr "Other parts"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__16
+msgid "ふるさと納税"
+msgstr "Tax payment at home"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__10
+msgid "アイデック"
+msgstr "IDEC"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__22
+msgid "イベント参加"
+msgstr "Event Participation"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__22
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__39
+msgid "インテリアフェア"
+msgstr "Interior Fair"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__12
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__11
+msgid "エスティック"
+msgstr "Estic"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__7
+msgid "オイルキット"
+msgstr "Oil Kit"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__9
+msgid "オイル・レザーキット"
+msgstr "Oil・Leather Kit"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__delivery_type__6
+msgid "オフィス・金融関連"
+msgstr "Office・Financial"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__15
+msgid "カタログギフト"
+msgstr "Catalog gift"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__14
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__13
+msgid "カリモク家具"
+msgstr "Karimoku Furniture"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__4
+msgid "カレッツァ(AC)"
+msgstr "Karezza(AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__3
+msgid "カレッツァ(C)"
+msgstr "Karezza(C)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__10
+msgid "カレンダー"
+msgstr "Calender"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__19
+msgid "カレンダー購入"
+msgstr "Buy Calendar"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__15
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__14
+msgid "カンディハウス"
+msgstr "Kandi House"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__13
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_rug__2
+msgid "キリム"
+msgstr "Kilim"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__1
+msgid "クッション"
+msgstr "Cushion"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__11
+msgid "クリント(AC)"
+msgstr "clint(AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__10
+msgid "クリント(C)"
+msgstr "clint(C)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__7
+msgid "クロード(AC)"
+msgstr "Claude(AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__6
+msgid "クロード(C)"
+msgstr "Claude(C)"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "ケース"
+msgstr "Case"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__45
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__52
+msgid "コラボイベント"
+msgstr "collaborative event"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "システム管理者チェック用"
+msgstr "For system administrator check"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__27
+msgid "ショールーム販売"
+msgstr "Showroom Sales"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__8
+msgid "シーライン(AC)"
+msgstr "Sea Line (AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__16
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__16
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__16
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__16
+msgid "スコラー"
+msgstr "Squollar"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__2
+msgid "スペアカバー"
+msgstr "Spare Covers"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__4
+msgid "スペアカバー+中材"
+msgstr "Spare cover + padding"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__28
+msgid "セール販売"
+msgstr "Sale Sale"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__1
+msgid "ダイニング"
+msgstr "Dining"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__5
+msgid "チャーリー"
+msgstr "Charlie"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__23
+msgid "ハウスメーカーその他"
+msgstr "Housebuilders and others"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__3
+msgid "バー"
+msgstr "Bar"
+
+#. module: rtw_crm
+#: model:ir.actions.act_window,name:rtw_crm.action_filter_list
+msgid "フィルタ"
+msgstr "Filter "
+
+#. module: rtw_crm
+#: model:ir.ui.menu,name:rtw_crm.menu_filter_list
+msgid "フィルタ管理"
+msgstr "Filter Management"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__24
+msgid "フェア・展示会"
+msgstr "Fairs・Exhibitions"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "フェア情報"
+msgstr "Fair Information"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__2
+msgid "ブラヴァ(AC)"
+msgstr "Brava(AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__1
+msgid "ブラヴァ(C)"
+msgstr "Brava(C)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__5
+msgid "プラパート"
+msgstr "Plapert"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "プレゼン"
+msgstr "Presentation"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__4
+msgid "プレゼン依頼"
+msgstr "Presentation Request"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__12
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_rug__1
+msgid "ペリーニ"
+msgstr "Perini"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__21
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__20
+msgid "マスターウォール"
+msgstr "Master Wall"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__14
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__14
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__14
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__14
+msgid "マルセル"
+msgstr "Marcelle"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__22
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__21
+msgid "マルニ木工"
+msgstr "Maruni Woodworking"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__25
+msgid "マンションその他"
+msgstr "Condominiums and others"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__31
+msgid "マンション一般邸（IC直販）"
+msgstr "Condominium General Residence (IC direct sales)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__24
+msgid "マンション個人（販売会含む）"
+msgstr "Individual condominiums (including sales meetings)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__12
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__30
+msgid "ミラノサローネ"
+msgstr "Milano Salone"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__2
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__2
+msgid "ラウンジ・カフェ"
+msgstr "Lounge Cafe"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__2
+msgid "リサーチ・新規開拓"
+msgstr "Research and new business development"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__15
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__15
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__15
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__15
+msgid "リヴァージュ(AC)"
+msgstr "Rivage (AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__13
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__13
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__13
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__13
+msgid "ルパン(AC)"
+msgstr "Lupin (AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__12
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__12
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__12
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__12
+msgid "ルパン(C)"
+msgstr "Lupin (C)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair1__17
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair2__17
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair3__17
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_chair4__17
+msgid "ルボー(AC)"
+msgstr "Lebeau (AC)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__8
+msgid "レザーキット"
+msgstr "Leather Kit"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__forecast_category_name__1
+msgid "ロスト"
+msgstr "Lost"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__9
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__9
+msgid "ワークスペース"
+msgstr "Workspace"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__sample_sale__same
+msgid "一部"
+msgstr "Some"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__24
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__34
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__result__5
+msgid "不明"
+msgstr "Unknown"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_other__3
+msgid "中材"
+msgstr "Filler"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.customer_search_view_rtw_oppo
+msgid "今年"
+msgstr "This year"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__40
+msgid "仕入調達"
+msgstr "Procurement"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__26
+msgid "代理店・OEM"
+msgstr "Distributor・OEM"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__-
+msgid "以下未使用"
+msgstr "Not used below"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__8
+msgid "会議室"
+msgstr "Conference room"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__10
+msgid "住宅展示場"
+msgstr "Housing exhibition hall"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__delivery_type__1
+msgid "住宅系（戸建・マンション）"
+msgstr "Residential (detached houses and condominiums)"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "候補には上長承認が必要です"
+msgstr "Candidates must have superior approval."
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__sample_sale__all
+msgid "全て"
+msgstr "All"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__delivery_type__4
+msgid "公共施設（空港・図書館・他文化施設等）"
+msgstr "Public facilities (airports, libraries, other cultural facilities, etc.)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__20
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__19
+msgid "冨士ファニチア"
+msgstr "Fuji Furniture"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__delivery_type__2
+msgid "医療福祉（病院・老健等）"
+msgstr "Medical and welfare (hospitals, aged care facilities, etc.)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__forecast_category_name__5
+msgid "受注成立"
+msgstr "Order fulfillment"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__35
+msgid "口コミ"
+msgstr "Word of mouth"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__delivery_type__5
+msgid "商業施設（飲食・物販等）"
+msgstr "Commercial facilities (food, beverage, merchandise, etc.)"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.rtw_sale_manage_list
+msgid "商談番号"
+msgstr "Business negotiation number"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__1
+msgid "問合せ"
+msgstr "Query"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__installation_floor__ug
+msgid "地下"
+msgstr "Underground"
+
+#. module: rtw_crm
+#: model:ir.actions.act_window,name:rtw_crm.action_sale_manage
+#: model:ir.ui.menu,name:rtw_crm.menu_sale_manage_crm
+msgid "売上管理"
+msgstr "Sales Management"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__25
+msgid "外部イベント"
+msgstr "External event"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__13
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__12
+msgid "大塚家具"
+msgstr "Otsuka furniture"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_list_sf
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_list_sf2
+msgid "完了予定日"
+msgstr "Estimated completion date"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__6
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__6
+msgid "客室（病室/マンション含）"
+msgstr "Guest rooms (including hospital rooms/apartments)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__46
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__53
+msgid "家具店・IC等からの紹介"
+msgstr "Referrals from furniture stores, ICs, etc."
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__delivery_type__3
+msgid "宿泊施設（旅館・ホテル等）"
+msgstr "Accommodations (inns, hotels, etc.)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__delivery_type__7
+msgid "小物（家具以外）"
+msgstr "Small objects (other than furniture)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__12
+msgid "広報(広告）"
+msgstr "Public Relations (Advertising)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__13
+msgid "広報（PR）"
+msgstr "Public Relations (PR)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__19
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__18
+msgid "広松木工"
+msgstr "Hiromatsu Woodworking"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__44
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__51
+msgid "店舗"
+msgstr "Store"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench2__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot2__7
+msgid "廃番品"
+msgstr "Out of stock"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__10
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa1__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa2__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa3__11
+msgid "廃盤品"
+msgstr "Out of stock"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__how_to_get_photos__1
+msgid "建築写真を購入"
+msgstr "Buy Architectural Photos"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__4
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__4
+msgid "待合・休憩（飲食なし）"
+msgstr "Waiting and resting (no food or drink)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__7
+msgid "応接室"
+msgstr "Drawing room"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__1
+msgid "戸建(ﾌｪｱ)"
+msgstr "Detached house(Fair)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__2
+msgid "戸建(ﾌｪｱ外)"
+msgstr "Detached house (outside fair)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose1__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose2__5
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__Use_Purpose3__5
+msgid "接客・商談用"
+msgstr "For customer service and business meetings"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__13
+msgid "撮影・セット用"
+msgstr "For filming and set"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__21
+msgid "新規ビジネス"
+msgstr "New Business"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__20
+msgid "既存ビジネス"
+msgstr "Existing Business"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__17
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__16
+msgid "日本フクラ"
+msgstr "Japan Fukura"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__16
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__15
+msgid "日進木工"
+msgstr "Nissin Woodworking"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__forecast_category_name__4
+msgid "最終交渉"
+msgstr "Final Negotiations"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "注意：配送先が異なる場合はこちらに入力してください。"
+msgstr "Note: If you have a different shipping address, please enter it here."
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__5
+msgid "注文"
+msgstr "Order"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__29
+msgid "海外"
+msgstr "Overseas"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__16
+msgid "海外コントラクト"
+msgstr "overseas contract"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__15
+msgid "海外レジデンシャル"
+msgstr "Overseas Residential"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__29
+msgid "海外展示会"
+msgstr "Overseas Exhibition"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__42
+msgid "物件情報"
+msgstr "Property Information"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_ot2__8
+msgid "特注"
+msgstr "Custom"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt1__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_dt2__11
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_lt2__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench1__8
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_sofa_bench2__8
+msgid "特注品"
+msgstr "Made to measure"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_list_sf2
+msgid "現場納品日"
+msgstr "On Site Day"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__8
+msgid "異動(取責)"
+msgstr "Transfer (responsibility)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__1
+msgid "競合なし"
+msgstr "No competition"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "競合情報"
+msgstr "Competitive Information"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__6
+msgid "納入先展示(展示場・MR)"
+msgstr "Inclusion of the first show (showroom・MR)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__7
+msgid "納入先展示(店舗・施設等)"
+msgstr "Display at destination (stores, facilities, etc.)"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_form_sf
+msgid "納品先情報"
+msgstr "Delivery address information"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__48
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__55
+msgid "納品時の案内用紙"
+msgstr "Information sheet at time of delivery"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__27
+msgid "紹介(施主指定)"
+msgstr "Referral (designated by client)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__5
+msgid "紹介・提案(小売店・百貨店)"
+msgstr "Introductions and proposals (retailers and department stores)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__4
+msgid "紹介・提案(販売店FFE)"
+msgstr "Referral and proposal (dealer FFE)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__3
+msgid "紹介・提案(ＩＣ・設計)"
+msgstr "Introduction and proposal (IC and design)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__28
+msgid "紹介（従業員）"
+msgstr "Referral (Employee)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__26
+msgid "紹介（知人・外部）"
+msgstr "Referral (acquaintance/external)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__how_to_get_photos__2
+msgid "自社でカメラマン手配"
+msgstr "In-house photographer arrangement"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__7
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__7
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_list_sf2
+msgid "表参道来店"
+msgstr "Omotesando visit"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__3
+msgid "見積依頼"
+msgstr "Request for Quotation"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__forecast_category_name__3
+msgid "見込み有"
+msgstr "Possibility Existence"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__10
+msgid "訪問"
+msgstr "Visit"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__30
+msgid "該当なし（不明）"
+msgstr "Not applicable (unknown)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action2__2
+msgid "資料請求"
+msgstr "Request Information"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__23
+msgid "通りがかり"
+msgstr "Passing"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__1
+msgid "通常営業"
+msgstr "Business as usual"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__forecast_category_name__2
+msgid "進行中"
+msgstr "In Progress"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__14
+msgid "関係者直販"
+msgstr "Direct sales to interested parties"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_list_sf
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_list_sf2
+msgid "関連会社"
+msgstr "Affiliated Company"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__18
+msgid "集計用"
+msgstr "For Aggregation"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__49
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__56
+msgid "雑誌"
+msgstr "Magazine"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__1
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__lead_source__37
+msgid "電話"
+msgstr "Phone"
+
+#. module: rtw_crm
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_list_sf
+#: model_terms:ir.ui.view,arch_db:rtw_crm.view_crm_list_sf2
+msgid "顧客"
+msgstr "Client"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__18
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__17
+msgid "飛騨産業"
+msgstr "Hida Industries"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__3
+msgid "（R）WEBフォーム"
+msgstr "(R) WEB Form"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__action1__4
+msgid "（媒体）資料請求"
+msgstr "(Media) Information Request"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_a__3
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competition_b__2
+msgid "ＡＤコア"
+msgstr "AD Core"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__7
+msgid "ｺﾝﾄﾗｸﾄ"
+msgstr "Contract"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__8
+msgid "ｺﾝﾄﾗｸﾄ（直販）"
+msgstr "Contract (direct sales)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__12
+msgid "ｻﾝﾌﾟﾙ貸出（展示会他）"
+msgstr "SAMPLE LOAN OUT (showcase for him)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_l__1
+msgid "ｿﾌｧ"
+msgstr "Sofa"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_d__2
+msgid "chair"
+msgstr "Chair"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_l__3
+msgid "ﾎﾞｰﾄﾞ"
+msgstr "Board"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__4
+msgid "ﾏﾝｼｮﾝ個人（ﾌｪｱ外）"
+msgstr "Condominium Individuals (Outside Fair)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__3
+msgid "ﾏﾝｼｮﾝ個人（ﾌｪｱ）"
+msgstr "Condominium Individuals (Fair)"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__6
+msgid "ﾏﾝｼｮﾝ共用部"
+msgstr "Condominium common area"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__crm_type__5
+msgid "ﾏﾝｼｮﾝﾓﾃﾞﾙ"
+msgstr "Condominium Model"
+
+#. module: rtw_crm
+#: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__competitive_product_other__2
+msgid "ﾗｸﾞ"
+msgstr "Rug"

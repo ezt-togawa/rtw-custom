@@ -884,7 +884,7 @@ msgstr "クローズ済"
 #. module: rtw_crm
 #: model:ir.model.fields,field_description:rtw_crm.field_crm_lead__is_won
 msgid "IsWon"
-msgstr "成約"
+msgstr "受注成立"
 
 #. module: rtw_crm
 #: model:ir.model.fields.selection,name:rtw_crm.selection__crm_lead__product_list_board1__1

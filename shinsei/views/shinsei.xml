@@ -7,16 +7,16 @@
                 <search string="approval">
 
                     <filter
-                            name="needs_review"
-                            string="Needs my Review"
-                            domain="[('reviewer_ids','in',uid), ('state', 'not in', ['done', 'cancel'])]"
-                            help="My Purchases to review"
+                        name="needs_review"
+                        string="Needs my Review"
+                        domain="[('reviewer_ids','in',uid), ('state', 'not in', ['done', 'cancel'])]"
+                        help="My Purchases to review"
                     />
                     <filter
-                            name="tier_validated"
-                            string="Validated"
-                            domain="[('validated', '=', True)]"
-                            help="Purchase Requests validated and ready to be confirmed"
+                        name="tier_validated"
+                        string="Validated"
+                        domain="[('validated', '=', True)]"
+                        help="Purchase Requests validated and ready to be confirmed"
                     />
 
                 </search>
@@ -28,9 +28,10 @@
             <field name="model">shinsei.shinsei</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="name" string="name"/>
-                    <field name="application_date" string="application_date"/>
-                    <field name="owner" string="owner"/>
+                    <field name="name" string="name" />
+                    <field name="application_date" string="application_date" />
+                    <field name="shinsei_state" string="status" />
+                    <field name="owner" string="owner" />
                 </tree>
             </field>
         </record>
@@ -48,12 +49,19 @@
             <field name="arch" type="xml">
                 <form string="shinsei">
                     <header>
-                        <button string="test"/>
+                        <button string="test" invisible="1"/>
                         <field
-                                name="state"
-                                widget="statusbar"
-                                statusbar_visible="draft,to_approve,approved,done,rejected"
-                                statusbar_colors='{"approved":"blue"}'
+                            name="state"
+                            widget="statusbar"
+                            statusbar_visible="draft,to_approve,approved,done,rejected"
+                            statusbar_colors='{"approved":"blue"}'
+                            invisible="1"
+                        />
+                        <field
+                            name="shinsei_state"
+                            widget="statusbar"
+                            statusbar_visible="draft,to_approve,approved,done,rejected"
+                            statusbar_colors='{"approved":"blue"}'
                         />
                     </header>
                     <sheet>
@@ -61,197 +69,201 @@
                         </div>
                         <group>
                             <field name="shinsei_type"
-                                   widget="radio"
-                                   options="{'horizontal': true}" required="1"/>
-                            <field name="name" required="1"/>
-                            <field name="application_date" required="1"/>
-                            <field name="department"/>
-                            <field name="requested_by" widget="many2one_avatar_user"/>
-                            <field name="manager"/>
+                                widget="radio"
+                                options="{'horizontal': true}" required="1" />
+                            <field name="name" required="1" />
+                            <field name="application_date" required="1" />
+                            <field name="department" />
+                            <field name="requested_by" widget="many2one_avatar_user" />
+                            <field name="manager" />
                         </group>
                         <div attrs="{'invisible': [('shinsei_type','!=', 'sample')]}">
                             <group string="サンプル制作申請書">
-                                <field name="application_reason"/>
-                                <field name="no_product"/>
-                                <field name="desired_delivery_date"/>
-                                <field name="delivery_location"/>
-                                <field name="request"/>
+                                <field name="application_reason" />
+                                <field name="no_product" />
+                                <field name="desired_delivery_date" />
+                                <field name="delivery_location" />
+                                <field name="request" />
                             </group>
                             <group string="再提出">
-                                <field name="change"/>
-                                <field name="revision"/>
-                                <field name="withdrawal"/>
-                                <field name="other"/>
-                                <field name="reason"/>
+                                <field name="change" />
+                                <field name="revision" />
+                                <field name="withdrawal" />
+                                <field name="other" />
+                                <field name="reason" />
                             </group>
                             <group string="管理者">
-                                <field name="order_no"/>
-                                <field name="progress"/>
-                                <field name="id"/>
-                                <field name="owner"/>
+                                <field name="order_no" />
+                                <field name="progress" />
+                                <field name="id" />
+                                <field name="owner" />
                             </group>
                         </div>
                         <div attrs="{'invisible': [('shinsei_type','!=', 'kikaku')]}">
                             <group string="企画・広報関連申請">
-                                <field name="approval_process"/>
-                                <field name="application_item"/>
-                                <field name="purpose"/>
-                                <field name="project_outline"/>
-                                <field name="start_date"/>
-                                <field name="end_date"/>
-                                <field name="target"/>
-                                <field name="verification_method"/>
-                                <field name="request"/>
+                                <field name="approval_process" />
+                                <field name="application_item" />
+                                <field name="purpose" />
+                                <field name="project_outline" />
+                                <field name="start_date" />
+                                <field name="end_date" />
+                                <field name="target" />
+                                <field name="verification_method" />
+                                <field name="request" />
                             </group>
                             <group string="取引先関連情報">
-                                <field name="business_partner_manager"/>
+                                <field name="business_partner_manager" />
                             </group>
                             <group string="申請金額（合計）">
                                 <group>
-                                    <field name="postage"/>
-                                </group>
-                                <group>
-                                    
-                                </group>
-                            </group>
-                            <group string="システム情報">
-                                <field name="progress"/>
-                                <field name="id"/>
-                                <field name="owner"/>
-                            </group>
-                            <group string="再提出">
-                                <field name="change"/>
-                                <field name="revision"/>
-                                <field name="withdrawal"/>
-                                <field name="other"/>
-                                <field name="reason"/>
-                            </group>
-                        </div>
-                        <div attrs="{'invisible': [('shinsei_type','!=', 'bihin')]}">
-                            <group string="情報">
-                                <field name="classification" attrs="{'required': [('shinsei_type','=', 'bihin')]}"/>
-                            </group>
-                            <group string="報告内容">
-                                <field name="fixtures_name" attrs="{'required': [('shinsei_type','=', 'bihin')]}"/>
-                                <field name="date_time" attrs="{'required': [('shinsei_type','=', 'bihin')]}"/>
-                                <field name="situation_report"/>
-                                <field name="processed_contents"/>
-                                <field name="comment_by_charge"/>
-                            </group>
-                            <group string="システム情報">
-                                <field name="progress"/>
-                                <field name="id"/>
-                                <field name="owner"/>
-                            </group>
-                        </div>
-                        <div attrs="{'invisible': [('shinsei_type','!=', 'syucho')]}">
-<!--                            <group string="出張申請書">-->
-<!--                                <field name="report" attrs="{'required': [('shinsei_type','=', 'syucho')]}"/>-->
-<!--                                <field name="progress_report"/>-->
-<!--                            </group>-->
-                            <group string="申請内容">
-                                <group>
-                                    <field name="place_of_business"/>
-                                    <field name="business_trip_start_date"/>
-                                    <field name="business_trip_end_date"/>
-                                    <field name="number_of_days"/>
-                                    <field name="cost"/>
-                                </group>
-                                <group>
-                                </group>
-                            </group>
-                            <group>
-                                <field name="application_reason"/>
-                            </group>
-                            <group>
-                                <group>
-                                </group>
-                                <group>
-                                    <field name="progress"/>
-                                    <field name="id"/>
-                                    <field name="owner"/>
-                                </group>
-                            </group>
-                            <group string="再提出">
-                                <field name="change"/>
-                                <field name="revision"/>
-                                <field name="withdrawal"/>
-                                <field name="other"/>
-                                <field name="reason"/>
-                            </group>
-                        </div>
-                        <div attrs="{'invisible': [('shinsei_type','!=', 'buppin')]}">
-                            <group string="物品購入申請">
-                                <field name="application_item"/>
-                                <field name="purpose"/>
-                                <field name="request"/>
-                            </group>
-                            <group string="申請金額（合計）">
-                                <group>
-                                    <field name="postage"/>
+                                    <field name="postage" />
                                 </group>
                                 <group>
 
                                 </group>
                             </group>
                             <group string="システム情報">
-                                <field name="progress"/>
-                                <field name="id"/>
-                                <field name="owner"/>
+                                <field name="progress" />
+                                <field name="id" />
+                                <field name="owner" />
                             </group>
                             <group string="再提出">
-                                <field name="change"/>
-                                <field name="revision"/>
-                                <field name="withdrawal"/>
-                                <field name="other"/>
-                                <field name="reason"/>
+                                <field name="change" />
+                                <field name="revision" />
+                                <field name="withdrawal" />
+                                <field name="other" />
+                                <field name="reason" />
+                            </group>
+                        </div>
+                        <div attrs="{'invisible': [('shinsei_type','!=', 'bihin')]}">
+                            <group string="情報">
+                                <field name="classification"
+                                    attrs="{'required': [('shinsei_type','=', 'bihin')]}" />
+                            </group>
+                            <group string="報告内容">
+                                <field name="fixtures_name"
+                                    attrs="{'required': [('shinsei_type','=', 'bihin')]}" />
+                                <field name="date_time"
+                                    attrs="{'required': [('shinsei_type','=', 'bihin')]}" />
+                                <field name="situation_report" />
+                                <field name="processed_contents" />
+                                <field name="comment_by_charge" />
+                            </group>
+                            <group string="システム情報">
+                                <field name="progress" />
+                                <field name="id" />
+                                <field name="owner" />
+                            </group>
+                        </div>
+                        <div attrs="{'invisible': [('shinsei_type','!=', 'syucho')]}">
+                            <!--                            <group string="出張申請書">-->
+                            <!--                                <field name="report" attrs="{'required': [('shinsei_type','=',
+                            'syucho')]}"/>-->
+                            <!--                                <field name="progress_report"/>-->
+                            <!--                            </group>-->
+                            <group string="申請内容">
+                                <group>
+                                    <field name="place_of_business" />
+                                    <field name="business_trip_start_date" />
+                                    <field name="business_trip_end_date" />
+                                    <field name="number_of_days" />
+                                    <field name="cost" />
+                                </group>
+                                <group>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="application_reason" />
+                            </group>
+                            <group>
+                                <group>
+                                </group>
+                                <group>
+                                    <field name="progress" />
+                                    <field name="id" />
+                                    <field name="owner" />
+                                </group>
+                            </group>
+                            <group string="再提出">
+                                <field name="change" />
+                                <field name="revision" />
+                                <field name="withdrawal" />
+                                <field name="other" />
+                                <field name="reason" />
+                            </group>
+                        </div>
+                        <div attrs="{'invisible': [('shinsei_type','!=', 'buppin')]}">
+                            <group string="物品購入申請">
+                                <field name="application_item" />
+                                <field name="purpose" />
+                                <field name="request" />
+                            </group>
+                            <group string="申請金額（合計）">
+                                <group>
+                                    <field name="postage" />
+                                </group>
+                                <group>
+
+                                </group>
+                            </group>
+                            <group string="システム情報">
+                                <field name="progress" />
+                                <field name="id" />
+                                <field name="owner" />
+                            </group>
+                            <group string="再提出">
+                                <field name="change" />
+                                <field name="revision" />
+                                <field name="withdrawal" />
+                                <field name="other" />
+                                <field name="reason" />
                             </group>
                         </div>
                         <div attrs="{'invisible': [('shinsei_type','!=', 'keihi')]}">
                             <group string="経費精算書">
-                                <field name="request"/>
+                                <field name="request" />
                             </group>
                             <group string="(A)経費明細合計">
 
                             </group>
                             <group string="(B)出張関連項目">
                                 <group>
-                                    <field name="place_of_business"/>
-                                    <field name="business_trip_start_date"/>
-                                    <field name="business_trip_end_date"/>
-                                    <field name="lodging_day_amount"/>
-                                    <field name="lodging_expense"/>
-                                    <field name="daily_allowance"/>
+                                    <field name="place_of_business" />
+                                    <field name="business_trip_start_date" />
+                                    <field name="business_trip_end_date" />
+                                    <field name="lodging_day_amount" />
+                                    <field name="lodging_expense" />
+                                    <field name="daily_allowance" />
                                 </group>
                                 <group>
-                                    <field name="claim_order_no"/>
+                                    <field name="claim_order_no" />
                                 </group>
                             </group>
                             <group string="精算額">
-                                <field name="temporary_advance"/>
+                                <field name="temporary_advance" />
                             </group>
                             <group>
                                 <group>
                                 </group>
                                 <group>
-                                    <field name="progress"/>
-                                    <field name="id"/>
-                                    <field name="owner"/>
+                                    <field name="progress" />
+                                    <field name="id" />
+                                    <field name="owner" />
                                 </group>
                             </group>
                             <group string="再提出">
-                                <field name="change"/>
-                                <field name="revision"/>
-                                <field name="withdrawal"/>
-                                <field name="other"/>
-                                <field name="reason"/>
+                                <field name="change" />
+                                <field name="revision" />
+                                <field name="withdrawal" />
+                                <field name="other" />
+                                <field name="reason" />
                             </group>
                         </div>
                     </sheet>
                     <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                        <field name="activity_ids" widget="mail_activity"/>
-                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
                     </div>
                 </form>
             </field>
@@ -276,7 +288,7 @@
         <!-- Top menu item -->
 
         <menuitem name="shinsei" id="shinsei.menu_root" action="shinsei.action_window"
-                  web_icon="shinsei,static/description/shinsei_icon.png"/>
+            web_icon="shinsei,static/description/shinsei_icon.png" />
 
         <!-- menu categories -->
         <!--

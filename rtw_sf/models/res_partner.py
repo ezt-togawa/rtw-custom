@@ -125,7 +125,7 @@ class rtw_sf_partner(models.Model):
 
     case = fields.One2many(
         comodel_name="rtw_sf_case",
-        inverse_name="crm_id",
+        inverse_name="contacts",
         string="case")  # ケース OK
     # contact
     account_id = fields.Many2one('res.partner', "AccountId", tracking=True)  # OK
@@ -176,7 +176,7 @@ class rtw_sf_partner(models.Model):
         ('27', '紹介(施主指定)'),
         ('28', '紹介（従業員）'),
         ('29', '海外展示会'),
-        ('30', 'ミラノサローネ'),
+        ('30', 'Milano Salone'),
         ('31', 'Architonic'),
         ('32', 'Archiproducts'),
         ('33', 'その他'),

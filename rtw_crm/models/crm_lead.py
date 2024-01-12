@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-import datetime
+from datetime import datetime , timedelta
 
 
 class rtw_crm(models.Model):
     _inherit = 'crm.lead'
 
     # crm_seq = fields.Char('Opportunity No', readonly=True, copy=False)
-    crm_seq = fields.Char('Opportunity No', copy=False, default=lambda self: _("New"), store=True)
+    crm_seq = fields.Char('Opportunity No', copy=False, default=lambda self: _("OP-99999"), store=True)
     stage_sort_order = fields.Integer('StageSortOrder')  # 受注段階コード H列
     # expected_revenue = fields.Monetary('ExpectedRevenue')  # 予想売上高 K列
     reference_price = fields.Monetary(compute="_get_reference_price", currency_field='company_currency', store=True,
@@ -46,7 +46,7 @@ class rtw_crm(models.Model):
         ('27', '紹介(施主指定)'),
         ('28', '紹介（従業員）'),
         ('29', '海外展示会'),
-        ('30', 'ミラノサローネ'),
+        ('30', 'Milano Salone'),
         ('31', 'Architonic'),
         ('32', 'Archiproducts'),
         ('33', 'その他'),
@@ -857,13 +857,13 @@ class rtw_crm(models.Model):
     @api.onchange('stage_id')
     def _set_opportunity_completion_date(self):
         if not self.opportunity_completion_date:
-            if self.stage_id.name == "受注成立" or self.stage_id.name == "ロスト":
+            if self.stage_id.probability == 100 or self.stage_id.probability == 0:
                 self.opportunity_completion_date = fields.datetime.now()
         elif self.opportunity_completion_date:
-            if self.stage_id.name != "受注成立" or self.stage_id.name != "ロスト":
+            if self.stage_id.probability != 100 or self.stage_id.probability != 0:
                 self.opportunity_completion_date = False
-            if self._origin.stage_id.name != self.stage_id.name:
-                if self.stage_id.name == "受注成立" or self.stage_id.name == "ロスト":
+            if self._origin.stage_id.probability != self.stage_id.probability:
+                if self.stage_id.probability == 100 or self.stage_id.probability == 0:
                     self.opportunity_completion_date = fields.datetime.now()
 
     @api.depends('expected_revenue', 'rate')
@@ -878,8 +878,8 @@ class rtw_crm(models.Model):
     @api.model
     def create(self, vals):
 
-        if vals.get('crm_seq', 'New') == 'New':
-            vals['crm_seq'] = self.env['ir.sequence'].next_by_code('crm.lead') or 'New'
+        if vals.get('crm_seq', 'OP-99999') == 'OP-99999':
+            vals['crm_seq'] = self.env['ir.sequence'].next_by_code('crm.lead') or 'OP-99999'
 
         result = super(rtw_crm, self).create(vals)
 
@@ -887,7 +887,6 @@ class rtw_crm(models.Model):
 
     def _update_crm_seq(self, limit=1000):
         leads = self.search([("crm_seq", "=", "新規")], order="id", limit=limit)
-        print(leads)
         for lead in leads:
             lead.crm_seq = self.env["ir.sequence"].next_by_code("crm.lead")
             print(lead.crm_seq)

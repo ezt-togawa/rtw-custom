@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_view_order_crm_case_form" model="ir.ui.view">
+            <field name="name">Sale Order CRM Case</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_remark.sale_view_order_shipping_type_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='remark']" position="after">
+                    <field name="case_id" attrs="{'invisible': [('case_id', '=', False)]}" />
+                    <!-- <field name="crm_id" attrs="{'invisible': [('crm_id', '=', False)]}" /> -->
+                </xpath>
+            </field>
+        </record>
+        <record
+            id="mrp_production_case_form_view" model="ir.ui.view">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id"
+                ref="sale_order_remark.mrp_production_form_view_inherit_mrp_sale_order_remark" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='remark']" position="after">
+                    <field name="case_id" attrs="{'invisible': [('case_id', '=', False)]}" />
+                    <!-- <field name="crm_id" attrs="{'invisible': [('crm_id', '=', False)]}" /> -->
+                    <field name="inspected_button" invisible="1" />
+                    <field name="inspected_status" invisible="1" />
+                </xpath>
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <button
+                        name="toggle_inspected_btn"
+                        type="object"
+                        class="oe_stat_button text-success"
+                        icon="fa-check-square"
+                        attrs="{'invisible': ['|',('inspected_button' , '=', '未検品'),('inspected_button' , '=', '')]}"
+                    >
+                        検品済
+                    </button>
+                    <button
+                        name="toggle_inspected_btn"
+                        type="object"
+                        class="oe_stat_button text-danger"
+                        icon="fa-check-square"
+                        attrs="{'invisible': ['|',('inspected_button' , '=', '検品済'),('inspected_button' , '=', '')]}"
+                    >
+                        未検品
+                    </button>
+                </xpath>
+            </field>
+        </record>
+        <record
+            id="view_mrp_production_filter_custom" model="ir.ui.view">
+            <field name="name">mrp.production.select.custom</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='filter_cancel']" position="after">
+                    <filter string="未検品" name="filter_uninspected"
+                        domain="[('inspected_status', '=', False),('is_linked_to_crm','=',True)]" />
+                    <filter string="検品済" name="filter_inspected"
+                        domain="[('inspected_status', '=', True),('is_linked_to_crm','=',True)]" />
+                </xpath>
+            </field>
+        </record>
+        <record
+            id="view_mrp_production_tree_custom" model="ir.ui.view">
+            <field name="name">mrp.production.tree.custom</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="inspected_button" string="検品状態" />
+                </xpath>
+            </field>
+        </record>
+        <record
+            id="view_crm_case_tree_custom" model="ir.ui.view">
+            <field name="name">crm.case.tree.custom</field>
+            <field name="model">rtw_sf_case</field>
+            <field name="inherit_id" ref="rtw_sf.rtw_sf_case_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='verification_results']" position="after">
+                    <page string="クレーム注番">
+                        <group>
+                            <field name="claim_no" style="overflow:auto" no_label="1" widget="one2many" >
+                                <tree class="o_sale_order" editable="bottom">
+                                    <field name="name" />
+                                    <field name="title" />
+                                    <field name="process" />
+                                    <field name="status" />
+                                    <field name="partner_id" />
+                                    <field name="company_id" />
+                                    <field name="state" />
+                                    <button name="open_form_view" type="object" string="View" class="oe_highlight"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

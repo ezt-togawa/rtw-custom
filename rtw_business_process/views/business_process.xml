@@ -44,7 +44,7 @@
         -->
 
         <!-- Top menu item -->
-        <menuitem name="business process" id="rtw_business_process.menu_root" action="action_business_process_tree"/>
+        <!-- <menuitem name="business process" id="rtw_business_process.menu_root" action="action_business_process_tree"/> -->
         <!--                  web_icon="contract,static/description/contract_icon.png"/>-->
         <!--
             <menuitem name="rtw_business_process" id="rtw_business_process.menu_root"/>

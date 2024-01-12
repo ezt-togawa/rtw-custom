@@ -48,6 +48,14 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <button
+                            name="create_sale_order"
+                            string="クレーム注番"
+                            type="object"
+                            class="oe_highlight"
+                            style="width:100px;"
+                            attrs="{'invisible': [('id', '=', False)]}"
+                        />
                         <field name="status" widget="statusbar" options="{'clickable':1}"/>
                     </header>
                     <sheet>
@@ -73,8 +81,6 @@
                                 <field name="last_modified_by_id" string="LastModifiedById"/>
                                 <field name="last_modified_date" string="LastModifiedDate"/>
                                 <field name="progress_check" string="progress check"/>
-
-
                             </group>
                             <group>
                                 <!--                                <field name="status" string="Status"/>-->

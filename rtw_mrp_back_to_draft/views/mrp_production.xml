@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="view_mrp_production_back_to_draft" model="ir.ui.view">
+            <field name="name">rtw mrp production back to draft</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="ドラフトへ戻る" name="back_to_draft"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('state', '=', 'draft')]}"
+                         />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

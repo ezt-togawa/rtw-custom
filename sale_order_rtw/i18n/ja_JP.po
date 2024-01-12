@@ -1,0 +1,319 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_order_rtw
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-01 02:47+0000\n"
+"PO-Revision-Date: 2023-05-01 02:47+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "<span style=\"color:red\">海外</span>"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__customer_order_number
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "Customer Order Number"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__depo_date
+msgid "Depo Date"
+msgstr "デポ希望日"
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__display_name
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.rtw_sale_search_view
+msgid "Done"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__estimated_shipping_date
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "Estimated shipping date"
+msgstr "発送予定日"
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.view_item_attach_form
+msgid "File Name"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_crm_lead__id
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__id
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.view_item_attach_form
+msgid "Item Image"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.actions.act_window,name:sale_order_rtw.action_item_attach
+msgid "Item Images"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.ui.menu,name:sale_order_rtw.menu_item_attach
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.view_item_attach_tree
+msgid "Item attach"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__items_under_consideration
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.order_tree
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.order_tree_quotation
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.rtw_sale_search_view
+msgid "Items under consideration"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_crm_lead____last_update
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach____last_update
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order____last_update
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order_line____last_update
+msgid "Last Modified on"
+msgstr "最終更新日"
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model,name:sale_order_rtw.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "リード / 案件"
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__preferred_delivery_date
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "Preferred delivery date"
+msgstr "配達希望日"
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__warehouse_arrive_date
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "Warehouse arrive date"
+msgstr "デポ到着日"
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__preferred_delivery_period
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "Preferred delivery period"
+msgstr "希望納期"
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__product_id
+msgid "Product"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model,name:sale_order_rtw.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "販売オーダ明細"
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__shiratani_entry_date
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "Shiratani entry Date"
+msgstr "白谷到着日"
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.view_order_line_cusom_rtw
+msgid "View files"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "accepting an order"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model,name:sale_order_rtw.model_item_attach
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__attach_file
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__name
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order_line__item_sale_attach_ids
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.view_order_line_cusom_rtw
+msgid "attach"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order_line__item_sale_attach_count
+msgid "attach Count"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "back to draft"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.order_tree
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.order_tree_quotation
+msgid "customer_order_number"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__process__delivered
+msgid "delivered"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__status__done
+msgid "done"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__process__draft
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__status__draft
+msgid "draft"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__forwarding_address
+msgid "forwarding address"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__forwarding_address_zip
+msgid "forwarding address zip"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__process__manufactured
+msgid "manufactured"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order_line__memo
+msgid "memo"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__process
+msgid "process"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_item_attach__sale_line_ids
+msgid "sale Lines"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model,name:sale_order_rtw.model_sale_order
+msgid "sale_order_rtw.sale_order_rtw"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__status
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "status"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__title
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "title"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "under review"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__waypoint
+msgid "waypoint"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "デポ"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__sipping_to__depo
+msgid "デポ入れまで"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__sipping_to__inst
+msgid "搬入設置まで"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__sipping_to__inst_depo
+msgid "搬入設置（デポ入）"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__overseas
+msgid "海外"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__sipping_to__direct
+msgid "直送"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "納品設置先"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "納品設置先郵便番号"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__sipping_to
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "配送"
+msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__shipping_to_text
+msgid "配送ラベル"
+msgstr ""

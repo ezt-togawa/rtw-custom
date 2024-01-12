@@ -1,0 +1,1744 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* custom_report_rtw
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-15 06:20+0000\n"
+"PO-Revision-Date: 2023-12-15 06:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid ""
+"5-2-9 ITAZUKE HAKATA-KU <br/> FUKUOKA, 812-0888 JAPAN <br/> TEL:\n"
+"                        +81-92-584-2240 <br/> FAX: +81-92-584-2241 <br/> VAT NO. NL 826346315B01"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "9050412"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid ""
+"<br/>\n"
+"                <b><span>Delivery:</span><span style=\"color:red\"> DDP</span></b>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_sheet_header_layout
+msgid "<span class=\"ml-2 size20\"> 発注書 </span>"
+msgstr "<span class=\"ml-2 size20\"> Purchase Order </span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_shipping_order_header_layout
+msgid "<span class=\"ml-2 size20\">出荷依頼書</span>"
+msgstr "<span class=\"ml-2 size20\">Shipping Request Form</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_unit_price_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_unit_price_layout
+msgid "<span class=\"ml-2 size20\">単価御見積書</span>"
+msgstr "<span class=\"ml-2 size20\">Unit Price Quotation</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_product_spec_header_layout
+msgid "<span class=\"ml-2 size20\">商品仕様書</span>"
+msgstr "<span class=\"ml-2 size20\">Product Specification</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_list_price_header_layout
+msgid "<span class=\"ml-2 size20\">定価御見積書</span>"
+msgstr "<span class=\"ml-2 size20\">List Price Quotation</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_header_layout
+msgid "<span class=\"ml-2 size20\">御見積書</span>"
+msgstr "<span class=\"ml-2 size20\">Quotation</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_header_layout_oversea
+msgid "<span class=\"ml-2 size20\">御見積書（海外）</span>"
+msgstr "<span class=\"ml-2 size20\">Quotation (Overseas)</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_invoice_header_layout
+msgid "<span class=\"ml-2 size20\">御請求書</span>"
+msgstr "<span class=\"ml-2 size20\">Invoice</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_inspection_order_form_header_layout
+msgid "<span class=\"ml-2 size20\">検品発注書</span>"
+msgstr "<span class=\"ml-2 size20\">Purchase Order Inspection</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_header_layout
+msgid "<span class=\"ml-2 size20\">注文書</span>"
+msgstr "<span class=\"ml-2 size20\">Order Form</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_sheet_for_part_header_layout
+msgid "<span class=\"ml-2 size20\">発注書(部材用)</span>"
+msgstr "<span class=\"ml-2 size20\">Purchase Order (Components)</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_delivery_order_header_layout
+msgid "<span class=\"ml-2 size20\">配送依頼書</span>"
+msgstr "<span class=\"ml-2 size20\">Delivery Request Form</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">All\n"
+"                                            disputes, controversies, or differences which may arise\n"
+"                                            between the parties hereto, out of or in relation to or\n"
+"                                            in connection with the contract, shall be finally\n"
+"                                            settled by arbitration in Japan in accordance with the\n"
+"                                            Commercial Arbitration Rules of The Japan Commercial\n"
+"                                            Arbitration Association. The award rendered by the\n"
+"                                            arbitrator shall be final and binding upon both parties.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">All\n"
+"                                            trade terms provided in the contract shall be\n"
+"                                            interpreted in accordance with the latest Incoterms of\n"
+"                                            the International Chamber of Commerce.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">Buyer\n"
+"                                            shall hold Seller harmless from liability, loss or\n"
+"                                            expense in connection with any alleged infringement with\n"
+"                                            regard to any patent, trademark, copyright, design,\n"
+"                                            pattern, etc., in any country.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">Buyer’s\n"
+"                                            cancellation or changes in\n"
+"                                            specifications after confirmation of receipt of order\n"
+"                                            will incur\n"
+"                                            a fifty (50) percent cancellation fee.\n"
+"                                            Orders for built-to-order and custom-tailored products\n"
+"                                            cannot be\n"
+"                                            cancelled.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">Buyer’s\n"
+"                                            claim of whatever nature arising under the contract\n"
+"                                            shall be notified to Seller by email or fax within seven\n"
+"                                            (7) days after arrival of the goods at the destination\n"
+"                                            specified in the bills of lading. Full particulars of\n"
+"                                            such claim, together with sworn surveyor’s report shall\n"
+"                                            be made in writing and forwarded by registered airmail\n"
+"                                            within fifteen (15) days after notification</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">In the\n"
+"                                            event of Act of God, government orders or restraints,\n"
+"                                            war or warlike conditions, blockage, hostilities,\n"
+"                                            revolution, strikes, lockout, civil commotions, fire,\n"
+"                                            flood, epidemics, breakdown or accident or course of\n"
+"                                            preparation or transportation of the goods, or of any\n"
+"                                            other occurrence beyond Seller’s control, Seller shall\n"
+"                                            not be liable for non-delivery or delay in performance\n"
+"                                            of the contract caused directly or indirectly thereby,\n"
+"                                            in which case Buyer shall accept the delayed shipment or\n"
+"                                            the cancellation of all or any part of the contract.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">Seller\n"
+"                                            shall, before shipment, make inspection of the goods\n"
+"                                            especially in respect of specification, quality and\n"
+"                                            condition of the goods. Unless otherwise arranged, the\n"
+"                                            inspection by Seller shall be final in all respects\n"
+"                                            regarding the goods.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">Seller\n"
+"                                            warrants that the goods are free from any defects of\n"
+"                                            design, material and workmanship and conform to its\n"
+"                                            specifications. Once after having delivered the goods to\n"
+"                                            Buyer, Buyer is responsible to give all dealers and\n"
+"                                            customers necessary or adequate instructions for proper\n"
+"                                            use of the goods and prevention of misuse thereof.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">The\n"
+"                                            contract shall be governed as to all matters, including\n"
+"                                            validity, construction and performance by and under the\n"
+"                                            laws of Japan.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">The\n"
+"                                            date of a bill of landing shall be accepted as the\n"
+"                                            conclusive date of shipment. Any shipment made within\n"
+"                                            fifteen (15) days after date specified for shipment\n"
+"                                            shall be deemed as a contracted delivery. Partial\n"
+"                                            shipment and / or transshipment shall be permitted and,\n"
+"                                            in such case, each shipment shall be considered as a\n"
+"                                            separate contract.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:10px ; word-wrap: break-word;\">The\n"
+"                                            make-up, packing, packaging and marking shall be at\n"
+"                                            Seller’s option.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span style=\"font-size:11px\">E-mail: info@ritzwell.com</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:11px;padding:0;margin:0;\">5-2-9 ITAZUKE\n"
+"                                    HAKATA-KU</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:11px;padding:0;margin:0;\">FUKUOKA,812-0888\n"
+"                                    JAPAN</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:11px;padding:0;margin:0;\">RITZWELL &amp; CO.</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:11px;padding:0;margin:0;\">TEL: +81 92 584\n"
+"                                    2240\n"
+"                                    FAX: +81 92 584 2241</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"<span style=\"font-size:14px; font-weight: bold;\">\n"
+"                                    SALES TERMS AND CONDITIONS.\n"
+"                                </span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Arbitration</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Cancellation</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Claim</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Force Majeure</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Governing Law</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Inspection</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Packing</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Patents</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "<span>Payment:</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid "<span>SHIPPING INSTRUCTION</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Shipment</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Trade Terms</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>Warranty</span>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.PO_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.common_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.header_footer_layout
+msgid "<span>invoice</span>"
+msgstr "<span>Invoice</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.mrp_header_layout
+msgid "<span>mrp order</span>"
+msgstr "<span>Mrp order</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.PO_header_layout
+msgid "<span>purchase</span>"
+msgstr "<span>Purchase</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.header_footer_layout
+msgid "<span>quotation2</span>"
+msgstr "<span>Quotation2</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.common_header_layout
+msgid "<span>quotation</span>"
+msgstr "<span>Quotation</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.header_footer_layout
+msgid "<span>sssss</span>"
+msgstr "<span>Sssss</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "<span>別注</span>"
+msgstr "<span>Bespoke</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.spec_header_layout
+msgid "<span>商品仕様書</span>"
+msgstr "<span>Product Specifications</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "<span>特注</span>"
+msgstr "<span>Custom-made</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>税込合計</span>"
+msgstr "<span>Total after-tax</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_product_spec
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "AH"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.stock_picking
+msgid "ARTICLE"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Account name"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Account no"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Address"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.purchase
+msgid "Ah"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid ""
+"All the costs of transportation to the final destination are included.\n"
+"   Buyer also is responsible to unload the goods from the vehicle\n"
+"                    at the final destination."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Amount"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Article"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Bank Name"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Bank infomation"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Branch name"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid "CONSIGNEE"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order_line__calculate_packages
+msgid "Calculate packages"
+msgstr ""
+
+#. module: custom_report_rtw
+#. openerp-web
+#: code:addons/custom_report_rtw/static/src/js/boolean_fa_icon_widget.js:0
+#, python-format
+msgid "Click to check"
+msgstr ""
+
+#. module: custom_report_rtw
+#. openerp-web
+#: code:addons/custom_report_rtw/static/src/js/boolean_fa_icon_widget.js:0
+#, python-format
+msgid "Click to uncheck"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Client"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Client Order no."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Client VAT no."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model,name:custom_report_rtw.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_res_company__chop
+msgid "Company Chop Image"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "Custom"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.stock_picking
+msgid "DIMENSIONS"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Date"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Discount"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:custom_report_rtw.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:custom_report_rtw.field_res_company__display_name
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order__display_name
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_move__display_name
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "Draft Invoice"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__calculate_estimated_shipping_date
+msgid "Estimated Shipping Date"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "FUKUOKA BRANCH"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.stock_picking
+msgid "GOODS CODE"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.stock_picking
+msgid "HS CODE"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_account_move_line__id
+#: model:ir.model.fields,field_description:custom_report_rtw.field_mrp_production__id
+#: model:ir.model.fields,field_description:custom_report_rtw.field_res_company__id
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order__id
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order_line__id
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_move__id
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid "IMPORTER/BUYER - IF OTHER THAN CONSIGNEE"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "Invoice"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Invoice no."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.purchase
+msgid "Item NO/Size"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Item no."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model,name:custom_report_rtw.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.stock_picking
+msgid "LOCATION"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:custom_report_rtw.field_mrp_production____last_update
+#: model:ir.model.fields,field_description:custom_report_rtw.field_res_company____last_update
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order____last_update
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order_line____last_update
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_move____last_update
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.PO_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_delivery_order_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_header_layout_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_inspection_order_form_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_invoice_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_list_price_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_product_spec_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_sheet_for_part_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_sheet_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_shipping_order_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_unit_price_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_unit_price_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.common_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.header_footer_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.mrp_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.spec_header_layout
+msgid "Logo"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "MAIN OFFICE"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__calculate_name
+msgid "Name"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.stock_picking
+msgid "No"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__calculate_note
+msgid "Note"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__pic_name
+msgid "PIC Name"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_move__calculate_packages
+msgid "Packages"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.common_footer_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.header_footer_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.page_footer_layout
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Paid"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__calculate_payment_term
+msgid "Payment term"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Phone"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_stock_picking_rtw
+msgid "Picking"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Price"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model,name:custom_report_rtw.model_mrp_production
+msgid "Production Order"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Project Name"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.stock_picking
+msgid "QTY"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.purchase
+msgid "Qty"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "RITZWELL &amp; CO."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "Ref Proforma no."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid "Ritzwell &amp; Co."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_product_spec
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "SH"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid "SHIPPER/EXPORTER"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "SMBC JP JT"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "SUMITOMO MITSUI BANKING CORPORATION"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "SWIFT code"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_mrp_production__sale_order
+msgid "Sale order"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_mrp_production__order_line
+msgid "Sale order line"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model,name:custom_report_rtw.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__calculate_shiratani_date
+msgid "Shiratani Date"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_account_move_line__show_details
+msgid "Show details"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_account_move_line__show_subtotal
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order_line__show_subtotal
+msgid "Show subtotal"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.purchase
+msgid "Spec"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model,name:custom_report_rtw.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: custom_report_rtw
+#. openerp-web
+#: code:addons/custom_report_rtw/static/src/js/hide_details_translations.js:0
+#, python-format
+msgid "Switch to: details hidden"
+msgstr ""
+
+#. module: custom_report_rtw
+#. openerp-web
+#: code:addons/custom_report_rtw/static/src/js/hide_details_translations.js:0
+#, python-format
+msgid "Switch to: details shown"
+msgstr ""
+
+#. module: custom_report_rtw
+#. openerp-web
+#: code:addons/custom_report_rtw/static/src/js/hide_details_translations.js:0
+#, python-format
+msgid "Switch to: subtotal hidden"
+msgstr ""
+
+#. module: custom_report_rtw
+#. openerp-web
+#: code:addons/custom_report_rtw/static/src/js/hide_details_translations.js:0
+#, python-format
+msgid "Switch to: subtotal shown"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "TEL:"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "TEL／携帯"
+msgstr "TEL／Mobile"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "Total Amount:"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model,name:custom_report_rtw.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.purchase
+msgid "Unit Price"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
+msgid "UoM"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__calculate_witness
+msgid "Witness"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__calculate_witness_phone
+msgid "Witness Phone"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid "XXXXXX."
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid ""
+"XXXXXXXXXXX <br/>\n"
+"                        XXXXXXXXXXX <br/> XXXXXXXXXXX <br/> XXXXXXXXXXX <br/> XXXXXXXXXXX"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
+msgid ""
+"XXXXXXXXXXX <br/> XXXXXXXXXXX <br/>\n"
+"                        XXXXXXXXXXX <br/> XXXXXXXXXXX <br/> XXXXXXXXXXX"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "fax.06-4963-8778"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_invoice_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
+msgid "invoice"
+msgstr "Invoice"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_mrp_order_rtw
+msgid "mrp order"
+msgstr "Mrp order"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
+msgid "mrp_order"
+msgstr "Mrp order"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.stock_picking
+msgid "picking"
+msgstr "Picking"
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order__calculate_planned_date
+msgid "planned date"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_purchase_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.purchase
+msgid "purchase"
+msgstr "Purchase"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_product_spec
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "quotation"
+msgstr "Quotation"
+
+#. module: custom_report_rtw
+#: model:ir.model,name:custom_report_rtw.model_sale_order
+msgid "sale_order_rtw.sale_order_rtw"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.purchase
+msgid "summary"
+msgstr "Summary"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "tel.06-4963-8777"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order__so_title
+msgid "title"
+msgstr "Title"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "www.ritzwell.com"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "〒542-0081"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "お届け先（物件名)"
+msgstr "Delivery Address (Property Name):"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "お振込先:"
+msgstr "Payment address:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "お支払内容 :"
+msgstr "Payment detail:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "お支払期限:"
+msgstr "Payment period:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+msgid "ご依頼分"
+msgstr "requesting"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "デポ"
+msgstr "Depo"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+msgid "メモ"
+msgstr "Memo"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "下記の通り注文いたします。<br/>"
+msgstr "Order shall be made as follows.<br/>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "仕様・詳細"
+msgstr "Specifications/ Details"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
+msgid "仕様："
+msgstr "Specifications:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_product_spec
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "件名"
+msgstr "Title"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "住所"
+msgstr "Address"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "住所:"
+msgstr "Address:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "個口数"
+msgstr "Pieces Qty"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+msgid "値引 :"
+msgstr "Discount:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "備考:"
+msgstr "Note:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "入荷元"
+msgstr "Shipping To:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "入荷日"
+msgstr "Shipping Date"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_shipping_order_rtw
+msgid "出荷依頼書"
+msgstr "Shipping Request Form"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "出荷希望日"
+msgstr "Desired Shipping Date"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "出荷日"
+msgstr "Shipping Date"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
+msgid "出荷日："
+msgstr "Shipping Date:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "単価"
+msgstr "Unit Price"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_unit_price_rtw
+msgid "単価見積り書"
+msgstr "Unit Price Quotation"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+msgid "合計 :"
+msgstr "TOTAL:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "品名"
+msgstr "Product Name"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "品番・サイズ"
+msgstr "Product No/ Size"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
+msgid "品番："
+msgstr "Part number:"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_product_spec_2
+msgid "商品仕様書"
+msgstr "Product Specifications"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "大阪オフィス"
+msgstr "Osaka Office"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "大阪市中央区南船場4-7-6 B1F"
+msgstr "4-7-6 B1F Minamisenba, Chuo-ku, Osaka"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "定価"
+msgstr "List Price"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "定価合計 :"
+msgstr "Total List Price:"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_quotation_list_price_rtw
+msgid "定価見積書"
+msgstr "List Price Quotation"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "平成"
+msgstr "Heisei period"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid ""
+"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/>\n"
+"                                    御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
+msgstr ""
+"We would like to express our sincere gratitude for your continued patronage. <br/>\n"
+"                                    We have prepared an estimate as requested. Please review it at your earliest convenience.<br/>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.PO_header_layout
+msgid ""
+"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/>\n"
+"                        御依頼の件、下記の通りお見積り致しました。 <br/> ご査収の程宜しくお願い致します。"
+msgstr ""
+"We would like to express our sincere gratitude for your continued patronage. <br/>\n"
+"                                    We have prepared an estimate as requested. Please review it at your earliest convenience.<br/>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/> 下記の通り、ご請求申し上げます。<br/>"
+msgstr ""
+"We would like to express our sincere gratitude for your continued patronage."
+"  <br/> We have prepared an invoice as follow.<br/>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid ""
+"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/> 御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
+msgstr ""
+"We would like to express our sincere gratitude for your continued patronage."
+"  <br/> We have prepared an estimate as requested. Please review it at your "
+"earliest convenience.<br/>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "年月日"
+msgstr "Date"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_delivery_order_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_inspection_order_form_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_sheet_for_part_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_sheet_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_shipping_order_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "御中"
+msgstr "Dear"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_quotation_rtw2
+msgid "御見積書"
+msgstr "Quotation"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_quotation_rtw_oversea
+msgid "御見積書（海外）"
+msgstr "Quotation (Overseas)"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "才数"
+msgstr "Measurement"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "担当者名"
+msgstr "Person In Charge"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "掛率"
+msgstr "Markup Rate"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "搬入日時"
+msgstr "Delivery Datetime:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "搬入立会人:"
+msgstr "Delivery witness:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+msgid "摘要"
+msgstr "Description"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "支払条件："
+msgstr "Payment Terms:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
+msgid "改訂履歴"
+msgstr "Revision History"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "数量"
+msgstr "Quantity"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_delivery_order_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_inspection_order_form_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_sheet_for_part_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_purchase_order_sheet_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_shipping_order_header_layout
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "株式会社"
+msgstr "Co., Ltd."
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "株式会社リッツウェル"
+msgstr "Ritzwell Co., Ltd."
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "株式会社リッツウェル 宛"
+msgstr "To Ritzwell Co., Ltd."
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_inspection_order_form_rtw
+msgid "検品発注書"
+msgstr "Purchase Order Inspection"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "様 ご依頼分"
+msgstr "requesting"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_purchase_order_rtw
+msgid "注文書"
+msgstr "Order Form"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "海外"
+msgstr "OVERSEAS"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "消費税:"
+msgstr "Consumption tax:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "物件名"
+msgstr "Property Name"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+msgid "物件名:"
+msgstr "Property Name:"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_purchase_order_sheet_rtw
+msgid "発注書"
+msgstr "Purchase Order"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_purchase_order_sheet_for_part_rtw111
+msgid "発注書(部材用）"
+msgstr "Purchase Order (Components)"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "発注期限："
+msgstr "Order Deadline:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "発注番号"
+msgstr "Order No"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
+msgid "発注番号："
+msgstr "Purchase Order Number:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "発注金額"
+msgstr "Order Amount"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "白谷着日"
+msgstr "Shiratani Arrival Date"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "社名"
+msgstr "Company Name"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "税抜合計:"
+msgstr "Total Before-tax:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.PO_header_layout
+msgid "税込合計:"
+msgstr "Total including tax:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）"
+msgstr "Chikushi Dori Branch (714)"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "納品先住所"
+msgstr "Delivery Address"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "納品場所:"
+msgstr "Delivery Location:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "納品場所："
+msgstr "Delivery Location:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "納品希望日："
+msgstr "Desired Delivery Date:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "納品日:"
+msgstr "Delivery Date"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "組立"
+msgstr "Assembly"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "製作日数："
+msgstr "Manufacturing time (days):"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "西日本シティ銀行 （0190）"
+msgstr "Nishi-Nippon City Bank (0190)"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "見積有効期限："
+msgstr "Quotation Expiration Date:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "設置先"
+msgstr "Installation Location"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "設置先〒"
+msgstr "Installation Location 〒"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_invoice_rtw_3
+msgid "請求書"
+msgstr "Invoice"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "販売価格合計 :"
+msgstr "Total Sales Price:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "販売単価"
+msgstr "Sales Unit Price"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "販売金額"
+msgstr "Sales Unit Price"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "送り先"
+msgstr "Shipping Destination:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "送り先:"
+msgstr "Shipping Destination:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "送り先注記:"
+msgstr "Shipping Notes:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "送り先着日"
+msgstr "Shipment Arrival Date"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
+msgid "送り先着日："
+msgstr "Date of arrival at destination:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
+msgid "送り先："
+msgstr "Send to:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "送り状注記:"
+msgstr "Shipping Notes:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+msgid "連絡先"
+msgstr "Contact Info"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "配送"
+msgstr "Delivery"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "配送ラベル"
+msgstr "Delivery Level"
+
+#. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_delivery_order_rtw
+msgid "配送作業依頼書"
+msgstr "Delivery Work Request"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "配送手段 : <span class=\"size16\">定期便</span>"
+msgstr "Delivery Method: <span class=\"size16\">Regular</span>"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "配送費用"
+msgstr "Shipping Cost"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "配送金額合計（税抜）"
+msgstr "Total Shipping Amount (Before-tax)"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+msgid "開梱"
+msgstr "Unpack"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+msgid "（普）0272585"
+msgstr "(Regular) 0272585"

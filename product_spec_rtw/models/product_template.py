@@ -56,7 +56,7 @@ class ProductSpecRtw(models.Model):
     )
 
     minimum_scale = fields.Float("Minimum scale")
-    two_legs_scale = fields.Boolean("2Legs Scale")
+    two_legs_scale = fields.Integer("packages")
     necessary_length_of_the_cloth_a = fields.Float("necessary length of the cloth A")
     necessary_length_of_the_cloth_b = fields.Float("necessary length of the cloth B")
     catalog = fields.Many2many("product.catalog", string="Catalog")

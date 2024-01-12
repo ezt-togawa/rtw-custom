@@ -21,25 +21,49 @@
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale', 'account', 'product_spec_rtw',
-                'rtw_mrp_custom', 'rtw_product_attribute_value_images'],
+                'rtw_mrp_custom', 'rtw_product_attribute_value_images','excel_import_export'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        # quotation
         'report/report_quotation.xml',
-        'report/stock_picking.xml',
-        'report/purchase.xml',
-        'report/spec_list.xml',
+        'report/report_quotation_oversea.xml',
+        'report/report_list_price_quotation.xml',
+        'report/report_unit_price.xml',
+        'report/purchase_order.xml',
+        'report/report_product_spec.xml',
+        
+        # delivery
+        'report/report_delivery_order.xml',
+        'report/report_shipping_order.xml',
+        
+        # invoice
+        'report/report_invoice.xml',
+        
+        # purchase order
+        'report/purchase_order_sheet_for_part.xml',
+        
+        # mrp
+        'report/purchase_order_sheet.xml',
+        'report/inspection_order_form.xml',
+        
+        #general
         'report/external_layout.xml',
         'report/internal_layout.xml',
         'report/header_footer.xml',
-        'report/mrp.xml',
-        'report/invoice.xml',
         'views/views.xml',
         'views/templates.xml',
+        "views/res_company_view.xml",
+        
+        'report/purchase.xml',
+        'report/spec_list.xml',
+        'report/mrp.xml',
+        'report/invoice.xml',
+        
+        # 'report/stock_picking.xml',
         # "views/sale_views.xml",
         # "views/assets.xml",
-        "views/res_company_view.xml"
     ],
     # only loaded in demonstration mode
     'demo': [

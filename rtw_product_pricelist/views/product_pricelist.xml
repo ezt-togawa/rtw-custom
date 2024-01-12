@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="rtw_product_pricelist_formview" model="ir.ui.view">
+		<field name="name">product.pricelist.item.form</field>
+		<field name="model">product.pricelist.item</field>
+		<field name="priority">100</field>
+		<field name="inherit_id" ref="product.product_pricelist_item_form_view" />
+		<field name="arch" type="xml">
+			<xpath
+				expr="//field[@name='applied_on']"
+				position="after">
+				<field name="product_template_attribute_value_id"
+					attrs="{'invisible':[('applied_on', '!=', '4_product_attribute')],
+          'required':[('applied_on', '=', '4_product_attribute')]}"
+					options="{'no_create':1}"
+					string="属性価格"
+				/>
+			</xpath>
+			<xpath
+				expr="//field[@name='compute_price']"
+				position="attributes">
+				<attribute name="attrs">{'readonly': [('applied_on', '=', '4_product_attribute')]}</attribute>
+			</xpath>
+		</field>
+	</record>
+	<record id="product_template_attribute_value_view_search" model="ir.ui.view">
+		<field name="model">product.template.attribute.value</field>
+		<field name="inherit_id" ref="product.product_template_attribute_value_view_search" />
+		<field name="arch" type="xml">
+			<xpath
+				expr="//search"
+				position="inside">
+				<field name="price_extra" />
+				<field name="attribute_id" />
+				<field name="product_tmpl_id" />
+			</xpath>
+		</field>
+	</record>
+	<record id="product_template_attribute_value_view_tree_custom" model="ir.ui.view">
+		<field name="name">product.template.attribute.value.view.tree</field>
+		<field name="model">product.template.attribute.value</field>
+		<field name="inherit_id" ref="product.product_template_attribute_value_view_tree" />
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<xpath
+				expr="//field[@name='attribute_id']"
+				position="before">
+				<field name="product_tmpl_id" string="プロダクトテンプレート" />
+			</xpath>
+			<xpath
+				expr="//field[@name='display_type']"
+				position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath
+				expr="//field[@name='html_color']"
+				position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath
+				expr="//field[@name='weight_extra']"
+				position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath
+				expr="//field[@name='ptav_active']"
+				position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+		</field>
+	</record>
+</odoo>

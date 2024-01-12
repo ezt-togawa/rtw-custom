@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2019 Ecosoft Co., Ltd.
+  License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="action_invoice_export_xlsx" model="ir.actions.act_window">
+        <field name="name">請求書</field>
+        <field name="res_model">export.xlsx.wizard</field>
+        <field name="binding_view_types">form</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">
+            {
+            'template_domain': [('res_model', '=', 'account.move'),
+            ('fname', '=', 'invoice.xlsx'),
+            ('gname', '=', False)],
+            }
+        </field>
+    </record>
+    <menuitem
+        id="menu_report_invoice"
+        parent="excel_import_export.menu_excel_import_export"
+        action="action_invoice_export_xlsx"
+        sequence="10"
+    />
+</odoo>
