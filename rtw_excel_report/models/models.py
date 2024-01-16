@@ -1400,7 +1400,21 @@ class AccountMoveLineExcelReport(models.Model):
         compute="_compute_acc_line_sell_unit_price",
         string="sell unit price",
     )
+    
+    acc_line_name = fields.Char(
+        compute="_compute_acc_line_name",
+        string="acc line name",
+    )
 
+    def _compute_acc_line_name(self):
+        for line in self:
+            name = ""
+            if "down" in line.name.lower():  
+                name = line.product_id.product_tmpl_id.name
+            else:
+                name = line.product_id.product_tmpl_id.categ_id.name
+            line.acc_line_name = name
+            
     def _compute_acc_line_index(self):
         index = 0
         for line in self:

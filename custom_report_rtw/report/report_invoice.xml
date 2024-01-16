@@ -146,7 +146,7 @@
                                         </td>
                                         <td class="size11">
                                             <span
-                                                t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                                                t-field="l.acc_line_name" />
                                             <br />
                                         </td>
                                         <td class="size13">

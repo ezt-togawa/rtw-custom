@@ -35,7 +35,7 @@
                         },
                         'account_move_line':{
                             'A17': 'acc_line_index${value or ""}#{style=text;fill=grey}',
-                            'B17': 'product_id.product_tmpl_id.categ_id.name${value or ""}#{style=text;fill=grey}',
+                            'B17': 'acc_line_name${value or ""}#{style=text;fill=grey}',
                             'C17': 'acc_line_number_and_size#{style=text;fill=grey}',
                             'D17': 'acc_line_product_detail#{style=text;fill=grey}',
                             'E17': 'quantity${value or 0}#{style=number;fill=grey}',
