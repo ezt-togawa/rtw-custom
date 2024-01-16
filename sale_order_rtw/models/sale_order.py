@@ -18,6 +18,7 @@ class sale_order_rtw(models.Model):
         ('delivered', 'delivered'),
     ],
         string="process", default='draft')
+    date_deadline = fields.Date(string="Date deadline", tracking=True)
     preferred_delivery_date = fields.Date(string="Preferred delivery date", tracking=True)
     warehouse_arrive_date = fields.Date(string="Warehouse arrive date", tracking=True)
     preferred_delivery_period = fields.Char(string="Preferred delivery period")
