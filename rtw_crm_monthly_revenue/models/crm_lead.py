@@ -18,6 +18,8 @@ class rtw_crm(models.Model):
     @api.onchange('expected_revenue','opportunity_completion_date')
     def compute_monthly_revenue(self):
         min_date, max_date = self.find_min_max_date_deadline()
+        if not min_date and not max_date:
+            return
         current_date = min_date
         while current_date <= max_date:
             next_month = current_date.replace(day=1) + timedelta(days=32)
@@ -43,6 +45,8 @@ class rtw_crm(models.Model):
         result = super(rtw_crm,self).write(vals)
         # self.refresh()
         min_date, max_date = self.find_min_max_date_deadline()
+        if not min_date and not max_date:
+            return
         leads = self.search([])
         current_date = min_date
         while current_date <= max_date:
@@ -72,6 +76,8 @@ class rtw_crm(models.Model):
         result = super(rtw_crm,self).create(vals)
         self.refresh()
         min_date, max_date = self.find_min_max_date_deadline()
+        if not min_date and not max_date:
+            return
         current_date = min_date
         while current_date <= max_date:
             next_month = current_date.replace(day=1) + timedelta(days=32)
