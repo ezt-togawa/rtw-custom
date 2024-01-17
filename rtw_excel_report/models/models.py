@@ -64,6 +64,10 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_sale_order_format_date",
         string="Preferred Delivery Date",
     )
+    sale_order_date_deadline = fields.Char(
+        compute="_compute_sale_order_format_date",
+        string="Date deadline",
+    )
     sale_order_send_to_company = fields.Char(
         compute="_compute_sale_order_send_to_company",
         string="Send to company",
@@ -131,6 +135,17 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_sale_order_info_cus",
         string="Sale order name",
     )
+    
+    sale_order_hr_employee = fields.Char(
+        compute="_compute_sale_order_hr_employee",
+        string="Sale order hr employee",
+    )
+    
+    sale_order_preferred_delivery_period= fields.Char(
+        compute="_compute_sale_order_preferred_delivery_period",
+        string="Sale order preferred delivery period",
+    )
+    
 
     list_order_line = fields.One2many(
         'sale.order.line',
@@ -172,6 +187,33 @@ class SaleOrderExcelReport(models.Model):
                 record.dayUnit = ""
             else:
                 record.dayUnit = "日"
+                
+    def _compute_sale_order_hr_employee(self):
+        for record in self:
+            hr_employee_detail = ""
+            if record.hr_employee_company:
+                hr_employee_detail += record.hr_employee_company + "\n"
+            if record.hr_employee_department:
+                hr_employee_detail += record.hr_employee_department + "\n"
+            if record.hr_employee_zip:
+                hr_employee_detail += record.hr_employee_zip + "\n"
+            if record.hr_employee_info:
+                hr_employee_detail += record.hr_employee_info + "\n"
+            if record.hr_employee_tel:
+                hr_employee_detail += record.hr_employee_tel + "\n"
+            if record.hr_employee_fax:
+                hr_employee_detail += record.hr_employee_fax + "\n"
+            if record.hr_employee_printer:
+                hr_employee_detail += record.hr_employee_printer 
+            
+            record.sale_order_hr_employee= hr_employee_detail
+                
+    def _compute_sale_order_preferred_delivery_period(self):
+        for record in self:
+            if record.preferred_delivery_period :
+                record.sale_order_preferred_delivery_period = record.preferred_delivery_period
+            else:
+                record.sale_order_preferred_delivery_period = ""
 
     def _compute_sale_order_name(self):
         for line in self:
@@ -356,6 +398,7 @@ class SaleOrderExcelReport(models.Model):
             validity_date = record.validity_date
             shiratani_entry_date = record.shiratani_entry_date
             preferred_delivery_date = record.preferred_delivery_date
+            date_deadline = record.date_deadline
 
             if shipping_date:
                 record.sale_order_estimated_shipping_date = (
@@ -413,6 +456,17 @@ class SaleOrderExcelReport(models.Model):
                 )
             else:
                 record.sale_order_preferred_delivery_date = ""
+            if date_deadline:
+                record.sale_order_date_deadline = (
+                    str(date_deadline.year)
+                    + record.yearUnit
+                    + str(date_deadline.month)
+                    + record.monthUnit
+                    + str(date_deadline.day)
+                    + record.dayUnit
+                )
+            else:
+                record.sale_order_date_deadline = ""
 
     def _compute_sale_order_company_owner(self):
         for record in self:
@@ -534,7 +588,20 @@ class SaleOrderLineExcelReport(models.Model):
         compute="_compute_sale_order_config_session",
         string="Config Session",
     )
+    
+    sale_order_line_discount = fields.Float (
+        compute="_compute_sale_order_line_discount",
+        string="Sale order line discount",
+    )
 
+    def _compute_sale_order_line_discount(self):
+        for line in self:
+            if line.discount != 0.00 or line.discount != 0.0 or line.discount != 0 :
+                line.sale_order_line_discount = '{0:,.1f}'.format(100-line.discount)
+            else:
+                line.sale_order_line_discount = 0.0
+                
+            
     def _compute_sale_order_config_session(self):
         for line in self:
             config=""
@@ -1468,10 +1535,10 @@ class AccountMoveLineExcelReport(models.Model):
     
     def _compute_acc_line_discount(self):
         for line in self:
-            if line.discount:
-                line.acc_line_discount = line.discount + " %"
+            if  line.discount != 0.00 or line.discount != 0.0 or line.discount != 0 :
+                line.acc_line_discount = '{0:,.1f}'.format(100-line.discount)
             else:
-                line.acc_line_discount = "0 %"
+                line.acc_line_discount = 0.0
 
     def _compute_acc_line_sell_unit_price(self):
         for line in self:

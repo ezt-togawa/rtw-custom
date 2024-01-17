@@ -37,17 +37,12 @@
                         </div>
                         <div class="row size13" style="margin-top:-50px;">
                             <div class="col-4">
-                                <t t-if="docs.lang_code == 'en_US'">
-                                    <div>御中 <span t-field="docs.company_id.partner_id.name" /> 株式会社 </div>
-                                    <div> Mr./Mrs. <t t-esc="' '" /> <span
-                                            t-field="docs.partner_id.name" />
-                                    </div>
-                                </t>
-                                <t t-else="">
-                                    <div> 株式会社 <span t-field="docs.company_id.partner_id.name" /> 御中 </div>
-                                    <div>
-                                        <span t-field="docs.partner_id.name" /> 様 </div>
-                                </t>
+                                <div>
+                                    <span t-field="docs.send_to_company" />
+                                </div>
+                                <div>
+                                    <span t-field="docs.send_to_people" />
+                                </div>
                                 <br />
                                 <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 下記の通り、ご請求申し上げます。<br /> <span
                                         class="mt-1"> 件名 <span class="size16"
@@ -186,7 +181,8 @@
                                             <span t-esc="l.price_unit" />
                                         </td>
                                         <td class="text-center size11">
-                                            <span t-esc="'{0:,.2f}'.format(l.discount)" />% </td>
+                                            <span t-esc="l.acc_line_discount" />
+                                        </td>
                                         <td class="text-center size12">
                                             <span
                                                 t-esc="'{0:,.2f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else l.price_unit" />

@@ -14,8 +14,8 @@
                 '__EXPORT__': {
                     '請求書': {
                         '_HEAD_': {
-                            'A3': 'send_company${value or ""}',
-                            'A4': 'to_receiver${value or ""}',
+                            'A3': 'send_to_company${value or ""}',
+                            'A4': 'send_to_people${value or ""}',
                             'H9': 'printing_staff${value or ""}',
                             'B9': 'amount_untaxed${value or ""}',
                             'B10':'amount_tax${value or 0}',
