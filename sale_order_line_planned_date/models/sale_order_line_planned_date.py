@@ -2,7 +2,6 @@
 
 from odoo import models, fields, api
 
-
 class sale_order_line_confirm(models.Model):
     _inherit = "sale.order.line"
 
@@ -10,16 +9,13 @@ class sale_order_line_confirm(models.Model):
     def _onchange_date_planned(self):
         for record in self:
             if record._origin.date_planned and record.date_planned:
-                if record._origin.date_planned.strftime("%Y-%m-%d %H:%M:%S") > record.date_planned.strftime("%Y-%m-%d %H:%M:%S"):
-                    return {
-                        'warning': {
-                            'title': '確認',
-                            'message': '予定日を前倒しました。ご注意ください。',
-
+                    if record._origin.date_planned.strftime("%Y-%m-%d %H:%M:%S") > record.date_planned.strftime("%Y-%m-%d %H:%M:%S"):
+                        return {
+                            'warning': {
+                                'title': '確認',
+                                'message': '予定日を前倒しました。ご注意ください。',
                         },
                     }
-
-
 class sale_order(models.Model):
     _inherit = "sale.order"
 
@@ -27,18 +23,19 @@ class sale_order(models.Model):
 
     @api.onchange('order_line')
     def _onchange_order_line(self):
-        has_record_meeting_condition = []
+        has_record_meeting_condition = False
         for order in self:
             for line in order.order_line:
-                if line.date_planned and line.date_planned.strftime("%Y-%m-%d %H:%M:%S") < line._origin.date_planned.strftime("%Y-%m-%d %H:%M:%S"):
-                    has_record_meeting_condition = True
-
-                    if has_record_meeting_condition:
-                        self.env.context = dict(
-                            self.env.context, is_show_planned_date_notice=True)
-                    else:
-                        self.env.context = dict(
-                            self.env.context, is_show_planned_date_notice=False)
+                if bool(line.product_id ) != False and line.display_type != "line_note":
+                    if line.date_planned and line._origin and line._origin.date_planned :
+                        if line.date_planned.strftime("%Y-%m-%d %H:%M:%S") < line._origin.date_planned.strftime("%Y-%m-%d %H:%M:%S"):
+                            has_record_meeting_condition = True
+                            if has_record_meeting_condition:
+                                self.env.context = dict(
+                                    self.env.context, is_show_planned_date_notice=True)
+                            else:
+                                self.env.context = dict(
+                                    self.env.context, is_show_planned_date_notice=False)
 
     @api.depends('order_line')
     def _compute_error_context(self):
