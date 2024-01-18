@@ -1477,7 +1477,7 @@ class AccountMoveLineExcelReport(models.Model):
         for line in self:
             name = ""
             if "down" in line.name.lower():  
-                name = line.product_id.product_tmpl_id.name
+                name = line.name
             else:
                 name = line.product_id.product_tmpl_id.categ_id.name
             line.acc_line_name = name
