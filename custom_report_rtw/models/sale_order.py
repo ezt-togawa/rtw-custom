@@ -23,13 +23,27 @@ class SaleOrder(models.Model):
 
     def _compute_send_to(self):
         for so in self:
+            partner_name = ''
+            company_name = ''
             if so.lang_code == 'en_US':
-                so.send_to_people = ('Mr./Mrs. ' + so.partner_id.name) if so.partner_id and so.partner_id.name else ''
-                so.send_to_company = ('御中 ' + (so.partner_id.company_id.name if so.partner_id and so.partner_id.company_id else '') + ' 株式会社') if so.partner_id and so.partner_id.company_id else ''
+                if so.partner_id:
+                    res_partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
+                    if res_partner:
+                        for line in res_partner:
+                            partner_name = ('Mr./Mrs. ' + line.last_name) if  line.last_name else ''
+                            company_name = ('御中 ' + line.parent_id.name + ' 株式会社') if line.parent_id  else ''
+                    
             else:
-                so.send_to_people = (so.partner_id.name +' 様') if so.partner_id and so.partner_id.name else ''
-                so.send_to_company = ('株式会社 ' + (so.partner_id.company_id.name if so.partner_id and so.partner_id.company_id else '') + ' 御中') if so.partner_id and so.partner_id.company_id else ''
-                
+                if so.partner_id:
+                    res_partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
+                    if res_partner:
+                        for line in res_partner:
+                            partner_name = ( line.last_name + ' 様') if  line.last_name else ''
+                            company_name = ( '株式会社 '+ line.parent_id.name + ' 御中') if line.parent_id  else ''
+                        
+            so.send_to_people = partner_name
+            so.send_to_company = company_name
+                        
     def _compute_calculate_planned_date(self):
         max_planned_date = ''
         for line in self.order_line:
