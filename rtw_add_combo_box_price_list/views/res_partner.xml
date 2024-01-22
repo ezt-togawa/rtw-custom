@@ -7,23 +7,9 @@
             <field name="inherit_id" ref="rtw_sf.view_partner_form_sf"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='multiplier_green']" position="after">
-                    <field name="property_product_pricelist" string="Pricelist" attrs="{'invisible': [('company_type','=', 'person')]}"/>
+                    <field name="property_product_pricelist" string="Pricelist" />
                 </xpath>
             </field>
         </record>
-
-        <!-- <record id="view_partner_property_form_2" model="ir.ui.view">
-            <field name="name">replace property product pricelist </field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="product.view_partner_property_form"/>
-            <field name="groups_id" eval="[(4, ref('product.group_product_pricelist'))]"/>
-            <field name="arch" type="xml">
-
-                <xpath expr="//field[@name='property_product_pricelist']" position="replace">
-                    <field name="property_product_pricelist" groups="product.group_product_pricelist" attrs="{'invisible': [('company_type','=', 'person'),('is_company','=',False),('parent_id','!=',False)]}"/>
-                </xpath>
-
-            </field>
-        </record> -->
     </data>
 </odoo>
