@@ -41,82 +41,85 @@
                 <div t-foreach="o.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l"
                   class="product-wrap"
                 >
-                  <t t-set="product_attribute_index" t-value="0" />
-                  <div
-                    class="product-container">
-                    <div class="row" style="width:100%">
-                      <div class="col-2 product-quantity">
-                        <div
-                          class="quantity"
-                          t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
-                      </div>
-                      <div class="col-10 name">
-                        <span class="size12"
-                          t-if="l.product_id.product_tmpl_id.categ_id.name"
-                          t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                        <div class="size14">
-                          <span t-if="l.product_id.product_tmpl_id.product_no"
-                            t-field="l.product_id.product_tmpl_id.product_no" />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-img" t-field="l.product_id.image_256"
-                      t-options='{"widget": "image"}' />
-                    <div class="string-line">
-                      <t
-                        t-foreach="l.product_id.product_template_attribute_value_ids"
-                        t-as="string_line">
-                        <span
-                          t-esc="string_line.display_name" />
-                        <br />
-                      </t>
-                      <t t-foreach="l.config_session_id.custom_value_ids"
-                        t-as="string_line"><span
-                          t-esc="string_line.display_name" />: <span
-                          t-esc="string_line.value" />
-                      <br />
-                      </t>
-                      <t t-if="l.product_id.width > 0">W<span
-                          t-field="l.product_id.width" />
-                      </t>
-                      <t t-if="l.product_id.depth > 0">*D<span
-                          t-field="l.product_id.depth" />
-                      </t>
-                      <t t-if="l.product_id.height > 0">*H<span
-                          t-field="l.product_id.height" />
-                      </t>
-                      <t t-if="l.product_id.sh > 0"> SH<span
-                          t-field="l.product_id.sh" />
-                      </t>
-                      <t t-if="l.product_id.ah > 0"> AH<span
-                          t-field="l.product_id.ah" />
-                      </t>
-                    </div>
-                    <div style="width:100%;margin:0 auto;font-size:12px;">
-                      <div
-                        t-foreach="l.product_id.product_template_attribute_value_ids.filtered(lambda x: x.product_attribute_value_id.image)"
-                        t-as="string_line"
-                        class="product-config"
-                      >
-                        <div
-                          t-foreach="string_line"
-                          t-as="line"
-                          t-if="line.product_attribute_value_id.image and product_attribute_index &lt; 4"
-                        >
-                          <t t-set="product_attribute_index"
-                            t-value="product_attribute_index + 1" />
+                  <t
+                    t-if="l.product_id.product_tmpl_id.type != 'service' and l.display_type != 'line_note'">
+                    <t t-set="product_attribute_index" t-value="0" />
+                    <div
+                      class="product-container">
+                      <div class="row" style="width:100%">
+                        <div class="col-2 product-quantity">
                           <div
-                            class="attribute-img"
-                            t-field="line.product_attribute_value_id.image"
-                            t-options='{"widget": "image"}' />
-                          <div class="mt-1">
-                            <span t-field="line.attribute_id.name" />: <span t-field="line.name" />
+                            class="quantity"
+                            t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                        </div>
+                        <div class="col-10 name">
+                          <span class="size12"
+                            t-if="l.product_id.product_tmpl_id.categ_id.name"
+                            t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                          <div class="size14">
+                            <span t-if="l.product_id.product_tmpl_id.product_no"
+                              t-field="l.product_id.product_tmpl_id.product_no" />
                           </div>
                         </div>
-                        <br />
+                      </div>
+                      <div class="product-img" t-if="l.product_id.image_256"
+                        t-field="l.product_id.image_256" t-options='{"widget": "image"}' />
+                      <div class="string-line">
+                        <t
+                          t-foreach="l.product_id.product_template_attribute_value_ids"
+                          t-as="string_line">
+                          <span
+                            t-esc="string_line.display_name" />
+                          <br />
+                        </t>
+                        <t t-foreach="l.config_session_id.custom_value_ids"
+                          t-as="string_line"><span
+                            t-esc="string_line.display_name" />: <span
+                            t-esc="string_line.value" />
+                      <br />
+                        </t>
+                        <t t-if="l.product_id.width > 0">W<span
+                            t-field="l.product_id.width" />
+                        </t>
+                        <t t-if="l.product_id.depth > 0">*D<span
+                            t-field="l.product_id.depth" />
+                        </t>
+                        <t t-if="l.product_id.height > 0">*H<span
+                            t-field="l.product_id.height" />
+                        </t>
+                        <t t-if="l.product_id.sh > 0"> SH<span
+                            t-field="l.product_id.sh" />
+                        </t>
+                        <t t-if="l.product_id.ah > 0"> AH<span
+                            t-field="l.product_id.ah" />
+                        </t>
+                      </div>
+                      <div style="width:100%;margin:0 auto;font-size:12px;">
+                        <div
+                          t-foreach="l.product_id.product_template_attribute_value_ids.filtered(lambda x: x.product_attribute_value_id.image)"
+                          t-as="string_line"
+                          class="product-config"
+                        >
+                          <div
+                            t-foreach="string_line"
+                            t-as="line"
+                            t-if="line.product_attribute_value_id.image and product_attribute_index &lt; 4"
+                          >
+                            <t t-set="product_attribute_index"
+                              t-value="product_attribute_index + 1" />
+                            <div
+                              class="attribute-img"
+                              t-field="line.product_attribute_value_id.image"
+                              t-options='{"widget": "image"}' />
+                            <div class="mt-1">
+                              <span t-field="line.attribute_id.name" />: <span t-field="line.name" />
+                            </div>
+                          </div>
+                          <br />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </t>
                 </div>
               </div>
             </table>

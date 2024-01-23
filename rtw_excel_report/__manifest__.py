@@ -24,7 +24,7 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'report/proforma.xml',
         'report/report.xml',
         'report_quotation/actions.xml',
