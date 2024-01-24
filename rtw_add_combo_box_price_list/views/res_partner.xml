@@ -1,0 +1,15 @@
+
+<odoo>
+    <data>
+        <record id="view_partner_form_add_price_list" model="ir.ui.view">
+            <field name="name">add price list</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="rtw_sf.view_partner_form_sf"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='multiplier_green']" position="after">
+                    <field name="property_product_pricelist" string="Pricelist" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

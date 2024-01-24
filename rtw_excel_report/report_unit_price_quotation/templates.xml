@@ -14,25 +14,18 @@
                 '__EXPORT__': {
                     '単価御見積書': {
                         '_HEAD_': {
-                            'A2': 'sale_order_send_to_company${value or ""}',
-                            'A3': 'sale_order_company_owner${value or ""}',
+                            'A2': 'send_to_company${value or ""}',
+                            'A3': 'send_to_people${value or ""}',
                             'B9': 'title${value or ""}',
-                            'E3': 'sale_order_estimated_shipping_date${value or ""}',
+                            'E3': 'sale_order_preferred_delivery_date${value or ""}',
                             'E4': 'workdays${value or ""}',
-                            'E5': 'sale_order_date_order${value or ""}',
+                            'E5': 'sale_order_date_deadline${value or ""}',
                             'E6': 'forwarding_address${value or ""}',
                             'E7': 'payment_term_id.name${value or ""}',
                             'E9': 'sale_order_validity_date${value or ""}',
                             'E10': 'special_note${value or ""}',
-                            'H9': 'user_id.name${value or ""}',
                             'H1': 'sale_order_current_date',
-                            'H3': 'hr_employee_company${value or ""}',
-                            'H4': 'hr_employee_department${value or ""}',
-                            'H5': 'hr_employee_zip${value or ""}',
-                            'H6': 'hr_employee_info${value or ""}',
-                            'H7': 'hr_employee_tel${value or ""}',
-                            'H8': 'hr_employee_fax${value or ""}',
-                            'H9': 'hr_employee_printer${value or ""}',
+                            'H3': 'sale_order_hr_employee${value or ""}',
                             'I14': 'name${value or ""}'
                         },
                         'list_order_line': {
@@ -42,7 +35,7 @@
                             'D17': 'sale_order_product_detail#{style=text;fill=grey}',
                             'E17': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
                             'F17': 'price_unit${value or 0}#{style=number;fill=grey}',
-                            'G17': 'discount${value or 0}#{style=number;fill=grey}',
+                            'G17': 'sale_order_line_discount${value or 0}#{style=number;fill=grey}',
                             'H17': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
                             'I17': 'price_subtotal${value or 0}#{style=number;fill=grey}',
                         }

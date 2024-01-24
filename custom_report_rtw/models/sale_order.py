@@ -17,7 +17,33 @@ class SaleOrder(models.Model):
     hr_employee_tel = fields.Char(string="hr employee tel" , compute="_compute_hr_employee")
     hr_employee_fax = fields.Char(string="hr employee fax" , compute="_compute_hr_employee")
     hr_employee_printer = fields.Char(string="hr employee printer" , compute="_compute_hr_employee")
+    send_to_company = fields.Char(string="send to company" , compute="_compute_send_to")
+    send_to_people = fields.Char(string="send to people" , compute="_compute_send_to")
+    sale_order_discount = fields.Char(string="sale order discount" , compute="_compute_sale_order_discount")
 
+    def _compute_send_to(self):
+        for so in self:
+            partner_name = ''
+            company_name = ''
+            if so.lang_code == 'en_US':
+                if so.partner_id:
+                    res_partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
+                    if res_partner:
+                        for line in res_partner:
+                            partner_name = ('Mr./Mrs. ' + line.last_name) if  line.last_name else ''
+                            company_name = ('御中 ' + line.parent_id.name + ' 株式会社') if line.parent_id  else ''
+                    
+            else:
+                if so.partner_id:
+                    res_partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
+                    if res_partner:
+                        for line in res_partner:
+                            partner_name = ( line.last_name + ' 様') if  line.last_name else ''
+                            company_name = ( '株式会社 '+ line.parent_id.name + ' 御中') if line.parent_id  else ''
+                        
+            so.send_to_people = partner_name
+            so.send_to_company = company_name
+                        
     def _compute_calculate_planned_date(self):
         max_planned_date = ''
         for line in self.order_line:
@@ -75,7 +101,7 @@ class SaleOrder(models.Model):
                                     if res_partner:
                                         for res in res_partner:
                                             so.hr_employee_zip = ("〒" + res.zip) if res.zip != False else ''
-                                            so.hr_employee_info = f"{res.street or res.street2 or ''} {res.city or ''} {res.state_id.name or ''} \n {res.country_id.name or ''}".strip()
+                                            so.hr_employee_info = f"{res.street or res.street2 or ''} {res.city or ''} {res.state_id.name or ''} {res.country_id.name or ''}".strip()
                                             so.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
                                             so.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
                                     else:

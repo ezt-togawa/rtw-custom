@@ -40,16 +40,12 @@
             </div>
             <div class="row size13" style="margin-top:-50px;">
               <div class="col-4">
-                <t t-if="docs.lang_code == 'en_US'">
-                  <div>御中 <span t-field="docs.company_id.partner_id.name" /> 株式会社</div>
-                  <div> Mr./Mrs. <t t-esc="' '" /><span t-field="docs.partner_id.name" />
-                  </div>
-                </t>
-                <t t-else="">
-                  <div> 株式会社 <span t-field="docs.company_id.partner_id.name" /> 御中</div>
-                  <div>
-                    <span t-field="docs.partner_id.name" /> 様 </div>
-                </t>
+                <div>
+                  <span t-field="docs.send_to_company" />
+                </div>
+                <div>
+                  <span t-field="docs.send_to_people" />
+                </div>
                 <br />
                 <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br /> 
                   <span
@@ -59,26 +55,14 @@
                 <br />
               </div>
               <div class="col-4">
-                <div>納品希望日： <span class="size14" t-if="docs.sale_order_estimated_shipping_date"
-                    t-esc="docs.sale_order_estimated_shipping_date" />
-                </div>
-                <div> 製作日数： <span t-if="docs.so_work_days"
-                    t-esc="docs.so_work_days" />
-                </div>
-                <div> 発注期限： <span class="size14" t-if="docs.sale_order_date_order"
-                    t-esc="docs.sale_order_date_order" />
-                </div>
-                <div> 納品場所： <span t-if="docs.date_order"
-                    t-esc="docs.forwarding_address" />
-                </div>
-                <div> 支払条件：<span class="size14" t-esc="docs.payment_term_id.name" />
-                </div>
+                <div>納品希望日： <span t-esc="docs.sale_order_preferred_delivery_date" /></div>
+                <div> 製作日数： <span t-if="docs.so_work_days" t-esc="docs.so_work_days" /></div>
+                <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
+                <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
+                <div> 支払条件：<span t-esc="docs.payment_term_id.name" /></div>
                 <br />
-                <div>見積有効期限： <span
-                    t-field="docs.validity_date" />
-                </div>
-                <div> 備考: <span t-field="docs.special_note" />
-                </div>
+                <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
+                <div> 備考: <span t-field="docs.special_note" /></div>
               </div>
               <div class="col-4 size11" name="company_address">
                 <div>
@@ -183,8 +167,9 @@
                     <td>
                       <span t-field="l.price_unit" />
                     </td>
-                    <td class="text-center size11">
-                      <span t-esc="'{0:,.2f}'.format(l.discount)" />% </td>
+                    <td class="size11">
+                      <span t-esc="l.sale_order_line_discount" />
+                    </td>
                     <td class="text-center size12">
                       <span
                         t-esc="'{0:,.2f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else l.price_unit" />

@@ -133,6 +133,12 @@ msgid "Warehouse arrive date"
 msgstr "デポ到着日"
 
 #. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__date_deadline
+#: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
+msgid "Date deadline"
+msgstr "発注期限"
+
+#. module: sale_order_rtw
 #: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__preferred_delivery_period
 #: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
 msgid "Preferred delivery period"

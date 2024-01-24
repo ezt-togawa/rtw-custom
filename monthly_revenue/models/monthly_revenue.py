@@ -21,10 +21,13 @@ class MonthlyRevenue(models.Model):
             [('opportunity_completion_date', '!=', False)], order='opportunity_completion_date asc', limit=1).opportunity_completion_date
         max_date = self.env['crm.lead'].search(
             [('opportunity_completion_date', '!=', False)], order='opportunity_completion_date desc', limit=1).opportunity_completion_date
+        
         return min_date, max_date
 
     def generate_monthly_revenue(self):
         min_date, max_date = self.find_min_max_date_deadline()
+        if not min_date and not max_date:
+            return
         current_date = min_date
         while current_date <= max_date:
             next_month = current_date.replace(day=1) + timedelta(days=32)
