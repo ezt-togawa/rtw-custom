@@ -1476,10 +1476,17 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_name(self):
         for line in self:
             name = ""
-            if "down" in line.name.lower():  
-                name = line.name
-            else:
-                name = line.product_id.product_tmpl_id.categ_id.name
+            if line.product_id: 
+                # case download payment 
+                if line.product_id.product_tmpl_id.type == 'service':  
+                    name = line.product_id.product_tmpl_id.name
+                else: #another case
+                    if line.product_id.product_tmpl_id.categ_id.name:
+                        name = line.product_id.product_tmpl_id.categ_id.name
+                    elif line.product_id.product_tmpl_id.product_no :
+                        name = line.product_id.product_tmpl_id.product_no
+                    else: 
+                        name = line.product_id.product_tmpl_id.name    
             line.acc_line_name = name
             
     def _compute_acc_line_index(self):
