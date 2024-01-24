@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_contact
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-01 02:47+0000\n"
+"PO-Revision-Date: 2023-05-01 02:47+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+
+#. module: rtw_contact
+#: model_terms:ir.ui.view,arch_db:rtw_contact.view_sale_order_form_add_transactions
+msgid "Transactions"
+msgstr "取引条件"
+
+#. module: rtw_contact
+#: model_terms:ir.ui.view,arch_db:rtw_contact.view_partner_form_add_payment_term
+msgid "Payment Terms"
+msgstr "支払条件	"
