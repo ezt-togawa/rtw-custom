@@ -25,6 +25,7 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'data/ir_cron_monthly_revenue.xml',
         'views/crm_lead.xml',
         'views/templates.xml',
     ],
