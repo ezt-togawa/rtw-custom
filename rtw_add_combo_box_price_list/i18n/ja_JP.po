@@ -20,3 +20,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rtw_add_combo_box_price_list.view_partner_form_add_price_list
 msgid "Pricelist"
 msgstr "価格リスト"
+
+#. module: rtw_add_combo_box_price_list
+#: model_terms:ir.ui.view,arch_db:rtw_add_combo_box_price_list.view_partner_form_add_price_list
+msgid "Pricelists are managed on"
+msgstr "価格表は、これで管理されています"
+
+#. module: rtw_add_combo_box_price_list
+#: model_terms:ir.ui.view,arch_db:rtw_add_combo_box_price_list.view_partner_form_add_price_list
+msgid "the parent company"
+msgstr "親会社"
