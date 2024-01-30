@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields ,api
 from datetime import datetime
 import math
 class SaleOrderExcelReport(models.Model):
@@ -712,15 +712,17 @@ class SaleOrderLineExcelReport(models.Model):
                 for attribute in attributes:
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
-
+                    
+    @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            if line.discount > 0:
-                line.sale_order_sell_unit_price = (
-                    line.price_unit - line.price_unit * line.discount / 100
-                )
-            else:
-                line.sale_order_sell_unit_price = line.price_unit
+            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty, product=line.product_id, partner=line.order_id.partner_shipping_id)
+            line.update({
+                'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])),
+                'price_total': taxes['total_included'],
+                'sale_order_sell_unit_price': taxes['total_excluded'],
+            })
 
     def _compute_sale_order_index(self):
         index = 0

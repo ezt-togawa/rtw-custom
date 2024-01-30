@@ -172,7 +172,7 @@
                     </td>
                     <td class="text-center size12">
                       <span
-                        t-esc="'{0:,.2f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else l.price_unit" />
+                      t-esc="'{0:,.2f}'.format(l.sale_order_sell_unit_price)" />
                     </td>
                     <td class="text-center">
                       <span t-field="l.price_subtotal" />
