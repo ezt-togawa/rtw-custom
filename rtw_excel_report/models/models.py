@@ -1605,7 +1605,7 @@ class MrpProductionExcelReport(models.Model):
     def _compute_sale_order(self):
         for line in self:
             line.sale_order = self.env["sale.order"].search(
-                [("name", "=", line.origin)]
+                [("name", "=", line.sale_reference)]
             )
 class StockMoveContainerReport(models.Model):
     _inherit = "stock.move.container"
