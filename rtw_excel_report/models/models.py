@@ -713,17 +713,11 @@ class SaleOrderLineExcelReport(models.Model):
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
                     
-    @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
+    @api.onchange('product_uom_qty', 'discount', 'price_unit')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty, product=line.product_id, partner=line.order_id.partner_shipping_id)
-            line.update({
-                'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])),
-                'price_total': taxes['total_included'],
-                'sale_order_sell_unit_price': taxes['total_excluded'],
-            })
-
+            line.sale_order_sell_unit_price = line.price_unit - line.price_unit * line.discount / 100 
+            
     def _compute_sale_order_index(self):
         index = 0
         for line in self:
