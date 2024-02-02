@@ -77,10 +77,10 @@ class MrpProduction(models.Model):
         compute="_compute_mrp_product_name_excel",
     )
     
-    mrp_product_config_cus = fields.Char(
-        "mrp product config cus",
-        compute="_compute_mrp_product_config_cus",
-    )
+    # mrp_product_config_cus = fields.Char(
+    #     "mrp product config cus",
+    #     compute="_compute_mrp_product_config_cus",
+    # )
     mrp_product_config_cus_excel = fields.Char(
         "mrp product config cus excel",
         compute="_compute_mrp_product_config_cus_excel",
@@ -111,75 +111,78 @@ class MrpProduction(models.Model):
         for line in self:
             name = ""
             if line.product_id: 
-                if line.product_id.product_tmpl_id.config_ok :  
-                    if line.product_id.product_tmpl_id.categ_id.name:
-                        name = line.product_id.product_tmpl_id.categ_id.name
-                    elif line.product_id.product_tmpl_id.product_no :
+                if line.product_id.product_tmpl_id.config_ok :
+                    if line.product_id.product_tmpl_id.product_no :
                         name = line.product_id.product_tmpl_id.product_no
                     else: 
                         name = line.product_id.product_tmpl_id.name   
                 else:
-                    # case product is standard Prod 
                     name = line.product_id.product_tmpl_id.name
             line.mrp_product_name = name
             
 
-    def _compute_mrp_product_config_cus(self):
-        for line in self:
-            config_cus = []
-            if line.production_type:
-                soup = BeautifulSoup(line.production_type, 'html.parser')
-                for div in soup.find_all('div'):
-                    text = div.get_text(strip=True)
-                    config_cus.append(text)
-            line.mrp_product_config_cus = "\n".join(config_cus)
+    # def _compute_mrp_product_config_cus(self):
+    #     for line in self:
+    #         config=""
+    #         so=self.env['sale.order'].search([("name",'=',line.sale_reference)])
+    #         if so:
+    #             sol=self.env['sale.order.line'].search([("order_id",'=',so[0].id)])
+    #             if sol:
+    #                 for l in sol:
+    #                     configCus=l.config_session_id.custom_value_ids
+    #                     if configCus:
+    #                         for cfg in configCus:
+    #                             config += cfg.display_name + ":" + cfg.value + "\n"
+    #                     config.rstrip("\n")
+    #         line.mrp_product_config_cus = config
+
             
     def _compute_mrp_product_config_cus_excel(self):
         for line in self:
             if line.origin.startswith('WH'):
-                type =""
+                line.mrp_product_config_cus_excel =""
             else:
-                if line.product_id.type=='consu':
-                    type = 'Consumable'
-                if line.product_id.type=='service':
-                    type = 'Service'
-                if line.product_id.type=='product':
-                    type = 'Storable product'
-            
-            config_cus = []
-            if line.production_type:
-                soup = BeautifulSoup(line.production_type, 'html.parser')
-                for div in soup.find_all('div'):
-                    text = div.get_text(strip=True)
-                    config_cus.append(text)
-            if type :
-                line.mrp_product_config_cus_excel = type + '\n' +"\n".join(config_cus)
-            else:
-                line.mrp_product_config_cus_excel = "\n".join(config_cus)
+                type = line.mrp_product_type
+                config =""
+                so=self.env['sale.order'].search([("name",'=',line.sale_reference)])
+                if so:
+                    sol=self.env['sale.order.line'].search([("order_id",'=',so[0].id)])
+                    if sol:
+                        for l in sol:
+                            if l.config_session_id.custom_value_ids:
+                                for cfg in l.config_session_id.custom_value_ids:
+                                    config += cfg.display_name + ':' + cfg.value + '\n'
+                                config = config.rstrip('\n')
+                if type :
+                    line.mrp_product_config_cus_excel = type + '\n' + config
+                else:
+                    line.mrp_product_config_cus_excel = config
             
     def _compute_mrp_product_type(self):
         for line in self:
             if line.origin.startswith('WH'):
                 line.mrp_product_type = ""
-            else:
-                type = ''
-                if line.product_id.type == 'consu':
-                    type = 'Consumable'
-                elif line.product_id.type == 'service':
-                    type = 'Service'
-                elif line.product_id.type == 'product':
-                    type = 'Storable product'
-                line.mrp_product_type = type
-
+                return
             
+            p_type = ""
+            so=self.env['sale.order'].search([("name",'=',line.sale_reference)])
+            if so:
+                sol=self.env['sale.order.line'].search([("order_id",'=',so[0].id)])
+                if sol:
+                    for l in sol:
+                        if l.p_type:
+                            if l.p_type == "special":
+                                p_type = "別注"
+                            elif l.p_type == "custom":
+                                p_type = "特注"
+            line.mrp_product_type = p_type
+        
     def _compute_mrp_product_name_excel(self):   
         for line in self:
             name = ""
             if line.product_id: 
                 if line.product_id.product_tmpl_id.config_ok :  
-                    if line.product_id.product_tmpl_id.categ_id.name:
-                        name = line.product_id.product_tmpl_id.categ_id.name
-                    elif line.product_id.product_tmpl_id.product_no :
+                    if line.product_id.product_tmpl_id.product_no :
                         name = line.product_id.product_tmpl_id.product_no
                     else: 
                         name = line.product_id.product_tmpl_id.name   
@@ -190,13 +193,8 @@ class MrpProduction(models.Model):
             if line.origin.startswith('WH'):
                 type =""
             else:
-                if line.product_id.type=='consu':
-                    type = 'Consumable'
-                if line.product_id.type=='service':
-                    type = 'Service'
-                if line.product_id.type=='product':
-                    type = 'Storable product'
-        
+                type = line.mrp_product_type
+                    
             size=""
             if line.product_id.product_tmpl_id.width:
                 size += "W" + str(line.product_id.product_tmpl_id.width) + "*"
