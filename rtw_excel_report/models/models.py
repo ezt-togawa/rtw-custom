@@ -1487,7 +1487,7 @@ class AccountMoveLineExcelReport(models.Model):
                             name = line.product_id.product_tmpl_id.name   
                     else:
                         # case product is standard Prod 
-                        name = line.product_id.product_tmpl_id.name
+                        name = line.name
             line.acc_line_name = name
             
     def _compute_acc_line_index(self):
