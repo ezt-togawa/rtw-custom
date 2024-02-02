@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="size12">
                                     <span t-esc="docs.acc_move_print_staff" />
-                                 </div>
+                                </div>
                             </div>
                         </div>
                         <table
@@ -137,59 +137,69 @@
                                 </t>
                                 <tbody class="invoice_tbody">
                                     <tr style="border-bottom:solid 1px black;font-size:15px;">
-                                        <td t-esc="l_index+1" class="text-center size12">
-                                        </td>
-                                        <td class="size11">
-                                            <span
-                                                t-field="l.acc_line_name" />
-                                            <br />
-                                        </td>
-                                        <td class="size13">
-                                            <div t-if="l.product_id.product_no"
-                                                t-field="l.product_id.product_no" />
-                                            <t t-if="l.product_id.width > 0">W<span
-                                                    t-field="l.product_id.width" />
-                                            </t>
-                                            <t t-if="l.product_id.depth > 0">*D<span
-                                                    t-field="l.product_id.depth" />
-                                            </t>
-                                            <t t-if="l.product_id.height > 0">*H<span
-                                                    t-field="l.product_id.height" />
-                                            </t>
-                                            <t t-if="l.product_id.sh > 0"> SH<span
-                                                    t-field="l.product_id.sh" />
-                                            </t>
-                                            <t t-if="l.product_id.ah > 0"> AH<span
-                                                    t-field="l.product_id.ah" />
-                                            </t>
-                                        </td>
-                                        <td class="size12">
-                                            <t
-                                                t-foreach="l.product_id.product_template_attribute_value_ids"
-                                                t-as="string_line"> ● <span
-                                                    t-esc="string_line.display_name" />
-                                                <br />
-                                            </t>
-                                        </td>
-                                        <td class="text-center">
-                                            <div id="quote_qty">
+                                        <t
+                                            t-if="l.display_type =='line_note' or l.display_type =='line_section'">
+                                            <td t-esc="l_index+1" class="text-center size12">
+                                            </td>
+                                            <td class="size11" colspan="8">
+                                                <span t-field="l.name" />
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td t-esc="l_index+1" class="text-center size12">
+                                            </td>
+                                            <td class="size11">
                                                 <span
-                                                    t-esc="'{0:,.0f}'.format(l.quantity)" />
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <span t-esc="l.price_unit" />
-                                        </td>
-                                        <td class="text-center size11">
-                                            <span t-esc="l.acc_line_discount" />
-                                        </td>
-                                        <td class="text-center size12">
-                                            <span
-                                                t-esc="'{0:,.2f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else l.price_unit" />
-                                        </td>
-                                        <td class="text-center">
-                                            <span t-esc="l.price_subtotal" />
-                                        </td>
+                                                    t-field="l.acc_line_name" />
+                                                <br />
+                                            </td>
+                                            <td class="size13">
+                                                <div t-if="l.product_id.product_no"
+                                                    t-field="l.product_id.product_no" />
+                                                <t t-if="l.product_id.width > 0">W<span
+                                                        t-field="l.product_id.width" />
+                                                </t>
+                                                <t t-if="l.product_id.depth > 0">*D<span
+                                                        t-field="l.product_id.depth" />
+                                                </t>
+                                                <t t-if="l.product_id.height > 0">*H<span
+                                                        t-field="l.product_id.height" />
+                                                </t>
+                                                <t t-if="l.product_id.sh > 0"> SH<span
+                                                        t-field="l.product_id.sh" />
+                                                </t>
+                                                <t t-if="l.product_id.ah > 0"> AH<span
+                                                        t-field="l.product_id.ah" />
+                                                </t>
+                                            </td>
+                                            <td class="size12">
+                                                <t
+                                                    t-foreach="l.product_id.product_template_attribute_value_ids"
+                                                    t-as="string_line"> ● <span
+                                                        t-esc="string_line.display_name" />
+                                                <br />
+                                                </t>
+                                            </td>
+                                            <td class="text-center">
+                                                <div id="quote_qty">
+                                                    <span
+                                                        t-esc="'{0:,.0f}'.format(l.quantity)" />
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="l.price_unit" />
+                                            </td>
+                                            <td class="text-center size11">
+                                                <span t-esc="l.acc_line_discount" />
+                                            </td>
+                                            <td class="text-center size12">
+                                                <span
+                                                    t-esc="'{0:,.2f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else l.price_unit" />
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="l.price_subtotal" />
+                                            </td>
+                                        </t>
                                     </tr>
                                 </tbody>
                             </t>
