@@ -38,11 +38,20 @@
             <field name="res_model">res.partner</field>
             <field name="view_id" ref="view_partner_dm_list"/>
             <field name="domain">[
-                ("parent_id","not ilike",("矢野","パートナー")),
                 ("state_id","!=",False),
-                ("parent_id","not ilike",("閉鎖","倒産","不明","不達","移転","個人")),
-                ("last_name","not ilike",("退職","転勤","異動","育休","産休","不明")),
-                ("parent_id","not ilike","個人"),
+                ("parent_id","not ilike","矢野"),
+                ("parent_id","not ilike","パートナー"),
+                ("parent_id","not ilike","閉鎖"),
+                ("parent_id","not ilike","倒産"),
+                ("parent_id","not ilike","不明"),
+                ("parent_id","not ilike","不達"),
+                ("parent_id","not ilike","移転"),
+                ("last_name","not ilike","退職"),
+                ("last_name","not ilike","転勤"),
+                ("last_name","not ilike","異動"),
+                ("last_name","not ilike","育休"),
+                ("last_name","not ilike","産休"),
+                ("last_name","not ilike","不明"),
                 ]
             </field>
 <!--            <field name="context">{"search_default_event_year":1,"search_default_is_showroom":1}</field>-->
