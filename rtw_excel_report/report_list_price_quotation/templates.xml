@@ -20,11 +20,11 @@
                             'B9': 'sale_order_amount_untaxed${value or ""}',
                             'B10':'sale_order_amount_tax${value or ""}',
                             'B11':'sale_order_amount_total${value or ""}',
-                            'E3': 'sale_order_preferred_delivery_date${value or ""}',
+                            'E3': 'preferred_delivery_period${value or ""}',
                             'E4': 'workdays${value or ""}',
                             'E5': 'sale_order_date_deadline${value or ""}',
                             'E6': 'forwarding_address${value or ""}',
-                            'E7': 'payment_term_id.name${value or ""}',
+                            'E7': 'sale_order_transactions_term${value or ""}',
                             'E9': 'sale_order_validity_date${value or ""}',
                             'E10': 'special_note${value or ""}',
                             'G1': 'sale_order_current_date',
@@ -39,9 +39,9 @@
                             'B20': 'sale_order_name${value or ""}#{style=text;fill=grey}',
                             'C20': 'sale_order_number_and_size#{style=text;fill=grey}',
                             'D20': 'sale_order_product_detail#{style=text;fill=grey}',
-                            'E20': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
-                            'F20': 'price_unit${value or 0}#{style=number;fill=grey}',
-                            'G20': 'price_subtotal${value or 0}#{style=number;fill=grey}',
+                            'E20': 'product_uom_qty${value or ""}#{style=text;fill=grey}',
+                            'F20': 'price_unit${value or ""}#{style=text;fill=grey}',
+                            'G20': 'price_subtotal${value or ""}#{style=text;fill=grey}',
                         }
                     }
                 }
