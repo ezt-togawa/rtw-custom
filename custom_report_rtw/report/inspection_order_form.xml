@@ -218,12 +218,17 @@
                       </td>
 
                       <td class="size13">
-                        <span t-field="docs.mrp_product_type" />
-                        <br />
-                        <t t-if="docs.mrp_product_config_cus">
-                          <t t-foreach="docs.mrp_product_config_cus.split('\n')" t-as="cfg">
-                            <span t-esc="cfg" />
-                            <br />
+                        <t t-if="docs.mrp_product_type">
+                          <span
+                            t-field="docs.mrp_product_type" />
+                          <br />
+                        </t>
+                        <t t-foreach="docs.order_line" t-as="l">
+                          <t t-foreach="l.config_session_id.custom_value_ids"
+                            t-as="string_line"> ●<span
+                              t-esc="string_line.display_name" />: <span
+                              t-esc="string_line.value" />
+                              <br />
                           </t>
                         </t>
                       </td>
