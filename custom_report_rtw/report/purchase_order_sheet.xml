@@ -48,14 +48,14 @@
                   </div>
                   <br />
                   <div class="d-flex">
-                    <div >
+                    <div>
                       物件名:
                     </div>
-                    <div  >
-                      <div class="size16" >
-                        <p   style="line-height:16px; margin:0;" t-field="so.title" />
+                    <div>
+                      <div class="size16">
+                        <p style="line-height:16px; margin:0;" t-field="so.title" />
                       </div>
-                      <div class="size13" >
+                      <div class="size13">
                         <span t-field="so.partner_id.name" />
                       <span
                           t-field="so.partner_id.site" />
@@ -140,56 +140,53 @@
               </div>
               <table
                 class="table">
-                <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
-                  t-att-last="last">
-                  <t t-set="total_subprice"
-                    t-value="total_subprice + l.price_subtotal" />
-                  <t t-set="total_listprice"
-                    t-value="total_listprice + l.price_unit * l.product_uom_qty" />
-                  <t t-if="l_index == 0">
-                    <thead>
-                      <tr class="table-title bold">
-                        <th class="text-center" style="width:2%">№</th>
-                        <th class="text-center" style="width:20%">品名</th>
-                        <th class="text-center" style="width:25%">仕様・詳細</th>
-                        <th class="text-center" style="width:10%">摘要</th>
-                        <th class="text-center" style="width:7%">数量</th>
-                        <th class="text-center" style="width:3%"></th>
-                        <th class="text-center" style="width:5%">単価</th>
-                        <th class="text-center" style="width:10%">発注金額</th>
-                        <th class="text-center" style="width:10%">Custom</th>
-                        <th class="text-center" style="width:10%">メモ</th>
-                      </tr>
-                    </thead>
-                  </t>
+                <t t-groupby="10" t-att-last="last">
+
+
+                  <thead>
+                    <tr class="table-title bold">
+                      <th class="text-center" style="width:2%">№</th>
+                      <th class="text-center" style="width:20%">品名</th>
+                      <th class="text-center" style="width:25%">仕様・詳細</th>
+                      <th class="text-center" style="width:10%">摘要</th>
+                      <th class="text-center" style="width:7%">数量</th>
+                      <th class="text-center" style="width:3%"></th>
+                      <th class="text-center" style="width:5%">単価</th>
+                      <th class="text-center" style="width:10%">発注金額</th>
+                      <th class="text-center" style="width:10%">Custom</th>
+                      <th class="text-center" style="width:10%">メモ</th>
+                    </tr>
+                  </thead>
+
                   <tbody class="invoice_tbody">
                     <tr class="size15 table-border-bottom">
-                      <td t-esc="l_index+1" class="text-center size12">
-                      </td>
+                      <td class="text-center size12">1</td>
+
                       <td class="size11">
-                        <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                        <span t-field="docs.mrp_product_name" />
                         <br />
-                        <span t-if="l.p_type" t-field="l.p_type" />
+                        <span t-field="docs.mrp_product_type" />
                         <br />
-                        <t t-if="l.product_id.width > 0">W<span
-                            t-field="l.product_id.width" />
+                        <t t-if="docs.product_id.width > 0">W<span
+                            t-field="docs.product_id.width" />
                         </t>
-                        <t t-if="l.product_id.depth > 0">*D<span
-                            t-field="l.product_id.depth" />
+                        <t t-if="docs.product_id.depth > 0">*D<span
+                            t-field="docs.product_id.depth" />
                         </t>
-                        <t t-if="l.product_id.height > 0">*H<span
-                            t-field="l.product_id.height" />
+                        <t t-if="docs.product_id.height > 0">*H<span
+                            t-field="docs.product_id.height" />
                         </t>
-                        <t t-if="l.product_id.sh > 0"> SH<span
-                            t-field="l.product_id.sh" />
+                        <t t-if="docs.product_id.sh > 0"> SH<span
+                            t-field="docs.product_id.sh" />
                         </t>
-                        <t t-if="l.product_id.ah > 0"> AH<span
-                            t-field="l.product_id.ah" />
+                        <t t-if="docs.product_id.ah > 0"> AH<span
+                            t-field="docs.product_id.ah" />
                         </t>
                       </td>
+
                       <td class="size13">
                         <t
-                          t-foreach="l.product_id.product_template_attribute_value_ids"
+                          t-foreach="docs.product_id.product_template_attribute_value_ids"
                           t-as="string_line"> ● <span
                             t-esc="string_line.display_name" />
                                                 <br />
@@ -197,7 +194,7 @@
                       </td>
                       <td class="size12">
                         <t
-                          t-foreach="l.product_id.product_template_attribute_value_ids"
+                          t-foreach="docs.product_id.product_template_attribute_value_ids"
                           t-as="string_line">
                           <span
                             t-esc="string_line.attribute_id.name" />
@@ -206,32 +203,37 @@
                       </td>
                       <td class="text-center">
                         <div id="quote_qty">
-                          <span t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                          <span t-esc="'{0:,.0f}'.format(docs.product_qty)" />
                         </div>
                       </td>
                       <td class="text-center size14">
                         <span> 脚 </span>
                       </td>
                       <td class="text-center size14">
-                        <span t-field="l.price_unit" />
+                        <span />
                       </td>
                       <td class="text-center">
-                        <span t-field="l.price_subtotal" />
+                        <span />
                       </td>
                       <td class="size13">
-                        <t t-if="l.p_type">
+                        <t t-if="docs.mrp_product_type">
                           <span
-                            t-field="l.p_type" />
+                            t-field="docs.mrp_product_type" />
                           <br />
                         </t>
-                        <t t-foreach="l.config_session_id.custom_value_ids"
-                          t-as="string_line"> ●<span
-                            t-esc="string_line.display_name" />: <span
-                            t-esc="string_line.value" />
-                                                <br />
+                        <t t-foreach="docs.order_line" t-as="l">
+                          <t t-foreach="l.config_session_id.custom_value_ids"
+                            t-as="string_line"> ●<span
+                              t-esc="string_line.display_name" />: <span
+                              t-esc="string_line.value" />
+                              <br />
+                          </t>
                         </t>
                       </td>
                       <td>
+                        <t t-if="docs.production_memo">
+                          <span t-field="docs.production_memo" />
+                        </t>
                       </td>
                     </tr>
                   </tbody>

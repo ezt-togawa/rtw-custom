@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields ,api
 from datetime import datetime
 import math
 class SaleOrderExcelReport(models.Model):
@@ -162,6 +162,8 @@ class SaleOrderExcelReport(models.Model):
     yearUnit = fields.Char(string="Year", compute="_compute_year_unit")
     monthUnit = fields.Char(string="Month", compute="_compute_month_unit")
     dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
+    
+    sale_order_transactions_term = fields.Char(string="sale order transactions term", compute="_compute_sale_order_transactions_term")
 
     def _compute_lang_code(self):
         for order in self:
@@ -187,6 +189,16 @@ class SaleOrderExcelReport(models.Model):
                 record.dayUnit = ""
             else:
                 record.dayUnit = "日"
+                
+    def _compute_sale_order_transactions_term(self):
+        for record in self:
+            term = ''
+            if record.partner_id.transactions:
+                for transaction in record.partner_id.transactions:
+                    term += str(transaction.name) + " "
+            if record.partner_id.payment_terms_1:
+                term += record.partner_id.payment_terms_1
+            record.sale_order_transactions_term = term
                 
     def _compute_sale_order_hr_employee(self):
         for record in self:
@@ -712,16 +724,12 @@ class SaleOrderLineExcelReport(models.Model):
                 for attribute in attributes:
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
-
+                    
+    @api.onchange('product_uom_qty', 'discount', 'price_unit')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            if line.discount > 0:
-                line.sale_order_sell_unit_price = (
-                    line.price_unit - line.price_unit * line.discount / 100
-                )
-            else:
-                line.sale_order_sell_unit_price = line.price_unit
-
+            line.sale_order_sell_unit_price = line.price_unit - line.price_unit * line.discount / 100 
+            
     def _compute_sale_order_index(self):
         index = 0
         for line in self:
@@ -730,49 +738,52 @@ class SaleOrderLineExcelReport(models.Model):
 
     def _compute_sale_order_name(self):
         for line in self:
-            categ_name=""
-            if line.product_id.product_tmpl_id.categ_id.name:
-                categ_name = str(line.product_id.product_tmpl_id.categ_id.name)
-            
-            p_type = ""
-            if line.p_type:
-                if line.p_type == "special":
-                    p_type = "別注"
-                elif line.p_type == "custom":
-                    p_type = "特注"
-
-            size_detail = ""
-            if line.product_id.product_tmpl_id.width:
-                size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-            if line.product_id.product_tmpl_id.depth:
-                size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-            if line.product_id.product_tmpl_id.height:
-                size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-            if line.product_id.product_tmpl_id.sh:
-                size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-            if line.product_id.product_tmpl_id.ah:
-                size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
-
-            prod=""
-            if categ_name != "" :
-                if p_type !="":
-                    prod+= categ_name+ "\n" +p_type
-                    if size_detail != "" :
-                        prod+=  "\n" + size_detail
-                else:
-                    prod+= categ_name
-                    if size_detail != "" :
-                        prod+= "\n" +size_detail
+            if line.display_type == "line_note" or line.display_type == "line_section":
+                line.sale_order_name = line.name
             else:
-                if p_type !="":
-                    prod+= p_type
-                    if size_detail != "" :
-                        prod+=  "\n" + size_detail
+                categ_name=""
+                if line.product_id.product_tmpl_id.categ_id.name:
+                    categ_name = str(line.product_id.product_tmpl_id.categ_id.name)
+                
+                p_type = ""
+                if line.p_type:
+                    if line.p_type == "special":
+                        p_type = "別注"
+                    elif line.p_type == "custom":
+                        p_type = "特注"
+
+                size_detail = ""
+                if line.product_id.product_tmpl_id.width:
+                    size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
+                if line.product_id.product_tmpl_id.depth:
+                    size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
+                if line.product_id.product_tmpl_id.height:
+                    size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
+                if line.product_id.product_tmpl_id.sh:
+                    size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
+                if line.product_id.product_tmpl_id.ah:
+                    size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
+
+                prod=""
+                if categ_name != "" :
+                    if p_type !="":
+                        prod+= categ_name+ "\n" +p_type
+                        if size_detail != "" :
+                            prod+=  "\n" + size_detail
+                    else:
+                        prod+= categ_name
+                        if size_detail != "" :
+                            prod+= "\n" +size_detail
                 else:
-                    if size_detail != "" :
-                        prod+= "\n" +size_detail
-                        
-            line.sale_order_name = prod
+                    if p_type !="":
+                        prod+= p_type
+                        if size_detail != "" :
+                            prod+=  "\n" + size_detail
+                    else:
+                        if size_detail != "" :
+                            prod+= "\n" +size_detail
+                            
+                line.sale_order_name = prod
 class StockPickingExcelReport(models.Model):
     _inherit = "stock.picking"
 
@@ -1477,16 +1488,21 @@ class AccountMoveLineExcelReport(models.Model):
         for line in self:
             name = ""
             if line.product_id: 
-                # case download payment 
-                if line.product_id.product_tmpl_id.type == 'service':  
-                    name = line.product_id.product_tmpl_id.name
-                else: #another case
+                # case product is download payment 
+                # if line.product_id.product_tmpl_id.type == 'service':  
+                #     name = line.product_id.product_tmpl_id.name
+                # else:
+                # case product is configurable Products
+                if line.product_id.product_tmpl_id.config_ok :  
                     if line.product_id.product_tmpl_id.categ_id.name:
                         name = line.product_id.product_tmpl_id.categ_id.name
                     elif line.product_id.product_tmpl_id.product_no :
                         name = line.product_id.product_tmpl_id.product_no
                     else: 
-                        name = line.product_id.product_tmpl_id.name    
+                        name = line.product_id.product_tmpl_id.name   
+                else:
+                    # case product is standard Prod + download payment
+                    name = line.name
             line.acc_line_name = name
             
     def _compute_acc_line_index(self):
@@ -1545,7 +1561,7 @@ class AccountMoveLineExcelReport(models.Model):
             if  line.discount != 0.00 or line.discount != 0.0 or line.discount != 0 :
                 line.acc_line_discount = '{0:,.1f}'.format(100-line.discount)
             else:
-                line.acc_line_discount = 0.0
+                line.acc_line_discount = ""
 
     def _compute_acc_line_sell_unit_price(self):
         for line in self:
@@ -1604,7 +1620,7 @@ class MrpProductionExcelReport(models.Model):
     def _compute_sale_order(self):
         for line in self:
             line.sale_order = self.env["sale.order"].search(
-                [("name", "=", line.origin)]
+                [("name", "=", line.sale_reference)]
             )
 class StockMoveContainerReport(models.Model):
     _inherit = "stock.move.container"

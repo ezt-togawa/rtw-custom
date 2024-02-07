@@ -42,7 +42,9 @@
                   class="product-wrap"
                 >
                   <t
-                    t-if="l.product_id.product_tmpl_id.type != 'service' and l.display_type != 'line_note'">
+                    t-if="l.product_id.product_tmpl_id.type == 'service' or l.display_type == 'line_note' or l.display_type == 'line_section'"></t>
+                  <t t-else="">
+
                     <t t-set="product_attribute_index" t-value="0" />
                     <div
                       class="product-container">

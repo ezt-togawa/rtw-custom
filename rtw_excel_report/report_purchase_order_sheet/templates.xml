@@ -15,6 +15,16 @@
                     '発注書': {
                         '_HEAD_': {
                             'I12': 'mrp_note${value or ""}',
+                            'A20': '${value or "1"}#{style=text;fill=grey}',
+                            'B20':'mrp_product_name_excel${value or ""}#{style=text;fill=grey}',
+                            'C20': 'mrp_product_attribute#{style=text;fill=grey}',
+                            'D20': 'mrp_product_attribute_summary#{style=text;fill=grey}',
+                            'E20': 'product_qty${value or 0}#{style=number;fill=grey}', 
+                            'F20': '${value or "脚"}#{style=text;fill=grey}', 
+                            'G20': '${value or ""}#{style=number;fill=grey}',
+                            'H20': '${value or ""}#{style=number;fill=grey}',
+                            'I20': "mrp_product_config_cus_excel${value or ''}#{style=text;fill=grey}",
+                            'J20': 'production_memo#{style=text;fill=grey}',
                         },
                         'sale_order':{
                             'C2': 'sale_order_send_to_company${value or ""}',
@@ -31,18 +41,6 @@
                             'J1':  'sale_order_current_date${value or ""}',
                             'J16': 'amount_untaxed${value or ""}',
                         },
-                        'order_line': {
-                            'A20': 'sale_order_index${value or ""}#{style=text;fill=grey}',
-                            'B20': 'sale_order_name${value or ""}#{style=text;fill=grey}',
-                            'C20': 'sale_order_product_detail#{style=text;fill=grey}',
-                            'D20': 'sale_order_product_summary#{style=text;fill=grey}',
-                            'E20': 'product_uom_qty${value or 0}#{style=number;fill=grey}', 
-                            'F20': 'sale_order_text_piece_leg${value or ""}#{style=text;fill=grey}', 
-                            'G20': 'sale_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
-                            'H20': 'price_subtotal${value or 0}#{style=number;fill=grey}',
-                            'I20': 'sale_order_config_session${value or ""}#{style=text;fill=grey}',
-                            'J20': '#{style=text;fill=grey}',
-                        }
                     }
                 }
             }

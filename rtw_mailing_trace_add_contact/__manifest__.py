@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_crm_monthly_revenue",
+    'name': "rtw_mailing_trace_add_contact",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Short (1 phrase/line) summary of the module's purpose""",
 
     'description': """
         Long description of module's purpose
     """,
-
-    'author': "Enzantrades",
+    
+     'author': "Enzantrades",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -20,14 +19,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management', 'crm', 'contract','monthly_revenue','rtw_crm'],
+    'depends': ['base', 'contacts', 'sale','mass_mailing','rtw_sf'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'data/ir_cron_monthly_revenue.xml',
-        'views/crm_lead.xml',
-        'views/templates.xml',
+        'security/ir.model.access.csv',
+        'views/mailing_trace.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
