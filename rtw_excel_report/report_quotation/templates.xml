@@ -38,7 +38,7 @@
                             'B19': 'sale_order_name${value or ""}#{style=text;fill=grey}',
                             'C19': 'sale_order_number_and_size#{style=text;fill=grey}',
                             'D19': 'sale_order_product_detail#{style=text;fill=grey}',
-                            'E19': 'product_uom_qty${value or ""}#{style=text;fill=grey}',
+                            'E19': 'sale_order_line_product_uom_qty${value or ""}#{style=text;fill=grey}',
                             'F19': 'sale_order_line_discount${value or ""}#{style=text;fill=grey}',
                             'G19': 'price_unit${value or ""}#{style=text;fill=grey}',
                             'H19': 'sale_order_sell_unit_price${value or ""}#{style=text;fill=grey}',

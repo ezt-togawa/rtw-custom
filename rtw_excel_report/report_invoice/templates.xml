@@ -38,7 +38,7 @@
                             'B17': 'acc_line_name${value or ""}#{style=text;fill=grey}',
                             'C17': 'acc_line_number_and_size#{style=text;fill=grey}',
                             'D17': 'acc_line_product_detail#{style=text;fill=grey}',
-                            'E17': 'quantity${value or ""}#{style=text;fill=grey}',
+                            'E17': 'acc_move_line_qty${value or ""}#{style=text;fill=grey}',
                             'F17': 'price_unit${value or ""}#{style=text;fill=grey}',
                             'G17': 'acc_line_discount${value or ""}#{style=text;fill=grey}',
                             'H17': 'acc_line_sell_unit_price${value or ""}#{style=text;fill=grey}',

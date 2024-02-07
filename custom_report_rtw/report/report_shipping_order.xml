@@ -199,8 +199,7 @@
                     </td>
                     <td class="text-center size14">
                       <div id="quote_qty">
-                        <span
-                          t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                        <span t-esc="l.stock_product_uom_qty" />
                       </div>
                     </td>
                     <td class="text-center size14">

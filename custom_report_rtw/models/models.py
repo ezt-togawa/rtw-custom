@@ -100,6 +100,22 @@ class MrpProduction(models.Model):
         "mrp product attribute summary",
         compute="_compute_mrp_product_attribute_summary",
     )
+    
+    mrp_product_product_qty = fields.Char(string="mrp product product qty" , compute="_compute_mrp_product_product_qty")
+                
+    def _compute_mrp_product_product_qty(self):
+        for line in self:
+            print(1111111111111111111111,line.product_qty)
+            float_product_qty = float(line.product_qty)
+            integer_part = int(line.product_qty)
+            decimal_part = round(float_product_qty - integer_part,2)
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.mrp_product_product_qty = integer_part
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.mrp_product_product_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
 
     def _compute_get_sale_order_line(self):        
         sale_order = self.env['sale.order'].search([('name','=',self.origin)])

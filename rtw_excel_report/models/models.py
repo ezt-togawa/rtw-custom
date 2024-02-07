@@ -1155,6 +1155,27 @@ class StockMoveExcelReport(models.Model):
         "Shiratani date",
         compute="_compute_stock_move",
     )
+    
+    stock_move_product_uom_qty = fields.Char(
+        "Shiratani date",
+        compute="_compute_stock_move",
+    )
+    
+    stock_product_uom_qty = fields.Char(string="stock_product_uom_qty" , compute="_compute_stock_product_uom_qty")
+                
+    def _compute_stock_product_uom_qty(self):
+        for line in self:
+            float_product_uom_qty = float(line.product_uom_qty)
+            integer_part = int(line.product_uom_qty)
+            decimal_part = round(float_product_uom_qty - integer_part,2)
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.stock_product_uom_qty = integer_part 
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.stock_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+
 
     def _compute_stock_move(self):
         index = 0
@@ -1487,6 +1508,9 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_name(self):
         for line in self:
             name = ""
+            if line.display_type =='line_note' or line.display_type =='line_section':
+                line.acc_line_name = line.name
+                return
             if line.product_id: 
                 # case product is download payment 
                 # if line.product_id.product_tmpl_id.type == 'service':  
@@ -1503,6 +1527,7 @@ class AccountMoveLineExcelReport(models.Model):
                 else:
                     # case product is standard Prod + download payment
                     name = line.name
+                
             line.acc_line_name = name
             
     def _compute_acc_line_index(self):
@@ -1907,6 +1932,22 @@ class PurChaseOrderLineExcelReport(models.Model):
         compute="_compute_purchase_order_prod_detail",
         string="Config Session",
     )
+    
+    purchase_order_line_product_uom_qty = fields.Char(string="sale order product uom qty" , compute="_compute_purchase_order_line_product_uom_qty")
+                
+    def _compute_purchase_order_line_product_uom_qty(self):
+        for line in self:
+            float_product_uom_qty = float(line.product_uom_qty)
+            integer_part = int(line.product_uom_qty)
+            decimal_part = round(float_product_uom_qty - integer_part,2)
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.purchase_order_line_product_uom_qty = integer_part
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.purchase_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+
     
     def _compute_purchase_order_prod_detail(self):
         for line in self:

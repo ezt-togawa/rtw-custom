@@ -86,7 +86,7 @@
                   </div>
                   <div class="d-flex">
                     <div>
-                      住所: 
+                      住所:
                     </div>
                     <t class="size14">
                       <div>
@@ -150,7 +150,7 @@
                         <th class="text-center" style="width:20%">品名</th>
                         <th class="text-center" style="width:25%">仕様・詳細</th>
                         <th class="text-center" style="width:7%">数量</th>
-                        <th class="text-center" style="width:3%"></th>
+                        <th class="text-center" style="width:6%"></th>
                         <th class="text-center">単価</th>
                         <th class="text-center" style="width:10%">発注金額</th>
                         <th class="text-center" style="width:10%">Custom</th>
@@ -177,13 +177,14 @@
                       <td class="text-center">
                         <div id="quote_qty">
                           <span
-                            t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                            t-esc="l.purchase_order_line_product_uom_qty" />
                         </div>
                       </td>
                       <td class="text-center size14">
-                        <span>
-                          脚
-                        </span>
+                        <t t-if="l.product_uom">
+                          <span
+                            t-field="l.product_uom" />
+                        </t>
                       </td>
                       <td class="text-center">
                         <span

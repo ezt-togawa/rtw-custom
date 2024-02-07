@@ -32,7 +32,7 @@
                             'B17': 'sale_order_name${value or ""}#{style=text;fill=grey}',
                             'C17': 'sale_order_number_and_size#{style=text;fill=grey}',
                             'D17': 'sale_order_product_detail#{style=text;fill=grey}',
-                            'E17': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
+                            'E17': 'sale_order_line_product_uom_qty${value or 0}#{style=number;fill=grey}',
                             'F17': 'price_unit${value or 0}#{style=number;fill=grey}',
                             'G17': 'price_subtotal${value or 0}#{style=number;fill=grey}',
                         }

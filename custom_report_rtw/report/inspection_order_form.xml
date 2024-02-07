@@ -144,20 +144,19 @@
                   <!-- <t t-set="total_subprice"
                     t-value="total_subprice + l.price_subtotal" />
                   <t t-set="total_listprice"
-                    t-value="total_listprice + l.price_unit * l.product_uom_qty" />
-                  -->
+                    t-value="total_listprice + l.price_unit * l.product_uom_qty" />  -->
                   <thead>
                     <tr class="table-title bold">
                       <th class="text-center" style="width:2%">№</th>
-                      <th class="text-center" style="width:20%">品名</th>
-                      <th class="text-center" style="width:25%">仕様・詳細</th>
-                      <th class="text-center" style="width:10%">摘要</th>
-                      <th class="text-center" style="width:7%">数量</th>
-                      <th class="text-center" style="width:3%"></th>
-                      <th class="text-center" style="width:5%">単価</th>
-                      <th class="text-center" style="width:10%">発注金額</th>
-                      <th class="text-center" style="width:10%">Custom</th>
-                      <th class="text-center" style="width:10%">メモ</th>
+                        <th class="text-center" style="width:20%">品名</th>
+                        <th class="text-center" style="width:24%">仕様・詳細</th>
+                        <th class="text-center" style="width:10%">摘要</th>
+                        <th class="text-center" style="width:7%">数量</th>
+                        <th class="text-center" style="width:6%"></th>
+                        <th class="text-center" style="width:5%">単価</th>
+                        <th class="text-center" style="width:9%">発注金額</th>
+                        <th class="text-center" style="width:9%">Custom</th>
+                        <th class="text-center" style="width:10%">メモ</th>
                     </tr>
                   </thead>
                   <tbody class="invoice_tbody">
@@ -203,11 +202,14 @@
                       </td>
                       <td class="text-center">
                         <div id="quote_qty">
-                          <span t-esc="'{0:,.0f}'.format(docs.product_qty)" />
+                          <span t-esc="docs.mrp_product_product_qty" />
                         </div>
                       </td>
                       <td class="text-center size14">
-                        <span> 脚 </span>
+                        <t t-if="docs.product_id.product_tmpl_id.uom_id.name">
+                          <span
+                            t-field="docs.product_id.product_tmpl_id.uom_id.name" />
+                        </t>
                       </td>
                       <td class="text-center size14">
                         <span />
