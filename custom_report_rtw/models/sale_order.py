@@ -120,29 +120,40 @@ class SaleOrder(models.Model):
                         so.update(hr_defaults)
             else:
                 so.update(hr_defaults)
+                
+
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    # show_details = fields.Boolean(
-    #     string="Show details",
-    #     default=True)
     show_subtotal = fields.Boolean(
         string="Show subtotal",
         default=True)
-    calculate_packages = fields.Integer(
+    calculate_packages = fields.Integer(   
         string="Calculate packages",
         compute="_compute_calculate_packages"
     )
-
+    
+    sale_order_line_product_uom_qty = fields.Char(string="sale order product uom qty" , compute="_compute_sale_order_product_uom_qty")
+    
     def _compute_calculate_packages(self):
         for line in self:
             if line.product_id.two_legs_scale:
                 line.calculate_packages = math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
             else:
                 line.calculate_packages = line.product_uom_qty
-
-    # def _prepare_invoice_line(self, qty):
-    #     res = super()._prepare_invoice_line(qty)
-    #     res.update(show_details=self.show_details,
-    #                show_subtotal=self.show_subtotal)
-    #     return res
+                
+    def _compute_sale_order_product_uom_qty(self):
+        for line in self:
+            if line.display_type =='line_note' or line.display_type =='line_section' :
+                line.sale_order_line_product_uom_qty = ""
+                return
+            float_product_uom_qty = float(line.product_uom_qty)
+            integer_part = int(line.product_uom_qty)
+            decimal_part = round(float_product_uom_qty - integer_part,2)  
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.sale_order_line_product_uom_qty = integer_part 
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.sale_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))

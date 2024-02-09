@@ -170,7 +170,7 @@
                       <div id="quote_qty">
                         <span
                           style="font-size:16px"
-                          t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                          t-esc="l.sale_order_line_product_uom_qty" />
                       </div>
                     </td>
                     <td class="text-center size15">
@@ -195,8 +195,6 @@
               <span t-field="docs.name" />
             </div>
           </div>
-
-
           <t t-call="custom_report_rtw.page_footer_layout"></t>
         </t>
       </t>

@@ -31,7 +31,7 @@
                             'A19': 'purchase_order_index${value or ""}#{style=text;fill=grey}',
                             'B19': 'name${value or ""}#{style=text;fill=grey}',
                             'C19': 'purchase_order_product_detail#{style=text;fill=grey}',
-                            'D19': 'product_uom_qty${value or 0}#{style=number;fill=grey}',
+                            'D19': 'purchase_order_line_product_uom_qty${value or 0}#{style=number;fill=grey}',
                             'E19': 'purchase_order_text_piece_leg#{style=number;fill=grey}',
                             'G19': 'price_subtotal${value or 0}#{style=number;fill=grey}',
                             'F19': 'purchase_order_sell_unit_price${value or 0}#{style=number;fill=grey}',
