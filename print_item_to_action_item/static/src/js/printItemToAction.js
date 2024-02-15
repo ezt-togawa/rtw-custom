@@ -304,9 +304,9 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     const sortItem11 = [invoice, english_names[invoice + "_pdf"], english_names[invoice + "_excel"]]
 
                     showActionItem.filter(val => {
-                        if (val.name === "Generate a Payment Link" || val.name === "支払用リンクを生成") sortAction[0] = val
-                        if (val.name === "Share" || val.name === "共有") sortAction[1] = val
-                        if (val.name === "Mark Quotation as Sent" || val.name === "見積もりを送信済みとしてマーク") sortAction[2] = val
+                        if (val.name === "Generate a Payment Link" || val.name === "支払用リンクを生成"|| val.name === "Genera link di pagamento") sortAction[0] = val
+                        if (val.name === "Share" || val.name === "共有"|| val.name === "Condividi") sortAction[1] = val
+                        if (val.name === "Mark Quotation as Sent" || val.name === "見積もりを送信済みとしてマーク"|| val.name === "Segna preventivo come inviato") sortAction[2] = val 
                         if (sortItem4.includes(val.name)) sortAction[3] = val
                         if (sortItem5.includes(val.name)) sortAction[4] = val
                         if (sortItem6.includes(val.name)) sortAction[5] = val
@@ -314,7 +314,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         if (sortItem8.includes(val.name)) sortAction[7] = val
                         if (sortItem9.includes(val.display_name)) sortAction[8] = val
                         if (sortItem11.includes(val.display_name)) sortAction[9] = val
-                        if (val.name === "Send a Cart Recovery Email" || val.name === "カートリカバリEメールを送信") sortAction[10] = val
+                        if (val.name === "Send a Cart Recovery Email" || val.name === "カートリカバリEメールを送信"|| val.name === "Invia e-mail di recupero carrello") sortAction[10] = val
                     })
                     this.props.items.action = sortAction
                     await this.english_name(prod_spec_excel, unique_list_translated)
