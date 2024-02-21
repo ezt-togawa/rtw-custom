@@ -767,7 +767,7 @@ msgstr "Quantità"
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.invoice_table
 msgid "RITZWELL &amp; CO."
-msgstr "Ritzwell Italia"
+msgstr ""
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
