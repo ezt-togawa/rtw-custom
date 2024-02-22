@@ -17,7 +17,7 @@ class sale_order_line_outlook_stock(models.Model):
             client_action = {
                 'type': 'ir.actions.act_url',
                 'name': "Product Forecasted",
-                'target': 'self',
+                'target': 'new',
                 'url': base_url+f'/web#action={action["id"]}&active_id={self.product_id.product_tmpl_id.id}&cids=1&menu_id={menu_id}&active_model=product.template',
             }
             return client_action
