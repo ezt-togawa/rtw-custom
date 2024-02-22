@@ -189,8 +189,11 @@ class productSpec(models.AbstractModel):
                         p_type=""
                         product_no='=""'
                         qty='=""'
-                        if sl.product_id.product_tmpl_id.categ_id.name:
-                            categ_name = sl.product_id.product_tmpl_id.categ_id.name 
+                        
+                        if sl.sale_order_name:
+                            categ_name = sl.sale_order_name
+                        
+                            
                         if sl.p_type:
                             if sl.p_type == "special":
                                 p_type = "別注"

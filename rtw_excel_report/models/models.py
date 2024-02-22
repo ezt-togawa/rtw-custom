@@ -742,9 +742,32 @@ class SaleOrderLineExcelReport(models.Model):
                 line.sale_order_name = line.name
             else:
                 categ_name=""
-                if line.product_id.product_tmpl_id.categ_id.name:
-                    categ_name = str(line.product_id.product_tmpl_id.categ_id.name)
+                if line.product_id.product_tmpl_id.config_ok :  
+                    if line.product_id.product_tmpl_id.categ_id.name:
+                        categ_name = line.product_id.product_tmpl_id.categ_id.name
+                    elif line.product_id.product_tmpl_id.product_no :
+                        categ_name = line.product_id.product_tmpl_id.product_no
+                    else: 
+                        categ_name = line.product_id.product_tmpl_id.name   
+                else:
+                    # case product is standard Prod + download payment
+                    if line.product_id.product_tmpl_id.seller_ids and line.order_id.partner_id.id:
+                        matching_sup = None  
+                        for sup in line.product_id.product_tmpl_id.seller_ids:
+                            if sup.name.id == line.order_id.partner_id.id:
+                                matching_sup = sup 
+                                break
+                        if matching_sup:
+                            categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
+                    else:
+                        if line.product_id.product_tmpl_id.default_code:
+                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
                 
+                                    
                 p_type = ""
                 if line.p_type:
                     if line.p_type == "special":
@@ -1186,9 +1209,35 @@ class StockMoveExcelReport(models.Model):
 
             categ_name=""
             p_type = ""
-            if line.product_id.product_tmpl_id.categ_id.name:
-                categ_name=line.product_id.product_tmpl_id.categ_id.name
+            
+            if line.product_id.product_tmpl_id.config_ok :  
+                if line.product_id.product_tmpl_id.categ_id.name:
+                    categ_name = line.product_id.product_tmpl_id.categ_id.name
+                elif line.product_id.product_tmpl_id.product_no :
+                    categ_name = line.product_id.product_tmpl_id.product_no
+                else: 
+                    categ_name = line.product_id.product_tmpl_id.name
+            else:
+                if line.product_id.product_tmpl_id.seller_ids and  line.picking_id.partner_id.id:
+                    matching_sup = None  
 
+                    for sup in line.product_id.product_tmpl_id.seller_ids:
+                        if sup.name.id == line.picking_id.partner_id.id:
+                            matching_sup = sup 
+                            break
+                    if matching_sup:
+                        categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                    else:
+                        if line.product_id.product_tmpl_id.default_code:
+                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
+                else:
+                    if line.product_id.product_tmpl_id.default_code:
+                        categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                    else:
+                        categ_name =  line.product_id.product_tmpl_id.name
+                        
             if line.p_type:
                 if line.p_type == "special":
                     p_type = "別注"
@@ -1526,7 +1575,18 @@ class AccountMoveLineExcelReport(models.Model):
                         name = line.product_id.product_tmpl_id.name   
                 else:
                     # case product is standard Prod + download payment
-                    name = line.name
+                    if line.product_id.product_tmpl_id.seller_ids and line.move_id.partner_id.id:
+                        matching_sup = None  
+                        for sup in line.product_id.product_tmpl_id.seller_ids:
+                            if sup.name.id == line.move_id.partner_id.id:
+                                matching_sup = sup 
+                                break
+                        if matching_sup:
+                            name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                        else:
+                            name =  line.name
+                    else:
+                        name =  line.name
                 
             line.acc_line_name = name
             

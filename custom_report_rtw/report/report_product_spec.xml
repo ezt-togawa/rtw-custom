@@ -56,8 +56,8 @@
                         </div>
                         <div class="col-10 name">
                           <span class="size12"
-                            t-if="l.product_id.product_tmpl_id.categ_id.name"
-                            t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                            t-if="l.sale_order_name"
+                            t-field="l.sale_order_name" />
                           <div class="size14">
                             <span t-if="l.product_id.product_tmpl_id.product_no"
                               t-field="l.product_id.product_tmpl_id.product_no" />
