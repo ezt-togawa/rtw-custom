@@ -1115,6 +1115,10 @@ class StockMoveExcelReport(models.Model):
         compute="_compute_calculate_product_pack",
         default=""
     )
+    calculate_product_pack_pdf = fields.Char(
+        string="Calculate product pack pdf",
+        compute="_compute_calculate_product_pack_pdf",
+    )
 
     def _compute_calculate_product_pack(self):
         for line in self:
@@ -1122,6 +1126,31 @@ class StockMoveExcelReport(models.Model):
                 line.calculate_product_pack = ' / ' + line.sale_line_id.pack_parent_line_id.product_id.name
             else:
                 line.calculate_product_pack = ''
+                
+    def _compute_calculate_product_pack_pdf(self):
+        for line in self:
+                categ_name = ""
+                if line.product_id.product_tmpl_id.seller_ids and line.picking_id.partner_id.id:
+                    matching_sup = None  
+
+                    for sup in line.product_id.product_tmpl_id.seller_ids:
+                        if sup.name.id == line.picking_id.partner_id.id:
+                            matching_sup = sup 
+                            break
+                    if matching_sup:
+                        categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                    else:
+                        if line.product_id.product_tmpl_id.default_code:
+                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
+                else:
+                    if line.product_id.product_tmpl_id.default_code:
+                        categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                    else:
+                        categ_name =  line.product_id.product_tmpl_id.name
+                line.calculate_product_pack_pdf =  categ_name
+           
 
     def _compute_calculate_packages(self):
         for move in self:
@@ -1255,22 +1284,29 @@ class StockMoveExcelReport(models.Model):
                 else:
                     line.product_name = ""
 
-            size_detail = ""
-            product_pack_ids = line.product_id.product_tmpl_id.mapped('pack_line_ids')
-            if line.product_id.product_tmpl_id.product_no:
-                size_detail += str(line.product_id.product_tmpl_id.product_no)
-                if product_pack_ids:
-                    size_detail += ' / '
-                    product_pack_names = []
-                    for pack in product_pack_ids:
-                        product_pack_names.append(pack.product_id.name)
-                    size_detail += ', '.join(product_pack_names)
+            size_detail = ""            
+            # product_pack_ids = line.product_id.product_tmpl_id.mapped('pack_line_ids')
+            # if line.product_id.product_tmpl_id.product_no:
+            #     size_detail += str(line.product_id.product_tmpl_id.product_no)
+            #     if product_pack_ids:
+            #         size_detail += ' / '
+            #         product_pack_names = []
+            #         for pack in product_pack_ids:
+            #             product_pack_names.append(pack.product_id.name)
+            #         size_detail += ', '.join(product_pack_names)
+            # else:
+            #     if product_pack_ids:
+            #         product_pack_names = []
+            #         for pack in product_pack_ids:
+            #             product_pack_names.append(pack.product_id.name)
+            #         size_detail += ', '.join(product_pack_names)
+                          
+            if line.sale_line_id.pack_parent_line_id:
+                size_detail += line.sale_line_id.pack_parent_line_id.product_id.product_no + '/' + line.calculate_product_pack_pdf
+                
             else:
-                if product_pack_ids:
-                    product_pack_names = []
-                    for pack in product_pack_ids:
-                        product_pack_names.append(pack.product_id.name)
-                    size_detail += ', '.join(product_pack_names)
+                size_detail += line.product_id.product_no
+
             size_detail + '\n'
 
             other_size=""
