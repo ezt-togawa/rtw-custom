@@ -21,7 +21,7 @@ class rtw_sf_partner(models.Model):
                     partner.property_product_pricelist = line.id
                     
                 else:
-                    dummy_price_list = self.env['product.pricelist'].search([('name', '=', '未指定')])
+                    dummy_price_list = self.env['product.pricelist'].search([('name', '=', '※   未指定')])
                     
                     if dummy_price_list and dummy_price_list[0].currency_id.name == "JPY" :
                         
@@ -29,19 +29,19 @@ class rtw_sf_partner(models.Model):
                         
                     else:
                         currency = self.env['res.currency'].search([('name', '=', 'JPY')])
-                        new_price_list = self.env['product.pricelist'].create({'name': '未指定','currency_id':currency[0].id})
+                        new_price_list = self.env['product.pricelist'].create({'name': '※未指定','currency_id':currency[0].id})
                         partner.property_product_pricelist = new_price_list.id
                         
     @api.onchange('property_product_pricelist')
     def check_property_product_pricelist(self):
         for partner in self:
             if not partner.property_product_pricelist :
-                dummy_price_list = self.env['product.pricelist'].search([('name', '=', '未指定')]) 
+                dummy_price_list = self.env['product.pricelist'].search([('name', '=', '※未指定')])
                     
                 if dummy_price_list:
                     partner.property_product_pricelist = dummy_price_list[0].id 
                     
                 else:
                     currency = self.env['res.currency'].search([('name', '=', 'JPY')])
-                    new_price_list = self.env['product.pricelist'].create({'name': '未指定','currency_id':currency[0].id})
+                    new_price_list = self.env['product.pricelist'].create({'name': '※未指定','currency_id':currency[0].id})
                     partner.property_product_pricelist = new_price_list.id
