@@ -1690,9 +1690,9 @@ class MrpProductionExcelReport(models.Model):
         note = ""
         for line in self:
             if line.remark:
-                note += line.remark + "\n"
-            if line.production_memo:
-                note += line.production_memo
+                note += line.remark 
+            # if line.production_memo:
+            #     note += line.production_memo
             line.mrp_note = note
 
     def _compute_order_line(self):
