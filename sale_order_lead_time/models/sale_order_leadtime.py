@@ -8,9 +8,16 @@ class sale_order_leadtime(models.Model):
     leadtime = fields.Datetime(string="リードタイム")
 
     def update_leadtime(self):
-        max_order_line = self.order_line.search([('date_planned' , '!=' , False),('order_id','=',self.id)], order='date_planned desc', limit=1)
-        if max_order_line:
-            self.leadtime = max_order_line.date_planned
+        if self.leadtime:
+            for line in self.order_line:
+                line.date_planned = self.leadtime
+            ## update delivery
+            stock_picking = self.env['stock.picking'].search([('sale_id', '=', self.id)])
+            for stock in stock_picking:
+                if stock.state not in ('done', 'cancel'):
+                    stock.write({"scheduled_date": self.leadtime})
+                    stock.write({"date_deadline": self.leadtime})
+
 
 
     @api.onchange('order_line')

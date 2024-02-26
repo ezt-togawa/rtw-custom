@@ -12,7 +12,7 @@
                         <field name="leadtime" nolabel="1" />
                         <button name="update_leadtime"
                             class="btn-link" icon="fa-refresh"
-                            confirm="This will update leadtime based on the currently order line."
+                            confirm="This will update all planned date based on the current leadtime."
                             string="予定日へ反映" type="object"
                         />
                     </div>
