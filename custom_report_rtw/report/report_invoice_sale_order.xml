@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_invoice_3">
+    <template id="report_invoice_4">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="custom_report_rtw.so_ex_layout">
@@ -46,7 +46,7 @@
                                 <br />
                                 <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 下記の通り、ご請求申し上げます。<br /> <span
                                         class="mt-1"> 件名 <span class="size16"
-                                            t-esc="docs.sale_order.title" />
+                                            t-esc="docs.title" />
                                     </span>
                                 </div>
                                 <br />
@@ -63,11 +63,10 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div>お支払期限: <span
-                                        t-if="docs.invoice_date_due"
-                                        t-esc="docs.acc_move_invoice_date_due" />
-                                </div>
-                                <div> お支払内容 : <span t-field="docs.sale_order.payment_term_id.name" />
+                                <div>お支払期限: 
+                                    <!-- <span t-if="docs.invoice_date_due" t-esc="docs.acc_move_invoice_date_due" /> -->
+                                </div> 
+                                <div> お支払内容 : <span t-field="docs.payment_term_id.name" />
                                 </div>
                                 <div class="d-flex">
                                     <div> お振込先: </div>
@@ -79,15 +78,15 @@
                                 </div>
                                 <br />
                                 <div>納品日: <span
-                                        t-field="docs.sale_order.sale_order_preferred_delivery_date" />
+                                        t-field="docs.sale_order_preferred_delivery_date" />
                                 </div>
-                                <div> 納品場所: <span t-field="docs.partner_id.street" />
-                                <div> 備考: <span
-                                            t-field="docs.sale_order.special_note" />
-                                    </div>
+                                <div> 納品場所: <span t-field="docs.partner_shipping_id.street" />
+                                <div> 備考: 
+                                    <span t-field="docs.special_note" /></div> 
                                 </div>
                             </div>
-                            <div class="col-4 size11" name="company_address">
+                            <div
+                                class="col-4 size11" name="company_address">
                                 <div>
                                     <img style="width:50%"
                                         src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
@@ -108,18 +107,13 @@
                                 <div> fax.06-4963-8778
                                 </div>
                                 <div class="size12">
-                                    <span t-esc="docs.acc_move_print_staff" />
+                                    <span t-esc="docs.sale_order_print_staff" />
                                 </div>
                             </div>
                         </div>
-                        <table
-                            class="table mt-1">
-                            <t t-foreach="docs.account_move_line" t-as="l" t-groupby="10"
-                                t-att-last="last">
-                                <!-- <t t-set="total_subprice"
-                                    t-value="total_subprice + l.price_subtotal" />
-                                <t t-set="total_listprice"
-                                    t-value="total_listprice + l.price_unit * l.product_uom_qty" /> -->
+                         <table class="table mt-1">
+                            <t t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l" t-groupby="10" t-att-last="last">
+                                
                                 <t t-if="l_index == 0">
                                     <thead>
                                         <tr class="table-title bold">
@@ -150,7 +144,7 @@
                                             </td>
                                             <td class="size11">
                                                 <span
-                                                    t-field="l.acc_line_name" />
+                                                    t-field="l.sale_order_name" />
                                                 <br />
                                             </td>
                                             <td class="size13">
@@ -179,17 +173,25 @@
                                                         t-esc="string_line.display_name" />
                                                 <br />
                                                 </t>
+                                                <t t-foreach="l.config_session_id.custom_value_ids"
+                                                    t-as="string_line"> ●<span
+                                                        t-esc="string_line.display_name" />: <span
+                                                        t-esc="string_line.value" />
+                                                    <br />
+                                                </t>
                                             </td>
                                             <td class="text-center">
                                                 <div id="quote_qty">
-                                                    <span t-esc="l.acc_move_line_qty" />
+                                                    <span t-esc="l.sale_order_line_product_uom_qty" />
                                                 </div>
                                             </td>
                                             <td class="text-center">
-                                                <span t-esc="l.price_unit" />
+                                                <span
+                                                    style="font-size:16px"
+                                                    t-esc="l.price_unit" />
                                             </td>
                                             <td class="text-center size11">
-                                                <span t-esc="l.acc_line_discount" />
+                                                <span t-esc="l.sale_order_line_discount" />
                                             </td>
                                             <td class="text-center size12">
                                                 <span
@@ -202,29 +204,21 @@
                                     </tr>
                                 </tbody>
                             </t>
-                        </table>
-                        <div
-                            class="d-flex justify-content-end size14">
-                            <div
-                                class="pr-4 ">定価合計 : <span class="size16"
+                        </table> 
+                        <div class="d-flex justify-content-end size14">
+                            <div class="pr-4 ">定価合計 : <span class="size16"
                                     t-esc="docs.amount_total" /></div>
                             <div>販売価格合計 : <span class="size16"
                                     t-esc="docs.amount_untaxed" /></div>
-                        </div>
-                        <div class="d-flex justify-content-end size13">
-                            <t t-if="docs.state=='draft'"> Draft Invoice <span
-                                    t-if="docs.name != '/'" t-field="docs.name" />
-                            </t>
-                            <t t-if="docs.state=='posted'"> Invoice <span t-field="docs.name" />
-                            </t>
-                        </div>
+                            </div>
+                        <div class="d-flex justify-content-end size13">Draft Invoice</div>
                         <t t-call="custom_report_rtw.page_footer_layout"></t>
                     </div>
                 </t>
             </t>
         </t>
     </template>
-    <record id="paperformat_invoice_report_3" model="report.paperformat">
+    <record id="paperformat_invoice_report_4" model="report.paperformat">
         <field name="name">Invoice</field>
         <field name="default" eval="False" />
         <field name="format">custom</field>
@@ -241,12 +235,12 @@
     </record>
     <report
         string="請求書"
-        id="report_invoice_rtw_3"
-        model="account.move"
+        id="report_invoice_rtw_4"
+        model="sale.order"
         report_type="qweb-pdf"
-        name="custom_report_rtw.report_invoice_3"
-        file="custom_report_rtw.report_invoice_3"
-        paperformat="paperformat_invoice_report_3"
+        name="custom_report_rtw.report_invoice_4"
+        file="custom_report_rtw.report_invoice_4"
+        paperformat="paperformat_invoice_report_4"
     />
 
 </odoo>

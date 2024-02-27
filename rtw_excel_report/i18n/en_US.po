@@ -842,6 +842,12 @@ msgid "請求書"
 msgstr "Invoice"
 
 #. module: rtw_excel_report
+#: model:ir.actions.act_window,name:rtw_excel_report.action_invoice_export_xlsx_2
+#: model:ir.ui.menu,name:rtw_excel_report.menu_report_invoice2
+msgid "請求書"
+msgstr "Invoice"
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_purchase_order_line__purchase_order_sell_unit_price
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_order_sell_unit_price
 msgid "販売単価"

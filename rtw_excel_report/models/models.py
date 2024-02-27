@@ -164,6 +164,47 @@ class SaleOrderExcelReport(models.Model):
     dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
     
     sale_order_transactions_term = fields.Char(string="sale order transactions term", compute="_compute_sale_order_transactions_term")
+    
+    sale_order_print_staff= fields.Char(
+        "sale order print staff",
+        compute="_compute_print_staff",
+    )        
+    sale_order_bank_name= fields.Char(
+        "sale order print staff",
+        compute="_compute_bank",
+    )        
+    sale_order_bank_branch= fields.Char(
+        "sale order print staff",
+        compute="_compute_bank",
+    )        
+    sale_order_number_account= fields.Char(
+        "sale order print staff",
+        compute="_compute_bank",
+    )    
+        
+    
+    def _compute_bank(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.sale_order_bank_name = "Nippon City Bank (0190)"
+                record.sale_order_bank_branch = "Chikushi Dori Branch (714)"
+                record.sale_order_number_account = "(Regular) 0272585"
+            elif record.lang_code =="ja_JP":
+                record.sale_order_bank_name = "西日本シティ銀行 （0190）"
+                record.sale_order_bank_branch = "筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）"
+                record.sale_order_number_account = "（普）0272585"
+            else:
+                record.sale_order_bank_name = "Nippon City Bank (0190)"
+                record.sale_order_bank_branch = "Chikushi Dori Branch (714)"
+                record.sale_order_number_account = "(Regular) 0272585"
+            
+            
+    def _compute_print_staff(self):
+        for l in self:
+            if l.user_id.name :
+                l.sale_order_print_staff = l.user_id.name +  (" Seal" if l.lang_code == "en_US" else "  印")
+            else:
+                l.sale_order_print_staff =""            
 
     def _compute_lang_code(self):
         for order in self:

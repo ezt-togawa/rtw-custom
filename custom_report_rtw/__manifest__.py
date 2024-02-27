@@ -40,6 +40,7 @@
         
         # invoice
         'report/report_invoice.xml',
+        'report/report_invoice_sale_order.xml',
         
         # purchase order
         'report/purchase_order_sheet_for_part.xml',
