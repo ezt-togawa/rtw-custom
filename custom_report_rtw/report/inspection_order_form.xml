@@ -131,8 +131,7 @@
                 <div class="col-4 size13">
                   <div> 送り先注記: <span t-field="docs.remark" />
                     <br />
-                    <span
-                      t-field="docs.production_memo" />
+                    <!-- <span t-field="docs.production_memo" /> -->
                   </div>
                 </div>
                 <div class="col-4">
