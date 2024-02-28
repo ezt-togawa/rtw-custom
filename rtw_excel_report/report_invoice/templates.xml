@@ -22,7 +22,6 @@
                             'B11':'amount_total${value or ""}',
                             'E3': 'acc_move_invoice_date_due${value or ""}',
                             'E10': 'partner_id.street${value or ""}',
-                            'E11':'narration${value or ""}',
                             'H1': 'acc_move_current_date',
                             'G13': 'amount_total${value or ""}',
                             'I13': 'amount_untaxed${value or ""}',
@@ -32,6 +31,7 @@
                             'B7':'title${value or ""}',
                             'E4': 'payment_term_id.name${value or ""}',
                             'E9': 'sale_order_preferred_delivery_date${value or ""}',
+                            'E11':'special_note${value or ""}',
                         },
                         'account_move_line':{
                             'A17': 'acc_line_index${value or ""}#{style=text;fill=grey}',

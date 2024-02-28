@@ -161,6 +161,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     await this.english_name(unit_price_quotation, unique_list_translated)
                     await this.english_name(purchase_order, unique_list_translated)
                     await this.english_name(quotation_over_sea, unique_list_translated)
+                    await this.english_name(invoice, unique_list_translated)
 
                     hidePrint = [
                         "Quotation / Order", "見積 / オーダ",
@@ -171,6 +172,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         unit_price_quotation, english_names[unit_price_quotation + "_pdf"], english_names[unit_price_quotation + "_excel"],
                         purchase_order, english_names[purchase_order + "_pdf"], english_names[purchase_order + "_excel"],
                         quotation_over_sea, english_names[quotation_over_sea + "_pdf"], english_names[quotation_over_sea + "_excel"],
+                        invoice, english_names[invoice + "_pdf"], english_names[invoice + "_excel"],
                     ]
                     hideExcel = [
                         prod_spec_excel, english_names[prod_spec_excel + "_pdf"], english_names[prod_spec_excel + "_excel"],
@@ -270,6 +272,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     }
                     let action = [...data_sale_order_form.action]
                     let prints = [...data_sale_order_form.print]
+
                     await this.english_name(prod_spec_excel, unique_list_translated)
                     const prod_spec = [prod_spec_excel, english_names[prod_spec_excel + "_pdf"], english_names[prod_spec_excel + "_excel"]]
                     let excel = prints.filter(val => {
@@ -290,6 +293,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     await this.english_name(purchase_order, unique_list_translated)
                     await this.english_name(prod_spec_excel, unique_list_translated)
                     await this.english_name(prod_spec_pdf, unique_list_translated)
+                    await this.english_name(invoice, unique_list_translated)
                     const sortItem4 = [quotation, english_names[quotation + "_pdf"], english_names[quotation + "_excel"]]
                     const sortItem5 = [quotation_over_sea, english_names[quotation_over_sea + "_pdf"], english_names[quotation_over_sea + "_excel"]]
                     const sortItem6 = [list_price_quotation, english_names[list_price_quotation + "_pdf"], english_names[list_price_quotation + "_excel"]]
@@ -297,6 +301,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     const sortItem8 = [purchase_order, english_names[purchase_order + "_pdf"], english_names[purchase_order + "_excel"]]
                     const sortItem9 = [prod_spec_excel, english_names[prod_spec_excel + "_pdf"], english_names[prod_spec_excel + "_excel"]]
                     const sortItem10 = [prod_spec_pdf, english_names[prod_spec_pdf + "_pdf"], english_names[prod_spec_pdf + "_excel"]]
+                    const sortItem11 = [invoice, english_names[invoice + "_pdf"], english_names[invoice + "_excel"]]
 
                     showActionItem.filter(val => {
                         if (val.name === "Generate a Payment Link" || val.name === "支払用リンクを生成") sortAction[0] = val
@@ -308,7 +313,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         if (sortItem7.includes(val.name)) sortAction[6] = val
                         if (sortItem8.includes(val.name)) sortAction[7] = val
                         if (sortItem9.includes(val.display_name)) sortAction[8] = val
-                        if (val.name === "Send a Cart Recovery Email" || val.name === "カートリカバリEメールを送信") sortAction[9] = val
+                        if (sortItem11.includes(val.display_name)) sortAction[9] = val
+                        if (val.name === "Send a Cart Recovery Email" || val.name === "カートリカバリEメールを送信") sortAction[10] = val
                     })
                     this.props.items.action = sortAction
                     await this.english_name(prod_spec_excel, unique_list_translated)
@@ -317,7 +323,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         prod_spec_excel, english_names[prod_spec_excel + "_pdf"], english_names[prod_spec_excel + "_excel"]
                     ]
                     let showPrint = prints.filter(val => !hidePrint.includes(val.display_name))
-                    let sortPrint = ['', '', '', '', '', '']
+                    let sortPrint = ['', '', '', '', '', '','']
                     showPrint.filter(async val => {
                         if (sortItem4.includes(val.name)) sortPrint[0] = val
                         if (sortItem5.includes(val.name)) sortPrint[1] = val
@@ -325,6 +331,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         if (sortItem7.includes(val.name)) sortPrint[3] = val
                         if (sortItem8.includes(val.name)) sortPrint[4] = val
                         if (sortItem10.includes(val.display_name)) sortPrint[5] = val
+                        if (sortItem11.includes(val.display_name)) sortPrint[6] = val
                     })
                     this.props.items.print = sortPrint
                 }
