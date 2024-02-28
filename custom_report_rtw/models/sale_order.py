@@ -87,7 +87,11 @@ class SaleOrder(models.Model):
                         if hr_employee:
                             for employee in hr_employee:
                                 so.hr_employee_company = employee.company_id.name if employee.company_id else ''
-                                so.hr_employee_department = employee.department_id.name if employee.department_id else ''
+                                if so.lang_code == 'ja_JP':
+                                    so.hr_employee_department = (employee.address_id.site +' オフィス')  if employee.address_id.site else ''
+                                else:
+                                    so.hr_employee_department = (employee.address_id.site +' Office')  if employee.address_id.site else ''
+                                    
                                 if employee.name:
                                     if so.lang_code == 'en_US':
                                         so.hr_employee_printer = employee.name +" Seal" 
@@ -101,7 +105,11 @@ class SaleOrder(models.Model):
                                     if res_partner:
                                         for res in res_partner:
                                             so.hr_employee_zip = ("〒" + res.zip) if res.zip != False else ''
-                                            so.hr_employee_info = f"{res.street or res.street2 or ''} {res.city or ''} {res.state_id.name or ''} {res.country_id.name or ''}".strip()
+                                            if so.lang_code == 'ja_JP':
+                                                so.hr_employee_info = f"{res.state_id.name or ''} {res.city or ''} {res.street or ''} { res.street2 or ''}".strip()
+                                            else:
+                                                so.hr_employee_info = f"{res.street or ''} { res.street2 or ''} {res.city or ''} {res.state_id.name or ''}".strip()
+                                            
                                             so.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
                                             so.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
                                     else:

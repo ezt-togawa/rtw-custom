@@ -102,6 +102,7 @@
                         </div>
                         <table
                             class="table">
+                            <t t-set="number" t-value="0" />
                             <t t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)"
                                 t-as="l" t-groupby="10"
                                 t-att-last="last">
@@ -126,16 +127,22 @@
                                 </t>
                                 <tbody class="invoice_tbody">
                                     <tr class="size15 table-border-bottom">
-                                        <t
-                                            t-if="l.display_type =='line_note' or l.display_type =='line_section'">
-                                            <td t-esc="l_index+1" class="text-center size12">
+                                        <t t-if="l.display_type =='line_section'">
+                                            <td class="bg-section" />
+                                            <td class="size11 bg-section" colspan="8">
+                                                <span t-field="l.name" />
                                             </td>
+                                        </t>
+                                        <t t-elif="l.display_type =='line_note'">
+                                            <td />
                                             <td class="size11" colspan="8">
                                                 <span t-field="l.name" />
                                             </td>
                                         </t>
                                         <t t-else=''>
-                                            <td t-esc="l_index+1" class="text-center size12">
+                                            <td class="text-center size12">
+                                                <t t-set="number" t-value="number + 1" />
+                                                <t t-esc="number" />
                                             </td>
                                             <td class="size11">
                                                 <span

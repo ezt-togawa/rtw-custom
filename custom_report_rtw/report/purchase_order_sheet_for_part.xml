@@ -56,23 +56,25 @@
                       alt="Logo" />
                   </div>
                   <div class="size12">
-                    <div>
-                      株式会社リッツウェル
-                    </div>
-                    <div>
-                      大阪オフィス
-                    </div>
-                  </div>
-                  <div>〒542-0081</div>
-                  <div>
-                    大阪市中央区南船場4-7-6 B1F
-                  </div>
-                  <div> tel.06-4963-8777
-                  </div>
-                  <div> fax.06-4963-8778
+                    <span t-esc="po.hr_employee_company" />
                   </div>
                   <div>
-                    <span t-if="po.purchase_print_staff" t-esc="po.purchase_print_staff"> </span>
+                    <span t-esc="po.hr_employee_department" />
+                  </div>
+                  <div>
+                    <span t-esc="po.hr_employee_zip" />
+                  </div>
+                  <div>
+                    <span t-esc="po.hr_employee_info" />
+                  </div>
+                  <div>
+                    <span t-esc="po.hr_employee_tel" />
+                  </div>
+                  <div>
+                    <span t-esc="po.hr_employee_fax" />
+                  </div>
+                  <div class="size12">
+                    <span t-esc="po.hr_employee_printer" />
                   </div>
                 </div>
               </div>
@@ -85,40 +87,8 @@
                     </t>
                   </div>
                   <div class="d-flex">
-                    <div>
-                      住所:
+                    <div> 住所: <span t-esc="po.purchase_order_address" />
                     </div>
-                    <t class="size14">
-                      <div>
-                        <t
-                          t-if="po.picking_type_id.warehouse_id.partner_id.street">
-                          <span t-field="po.picking_type_id.warehouse_id.partner_id.street" />
-                        </t>
-                        <div>
-                          <div>
-                            <t
-                              t-if="po.picking_type_id.warehouse_id.partner_id.city">
-                              <span t-field="po.picking_type_id.warehouse_id.partner_id.city" />
-                            </t>
-                            <t
-                              t-if="po.picking_type_id.warehouse_id.partner_id.state_id.name">
-                              <span
-                                t-field="po.picking_type_id.warehouse_id.partner_id.state_id.name" />
-                              <t t-if="po.picking_type_id.warehouse_id.partner_id.zip"> 〒 <span
-                                  t-field="po.picking_type_id.warehouse_id.partner_id.zip" />
-                              </t>
-                            </t>
-                          </div>
-                          <div>
-                            <t
-                              t-if="po.picking_type_id.warehouse_id.partner_id.country_id.name">
-                              <span
-                                t-field="po.picking_type_id.warehouse_id.partner_id.country_id.name" />
-                            </t>
-                          </div>
-                        </div>
-                      </div>
-                    </t>
                   </div>
                   <div> TEL: <t class="size14">
                       <t
@@ -136,6 +106,7 @@
               </div>
               <table
                 class="table">
+                <t t-set="number" t-value="0" />
                 <t t-foreach="docs.purchase_order_line" t-as="l" t-groupby="10"
                   t-att-last="last">
                   <t t-set="total_subprice"
@@ -159,42 +130,54 @@
                   </t>
                   <tbody class="invoice_tbody">
                     <tr class="table-border-bottom size15">
-                      <td t-esc="l_index+1" class="text-center size12" />
-                      <td class="size12">
-                        <span t-field="l.name" />
-                        <br />
-                      </td>
-                      <td class="size13">
-                        <t
-                          t-foreach="l.product_id.product_template_attribute_value_ids"
-                          t-as="string_line">
-                          <span
-                            t-esc="string_line.attribute_id.name" />: <span
-                            t-esc="string_line.product_attribute_value_id.name" />
+                      <t
+                        t-if="l.display_type =='line_note' or l.display_type =='line_section'">
+                        <td class="text-center size12"></td>
+                        <td class="size11" colspan="8">
+                          <span t-field="l.name" />
+                        </td>
+                      </t>
+                      <t t-else=''>
+                        <td class="text-center size12">
+                          <t t-set="number" t-value="number + 1" />
+                          <t t-esc="number" />
+                        </td>
+                        <td class="size12">
+                          <span t-field="l.name" />
                           <br />
-                        </t>
-                      </td>
-                      <td class="text-center">
-                        <div id="quote_qty">
+                        </td>
+                        <td class="size13">
+                          <t
+                            t-foreach="l.product_id.product_template_attribute_value_ids"
+                            t-as="string_line">
+                            <span
+                              t-esc="string_line.attribute_id.name" />: <span
+                              t-esc="string_line.product_attribute_value_id.name" />
+                            <br />
+                          </t>
+                        </td>
+                        <td class="text-center">
+                          <div id="quote_qty">
+                            <span
+                              t-esc="l.purchase_order_line_product_uom_qty" />
+                          </div>
+                        </td>
+                        <td class="text-center size14">
+                          <t t-if="l.product_uom">
+                            <span
+                              t-field="l.product_uom" />
+                          </t>
+                        </td>
+                        <td class="text-center">
                           <span
-                            t-esc="l.purchase_order_line_product_uom_qty" />
-                        </div>
-                      </td>
-                      <td class="text-center size14">
-                        <t t-if="l.product_uom">
+                            t-field="l.price_subtotal" />
+                        </td>
+                        <td class="text-center">
                           <span
-                            t-field="l.product_uom" />
-                        </t>
-                      </td>
-                      <td class="text-center">
-                        <span
-                          t-field="l.price_subtotal" />
-                      </td>
-                      <td class="text-center">
-                        <span
-                          t-field="l.price_unit" />
-                      </td>
-                      <td class="size13"></td>
+                            t-field="l.price_unit" />
+                        </td>
+                        <td class="size13"></td>
+                      </t>
                     </tr>
                   </tbody>
                 </t>

@@ -100,28 +100,7 @@
                     t-if="docs.partner_id.parent_id"
                     t-field="docs.partner_id.parent_id.name" />
                 </div>
-                <div> 住所 <t t-if="docs.partner_id.zip"> 〒<span t-field="docs.partner_id.zip" /></t>
-                  <t
-                    t-if="docs.partner_id.street">
-                    <span t-field="docs.partner_id.street" />
-                  </t>
-                  <t
-                    t-el="docs.partner_id.street2">
-                    <span t-field="docs.partner_id.street2" />
-                  </t>
-                  <t
-                    t-if="docs.partner_id.city">
-                    <span t-field="docs.partner_id.city" />
-                  </t>
-                  <t
-                    t-if="docs.partner_id.state_id.name">
-                    <span t-field="docs.partner_id.state_id.name" />
-                  </t>
-                  <t
-                    t-if="docs.partner_id.country_id.name">
-                    <span t-field="docs.partner_id.country_id.name" />
-                  </t>
-                </div>
+                <div> 住所 <span t-esc="docs.stock_picking_partner_address" /> </div>
                 <div> TEL／携帯 <span t-field="docs.partner_id.phone" />
                   <t
                     t-if="docs.partner_id.mobile"> / <span

@@ -182,3 +182,7 @@ body {
 .table-border-bottom{
   border-bottom:1px solid black;
 }
+
+.bg-section{
+  background: #e9ecef;
+}

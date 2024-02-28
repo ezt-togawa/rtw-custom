@@ -181,7 +181,10 @@ class SaleOrderExcelReport(models.Model):
         "sale order print staff",
         compute="_compute_bank",
     )    
-        
+    sale_order_draff_invoice= fields.Char(
+        "sale order draff invoice",
+        compute="_compute_sale_order_draff_invoice",
+    )    
     
     def _compute_bank(self):
         for record in self:
@@ -309,7 +312,7 @@ class SaleOrderExcelReport(models.Model):
                 
     def _compute_sale_order_hr_employee(self):
         for record in self:
-            hr_employee_detail = ""
+            hr_employee_detail = ""   
             if record.hr_employee_company:
                 hr_employee_detail += record.hr_employee_company + "\n"
             if record.hr_employee_department:
@@ -450,16 +453,24 @@ class SaleOrderExcelReport(models.Model):
         for line in self:
             if line.partner_id.zip:
                 details += "〒" + line.partner_id.zip + " "
-            if line.partner_id.street:
-                details += line.partner_id.street + " "
-            if line.partner_id.street2:
-                details += line.partner_id.street2 + " "
-            if line.partner_id.city:
-                details += line.partner_id.city + " "
-            if line.partner_id.state_id.name:
-                details += line.partner_id.state_id.name + " "
-            if line.partner_id.country_id.name:
-                details += line.partner_id.country_id.name + " "
+            if line.lang_code == 'ja_JP':
+                if line.partner_id.state_id.name:
+                    details += line.partner_id.state_id.name + " "
+                if line.partner_id.city:
+                    details += line.partner_id.city + " "
+                if line.partner_id.street:
+                    details += line.partner_id.street + " "
+                if line.partner_id.street2:
+                    details += line.partner_id.street2 
+            else:
+                if line.partner_id.street:
+                    details += line.partner_id.street + " "
+                if line.partner_id.street2:
+                    details += line.partner_id.street2 + " "
+                if line.partner_id.city:
+                    details += line.partner_id.city + " "
+                if line.partner_id.state_id.name:
+                    details += line.partner_id.state_id.name + " "
             line.sale_order_detail_address_partner =  details
 
     def _compute_sale_order_tel_phone_partner(self):
@@ -640,6 +651,15 @@ class SaleOrderExcelReport(models.Model):
                 )
             else:
                 record.sale_order_send_to_company2 =""
+                
+    def _compute_sale_order_draff_invoice(self):
+        for line in self:
+            invoice_name =''
+            if line.name:
+                invoice_name += line.name + '/'
+            invoice_name += "Draft Invoice"
+            line.sale_order_draff_invoice = invoice_name
+    
 class SaleOrderLineExcelReport(models.Model):
     _inherit = "sale.order.line"
 
@@ -861,15 +881,43 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_order_index(self):
         index = 0
         for line in self:
-            index = index + 1
-            line.sale_order_index = index
+            if line.display_type =='line_note' or line.display_type =='line_section':
+                line.sale_order_index = ''
+            else:
+                index += 1
+                line.sale_order_index = str(index)
+                
+    sale_order_name = fields.Text(
+        compute="_compute_sale_order_name",
+        string="Name",
+    )
+    
+    # sale_order_check_section = fields.Boolean(
+    #     compute="_compute_sale_order_name_section",
+    #     string="Name test",
+    # )
 
+    # def _compute_sale_order_name_section(self):
+    #     for line in self:
+    #         template = self.env.ref('rtw_excel_report.quotation_report_xlsx_template')
+    #         sale_order_check_section = False
+    #         if line.display_type == "line_section":
+    #             sale_order_check_section = True
+    
+    #         template.with_context({'sale_order_check_section': sale_order_check_section}).load_xlsx_template()
+    #         line.sale_order_check_section = sale_order_check_section
+            
     def _compute_sale_order_name(self):
         for line in self:
-            if line.display_type == "line_note" or line.display_type == "line_section":
-                line.sale_order_name = line.name
+            categ_name=""
+            if line.display_type == "line_section":
+                # line.sale_order_check_section = True
+                categ_name = line.name
+            elif line.display_type == "line_note" :
+                # line.sale_order_check_section = True
+                categ_name = line.name
             else:
-                categ_name=""
+                
                 if line.product_id.product_tmpl_id.config_ok :  
                     if line.product_id.product_tmpl_id.categ_id.name:
                         categ_name = line.product_id.product_tmpl_id.categ_id.name
@@ -894,47 +942,47 @@ class SaleOrderLineExcelReport(models.Model):
                             categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
                         else:
                             categ_name =  line.product_id.product_tmpl_id.name
-                
                                     
-                p_type = ""
-                if line.p_type:
-                    if line.p_type == "special":
-                        p_type = "別注"
-                    elif line.p_type == "custom":
-                        p_type = "特注"
+            p_type = ""
+            if line.p_type:
+                if line.p_type == "special":
+                    p_type = "別注"
+                elif line.p_type == "custom":
+                    p_type = "特注"
 
-                size_detail = ""
-                if line.product_id.product_tmpl_id.width:
-                    size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-                if line.product_id.product_tmpl_id.depth:
-                    size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-                if line.product_id.product_tmpl_id.height:
-                    size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-                if line.product_id.product_tmpl_id.sh:
-                    size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-                if line.product_id.product_tmpl_id.ah:
-                    size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
+            size_detail = ""
+            if line.product_id.product_tmpl_id.width:
+                size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
+            if line.product_id.product_tmpl_id.depth:
+                size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
+            if line.product_id.product_tmpl_id.height:
+                size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
+            if line.product_id.product_tmpl_id.sh:
+                size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
+            if line.product_id.product_tmpl_id.ah:
+                size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
 
-                prod=""
-                if categ_name != "" :
-                    if p_type !="":
-                        prod+= categ_name+ "\n" +p_type
-                        if size_detail != "" :
-                            prod+=  "\n" + size_detail
-                    else:
-                        prod+= categ_name
-                        if size_detail != "" :
-                            prod+= "\n" +size_detail
+            prod=""
+            if categ_name != "" :
+                if p_type !="":
+                    prod+= categ_name+ "\n" +p_type
+                    if size_detail != "" :
+                        prod+=  "\n" + size_detail
                 else:
-                    if p_type !="":
-                        prod+= p_type
-                        if size_detail != "" :
-                            prod+=  "\n" + size_detail
-                    else:
-                        if size_detail != "" :
-                            prod+= "\n" +size_detail
-                            
-                line.sale_order_name = prod
+                    prod+= categ_name
+                    if size_detail != "" :
+                        prod+= "\n" +size_detail
+            else:
+                if p_type !="":
+                    prod+= p_type
+                    if size_detail != "" :
+                        prod+=  "\n" + size_detail
+                else:
+                    if size_detail != "" :
+                        prod+= "\n" +size_detail
+                        
+            line.sale_order_name = prod        
+            
 class StockPickingExcelReport(models.Model):
     _inherit = "stock.picking"
 
@@ -1157,16 +1205,24 @@ class StockPickingExcelReport(models.Model):
             partner_address = ""
             if record.sale_id.partner_id.zip:
                 partner_address += record.sale_id.partner_id.zip + " "
-            if record.sale_id.partner_id.street:
-                partner_address += record.sale_id.partner_id.street + " "
-            if record.sale_id.partner_id.street2:
-                partner_address += record.sale_id.partner_id.street2 + " "
-            if record.sale_id.partner_id.city:
-                partner_address += record.sale_id.partner_id.city + " "
-            if record.sale_id.partner_id.state_id.name:
-                partner_address += record.sale_id.partner_id.state_id.name + " "
-            if record.sale_id.partner_id.country_id.name:
-                partner_address += record.sale_id.partner_id.country_id.name
+            if record.lang_code == 'ja_JP':    
+                if record.sale_id.partner_id.state_id.name:
+                    partner_address += record.sale_id.partner_id.state_id.name 
+                if record.sale_id.partner_id.city:
+                    partner_address += record.sale_id.partner_id.city + " "
+                if record.sale_id.partner_id.street:
+                    partner_address += record.sale_id.partner_id.street + " "
+                if record.sale_id.partner_id.street2:
+                    partner_address += record.sale_id.partner_id.street2 + " "
+            else:
+                if record.sale_id.partner_id.street:
+                    partner_address += record.sale_id.partner_id.street + " "
+                if record.sale_id.partner_id.street2:
+                    partner_address += record.sale_id.partner_id.street2 + " "
+                if record.sale_id.partner_id.city:
+                    partner_address += record.sale_id.partner_id.city + " "
+                if record.sale_id.partner_id.state_id.name:
+                    partner_address += record.sale_id.partner_id.state_id.name 
             record.stock_picking_partner_address = "〒" + partner_address
 
             partner_tel_phone = ""
@@ -1608,13 +1664,18 @@ class AccountMoveExcelReport(models.Model):
                 
     def _compute_acc_move_invoice_name(self):
         for line in self:
+            invoice_name =''
+            if line.invoice_origin:
+                invoice_name += line.invoice_origin + '/'
             if line.state == "draft":
                 if line.name =='/':
-                    line.acc_move_invoice_name= "Draft Invoice"
+                    invoice_name += "Draft Invoice"
                 else:
-                    line.acc_move_invoice_name= "Draft Invoice " + line.name
+                    invoice_name += "Draft Invoice " + line.name
             if line.state == "posted":
-                line.acc_move_invoice_name= "Invoice " + line.name
+                invoice_name += "Invoice " + line.name
+                
+            line.acc_move_invoice_name = invoice_name
     
     def _compute_acc_move_payment_term(self):
         for line in self:
@@ -1775,8 +1836,11 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_index(self):
         index = 0
         for line in self:
-            index = index + 1
-            line.acc_line_index = index
+            if line.display_type =='line_note' or line.display_type =='line_section':
+                line.acc_line_index = ''
+            else:
+                index += 1
+                line.acc_line_index = str(index)
 
     def _compute_acc_line_number_and_size(self):
         for line in self:
@@ -1810,7 +1874,11 @@ class AccountMoveLineExcelReport(models.Model):
                 product_number_and_size += (
                     "AH" + str(line.product_id.product_tmpl_id.ah) + "*"
                 )
-            line.acc_line_number_and_size = product_number_and_size
+            if product_number_and_size :
+                line.acc_line_number_and_size = product_number_and_size
+            else:
+                line.acc_line_number_and_size = ""
+                
 
     def _compute_acc_line_product_detail(self):
         for line in self:
@@ -2179,17 +2247,19 @@ class PurChaseOrderLineExcelReport(models.Model):
                 
     def _compute_purchase_order_line_product_uom_qty(self):
         for line in self:
-            float_product_uom_qty = float(line.product_uom_qty)
-            integer_part = int(line.product_uom_qty)
-            decimal_part = round(float_product_uom_qty - integer_part,2)
-            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
-            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
-                line.purchase_order_line_product_uom_qty = integer_part
+            if line.display_type =='line_note' or line.display_type =='line_section':
+                line.purchase_order_line_product_uom_qty = ''
             else:
-                while decimal_part_after_dot % 10 == 0:
-                    decimal_part_after_dot = decimal_part_after_dot / 10
-                line.purchase_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
-
+                float_product_uom_qty = float(line.product_uom_qty)
+                integer_part = int(line.product_uom_qty)
+                decimal_part = round(float_product_uom_qty - integer_part,2)
+                decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+                if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                    line.purchase_order_line_product_uom_qty = integer_part
+                else:
+                    while decimal_part_after_dot % 10 == 0:
+                        decimal_part_after_dot = decimal_part_after_dot / 10
+                    line.purchase_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
     
     def _compute_purchase_order_prod_detail(self):
         for line in self:
@@ -2230,15 +2300,20 @@ class PurChaseOrderLineExcelReport(models.Model):
                 product_number_and_size = categ + "\n" + detail
             else:
                 product_number_and_size = categ
-            
-            line.purchase_order_prod_detail = product_number_and_size
-            
+                
+            if product_number_and_size:
+                line.purchase_order_prod_detail = product_number_and_size
+            else:
+                line.purchase_order_prod_detail = ""
             
     def _compute_purchase_order_index(self):
         index = 0
         for line in self:
-            index = index + 1
-            line.purchase_order_index = index
+            if line.display_type =='line_note' or line.display_type =='line_section':
+                line.purchase_order_index = ''
+            else:
+                index += 1
+                line.purchase_order_index = str(index)
     
     def _compute_purchase_order_product_detail(self):
         for line in self:
@@ -2253,18 +2328,23 @@ class PurChaseOrderLineExcelReport(models.Model):
                         + "\n"
                     )
             line.purchase_order_product_detail = attr
-
+            
     def _compute_purchase_order_text_piece_leg(self):
         for line in self:
-            line.purchase_order_text_piece_leg = "脚"
-
+            if line.display_type == "line_section" or line.display_type == "line_note":
+                line.purchase_order_text_piece_leg = ""
+            else:
+                line.purchase_order_text_piece_leg = "脚"
+            
     def _compute_purchase_order_sell_unit_price(self):
         for line in self:
             # if line.discount > 0:
             #     line.purchase_order_sell_unit_price = (
             #         line.price_unit - line.price_unit * line.discount / 100
             #     )
-            # else:
+            if line.display_type == "line_section" or line.display_type == "line_note":
+                line.purchase_order_sell_unit_price = ""
+            else:
                 line.purchase_order_sell_unit_price = line.price_unit
 
     def _compute_purchase_order_config_session(self):
