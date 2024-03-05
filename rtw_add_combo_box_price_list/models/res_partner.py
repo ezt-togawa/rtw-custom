@@ -21,7 +21,7 @@ class rtw_sf_partner(models.Model):
                     partner.property_product_pricelist = line.id
                     
                 else:
-                    dummy_price_list = self.env['product.pricelist'].search([('name', '=', '※   未指定')])
+                    dummy_price_list = self.env['product.pricelist'].search([('name', '=', '※未指定')])
                     
                     if dummy_price_list and dummy_price_list[0].currency_id.name == "JPY" :
                         
