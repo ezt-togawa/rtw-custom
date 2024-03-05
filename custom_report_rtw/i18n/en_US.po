@@ -1626,6 +1626,11 @@ msgid "請求書"
 msgstr "Invoice"
 
 #. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_invoice_rtw_4
+msgid "請求書"
+msgstr "Invoice"
+
+#. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_form
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order

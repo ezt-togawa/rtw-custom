@@ -37,6 +37,8 @@
         'report_unit_price_quotation/templates.xml',
         'report_invoice/actions.xml',
         'report_invoice/templates.xml',
+        'report_invoice_sale_order/actions.xml',
+        'report_invoice_sale_order/templates.xml',
 
         'report_purchase_order/actions.xml',
         'report_purchase_order/templates.xml',

@@ -83,7 +83,7 @@
                                 </div>
                                 <div> 納品場所: <span t-field="docs.partner_id.street" />
                                 <div> 備考: <span
-                                            t-field="docs.narration" />
+                                            t-field="docs.sale_order.special_note" />
                                     </div>
                                 </div>
                             </div>
@@ -182,8 +182,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <div id="quote_qty">
-                                                    <span
-                                                        t-esc="'{0:,.0f}'.format(l.quantity)" />
+                                                    <span t-esc="l.acc_move_line_qty" />
                                                 </div>
                                             </td>
                                             <td class="text-center">
@@ -208,7 +207,7 @@
                             class="d-flex justify-content-end size14">
                             <div
                                 class="pr-4 ">定価合計 : <span class="size16"
-                                    t-esc="amount_total" /></div>
+                                    t-esc="docs.amount_total" /></div>
                             <div>販売価格合計 : <span class="size16"
                                     t-esc="docs.amount_untaxed" /></div>
                         </div>

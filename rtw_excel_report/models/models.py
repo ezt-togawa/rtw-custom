@@ -164,6 +164,47 @@ class SaleOrderExcelReport(models.Model):
     dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
     
     sale_order_transactions_term = fields.Char(string="sale order transactions term", compute="_compute_sale_order_transactions_term")
+    
+    sale_order_print_staff= fields.Char(
+        "sale order print staff",
+        compute="_compute_print_staff",
+    )        
+    sale_order_bank_name= fields.Char(
+        "sale order print staff",
+        compute="_compute_bank",
+    )        
+    sale_order_bank_branch= fields.Char(
+        "sale order print staff",
+        compute="_compute_bank",
+    )        
+    sale_order_number_account= fields.Char(
+        "sale order print staff",
+        compute="_compute_bank",
+    )    
+        
+    
+    def _compute_bank(self):
+        for record in self:
+            if record.lang_code =="en_US":
+                record.sale_order_bank_name = "Nippon City Bank (0190)"
+                record.sale_order_bank_branch = "Chikushi Dori Branch (714)"
+                record.sale_order_number_account = "(Regular) 0272585"
+            elif record.lang_code =="ja_JP":
+                record.sale_order_bank_name = "西日本シティ銀行 （0190）"
+                record.sale_order_bank_branch = "筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）"
+                record.sale_order_number_account = "（普）0272585"
+            else:
+                record.sale_order_bank_name = "Nippon City Bank (0190)"
+                record.sale_order_bank_branch = "Chikushi Dori Branch (714)"
+                record.sale_order_number_account = "(Regular) 0272585"
+            
+            
+    def _compute_print_staff(self):
+        for l in self:
+            if l.user_id.name :
+                l.sale_order_print_staff = l.user_id.name +  (" Seal" if l.lang_code == "en_US" else "  印")
+            else:
+                l.sale_order_print_staff =""            
 
     def _compute_lang_code(self):
         for order in self:
@@ -742,9 +783,32 @@ class SaleOrderLineExcelReport(models.Model):
                 line.sale_order_name = line.name
             else:
                 categ_name=""
-                if line.product_id.product_tmpl_id.categ_id.name:
-                    categ_name = str(line.product_id.product_tmpl_id.categ_id.name)
+                if line.product_id.product_tmpl_id.config_ok :  
+                    if line.product_id.product_tmpl_id.categ_id.name:
+                        categ_name = line.product_id.product_tmpl_id.categ_id.name
+                    elif line.product_id.product_tmpl_id.product_no :
+                        categ_name = line.product_id.product_tmpl_id.product_no
+                    else: 
+                        categ_name = line.product_id.product_tmpl_id.name   
+                else:
+                    # case product is standard Prod + download payment
+                    if line.product_id.product_tmpl_id.seller_ids and line.order_id.partner_id.id:
+                        matching_sup = None  
+                        for sup in line.product_id.product_tmpl_id.seller_ids:
+                            if sup.name.id == line.order_id.partner_id.id:
+                                matching_sup = sup 
+                                break
+                        if matching_sup:
+                            categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
+                    else:
+                        if line.product_id.product_tmpl_id.default_code:
+                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
                 
+                                    
                 p_type = ""
                 if line.p_type:
                     if line.p_type == "special":
@@ -1092,6 +1156,10 @@ class StockMoveExcelReport(models.Model):
         compute="_compute_calculate_product_pack",
         default=""
     )
+    calculate_product_pack_pdf = fields.Char(
+        string="Calculate product pack pdf",
+        compute="_compute_calculate_product_pack_pdf",
+    )
 
     def _compute_calculate_product_pack(self):
         for line in self:
@@ -1099,6 +1167,31 @@ class StockMoveExcelReport(models.Model):
                 line.calculate_product_pack = ' / ' + line.sale_line_id.pack_parent_line_id.product_id.name
             else:
                 line.calculate_product_pack = ''
+                
+    def _compute_calculate_product_pack_pdf(self):
+        for line in self:
+                categ_name = ""
+                if line.product_id.product_tmpl_id.seller_ids and line.picking_id.partner_id.id:
+                    matching_sup = None  
+
+                    for sup in line.product_id.product_tmpl_id.seller_ids:
+                        if sup.name.id == line.picking_id.partner_id.id:
+                            matching_sup = sup 
+                            break
+                    if matching_sup:
+                        categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                    else:
+                        if line.product_id.product_tmpl_id.default_code:
+                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
+                else:
+                    if line.product_id.product_tmpl_id.default_code:
+                        categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                    else:
+                        categ_name =  line.product_id.product_tmpl_id.name
+                line.calculate_product_pack_pdf =  categ_name
+           
 
     def _compute_calculate_packages(self):
         for move in self:
@@ -1155,6 +1248,27 @@ class StockMoveExcelReport(models.Model):
         "Shiratani date",
         compute="_compute_stock_move",
     )
+    
+    stock_move_product_uom_qty = fields.Char(
+        "Shiratani date",
+        compute="_compute_stock_move",
+    )
+    
+    stock_product_uom_qty = fields.Char(string="stock_product_uom_qty" , compute="_compute_stock_product_uom_qty")
+                
+    def _compute_stock_product_uom_qty(self):
+        for line in self:
+            float_product_uom_qty = float(line.product_uom_qty)
+            integer_part = int(line.product_uom_qty)
+            decimal_part = round(float_product_uom_qty - integer_part,2)
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.stock_product_uom_qty = integer_part 
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.stock_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+
 
     def _compute_stock_move(self):
         index = 0
@@ -1165,9 +1279,35 @@ class StockMoveExcelReport(models.Model):
 
             categ_name=""
             p_type = ""
-            if line.product_id.product_tmpl_id.categ_id.name:
-                categ_name=line.product_id.product_tmpl_id.categ_id.name
+            
+            if line.product_id.product_tmpl_id.config_ok :  
+                if line.product_id.product_tmpl_id.categ_id.name:
+                    categ_name = line.product_id.product_tmpl_id.categ_id.name
+                elif line.product_id.product_tmpl_id.product_no :
+                    categ_name = line.product_id.product_tmpl_id.product_no
+                else: 
+                    categ_name = line.product_id.product_tmpl_id.name
+            else:
+                if line.product_id.product_tmpl_id.seller_ids and  line.picking_id.partner_id.id:
+                    matching_sup = None  
 
+                    for sup in line.product_id.product_tmpl_id.seller_ids:
+                        if sup.name.id == line.picking_id.partner_id.id:
+                            matching_sup = sup 
+                            break
+                    if matching_sup:
+                        categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                    else:
+                        if line.product_id.product_tmpl_id.default_code:
+                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
+                else:
+                    if line.product_id.product_tmpl_id.default_code:
+                        categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                    else:
+                        categ_name =  line.product_id.product_tmpl_id.name
+                        
             if line.p_type:
                 if line.p_type == "special":
                     p_type = "別注"
@@ -1185,22 +1325,29 @@ class StockMoveExcelReport(models.Model):
                 else:
                     line.product_name = ""
 
-            size_detail = ""
-            product_pack_ids = line.product_id.product_tmpl_id.mapped('pack_line_ids')
-            if line.product_id.product_tmpl_id.product_no:
-                size_detail += str(line.product_id.product_tmpl_id.product_no)
-                if product_pack_ids:
-                    size_detail += ' / '
-                    product_pack_names = []
-                    for pack in product_pack_ids:
-                        product_pack_names.append(pack.product_id.name)
-                    size_detail += ', '.join(product_pack_names)
+            size_detail = ""            
+            # product_pack_ids = line.product_id.product_tmpl_id.mapped('pack_line_ids')
+            # if line.product_id.product_tmpl_id.product_no:
+            #     size_detail += str(line.product_id.product_tmpl_id.product_no)
+            #     if product_pack_ids:
+            #         size_detail += ' / '
+            #         product_pack_names = []
+            #         for pack in product_pack_ids:
+            #             product_pack_names.append(pack.product_id.name)
+            #         size_detail += ', '.join(product_pack_names)
+            # else:
+            #     if product_pack_ids:
+            #         product_pack_names = []
+            #         for pack in product_pack_ids:
+            #             product_pack_names.append(pack.product_id.name)
+            #         size_detail += ', '.join(product_pack_names)
+                          
+            if line.sale_line_id.pack_parent_line_id:
+                size_detail += line.sale_line_id.pack_parent_line_id.product_id.product_no + '/' + line.calculate_product_pack_pdf
+                
             else:
-                if product_pack_ids:
-                    product_pack_names = []
-                    for pack in product_pack_ids:
-                        product_pack_names.append(pack.product_id.name)
-                    size_detail += ', '.join(product_pack_names)
+                size_detail += line.product_id.product_no
+
             size_detail + '\n'
 
             other_size=""
@@ -1487,6 +1634,9 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_name(self):
         for line in self:
             name = ""
+            if line.display_type =='line_note' or line.display_type =='line_section':
+                line.acc_line_name = line.name
+                return
             if line.product_id: 
                 # case product is download payment 
                 # if line.product_id.product_tmpl_id.type == 'service':  
@@ -1502,7 +1652,19 @@ class AccountMoveLineExcelReport(models.Model):
                         name = line.product_id.product_tmpl_id.name   
                 else:
                     # case product is standard Prod + download payment
-                    name = line.name
+                    if line.product_id.product_tmpl_id.seller_ids and line.move_id.partner_id.id:
+                        matching_sup = None  
+                        for sup in line.product_id.product_tmpl_id.seller_ids:
+                            if sup.name.id == line.move_id.partner_id.id:
+                                matching_sup = sup 
+                                break
+                        if matching_sup:
+                            name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                        else:
+                            name =  line.name
+                    else:
+                        name =  line.name
+                
             line.acc_line_name = name
             
     def _compute_acc_line_index(self):
@@ -1605,9 +1767,9 @@ class MrpProductionExcelReport(models.Model):
         note = ""
         for line in self:
             if line.remark:
-                note += line.remark + "\n"
-            if line.production_memo:
-                note += line.production_memo
+                note += line.remark 
+            # if line.production_memo:
+            #     note += line.production_memo
             line.mrp_note = note
 
     def _compute_order_line(self):
@@ -1907,6 +2069,22 @@ class PurChaseOrderLineExcelReport(models.Model):
         compute="_compute_purchase_order_prod_detail",
         string="Config Session",
     )
+    
+    purchase_order_line_product_uom_qty = fields.Char(string="sale order product uom qty" , compute="_compute_purchase_order_line_product_uom_qty")
+                
+    def _compute_purchase_order_line_product_uom_qty(self):
+        for line in self:
+            float_product_uom_qty = float(line.product_uom_qty)
+            integer_part = int(line.product_uom_qty)
+            decimal_part = round(float_product_uom_qty - integer_part,2)
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.purchase_order_line_product_uom_qty = integer_part
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.purchase_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+
     
     def _compute_purchase_order_prod_detail(self):
         for line in self:

@@ -13,6 +13,25 @@ class AccountInvoiceLine(models.Model):
     show_subtotal = fields.Boolean(
         string="Show subtotal",
         default=True)
+    
+    acc_move_line_qty = fields.Char(string="acc_move_line_qty" , compute="_compute_acc_move_line_qty")
+                
+    def _compute_acc_move_line_qty(self):
+        for line in self:
+            if line.display_type =='line_note' or line.display_type =='line_section':
+                line.acc_move_line_qty = ""
+                return
+            float_product_uom_qty = float(line.quantity)
+            integer_part = int(line.quantity)
+            decimal_part = round(float_product_uom_qty - integer_part,2)
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.acc_move_line_qty = integer_part 
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.acc_move_line_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+
 
 class AccountMoveCus(models.Model):
     _inherit = 'account.move'
