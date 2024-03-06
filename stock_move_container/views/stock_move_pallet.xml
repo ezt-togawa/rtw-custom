@@ -10,5 +10,15 @@
                 </xpath>
             </field>
         </record>
+        <record id="move_pallet_container" model="ir.ui.view">
+            <field name="name">move_pallet_container</field>
+            <field name="model">stock.move.pallet</field>
+            <field name="inherit_id" ref="stock_move_pallet.stock_move_pallet_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_ids']" position="after">
+                    <field name="container_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

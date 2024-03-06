@@ -130,3 +130,8 @@ msgstr "はい"
 #: model_terms:ir.ui.view,arch_db:collective_shipping.view_collective_shipping
 msgid "※Selected items will be removed from the existing delivery"
 msgstr "※選択した商品は既存の配送から削除されます"
+
+#. module: stock_move_pallet
+#:  model:ir.ui.menu,name:stock_move_pallet.move_pallet_action_window_menu
+msgid "Move Pallet"
+msgstr "パレット"
