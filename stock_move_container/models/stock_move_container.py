@@ -11,13 +11,13 @@ class StockMoveContainer(models.Model):
         result = super(StockMoveContainer, self).create(vals)
         return result
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True , translate=True)
     pallet_ids = fields.One2many(
         comodel_name="stock.move.pallet",
         inverse_name="container_id",
         string="PalletId", )
     status = fields.Char('ステータス' ,compute="_compute_status")
-    note = fields.Text('備考')
+    note = fields.Text('備考', translate=True)
 
     def _compute_status(self):
         for record in self:
@@ -35,3 +35,11 @@ class StockMoveContainer(models.Model):
                     status="完了"
             record.status= status
 
+class stock_move_line_container(models.Model):
+    _inherit = 'stock.move.line'
+
+    container_id =fields.Many2one('stock.move.container',string='コンテナ' , compute='_compute_container_ids')
+
+    def _compute_container_ids(self):
+        for line in self:
+            line.container_id = line.pallet_id.container_id

@@ -13,7 +13,7 @@
     'data': [
         'security/ir.model.access.csv',
         'wizard/stock_move_container_wizard_view.xml',
-        # 'views/stock_move_line.xml',
+        'views/stock_move_line.xml',
         'views/stock_move_pallet.xml',
         'views/stock_move_container.xml',
         'views/templates.xml',

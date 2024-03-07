@@ -41,7 +41,7 @@
             <field name="view_mode">form</field>
         </record> -->
 
-        <menuitem name="move_container"
+        <menuitem name="Move Container"
             id="move_container_action_window_menu"
             action="stock_move_container_action_window"
             parent="stock.menu_stock_warehouse_mgmt" />

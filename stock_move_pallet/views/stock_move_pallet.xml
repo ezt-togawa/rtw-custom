@@ -19,7 +19,21 @@
             <field name="view_mode">tree,kanban,form</field>
         </record>
 
-        <menuitem name="move_pallet"
+        <record model="ir.ui.view" id="stock_move_pallet_form">
+            <field name="name">move_pallet_form</field>
+            <field name="model">stock.move.pallet</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="move_line_ids"/>
+                        <field name="picking_ids"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <menuitem name="Move Pallet"
                   id="move_pallet_action_window_menu"
                   action="stock_move_pallet_action_window"
                   parent="stock.menu_stock_warehouse_mgmt"/>
