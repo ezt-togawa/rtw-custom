@@ -25,6 +25,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/mailing_trace.xml',
+        'views/res_partner.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

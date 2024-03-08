@@ -29,6 +29,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//tree//field[@name='state']"
                     position="before">
+                    <field name="company_info" string="Company Info" />
                     <field name="name_contact" string="Contact" />
                 </xpath>
             </field>
