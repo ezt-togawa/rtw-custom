@@ -248,8 +248,8 @@
                             </div>
 
                             <t t-if="docs.is_show_prescription_note_en">
-                                <div style="padding-bottom:10px">
-                                    <div style="padding-bottom:15px;border-bottom:2px solid black;">
+                                <div style="padding-bottom:15px">
+                                    <div style="padding-bottom:4px;border-bottom:2px solid black;">
                                         <span style="font-size:14px; font-weight: bold;">
                                             NOTE
                                         </span>
@@ -265,8 +265,8 @@
                             </t>
                             
                             <t t-if="docs.is_show_prescription_note_ita">
-                                <div style="padding-bottom:10px">
-                                    <div style="padding-bottom:15px;border-bottom:2px solid black;">
+                                <div style="padding-bottom:15px">
+                                    <div style="padding-bottom:4px;border-bottom:2px solid black;">
                                         <span style="font-size:14px; font-weight: bold;">
                                             NOTA
                                         </span>
@@ -281,7 +281,7 @@
                                 </div> 
                             </t>
                             
-                            <div style="padding-bottom:18px;border-bottom:2px solid black;">
+                            <div style="padding-bottom:5px;border-bottom:2px solid black;">
                                 <span style="font-size:14px; font-weight: bold;">
                                     SALES TERMS AND CONDITIONS.
                                 </span>
