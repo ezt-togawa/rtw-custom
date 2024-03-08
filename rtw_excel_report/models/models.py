@@ -1014,17 +1014,35 @@ class StockPickingExcelReport(models.Model):
             else:
                 record.stock_picking_shiratani_entry_date = ""
 
-            if record.scheduled_date:
-                record.stock_picking_scheduled_date = (
-                    str(record.scheduled_date.year)
-                    + record.yearUnit
-                    + str(record.scheduled_date.month)
-                    + record.monthUnit
-                    + str(record.scheduled_date.day)
-                    + record.dayUnit
-                )
+            xml_id = self.env['ir.model.data'].search([
+                                ('model', '=', 'stock.location'),
+                                ('res_id', '=', record.location_dest_id.id)
+                            ]).name
+            
+            if xml_id == "stock_location_customers":
+                if record.warehouse_arrive_date:
+                    record.stock_picking_scheduled_date = (
+                        str(record.warehouse_arrive_date.year)
+                        + record.yearUnit
+                        + str(record.warehouse_arrive_date.month)
+                        + record.monthUnit
+                        + str(record.warehouse_arrive_date.day)
+                        + record.dayUnit
+                    )
+                else:
+                    record.stock_picking_scheduled_date =""
             else:
-                record.stock_picking_scheduled_date = ""
+                if record.shiratani_entry_date:
+                    record.stock_picking_scheduled_date = (
+                        str(record.shiratani_entry_date.year)
+                        + record.yearUnit
+                        + str(record.shiratani_entry_date.month)
+                        + record.monthUnit
+                        + str(record.shiratani_entry_date.day)
+                        + record.dayUnit
+                    )
+                else:
+                    record.stock_picking_scheduled_date =""
 
             partner_info = ""            
             if record.sale_id.partner_id.display_name:
@@ -1119,7 +1137,7 @@ class StockPickingExcelReport(models.Model):
                 year + " " + record.yearUnit + " " + month + " " + record.monthUnit +" " + day + " "+ record.dayUnit
             )
 
-            estimated_shipping_date = record.sale_id.estimated_shipping_date
+            estimated_shipping_date = record.estimated_shipping_date
             if estimated_shipping_date:
                 record.stock_estimated_shipping_date = (
                     str(estimated_shipping_date.year)
@@ -1346,7 +1364,7 @@ class StockMoveExcelReport(models.Model):
                 size_detail += line.sale_line_id.pack_parent_line_id.product_id.product_no + '/' + line.calculate_product_pack_pdf
                 
             else:
-                size_detail += line.product_id.product_no
+                size_detail += str(line.product_id.product_no)
 
             size_detail + '\n'
 
