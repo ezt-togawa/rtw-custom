@@ -16,6 +16,7 @@
         'views/stock_move_line.xml',
         'views/stock_move_pallet.xml',
         'views/stock_move_container.xml',
+        'views/stock_picking.xml',
         'views/templates.xml',
         'data/container_sequence.xml',
     ],
