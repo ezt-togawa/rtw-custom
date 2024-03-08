@@ -240,6 +240,72 @@ class SaleOrderExcelReport(models.Model):
             if record.partner_id.payment_terms_1:
                 term += record.partner_id.payment_terms_1
             record.sale_order_transactions_term = term
+            
+        
+    prescription_note = fields.Char(string="prescription note", compute="_compute_prescription_excel")
+    prescription_note_detail = fields.Char(string="prescription note detail", compute="_compute_prescription_excel")
+    is_show_prescription_note_en = fields.Char(string="is show prescription note", compute="_compute_is_show_prescription_note_pdf")
+    is_show_prescription_note_ita = fields.Char(string="is show prescription note", compute="_compute_is_show_prescription_note_pdf")
+
+    def _compute_is_show_prescription_note_pdf(self):  
+        for record in self:
+            is_enUS = False
+            is_ita = False
+            
+            order_lines=self.env['sale.order.line'].search([('order_id','=',record.id)])
+            if order_lines:
+                for order in order_lines:
+                    attributes_cfg=order.config_session_id.custom_value_ids
+                    if attributes_cfg:
+                        for cfg in attributes_cfg:
+                            xml_id = self.env['ir.model.data'].search([
+                                ('model', '=', 'product.attribute'),
+                                ('res_id', '=', cfg.attribute_id.id)
+                            ]).name
+                            if xml_id.isdigit(): 
+                                if int (xml_id) == 110 or int (xml_id) == 111 or int (xml_id) == 112:
+                                    if record.lang_code =="en_US":
+                                        is_enUS = True
+                                    if record.lang_code =="it_IT":
+                                        is_ita = True
+                                    else:
+                                        is_enUS = True
+                                    break
+            record.is_show_prescription_note_en = is_enUS
+            record.is_show_prescription_note_ita = is_ita
+            
+    def _compute_prescription_excel(self):  
+        for record in self:
+            note = ""
+            desc = ""
+            is_show_note=False
+            
+            order_lines=self.env['sale.order.line'].search([('order_id','=',record.id)])
+            if order_lines:
+                for order in order_lines:
+                    attributes_cfg=order.config_session_id.custom_value_ids
+                    if attributes_cfg:
+                        for cfg in attributes_cfg:
+                            xml_id = self.env['ir.model.data'].search([
+                                ('model', '=', 'product.attribute'),
+                                ('res_id', '=', cfg.attribute_id.id)
+                            ]).name
+                            if xml_id.isdigit(): 
+                                if int(xml_id) == 110 or int (xml_id) == 111 or int (xml_id) == 112:
+                                    is_show_note = True
+                                    break
+                
+            if is_show_note:
+                if record.lang_code =="it_IT":
+                    note += "NOTA"
+                    desc += "*1 COL & COM" + "\n"+"L'Acquirente si impegna ad inviare COL&COM a Ritzwell in termini Incoterms DDP (resa sdoganata). Ciò significa che l'Acquirente supporta le spese di acquisto COL&COM e tutti i rischi e i costi del trasporto (tasse di esportazione, trasporto, assicurazione, spese portuali di destinazione, consegna alla destinazione finale fabbrica Ritzwell),nonché eventuali dazi doganali e dazi di importazione. L'indirizzo di consegna per COL&COM è il seguente." + "\n" + "   RITZWELL & CO. Attn. Atsuya Nakamura" + "\n" + "   NIJOYOSHII 3515-1 ITOSHIMA FUKUOKA 819-1641 JAPAN"+ "\n"+ "   TEL +81-92-326-8011"
+                # if record.lang_code =="en_US":
+                else:
+                    note += "NOTE"
+                    desc += "*1 COL & COM" + "\n"  +  "The Buyer has to send COL&COM to Ritzwell in Incoterms DDP (Delivered Duty Paid) term. This term means Buyer assumes purchasing COL&COM and all the risks and costs of transport (export fees, carriage, insurance, and destination port charges, delivery to the final destination Ritzwell factory) and pays any import customs and duty. The delivery address for COL&COM is as follows." + "\n" + "   RITZWELL & CO. Attn. Atsuya Nakamura" + "\n" + "   NIJOYOSHII 3515-1 ITOSHIMA FUKUOKA 819-1641 JAPAN"+ "\n"+ "   TEL +81-92-326-8011"
+                    
+            record.prescription_note = note
+            record.prescription_note_detail = desc
                 
     def _compute_sale_order_hr_employee(self):
         for record in self:
@@ -755,7 +821,28 @@ class SaleOrderLineExcelReport(models.Model):
                         + attribute.product_attribute_value_id.name
                         + "\n"
                     )
-            line.sale_order_product_detail = attr
+                    
+            attr_cfg=""
+            attributes_cfg=line.config_session_id.custom_value_ids
+            if attributes_cfg:
+                for string_line in attributes_cfg:
+                    attr_cfg += (
+                        string_line.display_name
+                        + ":"
+                        + string_line.value
+                        + "\n"
+                    )
+            if attr:
+                if attr_cfg:
+                    line.sale_order_product_detail = attr + "\n" + attr_cfg
+                else:
+                    line.sale_order_product_detail = attr
+            else:
+                if attr_cfg:
+                    line.sale_order_product_detail =  attr_cfg
+                else:
+                    line.sale_order_product_detail = ""
+                    
 
     def _compute_sale_order_product_summary(self):
         for line in self:

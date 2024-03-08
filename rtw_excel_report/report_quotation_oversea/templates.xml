@@ -19,7 +19,7 @@
                             'B7':'title${value or ""}',
                             'B9': 'sale_order_amount_untaxed${value or ""}',
                             'B10':'sale_order_amount_tax${value or ""}',
-                            'B11':'sale_order_amount_total${value or ""}',
+                            'B11':'sale_order_amount_total${value or ""}',  
                             'E3': 'preferred_delivery_period${value or ""}',
                             'E4': 'workdays${value or ""}',
                             'E5': 'sale_order_date_deadline${value or ""}',
@@ -45,6 +45,13 @@
                             'I19': 'price_subtotal${value or ""}#{style=text;fill=grey}',
                         }
                     },
+
+                    'Prescription':{
+                        '_HEAD_': {
+                            'G7': 'prescription_note${value or ""}#{style=text}',
+                            'G8': 'prescription_note_detail${value or ""}#{style=text}',
+                        }
+                    }
                 }
         }
         </field>

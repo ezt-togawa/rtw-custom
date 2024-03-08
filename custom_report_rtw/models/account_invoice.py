@@ -10,8 +10,7 @@ class AccountInvoiceLine(models.Model):
     show_details = fields.Boolean(
         string="Show details",
         default=True)
-    show_subtotal = fields.Boolean(
-        string="Show subtotal",
+    show_subtotal = fields.Boolean(        string="Show subtotal",
         default=True)
     
     acc_move_line_qty = fields.Char(string="acc_move_line_qty" , compute="_compute_acc_move_line_qty")
