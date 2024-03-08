@@ -17,7 +17,7 @@
                             'C2': 'stock_picking_company_name${value or ""}',
                             'B3': 'sale_id.name${value or ""}',
                             'B5': 'stock_picking_scheduled_date${value or ""}',
-                            'B6': 'stock_picking_shiratani_entry_date${value or ""}',
+                            'B6': '${value or ""}',
                             'B8': 'sale_id.title${value or ""}',
                             'B9': 'stock_picking_partner_info${value or ""}',
                             'B11': 'stock_picking_partner_address${value or ""}',
