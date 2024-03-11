@@ -8,16 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']"
                     position="attributes">
-                    <attribute name="context">{
-                        'partner_id': parent.partner_id,
-                        'quantity': product_uom_qty,
-                        'pricelist': parent.pricelist_id,
-                        'uom':product_uom,
-                        'company_id': parent.company_id,
-                        'default_lst_price': price_unit,
-                        'default_description_sale': name,
-                        'search_default_filter_standard_products':1,
-                        }</attribute>
+                    <attribute name="domain">[('config_ok','=',False)]</attribute>
                 </xpath>
             </field>
         </record>
