@@ -244,6 +244,28 @@ class SaleOrderExcelReport(models.Model):
         
     prescription_note = fields.Char(string="prescription note", compute="_compute_prescription_excel")
     prescription_note_detail = fields.Char(string="prescription note detail", compute="_compute_prescription_excel")
+    
+    prescription_company_name = fields.Char(string="prescription note", compute="_compute_prescription")
+    prescription_address_info = fields.Char(string="prescription note detail", compute="_compute_prescription")
+    prescription_address_country = fields.Char(string="prescription note", compute="_compute_prescription")
+    prescription_tel_fax = fields.Char(string="prescription note detail", compute="_compute_prescription")
+    prescription_email = fields.Char(string="prescription note", compute="_compute_prescription")
+    
+    def _compute_prescription(self):  
+        for record in self:
+            if record.lang_code == "it_IT":
+                record.prescription_company_name = "Ritzwell Italia"
+                record.prescription_address_info = "Via Bocchetto, 6"
+                record.prescription_address_country = "Milano"
+                record.prescription_tel_fax = "20123 (MI) Italy"
+                record.prescription_email = ""
+            else:
+                record.prescription_company_name = "RITZWELL & CO."
+                record.prescription_address_info = "5-2-9 ITAZUKE HAKATA-KU"
+                record.prescription_address_country = "FUKUOKA,812-0888 JAPAN"
+                record.prescription_tel_fax = "TEL: +81 92 584 2240 FAX: +81 92 584 2241"
+                record.prescription_email = "E-mail: info@ritzwell.com"
+    
     is_show_prescription_note_en = fields.Char(string="is show prescription note", compute="_compute_is_show_prescription_note_pdf")
     is_show_prescription_note_ita = fields.Char(string="is show prescription note", compute="_compute_is_show_prescription_note_pdf")
 
@@ -886,7 +908,9 @@ class SaleOrderLineExcelReport(models.Model):
                                 matching_sup = sup 
                                 break
                         if matching_sup:
-                            categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                            product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                            product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
+                            categ_name = product_code + product_name
                         else:
                             categ_name =  line.product_id.product_tmpl_id.name
                     else:
@@ -1284,7 +1308,9 @@ class StockMoveExcelReport(models.Model):
                             matching_sup = sup 
                             break
                     if matching_sup:
-                        categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                        product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                        product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
+                        categ_name = product_code + product_name
                     else:
                         if line.product_id.product_tmpl_id.default_code:
                             categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
@@ -1401,7 +1427,9 @@ class StockMoveExcelReport(models.Model):
                             matching_sup = sup 
                             break
                     if matching_sup:
-                        categ_name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                        product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                        product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
+                        categ_name = product_code + product_name
                     else:
                         if line.product_id.product_tmpl_id.default_code:
                             categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
@@ -1764,7 +1792,9 @@ class AccountMoveLineExcelReport(models.Model):
                                 matching_sup = sup 
                                 break
                         if matching_sup:
-                            name = "[" + matching_sup.product_code + "]" + matching_sup.product_name
+                            product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                            product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
+                            name = product_code + product_name
                         else:
                             name =  line.name
                     else:

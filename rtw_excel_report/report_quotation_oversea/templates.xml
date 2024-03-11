@@ -50,6 +50,11 @@
                         '_HEAD_': {
                             'G7': 'prescription_note${value or ""}#{style=text}',
                             'G8': 'prescription_note_detail${value or ""}#{style=text}',
+                            'C8': 'prescription_company_name${value or ""}#{style=text}',
+                            'C9': 'prescription_address_info${value or ""}#{style=text}',
+                            'C10': 'prescription_address_country${value or ""}#{style=text}',
+                            'C11': 'prescription_tel_fax${value or ""}#{style=text}',
+                            'C12': 'prescription_email${value or ""}#{style=text}',
                         }
                     }
                 }
