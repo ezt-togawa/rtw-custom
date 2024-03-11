@@ -361,8 +361,6 @@ class rtw_product_configurator(models.TransientModel):
         return wizard_action
 
     def read(self, fields=None, load="_classic_read"):
-        print('222222222222222222222222')
-
         """Remove dynamic fields from the fields list and update the
         returned values with the dynamic data stored in value_ids"""
 
