@@ -23,9 +23,9 @@
                 <tree>
                     <field name="picking_id" />
                     <field name="overseas" />
-                    <field name="sale_id" string="注番" />
+                    <field name="sale_id" string="注番" optional="show" />
                     <field name="production_id" invisible="1" />
-                    <field name="mrp_production_id" />
+                    <field name="mrp_production_id" optional="show" />
                     <field name="product_id" />
                     <!--                    <field name="title"/>-->
                     <field name="spec" widget="many2many_tags" optional="hide" />
@@ -37,10 +37,10 @@
 
                     <field name="customer_id" optional="hide" />
                     <field name="result_package_id" invisible="1" />
-                    <field name="shiratani_date" string="白谷到着日" />
-                    <field name="area" string="デポ先" />
-                    <field name="warehouse_arrive_date" string="デポ到着日" />
-                    <field name="forwarding_address" string="納品設置先" />
+                    <field name="shiratani_date" string="白谷到着日" optional="show" />
+                    <field name="area" string="デポ先" optional="show" />
+                    <field name="warehouse_arrive_date" string="デポ到着日" optional="show" />
+                    <field name="forwarding_address" string="納品設置先" optional="show" />
                     <field name="date_planned" string="出荷日" />
                     <field name="memo" string="備考" />
                     <field name="shipping_to" />
@@ -57,9 +57,9 @@
                     decoration-danger="date_planned &lt; current_date">
                     <field name="picking_id" />
                     <field name="overseas" />
-                    <field name="sale_id" string="注番" />
+                    <field name="sale_id" string="注番" optional="show" />
                     <field name="production_id" invisible="1" />
-                    <field name="mrp_production_id" />
+                    <field name="mrp_production_id" optional="show" />
                     <field name="product_id" />
                     <!--                    <field name="title"/>-->
 
@@ -72,10 +72,10 @@
 
                     <field name="customer_id" optional="hide" />
                     <field name="result_package_id" invisible="1" />
-                    <field name="shiratani_date" string="白谷到着日" />
-                    <field name="area" string="デポ先" />
-                    <field name="warehouse_arrive_date" string="デポ到着日" />
-                    <field name="forwarding_address" string="納品設置先" />
+                    <field name="shiratani_date" string="白谷到着日" optional="show" />
+                    <field name="area" string="デポ先" optional="show" />
+                    <field name="warehouse_arrive_date" string="デポ到着日" optional="show" />
+                    <field name="forwarding_address" string="納品設置先" optional="show" />
                     <field name="date_planned" string="出荷日" />
                     <field name="shizai_date" />
                     <field name="memo" string="備考" />
@@ -101,10 +101,10 @@
                         domain="[('location_id', 'like', '糸島')]"
                     />
                     <filter string="移動先が白谷" name="to_shiratani"
-                        domain="[('location_id', 'like', '白谷')]"
+                        domain="[('location_dest_id', 'like', '白谷')]"
                     />
                     <filter string="移動元が白谷" name="from_shiratani"
-                        domain="[('location_dest_id', 'like', '白谷')]"
+                        domain="[('location_id', 'like', '白谷')]"
                     />
                     <separator />
                 </xpath>
