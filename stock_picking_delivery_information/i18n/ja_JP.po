@@ -1,0 +1,32 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_delivery_information
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-09 02:35+0000\n"
+"PO-Revision-Date: 2024-02-09 02:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_delivery_information
+#: model:ir.model.fields,field_description:stock_picking_delivery_information.field_stock_picking__shiratani_entry_date
+msgid "Shiratani entry date"
+msgstr "白谷到着日"
+
+#. module: stock_picking_delivery_information
+#: model:ir.model.fields,field_description:stock_picking_delivery_information.field_stock_picking__warehouse_arrive_date 
+msgid "Warehouse arrive date "
+msgstr "デポ到着日"
+
+#. module: stock_picking_delivery_information
+#: model:ir.model.fields,field_description:stock_picking_delivery_information.field_stock_picking__estimated_shipping_date
+msgid "Estimated shipping date"
+msgstr "発送予定日"
+

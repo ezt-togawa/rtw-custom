@@ -17,7 +17,11 @@
             <xpath expr="//field[@name='location_dest_id']" position="replace">
                 <field name="location_dest_id" options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>
             </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="shiratani_entry_date"/>
+                <field name="warehouse_arrive_date"/>
+                <field name="estimated_shipping_date"/>
+            </xpath>
         </field>
     </record>
-
 </odoo>

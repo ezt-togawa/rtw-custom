@@ -3,6 +3,7 @@
 from odoo import models, fields, api
 import datetime
 
+
 class rtw_stock_move_line(models.Model):
     _inherit = "stock.move.line"
 
@@ -10,7 +11,7 @@ class rtw_stock_move_line(models.Model):
     depo_date = fields.Date(compute="_get_sale", store=True)
     shiratani_date = fields.Date(related='move_id.sale_line_id.shiratani_date')
     date_planned = fields.Datetime(related='move_id.sale_line_id.date_planned', store=True)
-    sale_id = fields.Many2one('sale.order', compute="_get_sale_id", group_operator="sum", store=True)
+    sale_id = fields.Many2one('sale.order', compute="_get_sale_id", group_operator="sum")
     customer_id = fields.Many2one(related='sale_id.partner_id', string='顧客')
     title = fields.Char(related='sale_id.title', string='案件名')
     spec = fields.Many2many(related="move_id.sale_line_id.product_id.product_template_attribute_value_ids")
@@ -25,6 +26,8 @@ class rtw_stock_move_line(models.Model):
     forwarding_address = fields.Text(related='sale_id.forwarding_address', string='到着地')
     shipping_to = fields.Selection(string="配送", related='sale_id.sipping_to', store=True)
     shizai_date = fields.Date(string="資材出荷目安", compute="_get_shizai_date")
+    warehouse_arrive_date = fields.Date(compute="_get_warehouse_arrive_date")
+    mrp_production_id = fields.Char(string="製造オーダー", compute="_get_mrp_production_id")
     # @api.depends('product_id')
     # def _get_state(self):
     #     for rec in self:
@@ -38,9 +41,11 @@ class rtw_stock_move_line(models.Model):
     def _get_shizai_date(self):
         for rec in self:
             if rec.date_planned:
-                rec.shizai_date = rec.date_planned + datetime.timedelta(days=-20)
+                rec.shizai_date = rec.date_planned + \
+                    datetime.timedelta(days=-20)
             else:
                 rec.shizai_date = False
+
     @api.depends('product_id')
     def _get_sai(self):
         for rec in self:
@@ -57,14 +62,35 @@ class rtw_stock_move_line(models.Model):
             else:
                 rec.depo_date = False
 
-    @api.depends('product_id')
+    def _get_warehouse_arrive_date(self):
+        for rec in self:
+            print(rec.move_id.sale_line_id.order_id.name)
+            print(rec.move_id.sale_line_id.order_id.warehouse_arrive_date)
+            if rec.picking_id:
+                rec.warehouse_arrive_date = rec.picking_id.sale_id.warehouse_arrive_date
+            else:
+                rec.warehouse_arrive_date = False
+
     def _get_sale_id(self):
         for rec in self:
             if rec.move_id.sale_line_id.order_id:
                 rec.sale_id = rec.move_id.sale_line_id.order_id
+            elif rec.picking_id:
+                rec.sale_id = rec.picking_id.sale_id
             else:
                 rec.sale_id = False
 
+    def _get_mrp_production_id(self):
+        for rec in self:
+            if rec.production_id:
+                rec.mrp_production_id = rec.production_id.name
+            else:
+                mrp = self.env['mrp.production'].search(
+                    [('origin', '=', rec.picking_id.sale_id.name), ('product_id', '=', rec.product_id.id)], limit=1)
+                if mrp:
+                    rec.mrp_production_id = mrp.name
+                else:
+                    rec.mrp_production_id = None
 
     # def _get_spec(self):
     #     for rec in self:

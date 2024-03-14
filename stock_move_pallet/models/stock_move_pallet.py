@@ -12,7 +12,7 @@ class StockMovePallet(models.Model):
         result = super(StockMovePallet, self).create(vals)
         return result
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True , translate=True)
     move_line_ids = fields.One2many(
         comodel_name="stock.move.line",
         inverse_name="pallet_id",

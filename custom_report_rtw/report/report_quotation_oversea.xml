@@ -227,26 +227,77 @@
                             <span style="font-size:14px">
                                 <bold>MAIN OFFICE</bold>
                             </span>
-                            <div>
-                                <span style="font-size:11px;padding:0;margin:0;">RITZWELL &amp; CO.</span>
-                            </div>
-                            <div>
-                                <span style="font-size:11px;padding:0;margin:0;">5-2-9 ITAZUKE
-                                    HAKATA-KU</span>
-                            </div>
-                            <div>
-                                <span style="font-size:11px;padding:0;margin:0;">FUKUOKA,812-0888
-                                    JAPAN</span>
-                            </div>
-                            <div>
-                                <span style="font-size:11px;padding:0;margin:0;">TEL: +81 92 584
-                                    2240
-                                    FAX: +81 92 584 2241</span>
-                            </div>
-                            <div style="margin-bottom:22px;">
-                                <span style="font-size:11px">E-mail: info@ritzwell.com</span>
-                            </div>
-                            <div style="padding-bottom:18px;border-bottom:2px solid black;">
+
+                            <t t-if="docs.lang_code == 'it_IT'">
+                                <div>
+                                    <span style="font-size:11px;padding:0;margin:0;">Ritzwell Italia</span>
+                                </div>
+                                <div>
+                                    <span style="font-size:11px;padding:0;margin:0;">Via Bocchetto, 6</span>
+                                </div>
+                                <div>
+                                    <span style="font-size:11px;padding:0;margin:0;">Milano</span>
+                                </div>
+                                <div>
+                                    <span style="font-size:11px;padding:0;margin:0;">20123 (MI) Italy</span>
+                                </div>
+                                
+                            </t>
+                            <t t-else="">
+                                <div>
+                                    <span style="font-size:11px;padding:0;margin:0;">RITZWELL &amp; CO.</span>
+                                </div>
+                                <div>
+                                    <span style="font-size:11px;padding:0;margin:0;">5-2-9 ITAZUKE
+                                        HAKATA-KU</span>
+                                </div>
+                                <div>
+                                    <span style="font-size:11px;padding:0;margin:0;">FUKUOKA,812-0888
+                                        JAPAN</span>
+                                </div>
+                                <div>
+                                    <span style="font-size:11px;padding:0;margin:0;">TEL: +81 92 584 2240 FAX: +81 92 584 2241</span>
+                                </div>
+                                <div style="margin-bottom:22px;">
+                                    <span style="font-size:11px">E-mail: info@ritzwell.com</span>
+                                </div>
+                            </t>
+                            
+                            <t t-if="docs.is_show_prescription_note_en">
+                                <div style="padding-bottom:15px">
+                                    <div style="padding-bottom:4px;border-bottom:2px solid black;">
+                                        <span style="font-size:14px; font-weight: bold;">
+                                            NOTE
+                                        </span>
+                                    </div>
+                                    <div style="font-size:12px">*1 COL &amp; COM</div>
+                                    <div style="font-weight:300; ">
+                                        <div style="font-size:12px">The Buyer has to send COL&amp;COM to Ritzwell in Incoterms DDP (Delivered Duty Paid) term. This term means Buyer assumes purchasing COL&amp;COM and all the risks and costs of transport (export fees, carriage, insurance, and destination port charges,delivery to the final destination itzwell factory) and pays any import customs and duty. The delivery address for COL&amp;COM is as follows.</div>
+                                        <div style="font-size:12px;padding-left:8px">RITZWELL &amp; CO. Attn. Atsuya Nakamura</div>
+                                        <div style="font-size:12px;padding-left:8px">NIJOYOSHII 3515-1 ITOSHIMA FUKUOKA 819-1641 JAPAN</div>
+                                        <div style="font-size:12px;padding-left:8px">TEL +81-92-326-8011</div>
+                                </div>
+                            </div> 
+                            </t>
+                            
+                            <t t-if="docs.is_show_prescription_note_ita">
+                                <div style="padding-bottom:15px">
+                                    <div style="padding-bottom:4px;border-bottom:2px solid black;">
+                                        <span style="font-size:14px; font-weight: bold;">
+                                            NOTA
+                                        </span>
+                                    </div>
+                                    <div style="font-size:12px">*1 COL &amp; COM</div>
+                                    <div style="font-weight:300; ">
+                                        <div style="font-size:12px">L'Acquirente si impegna ad inviare COL&amp;COM a Ritzwell in termini Incoterms DDP (resa sdoganata). Ciò significa che l'Acquirente supporta le spese di acquisto COL&amp;COM e tutti i rischi e i costi del trasporto (tasse di esportazione, trasporto, assicurazione, spese portuali di destinazione, consegna alla destinazione finale fabbrica Ritzwell), nonché eventuali dazi doganali e dazi di importazione. L'indirizzo di consegna per COL&amp;COM è il seguente.</div>
+                                        <div style="font-size:12px;padding-left:8px">RITZWELL &amp; CO. Attn. Atsuya Nakamura</div>
+                                        <div style="font-size:12px;padding-left:8px">NIJOYOSHII 3515-1 ITOSHIMA FUKUOKA 819-1641 JAPAN</div>
+                                        <div style="font-size:12px;padding-left:8px">TEL +81-92-326-8011</div>
+                                    </div>
+                                </div> 
+                            </t>
+                            
+                            <div style="padding-bottom:5px;border-bottom:2px solid black;">
                                 <span style="font-size:14px; font-weight: bold;">
                                     SALES TERMS AND CONDITIONS.
                                 </span>
