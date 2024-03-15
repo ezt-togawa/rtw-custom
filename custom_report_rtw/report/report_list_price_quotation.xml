@@ -115,6 +115,7 @@
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody">
+                                <t t-set="number" t-value="0" />
                                 <tr
                                     t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)"
                                     t-as="l"
@@ -126,17 +127,23 @@
                                         t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                                     <t t-set="total_discount"
                                         t-value="total_discount + (l.price_unit - l.price_reduce) * l.product_uom_qty" />
-                                    <t
-                                        t-if="l.display_type =='line_note' or l.display_type =='line_section'">
-                                        <td t-esc="l_index+1" class="text-center">
-                                        </td>
+                                    <t t-if="l.display_type =='line_note'">
+                                        <td/>
                                         <td class="size11" colspan="6">
                                             <span t-field="l.name" />
                                         </td>
                                     </t>
-                                    <t t-else="">
-                                        <td t-esc="l_index+1" class="text-center">
+                                    <t t-elif="l.display_type =='line_section'">
+                                        <td class="bg-section"></td>
+                                        <td class="size11 bg-section" colspan="6">
+                                            <span t-field="l.name" />
                                         </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td class="text-center size12">
+                                                <t t-set="number" t-value="number + 1" />
+                                                <t t-esc="number" />
+                                            </td>
                                         <td class="size11">
                                             <span
                                                 t-field="l.sale_order_name" />

@@ -16,21 +16,24 @@
                         '_HEAD_': {
                             'A3': 'send_to_company${value or ""}',
                             'A4': 'send_to_people${value or ""}',
-                            'H9': 'printing_staff${value or ""}',
                             'B9': 'amount_untaxed${value or ""}',
                             'B10':'amount_tax${value or 0}',
                             'B11':'amount_total${value or ""}',
                             'E3': 'acc_move_invoice_date_due${value or ""}',
-                            'E10': 'partner_id.street${value or ""}',
+                            'E5': '${value or "西日本シティ銀行 （0190）"}',
+                            'E6': '${value or "筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）"}',
+                            'E7': '${value or "（普）0272585"}',
                             'H1': 'acc_move_current_date',
+                            'H3': 'account_move_hr_employee${value or ""}',
                             'G13': 'amount_total${value or ""}',
                             'I13': 'amount_untaxed${value or ""}',
-                            'I14': 'acc_move_invoice_name${value or ""}'
+                            'I14': 'acc_move_invoice_name${value or ""}',
                         },
                         'sale_order':{
                             'B7':'title${value or ""}',
                             'E4': 'payment_term_id.name${value or ""}',
                             'E9': 'sale_order_preferred_delivery_date${value or ""}',
+                            'E10': 'forwarding_address${value or ""}',
                             'E11':'special_note${value or ""}',
                         },
                         'account_move_line':{

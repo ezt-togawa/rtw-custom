@@ -77,22 +77,26 @@
                       src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
                       alt="Logo" />
                   </div>
-                  <div>
-                    株式会社リッツウェル
+                  <div class="size12">
+                    <span t-esc="docs.sale_order.hr_employee_company" />
                   </div>
                   <div>
-                    大阪オフィス
-                  </div>
-                  <div>〒542-0081</div>
-                  <div>
-                    大阪市中央区南船場4-7-6 B1F
-                  </div>
-                  <div> tel.06-4963-8777
-                  </div>
-                  <div> fax.06-4963-8778
+                    <span t-esc="docs.sale_order.hr_employee_department" />
                   </div>
                   <div>
-                    <span t-if="so.sale_order_printing_staff" t-esc="so.sale_order_printing_staff" />
+                    <span t-esc="docs.sale_order.hr_employee_zip" />
+                  </div>
+                  <div>
+                    <span t-esc="docs.sale_order.hr_employee_info" />
+                  </div>
+                  <div>
+                    <span t-esc="docs.sale_order.hr_employee_tel" />
+                  </div>
+                  <div>
+                    <span t-esc="docs.sale_order.hr_employee_fax" />
+                  </div>
+                  <div class="size12">
+                    <span t-esc="docs.sale_order.hr_employee_printer" />
                   </div>
                 </div>
               </div>
@@ -104,27 +108,7 @@
                       t-if="so.partner_id.parent_id"
                       t-field="so.partner_id.parent_id.name" />
                   </div>
-                  <div> 住所: <t class="size14">
-                      <t t-if="so.partner_id.zip"> 〒 <span t-field="so.partner_id.zip" />
-                      </t>
-                      <t
-                        t-if="so.partner_id.street">
-                        <span t-field="so.partner_id.street" />
-                      </t>
-                      <t
-                        t-if="so.partner_id.city">
-                        <span t-field="so.partner_id.city" />
-                      </t>
-                      <t
-                        t-if="so.partner_id.state_id.name">
-                        <span t-field="so.partner_id.state_id.name" />
-                      </t>
-                      <t
-                        t-if="so.partner_id.country_id.name">
-                        <span t-field="so.partner_id.country_id.name" />
-                      </t>
-                    </t>
-                  </div>
+                  <div> 住所: <span t-esc="docs.sale_order.sale_order_detail_address_partner" /> </div>
                   <div> TEL: <span class="size14" t-field="so.partner_id.phone" />
                   </div>
                 </div>
