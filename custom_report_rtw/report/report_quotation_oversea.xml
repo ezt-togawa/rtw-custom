@@ -244,10 +244,9 @@
                                 <div>
                                     <span style="font-size:11px;padding:0;margin:0;">Milano</span>
                                 </div>
-                                <div>
+                                <div style="margin-bottom:22px;">
                                     <span style="font-size:11px;padding:0;margin:0;">20123 (MI) Italy</span>
                                 </div>
-                                
                             </t>
                             <t t-else="">
                                 <div>
