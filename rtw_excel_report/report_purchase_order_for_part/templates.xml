@@ -16,6 +16,7 @@
                         '_HEAD_': {
                             'C1': 'purchase_order_company${value or ""}',
                             'B5': 'name${value or ""}',
+                            'B6': 'purchase_order_origin${value or ""}',
                             'B7': 'purchase_line_date_planned${value or ""}',
                             'B8': 'purchase_line_date_order${value or ""}',
                             'B11': 'picking_type_id.warehouse_id.name${value or ""}',

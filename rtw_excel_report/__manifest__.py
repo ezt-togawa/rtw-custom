@@ -43,10 +43,10 @@
         'report_purchase_order/actions.xml',
         'report_purchase_order/templates.xml',
 
-        'report_purchase_order_sheet/actions.xml',
-        'report_purchase_order_sheet/templates.xml',
-        'report_inspection_order_form/actions.xml',
-        'report_inspection_order_form/templates.xml',
+        # 'report_purchase_order_sheet/actions.xml',
+        # 'report_purchase_order_sheet/templates.xml',
+        # 'report_inspection_order_form/actions.xml',
+        # 'report_inspection_order_form/templates.xml',
 
         'report_purchase_order_for_part/actions.xml',
         'report_purchase_order_for_part/templates.xml',
@@ -68,6 +68,8 @@
         'views/scheduled_arrival_list.xml',
         'views/supplied_material_detail.xml',
         'views/stock_move_pallet.xml',
+        'views/purchase_order_sheet.xml',
+        'views/inspection_order_form.xml',
 
         # 'report_stock_move_pallet/actions.xml',
         # 'report_stock_move_pallet/templates.xml',

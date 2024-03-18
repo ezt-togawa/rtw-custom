@@ -14,3 +14,5 @@ from . import scheduled_arrival_list
 from . import supplied_material_detail
 from . import styles
 from . import shipping_instruction
+from . import purchase_order_sheet
+from . import inspection_order_form

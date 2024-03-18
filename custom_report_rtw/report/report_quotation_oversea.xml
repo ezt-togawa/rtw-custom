@@ -4,7 +4,7 @@
         <t t-call="web.html_container">
             <t t-call="custom_report_rtw.SO_header_layout_oversea"></t>
             <t t-foreach="docs" t-as="o">
-                <t t-call="custom_report_rtw.so_ex_layout">
+                <t t-call="custom_report_rtw.so_ex_layout" t-att-style="o != docs[0] and 'page-break-before: always;'">
                     <t t-set="total_subprice" t-value="0" />
                     <t t-set="total_listprice" t-value="0" />
                     <t t-if="not o" t-set="o" t-value="doc" />

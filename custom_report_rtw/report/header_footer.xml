@@ -270,15 +270,15 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20"> 発注書 </span>
-                        <t t-if="docs.lang_code == 'en_US'">
-                            <div>御中 <span t-field="docs.company_id.partner_id.name" /> 株式会社</div>
+                        <t t-if="so.lang_code == 'en_US'">
+                            <div>御中 <span t-field="so.company_id.partner_id.name" /> 株式会社</div>
                         </t>
                         <t t-else="">
-                            <div> 株式会社 <span t-field="docs.company_id.partner_id.name" /> 御中</div>
+                            <div> 株式会社 <span t-field="so.company_id.partner_id.name" /> 御中</div>
                         </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
-                        <t t-if="docs.lang_code == 'en_US'">
+                        <t t-if="so.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y')" /> - <t t-esc="time.strftime('%m')" /> - <t
                                 t-esc="time.strftime('%d')" />
                         </t>

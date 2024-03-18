@@ -6,7 +6,7 @@
     <record id="action_inspection_order_form_export_xlsx" model="ir.actions.act_window">
         <field name="name">検品発注書</field>
         <field name="res_model">export.xlsx.wizard</field>
-        <field name="binding_view_types">form</field>
+        <field name="binding_view_types">form,list</field>
         <field name="binding_model_id" ref="mrp.model_mrp_production" />
         <field name="view_mode">form</field>
         <field name="target">new</field>

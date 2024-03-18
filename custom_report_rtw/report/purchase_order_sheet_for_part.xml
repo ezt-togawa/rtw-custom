@@ -38,9 +38,16 @@
               </div>
               <div class="row size13" style="margin-top:-50px">
                 <div class="col-4 size13">
-                  <div> 発注番号 <span
-                      t-field="po.name" />
+                  <div class="d-flex">
+                    <div>
+                      発注番号
+                    </div>
+                    <div>
+                      <div t-field="po.name" />
+                      <div  style="width: 300px;" t-field="po.purchase_order_origin"/>
+                    </div>
                   </div>
+
                   <br />
                   <div>送り先着日 <span class="size16" t-esc="po.purchase_line_date_planned" />
                   </div>

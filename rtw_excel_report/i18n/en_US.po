@@ -759,6 +759,16 @@ msgid "品番・サイズ"
 msgstr "Product No/ Size"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.inspection_order_form
+msgid "検品発注書(EXCEL)"
+msgstr "Purchase Order Inspection(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.purchase_order_sheet
+msgid "発注書(EXCEL)"
+msgstr "Purchase Order(EXCEL)"
+
+#. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.product_label_sticker
 msgid "商品ラベルシール(EXCEL)"
 msgstr "Product Label Seal(EXCEL)"
