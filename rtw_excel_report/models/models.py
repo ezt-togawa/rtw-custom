@@ -2127,26 +2127,29 @@ class PurchaseOrderExcelReport(models.Model):
             detail = []  
             if ',' in order.origin:
                 origin = order.origin.split(',')
-                for o in origin:
-                    if 'MO' in o:
-                        mp = self.env['mrp.production'].search([('name', '=', o.strip())])
-                        if mp:
-                            for l in mp:
-                                if l.sale_reference:
-                                    detail.append(l.sale_reference)  
-                                else:
-                                    detail.append(l.name) 
-                    else:
-                        detail.append(o.strip())  
             else:
-                detail.append(order.origin.strip()) 
+                origin = [order.origin]
+                    
+            for o in origin:
+                if 'MO' in o:
+                    mp = self.env['mrp.production'].search([('name', '=', o.strip())])
+                    if mp:
+                        for l in mp:
+                            if l.sale_reference:
+                                detail.append(l.sale_reference)  
+                            elif l.origin:
+                                detail.append(l.origin) 
+                            else:
+                                detail.append(l.name) 
+                else:
+                    detail.append(o.strip())  
                 
             detail_unique = []
             for item in detail:
                 if item not in detail_unique:
                     detail_unique.append(item)
                     
-            order.purchase_order_origin = ', '.join(detail_unique) 
+            order.purchase_order_origin = ', '.join(detail_unique)
             
     def _compute_lang_code(self):
         for order in self:
