@@ -44,13 +44,21 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_sale_order_format_date",
         string="Validity Date",
     )
+    sale_order_special_note = fields.Char(
+        compute="_compute_sale_order_special_note",
+        string="Special note",
+    )
     sale_order_company_owner = fields.Char(
         compute="_compute_sale_order_company_owner",
         string="Company Name",
     )
-    sale_order_total_list_price = fields.Float(
+    sale_order_total_list_price = fields.Char(
         compute="_compute_sale_order_list_price",
         string="Total List Price",
+    )
+    sale_order_amount_untaxed2 = fields.Char(
+        compute="_compute_sale_order_amount_untaxed2",
+        string="Amount untaxed",
     )
     sale_order_total_discount = fields.Char(
         compute="_compute_sale_order_total_discount",
@@ -208,6 +216,12 @@ class SaleOrderExcelReport(models.Model):
                 l.sale_order_print_staff = l.user_id.name +  (" Seal" if l.lang_code == "en_US" else "  印")
             else:
                 l.sale_order_print_staff =""            
+    def _compute_sale_order_special_note(self):
+        for l in self:
+            if l.special_note :
+                l.sale_order_special_note = l.special_note[:115] 
+            else:
+                l.sale_order_special_note =""            
 
     def _compute_lang_code(self):
         for order in self:
@@ -466,7 +480,8 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_printing_staff(self):
         for line in self:
             if line.user_id.name:
-                line.sale_order_printing_staff = line.user_id.name + (" Seal" if line.lang_code == "en_US" else "  印")
+                # line.sale_order_printing_staff = line.user_id.name + (" Seal" if line.lang_code == "en_US" else "  印")
+                line.sale_order_printing_staff = line.user_id.name
             else:
                 line.sale_order_printing_staff=""
                 
@@ -633,7 +648,13 @@ class SaleOrderExcelReport(models.Model):
             sale_order_lines = record.order_line
             for line in sale_order_lines:
                 total_list_price += line.price_unit * line.product_uom_qty
-            record.sale_order_total_list_price = total_list_price
+            record.sale_order_total_list_price = '定価合計: ' + str(total_list_price)
+    
+    def _compute_sale_order_amount_untaxed2(self):
+        for record in self:
+            if record.amount_untaxed :
+                record.sale_order_amount_untaxed2 = '販売価格合計: ' + str(record.amount_untaxed)
+            
 
     def _compute_sale_order_total_discount(self):
         for record in self:
@@ -694,10 +715,23 @@ class SaleOrderLineExcelReport(models.Model):
         compute="_compute_sale_order_product_detail",
         string="仕様・詳細",
     )
+    sale_order_product_detail_2 = fields.Char(
+        compute="_compute_sale_order_product_detail_2",
+        string="仕様・詳細",
+    )
 
-    sale_order_sell_unit_price = fields.Float(
+    sale_order_sell_unit_price = fields.Integer(
         compute="_compute_sale_order_sell_unit_price",
         string="販売単価",
+    )
+    sale_order_price_subtotal = fields.Integer(
+        compute="_compute_sale_order_price_subtotal",
+        string="販売⾦額",
+    )
+    
+    sale_order_price_unit = fields.Integer(
+        compute="_compute_sale_order_price_unit",
+        string="定価",
     )
 
     sale_order_index = fields.Integer(
@@ -827,28 +861,29 @@ class SaleOrderLineExcelReport(models.Model):
 
             if line.product_id.product_tmpl_id.width:
                 product_number_and_size += (
-                    "W" + str(line.product_id.product_tmpl_id.width) + "*"
+                    "W" + str(int(line.product_id.product_tmpl_id.width)) + "*"
                 )
 
             if line.product_id.product_tmpl_id.depth:
                 product_number_and_size += (
-                    "D" + str(line.product_id.product_tmpl_id.depth) + "*"
+                    "D" + str(int(line.product_id.product_tmpl_id.depth)) + "*"
                 )
 
             if line.product_id.product_tmpl_id.height:
                 product_number_and_size += (
-                    "H" + str(line.product_id.product_tmpl_id.height) + "*"
+                    "H" + str(int(line.product_id.product_tmpl_id.height)) + "*"
                 )
 
             if line.product_id.product_tmpl_id.sh:
                 product_number_and_size += (
-                    "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
+                    "SH" + str(int(line.product_id.product_tmpl_id.sh)) + "*"
                 )
 
             if line.product_id.product_tmpl_id.ah:
                 product_number_and_size += (
-                    "AH" + str(line.product_id.product_tmpl_id.ah) + "*"
+                    "AH" + str(int(line.product_id.product_tmpl_id.ah)) + "*"
                 )
+            product_number_and_size = product_number_and_size.rstrip("*")
             line.sale_order_number_and_size = product_number_and_size
 
     def _compute_sale_order_product_detail(self):
@@ -863,6 +898,8 @@ class SaleOrderLineExcelReport(models.Model):
                         + attribute.product_attribute_value_id.name
                         + "\n"
                     )
+            attr = attr.rstrip()
+            print(111111111111111,attr)
                     
             attr_cfg=""
             attributes_cfg=line.config_session_id.custom_value_ids
@@ -874,17 +911,83 @@ class SaleOrderLineExcelReport(models.Model):
                         + string_line.value
                         + "\n"
                     )
+            attr_cfg = attr_cfg.rstrip()  # Loại bỏ dấu xuống dòng ở cuối chuỗi
+
+            product_detail = ""
+            line_count = 0
+            total_lines = 0  # Tổng số lượng dòng
             if attr:
-                if attr_cfg:
-                    line.sale_order_product_detail = attr + "\n" + attr_cfg
-                else:
-                    line.sale_order_product_detail = attr
-            else:
-                if attr_cfg:
-                    line.sale_order_product_detail =  attr_cfg
-                else:
-                    line.sale_order_product_detail = ""
+                for attr_line in attr.split('\n'):
+                    if line_count < 6:  # Lấy 6 phần tử đầu
+                        product_detail += attr_line + '\n'
+                        line_count += 1
+                        total_lines += 1
+            if attr_cfg:
+                for attr_cfg_line in attr_cfg.split('\n'):
+                    if total_lines < 6:  # Chỉ thêm dòng từ attr_cfg nếu số lượng dòng chưa đạt giới hạn
+                        product_detail += attr_cfg_line + '\n'
+                        total_lines += 1
+                    else:
+                        break
+
+            # Gán kết quả cho sale_order_product_detail
+            line.sale_order_product_detail = product_detail
+            
+    def _compute_sale_order_product_detail_2(self):
+        for line in self:
+            attr = ""
+            attributes = line.product_id.product_template_attribute_value_ids
+            if attributes:
+                for attribute in attributes:
+                    attr += (
+                        attribute.attribute_id.name
+                        + ":"
+                        + attribute.product_attribute_value_id.name
+                        + "\n"
+                    )
+            attr = attr.rstrip()
+            print(111111111111111,attr)
                     
+            attr_cfg=""
+            attributes_cfg=line.config_session_id.custom_value_ids
+            if attributes_cfg:
+                for string_line in attributes_cfg:
+                    attr_cfg += (
+                        string_line.display_name
+                        + ":"
+                        + string_line.value
+                        + "\n"
+                    )
+            attr_cfg = attr_cfg.rstrip()  # Loại bỏ dấu xuống dòng ở cuối chuỗi
+
+            print(2222222222222222222,attr_cfg)
+            
+            product_detail = ""
+            product_detail_2 = ""
+            line_count = 0
+            total_lines = 0  # Tổng số lượng dòng
+            if attr:
+                for attr_line in attr.split('\n'):
+                    if line_count < 6:  # Lấy 6 phần tử đầu
+                        product_detail += attr_line + '\n'
+                        line_count += 1
+                        total_lines += 1
+                    elif line_count < 12:  # Lấy 6 phần tử tiếp theo
+                        product_detail_2 += attr_line + '\n'
+                        line_count += 1
+            if attr_cfg:
+                for attr_cfg_line in attr_cfg.split('\n'):
+                    if total_lines < 6:  # Chỉ thêm dòng từ attr_cfg nếu số lượng dòng chưa đạt giới hạn
+                        product_detail += attr_cfg_line + '\n'
+                        total_lines += 1
+                    elif total_lines < 12:  # Lấy 6 phần tử tiếp theo từ attr_cfg
+                        product_detail_2 += attr_cfg_line + '\n'
+                        total_lines += 1
+                    else:
+                        break
+
+            # Gán kết quả cho sale_order_product_detail
+            line.sale_order_product_detail_2 = product_detail_2
 
     def _compute_sale_order_product_summary(self):
         for line in self:
@@ -898,8 +1001,17 @@ class SaleOrderLineExcelReport(models.Model):
     @api.onchange('product_uom_qty', 'discount', 'price_unit')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            line.sale_order_sell_unit_price = line.price_unit - line.price_unit * line.discount / 100 
+            line.sale_order_sell_unit_price = int(line.price_unit - line.price_unit * line.discount / 100 
+            )
             
+    def _compute_sale_order_price_subtotal(self):
+        for line in self:
+            line.sale_order_price_subtotal = int(line.price_subtotal) if line.price_subtotal else ''
+    
+    def _compute_sale_order_price_unit(self):
+        for line in self:
+            line.sale_order_price_unit = int(line.price_unit) if line.price_unit else ''
+
     def _compute_sale_order_index(self):
         index = 0
         for line in self:
@@ -934,10 +1046,10 @@ class SaleOrderLineExcelReport(models.Model):
             categ_name=""
             if line.display_type == "line_section":
                 # line.sale_order_check_section = True
-                categ_name = line.name
+                categ_name = line.name+ "\n" + "\n"+ "\n"+ "\n"+ "\n"
             elif line.display_type == "line_note" :
                 # line.sale_order_check_section = True
-                categ_name = line.name
+                categ_name = line.name + "\n"+ "\n"+ "\n"+ "\n"+ "\n"
             else:
                 
                 if line.product_id.product_tmpl_id.config_ok :  
@@ -2127,26 +2239,29 @@ class PurchaseOrderExcelReport(models.Model):
             detail = []  
             if ',' in order.origin:
                 origin = order.origin.split(',')
-                for o in origin:
-                    if 'MO' in o:
-                        mp = self.env['mrp.production'].search([('name', '=', o.strip())])
-                        if mp:
-                            for l in mp:
-                                if l.sale_reference:
-                                    detail.append(l.sale_reference)  
-                                else:
-                                    detail.append(l.name) 
-                    else:
-                        detail.append(o.strip())  
             else:
-                detail.append(order.origin.strip()) 
+                origin = [order.origin]
+                    
+            for o in origin:
+                if 'MO' in o:
+                    mp = self.env['mrp.production'].search([('name', '=', o.strip())])
+                    if mp:
+                        for l in mp:
+                            if l.sale_reference:
+                                detail.append(l.sale_reference)  
+                            elif l.origin:
+                                detail.append(l.origin) 
+                            else:
+                                detail.append(l.name) 
+                else:
+                    detail.append(o.strip())  
                 
             detail_unique = []
             for item in detail:
                 if item not in detail_unique:
                     detail_unique.append(item)
                     
-            order.purchase_order_origin = ', '.join(detail_unique) 
+            order.purchase_order_origin = ', '.join(detail_unique)
             
     def _compute_lang_code(self):
         for order in self:
