@@ -27,8 +27,8 @@
         'security/ir.model.access.csv',
         'report/proforma.xml',
         'report/report.xml',
-        'report_quotation/actions.xml',
-        'report_quotation/templates.xml',
+        # 'report_quotation/actions.xml',
+        # 'report_quotation/templates.xml',
         'report_quotation_oversea/actions.xml',
         'report_quotation_oversea/templates.xml',
         'report_list_price_quotation/actions.xml',
@@ -68,6 +68,7 @@
         'views/scheduled_arrival_list.xml',
         'views/supplied_material_detail.xml',
         'views/stock_move_pallet.xml',
+        'views/report_quotation.xml',
 
         # 'report_stock_move_pallet/actions.xml',
         # 'report_stock_move_pallet/templates.xml',

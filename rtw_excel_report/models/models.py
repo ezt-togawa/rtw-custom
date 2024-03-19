@@ -44,6 +44,10 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_sale_order_format_date",
         string="Validity Date",
     )
+    sale_order_special_note = fields.Char(
+        compute="_compute_sale_order_special_note",
+        string="Special note",
+    )
     sale_order_company_owner = fields.Char(
         compute="_compute_sale_order_company_owner",
         string="Company Name",
@@ -208,6 +212,12 @@ class SaleOrderExcelReport(models.Model):
                 l.sale_order_print_staff = l.user_id.name +  (" Seal" if l.lang_code == "en_US" else "  印")
             else:
                 l.sale_order_print_staff =""            
+    def _compute_sale_order_special_note(self):
+        for l in self:
+            if l.special_note :
+                l.sale_order_special_note = l.special_note[:128] 
+            else:
+                l.sale_order_special_note =""            
 
     def _compute_lang_code(self):
         for order in self:
@@ -466,7 +476,8 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_printing_staff(self):
         for line in self:
             if line.user_id.name:
-                line.sale_order_printing_staff = line.user_id.name + (" Seal" if line.lang_code == "en_US" else "  印")
+                # line.sale_order_printing_staff = line.user_id.name + (" Seal" if line.lang_code == "en_US" else "  印")
+                line.sale_order_printing_staff = line.user_id.name
             else:
                 line.sale_order_printing_staff=""
                 
@@ -2127,26 +2138,29 @@ class PurchaseOrderExcelReport(models.Model):
             detail = []  
             if ',' in order.origin:
                 origin = order.origin.split(',')
-                for o in origin:
-                    if 'MO' in o:
-                        mp = self.env['mrp.production'].search([('name', '=', o.strip())])
-                        if mp:
-                            for l in mp:
-                                if l.sale_reference:
-                                    detail.append(l.sale_reference)  
-                                else:
-                                    detail.append(l.name) 
-                    else:
-                        detail.append(o.strip())  
             else:
-                detail.append(order.origin.strip()) 
+                origin = [order.origin]
+                    
+            for o in origin:
+                if 'MO' in o:
+                    mp = self.env['mrp.production'].search([('name', '=', o.strip())])
+                    if mp:
+                        for l in mp:
+                            if l.sale_reference:
+                                detail.append(l.sale_reference)  
+                            elif l.origin:
+                                detail.append(l.origin) 
+                            else:
+                                detail.append(l.name) 
+                else:
+                    detail.append(o.strip())  
                 
             detail_unique = []
             for item in detail:
                 if item not in detail_unique:
                     detail_unique.append(item)
                     
-            order.purchase_order_origin = ', '.join(detail_unique) 
+            order.purchase_order_origin = ', '.join(detail_unique)
             
     def _compute_lang_code(self):
         for order in self:

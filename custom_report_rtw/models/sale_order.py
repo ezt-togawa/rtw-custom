@@ -40,9 +40,9 @@ class SaleOrder(models.Model):
                         for line in res_partner:
                             partner_name = ( line.last_name + ' 様') if  line.last_name else ''
                             company_name = ( '株式会社 '+ line.parent_id.name + ' 御中') if line.parent_id  else ''
-                        
-            so.send_to_people = partner_name
-            so.send_to_company = company_name
+            send = ""            
+            send += company_name + "\n" + partner_name
+            so.send_to_company = send
                         
     def _compute_calculate_planned_date(self):
         max_planned_date = ''
@@ -94,9 +94,9 @@ class SaleOrder(models.Model):
                                     
                                 if employee.name:
                                     if so.lang_code == 'en_US':
-                                        so.hr_employee_printer = employee.name +" Seal" 
+                                        so.hr_employee_printer = employee.name  
                                     else:
-                                        so.hr_employee_printer = employee.name +" 印" 
+                                        so.hr_employee_printer = employee.name 
                                 else:
                                     so.hr_employee_printer = ''
                                     
