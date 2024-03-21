@@ -6,7 +6,7 @@
             <field name="inherit_id" ref="rtw_stock_move_line.stock_move_line_list" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='result_package_id']" position="after">
-                    <field name="pallet_id" />
+                    <field name="pallet_id" optional="show" />
                 </xpath>
             </field>
         </record>
@@ -16,7 +16,7 @@
             <field name="inherit_id" ref="rtw_stock_move_line.stock_move_line_list_itoshima" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='result_package_id']" position="after">
-                    <field name="pallet_id" />
+                    <field name="pallet_id" optional="show" />
                 </xpath>
             </field>
         </record>
