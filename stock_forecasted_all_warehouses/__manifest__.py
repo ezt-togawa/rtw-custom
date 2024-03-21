@@ -13,6 +13,7 @@
     'version': '14.0.0.0',
     'depends': ['sale' , 'base', 'stock'],
     'data': [
+        'views/template.xml'
     ],
     'qweb': [
         'static/src/xml/stock_forecasted_all_warehouses.xml',
