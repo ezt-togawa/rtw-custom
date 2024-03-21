@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="stock_forecasted_all_warehouse" name="stock forecasted all warehouse" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/stock_forecasted_all_warehouses/static/src/js/stock_forecasted_all_warehouses.js"></script>
+        </xpath>
+    </template>
+</odoo>
