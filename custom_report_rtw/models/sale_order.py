@@ -30,18 +30,44 @@ class SaleOrder(models.Model):
                     res_partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
                     if res_partner:
                         for line in res_partner:
-                            partner_name = ('Mr./Mrs. ' + line.last_name) if  line.last_name else ''
-                            company_name = ('御中 ' + line.parent_id.name + ' 株式会社') if line.parent_id  else ''
-                    
+                            if line.company_type == 'company':
+                                company_name = (line.name + ' 御中') if line.name  else ''
+                            else:
+                                if line.parent_id :
+                                    if line.dummy:
+                                        partner_name = ('Mr./Mrs. ' + line.last_name) if  line.last_name else ''
+                                    else:
+                                        company_name = ('御中 ' + line.parent_id.name + ' 株式会社') if line.parent_id  else ''
+                                        partner_name = ('Mr./Mrs. ' + line.last_name) if  line.last_name else ''
+                                else:
+                                    partner_name = ('Mr./Mrs. ' + line.last_name) if  line.last_name else ''
+                                
             else:
                 if so.partner_id:
                     res_partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
                     if res_partner:
                         for line in res_partner:
+                            if line.company_type == 'company':
+                                company_name = (line.name + ' 御中') if line.name  else ''
+                            else:
+                                if line.parent_id :
+                                    if line.dummy:
+                                        partner_name = (line.last_name + ' 様') if  line.last_name else ''
+                                    else:
+                                        company_name = ('御中 ' + line.parent_id.name + ' 株式会社') if line.parent_id  else ''
+                                        partner_name = (line.last_name + ' 様') if  line.last_name else ''
+                                else:
+                                    partner_name = (line.last_name + ' 様') if  line.last_name else ''
                             partner_name = ( line.last_name + ' 様') if  line.last_name else ''
                             company_name = ( '株式会社 '+ line.parent_id.name + ' 御中') if line.parent_id  else ''
-            send = ""            
-            send += company_name + "\n" + partner_name
+            send = ""   
+            if company_name:
+                send += company_name
+                if partner_name:
+                    send += '\n' + partner_name  
+            else:
+                if partner_name :
+                    send += partner_name
             so.send_to_company = send
                         
     def _compute_calculate_planned_date(self):
