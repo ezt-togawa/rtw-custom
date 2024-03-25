@@ -67,12 +67,12 @@
                 </div>
               </div>
               <div class="col-4">
-                <div>納品希望日： <span t-if="docs.sale_order_preferred_delivery_date"
-                    t-esc="docs.sale_order_preferred_delivery_date" />
+                <div>納品希望日： <span t-if="docs.preferred_delivery_period"
+                    t-esc="docs.preferred_delivery_period" />
                 </div>
                 <div> 納品場所: <span t-field="docs.forwarding_address" />
                 </div>
-                <div> 備考: <span t-field="docs.note" />
+                <div> 備考: <span t-field="docs.special_note" />
                 </div>
               </div>
               <div class="col-4" name="company_address">
@@ -105,6 +105,7 @@
               </div>
             </div>
             <table class="table">
+              <t t-set="number" t-value="0" />
               <t t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l"
                 t-groupby="10"
                 t-att-last="last">
@@ -127,58 +128,74 @@
                 </t>
                 <tbody class="invoice_tbody">
                   <tr class="size11 table-border-bottom">
-                    <td t-esc="l_index+1" class="text-center">
-                    </td>
-                    <td>
-                      <span t-field="l.sale_order_name" />
-                      <br />
-                      <span t-if="l.p_type" t-field="l.p_type" />
-                    </td>
-                    <td class="size13">
-                      <div t-if="l.product_id.product_no" t-field="l.product_id.product_no" />
-                      <t t-if="l.product_id.width > 0">W<span
-                          t-field="l.product_id.width" />
-                      </t>
-                      <t t-if="l.product_id.depth > 0">*D<span
-                          t-field="l.product_id.depth" />
-                      </t>
-                      <t t-if="l.product_id.height > 0">*H<span
-                          t-field="l.product_id.height" />
-                      </t>
-                      <t t-if="l.product_id.sh > 0"> SH <span
-                          t-field="l.product_id.sh" />
-                      </t>
-                      <t t-if="l.product_id.ah > 0"> AH <span
-                          t-field="l.product_id.ah" />
-                      </t>
-                    </td>
-                    <td>
-                      <t
-                        t-foreach="l.product_id.product_template_attribute_value_ids"
-                        t-as="string_line"> ● <span
-                          t-esc="string_line.display_name" />
-                                                <br />
-                      </t>
-                      <t t-foreach="l.config_session_id.custom_value_ids"
-                        t-as="string_line"> ●<span
-                          t-esc="string_line.display_name" />: <span
-                          t-esc="string_line.value" />
-                                                <br />
-                      </t>
-                    </td>
-                    <td class="text-center size13">
-                      <div id="quote_qty">
-                        <span
-                          style="font-size:16px"
-                          t-esc="l.sale_order_line_product_uom_qty" />
-                      </div>
-                    </td>
-                    <td class="text-center size15">
-                      <span t-esc="l.price_unit" />
-                    </td>
-                    <td class="text-center size15">
-                      <span t-field="l.price_subtotal" />
-                    </td>
+                    <t t-if="l.display_type =='line_note'">
+                      <td />
+                      <td class="size11" colspan="8">
+                        <span t-field="l.name" />
+                      </td>
+                    </t>
+                    <t t-elif="l.display_type =='line_section'">
+                      <td class="bg-section"></td>
+                      <td class="size11 bg-section" colspan="8">
+                        <span t-field="l.name" />
+                      </td>
+                    </t>
+                    <t t-else="">
+                      <td class="text-center size12">
+                        <t t-set="number" t-value="number + 1" />
+                        <t t-esc="number" />
+                      </td>
+                      <td>
+                        <span t-field="l.sale_order_name" />
+                        <br />
+                        <span t-if="l.p_type" t-field="l.p_type" />
+                      </td>
+                      <td class="size13">
+                        <div t-if="l.product_id.product_no" t-field="l.product_id.product_no" />
+                        <t t-if="l.product_id.width > 0">W<span
+                            t-field="l.product_id.width" />
+                        </t>
+                        <t t-if="l.product_id.depth > 0">*D<span
+                            t-field="l.product_id.depth" />
+                        </t>
+                        <t t-if="l.product_id.height > 0">*H<span
+                            t-field="l.product_id.height" />
+                        </t>
+                        <t t-if="l.product_id.sh > 0"> SH <span
+                            t-field="l.product_id.sh" />
+                        </t>
+                        <t t-if="l.product_id.ah > 0"> AH <span
+                            t-field="l.product_id.ah" />
+                        </t>
+                      </td>
+                      <td>
+                        <t
+                          t-foreach="l.product_id.product_template_attribute_value_ids"
+                          t-as="string_line"> ● <span
+                            t-esc="string_line.display_name" />
+                                                                    <br />
+                        </t>
+                        <t t-foreach="l.config_session_id.custom_value_ids"
+                          t-as="string_line"> ●<span
+                            t-esc="string_line.display_name" />: <span
+                            t-esc="string_line.value" />
+                                                                    <br />
+                        </t>
+                      </td>
+                      <td class="text-center size13">
+                        <div id="quote_qty">
+                          <span
+                            style="font-size:16px"
+                            t-esc="l.sale_order_line_product_uom_qty" />
+                        </div>
+                      </td>
+                      <td class="text-center size15">
+                        <span t-esc="l.price_unit" />
+                      </td>
+                      <td class="text-center size15">
+                        <span t-field="l.price_subtotal" />
+                      </td>
+                    </t>
                   </tr>
                 </tbody>
               </t>

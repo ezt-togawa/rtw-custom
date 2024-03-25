@@ -22,11 +22,15 @@ class rtw_purchase(models.Model):
         supplier_id = False
         for line in self:
             if line.order_line:
-                if line.order_line[0].product_id.seller_ids:
-                    supplier_id = line.order_line[0].product_id.seller_ids[0].name.id
+                for order in line.order_line:
+                    if order.product_id.seller_ids:
+                        if not supplier_id:
+                            supplier_id = order.product_id.seller_ids[0].name.id
         if self.order_line:
+            if not supplier_id:
+                return {'domain': {'partner_id': ['|', ('company_id', '=', False), ('company_id', '=', line.company_id.id)]}}
             if not self.partner_id:
                 self.partner_id = supplier_id
-            return {'domain': {'partner_id': [('id', '=', supplier_id), '|', ('company_id', '=', False), ('company_id', '=', line.company_id)]}}
+            return {'domain': {'partner_id': [('id', '=', supplier_id), '|', ('company_id', '=', False), ('company_id', '=', line.company_id.id)]}}
         else:
-            return {'domain': {'partner_id': ['|', ('company_id', '=', False), ('company_id', '=', line.company_id)]}}
+            return {'domain': {'partner_id': ['|', ('company_id', '=', False), ('company_id', '=', line.company_id.id)]}}

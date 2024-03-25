@@ -16,7 +16,6 @@
                         '_HEAD_': {
                             'A3': 'send_to_company${value or ""}',
                             'A4': 'send_to_people${value or ""}',
-                            'H9': 'sale_order_printing_staff${value or ""}',
                             'B7':'title${value or ""}',
                             'B9': 'amount_untaxed${value or ""}',
                             'B10':'amount_tax${value or 0}',
@@ -27,12 +26,13 @@
                             'E6': 'sale_order_bank_branch${value or ""}',
                             'E7': 'sale_order_number_account${value or ""}',
                             'E9': 'sale_order_preferred_delivery_date${value or ""}',
-                            'E10': 'partner_shipping_id.street${value or ""}',
+                            'E10': 'forwarding_address${value or ""}',
                             'E11':'special_note${value or ""}',
                             'H1': 'sale_order_current_date',
+                            'H3': 'sale_order_hr_employee${value or ""}',
                             'G13': 'amount_total${value or ""}',
                             'I13': 'amount_untaxed${value or ""}',
-                            'I14': '${value or "Draf Invoice"}',
+                            'I14': 'sale_order_draff_invoice${value or ""}',
                         },
                         'list_order_line': {
                             'A17': 'sale_order_index${value or ""}#{style=text;fill=grey}',
