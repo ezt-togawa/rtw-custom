@@ -25,7 +25,7 @@ odoo.define('stock_forecasted_all_warehouses.custom_forecasted', function (requi
         }
         const active_warehouse = (this.active_warehouse && this.active_warehouse.id) || res.active_warehouse;
         if (active_warehouse) {
-          this.active_warehouse = _.findWhere(warehouses, { id: active_warehouse });
+          this.active_warehouse = _.findWhere(warehouses, { id: active_warehouse }) || warehouses[0];
         } else {
           this.active_warehouse = warehouses[0];
         }
