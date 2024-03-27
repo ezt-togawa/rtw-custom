@@ -49,13 +49,13 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
                     if not stored_product == 0 or not stored_virtual_available == 0:
                         available_warehouse.append(warehouse.id)
                         
-            itoshima_warehouse = self.env['stock.warehouse'].search([('code','=','糸島')]).id   
-            if itoshima_warehouse in available_warehouse:
-                warehouse = self.env['stock.warehouse'].search([
-                    ('company_id', '=', self.env.company.id),
-                    ('id', '=', itoshima_warehouse)
-                ], limit=1)
-            elif available_warehouse:
+            # itoshima_warehouse = self.env['stock.warehouse'].search([('code','=','糸島')]).id   
+            # if itoshima_warehouse in available_warehouse:
+            #     warehouse = self.env['stock.warehouse'].search([
+            #         ('company_id', '=', self.env.company.id),
+            #         ('id', '=', itoshima_warehouse)
+            #     ], limit=1)
+            if available_warehouse:
                 warehouse = self.env['stock.warehouse'].search([
                     ('company_id', '=', self.env.company.id),
                     ('id', '=', available_warehouse[0])
@@ -131,7 +131,7 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
                     
         if available_warehouse:
             warehouse = self.env['stock.warehouse'].search_read([('id','in',available_warehouse)],fields=['id', 'name', 'code'])
-            warehouse.sort(key=lambda x: x['code'] != '糸島')
+            # warehouse.sort(key=lambda x: x['code'] != '糸島')
             res['warehouses'] = warehouse
         else:
             res['is_not_available_warehouse'] = True
@@ -141,7 +141,7 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
         if not res['active_warehouse']:
             company_id = self.env.context.get('allowed_company_ids')[0]
             res['active_warehouse'] = self.env['stock.warehouse'].search([('company_id', '=', company_id)], limit=1).id
-        if len(res['warehouses']) > 0 and res['warehouses'][0]['code'] == '糸島':
-            self.env.context = dict(self.env.context, warehouse=res['warehouses'][0]['id'])
-            res['active_warehouse'] = res['warehouses'][0]['id']
+        # if len(res['warehouses']) > 0 and res['warehouses'][0]['code'] == '糸島':
+        #     self.env.context = dict(self.env.context, warehouse=res['warehouses'][0]['id'])
+        #     res['active_warehouse'] = res['warehouses'][0]['id']
         return res
