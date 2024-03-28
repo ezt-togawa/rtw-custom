@@ -61,9 +61,10 @@ class stock_picking_container(models.Model):
         'stock.move.container',
         string='コンテナ',
         compute='_compute_container_ids',
+        store=True
         )
 
-    @api.depends('move_line_ids')
+    @api.depends('move_line_ids', 'move_line_ids.pallet_id')
     def _compute_container_ids(self):
         for picking in self:
             pallet_ids = picking.move_line_ids.mapped('pallet_id')
