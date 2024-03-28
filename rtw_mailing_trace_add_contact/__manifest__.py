@@ -19,13 +19,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'contacts', 'sale','mass_mailing','rtw_sf'],
+    'depends': ['base', 'contacts', 'sale','mass_mailing','rtw_sf','contacts'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'views/mailing_trace.xml',
-        'views/res_partner.xml',
+        'views/mailing_hide_display_name_res_partner.xml',
+        'views/contact.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

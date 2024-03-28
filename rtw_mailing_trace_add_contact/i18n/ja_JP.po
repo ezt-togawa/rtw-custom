@@ -26,6 +26,21 @@ msgid "Company Info"
 msgstr "関連会社"
 
 #. module: rtw_mailing_trace_add_contact
-#: model_terms:ir.ui.view,arch_db:rtw_mailing_trace_add_contact.view_partner_tree_inherit
+#: model_terms:ir.ui.view,arch_db:rtw_mailing_trace_add_contact.view_partner_tree_contact
+msgid "Contact"
+msgstr "連絡先"
+
+#. module: rtw_mailing_trace_add_contact
+#: model_terms:ir.ui.view,arch_db:rtw_mailing_trace_add_contact.view_partner_tree_contact
+msgid "Name"
+msgstr "名称"
+
+#. module: rtw_mailing_trace_add_contact
+#: model_terms:ir.ui.view,arch_db:rtw_mailing_trace_add_contact.view_partner_tree_inherit2
+msgid "Name"
+msgstr "名称"
+
+#. module: rtw_mailing_trace_add_contact
+#: model_terms:ir.ui.view,arch_db:rtw_mailing_trace_add_contact.view_partner_tree_inherit2
 msgid "Contact"
 msgstr "連絡先"
