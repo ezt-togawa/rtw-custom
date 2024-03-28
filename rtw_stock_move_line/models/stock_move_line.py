@@ -9,7 +9,7 @@ class rtw_stock_move_line(models.Model):
 
     sai = fields.Float(compute="_get_sai", group_operator="sum", store=True)
     depo_date = fields.Date(compute="_get_sale", store=True)
-    shiratani_date = fields.Date(compute="_get_shiratani_date")
+    shiratani_date = fields.Date(compute="_get_shiratani_date",store=True)
     date_planned = fields.Datetime(
         related='move_id.sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
@@ -35,7 +35,7 @@ class rtw_stock_move_line(models.Model):
         string="配送", related='sale_id.sipping_to', store=True)
     shizai_date = fields.Date(string="資材出荷目安", compute="_get_shizai_date")
     warehouse_arrive_date = fields.Date(
-        compute="_get_warehouse_arrive_date")
+        compute="_get_warehouse_arrive_date" , store=True)
     mrp_production_id = fields.Char(
         string="製造オーダー", compute="_get_mrp_production_id", store=True)
     # @api.depends('product_id')
@@ -72,7 +72,7 @@ class rtw_stock_move_line(models.Model):
             else:
                 rec.depo_date = False
 
-    @api.depends('move_id','sale_id')
+    @api.depends('move_id.sale_line_id.depo_date','move_id.sale_line_id.depo_date','sale_id','sale_id.warehouse_arrive_date')
     def _get_warehouse_arrive_date(self):
         for rec in self:
             if rec.move_id.sale_line_id.depo_date:
@@ -105,7 +105,7 @@ class rtw_stock_move_line(models.Model):
                 else:
                     rec.mrp_production_id = None
 
-    @api.depends('product_id')
+    @api.depends('move_id.sale_line_id.shiratani_date','move_id.sale_line_id.shiratani_date','sale_id','sale_id.shiratani_entry_date')
     def _get_shiratani_date(self):
         for rec in self:
             if rec.move_id.sale_line_id.shiratani_date:
