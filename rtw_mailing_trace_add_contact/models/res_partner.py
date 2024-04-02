@@ -5,6 +5,7 @@ class rtw_sf_partner(models.Model):
                         
     name_contact = fields.Char(string="Contact", compute="_compute_contact", store=True)
 
+    @api.depends('last_name', 'first_name', 'name', 'company_type')
     def _compute_contact(self):
         for res in self:
             name = ''
