@@ -95,7 +95,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_order_rtw.order_tree_quotation
 #: model_terms:ir.ui.view,arch_db:sale_order_rtw.rtw_sale_search_view
 msgid "Items under consideration"
-msgstr ""
+msgstr "検討中"
 
 #. module: sale_order_rtw
 #: model:ir.model.fields,field_description:sale_order_rtw.field_crm_lead____last_update
