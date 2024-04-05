@@ -43,10 +43,13 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
                             ('product_id', '=', product.id),
                             ('location_id', 'child_of', warehouse.lot_stock_id.id)
                         ])
-                        stored_virtual_available += product.with_context({'warehouse' : warehouse.id}).virtual_available
-                        stored_product = stored_product + sum(quant.quantity for quant in quants)
-
-                    if not stored_product == 0 or not stored_virtual_available == 0:
+                        product_forecasted = product.with_context({'warehouse' : warehouse.id})
+                        if not product_forecasted.virtual_available == 0 or not product_forecasted.free_qty == 0 or not product_forecasted.incoming_qty == 0 or not product_forecasted.outgoing_qty == 0:
+                            stored_virtual_available = True
+                        stored_product += product.with_context({'warehouse' : warehouse.id}).qty_available
+                    if not stored_product == 0:
+                        available_warehouse.append(warehouse.id)
+                    elif stored_virtual_available:
                         available_warehouse.append(warehouse.id)
                         
             # itoshima_warehouse = self.env['stock.warehouse'].search([('code','=','糸島')]).id   
@@ -122,11 +125,13 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
                         ('product_id', '=', product.id),
                         ('location_id', 'child_of', warehouse.lot_stock_id.id)
                     ])
-                    stored_virtual_available += product.with_context({'warehouse' : warehouse.id}).virtual_available
-                    stored_product = stored_product + sum(quant.quantity for quant in quants)
+                    product_forecasted = product.with_context({'warehouse' : warehouse.id})
+                    if not product_forecasted.virtual_available == 0 or not product_forecasted.free_qty == 0 or not product_forecasted.incoming_qty == 0 or not product_forecasted.outgoing_qty == 0:
+                        stored_virtual_available = True
+                    stored_product += product.with_context({'warehouse' : warehouse.id}).qty_available
                 if not stored_product == 0:
                     available_warehouse.append(warehouse.id)
-                elif not stored_virtual_available == 0:
+                elif stored_virtual_available:
                     available_warehouse.append(warehouse.id)
                     
         if available_warehouse:
