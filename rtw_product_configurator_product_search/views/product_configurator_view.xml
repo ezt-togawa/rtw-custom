@@ -9,12 +9,12 @@
             <xpath
                 expr="//search//field[@name='name']"
                 position="attributes">
-                <attribute name="string">プロダクト 1</attribute>
+                <attribute name="string">プロダクト１</attribute>
             </xpath>
             <xpath
                 expr="//search//field[@name='name']"
                 position="after">
-                <field name="name" string="プロダクト 2"/>
+                <field name="name" string="プロダクト２"/>
             </xpath>
         </field>
     </record>
