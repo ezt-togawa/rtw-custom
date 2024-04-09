@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_mailing_trace_add_contact",
+    'name': "rtw_product_configurator_product_search",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose""",
+        Short (1 phrase/line) summary of the module's purpose, used as
+        subtitle on modules listing or apps.openerp.com""",
 
     'description': """
         Long description of module's purpose
     """,
-    
-     'author': "Enzantrades",
+
+    'author': "Enzantrades",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -19,14 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'contacts', 'sale','mass_mailing','rtw_sf','contacts'],
+    'depends': ['base', 'product_configurator', 'product_spec_rtw','product'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'views/mailing_trace.xml',
-        'views/mailing_hide_display_name_res_partner.xml',
-        'views/contact.xml',
+        # 'security/ir.model.access.csv',
+        'views/product_configurator_view.xml',
+        'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

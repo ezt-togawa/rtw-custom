@@ -258,8 +258,8 @@ class SaleOrderExcelReport(models.Model):
         for record in self:
             if record.lang_code == "it_IT":
                 record.prescription_company_name = "Ritzwell Italia"
-                record.prescription_address_info = "Via Bocchetto, 6"
-                record.prescription_address_country = "Milano"
+                record.prescription_address_info = "P.IVA"
+                record.prescription_address_country = "03408510133"
                 record.prescription_tel_fax = "20123 (MI) Italy"
                 record.prescription_email = ""
             else:

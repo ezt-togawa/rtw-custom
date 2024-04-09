@@ -13,3 +13,4 @@ class ResPartner(models.Model):
     zip = fields.Char(translate=True)
     street = fields.Char(translate=True)
     street2 = fields.Char(translate=True)
+    parent_name = fields.Char(related='parent_id.display_name', readonly=True, string='Parent name')

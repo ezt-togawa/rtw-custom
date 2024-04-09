@@ -20,7 +20,21 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
             available_warehouse = []
             if 'active_id' in self.env.context:
                 warehouses = self.env['stock.warehouse'].search([])
-                product_product = self.env['product.product'].search([('product_tmpl_id','=',self.env.context['active_id'])])
+                params = self.env.context['params'] if 'params' in self.env.context else None
+                active_model = ''
+                if params:
+                    if 'model' in params:
+                        active_model = self.env.context['params']['model']
+                    elif 'active_model' in params:
+                        active_model = self.env.context['params']['active_model']
+                else:
+                    active_model = self.env.context['active_model']
+                    
+                if active_model == 'product.product':
+                    product_product = self.env['product.product'].search([('id','=',self.env.context['active_id'])])
+                else:
+                    product_product = self.env['product.product'].search([('product_tmpl_id','=',self.env.context['active_id'])])
+                    
                 for warehouse in warehouses:
                     stored_product = 0
                     stored_virtual_available = 0
@@ -29,21 +43,22 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
                             ('product_id', '=', product.id),
                             ('location_id', 'child_of', warehouse.lot_stock_id.id)
                         ])
-                        stored_virtual_available += product.with_context({'warehouse' : warehouse.id}).virtual_available
-                        stored_product = stored_product + sum(quant.quantity for quant in quants)
-
+                        product_forecasted = product.with_context({'warehouse' : warehouse.id})
+                        if not product_forecasted.virtual_available == 0 or not product_forecasted.free_qty == 0 or not product_forecasted.incoming_qty == 0 or not product_forecasted.outgoing_qty == 0:
+                            stored_virtual_available = True
+                        stored_product += product.with_context({'warehouse' : warehouse.id}).qty_available
                     if not stored_product == 0:
                         available_warehouse.append(warehouse.id)
-                    elif not stored_virtual_available == 0:
+                    elif stored_virtual_available:
                         available_warehouse.append(warehouse.id)
                         
-            itoshima_warehouse = self.env['stock.warehouse'].search([('code','=','糸島')]).id   
-            if itoshima_warehouse in available_warehouse:
-                warehouse = self.env['stock.warehouse'].search([
-                    ('company_id', '=', self.env.company.id),
-                    ('id', '=', itoshima_warehouse)
-                ], limit=1)
-            elif available_warehouse:
+            # itoshima_warehouse = self.env['stock.warehouse'].search([('code','=','糸島')]).id   
+            # if itoshima_warehouse in available_warehouse:
+            #     warehouse = self.env['stock.warehouse'].search([
+            #         ('company_id', '=', self.env.company.id),
+            #         ('id', '=', itoshima_warehouse)
+            #     ], limit=1)
+            if available_warehouse:
                 warehouse = self.env['stock.warehouse'].search([
                     ('company_id', '=', self.env.company.id),
                     ('id', '=', available_warehouse[0])
@@ -87,7 +102,21 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
         available_warehouse = []
         if 'active_id' in self.env.context:
             warehouses = self.env['stock.warehouse'].search([])
-            product_product = self.env['product.product'].search([('product_tmpl_id','=',self.env.context['active_id'])])
+            params = self.env.context['params'] if 'params' in self.env.context else None
+            active_model = ''
+            if params:
+                if 'model' in params:
+                    active_model = self.env.context['params']['model']
+                elif 'active_model' in params:
+                    active_model = self.env.context['params']['active_model']
+            else:
+                active_model = self.env.context['active_model']
+                
+            if active_model == 'product.product':
+                product_product = self.env['product.product'].search([('id','=',self.env.context['active_id'])])
+            else:
+                product_product = self.env['product.product'].search([('product_tmpl_id','=',self.env.context['active_id'])])
+                
             for warehouse in warehouses:
                 stored_product = 0
                 stored_virtual_available = 0
@@ -96,16 +125,18 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
                         ('product_id', '=', product.id),
                         ('location_id', 'child_of', warehouse.lot_stock_id.id)
                     ])
-                    stored_virtual_available += product.with_context({'warehouse' : warehouse.id}).virtual_available
-                    stored_product = stored_product + sum(quant.quantity for quant in quants)
+                    product_forecasted = product.with_context({'warehouse' : warehouse.id})
+                    if not product_forecasted.virtual_available == 0 or not product_forecasted.free_qty == 0 or not product_forecasted.incoming_qty == 0 or not product_forecasted.outgoing_qty == 0:
+                        stored_virtual_available = True
+                    stored_product += product.with_context({'warehouse' : warehouse.id}).qty_available
                 if not stored_product == 0:
                     available_warehouse.append(warehouse.id)
-                elif not stored_virtual_available == 0:
+                elif stored_virtual_available:
                     available_warehouse.append(warehouse.id)
                     
         if available_warehouse:
             warehouse = self.env['stock.warehouse'].search_read([('id','in',available_warehouse)],fields=['id', 'name', 'code'])
-            warehouse.sort(key=lambda x: x['code'] != '糸島')
+            # warehouse.sort(key=lambda x: x['code'] != '糸島')
             res['warehouses'] = warehouse
         else:
             res['is_not_available_warehouse'] = True
@@ -115,7 +146,7 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
         if not res['active_warehouse']:
             company_id = self.env.context.get('allowed_company_ids')[0]
             res['active_warehouse'] = self.env['stock.warehouse'].search([('company_id', '=', company_id)], limit=1).id
-        if len(res['warehouses']) > 0 and res['warehouses'][0]['code'] == '糸島':
-            self.env.context = dict(self.env.context, warehouse=res['warehouses'][0]['id'])
-            res['active_warehouse'] = res['warehouses'][0]['id']
+        # if len(res['warehouses']) > 0 and res['warehouses'][0]['code'] == '糸島':
+        #     self.env.context = dict(self.env.context, warehouse=res['warehouses'][0]['id'])
+        #     res['active_warehouse'] = res['warehouses'][0]['id']
         return res

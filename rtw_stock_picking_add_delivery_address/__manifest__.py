@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_mailing_trace_add_contact",
+    'name': "rtw_stock_picking_add_delivery_address",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose""",
+        Short (1 phrase/line) summary of the module's purpose, used as
+        subtitle on modules listing or apps.openerp.com""",
 
     'description': """
         Long description of module's purpose
     """,
-    
-     'author': "Enzantrades",
+
+    'author': "Enzantrades",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -19,14 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'contacts', 'sale','mass_mailing','rtw_sf','contacts'],
+    'depends': ['base', 'stock'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/mailing_trace.xml',
-        'views/mailing_hide_display_name_res_partner.xml',
-        'views/contact.xml',
+        'views/stock_picking.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
