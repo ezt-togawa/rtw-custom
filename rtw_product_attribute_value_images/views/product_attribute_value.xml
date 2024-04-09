@@ -10,7 +10,35 @@
                 </xpath>
              </field>
         </record>
-
-
+        <record id="view_product_attribute_value_search" model="ir.ui.view">
+            <field name="name">product.attribute.value.search</field>
+            <field name="model">product.attribute.value</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="attribute_id"/>
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_attribute_value_form_view_inherit">
+            <field name="name">product.config.product.attribute.value.form.view</field>
+            <field name="model">product.attribute.value</field>
+            <field name="inherit_id" ref="product_configurator.product_attribute_value_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet//group" position="after">
+                    <notebook>
+                        <page string="詳細属性" name="child_attribute_ids">
+                            <field name="child_attribute_ids" string="Product Attribute">
+                                <tree>
+                                    <field name="attribute_id" string="属性"/> 
+                                    <field name="name" string="Name"/> 
+                                    <field name="image" string="Image" widget="image" options='{"size": [20, 20]}'/> 
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>
