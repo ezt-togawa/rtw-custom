@@ -30,14 +30,32 @@
                         <page string="詳細属性" name="child_attribute_ids">
                             <field name="child_attribute_ids" string="Product Attribute">
                                 <tree>
-                                    <field name="attribute_id" string="属性"/> 
-                                    <field name="name" string="Name"/> 
+                                    <field name="child_attribute"/> 
+                                    <field name="child_attribute_name"/> 
                                     <field name="image" string="Image" widget="image" options='{"size": [20, 20]}'/> 
                                 </tree>
                             </field>
                         </page>
                     </notebook>
                 </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_attribute_value_related_rel_form">
+            <field name="name">product.config.product.attribute.value.related.rel.view</field>
+            <field name="model">product.attribute.value.related.rel</field>
+            <field name="arch" type="xml">
+                    <form>
+                        <div>
+                            <label for="child_attribute_id">Attribute</label>
+                            <field name="child_attribute_id" string="Attribute"/>
+                        </div>
+                        <div>
+                            <label for="image">Image</label>
+                            <field name="image" string="Image" widget="image"/> 
+                        </div>
+                        <field name="child_attribute" invisible="1"/> 
+                        <field name="child_attribute_name" invisible="1"/> 
+                    </form>
             </field>
         </record>
     </data>
