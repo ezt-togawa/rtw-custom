@@ -43,6 +43,6 @@ class ProductAttributeValueRel(models.Model):
                 record.child_attribute_name = record.child_attribute_id.name if record.child_attribute_id.name else ''
                 
     _sql_constraints = [
-        ('unique_parent_child_pair', 'UNIQUE(parent_attribute_id, child_attribute_id)', '親属性には同じ子属性が２重に追加できません'),
-        ('check_child_is_parent', 'CHECK(parent_attribute_id != child_attribute_id)', '子属性が親属性と異なる必要です。')
+        ('unique_parent_child_pair', 'UNIQUE(parent_attribute_id, child_attribute_id)', '親属性には同じ子属性を２重に追加できません'),
+        ('check_child_is_parent', 'CHECK(parent_attribute_id != child_attribute_id)', '子属性は親属性と異なる必要があります')
     ]
