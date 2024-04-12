@@ -219,8 +219,8 @@ class SaleOrderExcelReport(models.Model):
             if line.user_id:
                 res_partner= self.env['res.partner'].with_context({'lang':self.env.user.lang}).search([('id','=',line.user_id.id)])
                 if res_partner :
-                    for line in res_partner:
-                        printing_staff = line.name if line.name else ''
+                    for res in res_partner:
+                        printing_staff = res.name if res.name else ''
             line.sale_order_printing_staff = printing_staff  
                    
     def _compute_sale_order_special_note(self):
@@ -494,8 +494,8 @@ class SaleOrderExcelReport(models.Model):
             if line.user_id:
                 res_partner= self.env['res.partner'].with_context({'lang':self.env.user.lang}).search([('id','=',line.user_id.id)])
                 if res_partner :
-                    for line in res_partner:
-                        printing_staff = line.name if line.name else ''
+                    for res in res_partner:
+                        printing_staff = res.name if res.name else ''
                         
             line.sale_order_printing_staff = printing_staff
                 
@@ -538,13 +538,13 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_missing_currency(self):
         for record in self:
             record.sale_order_amount_total = record.currency_id.symbol + str(
-                record.amount_total if record.amount_total else 0
+                str(int(record.amount_total)) if record.amount_total else 0
             )
             record.sale_order_amount_untaxed = record.currency_id.symbol + str(
-                record.amount_untaxed if record.amount_untaxed else 0
+                str(int(record.amount_untaxed)) if record.amount_untaxed else 0
             )
             record.sale_order_amount_tax = record.currency_id.symbol + str(
-                record.amount_tax if record.amount_tax else 0
+                str(int(record.amount_tax)) if record.amount_tax else 0
             )
 
     def _compute_sale_order_missing_char(self):
@@ -657,28 +657,27 @@ class SaleOrderExcelReport(models.Model):
                 record.sale_order_company_owner = ""
 
     def _compute_sale_order_list_price(self):
-        for record in self:
-            total_list_price = 0
-            sale_order_lines = record.order_line
-            for line in sale_order_lines:
-                total_list_price += line.price_unit * line.product_uom_qty
-            record.sale_order_total_list_price =  total_list_price
+        for so in self:
+            total_list_price = 0.0
+            if so.order_line :
+                for line in so.order_line:
+                    total_list_price += line.price_unit * line.product_uom_qty
+            so.sale_order_total_list_price =  int(total_list_price)
     
     def _compute_sale_order_amount_untaxed2(self):
-        for record in self:
-            if record.amount_untaxed :
-                record.sale_order_amount_untaxed2 =  record.amount_untaxed
+        for so in self:
+            so.sale_order_amount_untaxed2 =  str(int(so.amount_untaxed ))if so.amount_untaxed else ''
             
 
     def _compute_sale_order_total_discount(self):
         for record in self:
-            total_discount = 0
+            total_discount = 0.0
             sale_order_lines = record.order_line
             for line in sale_order_lines:
                 total_discount += (
                     line.price_unit - line.price_reduce
                 ) * line.product_uom_qty
-            record.sale_order_total_discount = "- " + str(total_discount)
+            record.sale_order_total_discount = "- " + str(int(total_discount))
 
     def _compute_sale_order_account_number(self):
         for record in self:
@@ -1125,37 +1124,37 @@ class SaleOrderLineExcelReport(models.Model):
                     p_type = "特注"
 
             size_detail = ""
-            if line.product_id.product_tmpl_id.width:
-                size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-            if line.product_id.product_tmpl_id.depth:
-                size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-            if line.product_id.product_tmpl_id.height:
-                size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-            if line.product_id.product_tmpl_id.sh:
-                size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-            if line.product_id.product_tmpl_id.ah:
-                size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
+            # if line.product_id.product_tmpl_id.width:
+            #     size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
+            # if line.product_id.product_tmpl_id.depth:
+            #     size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
+            # if line.product_id.product_tmpl_id.height:
+            #     size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
+            # if line.product_id.product_tmpl_id.sh:
+            #     size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
+            # if line.product_id.product_tmpl_id.ah:
+            #     size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
 
-            prod=""
+            prod = ""
             if isinstance(categ_name, bool):
                 categ_name = "" 
             if categ_name != "" :
                 if p_type !="":
-                    prod+= categ_name+ "\n" +p_type
-                    if size_detail != "" :
-                        prod+=  "\n" + size_detail
+                    prod += categ_name + "\n" + p_type
+                    # if size_detail != "" :
+                    #     prod+=  "\n" + size_detail
                 else:
-                    prod+= categ_name
-                    if size_detail != "" :
-                        prod+= "\n" +size_detail
+                    prod += categ_name
+                    # if size_detail != "" :
+                    #     prod += "\n" + size_detail
             else:
-                if p_type !="":
-                    prod+= p_type
-                    if size_detail != "" :
-                        prod+=  "\n" + size_detail
-                else:
-                    if size_detail != "" :
-                        prod+= "\n" +size_detail
+                if p_type != "":
+                    prod += p_type
+                #     if size_detail != "" :
+                #         prod+=  "\n" + size_detail
+                # else:
+                #     if size_detail != "" :
+                #         prod+= "\n" + size_detail
                         
             line.sale_order_line_name_excel = str(prod)       
             
@@ -1448,8 +1447,8 @@ class StockPickingExcelReport(models.Model):
             if record.sale_id and record.sale_id.user_id:
                 res_partner= self.env['res.partner'].with_context({'lang':self.env.user.lang}).search([('id','=',record.user_id.id)])
                 if res_partner :
-                    for line in res_partner:
-                        printing_staff = line.name if line.name else ''
+                    for res in res_partner:
+                        printing_staff = res.name if res.name else ''
             record.stock_picking_printing_staff = printing_staff
 
             day = str(datetime.now().day)
@@ -1489,9 +1488,9 @@ class StockPickingExcelReport(models.Model):
             if record.sale_id and record.sale_id.user_id:
                 res_partner= self.env['res.partner'].with_context({'lang':self.env.user.lang}).search([('id','=',record.sale_id.user_id.id)])
                 if res_partner :
-                    for line in res_partner:
-                        printing_staff = line.name if line.name else ''
-            line.stock_printing_staff = printing_staff  
+                    for res in res_partner:
+                        printing_staff = res.name if res.name else ''
+            record.stock_printing_staff = printing_staff  
 class StockMoveExcelReport(models.Model):
     _inherit = "stock.move"
     calculate_packages = fields.Integer('Packages' , compute="_compute_calculate_packages")
@@ -1849,8 +1848,8 @@ class AccountMoveExcelReport(models.Model):
             if l.user_id:
                 res_partner= self.env['res.partner'].with_context({'lang':self.env.user.lang}).search([('id','=',l.user_id.id)])
                 if res_partner :
-                    for line in res_partner:
-                        staff = line.name
+                    for res in res_partner:
+                        staff = res.name if res.name else ''
             l.acc_move_print_staff = staff
                 
     def _compute_acc_move_invoice_name(self):
@@ -2324,8 +2323,8 @@ class PurchaseOrderExcelReport(models.Model):
             if line.user_id:
                 res_partner= self.env['res.partner'].with_context({'lang':self.env.user.lang}).search([('id','=',line.user_id.id)])
                 if res_partner :
-                    for line in res_partner:
-                        printing_staff = line.name if line.name else ''
+                    for res in res_partner:
+                        printing_staff = res.name if res.name else ''
             line.purchase_print_staff = printing_staff  
             
     def _compute_year_unit(self):
@@ -2404,8 +2403,8 @@ class PurchaseOrderExcelReport(models.Model):
             if line.user_id:
                 res_partner= self.env['res.partner'].with_context({'lang':self.env.user.lang}).search([('id','=',line.user_id.id)])
                 if res_partner :
-                    for line in res_partner:
-                        printing_staff = line.name if line.name else ''
+                    for res in res_partner:
+                        printing_staff = res.name if res.name else ''
             line.purchase_order_printing_staff = printing_staff  
 
     def _compute_purchase_order_current_date(self):
