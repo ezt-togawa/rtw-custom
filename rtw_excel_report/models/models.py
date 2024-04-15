@@ -2339,8 +2339,9 @@ class PurchaseOrderExcelReport(models.Model):
                         detail_unique.append(item)
                         
                 order.purchase_order_origin = ', '.join(detail_unique)
-            else:
-                order.purchase_order_origin = ''
+                
+            else :
+                order.purchase_order_origin =  ''
     def _compute_lang_code(self):
         for order in self:
             order.lang_code = self.env.user.lang or 'en_US'
