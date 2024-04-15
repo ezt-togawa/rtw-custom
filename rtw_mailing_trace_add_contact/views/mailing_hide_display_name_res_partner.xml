@@ -9,7 +9,7 @@
           <field name="display_name" string="Name" optional="hide" />
         </xpath>
         <xpath expr="//field[@name='state_id']" position="before">
-          <!-- <field name="name_contact" string="Contact" /> -->
+          <field name="name_contact" string="Contact" />
         </xpath>
       </field>
     </record>
