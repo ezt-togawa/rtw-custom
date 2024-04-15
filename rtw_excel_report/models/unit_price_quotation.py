@@ -155,7 +155,7 @@ class ReportMrpExcel(models.AbstractModel):
             if so.order_line:
                 row = 17
                 merge_line = 6 
-                for ind,line in enumerate(so.order_line):
+                for ind,line in enumerate(so.order_line.filtered(lambda x: not x.is_pack_outside)):
                     
                     if line.display_type == 'line_note':
                         sheet.merge_range(row,0,row ,12, "=data!A" + str(ind * 1 + 1) , format_lines_note) 
