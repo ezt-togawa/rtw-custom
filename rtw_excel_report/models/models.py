@@ -534,17 +534,32 @@ class SaleOrderExcelReport(models.Model):
             elif not line.partner_id.phone and line.partner_id.mobile:
                 tel_phone = line.partner_id.mobile
             line.sale_order_tel_phone_partner = tel_phone
+    
+    def add_money_comma(self,money):
+        money = str(int(money))
+        money_len = len(money)
+        if money_len <=3 :
+            return money
+        
+        out = []
+                
+        for i in range(money_len - 1, -1, -3): 
+            out.append(money[max(0, i - 2):i + 1]) 
+            if i - 2 > 0:
+                out.append(',')
+        
+        return ''.join(out[::-1])
 
     def _compute_sale_order_missing_currency(self):
         for record in self:
             record.sale_order_amount_total = record.currency_id.symbol + str(
-                str(int(record.amount_total)) if record.amount_total else 0
+                self.add_money_comma(record.amount_total) if record.amount_total else 0
             )
             record.sale_order_amount_untaxed = record.currency_id.symbol + str(
-                str(int(record.amount_untaxed)) if record.amount_untaxed else 0
+                self.add_money_comma(record.amount_untaxed) if record.amount_untaxed else 0
             )
             record.sale_order_amount_tax = record.currency_id.symbol + str(
-                str(int(record.amount_tax)) if record.amount_tax else 0
+                self.add_money_comma(record.amount_tax) if record.amount_tax else 0
             )
 
     def _compute_sale_order_missing_char(self):
@@ -662,12 +677,11 @@ class SaleOrderExcelReport(models.Model):
             if so.order_line :
                 for line in so.order_line:
                     total_list_price += line.price_unit * line.product_uom_qty
-            so.sale_order_total_list_price =  int(total_list_price)
+            so.sale_order_total_list_price =  self.add_money_comma(total_list_price)
     
     def _compute_sale_order_amount_untaxed2(self):
         for so in self:
-            so.sale_order_amount_untaxed2 =  str(int(so.amount_untaxed ))if so.amount_untaxed else ''
-            
+            so.sale_order_amount_untaxed2 =  self.add_money_comma(so.amount_untaxed )if so.amount_untaxed else ''
 
     def _compute_sale_order_total_discount(self):
         for record in self:
@@ -733,16 +747,16 @@ class SaleOrderLineExcelReport(models.Model):
         string="仕様・詳細",
     )
 
-    sale_order_sell_unit_price = fields.Integer(
+    sale_order_sell_unit_price = fields.Char(
         compute="_compute_sale_order_sell_unit_price",
         string="販売単価",
     )
-    sale_order_price_subtotal = fields.Integer(
+    sale_order_price_subtotal = fields.Char(
         compute="_compute_sale_order_price_subtotal",
         string="販売⾦額",
     )
     
-    sale_order_price_unit = fields.Integer(
+    sale_order_price_unit = fields.Char(
         compute="_compute_sale_order_price_unit",
         string="定価",
     )
@@ -958,20 +972,34 @@ class SaleOrderLineExcelReport(models.Model):
                 for attribute in attributes:
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
+            
+    def add_money_comma(self,money):
+        money = str(int(money))
+        money_len = len(money)
+        if money_len <=3 :
+            return money
+        
+        out = []
+                
+        for i in range(money_len - 1, -1, -3): 
+            out.append(money[max(0, i - 2):i + 1]) 
+            if i - 2 > 0:
+                out.append(',')
+        
+        return ''.join(out[::-1])
                     
     @api.onchange('product_uom_qty', 'discount', 'price_unit')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            line.sale_order_sell_unit_price = int(line.price_unit - line.price_unit * line.discount / 100 
-            )
+            line.sale_order_sell_unit_price = self.add_money_comma(line.price_unit - line.price_unit * line.discount / 100 ) 
             
     def _compute_sale_order_price_subtotal(self):
         for line in self:
-            line.sale_order_price_subtotal = int(line.price_subtotal) if line.price_subtotal else ''
+            line.sale_order_price_subtotal = self.add_money_comma(line.price_subtotal) if line.price_subtotal else ''
     
     def _compute_sale_order_price_unit(self):
         for line in self:
-            line.sale_order_price_unit = int(line.price_unit) if line.price_unit else ''
+            line.sale_order_price_unit = self.add_money_comma(line.price_unit) if line.price_unit else ''
 
     def _compute_sale_order_index(self):
         index = 0
