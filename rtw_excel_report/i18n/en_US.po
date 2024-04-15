@@ -769,6 +769,16 @@ msgid "商品仕様書(EXCEL)"
 msgstr "Product Specification(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.report_purchase_order
+msgid "注文書(EXCEL)"
+msgstr "Order Form(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.report_purchase_order2
+msgid "定価注文書(EXCEL)"
+msgstr "List Price Order Form(EXCEL)"
+
+#. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.report_quotation
 msgid "御見積書(EXCEL)"
 msgstr "Quotation(EXCEL)"

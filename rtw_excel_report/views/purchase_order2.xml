@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="report_purchase_order2"
+            model="sale.order"
+            string="定価注文書(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.report_purchase_order2_xls"
+            file="定価注文書"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

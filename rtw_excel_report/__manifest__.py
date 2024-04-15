@@ -40,8 +40,8 @@
         'report_invoice_sale_order/actions.xml',
         'report_invoice_sale_order/templates.xml',
 
-        'report_purchase_order/actions.xml',
-        'report_purchase_order/templates.xml',
+        # 'report_purchase_order/actions.xml',
+        # 'report_purchase_order/templates.xml',
 
         'report_purchase_order_sheet/actions.xml',
         'report_purchase_order_sheet/templates.xml',
@@ -72,6 +72,8 @@
         'views/report_quotation_oversea.xml',
         'views/list_price_quotation.xml',
         'views/unit_price_quotation.xml',
+        'views/purchase_order.xml',
+        'views/purchase_order2.xml',
 
         # 'report_stock_move_pallet/actions.xml',
         # 'report_stock_move_pallet/templates.xml',
