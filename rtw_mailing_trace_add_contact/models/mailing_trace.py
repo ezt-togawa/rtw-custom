@@ -24,15 +24,16 @@ class rtw_sf_partner(models.Model):
             company_info = ''
             if ml.res_id:
                 res_partner = self.env['res.partner'].browse(ml.res_id)
-                if res_partner.company_type == 'person':
-                    if res_partner.last_name:
-                        name_contact += res_partner.last_name + " "
-                    if res_partner.first_name:
-                        name_contact += res_partner.first_name  
-                    if res_partner.parent_id:
-                        company_info = res_partner.parent_id.name  
-                elif res_partner.company_type == 'company':
-                    name_contact = res_partner.name
+                if res_partner.exists():
+                    if res_partner.company_type == 'person':
+                        if res_partner.last_name:
+                            name_contact += res_partner.last_name + " "
+                        if res_partner.first_name:
+                            name_contact += res_partner.first_name  
+                        if res_partner.parent_id:
+                            company_info = res_partner.parent_id.name  
+                    elif res_partner.company_type == 'company':
+                        name_contact = res_partner.name
             ml.name_contact = name_contact
             ml.company_info = company_info
 
@@ -43,6 +44,7 @@ class rtw_sf_partner(models.Model):
         form = self.env.ref("base.view_partner_form")
         action = action.read()[0]
         action["views"] = [(form.id, "form")]
-        action["res_id"] = res_partner.id
+        if res_partner.exists():
+            action["res_id"] = res_partner.id
         return action
     
