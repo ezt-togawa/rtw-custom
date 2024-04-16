@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="追加配送先">
                 <group>
-                    <field name="warehouse_id" string="倉"/>
+                    <field name="warehouse_id" string="倉庫"/>
                 </group>
                 <footer>
                     <button string="Apply" class="btn-primary" name="add_delivery_address" type="object"/>
