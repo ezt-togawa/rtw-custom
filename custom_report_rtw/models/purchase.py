@@ -30,9 +30,9 @@ class PurchaseOrderEmployee(models.Model):
                     for employee in hr_employee:
                         po.hr_employee_company = employee.company_id.name if employee.company_id else ''
                         if po.lang_code == 'ja_JP':
-                            po.hr_employee_department = (employee.address_id.site +' オフィス')  if employee.address_id.site else ''
+                            po.hr_employee_department = (employee.address_id.site)  if employee.address_id.site else ''
                         else:
-                            po.hr_employee_department = (employee.address_id.site +' Office')  if employee.address_id.site else ''
+                            po.hr_employee_department = (employee.address_id.site)  if employee.address_id.site else ''
                         if employee.name:
                             if po.lang_code == 'en_US':
                                 po.hr_employee_printer = employee.name +" Seal" 
