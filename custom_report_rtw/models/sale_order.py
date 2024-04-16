@@ -128,9 +128,9 @@ class SaleOrder(models.Model):
                                             
                                     if res.site:
                                         if so.lang_code == 'ja_JP':
-                                            so.hr_employee_department = (res.site + ' オフィス') 
+                                            so.hr_employee_department = (res.site)
                                         else:
-                                            so.hr_employee_department = (res.site + ' Office') 
+                                            so.hr_employee_department = (res.site)
                                     else:
                                         so.hr_employee_department = ''
                                     

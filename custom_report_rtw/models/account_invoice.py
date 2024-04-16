@@ -84,9 +84,9 @@ class AccountMoveCus(models.Model):
                     for employee in hr_employee:
                         ac.hr_employee_company = employee.company_id.name if employee.company_id else ''
                         if ac.lang_code == 'ja_JP':
-                            ac.hr_employee_department = (employee.address_id.site +' オフィス')  if employee.address_id.site else ''
+                            ac.hr_employee_department = (employee.address_id.site)  if employee.address_id.site else ''
                         else:
-                            ac.hr_employee_department = (employee.address_id.site +' Office')  if employee.address_id.site else ''
+                            ac.hr_employee_department = (employee.address_id.site)  if employee.address_id.site else ''
 
                         if employee.name:
                             if ac.lang_code == 'en_US':
