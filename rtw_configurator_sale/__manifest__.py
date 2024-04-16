@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_product_attribute_value_images",
+    'name': "rtw_configurator_sale",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Custom OCA <product_configurator_sale>""",
 
     'description': """
         Long description of module's purpose
     """,
-
-    'author': "My Company",
+    
+     'author': "Enzantrades",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -20,16 +19,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product_configurator'],
+    'depends': ['product_configurator_sale'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'views/product_attribute_value.xml',
-        'views/templates.xml',
+        'views/product_configurator.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo.xml',
+        
     ],
 }
