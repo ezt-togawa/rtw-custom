@@ -68,7 +68,13 @@
             <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='product_id']" position="after">
-                    <field name="inspected_button" string="検品状態" />
+                    <field name="inspected_button" optional="show" string="検品状態" />
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="write_uid" optional="hide" string="更新者" />
+                </xpath>
+                <xpath expr="//field[@name='write_uid']" position="after">
+                    <field name="write_date" optional="hide" string="更新日" />
                 </xpath>
             </field>
         </record>
