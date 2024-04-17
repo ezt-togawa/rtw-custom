@@ -2,4 +2,5 @@
 
 from . import mailing_trace
 from . import res_partner
+from . import mailing_mailing
 

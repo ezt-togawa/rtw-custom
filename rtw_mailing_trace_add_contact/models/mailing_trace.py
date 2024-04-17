@@ -11,7 +11,7 @@ class rtw_sf_partner(models.Model):
         for ml in self:
             name_contact = ''
             company_info = ''
-            if ml.res_id:
+            if ml.model == 'res.partner' and ml.res_id:
                 res_partner = self.env['res.partner'].browse(ml.res_id)
                 if res_partner.exists():
                     if res_partner.company_type == 'person':
