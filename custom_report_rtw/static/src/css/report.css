@@ -58,6 +58,7 @@ body {
 
 .attribute-img img {
   width: 100%;
+  /* height:100%; */
 }
 
 .product-img img {
@@ -103,6 +104,10 @@ body {
   margin: 5px 2px;
   border: 1px gray solid !important;
   padding: 5px;
+  /* height:360px;
+  max-height:360px;
+  overflow:hidden;
+  background: #e9ecef; */
 }
 
 .product-config {
@@ -181,6 +186,22 @@ body {
 
 .table-border-bottom{
   border-bottom:1px solid black;
+  height:130px;
+  max-height:130px;
+  overflow:hidden;
+}
+
+.table-border-bottom-auto{
+  border-bottom:1px solid black;
+  overflow:hidden;
+}
+
+.table-border-bottom .six-lines{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+  max-height:110px;
 }
 
 .bg-section{

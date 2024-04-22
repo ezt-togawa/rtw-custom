@@ -153,7 +153,6 @@ class SaleOrder(models.Model):
                         so.update(hr_defaults)
             else:
                 so.update(hr_defaults)
-
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
@@ -189,3 +188,4 @@ class SaleOrderLine(models.Model):
                 while decimal_part_after_dot % 10 == 0:
                     decimal_part_after_dot = decimal_part_after_dot / 10
                 line.sale_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+                
