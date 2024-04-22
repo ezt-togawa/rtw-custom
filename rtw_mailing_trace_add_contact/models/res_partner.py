@@ -23,7 +23,7 @@ class rtw_sf_partner(models.Model):
         res = super(rtw_sf_partner, self).write(values)
         if len(self) == 1:
             self._update_autocomplete_data(values.get('vat', False))
-        mailing_trace = self.env['mailing.trace'].search([('res_id','=',self.id)])
-        if mailing_trace:
+        mailing_trace = self.env['mailing.trace'].search([('res_id','=',self.id),('model','=','res.partner')])
+        if mailing_trace.exists():
             mailing_trace._compute_contact()
         return res
