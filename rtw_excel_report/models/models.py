@@ -1081,16 +1081,16 @@ class SaleOrderLineExcelReport(models.Model):
                     p_type = "特注"
 
             size_detail = ""
-            if line.product_id.product_tmpl_id.width:
-                size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-            if line.product_id.product_tmpl_id.depth:
-                size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-            if line.product_id.product_tmpl_id.height:
-                size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-            if line.product_id.product_tmpl_id.sh:
-                size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-            if line.product_id.product_tmpl_id.ah:
-                size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
+            # if line.product_id.product_tmpl_id.width:
+            #     size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
+            # if line.product_id.product_tmpl_id.depth:
+            #     size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
+            # if line.product_id.product_tmpl_id.height:
+            #     size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
+            # if line.product_id.product_tmpl_id.sh:
+            #     size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
+            # if line.product_id.product_tmpl_id.ah:
+            #     size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
 
             prod=""
             if isinstance(categ_name, bool):
