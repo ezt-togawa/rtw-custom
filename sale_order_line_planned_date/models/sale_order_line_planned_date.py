@@ -39,13 +39,13 @@ class sale_order(models.Model):
 
     @api.depends('order_line')
     def _compute_error_context(self):
-        print('_compute_error_context', self.env.context)
+        # print('_compute_error_context', self.env.context)
         if self.env.context.get('is_show_planned_date_notice'):
             self.error_context = self.env.context.get(
                 'is_show_planned_date_notice')
         else:
             self.error_context = False
-        print('_compute_error_context 2', self.error_context)
+        # print('_compute_error_context 2', self.error_context)
 
     def write(self, vals):
         result = super(sale_order, self).write(vals)
