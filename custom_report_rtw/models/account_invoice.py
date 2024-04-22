@@ -34,28 +34,49 @@ class AccountMoveCus(models.Model):
 
     send_to_company = fields.Char(string="send to company", compute="_compute_send_to")
     send_to_people = fields.Char(string="send to people", compute="_compute_send_to")
+    registration_number = fields.Char(string="registration number", compute="_compute_registration_number")
 
     def _compute_send_to(self):
-        for line in self:
+        for so in self:
             partner_name = ''
             company_name = ''
-            if line.lang_code == 'en_US' and line.partner_id:
-                res_partner = self.env['res.partner'].search([('id', '=', line.partner_id.id)])
+            if so.partner_id:
+                res_partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
                 if res_partner:
-                    for partner in res_partner:
-                        partner_name = ('Mr./Mrs. ' + partner.last_name) if partner.last_name else ''
-                        company_name = ('御中 ' + partner.parent_id.name + ' 株式会社') if partner.parent_id else ''
-            elif line.lang_code != 'en_US' and line.partner_id:
-                res_partner = self.env['res.partner'].search([('id', '=', line.partner_id.id)])
-                if res_partner:
-                    for partner in res_partner:
-                        partner_name = (partner.last_name + ' 様') if partner.last_name else ''
-                        company_name = ('株式会社 ' + partner.parent_id.name + ' 御中') if partner.parent_id else ''
-            
-            if 'send_to_people' in line:
-                line.send_to_people = partner_name
-            if 'send_to_company' in line:
-                line.send_to_company = company_name
+                    for line in res_partner:
+                        if so.lang_code == 'en_US':
+                            if line.company_type == 'company':
+                                company_name =  "Dear " + line.name if line.name else ''
+                            else:
+                                if line.parent_id :
+                                    if line.dummy:
+                                        partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                                    else:
+                                        if line.parent_id.name:
+                                            company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.'
+                                        partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                                else:
+                                    partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                        else:   
+                            if line.company_type == 'company':
+                                if line.name:
+                                    company_name =  line.name+ ' 御中'
+                            else:
+                                if line.parent_id :
+                                    if line.dummy:
+                                        if line.last_name:
+                                            partner_name =  line.last_name+ ' 様'
+                                    else:
+                                        if line.parent_id.name:
+                                            company_name =  line.parent_id.name
+                                        if line.last_name:
+                                            partner_name =  line.last_name+ ' 様'
+                                else:
+                                    if line.last_name:
+                                            partner_name =  line.last_name+ ' 様'
+
+        so.send_to_company = company_name
+        so.send_to_people = partner_name
                 
     hr_employee_company = fields.Char(string="hr employee company" , compute="_compute_hr_employee")
     hr_employee_department = fields.Char(string="hr employee department" , compute="_compute_hr_employee")
@@ -79,7 +100,7 @@ class AccountMoveCus(models.Model):
             }
 
             if ac.invoice_user_id:
-                hr_employee = self.env['hr.employee'].search([('user_id','=',ac.invoice_user_id.id)])
+                hr_employee = self.env['hr.employee'].with_context({'lang':self.lang_code}).search([('user_id','=',ac.invoice_user_id.id)])
                 if hr_employee:
                     for employee in hr_employee:
                         ac.hr_employee_company = employee.company_id.name if employee.company_id else ''
@@ -90,14 +111,14 @@ class AccountMoveCus(models.Model):
 
                         if employee.name:
                             if ac.lang_code == 'en_US':
-                                ac.hr_employee_printer = employee.name +" Seal" 
+                                ac.hr_employee_printer = employee.name
                             else:
-                                ac.hr_employee_printer = employee.name +" 印" 
+                                ac.hr_employee_printer = employee.name
                         else:
                             ac.hr_employee_printer = ''
                             
                         if employee.address_id:
-                            res_partner = self.env['res.partner'].search([('id','=',employee.address_id.id)])
+                            res_partner = self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id','=',employee.address_id.id)])
                             if res_partner:
                                 for res in res_partner:
                                     ac.hr_employee_zip = ("〒" + res.zip) if res.zip != False else ''
@@ -143,3 +164,9 @@ class AccountMoveCus(models.Model):
             hr_employee_detail += record.hr_employee_printer 
         
         record.account_move_hr_employee= hr_employee_detail
+        
+    def _compute_registration_number(self):
+        if self.env.user.lang == 'en_US':
+            self.registration_number = 'Registration number: T4290001017449'
+        else:
+            self.registration_number = '登録番号:T4290001017449'
