@@ -11,7 +11,7 @@ class rtw_sf_partner(models.Model):
         for res in self:
             name = ''
             if res.exists():
-                mailing_trace = self.env['mailing.trace'].search([('res_id', '=', self.id), ('model', '=', 'res.partner')])
+                mailing_trace = self.env['mailing.trace'].search([('res_id', '=', res.id), ('model', '=', 'res.partner')])
                 if mailing_trace.exists():
                     mailing_trace._compute_contact()
                 if res.company_type == 'person':
