@@ -54,6 +54,7 @@
             <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='filter_cancel']" position="after">
+                    <separator/>
                     <filter string="未検品" name="filter_uninspected"
                         domain="[('inspected_status', '=', False),('is_linked_to_crm','=',True)]" />
                     <filter string="検品済" name="filter_inspected"
@@ -68,7 +69,13 @@
             <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='product_id']" position="after">
-                    <field name="inspected_button" string="検品状態" />
+                    <field name="inspected_button" optional="show" string="検品状態" />
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="write_uid" optional="hide" string="更新者" />
+                </xpath>
+                <xpath expr="//field[@name='write_uid']" position="after">
+                    <field name="write_date" optional="hide" string="更新日" />
                 </xpath>
             </field>
         </record>
