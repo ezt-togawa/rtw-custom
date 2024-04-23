@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
-class rtw_sf_partner(models.Model):
+class rtw_mailing_trace(models.Model):
     _inherit = "mailing.trace"
     
     name_contact = fields.Char(string="Contact", compute="_compute_contact", store=True)
@@ -20,8 +20,8 @@ class rtw_sf_partner(models.Model):
                             name_contact += res_partner.last_name + " "
                         if res_partner.first_name:
                             name_contact += res_partner.first_name  
-                        if res_partner.parent_id:
-                            company_info = res_partner.parent_id.name  
+                        # if res_partner.parent_id:
+                        #     company_info = res_partner.parent_id.name
                     elif res_partner.company_type == 'company':
                         name_contact = res_partner.name
             ml.name_contact = name_contact.rstrip()

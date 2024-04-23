@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
-class rtw_sf_partner(models.Model):
+class rtw_mailing_res_partner(models.Model):
     _inherit = 'res.partner'
 
     name_contact = fields.Char(string='Contact', compute='_compute_contact', store=True)
