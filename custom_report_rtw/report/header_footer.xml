@@ -250,12 +250,15 @@
                     <span class="ml-2 size20">注文書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <t t-if="docs.lang_code == 'en_US'">
-                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    <div t-esc="docs.name" />
+                    <t>
+                        <t t-if="docs.lang_code == 'en_US'">
+                            <t t-esc="time.strftime('%Y-%m-%d')" />
+                        </t>
+                        <t t-else="">
+                            <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                                t-esc="time.strftime('%d')" /> 日 </t>
                     </t>
-                    <t t-else="">
-                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
-                            t-esc="time.strftime('%d')" /> 日 </t>
                 </div>
             </div>
         </div>
