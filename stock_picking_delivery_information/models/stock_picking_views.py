@@ -31,6 +31,11 @@ class StockPicking(models.Model):
         compute="_compute_delivery_information",
     )
     
+    shipping_destination_text = fields.Char(
+        "送り先",
+        compute="_compute_delivery_information",
+    )
+    
     sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order")
     shiratani_entry_date = fields.Date("Shiratani entry date", related="sale_order_id.shiratani_entry_date")
     warehouse_arrive_date = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date")
@@ -54,6 +59,7 @@ class StockPicking(models.Model):
                 record.shipping_to_text = sale_order.shipping_to_text
                 record.forwarding_address_zip = sale_order.forwarding_address_zip
                 record.forwarding_address = sale_order.forwarding_address
+                record.shipping_destination_text = sale_order.shipping_destination_text
                 if sale_order.sipping_to == 'depo':
                     record.sipping_to = 'デポ入れまで'
                     record.forwarding_address_zip = ''
@@ -83,3 +89,4 @@ class StockPicking(models.Model):
                 record.forwarding_address = ''
                 record.waypoint = ''
                 record.sipping_to = ''
+                record.shipping_destination_text = ''

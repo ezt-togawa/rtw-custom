@@ -204,6 +204,14 @@ body {
   max-height:110px;
 }
 
+.table-border-bottom .one-lines{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  max-height:18px;
+}
+
 .bg-section{
   background: #e9ecef;
 }

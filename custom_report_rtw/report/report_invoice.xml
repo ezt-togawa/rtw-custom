@@ -35,13 +35,13 @@
                         <div t-if="docs.company_id.logo or docs.company_id.report_header"
                             class="row zero_min_height">
                         </div>
-                        <div class="row size13" style="margin-top:-50px;">
+                        <div class="row size13" style="margin-top:-50px;height:250px;">
                             <div class="col-4">
                                 <div class="so_price">
                                     <t t-if="docs.send_to_people == ''">
                                         <span t-field="docs.send_to_company" style="border-bottom:1px solid black;" />
                                     </t>
-                                    <t t-else="else">
+                                    <t t-else="">
                                         <span t-field="docs.send_to_company" />
                                     </t>
                                 </div>
@@ -141,6 +141,8 @@
                             <t t-set="number" t-value="0" />
                             <t t-foreach="docs.account_move_line" t-as="l" t-groupby="10"
                                 t-att-last="last">
+                                <!-- <t t-set="total_subprice"
+                                    t-value="total_subprice + l.price_subtotal" /> -->
                                 <t t-set="total_listprice"
                                     t-value="total_listprice + l.price_unit * l.quantity" />
                                 <t t-if="l_index == 0">
@@ -185,8 +187,14 @@
                                                 </td>
                                                 <td class="size11">
                                                     <div class="six-lines">
-                                                        <span
-                                                            t-field="l.acc_line_name" />
+                                                        <t t-if="not l.product_id.config_ok">
+                                                            <span
+                                                                t-field="l.name" />
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span
+                                                                t-field="l.acc_line_name" />
+                                                        </t>
                                                         <br />
                                                     </div>
                                                 </td>
@@ -218,9 +226,11 @@
                                                     <div class="six-lines">
                                                     <t
                                                         t-foreach="l.product_id.product_template_attribute_value_ids[0:6]"
-                                                        t-as="string_line"> ● <span
-                                                            t-esc="string_line.display_name" />
-                                                    <br />
+                                                        t-as="string_line"> 
+                                                        <div class="one-lines">
+                                                            ● <span
+                                                                t-esc="string_line.display_name" />
+                                                        </div>
                                                     </t>
                                                     </div>
                                                 </td>
@@ -228,9 +238,11 @@
                                                     <div class="six-lines">
                                                     <t
                                                         t-foreach="l.product_id.product_template_attribute_value_ids[6:12]"
-                                                        t-as="string_line"> ● <span
+                                                        t-as="string_line">
+                                                        <div class="one-lines">
+                                                         ● <span
                                                             t-esc="string_line.display_name" />
-                                                    <br />
+                                                        </div>
                                                     </t>
                                                     </div>
                                                 </td>
@@ -244,12 +256,12 @@
                                                         <span t-esc="'{0:,.0f}'.format(l.price_unit)" />
                                                     </div>
                                                 </td>
-                                                <td class="text-center size11">
+                                                <td class="text-center size16">
                                                     <div class="six-lines">
                                                         <span t-esc="l.acc_line_discount" />
                                                     </div>
                                                 </td>
-                                                <td class="text-center size12">
+                                                <td class="text-center size16">
                                                     <div class="six-lines">
                                                         <span
                                                             t-esc="'{0:,.0f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else '{0:,.0f}'.format(l.price_unit)" />
