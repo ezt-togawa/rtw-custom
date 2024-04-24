@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="report_purchase_order">
+  <template id="report_purchase_order_fixed_price">
     <t t-call="web.html_container">
       <t t-foreach="docs" t-as="o">
         <t t-call="custom_report_rtw.so_ex_layout">
@@ -141,14 +141,13 @@
                 <t t-if="l_index == 0">
                   <thead>
                     <tr class="table-title bold" style="font-size:13px;background-color:#999999">
-                      <th class="text-center" style="width:1%">№</th>
-                      <th class="text-center" style="width:14%">品名</th>
-                      <th class="text-center" style="width:15%">品番・サイズ</th>
+                      <th class="text-center" style="width:2%">№</th>
+                      <th class="text-center" style="width:16%">品名</th>
+                      <th class="text-center" style="width:16%">品番・サイズ</th>
                       <th class="text-center" style="width:20%">仕様・詳細</th>
                       <th class="text-center" style="width:20%">仕様・詳細</th>
-                      <th class="text-center" style="width:7%">数量</th>
-                      <th class="text-center" style="width:7%">定価</th>
-                      <th class="text-center" style="width:6%">掛率</th>
+                      <th class="text-center" style="width:8%">数量</th>
+                      <th class="text-center" style="width:8%">定価</th>
                       <th class="text-center" style="width:10%">販売金額</th>
                     </tr>
                   </thead>
@@ -178,7 +177,7 @@
                           <t t-esc="number" />
                         </td>
                         <td>
-                          <div class="six-lines"> 
+                         <div class="six-lines">
                             <t t-if="not l.product_id.config_ok">
                                 <span
                                     t-field="l.name" />
@@ -189,7 +188,7 @@
                             </t>
                             <br />
                             <span t-if="l.p_type" t-field="l.p_type" />
-                          </div>
+                         </div>
                         </td>
                         <td class="size13">
                             <div class="six-lines">
@@ -215,7 +214,7 @@
                                 </t>
                             </div>
                         </td>
-                        <td>
+                        <td class="size12">
                           <div class="six-lines">
                               <t
                                   t-foreach="l.product_id.product_template_attribute_value_ids[0:(6 if len(l.product_id.product_template_attribute_value_ids) &gt;= 6 else len(l.product_id.product_template_attribute_value_ids))]"
@@ -236,8 +235,8 @@
                                   </t>
                               </t>
                           </div>
-                        </td>
-                        <td>
+                      </td>
+                      <td class="size12">
                           <div class="six-lines">
                               <t t-if="len(l.product_id.product_template_attribute_value_ids) &gt; 6">
                                   <t
@@ -270,7 +269,7 @@
                                   </t>
                               </t>
                           </div>
-                        </td>
+                      </td>
                         <td class="text-center size13">
                               <div id="quote_qty" class="six-lines">
                                   <span t-esc="l.sale_order_line_product_uom_qty" />
@@ -283,18 +282,11 @@
                                     t-esc="'{0:,.0f}'.format(l.price_unit)" />
                             </div>
                         </td>
-                        <td class="text-center size11">
-                            <div class="six-lines">
-                                <span
-                                    style="font-size:16px"
-                                    t-esc="'{0:,.0f}'.format(l.sale_order_line_discount)" />
-                            </div>
-                        </td>
                         <td class="text-center size15">
                             <div class="six-lines">
                                 <span
                                     style="font-size:16px"
-                                    t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
+                                    t-esc="'{0:,.0f}'.format(l.price_unit * l.product_uom_qty)" />
                             </div>
                         </td>
                       </t>
@@ -321,7 +313,7 @@
     </t>
   </template>
   <record id="paperformat_purchase_order_price" model="report.paperformat">
-    <field name="name">Purchase Order</field>
+    <field name="name">Purchase Order Fixed Price</field>
     <field name="default" eval="False" />
     <field name="format">custom</field>
     <field name="page_width">210</field>
@@ -336,12 +328,12 @@
     <field name="dpi">90</field>
   </record>
   <report
-    string="注文書"
-    id="report_purchase_order_rtw"
+    string="定価注文書"
+    id="report_purchase_order_fixed_price_rtw"
     model="sale.order"
     report_type="qweb-pdf"
-    name="custom_report_rtw.report_purchase_order"
-    file="custom_report_rtw.report_purchase_order"
+    name="custom_report_rtw.report_purchase_order_fixed_price"
+    file="custom_report_rtw.report_purchase_order_fixed_price"
     paperformat="paperformat_purchase_order_price"
   />
 

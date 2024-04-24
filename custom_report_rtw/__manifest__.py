@@ -32,6 +32,7 @@
         'report/report_list_price_quotation.xml',
         'report/report_unit_price.xml',
         'report/purchase_order.xml',
+        'report/purchase_order_fixed_price.xml',
         'report/report_product_spec.xml',
         
         # delivery
