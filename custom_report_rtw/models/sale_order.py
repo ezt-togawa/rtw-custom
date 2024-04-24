@@ -21,6 +21,7 @@ class SaleOrder(models.Model):
     send_to_people = fields.Char(string="send to people" , compute="_compute_send_to")
     dear_to = fields.Char(string="send to people" , compute="_compute_send_to")
     sale_order_discount = fields.Char(string="sale order discount" , compute="_compute_sale_order_discount")
+    registration_number = fields.Char(string="registration number" , compute="_compute_registration_number")
 
     def _compute_send_to(self):
         for so in self:
@@ -154,6 +155,13 @@ class SaleOrder(models.Model):
             else:
                 so.update(hr_defaults)
 
+
+    def _compute_registration_number(self):
+        if self.env.user.lang == 'en_US':
+            self.registration_number = 'Registration number: T4290001017449'
+        else:
+            self.registration_number = '登録番号:T4290001017449'
+        
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
