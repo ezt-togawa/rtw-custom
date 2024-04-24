@@ -155,7 +155,6 @@ class SaleOrder(models.Model):
             else:
                 so.update(hr_defaults)
 
-
     def _compute_registration_number(self):
         if self.env.user.lang == 'en_US':
             self.registration_number = 'Registration number: T4290001017449'
