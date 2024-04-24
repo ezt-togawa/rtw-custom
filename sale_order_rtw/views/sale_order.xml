@@ -78,6 +78,12 @@
                         string="デポ"
                         context="{'default_type':'delivery'}"
                         domain="[('type', '=', 'delivery')]"
+                        attrs="{'invisible': [('sipping_to', '=', 'direct')]}"
+                    />
+                    <field
+                        name="shipping_destination_text"
+                        string="送り先"
+                        attrs="{'invisible': [('sipping_to', '!=', 'direct')]}"
                     />
                     <field
                         name="forwarding_address_zip"

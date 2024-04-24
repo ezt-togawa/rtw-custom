@@ -58,7 +58,7 @@ class sale_order_rtw(models.Model):
         ('発注後約 10-12週間', '発注後約 10-12週間'),
         ('発注後約 12以上', '発注後約 12以上'),
     ],string="作成日数")
-
+    shipping_destination_text = fields.Text(string="送り先")
     #     value = fields.Integer()
     #     value2 = fields.Float(compute="_value_pc", store=True)
     #     description = fields.Text()

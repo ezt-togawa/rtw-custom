@@ -54,6 +54,7 @@
             <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='filter_cancel']" position="after">
+                    <separator/>
                     <filter string="未検品" name="filter_uninspected"
                         domain="[('inspected_status', '=', False),('is_linked_to_crm','=',True)]" />
                     <filter string="検品済" name="filter_inspected"
