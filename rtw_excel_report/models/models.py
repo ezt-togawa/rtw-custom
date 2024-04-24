@@ -153,6 +153,11 @@ class SaleOrderExcelReport(models.Model):
         string="Sale order hr employee",
     )
     
+    sale_order_hr_employee_invoice = fields.Char(
+        compute="_compute_sale_order_hr_employee",
+        string="Sale order hr employee invoice",
+    )
+    
     sale_order_preferred_delivery_period= fields.Char(
         compute="_compute_sale_order_preferred_delivery_period",
         string="Sale order preferred delivery period",
@@ -360,22 +365,33 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_hr_employee(self):
         for record in self:
             hr_employee_detail = ""   
+            hr_employee_detail_invoice = ""   
             if record.hr_employee_company:
                 hr_employee_detail += record.hr_employee_company + "\n"
+                hr_employee_detail_invoice += record.hr_employee_company + "\n"
+            if record.registration_number : 
+                hr_employee_detail_invoice += record.registration_number + "\n"
             if record.hr_employee_department:
                 hr_employee_detail += record.hr_employee_department + "\n"
+                hr_employee_detail_invoice += record.hr_employee_department + "\n"
             if record.hr_employee_zip:
                 hr_employee_detail += record.hr_employee_zip + "\n"
+                hr_employee_detail_invoice += record.hr_employee_zip + "\n"
             if record.hr_employee_info:
                 hr_employee_detail += record.hr_employee_info + "\n"
+                hr_employee_detail_invoice += record.hr_employee_info + "\n"
             if record.hr_employee_tel:
                 hr_employee_detail += record.hr_employee_tel + "\n"
+                hr_employee_detail_invoice += record.hr_employee_tel + "\n"
             if record.hr_employee_fax:
                 hr_employee_detail += record.hr_employee_fax + "\n"
+                hr_employee_detail_invoice += record.hr_employee_fax + "\n"
             if record.hr_employee_printer:
                 hr_employee_detail += record.hr_employee_printer 
+                hr_employee_detail_invoice += record.hr_employee_printer 
             
-            record.sale_order_hr_employee= hr_employee_detail
+            record.sale_order_hr_employee= hr_employee_detail.rstrip('\n')
+            record.sale_order_hr_employee_invoice= hr_employee_detail_invoice.rstrip('\n')
                 
     def _compute_sale_order_preferred_delivery_period(self):
         for record in self:
@@ -535,31 +551,16 @@ class SaleOrderExcelReport(models.Model):
                 tel_phone = line.partner_id.mobile
             line.sale_order_tel_phone_partner = tel_phone
     
-    def add_money_comma(self,money):
-        money = str(int(money))
-        money_len = len(money)
-        if money_len <=3 :
-            return money
-        
-        out = []
-                
-        for i in range(money_len - 1, -1, -3): 
-            out.append(money[max(0, i - 2):i + 1]) 
-            if i - 2 > 0:
-                out.append(',')
-        
-        return ''.join(out[::-1])
-
     def _compute_sale_order_missing_currency(self):
         for record in self:
             record.sale_order_amount_total = record.currency_id.symbol + str(
-                self.add_money_comma(record.amount_total) if record.amount_total else 0
+                '{0:,.2f}'.format(record.amount_total).split('.')[0] if record.amount_total else 0
             )
             record.sale_order_amount_untaxed = record.currency_id.symbol + str(
-                self.add_money_comma(record.amount_untaxed) if record.amount_untaxed else 0
+                '{0:,.2f}'.format(record.amount_untaxed).split('.')[0] if record.amount_untaxed else 0
             )
             record.sale_order_amount_tax = record.currency_id.symbol + str(
-                self.add_money_comma(record.amount_tax) if record.amount_tax else 0
+                '{0:,.2f}'.format(record.amount_tax).split('.')[0] if record.amount_tax else 0
             )
 
     def _compute_sale_order_missing_char(self):
@@ -677,11 +678,11 @@ class SaleOrderExcelReport(models.Model):
             if so.order_line :
                 for line in so.order_line:
                     total_list_price += line.price_unit * line.product_uom_qty
-            so.sale_order_total_list_price =  self.add_money_comma(total_list_price)
+            so.sale_order_total_list_price =  '{0:,.2f}'.format(total_list_price).split('.')[0]
     
     def _compute_sale_order_amount_untaxed2(self):
         for so in self:
-            so.sale_order_amount_untaxed2 =  self.add_money_comma(so.amount_untaxed )if so.amount_untaxed else ''
+            so.sale_order_amount_untaxed2 =  '{0:,.2f}'.format(so.amount_untaxed).split('.')[0] if so.amount_untaxed else ''
 
     def _compute_sale_order_total_discount(self):
         for record in self:
@@ -881,35 +882,36 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_order_number_and_size(self):
         for line in self:
             product_number_and_size = ""
-            if line.product_id.product_tmpl_id.product_no:
-                product_number_and_size += (
-                    str(line.product_id.product_tmpl_id.product_no) + "\n"
-                )
+            if line.product_id and line.product_id.product_tmpl_id:
+                if line.product_id.product_tmpl_id.product_no:
+                    product_number_and_size += (
+                        str(line.product_id.product_tmpl_id.product_no) + "\n"
+                    )
 
-            if line.product_id.product_tmpl_id.width:
-                product_number_and_size += (
-                    "W" + str(int(line.product_id.product_tmpl_id.width)) + "*"
-                )
+                if line.product_id.product_tmpl_id.width:
+                    product_number_and_size += (
+                        "W" + str(int(line.product_id.product_tmpl_id.width)) + "*"
+                    )
 
-            if line.product_id.product_tmpl_id.depth:
-                product_number_and_size += (
-                    "D" + str(int(line.product_id.product_tmpl_id.depth)) + "*"
-                )
+                if line.product_id.product_tmpl_id.depth:
+                    product_number_and_size += (
+                        "D" + str(int(line.product_id.product_tmpl_id.depth)) + "*"
+                    )
 
-            if line.product_id.product_tmpl_id.height:
-                product_number_and_size += (
-                    "H" + str(int(line.product_id.product_tmpl_id.height)) + "*"
-                )
+                if line.product_id.product_tmpl_id.height:
+                    product_number_and_size += (
+                        "H" + str(int(line.product_id.product_tmpl_id.height)) + "*"
+                    )
 
-            if line.product_id.product_tmpl_id.sh:
-                product_number_and_size += (
-                    "SH" + str(int(line.product_id.product_tmpl_id.sh)) + "*"
-                )
+                if line.product_id.product_tmpl_id.sh:
+                    product_number_and_size += (
+                        "SH" + str(int(line.product_id.product_tmpl_id.sh)) + "*"
+                    )
 
-            if line.product_id.product_tmpl_id.ah:
-                product_number_and_size += (
-                    "AH" + str(int(line.product_id.product_tmpl_id.ah)) + "*"
-                )
+                if line.product_id.product_tmpl_id.ah:
+                    product_number_and_size += (
+                        "AH" + str(int(line.product_id.product_tmpl_id.ah)) + "*"
+                    )
             product_number_and_size = product_number_and_size.rstrip("*")
             line.sale_order_number_and_size = product_number_and_size
 
@@ -972,34 +974,22 @@ class SaleOrderLineExcelReport(models.Model):
                 for attribute in attributes:
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
-            
-    def add_money_comma(self,money):
-        money = str(int(money))
-        money_len = len(money)
-        if money_len <=3 :
-            return money
-        
-        out = []
-                
-        for i in range(money_len - 1, -1, -3): 
-            out.append(money[max(0, i - 2):i + 1]) 
-            if i - 2 > 0:
-                out.append(',')
-        
-        return ''.join(out[::-1])
                     
-    @api.onchange('product_uom_qty', 'discount', 'price_unit')
+    @api.onchange('discount', 'price_unit')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            line.sale_order_sell_unit_price = self.add_money_comma(line.price_unit - line.price_unit * line.discount / 100 ) 
+            if line.price_unit and line.discount:
+                line.sale_order_sell_unit_price = '{0:,.2f}'.format(line.price_unit - line.price_unit * line.discount / 100 ).split('.')[0]
+            else:
+                line.sale_order_sell_unit_price = ''
             
     def _compute_sale_order_price_subtotal(self):
         for line in self:
-            line.sale_order_price_subtotal = self.add_money_comma(line.price_subtotal) if line.price_subtotal else ''
+            line.sale_order_price_subtotal = '{0:,.2f}'.format(line.price_subtotal).split('.')[0] if line.price_subtotal else ''
     
     def _compute_sale_order_price_unit(self):
         for line in self:
-            line.sale_order_price_unit = self.add_money_comma(line.price_unit) if line.price_unit else ''
+            line.sale_order_price_unit = '{0:,.2f}'.format(line.price_unit).split('.')[0] if line.price_unit else ''
 
     def _compute_sale_order_index(self):
         index = 0
@@ -1117,32 +1107,33 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_order_line_name_excel(self):
         for line in self:
             categ_name=""
-            if line.product_id.product_tmpl_id.config_ok :  
-                if line.product_id.product_tmpl_id.categ_id.name:
-                    categ_name = line.product_id.product_tmpl_id.categ_id.name
-                elif line.product_id.product_tmpl_id.product_no :
-                    categ_name = line.product_id.product_tmpl_id.product_no
-                else: 
-                    categ_name = line.product_id.product_tmpl_id.name   
-            else:
-                # case product is standard Prod + download payment
-                if line.product_id.product_tmpl_id.seller_ids and line.order_id.partner_id.id:
-                    matching_sup = None  
-                    for sup in line.product_id.product_tmpl_id.seller_ids:
-                        if sup.name.id == line.order_id.partner_id.id:
-                            matching_sup = sup 
-                            break
-                    if matching_sup:
-                        product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
-                        product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
-                        categ_name = product_code + product_name
-                    else:
-                        categ_name =  line.product_id.product_tmpl_id.name
+            if line.product_id and line.product_id.product_tmpl_id: 
+                if line.product_id.product_tmpl_id.config_ok :  
+                    if line.product_id.product_tmpl_id.categ_id.name:
+                        categ_name = line.product_id.product_tmpl_id.categ_id.name
+                    elif line.product_id.product_tmpl_id.product_no :
+                        categ_name = line.product_id.product_tmpl_id.product_no
+                    else: 
+                        categ_name = line.product_id.product_tmpl_id.name   
                 else:
-                    if line.product_id.product_tmpl_id.default_code:
-                        categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                    # case product is standard Prod + download payment
+                    if line.product_id.product_tmpl_id.seller_ids and line.order_id.partner_id.id:
+                        matching_sup = None  
+                        for sup in line.product_id.product_tmpl_id.seller_ids:
+                            if sup.name.id == line.order_id.partner_id.id:
+                                matching_sup = sup 
+                                break
+                        if matching_sup:
+                            product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                            product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
+                            categ_name = product_code + product_name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
                     else:
-                        categ_name =  line.product_id.product_tmpl_id.name
+                        if line.product_id.product_tmpl_id.default_code:
+                            categ_name = "[" +str(line.product_id.product_tmpl_id.default_code) +"]" + line.product_id.product_tmpl_id.name
+                        else:
+                            categ_name =  line.product_id.product_tmpl_id.name
                                 
             p_type = ""
             if line.p_type:
@@ -1151,41 +1142,19 @@ class SaleOrderLineExcelReport(models.Model):
                 elif line.p_type == "custom":
                     p_type = "特注"
 
-            size_detail = ""
-            # if line.product_id.product_tmpl_id.width:
-            #     size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-            # if line.product_id.product_tmpl_id.depth:
-            #     size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-            # if line.product_id.product_tmpl_id.height:
-            #     size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-            # if line.product_id.product_tmpl_id.sh:
-            #     size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-            # if line.product_id.product_tmpl_id.ah:
-            #     size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
-
             prod = ""
             if isinstance(categ_name, bool):
                 categ_name = "" 
             if categ_name != "" :
                 if p_type !="":
                     prod += categ_name + "\n" + p_type
-                    # if size_detail != "" :
-                    #     prod+=  "\n" + size_detail
                 else:
                     prod += categ_name
-                    # if size_detail != "" :
-                    #     prod += "\n" + size_detail
             else:
                 if p_type != "":
                     prod += p_type
-                #     if size_detail != "" :
-                #         prod+=  "\n" + size_detail
-                # else:
-                #     if size_detail != "" :
-                #         prod+= "\n" + size_detail
-                        
-            line.sale_order_line_name_excel = str(prod)       
-            
+                
+            line.sale_order_line_name_excel = str(prod)            
 class StockPickingExcelReport(models.Model):
     _inherit = "stock.picking"
 
@@ -1841,6 +1810,63 @@ class AccountMoveExcelReport(models.Model):
     monthUnit = fields.Char(string="Month", compute="_compute_month_unit")
     dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
     
+    acc_move_amount_total = fields.Char(
+        compute="_compute_acc_move_missing_currency",
+        string="Amount total",
+    )
+    acc_move_amount_untaxed = fields.Char(
+        compute="_compute_acc_move_missing_currency",
+        string="Amount untax",
+    )
+    acc_move_amount_tax = fields.Char(
+        compute="_compute_acc_move_missing_currency",
+        string="Amount tax",
+    )
+    
+    acc_move_draff_invoice= fields.Char(
+        compute="_compute_acc_move_draff_invoice",
+        string="invoice name",
+    )
+       
+    acc_move_total_list_price = fields.Char(
+        compute="_compute_acc_move_list_price",
+        string="Total List Price",
+    )
+    
+    @api.onchange('price_unit','quantity')
+    def _compute_acc_move_list_price(self):
+        for move in self:
+            total_list_price = 0.0
+            if move.invoice_line_ids :
+                for line in move.invoice_line_ids:
+                    total_list_price += line.price_unit * line.quantity
+            move.acc_move_total_list_price = '{0:,.2f}'.format(total_list_price).split('.')[0]
+                
+    def _compute_acc_move_draff_invoice(self):
+        for line in self:
+            invoice_name =''
+            if line.invoice_origin:
+                invoice_name += line.invoice_origin + '/'
+            if line.state == 'draft':
+                invoice_name += 'Draft Invoice'
+                if line.name != '/':
+                    invoice_name += line.name              
+            if line.state == 'posted':  
+                invoice_name += 'Invoice ' + line.name        
+            line.acc_move_draff_invoice = invoice_name
+
+    def _compute_acc_move_missing_currency(self):
+        for record in self:
+            record.acc_move_amount_total = record.currency_id.symbol + str(
+                '{0:,.2f}'.format(record.amount_total).split('.')[0] if record.amount_total else 0
+            )
+            record.acc_move_amount_untaxed = record.currency_id.symbol + str(
+                '{0:,.2f}'.format(record.amount_untaxed).split('.')[0] if record.amount_untaxed else 0
+            )
+            record.acc_move_amount_tax = record.currency_id.symbol + str(
+                '{0:,.2f}'.format(record.amount_tax).split('.')[0] if record.amount_tax else 0
+            )
+    
     def _compute_lang_code(self):
         for order in self:
             order.lang_code = self.env.user.lang or 'en_US'
@@ -1999,13 +2025,17 @@ class AccountMoveLineExcelReport(models.Model):
         compute="_compute_acc_line_product_detail",
         string="仕様・詳細",
     )
+    acc_line_product_detail2 = fields.Char(
+        compute="_compute_acc_line_product_detail",
+        string="仕様・詳細",
+    )
 
     acc_line_discount = fields.Char(
         compute="_compute_acc_line_discount",
         string="discount",
-    )
+    )   
 
-    acc_line_sell_unit_price = fields.Float(
+    acc_line_sell_unit_price = fields.Char(
         compute="_compute_acc_line_sell_unit_price",
         string="sell unit price",
     )
@@ -2014,13 +2044,28 @@ class AccountMoveLineExcelReport(models.Model):
         compute="_compute_acc_line_name",
         string="acc line name",
     )
+    
+    acc_line_price_subtotal = fields.Char(
+        compute="_compute_acc_line_price_subtotal",
+        string="販売⾦額",
+    )
+    
+    acc_line_price_unit = fields.Char(
+        compute="_compute_acc_line_price_unit",
+        string="定価",
+    )  
+            
+    def _compute_acc_line_price_subtotal(self):
+        for line in self:
+            line.acc_line_price_subtotal = '{0:,.2f}'.format(line.price_subtotal).split('.')[0] if line.price_subtotal else ''
+    
+    def _compute_acc_line_price_unit(self):
+        for line in self:
+            line.acc_line_price_unit = '{0:,.2f}'.format(line.price_unit).split('.')[0] if line.price_unit else ''
 
     def _compute_acc_line_name(self):
         for line in self:
             name = ""
-            if line.display_type =='line_note' or line.display_type =='line_section':
-                line.acc_line_name = line.name
-                return
             if line.product_id: 
                 # case product is download payment 
                 # if line.product_id.product_tmpl_id.type == 'service':  
@@ -2065,51 +2110,61 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_number_and_size(self):
         for line in self:
             product_number_and_size = ""
-            if line.product_id.product_tmpl_id.product_no:
-                product_number_and_size += (
-                    str(line.product_id.product_tmpl_id.product_no) + "\n"
-                )
+            if line.product_id and line.product_id.product_tmpl_id:
+                if line.product_id.product_tmpl_id.product_no:
+                    product_number_and_size += (
+                        str(line.product_id.product_tmpl_id.product_no) + "\n"
+                    )
 
-            if line.product_id.product_tmpl_id.width:
-                product_number_and_size += (
-                    "W" + str(line.product_id.product_tmpl_id.width) + "*"
-                )
+                if line.product_id.product_tmpl_id.width:
+                    product_number_and_size += (
+                        "W" + str(line.product_id.product_tmpl_id.width) + "*"
+                    )
 
-            if line.product_id.product_tmpl_id.depth:
-                product_number_and_size += (
-                    "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-                )
+                if line.product_id.product_tmpl_id.depth:
+                    product_number_and_size += (
+                        "D" + str(line.product_id.product_tmpl_id.depth) + "*"
+                    )
 
-            if line.product_id.product_tmpl_id.height:
-                product_number_and_size += (
-                    "H" + str(line.product_id.product_tmpl_id.height) + "*"
-                )
+                if line.product_id.product_tmpl_id.height:
+                    product_number_and_size += (
+                        "H" + str(line.product_id.product_tmpl_id.height) + "*"
+                    )
 
-            if line.product_id.product_tmpl_id.sh:
-                product_number_and_size += (
-                    "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-                )
+                if line.product_id.product_tmpl_id.sh:
+                    product_number_and_size += (
+                        "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
+                    )
 
-            if line.product_id.product_tmpl_id.ah:
-                product_number_and_size += (
-                    "AH" + str(line.product_id.product_tmpl_id.ah) + "*"
-                )
-            if product_number_and_size :
-                line.acc_line_number_and_size = product_number_and_size
-            else:
-                line.acc_line_number_and_size = ""
+                if line.product_id.product_tmpl_id.ah:
+                    product_number_and_size += (
+                        "AH" + str(line.product_id.product_tmpl_id.ah) + "*"
+                    )
+            product_number_and_size = product_number_and_size.rstrip("*")
+            line.acc_line_number_and_size = product_number_and_size
                 
-
     def _compute_acc_line_product_detail(self):
         for line in self:
-            product_detail = ""
-            product_template_attribute_values = (
-                line.product_id.product_template_attribute_value_ids
-            )
-
-            for attr in product_template_attribute_values:
-                product_detail += attr.display_name + "\n"
-            line.acc_line_product_detail = product_detail
+            attr = ""
+            attr_2= ""
+            
+            if line.product_id and line.product_id.product_template_attribute_value_ids :
+                attribute_values = line.product_id.product_template_attribute_value_ids 
+                length_attribute_values = len(attribute_values)
+                
+                if length_attribute_values <= 6 :
+                    for l in attribute_values:
+                        attr += ("● " + l.attribute_id.name + ":" + l.product_attribute_value_id.name + "\n" ) 
+                else:
+                    for l in attribute_values[:6]:
+                        attr += ("● " + l.attribute_id.name + ":" + l.product_attribute_value_id.name + "\n" ) 
+                    for l in attribute_values[6:12]:
+                        attr_2 += ("● " + l.attribute_id.name + ":" + l.product_attribute_value_id.name + "\n" )
+                                    
+            attr = attr.rstrip()
+            attr_2 = attr_2.rstrip()                        
+            line.acc_line_product_detail = attr
+            line.acc_line_product_detail2 = attr_2
     
     def _compute_acc_line_discount(self):
         for line in self:
@@ -2117,15 +2172,30 @@ class AccountMoveLineExcelReport(models.Model):
                 line.acc_line_discount = '{0:,.1f}'.format(100-line.discount)
             else:
                 line.acc_line_discount = ""
+    
+    acc_line_price_subtotal = fields.Char(
+        compute="_compute_acc_line_price_subtotal",
+        string="販売⾦額",
+    )
+    
+    acc_line_price_unit = fields.Char(
+        compute="_compute_acc_line_price_unit",
+        string="定価",
+    )        
+    def _compute_acc_line_price_subtotal(self):
+        for line in self:
+            line.acc_line_price_subtotal = '{0:,.2f}'.format(line.price_subtotal).split('.')[0] if line.price_subtotal else ''
+    
+    def _compute_acc_line_price_unit(self):
+        for line in self:
+            line.acc_line_price_unit = '{0:,.2f}'.format(line.price_unit).split('.')[0] if line.price_unit else ''
 
     def _compute_acc_line_sell_unit_price(self):
         for line in self:
-            if line.discount > 0:
-                line.acc_line_sell_unit_price = (
-                    line.price_unit - line.price_unit * line.discount / 100
-                )
+            if line.price_unit and line.discount:
+                line.acc_line_sell_unit_price = '{0:,.2f}'.format(line.price_unit - line.price_unit * line.discount / 100 ).split('.')[0] 
             else:
-                line.acc_line_sell_unit_price = line.price_unit
+                line.acc_line_sell_unit_price = ''
 class MrpProductionExcelReport(models.Model):
     _inherit = "mrp.production"
 

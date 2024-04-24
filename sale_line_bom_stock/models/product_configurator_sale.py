@@ -9,7 +9,7 @@ class ProductConfiguratorSale(models.TransientModel):
         product = self.env["product.product"].browse(product_id)
         res.update(
             {
-                "bom_id": min(product.bom_ids.ids),
+                "bom_id": min(product.bom_ids.ids) if (product and product.bom_ids) else None,
             }
         )
         

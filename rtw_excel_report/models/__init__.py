@@ -18,3 +18,7 @@ from . import report_quotation
 from . import report_quotation_oversea
 from . import list_price_quotation
 from . import unit_price_quotation
+from . import purchase_order_form
+from . import purchase_order_form2
+from . import invoice_sale_order
+from . import invoice_account_move
