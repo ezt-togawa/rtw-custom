@@ -104,7 +104,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_row(7, 15)
             sheet.set_row(8, 12)
             sheet.set_row(9, 12)
-            sheet.set_row(11, 19)
+            sheet.set_row(11, 22)
             sheet.set_row(12, 24)
             sheet.set_row(13, 22)
             sheet.set_row(14, 26)
@@ -145,7 +145,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(5,6, so.forwarding_address if so.forwarding_address else '', format_text) 
             sheet.write(6,6,so.sale_order_transactions_term if so.sale_order_transactions_term else '', format_text) 
             sheet.write(8,6, so.sale_order_validity_date if so.sale_order_validity_date else '', format_text) 
-            sheet.merge_range(9,6,11,8,so.sale_order_special_note if so.sale_order_special_note else '', format_note) 
+            sheet.merge_range(9,6,11,8,so.sale_order_special_note[:120] if so.sale_order_special_note else '', format_note) 
 
             sheet.merge_range(0,11,0,12, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
             sheet.merge_range(2,11,8,12, so.sale_order_hr_employee if so.sale_order_hr_employee else '' , format_address) 

@@ -799,6 +799,16 @@ msgid "単価御見積書(EXCEL)"
 msgstr "Unit Price Quotation(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.invoice_sale_order
+msgid "請求書(EXCEL)"
+msgstr "Invoice(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.invoice_account_move
+msgid "請求書(EXCEL)2"
+msgstr "Invoice(EXCEL)2"
+
+#. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.stock_status_list
 msgid "在庫状況一覧(EXCEL)"
 msgstr "Inventory Status List(EXCEL)"
