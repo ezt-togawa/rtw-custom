@@ -282,7 +282,7 @@
                                                         <div class="six-lines">
                                                             <span
                                                                 style="font-size:16px"
-                                                                t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
+                                                                t-esc="'{0:,.0f}'.format(l.price_unit * l.product_uom_qty)" />
                                                         </div>
                                                     </td>
                                                 </t>
