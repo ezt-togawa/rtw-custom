@@ -43,11 +43,11 @@
                   </span>
                 </div>
                 <t t-if="docs.lang_code == 'en_US'">
-                  <span class="so_price" style="border-bottom:1px solid black;"> Mr./Mrs. <t t-esc="' '" /> <span t-field="docs.user_id.name" /> 様 宛 </span>
+                  <span class="so_price" style="border-bottom:1px solid black;"> Mr./Mrs. <t t-esc="' '" /> <span t-field="docs.user_id.name" /> 宛 </span>
                 </t>
                 <t t-else="">
                   <span class="so_price" style="border-bottom:1px solid black;">
-                    <span t-field="docs.user_id.name" /> 様 宛 </span>
+                    <span t-field="docs.user_id.name" /> 宛 </span>
                 </t>
                 <br />
                 <div style="font-size:12px;padding-top:10px;padding-bottom:10px;">下記の通り注文いたします。<br />
@@ -88,7 +88,7 @@
                 <div class="d-flex">
                   <div class="col-4"></div>
                   <div class="col-8 d-flex justify-content-end">
-                    <div style="padding-right:50px;">西暦</div>
+                    <div style="padding-right:70px;">西暦</div>
                     <div>
                       <span class="letter-spacing">年</span>
                       <span class="letter-spacing">月</span>
@@ -215,61 +215,61 @@
                             </div>
                         </td>
                         <td class="size12">
-                          <div class="six-lines">
-                              <t
-                                  t-foreach="l.product_id.product_template_attribute_value_ids[0:(6 if len(l.product_id.product_template_attribute_value_ids) &gt;= 6 else len(l.product_id.product_template_attribute_value_ids))]"
-                                  t-as="string_line">
-                                  <div class="one-lines">
-                                      ● <span
-                                          t-esc="string_line.display_name" />
-                                  </div>
-                              </t>
-                              <t t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
-                                  <t t-foreach="l.config_session_id.custom_value_ids[0:(6 - len(l.product_id.product_template_attribute_value_ids))]"
-                                      t-as="string_line"> 
-                                      <div class="one-lines">
-                                          ● <span
-                                              t-esc="string_line.display_name" />: <span
-                                              t-esc="string_line.value" />
-                                      </div>
-                                  </t>
-                              </t>
-                          </div>
-                      </td>
-                      <td class="size12">
-                          <div class="six-lines">
-                              <t t-if="len(l.product_id.product_template_attribute_value_ids) &gt; 6">
-                                  <t
-                                      t-foreach="l.product_id.product_template_attribute_value_ids[6:12]"
-                                      t-as="string_line"> 
-                                      <div class="one-lines">
-                                          ● <span
-                                              t-esc="string_line.display_name" />
-                                      </div>
-                                  </t>
-                              </t>
-                              <t t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
-                                  <t t-foreach="l.config_session_id.custom_value_ids[(6 - len(l.product_id.product_template_attribute_value_ids)):len(l.config_session_id.custom_value_ids)]"
-                                      t-as="string_line"> 
-                                          <div class="one-lines">
-                                              ● <span
-                                              t-esc="string_line.display_name" />: <span
-                                              t-esc="string_line.value" />
-                                          </div>
-                                  </t>
-                              </t>
-                              <t t-else="">
-                                  <t t-foreach="l.config_session_id.custom_value_ids[0:len(l.config_session_id.custom_value_ids)]"
-                                      t-as="string_line"> 
-                                          <div class="one-lines">
-                                              ● <span
-                                              t-esc="string_line.display_name" />: <span
-                                              t-esc="string_line.value" />
-                                          </div>
-                                  </t>
-                              </t>
-                          </div>
-                      </td>
+                            <div class="six-lines">
+                                <t
+                                    t-foreach="l.product_id.product_template_attribute_value_ids[0:(6 if len(l.product_id.product_template_attribute_value_ids) &gt;= 6 else len(l.product_id.product_template_attribute_value_ids))]"
+                                    t-as="string_line">
+                                    <div class="one-lines">
+                                        ● <span
+                                            t-esc="string_line.display_name" />
+                                    </div>
+                                </t>
+                                <t t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
+                                    <t t-foreach="l.config_session_id.custom_value_ids[0:(6 - len(l.product_id.product_template_attribute_value_ids))]"
+                                        t-as="string_line"> 
+                                        <div class="one-lines">
+                                            ● <span
+                                                t-esc="string_line.display_name" />: <span
+                                                t-esc="string_line.value" />
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </td>
+                        <td class="size12">
+                            <div class="six-lines">
+                                <t t-if="len(l.product_id.product_template_attribute_value_ids) &gt; 6">
+                                    <t
+                                        t-foreach="l.product_id.product_template_attribute_value_ids[6:12]"
+                                        t-as="string_line"> 
+                                        <div class="one-lines">
+                                            ● <span
+                                                t-esc="string_line.display_name" />
+                                        </div>
+                                    </t>
+                                </t>
+                                <t t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
+                                    <t t-foreach="l.config_session_id.custom_value_ids[(6 - len(l.product_id.product_template_attribute_value_ids)):len(l.config_session_id.custom_value_ids)]"
+                                        t-as="string_line"> 
+                                            <div class="one-lines">
+                                                ● <span
+                                                t-esc="string_line.display_name" />: <span
+                                                t-esc="string_line.value" />
+                                            </div>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <t t-foreach="l.config_session_id.custom_value_ids[0:len(l.config_session_id.custom_value_ids)]"
+                                        t-as="string_line"> 
+                                            <div class="one-lines">
+                                                ● <span
+                                                t-esc="string_line.display_name" />: <span
+                                                t-esc="string_line.value" />
+                                            </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </td>
                         <td class="text-center size13">
                               <div id="quote_qty" class="six-lines">
                                   <span t-esc="l.sale_order_line_product_uom_qty" />
