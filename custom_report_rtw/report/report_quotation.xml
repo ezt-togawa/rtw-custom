@@ -89,12 +89,13 @@
                             </div>
                             <div
                                 class="col-4 size11" name="company_address">
-                                    <div style="float:right;">
-                                        <img style="width:70%;float:right;"
+                                <div class="float-right">
+                                    <div>
+                                        <img style="width:180px;height:40px;"
                                             src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
                                             alt="Logo" />
                                     </div>
-                                    <div style="float:right;padding-right:20px;">
+                                    <div>
                                         <div class="size12">
                                             <span t-esc="docs.hr_employee_company" />
                                         </div>
@@ -120,6 +121,7 @@
                                             <span t-esc="docs.hr_employee_printer" />
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                         <table
