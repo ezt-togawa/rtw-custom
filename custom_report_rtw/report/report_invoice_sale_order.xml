@@ -224,32 +224,56 @@
                                                 <td class="size12">
                                                     <div class="six-lines">
                                                         <t
-                                                            t-foreach="l.product_id.product_template_attribute_value_ids[0:6]"
-                                                            t-as="string_line"> ● <span
-                                                                t-esc="string_line.display_name" />
-                                                            <br />
+                                                            t-foreach="l.product_id.product_template_attribute_value_ids[0:(6 if len(l.product_id.product_template_attribute_value_ids) &gt;= 6 else len(l.product_id.product_template_attribute_value_ids))]"
+                                                            t-as="string_line">
+                                                            <div class="one-lines">
+                                                                ● <span
+                                                                    t-esc="string_line.display_name" />
+                                                            </div>
                                                         </t>
-                                                        <t t-foreach="l.config_session_id.custom_value_ids[0:6]"
-                                                            t-as="string_line"> ●<span
-                                                                t-esc="string_line.display_name" />: <span
-                                                                t-esc="string_line.value" />
-                                                            <br />
+                                                        <t t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
+                                                            <t t-foreach="l.config_session_id.custom_value_ids[0:(6 - len(l.product_id.product_template_attribute_value_ids))]"
+                                                                t-as="string_line"> 
+                                                                <div class="one-lines">
+                                                                    ● <span
+                                                                        t-esc="string_line.display_name" />: <span
+                                                                        t-esc="string_line.value" />
+                                                                </div>
+                                                            </t>
                                                         </t>
                                                     </div>
                                                 </td>
                                                 <td class="size12">
                                                     <div class="six-lines">
-                                                        <t
-                                                            t-foreach="l.product_id.product_template_attribute_value_ids[6:12]"
-                                                            t-as="string_line"> ● <span
-                                                                t-esc="string_line.display_name" />
-                                                            <br />
+                                                        <t t-if="len(l.product_id.product_template_attribute_value_ids) &gt; 6">
+                                                            <t
+                                                                t-foreach="l.product_id.product_template_attribute_value_ids[6:12]"
+                                                                t-as="string_line"> 
+                                                                <div class="one-lines">
+                                                                    ● <span
+                                                                        t-esc="string_line.display_name" />
+                                                                </div>
+                                                            </t>
                                                         </t>
-                                                        <t t-foreach="l.config_session_id.custom_value_ids[6:12]"
-                                                            t-as="string_line"> ●<span
-                                                                t-esc="string_line.display_name" />: <span
-                                                                t-esc="string_line.value" />
-                                                            <br />
+                                                        <t t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
+                                                            <t t-foreach="l.config_session_id.custom_value_ids[(6 - len(l.product_id.product_template_attribute_value_ids)):len(l.config_session_id.custom_value_ids)]"
+                                                                t-as="string_line"> 
+                                                                    <div class="one-lines">
+                                                                        ● <span
+                                                                        t-esc="string_line.display_name" />: <span
+                                                                        t-esc="string_line.value" />
+                                                                    </div>
+                                                            </t>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-foreach="l.config_session_id.custom_value_ids[0:len(l.config_session_id.custom_value_ids)]"
+                                                                t-as="string_line"> 
+                                                                    <div class="one-lines">
+                                                                        ● <span
+                                                                        t-esc="string_line.display_name" />: <span
+                                                                        t-esc="string_line.value" />
+                                                                    </div>
+                                                            </t>
                                                         </t>
                                                     </div>
                                                 </td>
@@ -265,12 +289,12 @@
                                                             t-esc="'{0:,.0f}'.format(l.price_unit)" />
                                                     </div>
                                                 </td>
-                                                <td class="text-center size11">
+                                                <td class="text-center size16">
                                                     <div class="six-lines">
                                                         <span t-esc="'{0:,.0f}'.format(l.sale_order_line_discount)" />
                                                     </div>
                                                 </td>
-                                                <td class="text-center size12">
+                                                <td class="text-center size16">
                                                     <div class="six-lines">
                                                         <span
                                                             t-esc="'{0:,.0f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else '{0:,.0f}'.format(l.price_unit)" />
