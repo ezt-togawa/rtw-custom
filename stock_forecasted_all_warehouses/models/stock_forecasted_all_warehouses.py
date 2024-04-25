@@ -3,10 +3,34 @@
 
 from collections import defaultdict
 from odoo.http import request
-from odoo import api, models
+from odoo import api, models , fields
 from odoo.tools import float_is_zero, format_datetime, format_date, float_round
 
-
+class mrp_production_custom(models.Model):
+    _inherit = 'mrp.production'
+    
+    mrp_sale_order = fields.One2many('sale.order' , compute='_compute_mrp_sale_order')
+    
+    def _get_so_from_mrp(self , mrp_production , count = 0):
+          if count >= 10:
+              return False
+          if not mrp_production.origin:
+              return False
+          
+          sale_order_id = False
+          if '/MO/' in mrp_production.origin:
+              mrp = self.env['mrp.production'].search([('name','=',mrp_production.origin)])
+              if mrp:
+                  count += 1
+                  sale_order_id = self._get_so_from_mrp(mrp, count)
+          else:
+              sale_order_id = self.env['sale.order'].search([('name','=',mrp_production.origin)])
+          return sale_order_id
+    
+    def _compute_mrp_sale_order(self):
+        for record in self:
+          record.mrp_sale_order = self._get_so_from_mrp(record)
+          
 class stock_forecasted_all_warehouses(models.AbstractModel):
     _inherit = 'report.stock.report_product_product_replenishment'
     
