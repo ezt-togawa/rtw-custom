@@ -755,6 +755,10 @@ class SaleOrderLineExcelReport(models.Model):
         compute="_compute_sale_order_price_subtotal",
         string="販売⾦額",
     )
+    sale_order_amount_no_rate = fields.Char(
+        compute="_compute_sale_order_amount_no_rate",
+        string="販売⾦額",
+    )
     
     sale_order_price_unit = fields.Char(
         compute="_compute_sale_order_price_unit",
@@ -997,6 +1001,14 @@ class SaleOrderLineExcelReport(models.Model):
         for line in self:
             line.sale_order_price_subtotal = self.add_money_comma(line.price_subtotal) if line.price_subtotal else ''
     
+    @api.onchange('product_uom_qty', 'price_unit')        
+    def _compute_sale_order_amount_no_rate(self):
+        for line in self:
+            if line.product_uom_qty and line.price_unit :
+                line.sale_order_amount_no_rate = self.add_money_comma(line.product_uom_qty * line.price_unit)
+            else:
+                line.sale_order_amount_no_rate = ''    
+                
     def _compute_sale_order_price_unit(self):
         for line in self:
             line.sale_order_price_unit = self.add_money_comma(line.price_unit) if line.price_unit else ''
