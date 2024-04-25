@@ -35,10 +35,10 @@
         # 'report_list_price_quotation/templates.xml',
         # 'report_unit_price_quotation/actions.xml',
         # 'report_unit_price_quotation/templates.xml',
-        'report_invoice/actions.xml',
-        'report_invoice/templates.xml',
-        'report_invoice_sale_order/actions.xml',
-        'report_invoice_sale_order/templates.xml',
+        # 'report_invoice/actions.xml',
+        # 'report_invoice/templates.xml',
+        # 'report_invoice_sale_order/actions.xml',
+        # 'report_invoice_sale_order/templates.xml',
 
         # 'report_purchase_order/actions.xml',
         # 'report_purchase_order/templates.xml',
@@ -74,6 +74,8 @@
         'views/unit_price_quotation.xml',
         'views/purchase_order.xml',
         'views/purchase_order2.xml',
+        'views/invoice_sale_order.xml',
+        'views/invoice_account_move.xml',
 
         # 'report_stock_move_pallet/actions.xml',
         # 'report_stock_move_pallet/templates.xml',
