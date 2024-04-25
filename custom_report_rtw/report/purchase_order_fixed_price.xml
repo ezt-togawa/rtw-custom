@@ -88,11 +88,11 @@
                 <div class="d-flex">
                   <div class="col-4"></div>
                   <div class="col-8 d-flex justify-content-end">
-                    <div style="padding-right:70px;">西暦</div>
+                    <div>西暦</div>
                     <div>
-                      <span class="letter-spacing">年</span>
-                      <span class="letter-spacing">月</span>
-                      <span class="letter-spacing">日</span>
+                      <span style="padding-left:50px;">年</span>
+                      <span style="padding-left:25px;">月</span>
+                      <span style="padding-left:25px;">日</span>
                     </div>
                   </div>
                 </div>
