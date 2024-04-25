@@ -46,8 +46,18 @@ class MrpProduction(models.Model):
       compute="_compute_mrp_product_attribute_summary",
   )
   
+  mrp_production_parent_id = fields.One2many(
+      "mrp.production",
+      compute="_compute_mrp_production_parent_id",
+  )
+  
+  mrp_production_so_id = fields.One2many(
+      "sale.order",
+      compute="_compute_mrp_production_so_id",
+  )
+  
   mrp_product_product_qty = fields.Char(string="mrp product product qty" , compute="_compute_mrp_product_product_qty")
-              
+  
   def _compute_mrp_product_product_qty(self):
       for line in self:
           float_product_qty = float(line.product_qty)
@@ -61,7 +71,7 @@ class MrpProduction(models.Model):
                   decimal_part_after_dot = decimal_part_after_dot / 10
               line.mrp_product_product_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
 
-  def _compute_get_sale_order_line(self):        
+  def _compute_get_sale_order_line(self):
       sale_order = self.env['sale.order'].search([('name','=',self.origin)])
       order_lines = self.env["sale.order.line"].search([("order_id", "in", sale_order.ids)])
       
@@ -189,6 +199,34 @@ class MrpProduction(models.Model):
                   attribute_summary += attr.attribute_id.name +'\n'
           line.mrp_product_attribute = attribute
           line.mrp_product_attribute_summary = attribute_summary
-          
-    
-                      
+
+  def _compute_mrp_production_parent_id(self):
+      if self.origin and '/MO/' in self.origin:
+          mrp_parent_id = self.env['mrp.production'].search([('name','=',self.origin)],limit=1)
+          if mrp_parent_id:
+              self.mrp_production_parent_id = mrp_parent_id
+          else:
+              self.mrp_production_parent_id = False
+      else:
+          self.mrp_production_parent_id = False
+  
+  def _get_so_from_mrp(self , mrp_production , count = 0):
+        if count >= 10:
+            return False
+        if not mrp_production.origin:
+            return False
+        
+        sale_order_id = False
+        if '/MO/' in mrp_production.origin:
+            mrp = self.env['mrp.production'].search([('name','=',mrp_production.origin)])
+            if mrp:
+                count += 1
+                sale_order_id = self._get_so_from_mrp(mrp, count)
+        else:
+            sale_order_id = self.env['sale.order'].search([('name','=',mrp_production.origin)])
+        return sale_order_id
+  
+  def _compute_mrp_production_so_id(self):
+      for record in self:
+        record.mrp_production_so_id = self._get_so_from_mrp(record)
+        
