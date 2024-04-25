@@ -56,6 +56,11 @@ class MrpProduction(models.Model):
       compute="_compute_mrp_production_so_id",
   )
   
+  mrp_production_date_planned_start = fields.Date(
+      string='date planned start',
+      compute="_compute_mrp_production_date_planned_start"
+  )
+  
   mrp_product_product_qty = fields.Char(string="mrp product product qty" , compute="_compute_mrp_product_product_qty")
   
   def _compute_mrp_product_product_qty(self):
@@ -229,4 +234,9 @@ class MrpProduction(models.Model):
   def _compute_mrp_production_so_id(self):
       for record in self:
         record.mrp_production_so_id = self._get_so_from_mrp(record)
-        
+                       
+  def _compute_mrp_production_date_planned_start(self):
+      if self.date_planned_start:
+          self.mrp_production_date_planned_start = self.date_planned_start.date()
+      else:
+          self.mrp_production_date_planned_start = ''

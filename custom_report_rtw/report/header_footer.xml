@@ -314,10 +314,10 @@
                             alt="Logo" />
                         <span class="ml-2 size20"> 発注書 </span>
                         <t t-if="docs.lang_code == 'en_US'">
-                            <div>御中 <span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /> 株式会社</div>
+                            <div>御中 <span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /></div>
                         </t>
                         <t t-else="">
-                            <div> 株式会社 <span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                            <div><span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
                         </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
@@ -347,10 +347,10 @@
                             alt="Logo" />
                         <span class="ml-2 size20">検品発注書</span>
                         <t t-if="docs.lang_code == 'en_US'">
-                            <div>御中 <span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /> 株式会社</div>
+                            <div>御中 <span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /></div>
                         </t>
                         <t t-else="">
-                            <div> 株式会社 <span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                            <div><span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
                         </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
@@ -378,7 +378,7 @@
                             src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                             style="max-height: 45px;"
                             alt="Logo" />
-                        <span class="ml-2 size20">発注書(部材用)</span>
+                        <span class="ml-2 size20">発注書(部材用)</span>                        
                         <t t-if="docs.lang_code == 'en_US'">
                             <span class="ml-5 size15"> 御中<t
                                     t-if="so.partner_id.commercial_company_name">
@@ -388,10 +388,10 @@
                                     t-else="">
                                     <span t-esc="so.partner_id.name" />
                                 </t>
-                                株式会社 </span>
+                            </span>
                         </t>
                         <t t-else="">
-                            <span class="ml-5 size15"> 株式会社 <t
+                            <span class="ml-5 size15"><t
                                     t-if="so.partner_id.commercial_company_name">
                                     <span t-esc="so.partner_id.commercial_company_name" />
                                 </t>

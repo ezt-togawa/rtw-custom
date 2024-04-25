@@ -53,7 +53,7 @@
                       </t>
                     </t>
                     <t t-else="">
-                        <span class="size14" t-field="docs.mrp_production_parent_id.date_planned_start" />
+                        <span class="size14" t-field="docs.mrp_production_parent_id.mrp_production_date_planned_start" />
                     </t>
                   </t>
                   </div>
@@ -72,7 +72,7 @@
                           t-field="so.partner_id.site" />
                       <span t-field="so.partner_id.department" />
                       <span
-                          t-field="so.partner_id.user_id.name" /> ご依頼分 <span t-field="so.name" />
+                          t-field="so.partner_id.user_id.name" /> ご依頼分
                       </div>
                     </div>
                   </div>
@@ -82,35 +82,41 @@
                     <t t-if="so.overseas"> 海外 </t>
                   </div>
                 </div>
-                <div class="col-4 size11" name="company_address">
-                  <div style="float:right;">
-                      <img style="width:70%;float:right;"
-                          src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
-                          alt="Logo" />
-                  </div>
-                  <div style="float:right;padding-right:20px;">
-                    <div class="size12">
-                      <span t-esc="so.hr_employee_company" />
-                    </div>
-                    <div>
-                      <span t-esc="so.hr_employee_department" />
-                    </div>
-                    <div>
-                      <span t-esc="so.hr_employee_zip" />
-                    </div>
-                    <div>
-                      <span t-esc="so.hr_employee_info" />
-                    </div>
-                    <div>
-                      <span t-esc="so.hr_employee_tel" />
-                    </div>
-                    <div>
-                      <span t-esc="so.hr_employee_fax" />
-                    </div>
-                    <div class="size12">
-                      <span t-esc="so.hr_employee_printer" />
-                    </div>
-                  </div>
+                <div
+                    class="col-4 size11" name="company_address">
+                        <div class="float-right">
+                            <div>
+                                <img style="width:180px;height:40px;"
+                                    src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                                    alt="Logo" />
+                            </div>
+                            <div>
+                                <div class="size12">
+                                    <span t-esc="so.hr_employee_company" />
+                                </div>
+                                <!-- <div>
+                                    <span t-esc="so.registration_number" />
+                                </div> -->
+                                <div>
+                                    <span t-esc="so.hr_employee_department" />
+                                </div>
+                                <div>
+                                    <span t-esc="so.hr_employee_zip" />
+                                </div>
+                                <div>
+                                    <span t-esc="so.hr_employee_info" />
+                                </div>
+                                <div>
+                                    <span t-esc="so.hr_employee_tel" />
+                                </div>
+                                <div>
+                                    <span t-esc="so.hr_employee_fax" />
+                                </div>
+                                <div class="size12">
+                                    <span t-esc="so.hr_employee_printer" />
+                                </div>
+                            </div>
+                        </div>
                 </div>
               </div>
               <div class="row py-2">
@@ -129,26 +135,44 @@
                       </t>
                     </div>
                     <t t-if="not so.sipping_to =='direct'">
-                      <div> 住所: 
-                        <t t-if="so.waypoint.zip">
-                          〒<span t-field="so.waypoint.zip" />
-                        </t>
-                        <t t-if="so.waypoint.street">
-                          <span t-field="so.waypoint.street" />
-                        </t>
-                        <t t-if="so.waypoint.street2">
-                          <span t-field="so.waypoint.street2" />  
-                        </t>
-                        <t t-if="so.waypoint.city">
-                          <span t-field="so.waypoint.city" />
-                        </t>
-                        <t t-if="so.waypoint.state_id.name">
-                          <span t-field="so.waypoint.state_id.name" />
-                        </t>
-                        <t t-if="so.waypoint.country_id.name">
-                          <span t-field="so.waypoint.country_id.name" />
-                        </t>
-                      </div>
+                      <t t-if="docs.lang_code == 'ja_JP'">
+                          <div> 住所: 
+                            <t t-if="so.waypoint.zip">
+                              〒<span t-field="so.waypoint.zip" />
+                            </t>
+                            <t t-if="so.waypoint.state_id.name">
+                              <span t-field="so.waypoint.state_id.name" />
+                            </t>
+                            <t t-if="so.waypoint.city">
+                              <span t-field="so.waypoint.city" />
+                            </t>
+                            <t t-if="so.waypoint.street">
+                              <span t-field="so.waypoint.street" />
+                            </t>
+                            <t t-if="so.waypoint.street2">
+                              <span t-field="so.waypoint.street2" />  
+                            </t>
+                          </div>
+                      </t>
+                      <t t-else="">
+                          <div> 住所: 
+                            <t t-if="so.waypoint.zip">
+                              〒<span t-field="so.waypoint.zip" />
+                            </t>
+                            <t t-if="so.waypoint.street">
+                              <span t-field="so.waypoint.street" />
+                            </t>
+                            <t t-if="so.waypoint.street2">
+                              <span t-field="so.waypoint.street2" />  
+                            </t>
+                            <t t-if="so.waypoint.city">
+                              <span t-field="so.waypoint.city" />
+                            </t>
+                            <t t-if="so.waypoint.state_id.name">
+                              <span t-field="so.waypoint.state_id.name" />
+                            </t>
+                          </div>
+                      </t>
                       <div> TEL: <span class="size14" t-field="so.waypoint.phone" />
                       </div>
                     </t>
@@ -157,26 +181,44 @@
                     <div> 送り先: 
                       <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.name"/>
                     </div>
-                    <div> 住所: 
-                      <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
-                        〒<span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
-                      </t>
-                      <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
-                        <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
-                      </t>
-                      <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
-                        <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />  
-                      </t>
-                      <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
-                        <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
-                      </t>
-                      <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
-                        <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
-                      </t>
-                      <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.country_id.name">
-                        <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.country_id.name" />
-                      </t>
-                    </div>
+                    <t t-if="docs.lang_code == 'ja_JP'">
+                        <div> 住所: 
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
+                            〒<span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
+                          </t>
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
+                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
+                          </t>
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
+                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
+                          </t>
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
+                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
+                          </t>
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
+                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />  
+                          </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div> 住所: 
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
+                            〒<span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
+                          </t>
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
+                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
+                          </t>
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
+                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />  
+                          </t>
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
+                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
+                          </t>
+                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
+                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
+                          </t>
+                        </div>
+                    </t>
                     <div> TEL: 
                       <span class="size14" t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.phone" />
                     </div>
@@ -184,7 +226,7 @@
                 </div>
                 <div class="col-4 size13">
                   <div style="padding-left:60px;">
-                    <div> 送り先注記: <span t-field="docs.remark" />
+                    <div> 送り先注記: <span t-field="so.remark" />
                       <br />
                       <!-- <span t-field="docs.production_memo" /> -->
                     </div>
@@ -219,7 +261,6 @@
                         <div class="six-lines">
                             <div t-if="docs.mrp_product_name" t-field="docs.mrp_product_name" />
                             <div t-if="docs.mrp_product_type" t-field="docs.mrp_product_type" />
-                            <br />
                             <t t-if="docs.product_id.width > 0">W<span
                                 t-field="docs.product_id.width" />
                             </t>
