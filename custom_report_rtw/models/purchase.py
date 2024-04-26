@@ -71,27 +71,28 @@ class PurchaseOrderEmployee(models.Model):
     purchase_order_address = fields.Char(string="purchase order address" , compute="_compute_purchase_order_address")
     def _compute_purchase_order_address(self):
       for po in self:
+        purchase_order = self.env['purchase.order'].with_context({'lang':self.env.user.lang}).search([('id','=',po.id)])
         address = ""
-        if po.picking_type_id.warehouse_id.partner_id.zip:
-                address += "〒" + po.picking_type_id.warehouse_id.partner_id.zip +" "
-        if po.lang_code == 'ja_JP':
-            if po.picking_type_id.warehouse_id.partner_id.state_id.name:
-                address += po.picking_type_id.warehouse_id.partner_id.state_id.name +" "
-            if po.picking_type_id.warehouse_id.partner_id.city:
-                address += po.picking_type_id.warehouse_id.partner_id.city +" "
-            if po.picking_type_id.warehouse_id.partner_id.street:
-                address += po.picking_type_id.warehouse_id.partner_id.street +" "
-            if po.picking_type_id.warehouse_id.partner_id.street2:
-                address += po.picking_type_id.warehouse_id.partner_id.street2 
+        if purchase_order.picking_type_id.warehouse_id.partner_id.zip:
+                address += "〒" + purchase_order.picking_type_id.warehouse_id.partner_id.zip +" "
+        if self.env.user.lang == 'ja_JP':
+            if purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name:
+                address += purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name +" "
+            if purchase_order.picking_type_id.warehouse_id.partner_id.city:
+                address += purchase_order.picking_type_id.warehouse_id.partner_id.city +" "
+            if purchase_order.picking_type_id.warehouse_id.partner_id.street:
+                address += purchase_order.picking_type_id.warehouse_id.partner_id.street +" "
+            if purchase_order.picking_type_id.warehouse_id.partner_id.street2:
+                address += purchase_order.picking_type_id.warehouse_id.partner_id.street2 
         else:
-            if po.picking_type_id.warehouse_id.partner_id.street:
-                address += po.picking_type_id.warehouse_id.partner_id.street +" "
-            if po.picking_type_id.warehouse_id.partner_id.street2:
-                address += po.picking_type_id.warehouse_id.partner_id.street2 
-            if po.picking_type_id.warehouse_id.partner_id.city:
-                address += po.picking_type_id.warehouse_id.partner_id.city +" "
-            if po.picking_type_id.warehouse_id.partner_id.state_id.name:
-                address += po.picking_type_id.warehouse_id.partner_id.state_id.name 
+            if purchase_order.picking_type_id.warehouse_id.partner_id.street:
+                address += purchase_order.picking_type_id.warehouse_id.partner_id.street +" "
+            if purchase_order.picking_type_id.warehouse_id.partner_id.street2:
+                address += purchase_order.picking_type_id.warehouse_id.partner_id.street2 
+            if purchase_order.picking_type_id.warehouse_id.partner_id.city:
+                address += purchase_order.picking_type_id.warehouse_id.partner_id.city +" "
+            if purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name:
+                address += purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name 
             
         po.purchase_order_address = address
         

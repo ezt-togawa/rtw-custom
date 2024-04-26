@@ -814,6 +814,11 @@ msgid "在庫状況一覧(EXCEL)"
 msgstr "Inventory Status List(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.purchase_order_for_part
+msgid "発注書(部材用）-(EXCEL)"
+msgstr "Purchase Order(Components) -(EXCEL)"
+
+#. module: rtw_excel_report
 #: model:ir.actions.act_window,name:rtw_excel_report.action_list_price_quotation_export_xlsx
 #: model:ir.ui.menu,name:rtw_excel_report.menu_report_list_price_quotation
 msgid "定価見積書"
@@ -872,7 +877,7 @@ msgstr "Purchase Order"
 #. module: rtw_excel_report
 #: model:ir.actions.act_window,name:rtw_excel_report.action_purchase_order_for_part_export_xlsx
 #: model:ir.ui.menu,name:rtw_excel_report.menu_report_purchase_order_for_part
-msgid "発注書(部材用）"
+msgid "発注書 (部材用）"
 msgstr "Purchase Order (Components)"
 
 #. module: rtw_excel_report

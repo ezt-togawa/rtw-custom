@@ -378,7 +378,8 @@
                             src="/custom_report_rtw/static/src/images/company_logo.jpeg"
                             style="max-height: 45px;"
                             alt="Logo" />
-                        <span class="ml-2 size20">発注書(部材用)</span>                        
+                        <span class="ml-2 size20">発注書(部材用)</span>
+                        
                         <t t-if="docs.lang_code == 'en_US'">
                             <span class="ml-5 size15"> 御中<t
                                     t-if="so.partner_id.commercial_company_name">
@@ -403,6 +404,7 @@
                         </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
+                        <div t-esc="docs.name" />
                         <t t-if="docs.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y-%m-%d')" />
                         </t>

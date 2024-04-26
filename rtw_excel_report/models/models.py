@@ -2523,18 +2523,31 @@ class PurchaseOrderExcelReport(models.Model):
         month = str(datetime.now().month)
         year = str(datetime.now().year)
         for record in self:
-            record.purchase_order_current_date = year + " 年 " + month + " 月 " + day + " 日 "
+            if self.env.user.lang == 'ja_JP':
+                record.purchase_order_current_date = year + " 年 " + month + " 月 " + day + " 日 "
+            else:
+                record.purchase_order_current_date = year + " - " + month + " - " + day 
 
     def _compute_purchase_order_company(self):
         for record in self:
             if record.partner_id.commercial_company_name:
-                record.purchase_order_company = (
-                    "株式会社 " + record.partner_id.commercial_company_name + " 御中"
-                )
+                if self.env.user.lang == 'ja_JP':
+                    record.purchase_order_company = (
+                        record.partner_id.commercial_company_name + " 御中"
+                    )
+                else:
+                    record.purchase_order_company = (
+                      "Dear " + record.partner_id.commercial_company_name
+                    )
             else:
-                record.purchase_order_company = (
-                    "株式会社 " + record.partner_id.name + " 御中"
-                )
+                if self.env.user.lang == 'ja_JP':
+                    record.purchase_order_company = (
+                        record.partner_id.name + " 御中"
+                    )
+                else:
+                    record.purchase_order_company = (
+                      "Dear " + record.partner_id.name
+                    )
 
     def _compute_purchase_order_address_zip_city(self):
         for record in self:
@@ -2659,18 +2672,21 @@ class PurChaseOrderLineExcelReport(models.Model):
                 line.purchase_order_index = str(index)
     
     def _compute_purchase_order_product_detail(self):
-        for line in self:
+        for record in self:
             attr = ""
-            attributes = line.product_id.product_template_attribute_value_ids
+            attributes = record.product_id.product_template_attribute_value_ids
             if attributes:
                 for attribute in attributes:
+                    attribute_name = self.env['product.attribute'].with_context({'lang':self.env.user.lang}).search([('id','=',attribute.attribute_id.id)]).name
+                    attribute_value = self.env['product.attribute.value'].with_context({'lang':self.env.user.lang}).search([('id','=',attribute.product_attribute_value_id.id)]).name
                     attr += (
-                        attribute.attribute_id.name
+                        '●' + ' '+
+                        attribute_name
                         + ":"
-                        + attribute.product_attribute_value_id.name
+                        + attribute_value
                         + "\n"
                     )
-            line.purchase_order_product_detail = attr
+            record.purchase_order_product_detail = attr
             
     def _compute_purchase_order_text_piece_leg(self):
         for line in self:
