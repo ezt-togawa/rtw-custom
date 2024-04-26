@@ -202,6 +202,14 @@ class SaleOrderExcelReport(models.Model):
         "sale order draff invoice",
         compute="_compute_sale_order_draff_invoice",
     )    
+    sale_order_waypoint_name= fields.Char(
+        "waypoint name",
+        compute="_compute_sale_order_waypoint",
+    )    
+    sale_order_waypoint_address= fields.Char(
+        "waypoint address",
+        compute="_compute_sale_order_waypoint",
+    )    
     
     def _compute_bank(self):
         for record in self:
@@ -427,31 +435,82 @@ class SaleOrderExcelReport(models.Model):
 
     def _compute_sale_order_company_name(self):
         for line in self:
-            sale_order_company_name = ""
-            if line.partner_id.commercial_company_name:
-                sale_order_company_name = line.partner_id.commercial_company_name
-            else:
-                sale_order_company_name = line.partner_id.name
-            if line.partner_id.department:
-                sale_order_company_name += " " + line.partner_id.department
-            if line.partner_id.user_id.name:
-                sale_order_company_name += " " + line.partner_id.user_id.name + " ご依頼分"
-            line.sale_order_company_name = sale_order_company_name
+            company_name = ""
+            partner = line.partner_id
+            
+            if partner:
+                if partner.commercial_company_name:
+                    company_name = partner.commercial_company_name
+                elif partner.name:
+                    company_name = partner.name
+                    
+                if partner.department:
+                    company_name += " " + partner.department
+                    
+                if partner.user_id and partner.user_id.name :
+                    company_name += " " + partner.user_id.name + " ご依頼分"
+                    
+            line.sale_order_company_name = company_name
+            
+    def _compute_sale_order_waypoint(self):
+        for line in self:
+            waypoint = line.waypoint
+            
+            company_name = ""
+            address = ""
+
+            if waypoint:
+                if waypoint.commercial_company_name:
+                    company_name = waypoint.commercial_company_name
+                elif waypoint.name:
+                    company_name = waypoint.name
+                    
+                if waypoint.department:
+                    company_name += " " + waypoint.department
+                    
+                if waypoint.user_id and waypoint.user_id.name :
+                    company_name += " " + waypoint.user_id.name + " ご依頼分"
+                    
+                if waypoint.zip:
+                    address += "〒" + waypoint.zip + " "
+                if line.lang_code == 'ja_JP':
+                    if waypoint.state_id and waypoint.state_id.name:
+                        address += waypoint.state_id.name + " "
+                    if waypoint.city:
+                        address += waypoint.city + " "
+                    if waypoint.street:
+                        address += waypoint.street + " "
+                    if waypoint.street2:
+                        address += waypoint.street2 
+                else:
+                    if waypoint.street:
+                        address += waypoint.street + " "
+                    if waypoint.street2:
+                        address += waypoint.street2 + " "
+                    if waypoint.city:
+                        address += waypoint.city + " "
+                    if waypoint.state_id and waypoint.state_id.name:
+                        address += waypoint.state_id.name + " "
+                    
+            line.sale_order_waypoint_name = company_name.strip()
+            line.sale_order_waypoint_address = address.strip()
 
     def _compute_sale_order_info_cus(self):
         for line in self:
             info_cus = ""
-            if line.partner_id.name:
-                info_cus = line.partner_id.name
-            if line.partner_id.site:
-                info_cus = line.partner_id.site
-            if line.partner_id.department:
-                info_cus += " " + line.partner_id.department
-            if line.partner_id.user_id.name:
-                info_cus += " " + line.partner_id.user_id.name + " "
-            if line.name:
-                info_cus += "ご依頼分" + line.name
-            line.sale_order_info_cus = info_cus
+            partner = line.partner_id
+            user = line.partner_id.user_id
+            
+            if partner.name:
+                info_cus += partner.name + " "
+            if partner.site:
+                info_cus += partner.site + " "
+            if partner.department:
+                info_cus += partner.department + " "
+            if partner and user and user.name:
+                info_cus += user.name + " "
+            info_cus = info_cus.rstrip()    
+            line.sale_order_info_cus = info_cus + " ご依頼分"
 
     def _compute_sale_order_ritzwell_staff(self):
         for line in self:
@@ -2231,6 +2290,62 @@ class MrpProductionExcelReport(models.Model):
     )
     
     lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
+    
+    mrp_join_partner_address = fields.Char(
+        "Partner info",
+        compute="_compute_mrp_join_partner",
+    )
+    
+    mrp_join_partner_company_name = fields.Char(
+        "Partner info",
+        compute="_compute_mrp_join_partner",
+    )
+    
+    def _compute_mrp_join_partner(self):
+        for line in self:
+            picking = line.picking_type_id
+            warehouse = line.picking_type_id.warehouse_id
+            partner = line.picking_type_id.warehouse_id.partner_id
+            
+            address = ""
+            company_name = ""
+
+            if picking and warehouse and partner :
+                if partner.zip:
+                    address += "〒" + partner.zip + " "
+                    
+                if line.lang_code == 'ja_JP':
+                    if partner.state_id and partner.state_id.name:
+                        address += partner.state_id.name + " "
+                    if partner.city:
+                        address += partner.city + " "
+                    if partner.street:
+                        address += partner.street + " "
+                    if partner.street2:
+                        address += partner.street2 
+                else:
+                    if partner.street:
+                        address += partner.street + " "
+                    if partner.street2:
+                        address += partner.street2 + " "
+                    if partner.city:
+                        address += partner.city + " "
+                    if partner.state_id and partner.state_id.name:
+                        address += partner.state_id.name + " "
+                        
+                if partner.commercial_company_name:
+                    company_name = partner.commercial_company_name
+                elif partner.name:
+                    company_name = partner.name
+                    
+                if partner.department:
+                    company_name += " " + partner.department
+                    
+                if partner.user_id and partner.user_id.name :
+                    company_name += " " + partner.user_id.name + " ご依頼分"
+                    
+            line.mrp_join_partner_address = address.strip()
+            line.mrp_join_partner_company_name = company_name.strip()
 
     def _compute_lang_code(self):
         for l in self:

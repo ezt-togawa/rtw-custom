@@ -852,6 +852,16 @@ msgid "検品チェックシート(EXCEL)"
 msgstr "Inspection Check Sheet(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.purchase_order_sheet
+msgid "発注書(EXCEL)"
+msgstr "Purchase Order(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.inspection_order_form
+msgid "検品発注書(EXCEL)"
+msgstr "Purchase Order Inspection(EXCEL)"
+
+#. module: rtw_excel_report
 #: model:ir.actions.act_window,name:rtw_excel_report.action_inspection_order_form_export_xlsx
 #: model:ir.ui.menu,name:rtw_excel_report.menu_report_inspection_order_form
 msgid "検品発注書"

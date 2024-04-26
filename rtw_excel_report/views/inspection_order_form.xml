@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="inspection_order_form"
+            model="mrp.production"
+            string="検品発注書(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.inspection_order_form_xls"
+            file="検品発注書"
+            attachment_use="False"
+        />
+    </data>
+</odoo>
