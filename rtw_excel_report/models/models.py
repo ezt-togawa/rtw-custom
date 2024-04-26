@@ -1118,55 +1118,28 @@ class SaleOrderLineExcelReport(models.Model):
             line.sale_order_name = str(prod)        
     def _compute_sale_order_line_name_excel(self):
         for line in self:
-            categ_name=""
-            if line.product_id and line.product_id.product_tmpl_id: 
-                if line.product_id.product_tmpl_id.config_ok :  
-                    if line.product_id.product_tmpl_id.categ_id.name:
-                        categ_name = line.product_id.product_tmpl_id.categ_id.name
-                    elif line.product_id.product_tmpl_id.product_no :
-                        categ_name = line.product_id.product_tmpl_id.product_no
-                    else: 
-                        categ_name = line.product_id.product_tmpl_id.name   
+            categ_name = ""
+            prod = line.product_id
+            prod_tmpl_id = line.product_id.product_tmpl_id
+            if prod and prod_tmpl_id:
+                if prod_tmpl_id.config_ok:  
+                    if prod_tmpl_id.categ_id and prod_tmpl_id.categ_id.name:
+                        categ_name = prod_tmpl_id.categ_id.name
+                    elif prod_tmpl_id.product_no:
+                        categ_name = prod_tmpl_id.product_no
+                    elif prod_tmpl_id.name: 
+                        categ_name = prod_tmpl_id.name   
                 else:
-                    # case product is standard Prod + download payment
-                    if line.product_id.product_tmpl_id.seller_ids and line.order_id.partner_id.id:
-                        matching_sup = None  
-                        for sup in line.product_id.product_tmpl_id.seller_ids:
-                            if sup.name.id == line.order_id.partner_id.id:
-                                matching_sup = sup 
-                                break
-                        if matching_sup:
-                            product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
-                            product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
-                            categ_name = product_code + product_name
-                        else:
-                            categ_name =  line.product_id.product_tmpl_id.name
-                    else:
-                        if line.product_id.product_tmpl_id.default_code:
-                            categ_name = "[" +str(line.product_id.product_tmpl_id.default_code) +"]" + line.product_id.product_tmpl_id.name
-                        else:
-                            categ_name =  line.product_id.product_tmpl_id.name
-                                
+                    if line.name:
+                        categ_name = line.name
+                        
             p_type = ""
             if line.p_type:
-                if line.p_type == "special":
-                    p_type = "別注"
-                elif line.p_type == "custom":
-                    p_type = "特注"
+                p_type = "別注" if line.p_type == "special" else "特注" if line.p_type == "custom" else ""
 
-            prod = ""
-            if isinstance(categ_name, bool):
-                categ_name = "" 
-            if categ_name != "" :
-                if p_type !="":
-                    prod += categ_name + "\n" + p_type
-                else:
-                    prod += categ_name
-            else:
-                if p_type != "":
-                    prod += p_type
-                
-            line.sale_order_line_name_excel = str(prod)            
+            detail = categ_name + "\n" + p_type if categ_name and p_type else categ_name if categ_name else p_type if p_type else ""
+
+            line.sale_order_line_name_excel = str(detail)                   
 class StockPickingExcelReport(models.Model):
     _inherit = "stock.picking"
 
@@ -1624,108 +1597,73 @@ class StockMoveExcelReport(models.Model):
                     decimal_part_after_dot = decimal_part_after_dot / 10
                 line.stock_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
 
-
     def _compute_stock_move(self):
         index = 0
         for line in self:
             line.product_attribute = ""
             index = index + 1
             line.stock_index = index
-
-            categ_name=""
-            p_type = ""
             
-            if line.product_id.product_tmpl_id.config_ok :  
-                if line.product_id.product_tmpl_id.categ_id.name:
-                    categ_name = line.product_id.product_tmpl_id.categ_id.name
-                elif line.product_id.product_tmpl_id.product_no :
-                    categ_name = line.product_id.product_tmpl_id.product_no
-                else: 
-                    categ_name = line.product_id.product_tmpl_id.name
-            else:
-                if line.product_id.product_tmpl_id.seller_ids and  line.picking_id.partner_id.id:
-                    matching_sup = None  
+            prod_id = line.product_id
+            prod_tmpl_id = line.product_id.product_tmpl_id
 
-                    for sup in line.product_id.product_tmpl_id.seller_ids:
-                        if sup.name.id == line.picking_id.partner_id.id:
-                            matching_sup = sup 
-                            break
-                    if matching_sup:
-                        product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
-                        product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
-                        categ_name = product_code + product_name
-                    else:
-                        if line.product_id.product_tmpl_id.default_code:
-                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
-                        else:
-                            categ_name =  line.product_id.product_tmpl_id.name
+            categ_name = ""
+            if prod_id and prod_tmpl_id :
+                if prod_tmpl_id.config_ok :  
+                    categ_id = prod_tmpl_id.categ_id
+                    prod_no = prod_tmpl_id.product_no
+                    prod_name = prod_tmpl_id.name
+                    if categ_id and categ_id.name:
+                        categ_name = categ_id.name 
+                    elif prod_no :
+                        categ_name = prod_no
+                    elif prod_name: 
+                        categ_name = prod_name
                 else:
-                    if line.product_id.product_tmpl_id.default_code:
-                        categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
-                    else:
-                        categ_name =  line.product_id.product_tmpl_id.name
+                    if line.description_picking:
+                        categ_name =  line.description_picking
                         
+            p_type = ""            
             if line.p_type:
                 if line.p_type == "special":
                     p_type = "別注"
                 elif line.p_type == "custom":
                     p_type = "特注"
-            
-            if categ_name != "":
-                if p_type != "":
-                    line.product_name = categ_name + "\n" + p_type
+                    
+            line.product_name = str(categ_name + "\n" + p_type if categ_name and p_type else categ_name if categ_name else p_type if p_type else '')
+
+            size_detail = ""  
+            if line.sale_line_id:  
+                pack_parent =  line.sale_line_id.pack_parent_line_id   
+                if pack_parent:
+                    if pack_parent.product_id and pack_parent.product_id.product_no:
+                        size_detail += pack_parent.product_id.product_no
+                    if line.calculate_product_pack_pdf:
+                        size_detail +=  '/' + line.calculate_product_pack_pdf
                 else:
-                    line.product_name = categ_name
-            else:
-                if p_type != "":
-                    line.product_name = p_type
-                else:
-                    line.product_name = ""
+                    size_detail += str(prod_id.product_no) if prod_id and prod_id.product_no else ''
 
-            size_detail = ""            
-            # product_pack_ids = line.product_id.product_tmpl_id.mapped('pack_line_ids')
-            # if line.product_id.product_tmpl_id.product_no:
-            #     size_detail += str(line.product_id.product_tmpl_id.product_no)
-            #     if product_pack_ids:
-            #         size_detail += ' / '
-            #         product_pack_names = []
-            #         for pack in product_pack_ids:
-            #             product_pack_names.append(pack.product_id.name)
-            #         size_detail += ', '.join(product_pack_names)
-            # else:
-            #     if product_pack_ids:
-            #         product_pack_names = []
-            #         for pack in product_pack_ids:
-            #             product_pack_names.append(pack.product_id.name)
-            #         size_detail += ', '.join(product_pack_names)
-                          
-            if line.sale_line_id.pack_parent_line_id:
-                size_detail += line.sale_line_id.pack_parent_line_id.product_id.product_no + '/' + line.calculate_product_pack_pdf
-                
-            else:
-                size_detail += str(line.product_id.product_no)
-
-            size_detail + '\n'
-
-            other_size=""
-            if line.product_id.product_tmpl_id.width:
-                other_size += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-            if line.product_id.product_tmpl_id.depth:
-                other_size += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-            if line.product_id.product_tmpl_id.height:
-                other_size += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-            if line.product_id.product_tmpl_id.sh:
-                other_size += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-            if line.product_id.product_tmpl_id.ah:
-                other_size += "AH" + str(line.product_id.product_tmpl_id.ah)
+            other_size = ""
             
-            if other_size != "":
-                line.product_number_and_size = size_detail + '\n' + other_size
+            if prod_id and prod_tmpl_id:
+                if prod_tmpl_id.width:
+                    other_size += "W" + str(prod_tmpl_id.width) + "*"
+                if prod_tmpl_id.depth:
+                    other_size += "D" + str(prod_tmpl_id.depth) + "*"
+                if prod_tmpl_id.height:
+                    other_size += "H" + str(prod_tmpl_id.height) + "*"
+                if prod_tmpl_id.sh:
+                    other_size += "SH" + str(prod_tmpl_id.sh) + "*"
+                if prod_tmpl_id.ah:
+                    other_size += "AH" + str(prod_tmpl_id.ah)
+            other_size = other_size.rstrip('*')
+            
+            if other_size:
+                line.product_number_and_size = str(size_detail) + '\n' + str(other_size)
             else:
-                line.product_number_and_size = size_detail
+                line.product_number_and_size = str(size_detail)
 
-
-            for attribute_value in line.product_id.product_template_attribute_value_ids:
+            for attribute_value in prod_id.product_template_attribute_value_ids:
                 attribute_name = attribute_value.attribute_id.name
                 attribute_value_name = attribute_value.product_attribute_value_id.name
 
@@ -1734,18 +1672,18 @@ class StockMoveExcelReport(models.Model):
                         f"{attribute_name}:{attribute_value_name}\n"
                     )
 
-            if line.product_id.two_legs_scale:
+            if prod_id.two_legs_scale:
                 line.packages_number = math.ceil(
-                    line.product_uom_qty / line.product_id.two_legs_scale
+                    line.product_uom_qty / prod_id.two_legs_scale
                 )
             else:
                 line.packages_number = line.product_uom_qty
 
             line.action_packages = "有"
             line.action_assemble = "無"
-            line.stock_sai = line.product_id.product_tmpl_id.sai
-            line.stock_warehouse = line.warehouse_id.name
-            line.stock_shiratani_date = line.sale_line_id.shiratani_date
+            line.stock_sai = prod_tmpl_id.sai if prod_tmpl_id.sai else ''
+            line.stock_warehouse = line.warehouse_id.name if line.warehouse_id and line.warehouse_id.name else ''
+            line.stock_shiratani_date = line.sale_line_id.shiratani_date if line.sale_line_id and line.sale_line_id.shiratani_date else ''
 class AccountMoveExcelReport(models.Model):
     _inherit = "account.move"
 
