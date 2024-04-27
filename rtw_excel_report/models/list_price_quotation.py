@@ -190,7 +190,7 @@ class ReportMrpExcel(models.AbstractModel):
                         
                         sheet.merge_range(row,9,row + merge_line,11, line.sale_order_price_unit if line.sale_order_price_unit else '' , format_lines_13) 
                         
-                        sheet.merge_range(row,12,row + merge_line,12, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '' , format_lines_13) 
+                        sheet.merge_range(row,12,row + merge_line,12, line.sale_order_amount_no_rate if line.sale_order_amount_no_rate else '' , format_lines_13) 
                         
                         row += merge_line + 1
                     
