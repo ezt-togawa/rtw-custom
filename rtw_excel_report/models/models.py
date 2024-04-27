@@ -979,7 +979,6 @@ class SaleOrderLineExcelReport(models.Model):
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
                     
-    @api.onchange('discount', 'price_unit')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
             if line.price_unit and line.discount:
@@ -991,13 +990,9 @@ class SaleOrderLineExcelReport(models.Model):
         for line in self:
             line.sale_order_price_subtotal = '{0:,.2f}'.format(line.price_subtotal).split('.')[0] if line.price_subtotal else ''
     
-    @api.onchange('product_uom_qty', 'price_unit')        
     def _compute_sale_order_amount_no_rate(self):
         for line in self:
-            if line.product_uom_qty and line.price_unit :
-                line.sale_order_amount_no_rate = self.add_money_comma(line.product_uom_qty * line.price_unit)
-            else:
-                line.sale_order_amount_no_rate = ''    
+            line.sale_order_amount_no_rate = '{0:,.2f}'.format(line.product_uom_qty * line.price_unit).split('.')[0] if line.product_uom_qty and line.price_unit else ''
                 
     def _compute_sale_order_price_unit(self):
         for line in self:
@@ -1845,7 +1840,6 @@ class AccountMoveExcelReport(models.Model):
         string="Total List Price",
     )
     
-    @api.onchange('price_unit','quantity')
     def _compute_acc_move_list_price(self):
         for move in self:
             total_list_price = 0.0
