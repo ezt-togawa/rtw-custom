@@ -692,8 +692,8 @@ class SaleOrderExcelReport(models.Model):
                 total_discount += (
                     line.price_unit - line.price_reduce
                 ) * line.product_uom_qty
-            record.sale_order_total_discount = "- " + str(int(total_discount))
-
+            record.sale_order_total_discount = "- " + '{0:,.0f}'.format(total_discount)
+            
     def _compute_sale_order_account_number(self):
         for record in self:
             if record.partner_id.bank_ids.acc_number:
