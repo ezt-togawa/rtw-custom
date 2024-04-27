@@ -176,7 +176,7 @@ class ReportMrpExcel(models.AbstractModel):
                         
                         sheet.merge_range(row,8,row + merge_line,8, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '' , format_lines_13) 
                         sheet.merge_range(row,9,row + merge_line,9, line.sale_order_price_unit if line.sale_order_price_unit else '' , format_lines_13) 
-                        sheet.merge_range(row,10,row + merge_line,10, line.sale_order_line_discount if line.sale_order_line_discount else '' , format_lines_10) 
+                        sheet.merge_range(row,10,row + merge_line,10, line.sale_order_line_discount if line.sale_order_line_discount else '' , format_lines_13) 
                         sheet.merge_range(row,11,row + merge_line,11, line.sale_order_sell_unit_price if line.sale_order_sell_unit_price else '' , format_lines_13) 
                         sheet.merge_range(row,12,row + merge_line,12, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '' , format_lines_13) 
                         
