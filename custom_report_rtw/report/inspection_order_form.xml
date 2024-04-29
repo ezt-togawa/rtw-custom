@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="report_inspection_order_form">
+  <template id="report_inspection_order_list_form">
     <t t-call="web.html_container">
       <t t-foreach="docs" t-as="o">
         <t t-call="custom_report_rtw.so_ex_layout">
@@ -42,20 +42,20 @@
                       t-field="so.name" />
                   </div>
                   <br />
-                  <div> 配達希望日 
-                  <t>
-                    <t t-if="not docs.mrp_production_parent_id">
-                      <t t-if="so.sipping_to == 'direct'">
-                        <span class="size14" t-field="so.sale_order_preferred_delivery_date" />
+                  <div> 配達希望日 <t>
+                      <t t-if="not docs.mrp_production_parent_id">
+                        <t t-if="so.sipping_to == 'direct'">
+                          <span class="size14" t-field="so.sale_order_preferred_delivery_date" />
+                        </t>
+                        <t t-else="">
+                          <span class="size14" t-field="so.warehouse_arrive_date" />
+                        </t>
                       </t>
                       <t t-else="">
-                        <span class="size14" t-field="so.warehouse_arrive_date" />
+                        <span class="size14"
+                          t-field="docs.mrp_production_parent_id.mrp_production_date_planned_start" />
                       </t>
                     </t>
-                    <t t-else="">
-                        <span class="size14" t-field="docs.mrp_production_parent_id.mrp_production_date_planned_start" />
-                    </t>
-                  </t>
                   </div>
                   <br />
                   <div class="d-flex">
@@ -72,8 +72,7 @@
                           t-field="so.partner_id.site" />
                       <span t-field="so.partner_id.department" />
                       <span
-                          t-field="so.partner_id.user_id.name" /> ご依頼分
-                      </div>
+                          t-field="so.partner_id.user_id.name" /> ご依頼分 </div>
                     </div>
                   </div>
                 </div>
@@ -82,145 +81,167 @@
                     <t t-if="so.overseas"> 海外 </t>
                   </div>
                 </div>
-                            <div
-                                class="col-4 size11" name="company_address">
-                                    <div class="float-right">
-                                        <div>
-                                            <img style="width:180px;height:40px;"
-                                                src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
-                                                alt="Logo" />
-                                        </div>
-                                        <div>
-                                            <div class="size12">
-                                                <span t-esc="so.hr_employee_company" />
-                                            </div>
-                                            <!-- <div>
+                <div
+                  class="col-4 size11" name="company_address">
+                  <div class="float-right">
+                    <div>
+                      <img style="width:180px;height:40px;"
+                        src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                        alt="Logo" />
+                    </div>
+                    <div>
+                      <div class="size12">
+                        <span t-esc="so.hr_employee_company" />
+                      </div>
+                      <!-- <div>
                                                 <span t-esc="so.registration_number" />
                                             </div> -->
-                                            <div>
-                                                <span t-esc="so.hr_employee_department" />
-                                            </div>
-                                            <div>
-                                                <span t-esc="so.hr_employee_zip" />
-                                            </div>
-                                            <div>
-                                                <span t-esc="so.hr_employee_info" />
-                                            </div>
-                                            <div>
-                                                <span t-esc="so.hr_employee_tel" />
-                                            </div>
-                                            <div>
-                                                <span t-esc="so.hr_employee_fax" />
-                                            </div>
-                                            <div class="size12">
-                                                <span t-esc="so.hr_employee_printer" />
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
+                      <div>
+                        <span t-esc="so.hr_employee_department" />
+                      </div>
+                      <div>
+                        <span t-esc="so.hr_employee_zip" />
+                      </div>
+                      <div>
+                        <span t-esc="so.hr_employee_info" />
+                      </div>
+                      <div>
+                        <span t-esc="so.hr_employee_tel" />
+                      </div>
+                      <div>
+                        <span t-esc="so.hr_employee_fax" />
+                      </div>
+                      <div class="size12">
+                        <span t-esc="so.hr_employee_printer" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="row py-2">
                 <div class="col-4 size13">
                   <t t-if="not docs.mrp_production_parent_id">
-                    <div> 送り先: 
-                      <t t-if="not so.sipping_to =='direct'">
+                    <div> 送り先: <t t-if="not so.sipping_to =='direct'">
                         <span class="size14" t-if="not so.waypoint.parent_id"
-                            t-field="so.waypoint.name" />
+                          t-field="so.waypoint.name" />
                         <span
-                            t-if="so.waypoint.parent_id"
-                            t-field="so.waypoint.parent_id.name" />
+                          t-if="so.waypoint.parent_id"
+                          t-field="so.waypoint.parent_id.name" />
                       </t>
-                      <t t-else="">
-                        <span  t-field="so.shipping_destination_text"/>
+                      <t
+                        t-else="">
+                        <span t-field="so.shipping_destination_text" />
                       </t>
-                    </div>                   
+                    </div>
                     <t t-if="not so.sipping_to =='direct'">
                       <t t-if="docs.lang_code == 'ja_JP'">
-                          <div> 住所: 
-                            <t t-if="so.waypoint.zip">
-                              〒<span t-field="so.waypoint.zip" />
-                            </t>
-                            <t t-if="so.waypoint.state_id.name">
-                              <span t-field="so.waypoint.state_id.name" />
-                            </t>
-                            <t t-if="so.waypoint.city">
-                              <span t-field="so.waypoint.city" />
-                            </t>
-                            <t t-if="so.waypoint.street">
-                              <span t-field="so.waypoint.street" />
-                            </t>
-                            <t t-if="so.waypoint.street2">
-                              <span t-field="so.waypoint.street2" />  
-                            </t>
-                          </div>
+                        <div> 住所: <t t-if="so.waypoint.zip"> 〒<span t-field="so.waypoint.zip" />
+                          </t>
+                            <t
+                            t-if="so.waypoint.state_id.name">
+                            <span t-field="so.waypoint.state_id.name" />
+                          </t>
+                            <t
+                            t-if="so.waypoint.city">
+                            <span t-field="so.waypoint.city" />
+                          </t>
+                            <t
+                            t-if="so.waypoint.street">
+                            <span t-field="so.waypoint.street" />
+                          </t>
+                            <t
+                            t-if="so.waypoint.street2">
+                            <span t-field="so.waypoint.street2" />
+                          </t>
+                        </div>
                       </t>
                       <t t-else="">
-                          <div> 住所: 
-                            <t t-if="so.waypoint.zip">
-                              〒<span t-field="so.waypoint.zip" />
-                            </t>
-                            <t t-if="so.waypoint.street">
-                              <span t-field="so.waypoint.street" />
-                            </t>
-                            <t t-if="so.waypoint.street2">
-                              <span t-field="so.waypoint.street2" />  
-                            </t>
-                            <t t-if="so.waypoint.city">
-                              <span t-field="so.waypoint.city" />
-                            </t>
-                            <t t-if="so.waypoint.state_id.name">
-                              <span t-field="so.waypoint.state_id.name" />
-                            </t>
-                          </div>
+                        <div> 住所: <t t-if="so.waypoint.zip"> 〒<span t-field="so.waypoint.zip" />
+                          </t>
+                            <t
+                            t-if="so.waypoint.street">
+                            <span t-field="so.waypoint.street" />
+                          </t>
+                            <t
+                            t-if="so.waypoint.street2">
+                            <span t-field="so.waypoint.street2" />
+                          </t>
+                            <t
+                            t-if="so.waypoint.city">
+                            <span t-field="so.waypoint.city" />
+                          </t>
+                            <t
+                            t-if="so.waypoint.state_id.name">
+                            <span t-field="so.waypoint.state_id.name" />
+                          </t>
+                        </div>
                       </t>
                       <div> TEL: <span class="size14" t-field="so.waypoint.phone" />
                       </div>
                     </t>
                   </t>
                   <t t-else="">
-                    <div> 送り先: 
-                      <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.name"/>
+                    <div> 送り先: <span
+                        t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.name" />
                     </div>
                     <t t-if="docs.lang_code == 'ja_JP'">
-                        <div> 住所: 
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
-                            〒<span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
-                          </t>
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
-                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
-                          </t>
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
-                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
-                          </t>
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
-                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
-                          </t>
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
-                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />  
-                          </t>
-                        </div>
+                      <div> 住所: <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
+                        〒<span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
+                        </t>
+                          <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
+                          <span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
+                        </t>
+                          <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
+                          <span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
+                        </t>
+                          <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
+                          <span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
+                        </t>
+                          <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
+                          <span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />
+                        </t>
+                      </div>
                     </t>
                     <t t-else="">
-                        <div> 住所: 
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
-                            〒<span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
-                          </t>
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
-                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
-                          </t>
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
-                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />  
-                          </t>
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
-                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
-                          </t>
-                          <t t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
-                            <span t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
-                          </t>
-                        </div>
+                      <div> 住所: <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
+                        〒<span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
+                        </t>
+                          <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
+                          <span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
+                        </t>
+                          <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
+                          <span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />
+                        </t>
+                          <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
+                          <span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
+                        </t>
+                          <t
+                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
+                          <span
+                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
+                        </t>
+                      </div>
                     </t>
-                    <div> TEL: 
-                      <span class="size14" t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.phone" />
+                    <div> TEL: <span class="size14"
+                        t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.phone" />
                     </div>
                   </t>
                 </div>
@@ -241,16 +262,16 @@
                   <thead>
                     <tr class="table-title bold" style="font-size:13px;background-color:#999999">
                       <th class="text-center" style="width:1%">№</th>
-                        <th class="text-center" style="width:10%">品名</th>
-                        <th class="text-center" style="width:20%">仕様・詳細</th>
-                        <th class="text-center" style="width:20%">仕様・詳細</th>
-                        <!-- <th class="text-center" style="width:6%">摘要</th> -->
-                        <th class="text-center" style="width:6%">数量</th>
-                        <th class="text-center" style="width:5%"></th>
-                        <th class="text-center" style="width:6%">単価</th>
-                        <th class="text-center" style="width:9%">発注金額</th>
-                        <th class="text-center" style="width:15%">Custom</th>
-                        <th class="text-center" style="width:8%">メモ</th>
+                      <th class="text-center" style="width:10%">品名</th>
+                      <th class="text-center" style="width:20%">仕様・詳細</th>
+                      <th class="text-center" style="width:20%">仕様・詳細</th>
+                      <!-- <th class="text-center" style="width:6%">摘要</th> -->
+                      <th class="text-center" style="width:6%">数量</th>
+                      <th class="text-center" style="width:5%"></th>
+                      <th class="text-center" style="width:6%">単価</th>
+                      <th class="text-center" style="width:9%">発注金額</th>
+                      <th class="text-center" style="width:15%">Custom</th>
+                      <th class="text-center" style="width:8%">メモ</th>
                     </tr>
                   </thead>
 
@@ -259,23 +280,23 @@
                       <td class="text-center size12">1</td>
                       <td class="size11">
                         <div class="six-lines">
-                            <div t-if="docs.mrp_product_name" t-field="docs.mrp_product_name" />
-                            <div t-if="docs.mrp_product_type" t-field="docs.mrp_product_type" />
-                            <t t-if="docs.product_id.width > 0">W<span
-                                t-field="docs.product_id.width" />
-                            </t>
-                            <t t-if="docs.product_id.depth > 0">*D<span
-                                t-field="docs.product_id.depth" />
-                            </t>
-                            <t t-if="docs.product_id.height > 0">*H<span
-                                t-field="docs.product_id.height" />
-                            </t>
-                            <t t-if="docs.product_id.sh > 0"> SH<span
-                                t-field="docs.product_id.sh" />
-                            </t>
-                            <t t-if="docs.product_id.ah > 0"> AH<span
-                                t-field="docs.product_id.ah" />
-                            </t>
+                          <div t-if="docs.mrp_product_name" t-field="docs.mrp_product_name" />
+                          <div t-if="docs.mrp_product_type" t-field="docs.mrp_product_type" />
+                          <t t-if="docs.product_id.width > 0">W<span
+                              t-field="docs.product_id.width" />
+                          </t>
+                          <t t-if="docs.product_id.depth > 0">*D<span
+                              t-field="docs.product_id.depth" />
+                          </t>
+                          <t t-if="docs.product_id.height > 0">*H<span
+                              t-field="docs.product_id.height" />
+                          </t>
+                          <t t-if="docs.product_id.sh > 0"> SH<span
+                              t-field="docs.product_id.sh" />
+                          </t>
+                          <t t-if="docs.product_id.ah > 0"> AH<span
+                              t-field="docs.product_id.ah" />
+                          </t>
                         </div>
                       </td>
 
@@ -283,10 +304,9 @@
                         <div class="six-lines">
                           <t
                             t-foreach="docs.product_id.product_template_attribute_value_ids[0:6]"
-                            t-as="string_line"> 
-                            <div class="one-lines">
-                            ● <span
-                              t-esc="string_line.display_name" />
+                            t-as="string_line">
+                            <div class="one-lines"> ● <span
+                                t-esc="string_line.display_name" />
                                                   <br />
                             </div>
                           </t>
@@ -296,10 +316,9 @@
                         <div class="six-lines">
                           <t
                             t-foreach="docs.product_id.product_template_attribute_value_ids[6:12]"
-                            t-as="string_line"> 
-                            <div class="one-lines">
-                            ● <span
-                              t-esc="string_line.display_name" />
+                            t-as="string_line">
+                            <div class="one-lines"> ● <span
+                                t-esc="string_line.display_name" />
                                                   <br />
                             </div>
                           </t>
@@ -368,7 +387,8 @@
       </t>
     </t>
   </template>
-  <record id="paperformat_inspection_order_form" model="report.paperformat">
+
+  <record id="paperformat_inspection_order_list_form" model="report.paperformat">
     <field name="name">Purchase Order Sheet</field>
     <field name="default" eval="False" />
     <field name="format">custom</field>
@@ -383,14 +403,17 @@
     <field name="header_spacing">12</field>
     <field name="dpi">90</field>
   </record>
-  <report
-    string="検品発注書"
-    id="report_inspection_order_form_rtw"
-    model="mrp.production"
-    report_type="qweb-pdf"
-    name="custom_report_rtw.report_inspection_order_form"
-    file="custom_report_rtw.report_inspection_order_form"
-    paperformat="paperformat_inspection_order_form"
-  />
+
+  <record id="report_inspection_order_form_rtw" model="ir.actions.report">
+    <field name="name">検品発注書</field>
+    <field name="model">mrp.production</field>
+    <field name="binding_model_id" ref="model_mrp_production" />
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">custom_report_rtw.report_inspection_order_list_form</field>
+    <field name="report_file">custom_report_rtw.report_inspection_order_list_form</field>
+    <field name="paperformat_id" ref="custom_report_rtw.paperformat_inspection_order_list_form" />
+    <field name="attachment_use">False</field>
+    <field name="binding_view_types">list,form</field>
+  </record>
 
 </odoo>

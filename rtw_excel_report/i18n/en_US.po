@@ -876,6 +876,16 @@ msgid "発注書(部材用）"
 msgstr "Purchase Order (Components)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.purchase_order_sheet
+msgid "発注書(EXCEL)"
+msgstr "Purchase Order(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.inspection_order_form
+msgid "検品発注書(EXCEL)"
+msgstr "Purchase Order Inspection(EXCEL)"
+
+#. module: rtw_excel_report
 #: model:ir.actions.act_window,name:rtw_excel_report.action_invoice_export_xlsx
 #: model:ir.ui.menu,name:rtw_excel_report.menu_report_invoice
 msgid "請求書"

@@ -41,6 +41,11 @@ class MrpProduction(models.Model):
       compute="_compute_mrp_product_attribute",
   )
   
+  mrp_product_attribute2 = fields.Char(
+      "mrp product attribute 2",
+      compute="_compute_mrp_product_attribute",
+  )
+  
   mrp_product_attribute_summary = fields.Char(
       "mrp product attribute summary",
       compute="_compute_mrp_product_attribute_summary",
@@ -68,7 +73,7 @@ class MrpProduction(models.Model):
           float_product_qty = float(line.product_qty)
           integer_part = int(line.product_qty)
           decimal_part = round(float_product_qty - integer_part,2)
-          decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+          decimal_part_after_dot = int(str(decimal_part).split('.')[1]) 
           if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
               line.mrp_product_product_qty = integer_part
           else:
@@ -95,47 +100,36 @@ class MrpProduction(models.Model):
                   name = line.product_id.product_tmpl_id.name
           line.mrp_product_name = name
           
-
-  # def _compute_mrp_product_config_cus(self):
-  #     for line in self:
-  #         config=""
-  #         so=self.env['sale.order'].search([("name",'=',line.sale_reference)])
-  #         if so:
-  #             sol=self.env['sale.order.line'].search([("order_id",'=',so[0].id)])
-  #             if sol:
-  #                 for l in sol:
-  #                     configCus=l.config_session_id.custom_value_ids
-  #                     if configCus:
-  #                         for cfg in configCus:
-  #                             config += cfg.display_name + ":" + cfg.value + "\n"
-  #                     config.rstrip("\n")
-  #         line.mrp_product_config_cus = config
-
-          
   def _compute_mrp_product_config_cus_excel(self):
-      for line in self:
-          if line.origin.startswith('WH'):
-              line.mrp_product_config_cus_excel =""
-          else:
-              type = line.mrp_product_type
-              config =""
-              so=self.env['sale.order'].search([("name",'=',line.sale_reference)])
-              if so:
-                  sol=self.env['sale.order.line'].search([("order_id",'=',so[0].id)])
-                  if sol:
-                      for l in sol:
-                          if l.config_session_id.custom_value_ids:
-                              for cfg in l.config_session_id.custom_value_ids:
-                                  config += cfg.display_name + ':' + cfg.value + '\n'
-                              config = config.rstrip('\n')
-              if type :
-                  line.mrp_product_config_cus_excel = type + '\n' + config
-              else:
-                  line.mrp_product_config_cus_excel = config
-          
+        for line in self:
+            if line.origin and line.origin.startswith('WH'):
+                line.mrp_product_config_cus_excel = ""
+            else:
+                type = line.mrp_product_type
+                config = ""
+                so = self.env['sale.order'].search([("name", '=', line.sale_reference)])
+                if so:
+                    sol = self.env['sale.order.line'].search([("order_id", '=', so[0].id)])
+                    if sol:
+                        for l in sol:
+                            if l.config_session_id.custom_value_ids:
+                                for cfg in l.config_session_id.custom_value_ids:
+                                    config += cfg.display_name + ':' + cfg.value + '\n'
+                                config = config.rstrip('\n')
+                                
+                mrp_prod_detail =  ''   
+                if type and config:
+                    mrp_prod_detail = type + '\n' + config
+                elif type :
+                     mrp_prod_detail = type 
+                elif config:
+                    mrp_prod_detail = config
+                    
+                line.mrp_product_config_cus_excel = mrp_prod_detail
+            
   def _compute_mrp_product_type(self):
       for line in self:
-          if line.origin.startswith('WH'):
+          if line.origin and line.origin.startswith('WH'):
               line.mrp_product_type = ""
               return
           
@@ -153,57 +147,54 @@ class MrpProduction(models.Model):
           line.mrp_product_type = p_type
       
   def _compute_mrp_product_name_excel(self):   
-      for line in self:
-          name = ""
-          if line.product_id: 
-              if line.product_id.product_tmpl_id.config_ok :  
-                  if line.product_id.product_tmpl_id.product_no :
-                      name = line.product_id.product_tmpl_id.product_no
-                  else: 
-                      name = line.product_id.product_tmpl_id.name   
-              else:
-                  name = line.product_id.product_tmpl_id.name
-                  
-          type =""        
-          if line.origin.startswith('WH'):
-              type =""
-          else:
-              type = line.mrp_product_type
-                  
-          size=""
-          if line.product_id.product_tmpl_id.width:
-              size += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-          if line.product_id.product_tmpl_id.depth:
-              size += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-          if line.product_id.product_tmpl_id.height:
-              size += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-          if line.product_id.product_tmpl_id.sh:
-              size += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-          if line.product_id.product_tmpl_id.ah:
-              size += "AH" + str(line.product_id.product_tmpl_id.ah)
-              
-          detail = ''
-          if name :
-              detail += name +'\n'
-              if type :
-                  detail += type + '\n'
-          else:
-              if type :
-                  detail += type + '\n'
-          detail += size
-                  
-          line.mrp_product_name_excel = detail 
+      for line in self: 
+        detail = ""
+        prod_id = line.product_id
+        prod_tmpl_id = line.product_id.product_tmpl_id
+        
+        name = ""
+        if prod_id and prod_tmpl_id: 
+            if prod_tmpl_id.config_ok :  
+                if prod_tmpl_id.product_no :
+                    name = prod_tmpl_id.product_no
+                else: 
+                    name = prod_tmpl_id.name   
+            else:
+                name = prod_tmpl_id.name
+                
+        type = ""        
+        if line.origin and line.origin.startswith('WH'):
+            type = ""
+        else:
+            type = line.mrp_product_type
+            
+        if name and type :
+            detail += name +'\n' + type
+        elif name :
+            detail += name
+        elif type :
+            detail += type 
+                
+        size = ''
+        if prod_id and prod_tmpl_id:
+            if prod_tmpl_id.width:
+                size += "W" + str(prod_tmpl_id.width) + "*"
+            if prod_tmpl_id.depth:
+                size += "D" + str(prod_tmpl_id.depth) + "*"
+            if prod_tmpl_id.height:
+                size += "H" + str(prod_tmpl_id.height) + "*"
+            if prod_tmpl_id.sh:
+                size += "SH" + str(prod_tmpl_id.sh) + "*"
+            if prod_tmpl_id.ah:
+                size += "AH" + str(prod_tmpl_id.ah)
+            size = size.rstrip("*")
+            
+        if size:
+            detail += "\n" + size
+                
+        line.mrp_product_name_excel = detail 
           
-  def _compute_mrp_product_attribute(self):
-      for line in self:
-          attribute = ''
-          attribute_summary = ''
-          if line.product_id.product_template_attribute_value_ids:
-              for attr in line.product_id.product_template_attribute_value_ids:
-                  attribute += attr.display_name + '\n'
-                  attribute_summary += attr.attribute_id.name +'\n'
-          line.mrp_product_attribute = attribute
-          line.mrp_product_attribute_summary = attribute_summary
+
 
   def _compute_mrp_production_parent_id(self):
       if self.origin and '/MO/' in self.origin:
@@ -240,3 +231,66 @@ class MrpProduction(models.Model):
           self.mrp_production_date_planned_start = self.date_planned_start.date()
       else:
           self.mrp_production_date_planned_start = ''
+  def _compute_mrp_product_attribute(self):
+      for line in self:
+            attr = ""
+            attr_cfg = ""
+            
+            attributes = line.product_id.product_template_attribute_value_ids  #attr default
+            attributes_cfg = [] 
+            
+            so = self.env['sale.order'].search([("name", '=', line.sale_reference)])
+            if so:
+                sol = self.env['sale.order.line'].search([("order_id", '=', so[0].id),("product_id", '=',line.product_id.id)])
+                if sol:
+                    attributes_cfg = sol[0].config_session_id.custom_value_ids #attr custom 
+                    
+            length_normal = len(attributes)
+            
+            if attributes:
+                if length_normal < 6:
+                    for attribute in attributes:
+                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
+                    if attributes_cfg:
+                        count_cfg = 0 
+                        count_attr = length_normal
+                        for cfg in attributes_cfg:
+                            if count_attr >= 6 :
+                                break
+                            else:
+                                count_attr +=1
+                            attr += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+                            count_cfg += 1
+                            
+                        for cfg2 in attributes_cfg[count_cfg:(6+count_cfg)]:
+                            attr_cfg += ("● " + cfg2.display_name  + ":" + cfg2.value  + "\n" )
+                elif length_normal == 6 :
+                    for attribute in attributes:
+                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
+                    if attributes_cfg:                            
+                        for cfg in attributes_cfg:
+                            attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+                else:
+                    for attribute in attributes[:6]:
+                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
+                    start = 6   
+                    for attribute in attributes[6:length_normal]:
+                        attr_cfg +=  ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
+                        start += 1
+                    if length_normal < 12 : 
+                        if attributes_cfg:
+                            for cfg in attributes_cfg[:(12-start)]:
+                                attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+            else: 
+                if attributes_cfg:                            
+                    for cfg in attributes_cfg[:6]:
+                        attr += ("● " +  cfg.display_name  + ":" + cfg.value  + "\n" )
+                    for cfg in attributes_cfg[6:12]:
+                        attr_cfg += ("● " +  cfg.display_name  + ":" + cfg.value  + "\n" )
+                        
+            attr = attr.rstrip()
+            attr_cfg = attr_cfg.rstrip() 
+            
+            line.mrp_product_attribute = attr
+            line.mrp_product_attribute2 = attr_cfg
+    
