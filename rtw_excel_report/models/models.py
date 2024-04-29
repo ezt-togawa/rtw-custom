@@ -76,6 +76,10 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_sale_order_format_date",
         string="Preferred Delivery Date",
     )
+    sale_order_warehouse_arrive_date = fields.Char(
+        compute="_compute_sale_order_format_date",
+        string="Warehouse Arrive Date",
+    )
     sale_order_date_deadline = fields.Char(
         compute="_compute_sale_order_format_date",
         string="Date deadline",
@@ -202,7 +206,15 @@ class SaleOrderExcelReport(models.Model):
         "sale order draff invoice",
         compute="_compute_sale_order_draff_invoice",
     )    
-    
+    sale_order_waypoint_name= fields.Char(
+        "waypoint name",
+        compute="_compute_sale_order_waypoint",
+    )    
+    sale_order_waypoint_address= fields.Char(
+        "waypoint address",
+        compute="_compute_sale_order_waypoint",
+    )  
+
     def _compute_bank(self):
         for record in self:
             if record.lang_code =="en_US":
@@ -427,31 +439,77 @@ class SaleOrderExcelReport(models.Model):
 
     def _compute_sale_order_company_name(self):
         for line in self:
-            sale_order_company_name = ""
-            if line.partner_id.commercial_company_name:
-                sale_order_company_name = line.partner_id.commercial_company_name
-            else:
-                sale_order_company_name = line.partner_id.name
-            if line.partner_id.department:
-                sale_order_company_name += " " + line.partner_id.department
-            if line.partner_id.user_id.name:
-                sale_order_company_name += " " + line.partner_id.user_id.name + " ご依頼分"
-            line.sale_order_company_name = sale_order_company_name
+            company_name = ""
+            partner = line.partner_id
+
+            if partner:
+                if partner.commercial_company_name:
+                    company_name = partner.commercial_company_name
+                elif partner.name:
+                    company_name = partner.name
+
+                if partner.department:
+                    company_name += " " + partner.department
+
+                if partner.user_id and partner.user_id.name :
+                    company_name += " " + partner.user_id.name + " ご依頼分"
+
+            line.sale_order_company_name = company_name
+            
+    def _compute_sale_order_waypoint(self):
+        for line in self:
+            waypoint = line.waypoint
+
+            company_name = ""
+            address = ""
+
+            if waypoint:
+                if waypoint.parent_id:
+                    company_name = waypoint.parent_id.name if waypoint.parent_id.name else ''
+                elif waypoint.name:
+                    company_name = waypoint.name
+
+                if waypoint.zip:
+                    address += "〒" + waypoint.zip + " "
+                    
+                if line.lang_code == 'ja_JP':
+                    if waypoint.state_id and waypoint.state_id.name:
+                        address += waypoint.state_id.name + " "
+                    if waypoint.city:
+                        address += waypoint.city + " "
+                    if waypoint.street:
+                        address += waypoint.street + " "
+                    if waypoint.street2:
+                        address += waypoint.street2 
+                else:
+                    if waypoint.street:
+                        address += waypoint.street + " "
+                    if waypoint.street2:
+                        address += waypoint.street2 + " "
+                    if waypoint.city:
+                        address += waypoint.city + " "
+                    if waypoint.state_id and waypoint.state_id.name:
+                        address += waypoint.state_id.name + " "
+
+            line.sale_order_waypoint_name = company_name.strip()
+            line.sale_order_waypoint_address = address.strip()
 
     def _compute_sale_order_info_cus(self):
         for line in self:
             info_cus = ""
-            if line.partner_id.name:
-                info_cus = line.partner_id.name
-            if line.partner_id.site:
-                info_cus = line.partner_id.site
-            if line.partner_id.department:
-                info_cus += " " + line.partner_id.department
-            if line.partner_id.user_id.name:
-                info_cus += " " + line.partner_id.user_id.name + " "
-            if line.name:
-                info_cus += "ご依頼分" + line.name
-            line.sale_order_info_cus = info_cus
+            partner = line.partner_id
+            if partner:
+                user = partner.user_id
+                if partner.name:
+                    info_cus += partner.name + " "
+                if partner.site:
+                    info_cus += partner.site + " "
+                if partner.department:
+                    info_cus += partner.department + " "
+                if user and user.name:
+                    info_cus += user.name + " "
+            info_cus = info_cus.rstrip()    
+            line.sale_order_info_cus = info_cus + " ご依頼分"
 
     def _compute_sale_order_ritzwell_staff(self):
         for line in self:
@@ -595,6 +653,7 @@ class SaleOrderExcelReport(models.Model):
             validity_date = record.validity_date
             shiratani_entry_date = record.shiratani_entry_date
             preferred_delivery_date = record.preferred_delivery_date
+            warehouse_arrive_date = record.warehouse_arrive_date
             date_deadline = record.date_deadline
 
             if shipping_date:
@@ -653,6 +712,17 @@ class SaleOrderExcelReport(models.Model):
                 )
             else:
                 record.sale_order_preferred_delivery_date = ""
+            if warehouse_arrive_date:
+                record.sale_order_warehouse_arrive_date = (
+                    str(warehouse_arrive_date.year)
+                    + record.yearUnit
+                    + str(warehouse_arrive_date.month)
+                    + record.monthUnit
+                    + str(warehouse_arrive_date.day)
+                    + record.dayUnit  
+                )
+            else:
+                record.sale_order_warehouse_arrive_date = ""
             if date_deadline:
                 record.sale_order_date_deadline = (
                     str(date_deadline.year)
@@ -2155,7 +2225,64 @@ class AccountMoveLineExcelReport(models.Model):
     acc_line_price_unit = fields.Char(
         compute="_compute_acc_line_price_unit",
         string="定価",
-    )        
+    )   
+    mrp_join_partner_address = fields.Char(
+        "Partner info",
+        compute="_compute_mrp_join_partner",
+    )
+    
+    mrp_join_partner_company_name = fields.Char(
+        "Partner info",
+        compute="_compute_mrp_join_partner",
+    )
+    
+    def _compute_mrp_join_partner(self):
+        for line in self:
+            address = ""
+            company_name = ""
+            
+            picking = line.picking_type_id
+            if picking:
+                warehouse = picking.warehouse_id
+                if warehouse :
+                    partner = warehouse.partner_id
+                    if partner :
+                        if partner.zip:
+                            address += "〒" + partner.zip + " "
+                            
+                        if line.lang_code == 'ja_JP':
+                            if partner.state_id and partner.state_id.name:
+                                address += partner.state_id.name + " "
+                            if partner.city:
+                                address += partner.city + " "
+                            if partner.street:
+                                address += partner.street + " "
+                            if partner.street2:
+                                address += partner.street2 
+                        else:
+                            if partner.street:
+                                address += partner.street + " "
+                            if partner.street2:
+                                address += partner.street2 + " "
+                            if partner.city:
+                                address += partner.city + " "
+                            if partner.state_id and partner.state_id.name:
+                                address += partner.state_id.name + " "
+                                
+                        if partner.commercial_company_name:
+                            company_name = partner.commercial_company_name
+                        elif partner.name:
+                            company_name = partner.name
+                            
+                        if partner.department:
+                            company_name += " " + partner.department
+                            
+                        if partner.user_id and partner.user_id.name :
+                            company_name += " " + partner.user_id.name + " ご依頼分"
+                        
+            line.mrp_join_partner_address = address.strip()
+            line.mrp_join_partner_company_name = company_name.strip()
+
     def _compute_acc_line_price_subtotal(self):
         for line in self:
             line.acc_line_price_subtotal = '{0:,.0f}'.format(line.price_subtotal) if line.price_subtotal else ''
@@ -2193,6 +2320,84 @@ class MrpProductionExcelReport(models.Model):
     )
     
     lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
+    
+    hr_employee_company = fields.Char(string="hr employee company" , compute="_compute_hr_employee")
+    hr_employee_department = fields.Char(string="hr employee department" , compute="_compute_hr_employee")
+    hr_employee_zip = fields.Char(string="hr employee zip" , compute="_compute_hr_employee")
+    hr_employee_info = fields.Char(string="hr employee info" , compute="_compute_hr_employee")
+    hr_employee_tel = fields.Char(string="hr employee tel" , compute="_compute_hr_employee")
+    hr_employee_fax = fields.Char(string="hr employee fax" , compute="_compute_hr_employee")
+    
+    mrp_hr_employee = fields.Char(compute="_compute_mrp_hr_employee", string="hr employee")  
+    
+    def _compute_hr_employee(self):
+        for so in self:
+            hr_defaults = {
+                'hr_employee_company': "株式会社リッツウェル",
+                'hr_employee_department': "大阪オフィス",
+                'hr_employee_zip': "〒542-0081",
+                'hr_employee_info': "大阪市中央区南船場4-7-6 B1F",
+                'hr_employee_tel': "tel.06-4963-8777",
+                'hr_employee_fax': "fax.06-4963-8778",
+            }
+            
+            picking_type = so.picking_type_id
+            if picking_type:
+                warehouse = picking_type.warehouse_id
+                if warehouse :
+                    partner = warehouse.partner_id
+                    if partner:
+                        res_partner= self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id','=',partner.id)])
+                        for res in res_partner:
+                                if res.company_type == 'company':
+                                    so.hr_employee_company =  res.name if res.name else ''
+                                else:
+                                    if res.parent_id :
+                                        so.hr_employee_company   =  res.parent_id.name if res.parent_id.name else ''
+                                    else:
+                                        so.hr_employee_company =  ''
+                                        
+                                if res.site:
+                                    if so.lang_code == 'ja_JP':
+                                        so.hr_employee_department = (res.site)
+                                    else:
+                                        so.hr_employee_department = (res.site)
+                                else:
+                                    so.hr_employee_department = ''
+                                
+                                so.hr_employee_zip = ("〒" + res.zip) if res.zip else ''
+                                
+                                if so.lang_code == 'ja_JP':
+                                    so.hr_employee_info = f"{res.state_id.name or ''} {res.city or ''} {res.street or ''} {res.street2 or ''}"
+                                else:
+                                    so.hr_employee_info = f"{res.street or ''} {res.street2 or ''} {res.city or ''} {res.state_id.name or ''}"
+                                
+                                so.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
+                                so.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
+                                
+                    else:
+                        so.update(hr_defaults)
+                else:
+                    so.update(hr_defaults)
+            else:
+                so.update(hr_defaults)
+          
+    def _compute_mrp_hr_employee(self):
+        for record in self:
+            hr_employee_detail = ""   
+            if record.hr_employee_company:
+                hr_employee_detail += record.hr_employee_company + "\n"      
+            if record.hr_employee_department:
+                hr_employee_detail += record.hr_employee_department + "\n"
+            if record.hr_employee_zip:
+                hr_employee_detail += record.hr_employee_zip + "\n"
+            if record.hr_employee_info:
+                hr_employee_detail += record.hr_employee_info + "\n"
+            if record.hr_employee_tel:
+                hr_employee_detail += record.hr_employee_tel + "\n"
+            if record.hr_employee_fax:
+                hr_employee_detail += record.hr_employee_fax + "\n"          
+            record.mrp_hr_employee= hr_employee_detail.rstrip('\n')
 
     def _compute_lang_code(self):
         for l in self:
