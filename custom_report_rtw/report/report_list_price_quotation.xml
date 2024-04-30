@@ -38,17 +38,12 @@
                         </div>
                         <div class="row size13" style="margin-top:-50px">
                             <div class="col-4">
-                                <t t-if="docs.lang_code == 'en_US'">
-                                    <div>御中 <span t-field="docs.company_id.partner_id.name" /> 株式会社 </div>
-                                    <div> Mr./Mrs.<t t-esc="' '" /><span
-                                            t-field="docs.partner_id.name" />
-                                    </div>
-                                </t>
-                                <t t-else="">
-                                    <div> 株式会社 <span t-field="docs.company_id.partner_id.name" /> 御中 </div>
-                                    <div>
-                                        <span t-field="docs.partner_id.name" /> 様 </div>
-                                </t>
+                                <div>
+                                    <span t-field="docs.send_to_company" />
+                                </div>
+                                <div>
+                                    <span t-field="docs.send_to_people" />
+                                </div>
                                 <br />
                                 <div class="size12">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
                                     御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br /> <span class="mt-1">
@@ -68,24 +63,14 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div>納品希望日： <span t-if="docs.sale_order_estimated_shipping_date"
-                                        class="size14"
-                                        t-esc="docs.sale_order_estimated_shipping_date" />
-                                </div>
-                                <div> 製作日数： <span t-if="docs.so_work_days"
-                                        t-esc="docs.so_work_days" />
-                                </div>
-                                <div> 発注期限： <span t-esc="docs.sale_order_date_order" class="size14" />
-                                </div>
-                                <div>納品場所：<span t-esc="docs.forwarding_address" class="size14" />
-                                </div>
-                                <div>支払条件：<span t-esc="docs.payment_term_id.name" />
-                                </div>
+                                <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
+                                <div> 製作日数： <span t-if="docs.so_work_days" t-esc="docs.so_work_days" /></div>
+                                <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
+                                <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
+                                <div> 支払条件：<span t-esc="docs.sale_order_transactions_term" /></div>
                                 <br />
-                                <div>見積有効期限： <span t-field="docs.validity_date" />
-                                </div>
-                                <div>備考: <span t-field="docs.special_note" />
-                                </div>
+                                <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
+                                <div> 備考: <span t-field="docs.special_note" /></div>
                             </div>
                             <div class="col-4 size11" name="company_address">
                                 <div>
@@ -130,6 +115,7 @@
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody">
+                                <t t-set="number" t-value="0" />
                                 <tr
                                     t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)"
                                     t-as="l"
@@ -141,62 +127,76 @@
                                         t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                                     <t t-set="total_discount"
                                         t-value="total_discount + (l.price_unit - l.price_reduce) * l.product_uom_qty" />
-
-                                    <td t-esc="l_index+1" class="text-center">
-                                    </td>
-
-                                    <td class="size11">
-                                        <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                                        <br />
-                                        <span t-if="l.p_type" t-field="l.p_type" />
-                                    </td>
-                                    <td class="size13">
-                                        <div t-if="l.product_id.product_no"
-                                            t-field="l.product_id.product_no" />
-                                        <t t-if="l.product_id.width > 0">W<span
-                                                t-field="l.product_id.width" />
-                                        </t>
-                                        <t t-if="l.product_id.depth > 0">*D<span
-                                                t-field="l.product_id.depth" />
-                                        </t>
-                                        <t t-if="l.product_id.height > 0">*H<span
-                                                t-field="l.product_id.height" />
-                                        </t>
-                                        <t t-if="l.product_id.sh > 0"> SH<span
-                                                t-field="l.product_id.sh" />
-                                        </t>
-                                        <t t-if="l.product_id.ah > 0"> AH<span
-                                                t-field="l.product_id.ah" />
-                                        </t>
-                                    </td>
-                                    <td>
-                                        <t
-                                            t-foreach="l.product_id.product_template_attribute_value_ids"
-                                            t-as="string_line"> ● <span
-                                                t-esc="string_line.display_name" />
-                                                <br />
-                                        </t>
-                                        <t t-foreach="l.config_session_id.custom_value_ids"
-                                            t-as="string_line"> ●<span
-                                                t-esc="string_line.display_name" />: <span
-                                                t-esc="string_line.value" />
-                                                <br />
-                                        </t>
-                                    </td>
-                                    <td class="text-center size15">
-                                        <div id="quote_qty">
+                                    <t t-if="l.display_type =='line_note'">
+                                        <td/>
+                                        <td class="size11" colspan="6">
+                                            <span t-field="l.name" />
+                                        </td>
+                                    </t>
+                                    <t t-elif="l.display_type =='line_section'">
+                                        <td class="bg-section"></td>
+                                        <td class="size11 bg-section" colspan="6">
+                                            <span t-field="l.name" />
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td class="text-center size12">
+                                                <t t-set="number" t-value="number + 1" />
+                                                <t t-esc="number" />
+                                            </td>
+                                        <td class="size11">
                                             <span
-                                                t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <span
-                                            t-esc="l.price_unit" />
-                                    </td>
-                                    <td class="text-center size15">
-                                        <span
-                                            t-esc="l.price_subtotal" />
-                                    </td>
+                                                t-field="l.sale_order_name" />
+                                            <br />
+                                            <span t-if="l.p_type" t-field="l.p_type" />
+                                        </td>
+                                        <td class="size13">
+                                            <div t-if="l.product_id.product_no"
+                                                t-field="l.product_id.product_no" />
+                                            <t t-if="l.product_id.width > 0">W<span
+                                                    t-field="l.product_id.width" />
+                                            </t>
+                                            <t t-if="l.product_id.depth > 0">*D<span
+                                                    t-field="l.product_id.depth" />
+                                            </t>
+                                            <t t-if="l.product_id.height > 0">*H<span
+                                                    t-field="l.product_id.height" />
+                                            </t>
+                                            <t t-if="l.product_id.sh > 0"> SH<span
+                                                    t-field="l.product_id.sh" />
+                                            </t>
+                                            <t t-if="l.product_id.ah > 0"> AH<span
+                                                    t-field="l.product_id.ah" />
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t
+                                                t-foreach="l.product_id.product_template_attribute_value_ids"
+                                                t-as="string_line"> ● <span
+                                                    t-esc="string_line.display_name" />
+                                                <br />
+                                            </t>
+                                            <t t-foreach="l.config_session_id.custom_value_ids"
+                                                t-as="string_line"> ●<span
+                                                    t-esc="string_line.display_name" />: <span
+                                                    t-esc="string_line.value" />
+                                                <br />
+                                            </t>
+                                        </td>
+                                        <td class="text-center size15">
+                                            <div id="quote_qty">
+                                                <span t-esc="l.sale_order_line_product_uom_qty" />
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span
+                                                t-esc="l.price_unit" />
+                                        </td>
+                                        <td class="text-center size15">
+                                            <span
+                                                t-esc="l.price_subtotal" />
+                                        </td>
+                                    </t>
                                 </tr>
                             </tbody>
                         </table>

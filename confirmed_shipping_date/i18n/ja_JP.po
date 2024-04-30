@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* confirmed_shipping_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-09 02:35+0000\n"
+"PO-Revision-Date: 2024-02-09 02:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: confirmed_shipping_date
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_purchase_order_line__confirmed_shipping_date
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_stock_picking__confirmed_shipping_date
+msgid "Confirmed shipping Date"
+msgstr "出荷確認日"
+
+#. module: confirmed_shipping_date
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: confirmed_shipping_date
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: confirmed_shipping_date
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr "最終更新日"
+
+#. module: confirmed_shipping_date
+#: model:ir.model,name:confirmed_shipping_date.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "購買オーダ明細"
+
+#. module: confirmed_shipping_date
+#: model:ir.model.fields,help:confirmed_shipping_date.field_stock_picking__scheduled_date
+msgid ""
+"Scheduled time for the first part of the shipment to be processed. Setting "
+"manually a value here would set it as expected date for all the stock moves."
+msgstr "出荷の最初の部分が処理される予定時刻。 ここで手動で値を設定すると、すべての在庫移動の予定日として設定されます。"
+
+#. module: confirmed_shipping_date
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_stock_picking__shipping_due_date
+msgid "Shipping Due Date"
+msgstr "出荷期限"
+
+#. module: confirmed_shipping_date
+#: model:ir.model.fields,help:confirmed_shipping_date.field_stock_picking__shipping_due_date
+msgid "The date the customer is expected to shipping the delivery."
+msgstr "お客様の発送予定日"
+
+#. module: confirmed_shipping_date
+#: model:ir.model,name:confirmed_shipping_date.model_stock_picking
+msgid "Transfer"
+msgstr "運送"
+
+#. module: confirmed_shipping_date
+#: model:ir.model.fields,field_description:confirmed_shipping_date.field_stock_picking__scheduled_date
+msgid "予定日"
+msgstr ""

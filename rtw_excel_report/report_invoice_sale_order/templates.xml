@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2019 Ecosoft Co., Ltd.
+  License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+    <record id="invoice_report_xlsx_template_2" model="xlsx.template">
+        <field name="res_model">sale.order</field>
+        <field name="fname">invoice2.xlsx</field>
+        <field name="name">請求書</field>
+        <field name="description">Invoice Report Excel</field>
+        <field name="export_action_id" eval="ref('action_invoice_export_xlsx_2')" />
+        <field name="input_instruction">
+            {
+                '__EXPORT__': {
+                    '請求書': {
+                        '_HEAD_': {
+                            'A3': 'send_to_company${value or ""}',
+                            'A4': 'send_to_people${value or ""}',
+                            'B7':'title${value or ""}',
+                            'B9': 'amount_untaxed${value or ""}',
+                            'B10':'amount_tax${value or 0}',
+                            'B11':'amount_total${value or ""}',
+                            'E3': '${value or ""}',
+                            'E4': 'payment_term_id.name${value or ""}',
+                            'E5': 'sale_order_bank_name${value or ""}',
+                            'E6': 'sale_order_bank_branch${value or ""}',
+                            'E7': 'sale_order_number_account${value or ""}',
+                            'E9': 'sale_order_preferred_delivery_date${value or ""}',
+                            'E10': 'forwarding_address${value or ""}',
+                            'E11':'special_note${value or ""}',
+                            'H1': 'sale_order_current_date',
+                            'H3': 'sale_order_hr_employee${value or ""}',
+                            'G13': 'amount_total${value or ""}',
+                            'I13': 'amount_untaxed${value or ""}',
+                            'I14': 'sale_order_draff_invoice${value or ""}',
+                        },
+                        'list_order_line': {
+                            'A17': 'sale_order_index${value or ""}#{style=text;fill=grey}',
+                            'B17': 'sale_order_name${value or ""}#{style=text;fill=grey}',
+                            'C17': 'sale_order_number_and_size#{style=text;fill=grey}',
+                            'D17': 'sale_order_product_detail#{style=text;fill=grey}',
+                            'E17': 'sale_order_line_product_uom_qty${value or ""}#{style=text;fill=grey}',
+                            'F17': 'price_unit${value or ""}#{style=text;fill=grey}',
+                            'G17': 'sale_order_line_discount${value or ""}#{style=text;fill=grey}',
+                            'H17': 'sale_order_sell_unit_price${value or ""}#{style=text;fill=grey}',
+                            'I17': 'price_subtotal${value or ""}#{style=text;fill=grey}',
+                        }
+                    }
+                }
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('invoice_report_xlsx_template_2')]" />
+    </function>
+</odoo>

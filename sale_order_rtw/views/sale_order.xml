@@ -44,6 +44,9 @@
                         <field name="title" />
                     </div>
                 </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="date_deadline" string="Date deadline" />
+                </xpath>
                 <xpath expr="//field[@name='state']" position="before">
                     <field name="process" widget="statusbar" options="{'clickable':1}" />
                 </xpath>

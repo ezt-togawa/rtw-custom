@@ -20,11 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management', 'crm', 'contract','monthly_revenue'],
+    'depends': ['base', 'sale_management', 'crm', 'contract','monthly_revenue','rtw_crm'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'data/ir_cron_monthly_revenue.xml',
         'views/crm_lead.xml',
         'views/templates.xml',
     ],

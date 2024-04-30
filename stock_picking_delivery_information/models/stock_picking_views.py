@@ -30,6 +30,22 @@ class StockPicking(models.Model):
         "納品設置先",
         compute="_compute_delivery_information",
     )
+    
+    sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order")
+    shiratani_entry_date = fields.Date("Shiratani entry date", related="sale_order_id.shiratani_entry_date")
+    warehouse_arrive_date = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date")
+    estimated_shipping_date = fields.Date('Estimated shipping date', related="sale_order_id.estimated_shipping_date")
+
+    def _compute_sale_order(self):
+        for picking in self:
+            if picking.sale_id:
+                picking.sale_order_id = picking.sale_id
+            else:
+                if picking.origin and picking.origin.startswith("S"):
+                    sale_order = self.env['sale.order'].search([('name', '=', picking.origin)], limit=1)
+                    picking.sale_order_id = sale_order
+                else:
+                    picking.sale_order_id = False
 
     def _compute_delivery_information(self):
         for record in self:

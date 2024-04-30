@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="view_mailing_trace_form_add_contact" model="ir.ui.view">
+            <field name="name">add contact form</field>
+            <field name="model">mailing.trace</field>
+            <field name="inherit_id" ref="mass_mailing.mailing_trace_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//group[1]//group[2]//field[@name='state_update']"
+                    position="after">
+                    <div class="o_td_label" style="font-weight:bold">Contact</div>
+                    <button
+                        name="open_res_partner_form_view"
+                        type="object"
+                        class="oe_stat_button"
+                        style="color: #7C7BAD;padding:0;margin:0 "
+                    >
+                        <attribute name="string">
+                            <field name="name_contact" />
+                        </attribute>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_mailing_trace_tree_add_contact" model="ir.ui.view">
+            <field name="name">add contact tree</field>
+            <field name="model">mailing.trace</field>
+            <field name="inherit_id" ref="mass_mailing.mailing_trace_view_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//tree//field[@name='state']" position="before">
+                    <field name="company_info" string="Company Info" />
+                    <field name="name_contact" string="Contact" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

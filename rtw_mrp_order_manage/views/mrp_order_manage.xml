@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record id="view_mrp_order_manage" model="ir.ui.view">
+            <field name="name">rtw mrp order_manage</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <field name="mrp_order_status" invisible="1" />
+                </xpath>
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <button
+                        name="toggle_mrp_order_btn"
+                        type="object"
+                        class="oe_stat_button text-danger"
+                        icon="fa-check-square"
+                        attrs="{'invisible': [('mrp_order_status' , '=', True)]}"
+                    >
+                        未発注
+                    </button>
+                    <button
+                        name="toggle_mrp_order_btn"
+                        type="object"
+                        class="oe_stat_button text-success"
+                        icon="fa-check-square"
+                        attrs="{'invisible': ['|',('mrp_order_status' , '=', False),('mrp_order_status' , '=', '')]}"
+                    >
+                        発注済
+                    </button>
+                </xpath>
+            </field>
+        </record>
+        <record
+            id="view_mrp_order_manage_filter_custom" model="ir.ui.view">
+            <field name="name">rtw mrp order_manage_select</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="sale_order_crm_case.view_mrp_production_filter_custom" />
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='filter_inspected']" position="after">
+                    <separator/>
+                    <filter string="未発注" name="filter_mrp_order_false"
+                        domain="['|', ('mrp_order_status', '=', False), ('mrp_order_status', '=', '')]" />
+                    <filter string="発注済" name="filter_mrp_order_true"
+                        domain="[('mrp_order_status', '=', True)]" />
+                </xpath>
+            </field>
+        </record>
+        <record
+            id="view_mrp_order_manage_tree_custom" model="ir.ui.view">
+            <field name="name">rtw mrp order_manage_tree</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="sale_order_crm_case.view_mrp_production_tree_custom" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='inspected_button']" position="after">
+                    <field name="mrp_order_status" optional="show" string="発注状態" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

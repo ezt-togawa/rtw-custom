@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_view_order_approve_form" model="ir.ui.view">
+            <field name="name">Sale Order RTW</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='workdays']" position="after">
+                    <label for="leadtime" />
+                    <div class="o_row">
+                        <field name="leadtime" nolabel="1" />
+                        <button name="update_leadtime"
+                            class="btn-link" icon="fa-refresh"
+                            confirm="This will update all planned date based on the current leadtime."
+                            string="予定日へ反映" type="object"
+                        />
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

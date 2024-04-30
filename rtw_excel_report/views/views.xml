@@ -21,6 +21,9 @@
           <field name="sale_order_validity_date" invisible="1" />
           <field name="sale_order_account_number" invisible="1" />
         </xpath>
+        <xpath  expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='discount']"  position="after">
+          <field name="sale_order_sell_unit_price" /> 
+        </xpath>
       </field>
     </record>
     <record id="view_order_form_sale_order_number_and_size" model="ir.ui.view">
@@ -55,14 +58,14 @@
         </xpath>
         <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
           <field name="sale_order_index" invisible="1" />
-        </xpath>
-                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
+       </xpath>
+            <!--      <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
           position="before">
           <field name="sale_order_name" invisible="1" />
-        </xpath>
-        <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+        </xpath> -->
+        <!-- <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
           <field name="sale_order_name" invisible="1" />
-        </xpath>
+        </xpath> -->
       </field>
     </record>
 

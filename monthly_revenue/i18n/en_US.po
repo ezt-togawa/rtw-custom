@@ -1,0 +1,5 @@
+#. module: monthly_revenue
+#: model:ir.actions.act_window,name:monthly_revenue.action_annual_average
+#: model:ir.ui.menu,name:monthly_revenue.menu_action_annual_average
+msgid "移動年計"
+msgstr "Monthly revenue"

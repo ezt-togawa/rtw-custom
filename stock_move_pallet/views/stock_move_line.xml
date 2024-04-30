@@ -6,7 +6,30 @@
             <field name="inherit_id" ref="rtw_stock_move_line.stock_move_line_list"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='result_package_id']" position="after">
-                    <field name="pallet_id"/>
+                    <field name="pallet_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_move_line_list_pallet_itoshima" model="ir.ui.view">
+            <field name="name">move_line_list_pallet</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="rtw_stock_move_line.stock_move_line_list_itoshima"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='result_package_id']" position="after">
+                    <field name="pallet_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_move_line_form_add_pallet_id" model="ir.ui.view">
+            <field name="name">stock_move_line_form_add_pallet_id</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="pallet_id" string="パレット"/>
+                </xpath>
+                <xpath expr="/form" position="attributes">
+                    <attribute name="edit">1</attribute>
                 </xpath>
             </field>
         </record>

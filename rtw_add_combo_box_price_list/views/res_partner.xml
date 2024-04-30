@@ -1,0 +1,19 @@
+
+<odoo>
+    <data>
+        <record id="view_partner_form_add_price_list" model="ir.ui.view">
+            <field name="name">add price list</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="rtw_sf.view_partner_form_sf"/>
+            <field name="groups_id" eval="[(4, ref('product.group_product_pricelist'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='multiplier_green']" position="after">
+                    <field name="property_product_pricelist" string="Pricelist" groups="product.group_product_pricelist" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}" />
+                    <div name="parent_pricelists" groups="product.group_product_pricelist" colspan="2" attrs="{'invisible': ['|',('is_company','=',True),('parent_id','=',False)]}">
+                        <p>Pricelists are managed on <button name="open_commercial_entity" type="object" string="the parent company" class="oe_link"/></p>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

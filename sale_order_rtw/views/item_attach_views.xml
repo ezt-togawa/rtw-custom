@@ -17,7 +17,7 @@
                     >
                         <div class="row">
                             <div class="col">
-                                <field name="attach_file" widget="pdf_viewer"/>
+                                <field name="attach_file" widget="image"/>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="product_id" />
-                <field name="attach_file" widget="pdf_viewer"/>
+                <field name="attach_file" widget="image"/>
             </tree>
         </field>
     </record>

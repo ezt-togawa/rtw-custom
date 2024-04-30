@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="list_price_quotation"
+            model="sale.order"
+            string="定価御見積書(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.list_price_quotation_xls"
+            file="定価御見積書"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

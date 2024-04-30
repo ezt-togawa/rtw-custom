@@ -13,12 +13,21 @@
                 position="after">
                 <field name="is_pack_outside" />
             </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_hide_print_description" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="product_spec_rtw.sale_view_order_line_form" />
+        <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/tree/field[@name='print_description']"
                 position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>
+
     <record model="ir.ui.view" id="product_template_only_form_view_custom">
         <field name="name">product.template.pack.form</field>
         <field name="model">product.template</field>

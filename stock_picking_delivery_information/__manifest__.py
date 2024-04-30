@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "delivery_information",
+    'name': "stock_picking_delivery_information",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as

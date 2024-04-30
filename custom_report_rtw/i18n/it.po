@@ -777,7 +777,7 @@ msgstr "Rif. Proforma no."
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.MO_header_layout
 msgid "Ritzwell &amp; Co."
-msgstr ""
+msgstr "Ritzwell Italia"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order

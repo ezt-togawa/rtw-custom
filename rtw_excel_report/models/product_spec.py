@@ -182,106 +182,112 @@ class productSpec(models.AbstractModel):
             sale_order_lines=self.find_sale_order_line(sale_order.id)
             if sale_order_lines :
                 for index,sl in enumerate(sale_order_lines.filtered(lambda x: not x.is_pack_outside)):
-                    categ_name=""
-                    p_type=""
-                    product_no='=""'
-                    qty='=""'
-                    if sl.product_id.product_tmpl_id.categ_id.name:
-                        categ_name = sl.product_id.product_tmpl_id.categ_id.name 
-                    if sl.p_type:
-                        if sl.p_type == "special":
-                            p_type = "別注"
-                        elif sl.p_type == "custom":
-                            p_type = "特注"    
-                    if sl.product_id.product_tmpl_id.product_no:
-                        product_no = sl.product_id.product_tmpl_id.product_no 
-                    if sl.product_uom_qty:
-                        qty = str(int(sl.product_uom_qty))
-
-                    sheet.write(index, 0,qty, qty_format)
-                    sheet.write(index, 1, categ_name + " " + p_type, categ_name_format)
-                    sheet.write(index, 2,product_no, product_no_format)
-
-                    if sl.product_id.image_256:
-                        image_product_db = base64.b64decode(sl.product_id.image_256)
-                        if image_product_db:
-                            image = Image.open(io.BytesIO(image_product_db))
-                            image_path = os.path.join(image_product, f"{sl.id}.png")
-                            image.save(image_path, 'PNG')
-                            img = PILImage.open(image_path)
-                            img = img.convert('RGB')
-                            img = img.resize((252, 252))
-                            img_io = BytesIO()
-                            img.save(img_io, 'JPEG')
-                            img_io.seek(2)
-
-                            count = index // 4  # col number attribute, even when past 4 col so count + 1
-                            row = 10 + count * 52
-                            col = (index % 4) * 5
-
-                            sheet_main.insert_image(row,col,"test",{'image_data': img_io})
-                            
-                    attributes = sl.product_id.product_template_attribute_value_ids
-
-                    size_detail = ""
-                    if sl.product_id.product_tmpl_id.width:
-                        size_detail += "W" + str(sl.product_id.product_tmpl_id.width) + "*"
-                    if sl.product_id.product_tmpl_id.depth:
-                        size_detail += "D" + str(sl.product_id.product_tmpl_id.depth) + "*"
-                    if sl.product_id.product_tmpl_id.height:
-                        size_detail += "H" + str(sl.product_id.product_tmpl_id.height) + "*"
-                    if sl.product_id.product_tmpl_id.sh:
-                        size_detail += "SH" + str(sl.product_id.product_tmpl_id.sh) + "*"
-                    if sl.product_id.product_tmpl_id.ah:
-                        size_detail += "AH" + str(sl.product_id.product_tmpl_id.ah)
-
-                    attr=""
-                    if attributes:
-                        for attribute in attributes :
-                            attr += attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" 
-                        attr += size_detail
-                        sheet.write(index, 4, attr, wrap_format)
+                    #sl.product_id.product_tmpl_id.type != 'service' (case order line has down payment)
+                    #sl.display_type != 'line_note' (case order line has line note)
+                    if sl.product_id.product_tmpl_id.type != 'service' and sl.display_type != 'line_note':
+                        categ_name=""
+                        p_type=""
+                        product_no='=""'
+                        qty='=""'
                         
-                        # take first 4 element of record
-                        attrs_has_img = [x for x in sl.product_id.product_template_attribute_value_ids if x.product_attribute_value_id.image][:4]
+                        if sl.sale_order_name:
+                            categ_name = sl.sale_order_name
+                        
+                            
+                        if sl.p_type:
+                            if sl.p_type == "special":
+                                p_type = "別注"
+                            elif sl.p_type == "custom":
+                                p_type = "特注"    
+                        if sl.product_id.product_tmpl_id.product_no:
+                            product_no = sl.product_id.product_tmpl_id.product_no 
+                        if sl.product_uom_qty:
+                            qty = str(int(sl.product_uom_qty))
 
-                        if attrs_has_img:
-                            for index2,attr_img in enumerate(attrs_has_img) : 
-                                image_attr_db= base64.b64decode(attr_img.product_attribute_value_id.image)
-                                image = Image.open(io.BytesIO(image_attr_db))
-                                path = os.path.join(image_attribute_product, f"{sl.id}_{index2}.png")
-                                image.save(path, 'PNG')
-                                img = PILImage.open(path)
+                        sheet.write(index, 0,qty, qty_format)
+                        sheet.write(index, 1, categ_name + " " + p_type, categ_name_format)
+                        sheet.write(index, 2,product_no, product_no_format)
+
+                        if sl.product_id.image_256:
+                            image_product_db = base64.b64decode(sl.product_id.image_256)
+                            if image_product_db:
+                                image = Image.open(io.BytesIO(image_product_db))
+                                image_path = os.path.join(image_product, f"{sl.id}.png")
+                                image.save(image_path, 'PNG')
+                                img = PILImage.open(image_path)
                                 img = img.convert('RGB')
-                                img = img.resize((125, 125))
+                                img = img.resize((252, 252))
                                 img_io = BytesIO()
                                 img.save(img_io, 'JPEG')
                                 img_io.seek(2)
 
-                                # loop image with recipe
-                                count_attr_img = index // 4  
-                                row_attr_img = 31 + count_attr_img * 52
-                                col_attr_img = (index % 4)*5
+                                count = index // 4  # col number attribute, even when past 4 col so count + 1
+                                row = 10 + count * 52
+                                col = (index % 4) * 5
 
-                                if index2 == 1:
-                                    col_attr_img += 2
-                                elif index2 == 2:
-                                    row_attr_img +=8
-                                elif index2 == 3:
-                                    row_attr_img +=8
-                                    col_attr_img += 2
+                                sheet_main.insert_image(row,col,"test",{'image_data': img_io})
                                 
-                                # image attribute 
-                                sheet_main.insert_image(row_attr_img, col_attr_img,"test",{'image_data': img_io})
-                                sheet.write(count, 5, " ", wrap_format)
-                                sheet.write(count, 6, " ", wrap_format)
-                                sheet.write(count, 7, " ", wrap_format)
-                                sheet.write(count, 8, " ", wrap_format)
-                                # detail attribute 
-                                if attr_img.attribute_id.name and attr_img.product_attribute_value_id.name:
-                                    sheet.write(index, index2+9,attr_img.attribute_id.name + ":" + attr_img.product_attribute_value_id.name + "\n", detail_attr_format)    
-                    else:
-                        sheet.write(index, 4, " ", wrap_format)
+                        attributes = sl.product_id.product_template_attribute_value_ids
+
+                        size_detail = ""
+                        if sl.product_id.product_tmpl_id.width:
+                            size_detail += "W" + str(sl.product_id.product_tmpl_id.width) + "*"
+                        if sl.product_id.product_tmpl_id.depth:
+                            size_detail += "D" + str(sl.product_id.product_tmpl_id.depth) + "*"
+                        if sl.product_id.product_tmpl_id.height:
+                            size_detail += "H" + str(sl.product_id.product_tmpl_id.height) + "*"
+                        if sl.product_id.product_tmpl_id.sh:
+                            size_detail += "SH" + str(sl.product_id.product_tmpl_id.sh) + "*"
+                        if sl.product_id.product_tmpl_id.ah:
+                            size_detail += "AH" + str(sl.product_id.product_tmpl_id.ah)
+
+                        attr=""
+                        if attributes:
+                            for attribute in attributes :
+                                attr += attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" 
+                            attr += size_detail
+                            sheet.write(index, 4, attr, wrap_format)
+                            
+                            # take first 4 element of record
+                            attrs_has_img = [x for x in sl.product_id.product_template_attribute_value_ids if x.product_attribute_value_id.image][:4]
+
+                            if attrs_has_img:
+                                for index2,attr_img in enumerate(attrs_has_img) : 
+                                    image_attr_db= base64.b64decode(attr_img.product_attribute_value_id.image)
+                                    image = Image.open(io.BytesIO(image_attr_db))
+                                    path = os.path.join(image_attribute_product, f"{sl.id}_{index2}.png")
+                                    image.save(path, 'PNG')
+                                    img = PILImage.open(path)
+                                    img = img.convert('RGB')
+                                    img = img.resize((125, 125))
+                                    img_io = BytesIO()
+                                    img.save(img_io, 'JPEG')
+                                    img_io.seek(2)
+
+                                    # loop image with recipe
+                                    count_attr_img = index // 4  
+                                    row_attr_img = 31 + count_attr_img * 52
+                                    col_attr_img = (index % 4)*5
+
+                                    if index2 == 1:
+                                        col_attr_img += 2
+                                    elif index2 == 2:
+                                        row_attr_img +=8
+                                    elif index2 == 3:
+                                        row_attr_img +=8
+                                        col_attr_img += 2
+                                    
+                                    # image attribute 
+                                    sheet_main.insert_image(row_attr_img, col_attr_img,"test",{'image_data': img_io})
+                                    sheet.write(count, 5, " ", wrap_format)
+                                    sheet.write(count, 6, " ", wrap_format)
+                                    sheet.write(count, 7, " ", wrap_format)
+                                    sheet.write(count, 8, " ", wrap_format)
+                                    # detail attribute 
+                                    if attr_img.attribute_id.name and attr_img.product_attribute_value_id.name:
+                                        sheet.write(index, index2+9,attr_img.attribute_id.name + ":" + attr_img.product_attribute_value_id.name + "\n", detail_attr_format)    
+                        else:
+                            sheet.write(index, 4, " ", wrap_format)
                         
     def find_sale_order_line(self,order_id):
         return self.env["sale.order.line"].search([("order_id", "=", order_id)])

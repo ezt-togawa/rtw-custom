@@ -100,28 +100,7 @@
                     t-if="docs.partner_id.parent_id"
                     t-field="docs.partner_id.parent_id.name" />
                 </div>
-                <div> 住所 <t t-if="docs.partner_id.zip"> 〒<span t-field="docs.partner_id.zip" /></t>
-                  <t
-                    t-if="docs.partner_id.street">
-                    <span t-field="docs.partner_id.street" />
-                  </t>
-                  <t
-                    t-el="docs.partner_id.street2">
-                    <span t-field="docs.partner_id.street2" />
-                  </t>
-                  <t
-                    t-if="docs.partner_id.city">
-                    <span t-field="docs.partner_id.city" />
-                  </t>
-                  <t
-                    t-if="docs.partner_id.state_id.name">
-                    <span t-field="docs.partner_id.state_id.name" />
-                  </t>
-                  <t
-                    t-if="docs.partner_id.country_id.name">
-                    <span t-field="docs.partner_id.country_id.name" />
-                  </t>
-                </div>
+                <div> 住所 <span t-esc="docs.stock_picking_partner_address" /> </div>
                 <div> TEL／携帯 <span t-field="docs.partner_id.phone" />
                   <t
                     t-if="docs.partner_id.mobile"> / <span
@@ -160,7 +139,22 @@
                     <td t-esc="l_index+1" class="text-center size12">
                     </td>
                     <td class="size11">
-                      <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                      <t>
+                        <t t-if="l.product_id.product_tmpl_id.config_ok">
+                          <t t-if="l.product_id.product_tmpl_id.categ_id.name">
+                            <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                          </t>
+                          <t t-elif="l.product_id.product_tmpl_id.product_no">
+                            <span t-field="l.product_id.product_tmpl_id.product_no" />
+                          </t>
+                          <t t-else="">
+                            <span t-field="l.product_id.product_tmpl_id.name" />
+                          </t>
+                        </t>
+                        <t t-else="">
+                          <span t-field="l.product_name" />
+                        </t>
+                      </t>
                       <br />
                       <t t-if="l.p_type == 'special'">
                         <span>別注</span>
@@ -170,10 +164,20 @@
                       </t>
                     </td>
                     <td class="size13">
-                      <div t-if="l.product_id.product_no"
-                        t-field="l.product_id.product_no" />
-                      <div t-if="l.calculate_product_pack"
-                        t-field="l.calculate_product_pack" />
+                      <div>
+                        <t t-if="l.sale_line_id.pack_parent_line_id">
+                          <span
+                            t-field="l.sale_line_id.pack_parent_line_id.product_id.product_no" />
+                          <span> / </span>
+                          <span
+                            t-field="l.calculate_product_pack_pdf"
+                          />
+                        </t>
+                        <t t-else="else">
+                          <span t-if="l.product_id.product_no"
+                            t-field="l.product_id.product_no" />
+                        </t>
+                      </div>
                       <t t-if="l.product_id.width > 0">W<span
                           t-field="l.product_id.width" />
                       </t>
@@ -199,8 +203,7 @@
                     </td>
                     <td class="text-center size14">
                       <div id="quote_qty">
-                        <span
-                          t-esc="'{0:,.0f}'.format(l.product_uom_qty)" />
+                        <span t-esc="l.stock_product_uom_qty" />
                       </div>
                     </td>
                     <td class="text-center size14">

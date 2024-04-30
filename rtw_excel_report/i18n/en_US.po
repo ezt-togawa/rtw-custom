@@ -769,6 +769,26 @@ msgid "商品仕様書(EXCEL)"
 msgstr "Product Specification(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.report_quotation
+msgid "御見積書(EXCEL)"
+msgstr "Quotation(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.report_quotation_oversea
+msgid "御見積書（海外）-(EXCEL)"
+msgstr "Quotation (Overseas)-(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.list_price_quotation
+msgid "定価御見積書(EXCEL)"
+msgstr "List Price Quotation(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.unit_price_quotation
+msgid "単価御見積書(EXCEL)"
+msgstr "Unit Price Quotation(EXCEL)"
+
+#. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.stock_status_list
 msgid "在庫状況一覧(EXCEL)"
 msgstr "Inventory Status List(EXCEL)"
@@ -838,6 +858,12 @@ msgstr "Purchase Order (Components)"
 #. module: rtw_excel_report
 #: model:ir.actions.act_window,name:rtw_excel_report.action_invoice_export_xlsx
 #: model:ir.ui.menu,name:rtw_excel_report.menu_report_invoice
+msgid "請求書"
+msgstr "Invoice"
+
+#. module: rtw_excel_report
+#: model:ir.actions.act_window,name:rtw_excel_report.action_invoice_export_xlsx_2
+#: model:ir.ui.menu,name:rtw_excel_report.menu_report_invoice2
 msgid "請求書"
 msgstr "Invoice"
 
