@@ -1,0 +1,138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_forecasted_all_warehouses
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-30 10:18+0000\n"
+"PO-Revision-Date: 2024-04-30 10:18+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_forecasted_all_warehouses
+#. openerp-web
+#: code:addons/stock_forecasted_all_warehouses/static/src/xml/stock_forecasted_all_warehouses.xml:0
+#, python-format
+msgid "ALL"
+msgstr ""
+
+#. module: stock_forecasted_all_warehouses
+#: model:ir.model.fields,field_description:stock_forecasted_all_warehouses.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:stock_forecasted_all_warehouses.field_report_stock_report_product_product_replenishment__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Expected Delivery"
+msgstr "配送予定"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Expected Receipt"
+msgstr "予想される入荷"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Forecasted Inventory"
+msgstr "予測在庫"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Forecasted with Pending"
+msgstr "保留中の予測"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Free Stock"
+msgstr "空き在庫"
+
+#. module: stock_forecasted_all_warehouses
+#: model:ir.model.fields,field_description:stock_forecasted_all_warehouses.field_mrp_production__id
+#: model:ir.model.fields,field_description:stock_forecasted_all_warehouses.field_report_stock_report_product_product_replenishment__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Incoming Draft Transfer"
+msgstr "着信ドラフト転送"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Inventory On Hand"
+msgstr "引当予定"
+
+#. module: stock_forecasted_all_warehouses
+#: model:ir.model.fields,field_description:stock_forecasted_all_warehouses.field_mrp_production____last_update
+#: model:ir.model.fields,field_description:stock_forecasted_all_warehouses.field_report_stock_report_product_product_replenishment____last_update
+msgid "Last Modified on"
+msgstr "最終更新日"
+
+#. module: stock_forecasted_all_warehouses
+#: model:ir.model.fields,field_description:stock_forecasted_all_warehouses.field_mrp_production__mrp_sale_order
+msgid "Mrp Sale Order"
+msgstr ""
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Not Available"
+msgstr "利用不可"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Outgoing Draft Transfer"
+msgstr "送信ドラフト転送"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Product"
+msgstr "プロダクト"
+
+#. module: stock_forecasted_all_warehouses
+#: model:ir.model,name:stock_forecasted_all_warehouses.model_mrp_production
+msgid "Production Order"
+msgstr "製造オーダ"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Quantity"
+msgstr "数量"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Replenishment"
+msgstr "補充"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Reserved from stock"
+msgstr "引当済"
+
+#. module: stock_forecasted_all_warehouses
+#: model:ir.model,name:stock_forecasted_all_warehouses.model_report_stock_report_product_product_replenishment
+msgid "Stock Replenishment Report"
+msgstr "在庫補充レポート"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "UoM"
+msgstr "単位"
+
+#. module: stock_forecasted_all_warehouses
+#: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
+msgid "Used by"
+msgstr "使用先"
+
+#. module: stock_forecasted_all_warehouses
+#. openerp-web
+#: code:addons/stock_forecasted_all_warehouses/static/src/xml/stock_forecasted_all_warehouses.xml:0
+#, python-format
+msgid "Warehouse:"
+msgstr "倉庫"
