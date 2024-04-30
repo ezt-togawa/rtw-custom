@@ -56,6 +56,9 @@
                 <field name="sale_order_ids"/>
                 <field name="sale_order_names"/>
             </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="destination_note" />
+            </xpath>
         </field>
     </record>
 </odoo>
