@@ -98,3 +98,8 @@ class sale_order_rtw(models.Model):
             order.order_line.update({
                 'depo_date': order.warehouse_arrive_date
             })
+
+    @api.onchange('preferred_delivery_date')
+    def update_commitment_date(self):
+        for record in self:
+            record.commitment_date = self.preferred_delivery_date
