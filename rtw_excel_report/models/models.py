@@ -554,13 +554,13 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_missing_currency(self):
         for record in self:
             record.sale_order_amount_total = record.currency_id.symbol + str(
-                '{0:,.2f}'.format(record.amount_total).split('.')[0] if record.amount_total else 0
+                '{0:,.0f}'.format(record.amount_total) if record.amount_total else 0
             )
             record.sale_order_amount_untaxed = record.currency_id.symbol + str(
-                '{0:,.2f}'.format(record.amount_untaxed).split('.')[0] if record.amount_untaxed else 0
+                '{0:,.0f}'.format(record.amount_untaxed) if record.amount_untaxed else 0
             )
             record.sale_order_amount_tax = record.currency_id.symbol + str(
-                '{0:,.2f}'.format(record.amount_tax).split('.')[0] if record.amount_tax else 0
+                '{0:,.0f}'.format(record.amount_tax) if record.amount_tax else 0
             )
 
     def _compute_sale_order_missing_char(self):
@@ -678,11 +678,11 @@ class SaleOrderExcelReport(models.Model):
             if so.order_line :
                 for line in so.order_line:
                     total_list_price += line.price_unit * line.product_uom_qty
-            so.sale_order_total_list_price =  '{0:,.2f}'.format(total_list_price).split('.')[0]
+            so.sale_order_total_list_price =  '{0:,.0f}'.format(total_list_price)
     
     def _compute_sale_order_amount_untaxed2(self):
         for so in self:
-            so.sale_order_amount_untaxed2 =  '{0:,.2f}'.format(so.amount_untaxed).split('.')[0] if so.amount_untaxed else ''
+            so.sale_order_amount_untaxed2 =  '{0:,.0f}'.format(so.amount_untaxed) if so.amount_untaxed else ''
 
     def _compute_sale_order_total_discount(self):
         for record in self:
@@ -979,29 +979,27 @@ class SaleOrderLineExcelReport(models.Model):
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
                     
-    @api.onchange('discount', 'price_unit')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
             if line.price_unit and line.discount:
-                line.sale_order_sell_unit_price = '{0:,.2f}'.format(line.price_unit - line.price_unit * line.discount / 100 ).split('.')[0]
+                line.sale_order_sell_unit_price = '{0:,.0f}'.format(line.price_unit - line.price_unit * line.discount / 100 )
             else:
                 line.sale_order_sell_unit_price = ''
             
     def _compute_sale_order_price_subtotal(self):
         for line in self:
-            line.sale_order_price_subtotal = '{0:,.2f}'.format(line.price_subtotal).split('.')[0] if line.price_subtotal else ''
+            line.sale_order_price_subtotal = '{0:,.0f}'.format(line.price_subtotal) if line.price_subtotal else ''
     
-    @api.onchange('product_uom_qty', 'price_unit')        
     def _compute_sale_order_amount_no_rate(self):
         for line in self:
             if line.product_uom_qty and line.price_unit :
-                line.sale_order_amount_no_rate = self.add_money_comma(line.product_uom_qty * line.price_unit)
+                line.sale_order_amount_no_rate = '{0:,.0f}'.format(line.product_uom_qty * line.price_unit)
             else:
                 line.sale_order_amount_no_rate = ''    
                 
     def _compute_sale_order_price_unit(self):
         for line in self:
-            line.sale_order_price_unit = '{0:,.2f}'.format(line.price_unit).split('.')[0] if line.price_unit else ''
+            line.sale_order_price_unit = '{0:,.0f}'.format(line.price_unit) if line.price_unit else ''
 
     def _compute_sale_order_index(self):
         index = 0
@@ -1845,14 +1843,13 @@ class AccountMoveExcelReport(models.Model):
         string="Total List Price",
     )
     
-    @api.onchange('price_unit','quantity')
     def _compute_acc_move_list_price(self):
         for move in self:
             total_list_price = 0.0
             if move.invoice_line_ids :
                 for line in move.invoice_line_ids:
                     total_list_price += line.price_unit * line.quantity
-            move.acc_move_total_list_price = '{0:,.2f}'.format(total_list_price).split('.')[0]
+            move.acc_move_total_list_price = '{0:,.0f}'.format(total_list_price)
                 
     def _compute_acc_move_draff_invoice(self):
         for line in self:
@@ -1870,13 +1867,13 @@ class AccountMoveExcelReport(models.Model):
     def _compute_acc_move_missing_currency(self):
         for record in self:
             record.acc_move_amount_total = record.currency_id.symbol + str(
-                '{0:,.2f}'.format(record.amount_total).split('.')[0] if record.amount_total else 0
+                '{0:,.0f}'.format(record.amount_total) if record.amount_total else 0
             )
             record.acc_move_amount_untaxed = record.currency_id.symbol + str(
-                '{0:,.2f}'.format(record.amount_untaxed).split('.')[0] if record.amount_untaxed else 0
+                '{0:,.0f}'.format(record.amount_untaxed) if record.amount_untaxed else 0
             )
             record.acc_move_amount_tax = record.currency_id.symbol + str(
-                '{0:,.2f}'.format(record.amount_tax).split('.')[0] if record.amount_tax else 0
+                '{0:,.0f}'.format(record.amount_tax) if record.amount_tax else 0
             )
     
     def _compute_lang_code(self):
@@ -2069,11 +2066,11 @@ class AccountMoveLineExcelReport(models.Model):
             
     def _compute_acc_line_price_subtotal(self):
         for line in self:
-            line.acc_line_price_subtotal = '{0:,.2f}'.format(line.price_subtotal).split('.')[0] if line.price_subtotal else ''
+            line.acc_line_price_subtotal = '{0:,.0f}'.format(line.price_subtotal) if line.price_subtotal else ''
     
     def _compute_acc_line_price_unit(self):
         for line in self:
-            line.acc_line_price_unit = '{0:,.2f}'.format(line.price_unit).split('.')[0] if line.price_unit else ''
+            line.acc_line_price_unit = '{0:,.0f}'.format(line.price_unit) if line.price_unit else ''
 
     def _compute_acc_line_name(self):
         for line in self:
@@ -2196,16 +2193,16 @@ class AccountMoveLineExcelReport(models.Model):
     )        
     def _compute_acc_line_price_subtotal(self):
         for line in self:
-            line.acc_line_price_subtotal = '{0:,.2f}'.format(line.price_subtotal).split('.')[0] if line.price_subtotal else ''
+            line.acc_line_price_subtotal = '{0:,.0f}'.format(line.price_subtotal) if line.price_subtotal else ''
     
     def _compute_acc_line_price_unit(self):
         for line in self:
-            line.acc_line_price_unit = '{0:,.2f}'.format(line.price_unit).split('.')[0] if line.price_unit else ''
+            line.acc_line_price_unit = '{0:,.0f}'.format(line.price_unit) if line.price_unit else ''
 
     def _compute_acc_line_sell_unit_price(self):
         for line in self:
             if line.price_unit and line.discount:
-                line.acc_line_sell_unit_price = '{0:,.2f}'.format(line.price_unit - line.price_unit * line.discount / 100 ).split('.')[0] 
+                line.acc_line_sell_unit_price = '{0:,.0f}'.format(line.price_unit - line.price_unit * line.discount / 100 ) 
             else:
                 line.acc_line_sell_unit_price = ''
 class MrpProductionExcelReport(models.Model):
