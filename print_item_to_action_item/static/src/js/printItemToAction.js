@@ -426,10 +426,10 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         if (quotation_oversea_pdf.includes(val.display_name)) sortPrint[1] = val
                         if (list_price_quotation_pdf.includes(val.display_name)) sortPrint[2] = val
                         if (unit_price_quotation_pdf.includes(val.display_name)) sortPrint[3] = val
-                        if (purchase_order_pdf.includes(val.name)) sortPrint[4] = val
-                        if (purchase_order2_pd.includes(val.name)) sortPrint[5] = val
+                        if (purchase_order_pdf.includes(val.display_name)) sortPrint[4] = val
+                        if (purchase_order2_pd.includes(val.display_name)) sortPrint[5] = val
                         if (pro_spec_pdf.includes(val.display_name)) sortPrint[6] = val
-                        if (invoice_pdf.includes(val.name)) sortPrint[7] = val
+                        if (invoice_pdf.includes(val.display_name)) sortPrint[7] = val
                     })
                     this.props.items.print = sortPrint
                 }
