@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="purchase_order_for_part"
+            model="purchase.order"
+            string="発注書(部材用）-(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.report_purchase_order_for_part_xls"
+            file="発注書(部材用) "
+            attachment_use="False"
+        />
+    </data>
+</odoo>

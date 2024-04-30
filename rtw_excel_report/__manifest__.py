@@ -48,8 +48,8 @@
         'report_inspection_order_form/actions.xml',
         'report_inspection_order_form/templates.xml',
 
-        'report_purchase_order_for_part/actions.xml',
-        'report_purchase_order_for_part/templates.xml',
+        # 'report_purchase_order_for_part/actions.xml',
+        # 'report_purchase_order_for_part/templates.xml',
         'report_delivery_request_form/actions.xml',
         'report_delivery_request_form/templates.xml',
         'report_ship_order/actions.xml',
@@ -76,6 +76,7 @@
         'views/purchase_order2.xml',
         'views/invoice_sale_order.xml',
         'views/invoice_account_move.xml',
+        'views/purchase_order_for_part.xml',
 
         # 'report_stock_move_pallet/actions.xml',
         # 'report_stock_move_pallet/templates.xml',
