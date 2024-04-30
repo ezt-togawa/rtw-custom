@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import fields, models
+from odoo.exceptions import UserError
 
 class MrpProduction(models.Model):
   _inherit = 'mrp.production'
@@ -73,7 +74,7 @@ class MrpProduction(models.Model):
           float_product_qty = float(line.product_qty)
           integer_part = int(line.product_qty)
           decimal_part = round(float_product_qty - integer_part,2)
-          decimal_part_after_dot = int(str(decimal_part).split('.')[1]) 
+          decimal_part_after_dot = int(str(decimal_part).split('.')[1])
           if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
               line.mrp_product_product_qty = integer_part
           else:
@@ -82,10 +83,11 @@ class MrpProduction(models.Model):
               line.mrp_product_product_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
 
   def _compute_get_sale_order_line(self):
-      sale_order = self.env['sale.order'].search([('name','=',self.origin)])
-      order_lines = self.env["sale.order.line"].search([("order_id", "in", sale_order.ids)])
-      
-      self.order_line = order_lines
+      for record in self:
+        sale_order = self.env['sale.order'].search([('name','=',record.origin)])
+        order_lines = self.env["sale.order.line"].search([("order_id", "in", sale_order.ids)])
+
+        record.order_line = order_lines
       
   def _compute_mrp_product_name(self):   
       for line in self:
@@ -197,14 +199,15 @@ class MrpProduction(models.Model):
 
 
   def _compute_mrp_production_parent_id(self):
-      if self.origin and '/MO/' in self.origin:
-          mrp_parent_id = self.env['mrp.production'].search([('name','=',self.origin)],limit=1)
-          if mrp_parent_id:
-              self.mrp_production_parent_id = mrp_parent_id
-          else:
-              self.mrp_production_parent_id = False
-      else:
-          self.mrp_production_parent_id = False
+      for record in self:
+        if record.origin and '/MO/' in record.origin:
+            mrp_parent_id = self.env['mrp.production'].search([('name','=',record.origin)],limit=1)
+            if mrp_parent_id:
+                record.mrp_production_parent_id = mrp_parent_id
+            else:
+                record.mrp_production_parent_id = False
+        else:
+            record.mrp_production_parent_id = False
   
   def _get_so_from_mrp(self , mrp_production , count = 0):
         if count >= 10:
@@ -227,10 +230,11 @@ class MrpProduction(models.Model):
         record.mrp_production_so_id = self._get_so_from_mrp(record)
                        
   def _compute_mrp_production_date_planned_start(self):
-      if self.date_planned_start:
-          self.mrp_production_date_planned_start = self.date_planned_start.date()
-      else:
-          self.mrp_production_date_planned_start = ''
+      for record in self:
+        if record.date_planned_start:
+            record.mrp_production_date_planned_start = record.date_planned_start.date()
+        else:
+            record.mrp_production_date_planned_start = ''
   def _compute_mrp_product_attribute(self):
       for line in self:
             attr = ""
@@ -294,3 +298,40 @@ class MrpProduction(models.Model):
             line.mrp_product_attribute = attr
             line.mrp_product_attribute2 = attr_cfg
     
+
+class mrp_report(models.Model):
+    _inherit = 'ir.actions.report'
+    
+    def _get_rendering_context(self, docids, data):
+        res = super(mrp_report, self)._get_rendering_context(docids, data)
+        print('doc',docids)
+        if self.model == 'mrp.production':
+            list_mrp_origin = []
+            for doc in docids:
+                mrp = self.env['mrp.production'].search([('id','=',doc)])
+                if mrp:
+                    list_mrp_origin.append(mrp.origin)
+            if list_mrp_origin and len(list_mrp_origin) > 1:
+                first_element = list_mrp_origin[0]
+                if not all(element == first_element for element in list_mrp_origin):
+                    
+                    raise UserError('複数な要求元になったため、出力できません。')
+                
+        return res
+
+class sale_report_excel(models.AbstractModel):
+    _inherit = 'xlsx.export'
+
+    def export_xlsx(self, template, res_model, res_ids):
+        res = super(mrp_report, self)._get_rendering_context(docids, data)
+        if self.model == 'mrp.production':
+            list_mrp_origin = []
+            for doc in docids:
+                mrp = self.env['mrp.production'].search([('id','=',doc)])
+                if mrp:
+                    list_mrp_origin.append(mrp.origin)
+            if list_mrp_origin and len(list_mrp_origin) > 1:
+                first_element = list_mrp_origin[0]
+                if not all(element == first_element for element in list_mrp_origin):
+                    raise UserError('複数な要求元になったため、出力できません。')
+        return res

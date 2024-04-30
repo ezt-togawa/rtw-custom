@@ -2,7 +2,7 @@
 <odoo>
   <template id="report_purchase_order_pdf_list_form">
     <t t-call="web.html_container">
-      <t t-foreach="docs" t-as="o">
+      <t t-foreach="docs[0]" t-as="o">
         <t t-call="custom_report_rtw.so_ex_layout">
           <t t-set="total_subprice" t-value="0" />
           <t t-set="total_listprice" t-value="0" />
@@ -21,7 +21,7 @@
           </t>
           <t t-call="custom_report_rtw.SO_purchase_order_sheet_header_layout"></t>
           <div class="page">
-            <t t-foreach="docs.mrp_production_so_id" t-as="so">
+            <t t-foreach="o.mrp_production_so_id" t-as="so">
               <t
                 t-set="type">quotation</t>
               <t t-set="address">
@@ -43,7 +43,7 @@
                   </div>
                   <br />
                   <div> 配達希望日 <t>
-                      <t t-if="not docs.mrp_production_parent_id">
+                      <t t-if="not o.mrp_production_parent_id">
                         <t t-if="so.sipping_to == 'direct'">
                           <span class="size14" t-field="so.sale_order_preferred_delivery_date" />
                         </t>
@@ -53,7 +53,7 @@
                       </t>
                       <t t-else="">
                         <span class="size14"
-                          t-field="docs.mrp_production_parent_id.mrp_production_date_planned_start" />
+                          t-field="o.mrp_production_parent_id.mrp_production_date_planned_start" />
                       </t>
                     </t>
                   </div>
@@ -120,7 +120,7 @@
               </div>
               <div class="row py-2">
                 <div class="col-4 size13">
-                  <t t-if="not docs.mrp_production_parent_id">
+                  <t t-if="not o.mrp_production_parent_id">
                     <div> 送り先: <t t-if="not so.sipping_to =='direct'">
                         <span class="size14" t-if="not so.waypoint.parent_id"
                           t-field="so.waypoint.name" />
@@ -134,7 +134,7 @@
                       </t>
                     </div>
                     <t t-if="not so.sipping_to =='direct'">
-                      <t t-if="docs.lang_code == 'ja_JP'">
+                      <t t-if="o.lang_code == 'ja_JP'">
                         <div> 住所: <t t-if="so.waypoint.zip"> 〒<span t-field="so.waypoint.zip" />
                           </t>
                             <t
@@ -182,66 +182,66 @@
                   </t>
                   <t t-else="">
                     <div> 送り先: <span
-                        t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.name" />
+                        t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.name" />
                     </div>
-                    <t t-if="docs.lang_code == 'ja_JP'">
+                    <t t-if="o.lang_code == 'ja_JP'">
                       <div> 住所: <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
                         〒<span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
                         </t>
                           <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
                           <span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
                         </t>
                           <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
                           <span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
                         </t>
                           <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
                           <span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
                         </t>
                           <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
                           <span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />
                         </t>
                       </div>
                     </t>
                     <t t-else="">
                       <div> 住所: <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
                         〒<span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
+                            t-field="o.picking_type_id.warehouse_id.partner_id.zip" />
                         </t>
                           <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
                           <span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
                         </t>
                           <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
                           <span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />
                         </t>
                           <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
                           <span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
                         </t>
                           <t
-                          t-if="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
+                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
                           <span
-                            t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
+                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
                         </t>
                       </div>
                     </t>
                     <div> TEL: <span class="size14"
-                        t-field="docs.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.phone" />
+                        t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.phone" />
                     </div>
                   </t>
                 </div>
@@ -276,107 +276,112 @@
                   </thead>
 
                   <tbody class="invoice_tbody">
-                    <tr class="size15 table-border-bottom">
-                      <td class="text-center size12">1</td>
-                      <td class="size11">
-                        <div class="six-lines">
-                          <div t-if="docs.mrp_product_name" t-field="docs.mrp_product_name" />
-                          <div t-if="docs.mrp_product_type" t-field="docs.mrp_product_type" />
-                          <t t-if="docs.product_id.width > 0">W<span
-                              t-field="docs.product_id.width" />
-                          </t>
-                          <t t-if="docs.product_id.depth > 0">*D<span
-                              t-field="docs.product_id.depth" />
-                          </t>
-                          <t t-if="docs.product_id.height > 0">*H<span
-                              t-field="docs.product_id.height" />
-                          </t>
-                          <t t-if="docs.product_id.sh > 0"> SH<span
-                              t-field="docs.product_id.sh" />
-                          </t>
-                          <t t-if="docs.product_id.ah > 0"> AH<span
-                              t-field="docs.product_id.ah" />
-                          </t>
-                        </div>
-                      </td>
+                    <t t-set="index" t-value="0"/>
+                    <t t-foreach="docs" t-as="line">
+                      <t t-set="index" t-value="index+1"/>
+                      <tr class="size15 table-border-bottom">
+                        <td class="text-center size12"><span t-esc="index"/>
+                        </td>
+                        <td class="size11">
+                          <div class="six-lines">
+                            <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
+                            <div t-if="line.mrp_product_type" t-field="line.mrp_product_type"/>
+                            <t t-if="line.product_id.width > 0">W<span
+                                t-field="line.product_id.width" />
+                            </t>
+                            <t t-if="line.product_id.depth > 0">*D<span
+                                t-field="line.depth" />
+                            </t>
+                            <t t-if="line.product_id.height > 0">*H<span
+                                t-field="line.product_id.height" />
+                            </t>
+                            <t t-if="line.product_id.sh > 0"> SH<span
+                                t-field="line.product_id.sh" />
+                            </t>
+                            <t t-if="line.product_id.ah > 0"> AH<span
+                                t-field="line.product_id.ah" />
+                            </t>
+                          </div>
+                        </td>
 
-                      <td class="size13">
-                        <div class="six-lines">
+                        <td class="size13">
+                          <div class="six-lines">
+                            <t
+                              t-foreach="line.product_id.product_template_attribute_value_ids[0:6]"
+                              t-as="string_line">
+                              <div class="one-lines"> ● <span
+                                  t-esc="string_line.display_name" />
+                                                    <br />
+                              </div>
+                            </t>
+                          </div>
+                        </td>
+                        <td class="size13">
+                          <div class="six-lines">
+                            <t
+                              t-foreach="line.product_id.product_template_attribute_value_ids[6:12]"
+                              t-as="string_line">
+                              <div class="one-lines"> ● <span
+                                  t-esc="string_line.display_name" />
+                                                    <br />
+                              </div>
+                            </t>
+                          </div>
+                        </td>
+                        <!-- <td class="size12">
                           <t
-                            t-foreach="docs.product_id.product_template_attribute_value_ids[0:6]"
+                            t-foreach="docs.product_id.product_template_attribute_value_ids"
                             t-as="string_line">
-                            <div class="one-lines"> ● <span
-                                t-esc="string_line.display_name" />
-                                                  <br />
-                            </div>
-                          </t>
-                        </div>
-                      </td>
-                      <td class="size13">
-                        <div class="six-lines">
-                          <t
-                            t-foreach="docs.product_id.product_template_attribute_value_ids[6:12]"
-                            t-as="string_line">
-                            <div class="one-lines"> ● <span
-                                t-esc="string_line.display_name" />
-                                                  <br />
-                            </div>
-                          </t>
-                        </div>
-                      </td>
-                      <!-- <td class="size12">
-                        <t
-                          t-foreach="docs.product_id.product_template_attribute_value_ids"
-                          t-as="string_line">
-                          <span
-                            t-esc="string_line.attribute_id.name" />
-                          <br />
-                        </t>
-                      </td> -->
-                      <td class="text-center">
-                        <div id="quote_qty" class="six-lines">
-                          <span t-esc="docs.mrp_product_product_qty" />
-                        </div>
-                      </td>
-                      <td class="text-center size14">
-                        <div class="six-lines">
-                          <t t-if="docs.product_id.product_tmpl_id.uom_id.name">
                             <span
-                              t-field="docs.product_id.product_tmpl_id.uom_id.name" />
-                          </t>
-                        </div>
-                      </td>
-                      <td class="text-center size14">
-                        <span />
-                      </td>
-                      <td class="text-center">
-                        <span />
-                      </td>
-                      <td class="size13">
-                        <div class="six-lines">
-                          <t t-if="docs.mrp_product_type">
-                            <span
-                              t-field="docs.mrp_product_type" />
+                              t-esc="string_line.attribute_id.name" />
                             <br />
                           </t>
-                          <t t-foreach="docs.order_line" t-as="l">
-                            <t t-foreach="l.config_session_id.custom_value_ids"
-                              t-as="string_line"> ● <span
-                                t-esc="string_line.display_name" />: <span
-                                t-esc="string_line.value" />
-                                <br />
-                            </t>
-                          </t>
-                        </div>
-                      </td>
-                      <td>
-                        <t t-if="docs.production_memo">
-                          <div class="six-lines">
-                            <span t-field="docs.production_memo" />
+                        </td> -->
+                        <td class="text-center">
+                          <div id="quote_qty" class="six-lines">
+                            <span t-esc="line.mrp_product_product_qty" />
                           </div>
-                        </t>
-                      </td>
-                    </tr>
+                        </td>
+                        <td class="text-center size14">
+                          <div class="six-lines">
+                            <t t-if="line.product_id.product_tmpl_id.uom_id.name">
+                              <span
+                                t-field="line.product_id.product_tmpl_id.uom_id.name" />
+                            </t>
+                          </div>
+                        </td>
+                        <td class="text-center size14">
+                          <span />
+                        </td>
+                        <td class="text-center">
+                          <span />
+                        </td>
+                        <td class="size13">
+                          <div class="six-lines">
+                            <t t-if="line.mrp_product_type">
+                              <span
+                                t-field="line.mrp_product_type" />
+                              <br />
+                            </t>
+                            <t t-foreach="line.order_line" t-as="l">
+                              <t t-foreach="l.config_session_id.custom_value_ids"
+                                t-as="string_line"> ● <span
+                                  t-esc="string_line.display_name" />: <span
+                                  t-esc="string_line.value" />
+                                  <br />
+                              </t>
+                            </t>
+                          </div>
+                        </td>
+                        <td>
+                          <t t-if="line.production_memo">
+                            <div class="six-lines">
+                              <span t-field="line.production_memo" />
+                            </div>
+                          </t>
+                        </td>
+                      </tr>
+                    </t>
                   </tbody>
                 </t>
               </table>

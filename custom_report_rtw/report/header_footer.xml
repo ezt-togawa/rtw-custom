@@ -304,7 +304,7 @@
         </div>
     </template>
     <template id="SO_purchase_order_sheet_header_layout">
-        <t t-foreach="docs.mrp_production_so_id" t-as="so">
+        <t t-foreach="docs" t-as="doc">
             <div t-attf-class="header" t-att-style="report_header_style">
                 <div class="row">
                     <div class="col-8">
@@ -313,17 +313,17 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20"> 発注書 </span>
-                        <t t-if="docs.lang_code == 'en_US'">
-                            <div>御中 <span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /></div>
+                        <t t-if="doc.lang_code == 'en_US'">
+                            <div>御中 <span t-field="doc.picking_type_id.warehouse_id.partner_id.name" /></div>
                         </t>
                         <t t-else="">
-                            <div><span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                            <div><span t-field="doc.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
                         </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
-                        <div t-esc="docs.mrp_production_so_id.name" />
+                        <div t-esc="doc.mrp_production_so_id.name" />
                         <t>
-                            <t t-if="docs.lang_code == 'en_US'">
+                            <t t-if="doc.lang_code == 'en_US'">
                                 <t t-esc="time.strftime('%Y')" /> - <t t-esc="time.strftime('%m')" /> - <t
                                     t-esc="time.strftime('%d')" />
                             </t>
@@ -337,7 +337,7 @@
         </t>
     </template>
     <template id="SO_inspection_order_form_header_layout">
-        <t t-foreach="docs.mrp_production_so_id" t-as="so">
+        <t t-foreach="docs" t-as="doc">
             <div t-attf-class="header" t-att-style="report_header_style">
                 <div class="row">
                     <div class="col-8 mb4">
@@ -346,17 +346,17 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20">検品発注書</span>
-                        <t t-if="docs.lang_code == 'en_US'">
-                            <div>御中 <span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /></div>
+                        <t t-if="doc.lang_code == 'en_US'">
+                            <div>御中 <span t-field="doc.picking_type_id.warehouse_id.partner_id.name" /></div>
                         </t>
                         <t t-else="">
-                            <div><span t-field="docs.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                            <div><span t-field="doc.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
                         </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
-                        <div t-esc="docs.mrp_production_so_id.name" />
+                        <div t-esc="doc.mrp_production_so_id.name" />
                         <t>
-                            <t t-if="docs.lang_code == 'en_US'">
+                            <t t-if="doc.lang_code == 'en_US'">
                                 <t t-esc="time.strftime('%Y')" /> - <t t-esc="time.strftime('%m')" /> - <t
                                     t-esc="time.strftime('%d')" />
                             </t>
