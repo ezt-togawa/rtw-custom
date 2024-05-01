@@ -290,7 +290,7 @@
                                 t-field="line.product_id.width" />
                             </t>
                             <t t-if="line.product_id.depth > 0">*D<span
-                                t-field="line.depth" />
+                                t-field="line.product_id.depth" />
                             </t>
                             <t t-if="line.product_id.height > 0">*H<span
                                 t-field="line.product_id.height" />
