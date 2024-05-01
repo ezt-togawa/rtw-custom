@@ -1051,10 +1051,7 @@ class SaleOrderLineExcelReport(models.Model):
                     
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            if line.price_unit and line.discount:
-                line.sale_order_sell_unit_price = '{0:,.0f}'.format(line.price_unit - line.price_unit * line.discount / 100 )
-            else:
-                line.sale_order_sell_unit_price = ''
+            line.sale_order_sell_unit_price = '{0:,.0f}'.format(line.price_unit - line.price_unit * line.discount / 100 )
             
     def _compute_sale_order_price_subtotal(self):
         for line in self:
@@ -2293,10 +2290,7 @@ class AccountMoveLineExcelReport(models.Model):
 
     def _compute_acc_line_sell_unit_price(self):
         for line in self:
-            if line.price_unit and line.discount:
-                line.acc_line_sell_unit_price = '{0:,.0f}'.format(line.price_unit - line.price_unit * line.discount / 100 ) 
-            else:
-                line.acc_line_sell_unit_price = ''
+            line.acc_line_sell_unit_price = '{0:,.0f}'.format(line.price_unit - line.price_unit * line.discount / 100 ) 
 class MrpProductionExcelReport(models.Model):
     _inherit = "mrp.production"
 
