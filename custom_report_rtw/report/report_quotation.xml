@@ -35,7 +35,7 @@
                         <div t-if="docs.company_id.logo or docs.company_id.report_header"
                             class="row zero_min_height">
                         </div>
-                        <div class="row size13" style="margin-top:-50px;height:250px;">
+                        <div class="row size13" style="margin-top:-50px;height:280px;">
                             <div class="col-4">
                                 <div class="so_price">
                                     <t t-if="docs.send_to_people == ''">
