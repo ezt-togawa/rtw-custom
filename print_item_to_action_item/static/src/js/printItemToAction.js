@@ -12,6 +12,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
     var data_manufacture_form = null;
     var data_reporting_list = null;
     var data_purchase_list = null;
+    var data_purchase_order_form = null;
     var data_template_form = null;
 
     const delivery_request = "配送作業依頼書"
@@ -47,7 +48,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
     const invoice = "請求書"
     const invoice_excel = "請求書(EXCEL)"
     const invoice_excel_account_move = "請求書(EXCEL)2"
-    const purchase_for_part_excel = "発注書(部材用) -(EXCEL)"
+    const purchase_for_part_excel = "発注書(部材用）-(EXCEL)"
 
 
     const english_names = {}
@@ -84,7 +85,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         '|',
                         ['module', '=', excel],
                         ['module', '=', pdf],
-                        '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|',
+                        '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|',
                         ['src', '=', quotation_excel], ['src', '=', quotation_oversea_excel], ['src', '=', list_price_quotation_excel], ['src', '=', unit_price_quotation_excel], ['src', '=', purchase_order2_pdf],
                         ['src', '=', quotation], ['src', '=', quotation_over_sea], ['src', '=', list_price_quotation], ['src', '=', unit_price_quotation],
                         ['src', '=', delivery_request], ['src', '=', inspection_order], ['src', '=', invoice], ['src', '=', shipping_form],
@@ -298,34 +299,36 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     let prints = [...data_purchase_list.print]
                     await this.english_name(purchase_order_part, unique_list_translated)
                     const purchase_for_part = [purchase_order_part, english_names[purchase_order_part + "_pdf"], english_names[purchase_order_part + "_excel"]];
-                    this.props.items.print = prints.filter(val => !purchase_for_part.includes(val.display_name));
+                    this.props.items.print = [];
                 }
             }
 
             if (view_type_now === 'form') {
                 // purchase_order_view_form
                 if (this.env.view.model === "purchase.order") {
-                    if (data_account_move_list === null) {
-                        data_account_move_list = {
+                    if (data_purchase_order_form === null) {
+                        data_purchase_order_form = {
                             action: [...this.props.items.action],
                             print: [...this.props.items.print],
                         };
                     }
-                    let prints = [...data_account_move_list.print]
-                    let actions = [...data_account_move_list.action]
+                    let prints = [...data_purchase_order_form.print]
+                    let actions = [...data_purchase_order_form.action]
 
                     await this.english_name(purchase_for_part_excel, unique_list_translated)
+                    await this.english_name(purchase_order_part, unique_list_translated)
 
-                    const purchase_for_part_pdf = [purchase_order_part, english_names[invoice + "_pdf"], english_names[purchase_order_part + "_excel"]]
+                    const purchase_for_part_pdf = [purchase_order_part, english_names[purchase_order_part + "_pdf"], english_names[purchase_order_part + "_excel"]]
                     const purchase_for_part_ex = [purchase_for_part_excel, english_names[purchase_for_part_excel + "_pdf"], english_names[purchase_for_part_excel + "_excel"]]
-                    let split_name_excel = [...purchase_for_part_ex]
+                    console.log(purchase_for_part_pdf, 'purchase_for_part_pdf');
+                    console.log(purchase_for_part_ex, 'purchase_for_part_ex');
                     let excel_arr = prints.filter(val => {
                         if (purchase_for_part_ex.includes(val.display_name)) {
                             val.name = val.name.split("-")[0]
                             return val
                         }
                     })
-                    this.props.items.action = [...data_account_move_list.action, ...excel_arr ? excel_arr : []]
+                    this.props.items.action = [...data_purchase_order_form.action, ...excel_arr]
                     this.props.items.print = prints.filter(val => purchase_for_part_pdf.includes(val.display_name))
                 }
                 // sale_order_view_form
@@ -735,7 +738,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     let prints = [...data_purchase_list.print]
                     await this.english_name(purchase_order_part, unique_list_translated)
                     const purchase_for_part = [purchase_order_part, english_names[purchase_order_part + "_pdf"], english_names[purchase_order_part + "_excel"]];
-                    nextProps.items.print = prints.filter(val => !purchase_for_part.includes(val.display_name));
+                    nextProps.items.print = [];
                 }
             }
 
