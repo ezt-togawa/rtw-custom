@@ -298,7 +298,7 @@ class mrp_report(models.Model):
             for doc in docids:
                 mrp = self.env['mrp.production'].search([('id','=',doc)])
                 if mrp:
-                    list_mrp_origin.append(mrp.origin)
+                    list_mrp_origin.append(mrp.mrp_production_so_id.id)
             if list_mrp_origin and len(list_mrp_origin) > 1:
                 first_element = list_mrp_origin[0]
                 if not all(element == first_element for element in list_mrp_origin):
