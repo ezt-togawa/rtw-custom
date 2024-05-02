@@ -313,12 +313,6 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20"> 発注書 </span>
-                        <t t-if="doc.lang_code == 'en_US'">
-                            <div>御中 <span t-field="doc.picking_type_id.warehouse_id.partner_id.name" /></div>
-                        </t>
-                        <t t-else="">
-                            <div><span t-field="doc.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
-                        </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
                         <div t-esc="doc.mrp_production_so_id.name" />
@@ -346,12 +340,6 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20">検品発注書</span>
-                        <t t-if="doc.lang_code == 'en_US'">
-                            <div>御中 <span t-field="doc.picking_type_id.warehouse_id.partner_id.name" /></div>
-                        </t>
-                        <t t-else="">
-                            <div><span t-field="doc.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
-                        </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
                         <div t-esc="doc.mrp_production_so_id.name" />

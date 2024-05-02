@@ -69,7 +69,7 @@ class ReportMrpExcel(models.AbstractModel):
         
         format_lines_9_left= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':9,'bottom':1})
         format_lines_10 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_10_left = workbook.add_format({'align': 'left','valign': 'top', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
+        format_lines_10_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
         format_lines_11_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
         format_lines_13 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':13,'bottom':1})
 
@@ -125,9 +125,6 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_row(11, 22)
             sheet.set_row(12, 24)
             sheet.set_row(13, 22)
-            sheet.set_row(14, 26)
-            sheet.set_row(15, 24)
-            sheet.set_row(16,32)
             
             sheet.insert_image(1, 0, "logo", {'image_data': img_io_R, 'x_offset': 5, 'y_offset': 1})
             sheet.insert_image(1, 11, "logo2", {'image_data': img_io_ritzwell})
@@ -151,7 +148,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(11,0, "TEL:", format_text) 
             sheet.merge_range(11,1,11,4, so.picking_type_id.warehouse_id.partner_id.phone if so.picking_type_id.warehouse_id.partner_id.phone else '', format_text_wrap) 
 
-            sheet.write(10,5, "送り先注記:" if self.env.user.lang == 'ja_JP' else 'Shipping Notes:', format_address) 
+            sheet.write(9,5, "送り先注記:" if self.env.user.lang == 'ja_JP' else 'Shipping Notes:', format_address) 
             sheet.merge_range(9,6,11,8,so.destination_note if so.destination_note else '', format_note)
             
             sheet.write(11,11, "販売価格合計:" if self.env.user.lang == 'ja_JP' else 'Total sale amount:', format_text_right) 
@@ -172,9 +169,9 @@ class ReportMrpExcel(models.AbstractModel):
 
             if so.order_line:
                 row = 14
-                merge_line = 6 
+                # merge_line = 3 
                 for ind,line in enumerate(so.order_line):
-                    
+                    merge_line = 2 + len(line.product_id.product_template_attribute_value_ids) if len(line.product_id.product_template_attribute_value_ids) > 1 else 2
                     if line.display_type == 'line_note':
                         sheet.merge_range(row,0,row ,12, "=data!A" + str(ind * 1 + 1) , format_lines_note) 
                         sheet_data.write(ind,0, line.name if line.name else '', format_lines_note) 
@@ -188,7 +185,7 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.merge_range(row,0,row + merge_line,0, line.purchase_order_index if line.purchase_order_index else '' , format_lines_10) 
                         sheet.merge_range(row,1,row + merge_line,2, line.purchase_order_prod_name if line.purchase_order_prod_name else '' , format_lines_11_left) 
                         sheet.merge_range(row,3,row + merge_line,6, line.purchase_order_product_detail if line.purchase_order_product_detail else '' , format_lines_10_left) 
-                        sheet.merge_range(row,7,row + merge_line,7, line.purchase_order_line_product_uom_qty if line.purchase_order_line_product_uom_qty else 0 , format_lines_10) 
+                        sheet.merge_range(row,7,row + merge_line,7, line.purchase_order_line_product_uom_qty if line.purchase_order_line_product_uom_qty else 0 , format_lines_13) 
                         sheet.merge_range(row,8,row + merge_line,8, '個' , format_lines_10) 
                         sheet.merge_range(row,9,row + merge_line,9, "{:,.0f}".format(line.purchase_order_sell_unit_price) if line.purchase_order_sell_unit_price else 0 , format_lines_13) 
                         sheet.merge_range(row,10,row + merge_line,10, "{:,.0f}".format(line.price_subtotal) if line.price_subtotal else 0 , format_lines_13) 

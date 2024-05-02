@@ -302,7 +302,7 @@ class mrp_report(models.Model):
             if list_mrp_origin and len(list_mrp_origin) > 1:
                 first_element = list_mrp_origin[0]
                 if not all(element == first_element for element in list_mrp_origin):
-                    raise UserError('複数な要求元になったため、出力できません。')
+                    raise UserError('販売オーダーが複数にまたがるため出力できません。')
                 
         return res
 
