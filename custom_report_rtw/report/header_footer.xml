@@ -497,6 +497,7 @@
                     <span class="ml-2 size20">商品仕様書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
+                    <div t-esc="docs.name" />
                     <t t-if="docs.lang_code == 'en_US'">
                         <t t-esc="time.strftime('%Y-%m-%d')" />
                     </t>
