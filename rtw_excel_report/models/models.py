@@ -1452,7 +1452,7 @@ class StockPickingExcelReport(models.Model):
                     partner_address += record.sale_id.partner_id.city + " "
                 if record.sale_id.partner_id.state_id.name:
                     partner_address += record.sale_id.partner_id.state_id.name 
-            record.stock_picking_partner_address = "〒" + partner_address
+            record.stock_picking_partner_address = ("〒" + partner_address) if partner_address else ""
 
             partner_tel_phone = ""
             if record.sale_id.partner_id.phone and record.sale_id.partner_id.mobile:
@@ -1760,6 +1760,9 @@ class StockMoveExcelReport(models.Model):
                 line.product_number_and_size = size_detail
             elif other_size:
                 line.product_number_and_size = other_size
+            else:
+                line.product_number_and_size = ''
+                
 
             if prod.two_legs_scale:
                 line.packages_number = math.ceil(
