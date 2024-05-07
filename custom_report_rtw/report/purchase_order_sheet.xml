@@ -38,6 +38,12 @@
               </div>
               <div class="row size13" style="margin-top:-30px;">
                 <div class="col-4">
+                  <t t-if="o.lang_code == 'en_US'">
+                      <div class="size16">御中 <span t-field="o.picking_type_id.warehouse_id.partner_id.name" /></div>
+                  </t>
+                  <t t-else="">
+                      <div class="size16"><span t-field="o.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                  </t>
                   <div> 発注番号 <span class="size16"
                       t-field="so.name" />
                   </div>
@@ -77,14 +83,14 @@
                   </div>
                 </div>
                 <div class="col-4">
-                  <div style="text-align:end;font-size:20px;">
-                    <t t-if="so.overseas"> 海外 </t>
-                  </div>
                 </div>
                 <div
                   class="col-4 size11" name="company_address">
                   <div class="float-right">
-                    <div>
+                    <div style="position:relative;">
+                      <div style="font-size:20px;position:absolute;left:-60px;top:5px;">
+                        <t t-if="so.overseas"> 海外 </t>
+                      </div>
                       <img style="width:180px;height:40px;"
                         src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
                         alt="Logo" />
