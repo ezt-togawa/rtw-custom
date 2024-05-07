@@ -179,13 +179,15 @@
                                                             <t t-if="not l.product_id.config_ok">
                                                                 <span
                                                                     t-field="l.name" />
+                                                                <t t-if="l.p_type">
+                                                                    <br />
+                                                                    <span t-field="l.p_type" />
+                                                                </t>
                                                             </t>
                                                             <t t-else="">
                                                                 <span
                                                                     t-field="l.sale_order_name" />
                                                             </t>
-                                                            <br />
-                                                            <span t-if="l.p_type" t-field="l.p_type" />
                                                         </div>
                                                     </td>
                                                     <td class="size13">
