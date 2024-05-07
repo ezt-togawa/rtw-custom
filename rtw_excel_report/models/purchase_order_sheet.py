@@ -23,17 +23,17 @@ class ReportMrpExcel(models.AbstractModel):
         image_logo_ritzwell = get_module_resource('rtw_excel_report', 'img', 'ritzwell.png')
         img_ritzwell = PILImage.open(image_logo_ritzwell)
         img_ritzwell = img_ritzwell.convert('RGB')
-        img_ritzwell = img_ritzwell.resize((180, 25))
+        img_ritzwell = img_ritzwell.resize((188, 25))
         img_io_ritzwell = BytesIO()
         img_ritzwell.save(img_io_ritzwell, 'PNG')
         img_io_ritzwell.seek(0)
 
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name,})
-        format_name_company = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':13})
         format_text = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':11})
         format_text_right = workbook.add_format({'align': 'right', 'valign': 'top', 'font_name': font_name, 'font_size':11})
         format_text_13 = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':13})
+        format_text_13_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':13})
         format_text_14 = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14})
         format_text_12 = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':12})
         format_remark_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
@@ -106,7 +106,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(8, 0, "物件名", format_text) 
                 sheet.write(8, 3, "送り先注記", format_text_right)
                 
-                sheet.write(1, 8, mrp.sale_order.check_oversea if mrp.sale_order.check_oversea else '', format_text_13) 
+                sheet.write(1, 8, mrp.sale_order.check_oversea if mrp.sale_order.check_oversea else '', format_text_13_right) 
                 if mrp.picking_type_id.warehouse_id.partner_id:
                     if mrp.lang_code == "ja_JP":
                         sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
@@ -143,7 +143,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(9, 1, mrp.sale_order.sale_order_info_cus if mrp.sale_order.sale_order_info_cus else '', format_text_12) 
                 
                 # y,x,y,x
-                sheet.merge_range(8, 4, 11, 7, mrp.mrp_note if mrp.mrp_note else '', format_remark_note)
+                sheet.merge_range(8, 4, 11, 7, mrp.mrp_note[:244] if mrp.mrp_note else '', format_remark_note)
                 sheet.merge_range(3, 9, 9, 9, mrp.mrp_hr_employee if mrp.mrp_hr_employee else '', format_remark_note)
 
                 #table title
@@ -224,7 +224,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.insert_image(1, 9, "logo2", {'image_data': img_io_ritzwell})
                 
                 # y,x
-                sheet.write(1, 8, mrp.sale_order.check_oversea if mrp.sale_order.check_oversea else '', format_text_13) 
+                sheet.write(1, 8, mrp.sale_order.check_oversea if mrp.sale_order.check_oversea else '', format_text_13_right) 
                 sheet.write(1, 1, "発注書", format_sheet_title) 
                 sheet.write(5, 0, "発注番号", format_text) 
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else '', format_text) 
@@ -232,7 +232,6 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(8, 0, "物件名", format_text) 
                 sheet.write(8, 3, "送り先注記", format_text_right)
                 
-                sheet.write(1, 8, mrp.sale_order.check_oversea if mrp.sale_order.check_oversea else '', format_text_13) 
                 if mrp.picking_type_id.warehouse_id.partner_id:
                     if mrp.lang_code == "ja_JP":
                         sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
@@ -261,7 +260,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(9, 1, mrp.sale_order.sale_order_info_cus if mrp.sale_order.sale_order_info_cus else '', format_text_12) 
                 
                 # y,x,y,x
-                sheet.merge_range(8, 4, 11, 7, mrp.mrp_note if mrp.mrp_note else '', format_remark_note)
+                sheet.merge_range(8, 4, 11, 7, mrp.mrp_note[:244] if mrp.mrp_note else '', format_remark_note)
                 sheet.merge_range(3, 9, 9, 9, mrp.mrp_hr_employee if mrp.mrp_hr_employee else '', format_remark_note)
 
                 #table title
