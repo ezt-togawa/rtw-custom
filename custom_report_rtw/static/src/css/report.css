@@ -144,6 +144,7 @@ body {
   width: 49%;
   box-sizing: border-box;
   overflow:hidden;
+  height:90px;
 }
 
 .product-config:not(:has(img[src])) {
@@ -222,6 +223,11 @@ body {
 .table-border-bottom-auto{
   border-bottom:1px solid black;
   overflow:hidden;
+}
+
+.product-attribute{
+  overflow: hidden;
+  height:225px;
 }
 
 .table-border-bottom .six-lines{
