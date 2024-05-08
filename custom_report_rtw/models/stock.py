@@ -33,7 +33,7 @@ class StockPicking(models.Model):
             self.calculate_note = sale_order.note
             self.calculate_estimated_shipping_date = sale_order.estimated_shipping_date
             self.calculate_payment_term = sale_order.payment_term_id.name
-            self.sale_orders =sale_order
+            self.sale_orders = sale_order
         else:
             self.calculate_shiratani_date = ''
             self.calculate_witness = ''
@@ -43,6 +43,7 @@ class StockPicking(models.Model):
             self.calculate_note = ''
             self.calculate_estimated_shipping_date = ''
             self.calculate_payment_term = ''
+            self.sale_orders = False
 
 class StockMove(models.Model):
   _inherit = 'stock.move'
