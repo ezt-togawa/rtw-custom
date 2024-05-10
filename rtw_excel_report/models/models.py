@@ -817,6 +817,10 @@ class SaleOrderLineExcelReport(models.Model):
         compute="_compute_sale_order_product_detail",
         string="仕様・詳細",
     )
+    sale_order_all_attribute = fields.Char(
+        compute="_compute_sale_order_all_attribute",
+        string="All attributes",
+    )
 
     sale_order_sell_unit_price = fields.Char(
         compute="_compute_sale_order_sell_unit_price",
@@ -995,13 +999,15 @@ class SaleOrderLineExcelReport(models.Model):
             attr_cfg = ""
             attributes = line.product_id.product_template_attribute_value_ids  #attr default
             attributes_cfg=line.config_session_id.custom_value_ids             #attr custom 
+            length_normal = len(attributes)
+            
             if attributes:
-                if len(attributes) < 6:
+                if length_normal < 6:
                     for attribute in attributes:
                         attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
                     if attributes_cfg:
                         count_cfg = 0 
-                        count_attr = len(attributes)
+                        count_attr = length_normal
                         for cfg in attributes_cfg:
                             if count_attr >= 6 :
                                 break
@@ -1012,7 +1018,9 @@ class SaleOrderLineExcelReport(models.Model):
                             
                         for cfg2 in attributes_cfg[count_cfg:(6+count_cfg)]:
                             attr_cfg += ("● " + cfg2.display_name  + ":" + cfg2.value  + "\n" )
-                elif len(attributes) == 6 :
+                elif length_normal == 6 :
+                    for attribute in attributes:
+                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
                     if attributes_cfg:                            
                         for cfg in attributes_cfg:
                             attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
@@ -1020,10 +1028,10 @@ class SaleOrderLineExcelReport(models.Model):
                     for attribute in attributes[:6]:
                         attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
                     start = 6   
-                    for attribute in attributes[6:12]:
+                    for attribute in attributes[6:length_normal]:
                         attr_cfg +=  ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
                         start += 1
-                    if len(attributes) < 12 : 
+                    if length_normal < 12 : 
                         if attributes_cfg:
                             for cfg in attributes_cfg[:(12-start)]:
                                 attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
@@ -1035,10 +1043,27 @@ class SaleOrderLineExcelReport(models.Model):
                         attr_cfg += ("● " +  cfg.display_name  + ":" + cfg.value  + "\n" )
                         
             attr = attr.rstrip()
-            attr_cfg = attr_cfg.rstrip() 
+            attr_cfg = attr_cfg.rstrip()
             
             line.sale_order_product_detail = attr
             line.sale_order_product_detail_2 = attr_cfg
+            
+    def _compute_sale_order_all_attribute(self):
+        for line in self:
+            attr = ""
+            attributes = line.product_id.product_template_attribute_value_ids  #attr default
+            attributes_cfg=line.config_session_id.custom_value_ids             #attr custom 
+            
+            if attributes:
+                for attribute in attributes:
+                    attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" ) 
+            if attributes_cfg: 
+                for cfg2 in attributes_cfg:
+                    attr += ("● " + cfg2.display_name  + ":" + cfg2.value  + "\n" )
+                        
+            attr = attr.rstrip()
+            
+            line.sale_order_all_attribute = attr
 
     def _compute_sale_order_product_summary(self):
         for line in self:
