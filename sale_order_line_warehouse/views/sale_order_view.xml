@@ -8,6 +8,7 @@
             <xpath expr="//field[@name='order_line']/tree/field[@name='warehouse_id']"
                 position="attributes">
                 <attribute name="string">倉庫</attribute>
+                <attribute name="optional">hide</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
                 position="before">

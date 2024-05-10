@@ -34,6 +34,10 @@ class ProductSpecRtw(models.Model):
         name="ah",
         string="arm height"
     )
+    diameter = fields.Integer(
+        name="diameter",
+        string="diameter(Φ)"
+    )
     cloth = fields.Float('cloth A(m)')
     cloth_b = fields.Float('cloth B(m)')
     leather = fields.Float('leather(sheet)')
@@ -74,12 +78,13 @@ class ProductSpecRtw(models.Model):
             cost = self.shipping_cost_unit_price * self.sai
         return round(cost)
 
-class SaleOrderLine(models.Model):
+class SaleOrderLine(models.Model): 
     _inherit = 'sale.order.line'
     _description = 'print_description'
     print_description = fields.Text(name="print_description", string="print description")
-
-    @api.onchange('product_id', 'config_session_id')
+    product_size = fields.Char("製品サイズ")
+    
+    @api.onchange('product_id' , 'config_session_id')
     def product_id_change(self):
         if self.product_id:
             res = super(SaleOrderLine, self).product_id_change()
@@ -92,7 +97,44 @@ class SaleOrderLine(models.Model):
                 string += 'D/' + str(self.product_id.depth) + 'mm\n'
             if self.product_id.width > 0:
                 string += 'w/' + str(self.product_id.width) + 'mm\n'
+            
             self.print_description = string
+            
+            product_size = ""
+            if self.product_id.width:
+                product_size += 'W' + str(self.product_id.width) + ' '
+            if self.product_id.depth:
+                product_size += '*D' + str(self.product_id.depth) + ' '
+            if self.product_id.height:
+                product_size += '*H' + str(self.product_id.height) + ' '
+            if self.product_id.diameter:
+                product_size += 'Φ' + str(self.product_id.diameter) + ' '
+            if self.product_id.sh:
+                product_size += 'SH' + str(self.product_id.sh) + ' '
+            if self.product_id.ah:
+                product_size += 'AH' + str(self.product_id.ah)
+                
+            self.product_size = product_size
             return res
-
+    
+    def _prepare_add_missing_fields(self , values): # SET DEFAULT PRODUCT_SIZE WHEN CREATE SALE ORDER LINE WITH CONFIGURE PRODUCT
+          res = super(SaleOrderLine, self)._prepare_add_missing_fields(values)
+          warehouses = []
+          product = self.env['product.product'].search([('id' , '=' , values['product_id'])])
+          if product:
+            product_size = ""
+            if product.width:
+                product_size += 'W' + str(product.width) + ' '
+            if product.depth:
+                product_size += '*D' + str(product.depth) + ' '
+            if product.height:
+                product_size += '*H' + str(product.height) + ' '
+            if product.diameter:
+                product_size += 'Φ' + str(product.diameter) + ' '
+            if product.sh:
+                product_size += 'SH' + str(product.sh) + ' '
+            if product.ah:
+                product_size += 'AH' + str(product.ah)
+            res['product_size'] = product_size
+          return res
 

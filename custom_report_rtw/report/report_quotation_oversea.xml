@@ -192,6 +192,30 @@
                                                 </td>
                                                 <td class="size12">
                                                     <div class="six-lines">
+                                                        <div t-if="l.product_id.product_no"
+                                                            t-field="l.product_id.product_no" />
+                                                        <t t-if="l.product_id.width > 0">W<span
+                                                                t-esc="'{:.0f}'.format(l.product_id.width)" />
+                                                        </t>
+                                                        <!-- <t t-if="l.product_id.dimension > 0">Φ<span
+                                                                t-field="l.product_id.dimension" />
+                                                        </t> -->
+                                                        <t t-if="l.product_id.depth > 0">*D<span
+                                                                t-esc="'{:.0f}'.format(l.product_id.depth)" />
+                                                        </t>
+                                                        <t t-if="l.product_id.height > 0">*H<span
+                                                                t-esc="'{:.0f}'.format(l.product_id.height)" />
+                                                        </t>
+                                                        <t t-if="l.product_id.sh > 0"> SH<span
+                                                                t-esc="'{:.0f}'.format(l.product_id.sh)" />
+                                                        </t>
+                                                        <t t-if="l.product_id.ah > 0"> AH<span
+                                                                t-esc="'{:.0f}'.format(l.product_id.ah)" />
+                                                        </t>
+                                                    </div>
+                                                </td>
+                                                <td class="size12">
+                                                    <div class="six-lines">
                                                         <t
                                                             t-foreach="l.product_id.product_template_attribute_value_ids[0:(6 if len(l.product_id.product_template_attribute_value_ids) &gt;= 6 else len(l.product_id.product_template_attribute_value_ids))]"
                                                             t-as="string_line">
@@ -244,22 +268,6 @@
                                                                     </div>
                                                             </t>
                                                         </t>
-                                                    </div>
-                                                </td>
-                                                <td class="size12">
-                                                    <div class="six-lines">
-                                                    <t
-                                                        t-foreach="l.product_id.product_template_attribute_value_ids[6:12]"
-                                                        t-as="string_line"> ● <span
-                                                            t-esc="string_line.display_name" />
-                                                        <br />
-                                                    </t>
-                                                    <t t-foreach="l.config_session_id.custom_value_ids[6:12]"
-                                                        t-as="string_line"> ●<span
-                                                            t-esc="string_line.display_name" />: <span
-                                                            t-esc="string_line.value" />
-                                                        <br />
-                                                    </t>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
