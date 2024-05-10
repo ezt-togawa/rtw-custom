@@ -14,6 +14,10 @@ class ProductSpecRtw(models.Model):
         name="product_no",
         string="product no"
     )
+    key_component = fields.Boolean(
+        name="key_component",
+        string="key component"
+    )
     width = fields.Integer(
         name="width",
         string="width"
