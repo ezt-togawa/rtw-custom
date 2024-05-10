@@ -288,11 +288,14 @@
                       <tr class="size15 table-border-bottom">
                         <td class="text-center size12"><span t-esc="index"/>
                         </td>
-                        <td class="size11">
+                        <td class="size12">
                           <div class="six-lines">
                             <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
                             <div t-if="line.mrp_product_type" t-field="line.mrp_product_type"/>
-                            <t t-if="line.product_id.width > 0">W<span
+                            <t t-if="line.mrp_production_order_line"><span
+                                t-field="line.mrp_production_order_line.product_size" />
+                            </t>
+                            <!-- <t t-if="line.product_id.width > 0">W<span
                                 t-field="line.product_id.width" />
                             </t>
                             <t t-if="line.product_id.depth > 0">*D<span
@@ -306,11 +309,11 @@
                             </t>
                             <t t-if="line.product_id.ah > 0"> AH<span
                                 t-field="line.product_id.ah" />
-                            </t>
+                            </t> -->
                           </div>
                         </td>
 
-                        <td class="size13">
+                        <td class="size12">
                           <div class="six-lines">
                             <t
                               t-foreach="line.product_id.product_template_attribute_value_ids[0:6]"
@@ -322,7 +325,7 @@
                             </t>
                           </div>
                         </td>
-                        <td class="size13">
+                        <td class="size12">
                           <div class="six-lines">
                             <t
                               t-foreach="line.product_id.product_template_attribute_value_ids[6:12]"
