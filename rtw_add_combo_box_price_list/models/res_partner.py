@@ -13,8 +13,9 @@ class rtw_sf_partner(models.Model):
                 
                 check = False
                 price_list = self.env['product.pricelist'].search([])
+                multiplier = self._decimal_normalize(float(partner.multiplier_green))
                 for line in price_list:
-                    if re.search(str(int(partner.multiplier_green)) , line.name):
+                    if re.search(str(multiplier), line.name):
                         check = True
                         break
                 if check:
@@ -45,3 +46,12 @@ class rtw_sf_partner(models.Model):
                     currency = self.env['res.currency'].search([('name', '=', 'JPY')])
                     new_price_list = self.env['product.pricelist'].create({'name': '※未指定','currency_id':currency[0].id})
                     partner.property_product_pricelist = new_price_list.id
+
+    def _decimal_normalize(self, value):
+        """
+            浮動小数点数の場合、末尾の不要な0を削除する。
+            整数値の場合、そのまま整数として返す。
+        """
+        if isinstance(value, float) and value.is_integer():
+            return int(value)
+        return value
