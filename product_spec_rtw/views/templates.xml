@@ -10,6 +10,7 @@
                     <field name="width" class="width"/>
                     <field name="height" class="height"/>
                     <field name="depth" class="depth"/>
+                    <field name="diameter" class="diameter"/>
                     <field name="sh" class="sh"/>
                     <field name="ah" class="ah"/>
                     <field name="cloth" class="cloth A(M)"/>
