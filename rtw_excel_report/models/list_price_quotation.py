@@ -137,7 +137,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(5,5, so.forwarding_address if so.forwarding_address else '', format_text) 
             sheet.write(6,5,so.sale_order_transactions_term if so.sale_order_transactions_term else '', format_text) 
             sheet.write(8,5, so.sale_order_validity_date if so.sale_order_validity_date else '', format_text) 
-            sheet.merge_range(9,5,11,7,so.sale_order_special_note if so.sale_order_special_note else '', format_note) 
+            sheet.merge_range(9,5,11,7,so.sale_order_special_note[:130] if so.sale_order_special_note else '', format_note) 
 
             sheet.merge_range(0,11,0,12, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
             sheet.merge_range(2,10,8,12, so.sale_order_hr_employee if so.sale_order_hr_employee else '' , format_address) 
@@ -190,7 +190,7 @@ class ReportMrpExcel(models.AbstractModel):
                         
                         sheet.merge_range(row,9,row + merge_line,11, line.sale_order_price_unit if line.sale_order_price_unit else '' , format_lines_13) 
                         
-                        sheet.merge_range(row,12,row + merge_line,12, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '' , format_lines_13) 
+                        sheet.merge_range(row,12,row + merge_line,12, line.sale_order_amount_no_rate if line.sale_order_amount_no_rate else '' , format_lines_13) 
                         
                         row += merge_line + 1
                     

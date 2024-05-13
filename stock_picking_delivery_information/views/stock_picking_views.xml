@@ -10,7 +10,8 @@
                 <field name="sale_id" attrs="{'invisible': 1}" />
                 <field name="sipping_to" attrs="{'invisible': [('sale_id', '=', False)]}" />
                 <field name="shipping_to_text" attrs="{'invisible': [('sale_id', '=', False)]}" />
-                <field name="waypoint" attrs="{'invisible': [('sale_id', '=', False)]}" />
+                <field name="shipping_destination_text" attrs="{'invisible': ['|',('sale_id', '=', False),('sipping_to','!=','直送')]}" />
+                <field name="waypoint" attrs="{'invisible': ['|',('sale_id', '=', False),('sipping_to','=','直送')]}" />
                 <field name="forwarding_address_zip" attrs="{'invisible': [('sale_id', '=', False)]}" />
                 <field name="forwarding_address" attrs="{'invisible': [('sale_id', '=', False)]}" />
             </xpath>

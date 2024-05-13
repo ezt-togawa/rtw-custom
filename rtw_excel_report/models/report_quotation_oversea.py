@@ -104,7 +104,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_row(7, 15)
             sheet.set_row(8, 12)
             sheet.set_row(9, 12)
-            sheet.set_row(11, 19)
+            sheet.set_row(11, 22)
             sheet.set_row(12, 24)
             sheet.set_row(13, 22)
             sheet.set_row(14, 26)
@@ -145,7 +145,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(5,6, so.forwarding_address if so.forwarding_address else '', format_text) 
             sheet.write(6,6,so.sale_order_transactions_term if so.sale_order_transactions_term else '', format_text) 
             sheet.write(8,6, so.sale_order_validity_date if so.sale_order_validity_date else '', format_text) 
-            sheet.merge_range(9,6,11,8,so.sale_order_special_note if so.sale_order_special_note else '', format_note) 
+            sheet.merge_range(9,6,11,8,so.sale_order_special_note[:120] if so.sale_order_special_note else '', format_note) 
 
             sheet.merge_range(0,11,0,12, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
             sheet.merge_range(2,11,8,12, so.sale_order_hr_employee if so.sale_order_hr_employee else '' , format_address) 
@@ -191,7 +191,7 @@ class ReportMrpExcel(models.AbstractModel):
                         
                         sheet.merge_range(row,8,row + merge_line,8, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '' , format_lines_13) 
                         sheet.merge_range(row,9,row + merge_line,9, line.sale_order_price_unit if line.sale_order_price_unit else '' , format_lines_13) 
-                        sheet.merge_range(row,10,row + merge_line,10, line.sale_order_line_discount if line.sale_order_line_discount else '' , format_lines_10) 
+                        sheet.merge_range(row,10,row + merge_line,10, line.sale_order_line_discount if line.sale_order_line_discount else '' , format_lines_13) 
                         sheet.merge_range(row,11,row + merge_line,11, line.sale_order_sell_unit_price if line.sale_order_sell_unit_price else '' , format_lines_13) 
                         sheet.merge_range(row,12,row + merge_line,12, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '' , format_lines_13) 
                         row += merge_line + 1

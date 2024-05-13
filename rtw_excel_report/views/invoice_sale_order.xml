@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="invoice_sale_order"
+            model="sale.order"
+            string="請求書(EXCEL)"
+            report_type="xlsx"
+            name="rtw_excel_report.invoice_sale_order_xls"
+            file="請求書"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

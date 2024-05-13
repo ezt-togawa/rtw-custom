@@ -9,7 +9,11 @@
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
                     <field name="print_description" string="print_description"/>
                 </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
+                    <field name="product_size" optional="hide"/>
+                </xpath>
             </field>
         </record>
+
     </data>
 </odoo>

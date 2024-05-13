@@ -51,37 +51,39 @@
                   <br />
                   <div>送り先着日 <span class="size16" t-esc="po.purchase_line_date_planned" />
                   </div>
-                  <div>出荷希望日 <span class="size14" t-esc="po.purchase_line_date_order" />
-                  </div>
                   <br />
                 </div>
                 <div class="col-4"></div>
                 <div class="col-4 size11" name="company_address">
-                  <div>
-                    <img style="width:50%"
-                      src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
-                      alt="Logo" />
-                  </div>
-                  <div class="size12">
-                    <span t-esc="po.hr_employee_company" />
-                  </div>
-                  <div>
-                    <span t-esc="po.hr_employee_department" />
-                  </div>
-                  <div>
-                    <span t-esc="po.hr_employee_zip" />
-                  </div>
-                  <div>
-                    <span t-esc="po.hr_employee_info" />
-                  </div>
-                  <div>
-                    <span t-esc="po.hr_employee_tel" />
-                  </div>
-                  <div>
-                    <span t-esc="po.hr_employee_fax" />
-                  </div>
-                  <div class="size12">
-                    <span t-esc="po.hr_employee_printer" />
+                  <div class="float-right">
+                    <div>
+                        <img style="width:180px;height:40px;"
+                            src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                            alt="Logo" />
+                    </div>
+                    <div>
+                      <div class="size12">
+                        <span t-esc="po.hr_employee_company" />
+                      </div>
+                      <div>
+                        <span t-esc="po.hr_employee_department" />
+                      </div>
+                      <div>
+                        <span t-esc="po.hr_employee_zip" />
+                      </div>
+                      <div>
+                        <span t-esc="po.hr_employee_info" />
+                      </div>
+                      <div>
+                        <span t-esc="po.hr_employee_tel" />
+                      </div>
+                      <div>
+                        <span t-esc="po.hr_employee_fax" />
+                      </div>
+                      <div class="size12">
+                        <span t-esc="po.hr_employee_printer" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -106,7 +108,10 @@
                   </div>
                 </div>
                 <div class="col-4 size13">
-                  <div> 送り先注記: </div>
+                  <div class="d-flex"> 
+                    <div>送り先注記: </div>
+                    <div style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;" class="ml-1" t-field="docs.destination_note" />
+                  </div>
                 </div>
                 <div class="col-4">
                 </div>
@@ -136,65 +141,95 @@
                     </thead>
                   </t>
                   <tbody class="invoice_tbody">
-                    <tr class="table-border-bottom size15">
-                      <t
-                        t-if="l.display_type =='line_note' or l.display_type =='line_section'">
-                        <td class="text-center size12"></td>
-                        <td class="size11" colspan="8">
-                          <span t-field="l.name" />
-                        </td>
-                      </t>
-                      <t t-else=''>
-                        <td class="text-center size12">
-                          <t t-set="number" t-value="number + 1" />
-                          <t t-esc="number" />
-                        </td>
-                        <td class="size12">
-                          <span t-field="l.name" />
-                          <br />
-                        </td>
-                        <td class="size13">
-                          <t
-                            t-foreach="l.product_id.product_template_attribute_value_ids"
-                            t-as="string_line">
-                            <span
-                              t-esc="string_line.attribute_id.name" />: <span
-                              t-esc="string_line.product_attribute_value_id.name" />
+                    <t t-if="l.display_type =='line_section' or l.display_type =='line_note'">
+                        <tr class="size15 table-border-bottom-auto">
+                            <t t-if="l.display_type =='line_section'">
+                                <td class="bg-section" />
+                                <td class="size11 bg-section" colspan="9">
+                                    <span t-field="l.name" />
+                                </td>
+                            </t>
+                            <t t-elif="l.display_type =='line_note'">
+                                <td />
+                                <td class="size11" colspan="9">
+                                    <span t-field="l.name" />
+                                </td>
+                            </t>
+                        </tr>
+                    </t>
+                    <t t-else="">
+                      <tr class="table-border-bottom-auto size15">
+                          <td class="text-center size12">
+                            <t t-set="number" t-value="number + 1" />
+                            <t t-esc="number" />
+                          </td>
+                          <td class="size12">
+                            <t t-if="l.product_id.product_tmpl_id.config_ok">
+                              <t t-if="l.product_id.product_tmpl_id.categ_id.name">
+                                <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                              </t>
+                              <t t-elif="l.product_id.product_tmpl_id.product_no">
+                                <span t-field="l.product_id.product_tmpl_id.product_no" />
+                              </t>
+                              <t t-else="">
+                                <span t-field="l.name" />
+                              </t>
+                            </t>
+                            <t t-else="">
+                              <span t-field="l.name" />
+                            </t>
                             <br />
-                          </t>
-                        </td>
-                        <td class="text-center">
-                          <div id="quote_qty">
+                          </td>
+                          <td class="size13">
+                            <t
+                              t-foreach="l.product_id.product_template_attribute_value_ids"
+                              t-as="string_line">
+                              ●
+                              <span
+                                t-esc="string_line.attribute_id.name" />: <span
+                                t-esc="string_line.product_attribute_value_id.name" />
+
+                              <br />
+                            </t>
+                            <t
+                              t-if="l.sale_line_id and l.sale_line_id.config_session_id"
+                              t-foreach="l.sale_line_id.config_session_id.custom_value_ids"
+                              t-as="string_line">
+                                ● <span
+                                t-esc="string_line.display_name" />: <span
+                                t-esc="string_line.value" />
+                                <br />
+                            </t>
+                          </td>
+                          <td class="text-center">
+                            <div id="quote_qty">
+                              <span
+                                t-field="l.purchase_order_line_product_uom_qty" />
+                            </div>
+                          </td>
+                          <td class="text-center size14">
+                            <t t-if="l.product_uom">
+                              <span
+                                t-field="l.product_uom" />
+                            </t>
+                          </td>
+                          <td class="text-center">
                             <span
-                              t-esc="l.purchase_order_line_product_uom_qty" />
-                          </div>
-                        </td>
-                        <td class="text-center size14">
-                          <t t-if="l.product_uom">
+                              t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                          </td>
+                          <td class="text-center">
                             <span
-                              t-field="l.product_uom" />
-                          </t>
-                        </td>
-                        <td class="text-center">
-                          <span
-                            t-field="l.price_subtotal" />
-                        </td>
-                        <td class="text-center">
-                          <span
-                            t-field="l.price_unit" />
-                        </td>
-                        <td class="size13"></td>
-                      </t>
-                    </tr>
+                              t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
+                          </td>
+                          <td class="size13"></td>
+                      </tr>
+                    </t>
                   </tbody>
                 </t>
               </table>
               <div class="d-flex justify-content-end size13">
                 <div>販売価格合計 : <span class="size15"
-                    t-esc="po.amount_untaxed" /></div>
-              </div>
-              <div class="d-flex justify-content-end size12">
-                <span t-field="po.name" />
+                    t-esc="'{0:,.0f}'.format(po.amount_untaxed)" /></div>
               </div>
             </t>
           </div>

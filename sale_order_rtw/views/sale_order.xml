@@ -78,6 +78,12 @@
                         string="デポ"
                         context="{'default_type':'delivery'}"
                         domain="[('type', '=', 'delivery')]"
+                        attrs="{'invisible': [('sipping_to', '=', 'direct')]}"
+                    />
+                    <field
+                        name="shipping_destination_text"
+                        string="送り先"
+                        attrs="{'invisible': [('sipping_to', '!=', 'direct')]}"
                     />
                     <field
                         name="forwarding_address_zip"
@@ -152,11 +158,54 @@
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
                 <xpath
-                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']"
+                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']"
                     position="after">
-                    <field name="memo" />
-                    <field name="item_sale_attach_ids" string="attach" />
+                    <field name="memo" optional="hide" />
+                    <field name="item_sale_attach_ids" string="attach" optional="hide" />
+                </xpath>
+                <xpath
+                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='qty_invoiced']"
+                    position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath
+                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='qty_delivered']"
+                    position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath
+                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_id']"
+                    position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath
+                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='config_session_id']"
+                    position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath
+                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='route_id']"
+                    position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath
+                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='tax_id']"
+                    position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_order_line_view_file" model="ir.ui.view">
+            <field name="name">sale.order.custom_view_file</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <xpath
+                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']"
+                    position="after">
                     <button
+                        optional="hide"
                         name="action_get_item_sale_attach_view"
                         string="View files"
                         type="object"
@@ -165,6 +214,5 @@
                 </xpath>
             </field>
         </record>
-
     </data>
 </odoo>

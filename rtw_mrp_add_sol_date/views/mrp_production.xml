@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="view_mrp_production_form_add_sol_date_rtw" model="ir.ui.view">
+            <field name="name">rtw mrp production add sol date</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="shiratani_date" />
+                    <field name="depo_date" />
+                    <field name="preferred_delivery_date" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

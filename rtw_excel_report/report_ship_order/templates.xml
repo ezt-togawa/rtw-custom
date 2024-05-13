@@ -27,7 +27,7 @@
                             'H12': 'note${value or ""}',
                             'I1': 'stock_picking_current_date${value or ""}',
                             'I4': 'sale_id.sale_order_hr_employee${value or ""}',
-                            'I15': 'sale_id.amount_untaxed${value or ""}',
+                            'I15': 'sale_id.sale_order_amount_untaxed${value or ""}',
                             'I16': 'sale_id.name${value or ""}',
                         },
                         'stock_move':{
