@@ -28,6 +28,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13})
         format_text_14 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
         format_text_13_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':13})
+        format_text_14_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':14})
         format_note = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True,'font_name': font_name,'font_size':10})
         format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'bottom':1})
         format_money_bgRed = workbook.add_format({'align': 'left','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
@@ -111,6 +112,7 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.write(2, 0,'株式 会社リッツウェル', format_text_14)
             sheet.write(3, 0,(so.sale_order_ritzwell_staff + ' 宛') if so.sale_order_ritzwell_staff else '', format_text_14)
+            sheet.write(1, 10, so.check_oversea if so.check_oversea  else '', format_text_14_right) 
             
             sheet.write(5,0, "下記の通り注文いたします。", format_text) 
             

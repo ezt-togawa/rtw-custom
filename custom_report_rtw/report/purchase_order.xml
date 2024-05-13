@@ -88,7 +88,12 @@
                 <div class="d-flex">
                   <div class="col-4"></div>
                   <div class="col-8 d-flex justify-content-end">
-                    <div>西暦</div>
+                    <div style="position:relative;">
+                      <div style="position:absolute; font-size:20px; left:-45px; top:-4px;">
+                        <t t-if="docs.check_oversea"> 海外 </t>
+                      </div>
+                      <div>西暦</div>
+                    </div>
                     <div>
                       <span style="padding-left:50px;">年</span>
                       <span style="padding-left:25px;">月</span>
