@@ -194,7 +194,7 @@ class MrpProduction(models.Model):
                 else:
                     name = prod_tmpl.name
         if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
-            size += line.mrp_production_order_line.product_siz
+            size += line.mrp_production_order_line.product_size
                 
         type = line.mrp_product_type
             

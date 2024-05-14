@@ -44,7 +44,7 @@
                     </div>
                     <div>
                       <div t-field="po.name" />
-                      <div  style="width: 300px;" t-field="po.purchase_order_origin"/>
+                      <div style="width: 300px;" t-field="po.purchase_order_origin" />
                     </div>
                   </div>
 
@@ -57,9 +57,9 @@
                 <div class="col-4 size11" name="company_address">
                   <div class="float-right">
                     <div>
-                        <img style="width:180px;height:40px;"
-                            src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
-                            alt="Logo" />
+                      <img style="width:180px;height:40px;"
+                        src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                        alt="Logo" />
                     </div>
                     <div>
                       <div class="size12">
@@ -108,9 +108,11 @@
                   </div>
                 </div>
                 <div class="col-4 size13">
-                  <div class="d-flex"> 
+                  <div class="d-flex">
                     <div>送り先注記: </div>
-                    <div style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;" class="ml-1" t-field="docs.destination_note" />
+                    <div
+                      style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;"
+                      class="ml-1" t-field="docs.destination_note" />
                   </div>
                 </div>
                 <div class="col-4">
@@ -142,86 +144,87 @@
                   </t>
                   <tbody class="invoice_tbody">
                     <t t-if="l.display_type =='line_section' or l.display_type =='line_note'">
-                        <tr class="size15 table-border-bottom-auto">
-                            <t t-if="l.display_type =='line_section'">
-                                <td class="bg-section" />
-                                <td class="size11 bg-section" colspan="9">
-                                    <span t-field="l.name" />
-                                </td>
-                            </t>
-                            <t t-elif="l.display_type =='line_note'">
-                                <td />
-                                <td class="size11" colspan="9">
-                                    <span t-field="l.name" />
-                                </td>
-                            </t>
-                        </tr>
+                      <tr class="size15 table-border-bottom-auto">
+                        <t t-if="l.display_type =='line_section'">
+                          <td class="bg-section" />
+                          <td class="size11 bg-section" colspan="9">
+                            <span t-field="l.name" />
+                          </td>
+                        </t>
+                        <t t-elif="l.display_type =='line_note'">
+                          <td />
+                          <td class="size11" colspan="9">
+                            <span t-field="l.name" />
+                          </td>
+                        </t>
+                      </tr>
                     </t>
                     <t t-else="">
                       <tr class="table-border-bottom-auto size15">
-                          <td class="text-center size12">
-                            <t t-set="number" t-value="number + 1" />
-                            <t t-esc="number" />
-                          </td>
-                          <td class="size12">
-                            <t t-if="l.product_id.product_tmpl_id.config_ok">
-                              <t t-if="l.product_id.product_tmpl_id.categ_id.name">
-                                <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                              </t>
-                              <t t-elif="l.product_id.product_tmpl_id.product_no">
-                                <span t-field="l.product_id.product_tmpl_id.product_no" />
-                              </t>
-                              <t t-else="">
-                                <span t-field="l.name" />
-                              </t>
-                            </t>
-                            <t t-else="">
-                              <span t-field="l.name" />
-                            </t>
-                            <br />
-                          </td>
-                          <td class="size13">
-                            <t
-                              t-foreach="l.product_id.product_template_attribute_value_ids"
-                              t-as="string_line">
-                              ●
-                              <span
-                                t-esc="string_line.attribute_id.name" />: <span
-                                t-esc="string_line.product_attribute_value_id.name" />
-
+                        <td class="text-center size12">
+                          <t t-set="number" t-value="number + 1" />
+                          <t t-esc="number" />
+                        </td>
+                        <td class="size12">
+                          <div t-field="l.purchase_order_prod_name" />
+                          <t t-if="l.product_id.product_tmpl_id.width > 0">W<span
+                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.width)" />
+                          </t>
+                          <t t-if="l.product_id.product_tmpl_id.depth > 0">*D<span
+                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.depth)" />
+                          </t>
+                          <t t-if="l.product_id.product_tmpl_id.height > 0">*H<span
+                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.height)" />
+                          </t>
+                          <t t-if="l.product_id.product_tmpl_id.diameter > 0">Φ<span
+                              t-field="l.product_id.product_tmpl_id.diameter" />
+                          </t>
+                          <t t-if="l.product_id.product_tmpl_id.sh > 0"> SH<span
+                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.sh)" />
+                          </t>
+                          <t t-if="l.product_id.product_tmpl_id.ah > 0"> AH<span
+                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.ah)" />
+                          </t>
+                          <br />
+                        </td>
+                        <td class="size13">
+                          <t
+                            t-foreach="l.product_id.product_template_attribute_value_ids"
+                            t-as="string_line"> ● <span
+                              t-esc="string_line.attribute_id.name" />: <span
+                              t-esc="string_line.product_attribute_value_id.name" />
                               <br />
-                            </t>
-                            <t
-                              t-if="l.sale_line_id and l.sale_line_id.config_session_id"
-                              t-foreach="l.sale_line_id.config_session_id.custom_value_ids"
-                              t-as="string_line">
-                                ● <span
-                                t-esc="string_line.display_name" />: <span
-                                t-esc="string_line.value" />
+                          </t>
+                          <t
+                            t-if="l.sale_line_id and l.sale_line_id.config_session_id"
+                            t-foreach="l.sale_line_id.config_session_id.custom_value_ids"
+                            t-as="string_line"> ● <span
+                              t-esc="string_line.display_name" />: <span
+                              t-esc="string_line.value" />
                                 <br />
-                            </t>
-                          </td>
-                          <td class="text-center">
-                            <div id="quote_qty">
-                              <span
-                                t-field="l.purchase_order_line_product_uom_qty" />
-                            </div>
-                          </td>
-                          <td class="text-center size14">
-                            <t t-if="l.product_uom">
-                              <span
-                                t-field="l.product_uom" />
-                            </t>
-                          </td>
-                          <td class="text-center">
+                          </t>
+                        </td>
+                        <td class="text-center">
+                          <div id="quote_qty">
                             <span
-                              t-esc="'{0:,.0f}'.format(l.price_unit)" />
-                          </td>
-                          <td class="text-center">
+                              t-field="l.purchase_order_line_product_uom_qty" />
+                          </div>
+                        </td>
+                        <td class="text-center size14">
+                          <t t-if="l.product_uom">
                             <span
-                              t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
-                          </td>
-                          <td class="size13"></td>
+                              t-field="l.product_uom" />
+                          </t>
+                        </td>
+                        <td class="text-center">
+                          <span
+                            t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                        </td>
+                        <td class="text-center">
+                          <span
+                            t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
+                        </td>
+                        <td class="size13"></td>
                       </tr>
                     </t>
                   </tbody>
