@@ -329,10 +329,10 @@ class productSpec(models.AbstractModel):
                             
                             attr_child_count = 0
                             attr_child_ids =[]
+                            img_attr = None
                             for parent_attr in sol.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id'):
                                 if attr_child_count >= 4:
                                     break
-                                
                                 if parent_attr.id in attr_child_ids or not parent_attr.image:
                                     for child_attr in parent_attr.child_attribute_ids:
                                         if child_attr.image and child_attr.mapped('child_attribute_id') in sol.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id'):
