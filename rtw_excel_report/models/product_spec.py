@@ -211,51 +211,17 @@ class productSpec(models.AbstractModel):
                         price_and_size = ""
                         price = ""
                         size = ""
-                        size2 = ""
-                        size3 = ""
-                        if sol.price_subtotal:
-                            price += '定価：'+ str('{0:,.0f}'.format(sol.price_subtotal))
                         
-                        if price and sol.currency_id.symbol:
+                        price += '定価：' + str('{0:,.0f}'.format(sol.price_subtotal))
+                        
+                        if sol.currency_id.symbol:
                             price += sol.currency_id.symbol
                             
-                        if sol.product_id:
-                            prod_tmpl = sol.product_id.product_tmpl_id
-                            if prod_tmpl:
-                                
-                                if prod_tmpl.width:
-                                    size += ("W" + str(int(prod_tmpl.width)) + "x")
-                                if prod_tmpl.depth:
-                                    size += ("D" + str(int(prod_tmpl.depth)) + "x")
-                                if prod_tmpl.height:
-                                    size += ("H" + str(int(prod_tmpl.height)) + "x")
-                                    
-                                if prod_tmpl.ah:
-                                    size2 += ("AH" + str(int(prod_tmpl.ah)) + "x")
-                                    size3 += "SH" + str(int(prod_tmpl.sh))
-                                    
-                                if prod_tmpl.sh:
-                                    size2 += ("SH" + str(int(prod_tmpl.sh)) + "x")
-                                    size3 += "AH" + str(int(prod_tmpl.ah)) + " "
-                                    
-                        size = size.strip('x')
-                        size2 = size2.strip('x')
-                        size3 = size3.strip(' ')
-
-                        if price and size and size2:
-                            price_and_size += price + '\n'+ 'サイズ：' + size + '\n' + '                ' + size2
-                        elif price and size:
-                            price_and_size +=  price + '\n'+ 'サイズ：' + size 
-                        elif price and size2:
-                            price_and_size +=  price + '\n'+ 'サイズ：' + size2
-                        elif size and size2:
-                            price_and_size += 'サイズ：' + size + '\n' + '                ' + size2
-                        elif price:
-                            price_and_size +=  price
-                        elif size:
-                            price_and_size +=  'サイズ：' + size 
-                        elif size2:
-                            price_and_size +=  'サイズ：' + size2 
+                        if sol.product_size:
+                            size = sol.product_size
+                        
+                        price_and_size += price + '\n'+ 'サイズ：' + size 
+                        
                         sheet.merge_range(24 + height + more_height, 16 + width, 26 + height + more_height, 22 + width , price_and_size if price_and_size else "", format_text_top_size9)
                         
                         #empty bg image 1 
@@ -311,18 +277,6 @@ class productSpec(models.AbstractModel):
                                 img.save(big_img_1, 'JPEG')
                                 big_img_1.seek(2)
                                 sheet.insert_image(10 + height + more_height, 9 + width,"test",{'image_data': big_img_1,'x_offset': 10, 'y_offset': 0})    
-
-                                
-                        # if need size under big image2    
-                        # size_of_image1 = ""
-                        # if size and size3:
-                        #     size_of_image1 += size + ' ' +  size3
-                        # elif size:
-                        #     size_of_image1 += size 
-                        # elif size3:
-                        #     size_of_image1 += size3
-                        # sheet.write(9 + height + more_height, 2 + width, size_of_image1 if size_of_image1 else "", format_text_bottom_center)
-
                                 
                         ## 4 picture + 4 attributes
                         if sol.product_id:
