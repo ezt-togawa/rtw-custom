@@ -203,12 +203,12 @@
                                                     <div class="six-lines">
                                                         <div t-if="l.product_id.product_no"
                                                             t-field="l.product_id.product_no" />
-                                                        <t t-if="l.product_id.width > 0">W<span
+                                                        <t t-if="l.sale_line_ids.product_size">
+                                                            <span t-esc="l.sale_line_ids.product_size"/>
+                                                        </t>
+                                                        <!-- <t t-if="l.product_id.width > 0">W<span
                                                                 t-esc="'{:.0f}'.format(l.product_id.width)" />
                                                         </t>
-                                                        <!-- <t t-if="l.product_id.dimension > 0">Φ<span
-                                                                t-field="l.product_id.dimension" />
-                                                        </t> -->
                                                         <t t-if="l.product_id.depth > 0">*D<span
                                                                 t-esc="'{:.0f}'.format(l.product_id.depth)" />
                                                         </t>
@@ -220,7 +220,7 @@
                                                         </t>
                                                         <t t-if="l.product_id.ah > 0"> AH<span
                                                                 t-esc="'{:.0f}'.format(l.product_id.ah)" />
-                                                        </t>
+                                                        </t> -->
                                                     </div>
                                                 </td>
                                                 <td class="size12">

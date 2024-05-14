@@ -293,7 +293,10 @@
                           <div class="six-lines">
                             <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
                             <div t-if="line.mrp_product_type" t-field="line.mrp_product_type"/>
-                            <t t-if="line.product_id.width > 0">W<span
+                            <t t-if="line.mrp_production_order_line"><span
+                                t-field="line.mrp_production_order_line.product_size" />
+                            </t>
+                            <!-- <t t-if="line.product_id.width > 0">W<span
                                 t-field="line.product_id.width" />
                             </t>
                             <t t-if="line.product_id.depth > 0">*D<span
@@ -307,7 +310,7 @@
                             </t>
                             <t t-if="line.product_id.ah > 0"> AH<span
                                 t-field="line.product_id.ah" />
-                            </t>
+                            </t> -->
                           </div>
                         </td>
 
