@@ -195,24 +195,5 @@
                 </xpath>
             </field>
         </record>
-        <record id="view_order_line_view_file" model="ir.ui.view">
-            <field name="name">sale.order.custom_view_file</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form" />
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <xpath
-                    expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']"
-                    position="after">
-                    <button
-                        optional="hide"
-                        name="action_get_item_sale_attach_view"
-                        string="View files"
-                        type="object"
-                        icon="fa-paperclip"
-                    />
-                </xpath>
-            </field>
-        </record>
     </data>
 </odoo>
