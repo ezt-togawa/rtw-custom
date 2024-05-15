@@ -193,19 +193,9 @@ class MrpProduction(models.Model):
                         name = prod_tmpl.name   
                 else:
                     name = prod_tmpl.name
-                    
-                if prod_tmpl.width:
-                    size += "W" + str(prod_tmpl.width) + "*"
-                if prod_tmpl.depth:
-                    size += "D" + str(prod_tmpl.depth) + "*"
-                if prod_tmpl.height:
-                    size += "H" + str(prod_tmpl.height) + "*"
-                if prod_tmpl.sh:
-                    size += "SH" + str(prod_tmpl.sh) + "*"
-                if prod_tmpl.ah:
-                    size += "AH" + str(prod_tmpl.ah)
-                size = size.rstrip("*")
-                     
+        if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
+            size += line.mrp_production_order_line.product_size
+                
         type = line.mrp_product_type
             
         if name and type :

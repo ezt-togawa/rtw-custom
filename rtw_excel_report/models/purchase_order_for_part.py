@@ -2,24 +2,6 @@ from odoo import models , fields
 from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
 from io import BytesIO
-
-class PurchaseOrderLineCustom(models.Model):
-    _inherit = 'purchase.order.line'
-    
-    purchase_order_prod_name = fields.Char(compute = '_compute_purchase_order_prod_name')
-
-    def _compute_purchase_order_prod_name(self):
-        for record in self:
-            if record.product_id.product_tmpl_id.config_ok:
-                if record.product_id.product_tmpl_id.categ_id.name:
-                    record.purchase_order_prod_name = record.product_id.product_tmpl_id.categ_id.name
-                elif record.product_id.product_tmpl_id.product_no:
-                    record.purchase_order_prod_name = record.product_id.product_tmpl_id.product_no
-                else:
-                    record.purchase_order_prod_name = record.name
-            else:
-                record.purchase_order_prod_name = record.name
-            
 class ReportMrpExcel(models.AbstractModel):
     _name = 'report.rtw_excel_report.report_purchase_order_for_part_xls'
     _inherit = 'report.report_xlsx.abstract'
@@ -181,9 +163,15 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet_data.write(ind,1,line.name if line.name else '' , format_lines_section) 
                         row += 1
                     else:
-
+                        if line.purchase_order_prod_name and line.purchase_order_line_size and line.purchase_order_line_size:
+                            prod_name = line.purchase_order_prod_name + "\n" + line.purchase_order_line_size
+                        elif line.purchase_order_prod_name:
+                            prod_name = line.purchase_order_prod_name
+                        elif line.purchase_order_line_size:
+                            prod_name = line.purchase_order_line_size
+                            
                         sheet.merge_range(row,0,row + merge_line,0, line.purchase_order_index if line.purchase_order_index else '' , format_lines_10) 
-                        sheet.merge_range(row,1,row + merge_line,2, line.purchase_order_prod_name if line.purchase_order_prod_name else '' , format_lines_11_left) 
+                        sheet.merge_range(row,1,row + merge_line,2, prod_name or '' , format_lines_11_left) 
                         sheet.merge_range(row,3,row + merge_line,6, line.purchase_order_product_detail if line.purchase_order_product_detail else '' , format_lines_10_left) 
                         sheet.merge_range(row,7,row + merge_line,7, line.purchase_order_line_product_uom_qty if line.purchase_order_line_product_uom_qty else 0 , format_lines_13) 
                         sheet.merge_range(row,8,row + merge_line,8, '個' , format_lines_10) 

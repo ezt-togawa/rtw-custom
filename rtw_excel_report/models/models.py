@@ -2789,7 +2789,44 @@ class PurChaseOrderLineExcelReport(models.Model):
     )
     
     purchase_order_line_product_uom_qty = fields.Char(string="sale order product uom qty" , compute="_compute_purchase_order_line_product_uom_qty")
-                
+        
+    purchase_order_prod_name = fields.Char(compute = '_compute_purchase_order_prod_name')
+    purchase_order_line_size = fields.Char(compute = '_compute_purchase_order_prod_name')
+
+    def _compute_purchase_order_prod_name(self):
+        for line in self:
+            categ_name = ""
+            size = ""
+            prod = line.product_id
+            if prod:
+                prod_tmpl = prod.product_tmpl_id
+                if prod_tmpl:
+                    if prod_tmpl.config_ok:  
+                        if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                            categ_name = prod_tmpl.categ_id.name
+                        elif prod_tmpl.product_no:
+                            categ_name = prod_tmpl.product_no
+                        elif prod_tmpl.name: 
+                            categ_name = prod_tmpl.name   
+                    elif line.name:
+                        categ_name = line.name
+                        
+                    if prod_tmpl.width:
+                        size += 'W' + str(prod_tmpl.width) + ' '
+                    if prod_tmpl.depth:
+                        size += '*D' + str(prod_tmpl.depth) + ' '
+                    if prod_tmpl.height:
+                        size += '*H' + str(prod_tmpl.height) + ' '
+                    if prod_tmpl.diameter:
+                        size += 'Φ' + str(prod_tmpl.diameter) + ' '
+                    if prod_tmpl.sh:
+                        size += 'SH' + str(prod_tmpl.sh) + ' '
+                    if prod_tmpl.ah:
+                        size += 'AH' + str(prod_tmpl.ah)
+                    
+            line.purchase_order_prod_name = categ_name
+            line.purchase_order_line_size = size.strip()
+            
     def _compute_purchase_order_line_product_uom_qty(self):
         for line in self:
             if line.display_type =='line_note' or line.display_type =='line_section':
