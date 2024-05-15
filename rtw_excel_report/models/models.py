@@ -1109,62 +1109,49 @@ class SaleOrderLineExcelReport(models.Model):
     
     sale_order_line_name_excel = fields.Text(
         compute="_compute_sale_order_line_name_excel",
-        string="Name",
+        string="Name excel",
     )
-    
-    # sale_order_check_section = fields.Boolean(
-    #     compute="_compute_sale_order_name_section",
-    #     string="Name test",
-    # )
-
-    # def _compute_sale_order_name_section(self):
-    #     for line in self:
-    #         template = self.env.ref('rtw_excel_report.quotation_report_xlsx_template')
-    #         sale_order_check_section = False
-    #         if line.display_type == "line_section":
-    #             sale_order_check_section = True
-    
-    #         template.with_context({'sale_order_check_section': sale_order_check_section}).load_xlsx_template()
-    #         line.sale_order_check_section = sale_order_check_section
+    sale_order_line_name_pdf = fields.Text(
+        compute="_compute_sale_order_line_name_excel",
+        string="Name pdf",
+    )
             
     def _compute_sale_order_name(self):
         for line in self:
-            categ_name=""
-            if line.display_type == "line_section":
-                # line.sale_order_check_section = True
-                categ_name = line.name
-            elif line.display_type == "line_note" :
-                # line.sale_order_check_section = True
-                categ_name = line.name
-            else:
-                
-                if line.product_id.product_tmpl_id.config_ok :  
-                    if line.product_id.product_tmpl_id.categ_id.name:
-                        categ_name = line.product_id.product_tmpl_id.categ_id.name
-                    elif line.product_id.product_tmpl_id.product_no :
-                        categ_name = line.product_id.product_tmpl_id.product_no
-                    else: 
-                        categ_name = line.product_id.product_tmpl_id.name   
-                else:
-                    # case product is standard Prod + download payment
-                    if line.product_id.product_tmpl_id.seller_ids and line.order_id.partner_id.id:
-                        matching_sup = None  
-                        for sup in line.product_id.product_tmpl_id.seller_ids:
-                            if sup.name.id == line.order_id.partner_id.id:
-                                matching_sup = sup 
-                                break
-                        if matching_sup:
-                            product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
-                            product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
-                            categ_name = product_code + product_name
+            categ_name = ""
+            if line.display_type == "line_section" or line.display_type == "line_note":
+                categ_name = line.name if line.name else ""
+            elif line.product_id:
+                    prod_tmpl = line.product_id.product_tmpl_id
+                    if prod_tmpl:
+                        if prod_tmpl.config_ok :  
+                            if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                                categ_name = prod_tmpl.categ_id.name
+                            elif prod_tmpl.product_no :
+                                categ_name = prod_tmpl.product_no
+                            elif prod_tmpl.name  : 
+                                categ_name = prod_tmpl.name   
                         else:
-                            categ_name =  line.product_id.product_tmpl_id.name
-                    else:
-                        if line.product_id.product_tmpl_id.default_code:
-                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
-                        else:
-                            categ_name =  line.product_id.product_tmpl_id.name
-                                    
+                            if prod_tmpl.seller_ids and line.order_id and line.order_id.partner_id and line.order_id.partner_id.id:
+                                matching_sup = None  
+                                for sup in prod_tmpl.seller_ids:
+                                    if sup.name and sup.name.id and sup.name.id == line.order_id.partner_id.id:
+                                            matching_sup = sup 
+                                            break
+                                if matching_sup:
+                                    product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                                    product_name = matching_sup.product_name if matching_sup.product_name else ''
+                                    categ_name = product_code + product_name
+                                else:
+                                    categ_name =  prod_tmpl.name
+                            else:
+                                if prod_tmpl.default_code and prod_tmpl.name: 
+                                    categ_name = "[" + str(prod_tmpl.default_code) + "]" + prod_tmpl.name
+                                elif prod_tmpl.default_code :
+                                    categ_name = "[" + str(prod_tmpl.default_code) + "]"
+                                elif prod_tmpl.name :
+                                    categ_name = prod_tmpl.name
+                                            
             p_type = ""
             if line.p_type:
                 if line.p_type == "special":
@@ -1172,44 +1159,21 @@ class SaleOrderLineExcelReport(models.Model):
                 elif line.p_type == "custom":
                     p_type = "特注"
 
-            size_detail = ""
-            # if line.product_id.product_tmpl_id.width:
-            #     size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-            # if line.product_id.product_tmpl_id.depth:
-            #     size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-            # if line.product_id.product_tmpl_id.height:
-            #     size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-            # if line.product_id.product_tmpl_id.sh:
-            #     size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-            # if line.product_id.product_tmpl_id.ah:
-            #     size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
-
-            prod=""
-            if isinstance(categ_name, bool):
-                categ_name = "" 
-            if categ_name != "" :
-                if p_type !="":
-                    prod+= categ_name+ "\n" +p_type
-                    if size_detail != "" :
-                        prod+=  "\n" + size_detail
-                else:
-                    prod+= categ_name
-                    if size_detail != "" :
-                        prod+= "\n" +size_detail
-            else:
-                if p_type !="":
-                    prod+= p_type
-                    if size_detail != "" :
-                        prod+=  "\n" + size_detail
-                else:
-                    if size_detail != "" :
-                        prod+= "\n" +size_detail
+            prod = "" 
+            if categ_name and p_type:
+                prod += categ_name + "\n" + p_type
+            elif categ_name:
+                prod += categ_name
+            elif p_type:
+                prod += p_type
                         
-            line.sale_order_name = str(prod)        
+            line.sale_order_name = prod   
+            
     def _compute_sale_order_line_name_excel(self):
         for line in self:
             categ_name = ""
             prod = line.product_id
+            summary = ""
             if prod:
                 prod_tmpl = prod.product_tmpl_id
                 if prod_tmpl.config_ok:  
@@ -1221,6 +1185,9 @@ class SaleOrderLineExcelReport(models.Model):
                         categ_name = prod_tmpl.name   
                 elif line.name:
                     categ_name = line.name
+                
+                if prod_tmpl.summary:
+                    summary = prod_tmpl.summary
                         
             p_type = ""
             if line.p_type == "special":
@@ -1229,14 +1196,23 @@ class SaleOrderLineExcelReport(models.Model):
                 p_type = "特注"
                     
             detail = ""
-            if categ_name and p_type:
+            if categ_name and summary and p_type:
+                detail = categ_name + "\n" + summary + "\n" + p_type
+            elif categ_name and summary:
+                detail = categ_name + "\n" + summary
+            elif categ_name and p_type:
                 detail = categ_name + "\n" + p_type
+            elif summary and p_type:
+                detail = summary + "\n" + p_type 
             elif categ_name:
                 detail = categ_name 
+            elif summary:
+                detail = summary 
             elif p_type:
                 detail = p_type 
 
             line.sale_order_line_name_excel = detail       
+            line.sale_order_line_name_pdf = categ_name       
 class StockPickingExcelReport(models.Model):
     _inherit = "stock.picking"
 
@@ -2108,7 +2084,12 @@ class AccountMoveLineExcelReport(models.Model):
     
     acc_line_name = fields.Char(
         compute="_compute_acc_line_name",
-        string="acc line name",
+        string="acc line name excel",
+    )
+    
+    acc_line_name_pdf = fields.Char(
+        compute="_compute_acc_line_name",
+        string="acc line name pdf",
     )
     
     acc_line_price_subtotal = fields.Char(
@@ -2132,37 +2113,44 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_name(self):
         for line in self:
             name = ""
+            summary = ""
             if line.product_id: 
-                # case product is download payment 
-                # if line.product_id.product_tmpl_id.type == 'service':  
-                #     name = line.product_id.product_tmpl_id.name
-                # else:
-                # case product is configurable Products
-                if line.product_id.product_tmpl_id.config_ok :  
-                    if line.product_id.product_tmpl_id.categ_id.name:
-                        name = line.product_id.product_tmpl_id.categ_id.name
-                    elif line.product_id.product_tmpl_id.product_no :
-                        name = line.product_id.product_tmpl_id.product_no
-                    else: 
-                        name = line.product_id.product_tmpl_id.name   
-                else:
-                    # case product is standard Prod + download payment
-                    if line.product_id.product_tmpl_id.seller_ids and line.move_id.partner_id.id:
-                        matching_sup = None  
-                        for sup in line.product_id.product_tmpl_id.seller_ids:
-                            if sup.name.id == line.move_id.partner_id.id:
-                                matching_sup = sup 
-                                break
-                        if matching_sup:
-                            product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
-                            product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
-                            name = product_code + product_name
+                prod_tmpl = line.product_id.product_tmpl_id
+                if prod_tmpl:
+                    if prod_tmpl.config_ok:  
+                        if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                            name = prod_tmpl.categ_id.name
+                        elif prod_tmpl.product_no:
+                            name = prod_tmpl.product_no
+                        else: 
+                            name = prod_tmpl.name   
+                    else:
+                        # case product is standard Prod + download payment
+                        if prod_tmpl.seller_ids and line.move_id and line.move_id.partner_id and line.move_id.partner_id.id:
+                            matching_sup = None  
+                            for sup in prod_tmpl.seller_ids:
+                                if sup.name and sup.name.id and sup.name.id == line.move_id.partner_id.id:
+                                        matching_sup = sup 
+                                        break
+                            if matching_sup:
+                                product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                                product_name = matching_sup.product_name if matching_sup.product_name else ''
+                                name = product_code + product_name
+                            else:
+                                name =  line.name
                         else:
                             name =  line.name
-                    else:
-                        name =  line.name
-                
-            line.acc_line_name = name
+                if line.product_id.summary:
+                    summary = line.product_id.summary
+            
+            if name and summary:
+                line.acc_line_name = name + "\n"+ summary
+            elif name:
+                line.acc_line_name = name
+            elif summary:
+                line.acc_line_name = summary
+            
+            line.acc_line_name_pdf = name
             
     def _compute_acc_line_index(self):
         index = 0

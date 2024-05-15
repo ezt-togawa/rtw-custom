@@ -39,37 +39,39 @@
                             <div class="col-4">
                                 <div class="so_price">
                                     <t t-if="docs.send_to_people == ''">
-                                        <span t-field="docs.send_to_company" style="border-bottom:1px solid black;" />
+                                        <span t-field="docs.send_to_company"
+                                            style="border-bottom:1px solid black;" />
                                     </t>
                                     <t t-else="else">
                                         <span t-field="docs.send_to_company" />
                                     </t>
                                 </div>
                                 <div class="so_price">
-                                     <span t-field="docs.send_to_people" style="border-bottom:1px solid black;" />
+                                    <span t-field="docs.send_to_people"
+                                        style="border-bottom:1px solid black;" />
                                 </div>
                                 <br />
                                 <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
-                                    御依頼の件、書きの通りお見積り致しました。<br />ご査収の程宜しくお願い致します。<br /> <span class="mt-1 so_price" style="border-bottom:1px solid black;"
-                                    > 件名 <span t-field="docs.title" /></span>
+                                    御依頼の件、書きの通りお見積り致しました。<br />ご査収の程宜しくお願い致します。<br /> <span
+                                        class="mt-1 so_price" style="border-bottom:1px solid black;"
+                                    >
+                                    件名 <span t-field="docs.title" /></span>
                                 </div>
                                 <br />
-                                <div>税抜合計:
-                                    <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol"/>
+                                <div>税抜合計: <div style="float:right">
+                                        <span t-field="docs.currency_id.symbol" />
                                         <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
                                     </div>
                                 </div>
-                                <div>消費税:
-                                    <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol"/>
+                                <div>消費税: <div style="float:right">
+                                        <span t-field="docs.currency_id.symbol" />
                                         <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
                                     </div>
                                 </div>
                                 <div class="so_price total-price">
                                     <span>税込合計</span>
                                     <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol"/>
+                                        <span t-field="docs.currency_id.symbol" />
                                         <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
                                     </div>
                                 </div>
@@ -77,51 +79,53 @@
                             <div class="col-4">
                                 <div style="float:right;padding-right:60px;">
                                     <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
-                                    <div> 製作日数： <span t-if="docs.so_work_days" t-esc="docs.so_work_days" /></div>
+                                    <div> 製作日数： <span t-if="docs.so_work_days"
+                                            t-esc="docs.so_work_days" /></div>
                                     <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
                                     <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
                                     <div> 支払条件：<span t-esc="docs.sale_order_transactions_term" /></div>
                                     <br />
                                     <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
-                                    <div style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;"> 
-                                    備考: <span t-field="docs.special_note" /></div>
+                                    <div
+                                        style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;">
+                                        備考: <span t-field="docs.special_note" /></div>
                                 </div>
                             </div>
                             <div
                                 class="col-4 size11" name="company_address">
-                                    <div class="float-right">
-                                        <div>
-                                            <img style="width:180px;height:40px;"
-                                                src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
-                                                alt="Logo" />
+                                <div class="float-right">
+                                    <div>
+                                        <img style="width:180px;height:40px;"
+                                            src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                                            alt="Logo" />
+                                    </div>
+                                    <div>
+                                        <div class="size12">
+                                            <span t-esc="docs.hr_employee_company" />
                                         </div>
-                                        <div>
-                                            <div class="size12">
-                                                <span t-esc="docs.hr_employee_company" />
-                                            </div>
-                                            <!-- <div>
+                                        <!-- <div>
                                                 <span t-esc="docs.registration_number" />
                                             </div> -->
-                                            <div>
-                                                <span t-esc="docs.hr_employee_department" />
-                                            </div>
-                                            <div>
-                                                <span t-esc="docs.hr_employee_zip" />
-                                            </div>
-                                            <div>
-                                                <span t-esc="docs.hr_employee_info" />
-                                            </div>
-                                            <div>
-                                                <span t-esc="docs.hr_employee_tel" />
-                                            </div>
-                                            <div>
-                                                <span t-esc="docs.hr_employee_fax" />
-                                            </div>
-                                            <div class="size12">
-                                                <span t-esc="docs.hr_employee_printer" />
-                                            </div>
+                                        <div>
+                                            <span t-esc="docs.hr_employee_department" />
                                         </div>
-                                    </div>                                    
+                                        <div>
+                                            <span t-esc="docs.hr_employee_zip" />
+                                        </div>
+                                        <div>
+                                            <span t-esc="docs.hr_employee_info" />
+                                        </div>
+                                        <div>
+                                            <span t-esc="docs.hr_employee_tel" />
+                                        </div>
+                                        <div>
+                                            <span t-esc="docs.hr_employee_fax" />
+                                        </div>
+                                        <div class="size12">
+                                            <span t-esc="docs.hr_employee_printer" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <table
@@ -136,7 +140,8 @@
                                     t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                                 <t t-if="l_index == 0">
                                     <thead>
-                                        <tr class="table-title bold" style="font-size:13px;background-color:#999999">
+                                        <tr class="table-title bold"
+                                            style="font-size:13px;background-color:#999999">
                                             <th class="text-center" style="width:1%">№</th>
                                             <th class="text-center" style="width:11%">品名</th>
                                             <th class="text-center" style="width:10%">品番・サイズ</th>
@@ -152,7 +157,8 @@
                                 </t>
                                 <tbody class="invoice_tbody">
                                     <t>
-                                        <t t-if="l.display_type =='line_section' or l.display_type =='line_note'">
+                                        <t
+                                            t-if="l.display_type =='line_section' or l.display_type =='line_note'">
                                             <tr class="size15 table-border-bottom-auto">
                                                 <t t-if="l.display_type =='line_section'">
                                                     <td class="bg-section" />
@@ -176,25 +182,20 @@
                                                 </td>
                                                 <td class="size11">
                                                     <div class="six-lines">
-                                                        <t t-if="not l.product_id.config_ok">
-                                                            <span
-                                                                t-field="l.name" />
-                                                            <t t-if="l.p_type">
-                                                                <br />
-                                                                <span t-field="l.p_type" />
-                                                            </t>
-                                                        </t>
-                                                        <t t-else="">
-                                                            <span
-                                                                t-field="l.sale_order_name" />
-                                                        </t>
+                                                        <div t-if="l.sale_order_line_name_pdf"
+                                                            t-field="l.sale_order_line_name_pdf" />
+                                                        <div t-if="l.product_id.summary"
+                                                            t-field="l.product_id.summary" />
+                                                        <div t-if="l.p_type == 'special'">別注</div>
+                                                        <div t-if="l.p_type == 'custom'">特注</div>
                                                     </div>
                                                 </td>
                                                 <td class="size12">
                                                     <div class="six-lines">
                                                         <div t-if="l.product_id.product_no"
                                                             t-field="l.product_id.product_no" />
-                                                        <t t-if="l.product_size"><span
+                                                        <t t-if="l.product_size">
+                                                            <span
                                                                 t-esc="l.product_size" />
                                                         </t>
                                                         <!-- <t t-if="l.product_id.width > 0">W<span
@@ -219,17 +220,18 @@
                                                         <t
                                                             t-foreach="l.product_id.product_template_attribute_value_ids[0:(6 if len(l.product_id.product_template_attribute_value_ids) &gt;= 6 else len(l.product_id.product_template_attribute_value_ids))]"
                                                             t-as="string_line">
-                                                            <div class="one-lines">
-                                                                ● <span
+                                                            <div class="one-lines"> ● <span
                                                                     t-esc="string_line.display_name" />
                                                             </div>
                                                         </t>
-                                                        <t t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
-                                                            <t t-foreach="l.config_session_id.custom_value_ids[0:(6 - len(l.product_id.product_template_attribute_value_ids))]"
-                                                                t-as="string_line"> 
-                                                                <div class="one-lines">
-                                                                    ● <span
-                                                                        t-esc="string_line.display_name" />: <span
+                                                        <t
+                                                            t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
+                                                            <t
+                                                                t-foreach="l.config_session_id.custom_value_ids[0:(6 - len(l.product_id.product_template_attribute_value_ids))]"
+                                                                t-as="string_line">
+                                                                <div class="one-lines"> ● <span
+                                                                        t-esc="string_line.display_name" />
+                                                                    : <span
                                                                         t-esc="string_line.value" />
                                                                 </div>
                                                             </t>
@@ -238,41 +240,45 @@
                                                 </td>
                                                 <td class="size12">
                                                     <div class="six-lines">
-                                                        <t t-if="len(l.product_id.product_template_attribute_value_ids) &gt; 6">
+                                                        <t
+                                                            t-if="len(l.product_id.product_template_attribute_value_ids) &gt; 6">
                                                             <t
                                                                 t-foreach="l.product_id.product_template_attribute_value_ids[6:12]"
-                                                                t-as="string_line"> 
-                                                                <div class="one-lines">
-                                                                    ● <span
+                                                                t-as="string_line">
+                                                                <div class="one-lines"> ● <span
                                                                         t-esc="string_line.display_name" />
                                                                 </div>
                                                             </t>
                                                         </t>
-                                                        <t t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
-                                                            <t t-foreach="l.config_session_id.custom_value_ids[(6 - len(l.product_id.product_template_attribute_value_ids)):len(l.config_session_id.custom_value_ids)]"
-                                                                t-as="string_line"> 
-                                                                    <div class="one-lines">
-                                                                        ● <span
-                                                                        t-esc="string_line.display_name" />: <span
+                                                        <t
+                                                            t-if="len(l.product_id.product_template_attribute_value_ids) &lt; 6">
+                                                            <t
+                                                                t-foreach="l.config_session_id.custom_value_ids[(6 - len(l.product_id.product_template_attribute_value_ids)):len(l.config_session_id.custom_value_ids)]"
+                                                                t-as="string_line">
+                                                                <div class="one-lines"> ● <span
+                                                                        t-esc="string_line.display_name" />
+                                                                    : <span
                                                                         t-esc="string_line.value" />
-                                                                    </div>
+                                                                </div>
                                                             </t>
                                                         </t>
                                                         <t t-else="">
-                                                            <t t-foreach="l.config_session_id.custom_value_ids[0:len(l.config_session_id.custom_value_ids)]"
-                                                                t-as="string_line"> 
-                                                                    <div class="one-lines">
-                                                                        ● <span
-                                                                        t-esc="string_line.display_name" />: <span
+                                                            <t
+                                                                t-foreach="l.config_session_id.custom_value_ids[0:len(l.config_session_id.custom_value_ids)]"
+                                                                t-as="string_line">
+                                                                <div class="one-lines"> ● <span
+                                                                        t-esc="string_line.display_name" />
+                                                                    : <span
                                                                         t-esc="string_line.value" />
-                                                                    </div>
+                                                                </div>
                                                             </t>
                                                         </t>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div id="quote_qty" class="six-lines">
-                                                        <span t-esc="l.sale_order_line_product_uom_qty" />
+                                                        <span
+                                                            t-esc="l.sale_order_line_product_uom_qty" />
                                                     </div>
                                                 </td>
                                                 <td class="text-center size12">
@@ -284,7 +290,7 @@
                                                 </td>
                                                 <td class="text-center size11">
                                                     <div class="six-lines">
-                                                        <span 
+                                                        <span
                                                             style="font-size:16px"
                                                             t-esc="'{0:,.0f}'.format(l.sale_order_line_discount)" />
                                                     </div>

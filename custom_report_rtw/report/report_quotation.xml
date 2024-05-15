@@ -181,18 +181,12 @@
                                                 </td>
                                                 <td class="size12">
                                                     <div class="six-lines">
-                                                        <t t-if="not l.product_id.config_ok">
-                                                            <span
-                                                                t-field="l.name" />
-                                                            <t t-if="l.p_type">
-                                                                <br />
-                                                                <span t-field="l.p_type" />
-                                                            </t>
-                                                        </t>
-                                                        <t t-else="">
-                                                            <span
-                                                                t-field="l.sale_order_name" />
-                                                        </t>
+                                                        <div t-if="l.sale_order_line_name_pdf"
+                                                            t-field="l.sale_order_line_name_pdf" />
+                                                        <div t-if="l.product_id.summary"
+                                                            t-field="l.product_id.summary" />
+                                                        <div t-if="l.p_type == 'special'">別注</div>
+                                                        <div t-if="l.p_type == 'custom'">特注</div>
                                                     </div>
                                                 </td>
                                                 <td class="size12">
