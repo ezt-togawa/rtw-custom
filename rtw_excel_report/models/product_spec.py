@@ -330,6 +330,7 @@ class productSpec(models.AbstractModel):
                             attr_child_count = 0
                             attr_child_ids =[]
                             img_attr = None
+                            attr = ""
                             for parent_attr in sol.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id'):
                                 if attr_child_count >= 4:
                                     break
