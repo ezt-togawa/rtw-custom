@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 from odoo import fields, models
-from odoo.exceptions import UserError
 
 class MrpProduction(models.Model):
   _inherit = 'mrp.production'
@@ -321,21 +318,4 @@ class MrpProduction(models.Model):
             
             line.mrp_product_attribute = attr
             line.mrp_product_attribute2 = attr_cfg
-class mrp_report(models.Model):
-    _inherit = 'ir.actions.report'
-    
-    def _get_rendering_context(self, docids, data):
-        res = super(mrp_report, self)._get_rendering_context(docids, data)
-        if self.model == 'mrp.production':
-            list_mrp_origin = []
-            for doc in docids:
-                mrp = self.env['mrp.production'].search([('id','=',doc)])
-                if mrp:
-                    list_mrp_origin.append(mrp.mrp_production_so_id.id)
-            if list_mrp_origin and len(list_mrp_origin) > 1:
-                first_element = list_mrp_origin[0]
-                if not all(element == first_element for element in list_mrp_origin):
-                    raise UserError('販売オーダーが複数にまたがるため出力できません。')
-                
-        return res
 

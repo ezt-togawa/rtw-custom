@@ -2502,13 +2502,13 @@ class PurchaseOrderExcelReport(models.Model):
     purchase_print_staff= fields.Char(
         "purchase print staff",
         compute="_compute_print_staff",
-    )        
-    
+    )  
+
     lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
     yearUnit = fields.Char(string="Year", compute="_compute_year_unit")
     monthUnit = fields.Char(string="Month", compute="_compute_month_unit")
     dayUnit = fields.Char(string="Day", compute="_compute_day_unit")
-    
+            
     def _compute_purchase_order_origin(self):
         for order in self:
             if order.origin:
