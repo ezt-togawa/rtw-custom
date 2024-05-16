@@ -39,10 +39,12 @@
               <div class="row size13" style="margin-top:-30px;">
                 <div class="col-4">
                   <t t-if="o.lang_code == 'en_US'">
-                      <div class="size16">御中 <span t-field="o.picking_type_id.warehouse_id.partner_id.name" /></div>
+                    <div class="size16">御中 <span
+                        t-field="o.picking_type_id.warehouse_id.partner_id.name" /></div>
                   </t>
                   <t t-else="">
-                      <div class="size16"><span t-field="o.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                    <div class="size16"><span
+                        t-field="o.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
                   </t>
                   <div> 発注番号 <span class="size16"
                       t-field="so.name" />
@@ -282,17 +284,20 @@
                   </thead>
 
                   <tbody class="invoice_tbody">
-                    <t t-set="index" t-value="0"/>
+                    <t t-set="index" t-value="0" />
                     <t t-foreach="docs" t-as="line">
-                      <t t-set="index" t-value="index+1"/>
+                      <t t-set="index" t-value="index+1" />
                       <tr class="size15 table-border-bottom">
-                        <td class="text-center size12"><span t-esc="index"/>
+                        <td class="text-center size12">
+                          <span t-esc="index" />
                         </td>
                         <td class="size12">
                           <div class="six-lines">
                             <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
-                            <div t-if="line.mrp_product_type" t-field="line.mrp_product_type"/>
-                            <t t-if="line.mrp_production_order_line"><span
+                            <div t-if="line.product_id.summary" t-field="line.product_id.summary" />
+                            <div t-if="line.mrp_product_type" t-field="line.mrp_product_type" />
+                            <t t-if="line.mrp_production_order_line">
+                              <span
                                 t-field="line.mrp_production_order_line.product_size" />
                             </t>
                             <!-- <t t-if="line.product_id.width > 0">W<span

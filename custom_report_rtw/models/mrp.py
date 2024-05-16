@@ -181,8 +181,9 @@ class MrpProduction(models.Model):
         
         detail = ""
         name = ""
+        summary = ""
         size = ""
-        type = ""      
+        type = ""
         if prod: 
             prod_tmpl = prod.product_tmpl_id
             if prod_tmpl:
@@ -193,15 +194,26 @@ class MrpProduction(models.Model):
                         name = prod_tmpl.name   
                 else:
                     name = prod_tmpl.name
+            if prod.summary:
+                summary = prod.summary
+                
         if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
             size += line.mrp_production_order_line.product_size
-                
+            
         type = line.mrp_product_type
             
-        if name and type :
+        if name and summary and type :
+            detail += name +'\n' + summary +'\n' + type
+        elif name and summary:
+            detail += name +'\n' + summary
+        elif name and type:
             detail += name +'\n' + type
+        elif summary and type:
+            detail += summary +'\n' + type
         elif name :
-            detail += name
+            detail += name 
+        elif name :
+            summary += summary
         elif type :
             detail += type 
                 
