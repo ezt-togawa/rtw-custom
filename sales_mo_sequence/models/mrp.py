@@ -23,7 +23,6 @@ class MrpProduction(models.Model):
     def _compute_reference_mo(self):
         for value in self: # 手動新規の場合 value.origin はFalseになるので考慮
             sale_ids = self.env['sale.order'].search([('name', '=', value.origin)])
-            print('sale_ids2',sale_ids)
             if sale_ids:
                 value.mrp_reference = ''
             else:
@@ -32,7 +31,6 @@ class MrpProduction(models.Model):
                     value.mrp_reference = ele.name
 
     def _compute_production_type(self):
-        print('_compute_production_type')
         for record in self:
             list_custom_config = ''
             production_type = ''
@@ -97,7 +95,6 @@ class MrpProduction(models.Model):
                 record.production_memo = ''
 
     def _inverse_production_memo(self):
-        print('_inverse_production_memo')
         for record in self:
             sale_order_line = []
             search_criteria = [  # limit 10 times
