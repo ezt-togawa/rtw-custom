@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_order_form_outlook_stock" model="ir.ui.view">
+    <!-- <record id="view_order_form_outlook_stock" model="ir.ui.view">
         <field name="name">sale.order.form</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
@@ -17,7 +17,7 @@
                 />
             </xpath>
         </field>
-    </record>
+    </record> -->
     <record id="mrp_bom_line_view_form_outlook_stock" model="ir.ui.view">
         <field name="name">mrp.bom.line.view.form</field>
         <field name="model">mrp.bom.line</field>
@@ -62,7 +62,6 @@
                 expr="/tree/field[@name='product_qty']"
                 position="after">
                 <field name="id" invisible="1" />
-                <field name="priority_sort" invisible="1"/>
                 <field name="bom_product_template_attribute_value_ids" string="Apply on Variants"
                     widget="many2many_tags" options="{'no_create': True}"
                     groups="product.group_product_variant" />

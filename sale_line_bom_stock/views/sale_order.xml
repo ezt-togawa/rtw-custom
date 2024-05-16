@@ -4,9 +4,10 @@
         <field name="name">sale_mrp_bom.sale.order.form</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="priority">0</field>
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='order_line']//tree//field[@name='name']"
+                expr="//field[@name='order_line']//tree//field[@name='price_subtotal']"
                 position="after"
             >
 <!--                <field-->
