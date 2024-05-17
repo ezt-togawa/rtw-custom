@@ -114,7 +114,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(2, 0,3,2,  so.dear_to if so.dear_to else '', format_name_company)
 
             sheet.write(5,0, "平素より格別のお引き⽴てを賜り暑く御礼申し上げます。", format_text) 
-            sheet.write(6,0, "御依頼の件、書きの通りお⾒積り致しました。", format_text) 
+            sheet.write(6,0, "御依頼の件、下記の通りお⾒積り致しました。", format_text)
             sheet.write(7,0, "ご査収の程宜しくお願い致します。", format_text) 
             sheet.write(10, 0, "件名", format_text_14_border) 
             sheet.write(10, 1, so.title if so.title else '', format_text_14_border) 
