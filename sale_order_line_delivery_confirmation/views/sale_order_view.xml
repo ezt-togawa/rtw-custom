@@ -6,11 +6,11 @@
         <field name="inherit_id" ref="sale_sourced_by_line.view_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
-                position="after">
-                <field name="delivery_confirmation" optional="hide" />
+                position="before">
+                <field name="delivery_confirmation" />
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="after">
-                <field name="delivery_confirmation" optional="hide" />
+            <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+                <field name="delivery_confirmation" />
             </xpath>
         </field>
     </record>
