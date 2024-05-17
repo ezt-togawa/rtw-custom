@@ -36,7 +36,7 @@
               class="row zero_min_height">
             </div>
             <div class="row size13" style="margin-top:-50px;">
-              <div class="col-4">
+              <div class="col-3">
                 <div class="so_price" style="">
                   <span style="border-bottom:1px solid black;">
                     株式会社リッツウェル
@@ -75,7 +75,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-5">
                 <div>納品希望日： <span t-if="docs.preferred_delivery_period"
                     t-esc="docs.preferred_delivery_period" />
                 </div>

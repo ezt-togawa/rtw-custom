@@ -36,7 +36,7 @@
                             class="row zero_min_height">
                         </div>
                         <div class="row size13" style="margin-top:-50px;">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="so_price">
                                     <t t-if="docs.send_to_people == ''">
                                         <span t-field="docs.send_to_company"
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-5">
                                 <div style="float:right;padding-right:60px;">
                                     <div>お支払期限:<!-- <span t-if="docs.invoice_date_due"
                                         t-esc="docs.acc_move_invoice_date_due" /> -->

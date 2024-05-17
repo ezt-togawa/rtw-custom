@@ -1312,7 +1312,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
 msgid ""
 "平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/>\n"
-"                                    御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
+"                                    御依頼の件、下記の通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
 msgstr ""
 
 #. module: custom_report_rtw
@@ -1330,7 +1330,7 @@ msgstr ""
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
 msgid ""
-"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/> 御依頼の件、書きの通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
+"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/> 御依頼の件、下記の通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
 msgstr ""
 
 #. module: custom_report_rtw

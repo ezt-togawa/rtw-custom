@@ -36,7 +36,7 @@
                             class="row zero_min_height">
                         </div>
                         <div class="row size13" style="margin-top:-50px">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="so_price">
                                     <t t-if="docs.send_to_people == ''">
                                         <span t-field="docs.send_to_company"
@@ -52,7 +52,7 @@
                                 </div>
                                 <br />
                                 <div style="font-size:12px">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
-                                    御依頼の件、書きの通りお見積り致しました。<br />ご査収の程宜しくお願い致します。<br /> <span
+                                    御依頼の件、下記の通りお見積り致しました。<br />ご査収の程宜しくお願い致します。<br /> <span
                                         class="mt-1 so_price" style="border-bottom:1px solid black;">
                                     件名 <span t-field="docs.title" /></span>
                                 </div>
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-5">
                                 <div style="float:right;padding-right:60px;">
                                     <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
                                     <div> 製作日数： <span t-if="docs.so_work_days"
