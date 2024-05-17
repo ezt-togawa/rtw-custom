@@ -33,10 +33,10 @@
         <field name="name">mrp.bom.line.tree.view</field>
         <field name="model">mrp.bom.line</field>
         <field name="priority">0</field>
-        <field name="inherit_id" ref="sale_order_line_outlook_stock.view_order_form_bom_line_view" />
+        <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_tree_view" />
         <field name="arch" type="xml">
             <xpath
-                expr="/tree/field[@name='virtual_available']"
+                expr="/tree/field[@name='product_qty']"
                 position="after">
                 <field name="key_component" optional="show" />
             </xpath>
