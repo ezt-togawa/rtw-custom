@@ -32,6 +32,7 @@
                     <field name="custom" widget="many2many_tags" optional="hide" />
                     <field name="product_qty" />
                     <field name="sai" sum="sai" string="才数" />
+                    <field name="product_package_quantity" optional="show"/>
                     <field name="factory" sum="工場" />
                     <field name="mrp_state" />
 
@@ -67,6 +68,7 @@
                     <field name="custom" widget="many2many_tags" optional="hide" />
                     <field name="product_qty" />
                     <field name="sai" sum="sai" string="才数" />
+                    <field name="product_package_quantity" optional="show"/>
                     <field name="factory" sum="工場" />
                     <field name="mrp_state" />
 
@@ -111,6 +113,28 @@
                 <xpath expr="//filter[@name='groupby_product_id']" position="before">
                     <filter string="sale_id" name="注番" domain="[]" context="{'group_by': 'sale_id'}" />
                     <separator />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_move_line_add_product_package_quantity" model="ir.ui.view">
+            <field name="name">move_line_add_product_package_quantity</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lot_id']" position="after">
+                    <field name="product_package_quantity" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_move_line_add_product_package_quantity_detailed_operation" model="ir.ui.view">
+            <field name="name">move_line_add_product_package_quantity_detailed_operation</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_uom_id']" position="after">
+                    <field name="product_package_quantity" optional="show"/>
                 </xpath>
             </field>
         </record>
