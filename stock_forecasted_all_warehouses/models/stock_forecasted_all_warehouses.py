@@ -116,8 +116,8 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
             res['uom'] = product_variants[:1].uom_id.display_name
             res['quantity_on_hand'] = sum(product_variants.mapped('qty_available'))
             res['virtual_available'] = sum(product_variants.mapped('virtual_available'))
-        res.update(self._compute_draft_quantity_count(product_template_ids, product_variant_ids, wh_location_ids))
-        res['lines'] = self._get_report_lines(product_template_ids, product_variant_ids, wh_location_ids)
+        res.update(self._compute_draft_quantity_count([product_template_ids], product_variant_ids, wh_location_ids))
+        res['lines'] = self._get_report_lines([product_template_ids], product_variant_ids, wh_location_ids)
         return res
 
     @api.model
