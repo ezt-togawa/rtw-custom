@@ -34,6 +34,12 @@
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
                 <attribute name="optional">show</attribute>
             </xpath>
+            <!-- <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='qty_delivered']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='qty_invoiced']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath> -->
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
@@ -44,6 +50,19 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+                <field name="tax_id" widget="many2many_tags" options="{'no_create': True}" context="{'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
+                        attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}" optional="hide"/>
+                <button
+                    name="outlook_link"
+                    string="見通し在庫"
+                    type="object"
+                    icon="fa-external-link"
+                    class="oe_stat_button"
+                />
+                <field name="date_planned" string="予定日" optional="show" />
+                <field name="depo_date" optional="hide"/>
+                <field name="shiratani_date" optional="hide"/>
+                <field name="remarks" optional="show"/>
                 <field name="memo" optional="hide"/>
                 <field name="product_size" optional="hide"/>
                 <field name="p_type" optional="hide"/>
@@ -82,6 +101,7 @@
                     widget="product_configurator"
                     optional="hide"
                 />
+                <field name="bom_id" optional="hide" />
             </xpath>
         </field>
     </record>
@@ -96,6 +116,9 @@
             </xpath>
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='memo']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/button[@name='action_get_item_sale_attach_view']" position="replace">
+                <!-- <attribute name="invisible">1</attribute> -->
             </xpath>
         </field>
     </record>
@@ -130,17 +153,11 @@
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='p_type']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='depo_date']" position="before">
-                <field name="tax_id" widget="many2many_tags" options="{'no_create': True}" context="{'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
-                        attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}" optional="hide"/>
-                <button
-                    name="outlook_link"
-                    string="見通し在庫"
-                    type="object"
-                    icon="fa-external-link"
-                    class="oe_stat_button"
-                />
-                <field name="date_planned" string="予定日" optional="show" />
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='depo_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='shiratani_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>
@@ -171,6 +188,28 @@
         <field name="inherit_id" ref="product_spec_rtw.sale_view_order_line_form" />
         <field name="arch" type="xml">
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_size']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_line_reorder_fields_7" model="ir.ui.view">
+        <field name="name">sale.order.reorder_field7</field>
+        <field name="model">sale.order</field>
+        <field name="priority">0</field>
+        <field name="inherit_id" ref="sale_line_bom_stock.sale_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='bom_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_line_reorder_fields_8" model="ir.ui.view">
+        <field name="name">sale.order.reorder_field7</field>
+        <field name="model">sale.order</field>
+        <field name="priority">0</field>
+        <field name="inherit_id" ref="rtw_stock_move_line.sale_view_order_rtw_stock_move_line_form" />
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='remarks']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
         </field>
