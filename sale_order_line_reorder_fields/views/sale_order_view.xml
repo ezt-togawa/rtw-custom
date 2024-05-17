@@ -204,13 +204,23 @@
         </field>
     </record>
     <record id="view_order_line_reorder_fields_8" model="ir.ui.view">
-        <field name="name">sale.order.reorder_field7</field>
+        <field name="name">sale.order.reorder_field8</field>
         <field name="model">sale.order</field>
         <field name="priority">0</field>
         <field name="inherit_id" ref="rtw_stock_move_line.sale_view_order_rtw_stock_move_line_form" />
         <field name="arch" type="xml">
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='remarks']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_line_reorder_fields_9" model="ir.ui.view">
+        <field name="name">sale.order.reorder_field9</field>
+        <field name="model">sale.order</field>
+        <field name="priority">0</field>
+        <field name="inherit_id" ref="sale_order_line_outlook_stock.view_order_form_outlook_stock" />
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/button[@name='outlook_link']" position="replace">
             </xpath>
         </field>
     </record>
