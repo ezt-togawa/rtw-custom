@@ -7,10 +7,10 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']"
                 position="before">
-                <field name="delivery_confirmation" optional="hide" />
+                <field name="delivery_confirmation" />
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
-                <field name="delivery_confirmation" optional="hide" />
+                <field name="delivery_confirmation" />
             </xpath>
         </field>
     </record>

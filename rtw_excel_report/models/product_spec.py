@@ -1,7 +1,6 @@
 from odoo import models
 from odoo.modules.module import get_module_resource
 
-import math
 from datetime import datetime 
 import base64
 from PIL import Image
@@ -11,13 +10,11 @@ import shutil
 
 from io import BytesIO
 from PIL import Image as PILImage
-import math
-
 class productSpec(models.AbstractModel):
     _name = 'report.rtw_excel_report.product_spec_xls'
     _inherit = 'report.report_xlsx.abstract'
 
-    def generate_xlsx_report(self, workbook, data, lines):
+    def generate_xlsx_report(self, workbook, data, so_data):
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -38,256 +35,380 @@ class productSpec(models.AbstractModel):
         else:
             os.makedirs(image_attribute_product)
 
-        sheet_main = workbook.add_worksheet("商品仕様書(EXCEL)")
-        sheet_main.set_column("A:Z", None,cell_format=font_family) 
-        sheet = workbook.add_worksheet("data")
+        image_logo_R = get_module_resource('rtw_excel_report', 'img', 'logo.png')
+        logo_R = PILImage.open(image_logo_R)
+        logo_R = logo_R.convert('RGB')
+        logo_R = logo_R.resize((70, 45))
+        img_io_R = BytesIO()
+        logo_R.save(img_io_R, 'PNG')
+        img_io_R.seek(0)
 
-        default_value = '=""'
-        for row in range(100):  
-            for col in range(26): 
-                sheet.write(row, col, default_value)
+        # different format  width font 
+        format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
+        format_text = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':10, 'text_wrap':True})
+        format_text_top = workbook.add_format({'align': 'left', 'valign': 'top', 'font_name': font_name, 'font_size':10, 'text_wrap':True})
+        format_text_top_size9 = workbook.add_format({'align': 'left', 'valign': 'top', 'font_name': font_name, 'font_size':9, 'text_wrap':True})
+        format_text_center_size9 = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':9, 'text_wrap':True})
+        format_text_bottom_center = workbook.add_format({'align': 'center', 'valign': 'bottom', 'font_name': font_name, 'font_size':8, 'text_wrap':True})
+        format_date = workbook.add_format({'align': 'right','font_name': font_name,'font_size':9})
+        format_text_14 = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':14})
+        format_text_12 = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':12})
         
-        format_name_file = workbook.add_format({'align': 'center','valign': 'vcenter','font_name': font_name,'font_size': 18})
-        format_current_date = workbook.add_format({'align': 'center','valign': 'vcenter','font_name': font_name,'font_size': 10})
-        format_title = workbook.add_format({'align': 'center','valign': 'vcenter','font_name': font_name,'font_size': 10})
-        format_title_big = workbook.add_format({'align': 'center','valign': 'vcenter','font_name': font_name,'font_size': 14})
-        qty_format = workbook.add_format({'font_name': font_name,'font_size': 16,'align': 'center','valign': 'vcenter',})
-        categ_name_format = workbook.add_format({'text_wrap': True,'align': 'center','valign': 'left','font_name': font_name,'font_size': 10})
-        product_no_format = workbook.add_format({'font_name': font_name,'font_size': 12})
-        all_attr_format = workbook.add_format({'text_wrap': True,'align': 'center','valign': 'vcenter','font_name': font_name,'font_size': 10})
-        detail_attr_format = workbook.add_format({'font_name': font_name,'font_size': 10})
-
-        wrap_format = workbook.add_format({'text_wrap': True,'align': 'center','valign': 'vcenter','font_name': font_name})
-        merge_format = workbook.add_format({'align': 'center','valign': 'vcenter','font_name': font_name})
-        r = ""
-        # image main of product
-        image_logo = get_module_resource('rtw_excel_report', 'img', 'logo.png')
-        img = PILImage.open(image_logo)
-        img = img.convert('RGB')
-        img = img.resize((70, 70))
-        img_io = BytesIO()
-        img.save(img_io, 'PNG')
-        img_io.seek(2)
-
-        #current time
-        day = str(datetime.now().day)
-        month = str(datetime.now().month)
-        year = str(datetime.now().year)
-        current_date = year + " 年 " + month + " 月 " + day + " 日 "
-        
-        # template number
-        r = math.ceil(len(lines.order_line)/4)
-
-        row_logo=0
-        row_title=2
-        col_title=1
-        row_print_time=0
-        col_print_time=17
-        col_title_name=5
-        row_title_name_db=5
-        col_title_name_db=1
-
-        order_title =""
-        for sale_order in lines:
-            if sale_order.title:
-                order_title=sale_order.title
-        sheet_main.merge_range(row_title_name_db, col_title_name_db, row_title_name_db, col_title_name_db+1,order_title, format_title_big)
-
-        sheet_main.insert_image(row_logo,0,"logo",{'image_data': img_io})
-        sheet_main.merge_range(row_title, col_title, row_title, col_title+1, "商品仕様書", format_name_file)
-        sheet_main.write(row_print_time, col_print_time,current_date , format_current_date)
-        sheet_main.write(col_title_name, 0,"件名", format_title)
-
-        for count in range(r):
-
-            sheet_main.merge_range(count*52 + 8, 0, count*52+9, 0, "=data!A"+str(count * 4+1), qty_format)
-            sheet_main.merge_range(count*52 + 8, 5, count*52+9, 5, "=data!A"+str(count* 4+2), qty_format)
-            sheet_main.merge_range(count*52 + 8, 10, count*52+9, 10, "=data!A"+str(count * 4+3), qty_format)
-            sheet_main.merge_range(count*52 + 8, 15, count*52+9, 15, "=data!A"+str(count * 4+4), qty_format)
+        format_border = workbook.add_format({'bg_color': '#d9d9d9'})
+        #create sheet
+        for index,so in enumerate(so_data):
+            sheet_name = f"{so.name}" 
+            sheet= workbook.add_worksheet(sheet_name)
+            sheet.set_paper(9)  #A4
+            sheet.set_landscape()
+            sheet.set_print_scale(71)
             
-            sheet_main.merge_range((count * 52) + 8, 1, count * 52 + 8, 3, "=data!B" + str(count * 4 + 1), categ_name_format)
-            sheet_main.merge_range((count * 52) + 8, 6, count * 52 + 8, 8, "=data!B" + str(count * 4 + 2), categ_name_format)
-            sheet_main.merge_range((count * 52) + 8, 11, count * 52 + 8, 13, "=data!B" + str(count * 4 + 3), categ_name_format)
-            sheet_main.merge_range((count * 52) + 8, 16, count * 52 + 8, 18, "=data!B" + str(count * 4 + 4), categ_name_format)
+            margin_header = 0.3
+            margin_footer = 0.3
+            left_margin = 0.8
+            right_margin = 0.7
+            top_margin = 0.5
+            bottom_margin = 0.5
+            sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
+            sheet.set_header( f'{"&"}R {so.name  if so.name else ""}', margin=margin_header) 
+            sheet.set_footer(f'{"&"}L page{" "}{"&"}P/{"&"}N',margin=margin_footer)    
+                    
+            sheet.set_column("A:A", width=0.81, cell_format=font_family)  
+            sheet.set_column("B:B", width=0.63, cell_format=font_family)  
+            sheet.set_column("C:H", width=3.67, cell_format=font_family)  
+            sheet.set_column("I:I", width=0.63, cell_format=font_family)  
+            sheet.set_column("J:O", width=3.67, cell_format=font_family)  
+            sheet.set_column("P:P", width=0.63, cell_format=font_family)
+            sheet.set_column("Q:W", width=3.67, cell_format=font_family)
+            sheet.set_column("X:X", width=0.63, cell_format=font_family)
+            sheet.set_column("Y:Y", width=1.22, cell_format=font_family)
+            sheet.set_column("Z:Z", width=0.63, cell_format=font_family)
+            sheet.set_column("AA:AF", width=3.67, cell_format=font_family)
+            sheet.set_column("AG:AG", width=0.63, cell_format=font_family)
+            sheet.set_column("AH:AM", width=3.67, cell_format=font_family)
+            sheet.set_column("AN:AN", width=0.63, cell_format=font_family)
+            sheet.set_column("AO:AU", width=3.67, cell_format=font_family)
+            sheet.set_column("AV:AV", width=0.63, cell_format=font_family)
+            sheet.set_column("AW:AW", width=0.81, cell_format=font_family)
             
-            sheet_main.merge_range((count * 52) + 9, 1, count * 52 + 9, 3, "=data!C" + str(count * 4 + 1), product_no_format)
-            sheet_main.merge_range((count * 52) + 9,6, count * 52 + 9, 8, "=data!C" + str(count * 4 + 2), product_no_format)
-            sheet_main.merge_range((count * 52) + 9,11, count * 52 + 9, 13, "=data!C" + str(count * 4 + 3), product_no_format)
-            sheet_main.merge_range((count * 52) + 9,16, count * 52 + 9, 18, "=data!C" + str(count * 4 + 4), product_no_format)
-
-            sheet_main.merge_range((count * 52) + 10, 0, count * 52 + 22, 3, "", merge_format)
-            sheet_main.merge_range((count * 52) + 10, 5, count * 52 + 22, 8, "", merge_format)
-            sheet_main.merge_range((count * 52) + 10, 10, count * 52 + 22, 13, "", merge_format)
-            sheet_main.merge_range((count * 52) + 10, 15, count * 52 + 22, 18, "", merge_format)
-
-            sheet_main.merge_range((count * 52) + 23, 0, count * 52 + 30, 3, "=data!E" + str(count * 4 + 1), all_attr_format)
-            sheet_main.merge_range((count * 52) + 23, 5, count * 52 + 30, 8, "=data!E" + str(count * 4 + 2), all_attr_format)
-            sheet_main.merge_range((count * 52) + 23, 10, count * 52 + 30, 13, "=data!E" + str(count * 4 + 3), all_attr_format)
-            sheet_main.merge_range((count * 52) + 23, 15, count * 52 + 30, 18, "=data!E" + str(count * 4 + 4), all_attr_format)
+            sheet.set_row(0, 14.4)
+            sheet.set_row(1, 14.4)
+            sheet.set_row(2, 14.4)
+            sheet.set_row(3, 14.4)
+            sheet.set_row(4, 5.4)
             
-            # #attribute image
-            sheet_main.merge_range((count * 52) + 31, 0, count * 52 + 36, 1, "", merge_format)
-            sheet_main.merge_range((count * 52) + 31, 5, count * 52 + 36, 6, "", merge_format)
-            sheet_main.merge_range((count * 52) + 31, 10, count * 52 + 36, 11, "", merge_format)
-            sheet_main.merge_range((count * 52) + 31, 15, count * 52 + 36, 16, "", merge_format)
+            
+            sheet.set_row(5, 22.2)
+            
+            # row 7 -> row 28
+            sheet.set_row(6, 6)
+            sheet.set_row(7, 24)
+            sheet.set_row(8, 6)
+            sheet.set_row(9, 13.8)
+            sheet.set_row(10, 13.8)
+            sheet.set_row(11, 13.8)
+            sheet.set_row(12, 13.8)
+            sheet.set_row(13, 13.8)
+            sheet.set_row(14, 13.8)
+            sheet.set_row(15, 13.8)
+            sheet.set_row(16, 13.8)
+            sheet.set_row(17, 6)
+            sheet.set_row(18, 13.8)
+            sheet.set_row(19, 13.8)
+            sheet.set_row(20, 13.8)
+            sheet.set_row(21, 13.8)
+            sheet.set_row(22, 6)
+            sheet.set_row(23, 13.8)
+            sheet.set_row(24, 13.8)
+            sheet.set_row(25, 13.8)
+            sheet.set_row(26, 13.8)
+            sheet.set_row(27, 6)
+            
+            # space
+            sheet.set_row(28, 10.8)
+            
+            # row 30 -> row 51
+            sheet.set_row(29, 6)
+            sheet.set_row(30, 24)
+            sheet.set_row(31, 6)
+            sheet.set_row(32, 13.8)
+            sheet.set_row(33, 13.8)
+            sheet.set_row(34, 13.8)
+            sheet.set_row(35, 13.8)
+            sheet.set_row(36, 13.8)
+            sheet.set_row(37, 13.8)
+            sheet.set_row(38, 13.8)
+            sheet.set_row(39, 13.8)
+            sheet.set_row(40, 6)
+            sheet.set_row(41, 13.8)
+            sheet.set_row(42, 13.8)
+            sheet.set_row(43, 13.8)
+            sheet.set_row(44, 13.8)
+            sheet.set_row(45, 6)
+            sheet.set_row(46, 13.8)
+            sheet.set_row(47, 13.8)
+            sheet.set_row(48, 13.8)
+            sheet.set_row(49, 13.8)
+            sheet.set_row(50,6)
+            
+            sheet.set_row(51, 13.8)
+            sheet.set_row(52, 14.4)
+            sheet.set_row(53, 14.4)
+            
+            sheet.insert_image(1, 2, "logo", {'image_data': img_io_R, 'x_offset': 0, 'y_offset': 0})
+            # y,x,y,x
+            sheet.merge_range(1, 5, 3, 11, "商品仕様書", format_sheet_title) 
+            sheet.merge_range(2, 43, 2, 48, so.sale_order_current_date if so.sale_order_current_date else "", format_date)
+            sheet.merge_range(5, 2, 5, 3, "件名", format_text)
+            sheet.merge_range(5, 4, 5, 48, so.title if so.title else "", format_text_14)
+            
+            pagebreaks = 0    
 
-            sheet_main.merge_range((count * 52) + 31, 2, count * 52 + 36, 3, "", merge_format)
-            sheet_main.merge_range((count * 52) + 31, 7, count * 52 + 36, 8, "", merge_format)
-            sheet_main.merge_range((count * 52) + 31, 12, count * 52 + 36, 13, "", merge_format)
-            sheet_main.merge_range((count * 52) + 31, 17, count * 52 + 36, 18, "", merge_format)
-
-            sheet_main.merge_range((count * 52) + 39, 0, count * 52 + 44, 1, "", merge_format)
-            sheet_main.merge_range((count * 52) + 39, 5, count * 52 + 44, 6, "", merge_format)
-            sheet_main.merge_range((count * 52) + 39, 10, count * 52 + 44, 11, "", merge_format)
-            sheet_main.merge_range((count * 52) + 39, 15, count * 52 + 44, 16, "", merge_format)
-
-            sheet_main.merge_range((count * 52) + 39, 2, count * 52 + 44, 3, "", merge_format)
-            sheet_main.merge_range((count * 52) + 39, 7, count * 52 + 44, 8, "", merge_format)
-            sheet_main.merge_range((count * 52) + 39, 12, count * 52 + 44, 13, "", merge_format)
-            sheet_main.merge_range((count * 52) + 39, 17, count * 52 + 44, 18, "", merge_format)
-
-            # #attribute detail 
-            sheet_main.merge_range((count * 52) + 37, 0, count * 52 + 38, 1, "=data!J" + str(count * 4 + 1), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 37, 5, count * 52 + 38, 6, "=data!J" + str(count * 4 + 2), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 37, 10, count * 52 + 38, 11, "=data!J" + str(count * 4 + 3), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 37, 15, count * 52 + 38, 16, "=data!J" + str(count * 4 + 4), detail_attr_format)
-
-            sheet_main.merge_range((count * 52) + 37, 2, count * 52 + 38, 3, "=data!K" + str(count * 4 + 1), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 37, 7, count * 52 + 38, 8, "=data!K" + str(count * 4 + 2), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 37, 12, count * 52 + 38, 13, "=data!K" + str(count * 4 +  3), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 37, 17, count * 52 + 38, 18, "=data!K" + str(count * 4 + 4), detail_attr_format)
-
-            sheet_main.merge_range((count * 52) + 45, 0, count * 52 + 46, 1, "=data!L" + str(count * 4 + 1), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 45, 5, count * 52 + 46, 6, "=data!L" + str(count * 4 + 2), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 45, 10, count * 52 + 46, 11, "=data!L" + str(count * 4 + 3), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 45, 15, count * 52 + 46, 16, "=data!L" + str(count * 4 + 4), detail_attr_format)
-
-            sheet_main.merge_range((count * 52) + 45, 2, count * 52 + 46, 3, "=data!M" + str(count * 4 + 1), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 45, 7, count * 52 + 46, 8, "=data!M" + str(count * 4 +2), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 45, 12, count * 52 + 46, 13, "=data!M" + str(count * 4 +  3), detail_attr_format)
-            sheet_main.merge_range((count * 52) + 45, 17, count * 52 + 46, 18, "=data!M" + str(count * 4 + 4), detail_attr_format)
-
-            sheet.write(count, 5, " ", wrap_format)
-            sheet.write(count, 6, " ", wrap_format)
-            sheet.write(count, 7, " ", wrap_format)
-            sheet.write(count, 8, " ", wrap_format)
-
-            sheet.write(count, 9, " ", wrap_format)
-            sheet.write(count, 10, " ", wrap_format)
-            sheet.write(count, 11, " ", wrap_format)
-            sheet.write(count, 12, " ", wrap_format)
-        count = 0  
-
-        for sale_order in lines:
-            sale_order_lines=self.find_sale_order_line(sale_order.id)
-            if sale_order_lines :
-                for index,sl in enumerate(sale_order_lines.filtered(lambda x: not x.is_pack_outside)):
-                    #sl.product_id.product_tmpl_id.type != 'service' (case order line has down payment)
-                    #sl.display_type != 'line_note' (case order line has line note)
-                    if sl.product_id.product_tmpl_id.type != 'service' and sl.display_type != 'line_note':
-                        categ_name=""
-                        p_type=""
-                        product_no='=""'
-                        qty='=""'
+            if so.order_line:
+                length = len(so.order_line.filtered(lambda x: not x.is_pack_outside))
+                
+                if length > 0:
+                    more_height = 0 
+                    for i,sol in enumerate(so.order_line.filtered(lambda x: not x.is_pack_outside)):
+                        height = 0
+                        width = 0
+                        i = i+1
                         
-                        if sl.sale_order_name:
-                            categ_name = sl.sale_order_name
+                        if i % 4 == 1:
+                            height = 0
+                            width = 0
+                        elif i % 4 == 2:
+                            width = 24 
+                        elif i % 4 == 3:
+                            height = 23
+                        elif i % 4 == 0:
+                            height = 23
+                            width = 24 
                         
+                        # border
+                        sheet.merge_range(6 + height + more_height, 2 + width, 6 + height + more_height, 22 + width, "", format_border)
+                        sheet.merge_range(8 + height + more_height, 2 + width, 8 + height + more_height, 22 + width, "", format_border)
+                        sheet.merge_range(17 + height + more_height, 2 + width, 17 + height + more_height, 14 + width, "", format_border)
+                        sheet.merge_range(22 + height + more_height, 2 + width, 22 + height + more_height, 14 + width, "", format_border)
+                        sheet.merge_range(27 + height + more_height, 2 + width, 27 + height + more_height, 22 + width, "", format_border)
+                                        
+                        sheet.merge_range(6 + height + more_height, 1 + width, 27 + height + more_height, 1 + width, "", format_border)
+                        sheet.merge_range(6 + height + more_height, 23 + width, 27 + height + more_height, 23 + width, "", format_border)
+                                        
+                        sheet.merge_range(9 + height + more_height, 8 + width, 16 + height + more_height, 8 + width, "", format_border)
+                        sheet.merge_range(18 + height + more_height, 8 + width, 21 + height + more_height, 8 + width, "", format_border)
+                        sheet.merge_range(23 + height + more_height, 8 + width, 26 + height + more_height, 8 + width, "", format_border)
+                                        
+                        sheet.merge_range(9 + height + more_height, 15 + width, 26 + height + more_height, 15 + width, "", format_border)
+                        
+                        # name product
+                        sheet.merge_range(7 + height + more_height, 2 + width, 7 + height + more_height, 22 + width, sol.name if sol.name else "", format_text_12)
+                        
+                        # all 12 attribute
+                        sheet.merge_range(9 + height + more_height, 16 + width, 23 + height + more_height , 22 + width , sol.sale_order_all_attribute if sol.sale_order_all_attribute else "", format_text_top)
+                        
+                        # price and size
+                        price_and_size = ""
+                        price = ""
+                        size = ""
+                        
+                        price += '定価：' + str('{0:,.0f}'.format(sol.price_subtotal))
+                        
+                        if sol.currency_id.symbol:
+                            price += sol.currency_id.symbol
                             
-                        if sl.p_type:
-                            if sl.p_type == "special":
-                                p_type = "別注"
-                            elif sl.p_type == "custom":
-                                p_type = "特注"    
-                        if sl.product_id.product_tmpl_id.product_no:
-                            product_no = sl.product_id.product_tmpl_id.product_no 
-                        if sl.product_uom_qty:
-                            qty = str(int(sl.product_uom_qty))
-
-                        sheet.write(index, 0,qty, qty_format)
-                        sheet.write(index, 1, categ_name + " " + p_type, categ_name_format)
-                        sheet.write(index, 2,product_no, product_no_format)
-
-                        if sl.product_id.image_256:
-                            image_product_db = base64.b64decode(sl.product_id.image_256)
+                        if sol.product_size:
+                            size = sol.product_size
+                        
+                        price_and_size += price + '\n'+ 'サイズ：' + size 
+                        
+                        sheet.merge_range(24 + height + more_height, 16 + width, 26 + height + more_height, 22 + width , price_and_size if price_and_size else "", format_text_top_size9)
+                        
+                        #empty bg image 1 
+                        sheet.merge_range(9 + height + more_height, 2 + width, 16 + height + more_height, 7 + width , "", format_text)
+                        #empty bg  image 2 
+                        sheet.merge_range(9 + height + more_height, 9 + width, 16 + height + more_height, 14 + width , "", format_text)
+                        
+                        #empty bg image attribute1 
+                        sheet.merge_range(18 + height + more_height, 2 + width, 21 + height + more_height, 4 + width , "", format_text)
+                        #empty bg image attribute2
+                        sheet.merge_range(18 + height + more_height, 9 + width, 21 + height + more_height, 11 + width , "", format_text)
+                        #empty bg image attribute3
+                        sheet.merge_range(23 + height + more_height, 2 + width, 26 + height + more_height, 4 + width , "", format_text)
+                        #empty bg image attribute4
+                        sheet.merge_range(23 + height + more_height, 9 + width, 26 + height + more_height, 11 + width , "", format_text)
+                        
+                        #empty bg text attribute1 
+                        sheet.merge_range(18 + height + more_height, 5 + width, 21 + height + more_height, 7 + width , "", format_text)
+                        #empty bg text attribute2
+                        sheet.merge_range(18 + height + more_height, 12 + width, 21 + height + more_height, 14 + width , "", format_text)
+                        #empty bg text attribute3
+                        sheet.merge_range(23 + height + more_height, 5 + width, 26 + height + more_height, 7 + width , "", format_text)
+                        #empty bg text attribute4
+                        sheet.merge_range(23 + height + more_height, 12 + width, 26 + height + more_height, 14 + width , "", format_text)
+                        
+                        
+                        # big image 1
+                        if sol.product_id.image_256:
+                            image_product_db = base64.b64decode(sol.product_id.image_256)
                             if image_product_db:
                                 image = Image.open(io.BytesIO(image_product_db))
-                                image_path = os.path.join(image_product, f"{sl.id}.png")
+                                image_path = os.path.join(image_product, f"sol_{sol.id}_big_img2.png")
                                 image.save(image_path, 'PNG')
                                 img = PILImage.open(image_path)
                                 img = img.convert('RGB')
-                                img = img.resize((252, 252))
-                                img_io = BytesIO()
-                                img.save(img_io, 'JPEG')
-                                img_io.seek(2)
-
-                                count = index // 4  # col number attribute, even when past 4 col so count + 1
-                                row = 10 + count * 52
-                                col = (index % 4) * 5
-
-                                sheet_main.insert_image(row,col,"test",{'image_data': img_io})
+                                img = img.resize((185, 110))
+                                big_img_2 = BytesIO()
+                                img.save(big_img_2, 'JPEG')
+                                big_img_2.seek(2)
+                                sheet.insert_image(10 + height + more_height, 2 + width,"test",{'image_data': big_img_2,'x_offset': 0.5, 'y_offset': 0})  
                                 
-                        attributes = sl.product_id.product_template_attribute_value_ids
-
-                        size_detail = ""
-                        if sl.product_id.product_tmpl_id.width:
-                            size_detail += "W" + str(sl.product_id.product_tmpl_id.width) + "*"
-                        if sl.product_id.product_tmpl_id.depth:
-                            size_detail += "D" + str(sl.product_id.product_tmpl_id.depth) + "*"
-                        if sl.product_id.product_tmpl_id.height:
-                            size_detail += "H" + str(sl.product_id.product_tmpl_id.height) + "*"
-                        if sl.product_id.product_tmpl_id.sh:
-                            size_detail += "SH" + str(sl.product_id.product_tmpl_id.sh) + "*"
-                        if sl.product_id.product_tmpl_id.ah:
-                            size_detail += "AH" + str(sl.product_id.product_tmpl_id.ah)
-
-                        attr=""
-                        if attributes:
-                            for attribute in attributes :
-                                attr += attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" 
-                            attr += size_detail
-                            sheet.write(index, 4, attr, wrap_format)
+                        # big image 2
+                        if sol.item_sale_attach_ids and sol.item_sale_attach_ids[0] and sol.item_sale_attach_ids[0].attach_file:
+                            image_product_db = base64.b64decode(sol.item_sale_attach_ids[0].attach_file)
+                            if image_product_db:
+                                image = Image.open(io.BytesIO(image_product_db))
+                                image_path = os.path.join(image_product, f"sol_{sol.id}_big_img1.png")
+                                image.save(image_path, 'PNG')
+                                img = PILImage.open(image_path)
+                                img = img.convert('RGB')
+                                img = img.resize((164, 110))
+                                big_img_1 = BytesIO()
+                                img.save(big_img_1, 'JPEG')
+                                big_img_1.seek(2)
+                                sheet.insert_image(10 + height + more_height, 9 + width,"test",{'image_data': big_img_1,'x_offset': 10, 'y_offset': 0})    
+                                
+                        ## 4 picture + 4 attributes
+                        if sol.product_id:
                             
-                            # take first 4 element of record
-                            attrs_has_img = [x for x in sl.product_id.product_template_attribute_value_ids if x.product_attribute_value_id.image][:4]
-
-                            if attrs_has_img:
-                                for index2,attr_img in enumerate(attrs_has_img) : 
-                                    image_attr_db= base64.b64decode(attr_img.product_attribute_value_id.image)
+                            attr_child_count = 0
+                            attr_child_ids =[]
+                            img_attr = None
+                            attr = ""
+                            for parent_attr in sol.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id'):
+                                if attr_child_count >= 4:
+                                    break
+                                if parent_attr.id in attr_child_ids or not parent_attr.image:
+                                    for child_attr in parent_attr.child_attribute_ids:
+                                        if child_attr.image and child_attr.mapped('child_attribute_id') in sol.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id'):
+                                            attr_child_count += 1
+                                            attr_child_ids.append(child_attr.child_attribute_id.id)
+                                            # attributes picture            
+                                            image_attr_db= base64.b64decode(child_attr.image)
+                                            image = Image.open(io.BytesIO(image_attr_db))
+                                            path = os.path.join(image_attribute_product, f"sol_{sol.id}_attr_{attr_child_count}.png")
+                                            image.save(path, 'PNG')
+                                            img = PILImage.open(path)
+                                            img = img.convert('RGB')
+                                            img = img.resize((70, 60))
+                                            img_attr = BytesIO()
+                                            img.save(img_attr, 'JPEG')
+                                            img_attr.seek(2)
+                                            # attributes value
+                                            attr = child_attr.child_attribute_id.attribute_id.name + ":" + "\n" + child_attr.child_attribute_id.name
+                                else:
+                                    attr_child_count += 1
+                                    # attributes picture            
+                                    image_attr_db= base64.b64decode(parent_attr.image)
                                     image = Image.open(io.BytesIO(image_attr_db))
-                                    path = os.path.join(image_attribute_product, f"{sl.id}_{index2}.png")
+                                    path = os.path.join(image_attribute_product, f"sol_{sol.id}_attr_{attr_child_count}.png")
                                     image.save(path, 'PNG')
                                     img = PILImage.open(path)
                                     img = img.convert('RGB')
-                                    img = img.resize((125, 125))
-                                    img_io = BytesIO()
-                                    img.save(img_io, 'JPEG')
-                                    img_io.seek(2)
-
-                                    # loop image with recipe
-                                    count_attr_img = index // 4  
-                                    row_attr_img = 31 + count_attr_img * 52
-                                    col_attr_img = (index % 4)*5
-
-                                    if index2 == 1:
-                                        col_attr_img += 2
-                                    elif index2 == 2:
-                                        row_attr_img +=8
-                                    elif index2 == 3:
-                                        row_attr_img +=8
-                                        col_attr_img += 2
+                                    img = img.resize((70, 60))
+                                    img_attr = BytesIO()
+                                    img.save(img_attr, 'JPEG')
+                                    img_attr.seek(2)
+                                    # attributes value
+                                    attr = parent_attr.attribute_id.name + ":" + "\n" + parent_attr.name
                                     
-                                    # image attribute 
-                                    sheet_main.insert_image(row_attr_img, col_attr_img,"test",{'image_data': img_io})
-                                    sheet.write(count, 5, " ", wrap_format)
-                                    sheet.write(count, 6, " ", wrap_format)
-                                    sheet.write(count, 7, " ", wrap_format)
-                                    sheet.write(count, 8, " ", wrap_format)
-                                    # detail attribute 
-                                    if attr_img.attribute_id.name and attr_img.product_attribute_value_id.name:
-                                        sheet.write(index, index2+9,attr_img.attribute_id.name + ":" + attr_img.product_attribute_value_id.name + "\n", detail_attr_format)    
-                        else:
-                            sheet.write(index, 4, " ", wrap_format)
-                        
-    def find_sale_order_line(self,order_id):
-        return self.env["sale.order.line"].search([("order_id", "=", order_id)])
+                                att_height = 0
+                                att_width = 0
+                                if attr_child_count == 2:
+                                    att_width = 7
+                                elif attr_child_count == 3:
+                                    att_height = 5
+                                elif attr_child_count == 4:
+                                    att_height = 5
+                                    att_width = 7
+                                # attributes picture write excel             
+                                sheet.insert_image(18 + att_height + height + more_height, 2 + att_width + width , "attribute_img", {'image_data': img_attr,'x_offset': 11, 'y_offset': 7})    
+                                # attributes value write excel 
+                                sheet.write(18 + att_height + height + more_height, 5 + att_width + width, attr, format_text_center_size9)
+                                            
+                            #break page 
+                            if i % 4 == 0:
+                                pagebreaks += 52
+                                more_height += 52
+                                sheet.set_h_pagebreaks([pagebreaks])
+                                
+                                sheet.set_row(more_height + 0, 14.4)
+                                sheet.set_row(more_height + 1, 14.4)
+                                sheet.set_row(more_height + 2, 14.4)
+                                sheet.set_row(more_height + 3, 14.4)
+                                sheet.set_row(more_height + 4, 5.4)
+                                
+                                
+                                sheet.set_row(more_height + 5, 22.2)
+                                
+                                # row 7 -> row 28
+                                sheet.set_row(more_height + 6, 6)
+                                sheet.set_row(more_height + 7, 24)
+                                sheet.set_row(more_height + 8, 6)
+                                sheet.set_row(more_height + 9, 13.8)
+                                sheet.set_row(more_height + 10, 13.8)
+                                sheet.set_row(more_height + 11, 13.8)
+                                sheet.set_row(more_height + 12, 13.8)
+                                sheet.set_row(more_height + 13, 13.8)
+                                sheet.set_row(more_height + 14, 13.8)
+                                sheet.set_row(more_height + 15, 13.8)
+                                sheet.set_row(more_height + 16, 13.8)
+                                sheet.set_row(more_height + 17, 6)
+                                sheet.set_row(more_height + 18, 13.8)
+                                sheet.set_row(more_height + 19, 13.8)
+                                sheet.set_row(more_height + 20, 13.8)
+                                sheet.set_row(more_height + 21, 13.8)
+                                sheet.set_row(more_height + 22, 6)
+                                sheet.set_row(more_height + 23, 13.8)
+                                sheet.set_row(more_height + 24, 13.8)
+                                sheet.set_row(more_height + 25, 13.8)
+                                sheet.set_row(more_height + 26, 13.8)
+                                sheet.set_row(more_height + 27, 6)
+                                
+                                # space
+                                sheet.set_row(more_height + 28, 10.8)
+                                
+                                # row 30 -> row 51
+                                sheet.set_row(more_height + 29, 6)
+                                sheet.set_row(more_height + 30, 24)
+                                sheet.set_row(more_height + 31, 6)
+                                sheet.set_row(more_height + 32, 13.8)
+                                sheet.set_row(more_height + 33, 13.8)
+                                sheet.set_row(more_height + 34, 13.8)
+                                sheet.set_row(more_height + 35, 13.8)
+                                sheet.set_row(more_height + 36, 13.8)
+                                sheet.set_row(more_height + 37, 13.8)
+                                sheet.set_row(more_height + 38, 13.8)
+                                sheet.set_row(more_height + 39, 13.8)
+                                sheet.set_row(more_height + 40, 6)
+                                sheet.set_row(more_height + 41, 13.8)
+                                sheet.set_row(more_height + 42, 13.8)
+                                sheet.set_row(more_height + 43, 13.8)
+                                sheet.set_row(more_height + 44, 13.8)
+                                sheet.set_row(more_height + 45, 6)
+                                sheet.set_row(more_height + 46, 13.8)
+                                sheet.set_row(more_height + 47, 13.8)
+                                sheet.set_row(more_height + 48, 13.8)
+                                sheet.set_row(more_height + 49, 13.8)
+                                sheet.set_row(more_height + 50,6)
+                                
+                                sheet.set_row(more_height + 51, 13.8)
+                                sheet.set_row(more_height + 52, 14.4)
+                                sheet.set_row(more_height + 53, 14.4)
+                                
+                                sheet.insert_image(more_height + 1, 2, "logo", {'image_data': img_io_R, 'x_offset': 0, 'y_offset': 0})
+                                # y,x,y,x
+                                sheet.merge_range(more_height + 1, 5, more_height + 3, 11, "商品仕様書", format_sheet_title) 
+                                sheet.merge_range(more_height + 2, 43,more_height + 2, 48, so.sale_order_current_date if so.sale_order_current_date else "", format_date)
+                                sheet.merge_range(more_height + 5, 2, more_height + 5, 3, "件名", format_text)
+                                sheet.merge_range(more_height + 5, 4, more_height + 5, 48, so.title if so.title else "", format_text_14)

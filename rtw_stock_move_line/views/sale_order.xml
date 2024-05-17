@@ -5,12 +5,11 @@
             <field name="name">Sale Order RTW Stock Move Line</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
-            <field name="priority">2</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="delivery_confirmation" string="Delivery confirmation"/>
                 </xpath>
-                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']"
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']"
                        position="after">
                     <field name="remarks"/>
                 </xpath>

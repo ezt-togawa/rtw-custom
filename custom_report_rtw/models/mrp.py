@@ -67,7 +67,38 @@ class MrpProduction(models.Model):
       compute="_compute_mrp_production_date_planned_start"
   )
   
+  mrp_production_order_line = fields.One2many(
+      'sale.order.line',
+      compute="_compute_mrp_production_order_line"
+  )
+  
   mrp_product_product_qty = fields.Char(string="mrp product product qty" , compute="_compute_mrp_product_product_qty")
+  
+  def _compute_mrp_production_order_line(self):
+     for record in self:      
+       sale_order_line = False
+       search_criteria = [ #limit 10 times
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+       ]
+
+       for search in search_criteria: #find sale_order_line
+           if self.env['sale.order.line'].search([search]):
+               sale_order_line = self.env['sale.order.line'].search([search])
+               break
+           
+       if sale_order_line:
+           record.mrp_production_order_line = sale_order_line
+       else:
+          record.mrp_production_order_line = False
   
   def _compute_mrp_product_product_qty(self):
       for line in self:
@@ -150,8 +181,9 @@ class MrpProduction(models.Model):
         
         detail = ""
         name = ""
+        summary = ""
         size = ""
-        type = ""      
+        type = ""
         if prod: 
             prod_tmpl = prod.product_tmpl_id
             if prod_tmpl:
@@ -162,25 +194,26 @@ class MrpProduction(models.Model):
                         name = prod_tmpl.name   
                 else:
                     name = prod_tmpl.name
-                    
-                if prod_tmpl.width:
-                    size += "W" + str(prod_tmpl.width) + "*"
-                if prod_tmpl.depth:
-                    size += "D" + str(prod_tmpl.depth) + "*"
-                if prod_tmpl.height:
-                    size += "H" + str(prod_tmpl.height) + "*"
-                if prod_tmpl.sh:
-                    size += "SH" + str(prod_tmpl.sh) + "*"
-                if prod_tmpl.ah:
-                    size += "AH" + str(prod_tmpl.ah)
-                size = size.rstrip("*")
-                     
+            if prod.summary:
+                summary = prod.summary
+                
+        if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
+            size += line.mrp_production_order_line.product_size
+            
         type = line.mrp_product_type
             
-        if name and type :
+        if name and summary and type :
+            detail += name +'\n' + summary +'\n' + type
+        elif name and summary:
+            detail += name +'\n' + summary
+        elif name and type:
             detail += name +'\n' + type
+        elif summary and type:
+            detail += summary +'\n' + type
         elif name :
-            detail += name
+            detail += name 
+        elif name :
+            summary += summary
         elif type :
             detail += type 
                 

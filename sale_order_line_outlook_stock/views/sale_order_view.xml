@@ -62,7 +62,6 @@
                 expr="/tree/field[@name='product_qty']"
                 position="after">
                 <field name="id" invisible="1" />
-                <field name="priority_sort" invisible="1"/>
                 <field name="bom_product_template_attribute_value_ids" string="Apply on Variants"
                     widget="many2many_tags" options="{'no_create': True}"
                     groups="product.group_product_variant" />

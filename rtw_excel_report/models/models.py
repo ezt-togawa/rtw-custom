@@ -817,6 +817,10 @@ class SaleOrderLineExcelReport(models.Model):
         compute="_compute_sale_order_product_detail",
         string="仕様・詳細",
     )
+    sale_order_all_attribute = fields.Char(
+        compute="_compute_sale_order_all_attribute",
+        string="All attributes",
+    )
 
     sale_order_sell_unit_price = fields.Char(
         compute="_compute_sale_order_sell_unit_price",
@@ -956,38 +960,13 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_order_number_and_size(self):
         for line in self:
             product_number_and_size = ""
-            if line.product_id and line.product_id.product_tmpl_id:
-                if line.product_id.product_tmpl_id.product_no:
-                    product_number_and_size += (
-                        str(line.product_id.product_tmpl_id.product_no) + "\n"
-                    )
-
-                if line.product_id.product_tmpl_id.width:
-                    product_number_and_size += (
-                        "W" + str(int(line.product_id.product_tmpl_id.width)) + "*"
-                    )
-
-                if line.product_id.product_tmpl_id.depth:
-                    product_number_and_size += (
-                        "D" + str(int(line.product_id.product_tmpl_id.depth)) + "*"
-                    )
-
-                if line.product_id.product_tmpl_id.height:
-                    product_number_and_size += (
-                        "H" + str(int(line.product_id.product_tmpl_id.height)) + "*"
-                    )
-
-                if line.product_id.product_tmpl_id.sh:
-                    product_number_and_size += (
-                        "SH" + str(int(line.product_id.product_tmpl_id.sh)) + "*"
-                    )
-
-                if line.product_id.product_tmpl_id.ah:
-                    product_number_and_size += (
-                        "AH" + str(int(line.product_id.product_tmpl_id.ah)) + "*"
-                    )
-            product_number_and_size = product_number_and_size.rstrip("*")
-            line.sale_order_number_and_size = product_number_and_size
+            if line.product_id and line.product_id.product_tmpl_id and line.product_id.product_tmpl_id.product_no:
+                product_number_and_size += str(line.product_id.product_tmpl_id.product_no) + "\n"
+                
+            if line.product_size:
+                product_number_and_size += line.product_size
+                
+            line.sale_order_number_and_size = product_number_and_size.rstrip("\n")
 
     def _compute_sale_order_product_detail(self):
         for line in self:
@@ -995,13 +974,15 @@ class SaleOrderLineExcelReport(models.Model):
             attr_cfg = ""
             attributes = line.product_id.product_template_attribute_value_ids  #attr default
             attributes_cfg=line.config_session_id.custom_value_ids             #attr custom 
+            length_normal = len(attributes)
+            
             if attributes:
-                if len(attributes) < 6:
+                if length_normal < 6:
                     for attribute in attributes:
                         attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
                     if attributes_cfg:
                         count_cfg = 0 
-                        count_attr = len(attributes)
+                        count_attr = length_normal
                         for cfg in attributes_cfg:
                             if count_attr >= 6 :
                                 break
@@ -1012,7 +993,9 @@ class SaleOrderLineExcelReport(models.Model):
                             
                         for cfg2 in attributes_cfg[count_cfg:(6+count_cfg)]:
                             attr_cfg += ("● " + cfg2.display_name  + ":" + cfg2.value  + "\n" )
-                elif len(attributes) == 6 :
+                elif length_normal == 6 :
+                    for attribute in attributes:
+                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
                     if attributes_cfg:                            
                         for cfg in attributes_cfg:
                             attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
@@ -1020,10 +1003,10 @@ class SaleOrderLineExcelReport(models.Model):
                     for attribute in attributes[:6]:
                         attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
                     start = 6   
-                    for attribute in attributes[6:12]:
+                    for attribute in attributes[6:length_normal]:
                         attr_cfg +=  ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
                         start += 1
-                    if len(attributes) < 12 : 
+                    if length_normal < 12 : 
                         if attributes_cfg:
                             for cfg in attributes_cfg[:(12-start)]:
                                 attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
@@ -1035,10 +1018,27 @@ class SaleOrderLineExcelReport(models.Model):
                         attr_cfg += ("● " +  cfg.display_name  + ":" + cfg.value  + "\n" )
                         
             attr = attr.rstrip()
-            attr_cfg = attr_cfg.rstrip() 
+            attr_cfg = attr_cfg.rstrip()
             
             line.sale_order_product_detail = attr
             line.sale_order_product_detail_2 = attr_cfg
+            
+    def _compute_sale_order_all_attribute(self):
+        for line in self:
+            attr = ""
+            attributes = line.product_id.product_template_attribute_value_ids  #attr default
+            attributes_cfg=line.config_session_id.custom_value_ids             #attr custom 
+            
+            if attributes:
+                for attribute in attributes:
+                    attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" ) 
+            if attributes_cfg: 
+                for cfg2 in attributes_cfg:
+                    attr += ("● " + cfg2.display_name  + ":" + cfg2.value  + "\n" )
+                        
+            attr = attr.rstrip()
+            
+            line.sale_order_all_attribute = attr
 
     def _compute_sale_order_product_summary(self):
         for line in self:
@@ -1084,62 +1084,49 @@ class SaleOrderLineExcelReport(models.Model):
     
     sale_order_line_name_excel = fields.Text(
         compute="_compute_sale_order_line_name_excel",
-        string="Name",
+        string="Name excel",
     )
-    
-    # sale_order_check_section = fields.Boolean(
-    #     compute="_compute_sale_order_name_section",
-    #     string="Name test",
-    # )
-
-    # def _compute_sale_order_name_section(self):
-    #     for line in self:
-    #         template = self.env.ref('rtw_excel_report.quotation_report_xlsx_template')
-    #         sale_order_check_section = False
-    #         if line.display_type == "line_section":
-    #             sale_order_check_section = True
-    
-    #         template.with_context({'sale_order_check_section': sale_order_check_section}).load_xlsx_template()
-    #         line.sale_order_check_section = sale_order_check_section
+    sale_order_line_name_pdf = fields.Text(
+        compute="_compute_sale_order_line_name_excel",
+        string="Name pdf",
+    )
             
     def _compute_sale_order_name(self):
         for line in self:
-            categ_name=""
-            if line.display_type == "line_section":
-                # line.sale_order_check_section = True
-                categ_name = line.name
-            elif line.display_type == "line_note" :
-                # line.sale_order_check_section = True
-                categ_name = line.name
-            else:
-                
-                if line.product_id.product_tmpl_id.config_ok :  
-                    if line.product_id.product_tmpl_id.categ_id.name:
-                        categ_name = line.product_id.product_tmpl_id.categ_id.name
-                    elif line.product_id.product_tmpl_id.product_no :
-                        categ_name = line.product_id.product_tmpl_id.product_no
-                    else: 
-                        categ_name = line.product_id.product_tmpl_id.name   
-                else:
-                    # case product is standard Prod + download payment
-                    if line.product_id.product_tmpl_id.seller_ids and line.order_id.partner_id.id:
-                        matching_sup = None  
-                        for sup in line.product_id.product_tmpl_id.seller_ids:
-                            if sup.name.id == line.order_id.partner_id.id:
-                                matching_sup = sup 
-                                break
-                        if matching_sup:
-                            product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
-                            product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
-                            categ_name = product_code + product_name
+            categ_name = ""
+            if line.display_type == "line_section" or line.display_type == "line_note":
+                categ_name = line.name if line.name else ""
+            elif line.product_id:
+                    prod_tmpl = line.product_id.product_tmpl_id
+                    if prod_tmpl:
+                        if prod_tmpl.config_ok :  
+                            if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                                categ_name = prod_tmpl.categ_id.name
+                            elif prod_tmpl.product_no :
+                                categ_name = prod_tmpl.product_no
+                            elif prod_tmpl.name  : 
+                                categ_name = prod_tmpl.name   
                         else:
-                            categ_name =  line.product_id.product_tmpl_id.name
-                    else:
-                        if line.product_id.product_tmpl_id.default_code:
-                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
-                        else:
-                            categ_name =  line.product_id.product_tmpl_id.name
-                                    
+                            if prod_tmpl.seller_ids and line.order_id and line.order_id.partner_id and line.order_id.partner_id.id:
+                                matching_sup = None  
+                                for sup in prod_tmpl.seller_ids:
+                                    if sup.name and sup.name.id and sup.name.id == line.order_id.partner_id.id:
+                                            matching_sup = sup 
+                                            break
+                                if matching_sup:
+                                    product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                                    product_name = matching_sup.product_name if matching_sup.product_name else ''
+                                    categ_name = product_code + product_name
+                                else:
+                                    categ_name =  prod_tmpl.name
+                            else:
+                                if prod_tmpl.default_code and prod_tmpl.name: 
+                                    categ_name = "[" + str(prod_tmpl.default_code) + "]" + prod_tmpl.name
+                                elif prod_tmpl.default_code :
+                                    categ_name = "[" + str(prod_tmpl.default_code) + "]"
+                                elif prod_tmpl.name :
+                                    categ_name = prod_tmpl.name
+                                            
             p_type = ""
             if line.p_type:
                 if line.p_type == "special":
@@ -1147,44 +1134,21 @@ class SaleOrderLineExcelReport(models.Model):
                 elif line.p_type == "custom":
                     p_type = "特注"
 
-            size_detail = ""
-            # if line.product_id.product_tmpl_id.width:
-            #     size_detail += "W" + str(line.product_id.product_tmpl_id.width) + "*"
-            # if line.product_id.product_tmpl_id.depth:
-            #     size_detail += "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-            # if line.product_id.product_tmpl_id.height:
-            #     size_detail += "H" + str(line.product_id.product_tmpl_id.height) + "*"
-            # if line.product_id.product_tmpl_id.sh:
-            #     size_detail += "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-            # if line.product_id.product_tmpl_id.ah:
-            #     size_detail += "AH" + str(line.product_id.product_tmpl_id.ah)
-
-            prod=""
-            if isinstance(categ_name, bool):
-                categ_name = "" 
-            if categ_name != "" :
-                if p_type !="":
-                    prod+= categ_name+ "\n" +p_type
-                    if size_detail != "" :
-                        prod+=  "\n" + size_detail
-                else:
-                    prod+= categ_name
-                    if size_detail != "" :
-                        prod+= "\n" +size_detail
-            else:
-                if p_type !="":
-                    prod+= p_type
-                    if size_detail != "" :
-                        prod+=  "\n" + size_detail
-                else:
-                    if size_detail != "" :
-                        prod+= "\n" +size_detail
+            prod = "" 
+            if categ_name and p_type:
+                prod += categ_name + "\n" + p_type
+            elif categ_name:
+                prod += categ_name
+            elif p_type:
+                prod += p_type
                         
-            line.sale_order_name = str(prod)        
+            line.sale_order_name = prod   
+            
     def _compute_sale_order_line_name_excel(self):
         for line in self:
             categ_name = ""
             prod = line.product_id
+            summary = ""
             if prod:
                 prod_tmpl = prod.product_tmpl_id
                 if prod_tmpl.config_ok:  
@@ -1196,6 +1160,9 @@ class SaleOrderLineExcelReport(models.Model):
                         categ_name = prod_tmpl.name   
                 elif line.name:
                     categ_name = line.name
+                
+                if prod_tmpl.summary:
+                    summary = prod_tmpl.summary
                         
             p_type = ""
             if line.p_type == "special":
@@ -1204,14 +1171,23 @@ class SaleOrderLineExcelReport(models.Model):
                 p_type = "特注"
                     
             detail = ""
-            if categ_name and p_type:
+            if categ_name and summary and p_type:
+                detail = categ_name + "\n" + summary + "\n" + p_type
+            elif categ_name and summary:
+                detail = categ_name + "\n" + summary
+            elif categ_name and p_type:
                 detail = categ_name + "\n" + p_type
+            elif summary and p_type:
+                detail = summary + "\n" + p_type 
             elif categ_name:
                 detail = categ_name 
+            elif summary:
+                detail = summary 
             elif p_type:
                 detail = p_type 
 
             line.sale_order_line_name_excel = detail       
+            line.sale_order_line_name_pdf = categ_name       
 class StockPickingExcelReport(models.Model):
     _inherit = "stock.picking"
 
@@ -1679,7 +1655,6 @@ class StockMoveExcelReport(models.Model):
             
             prod = line.product_id
             categ_name = ""
-            other_size = ""
             
             if prod:
                 prod_tmpl = prod.product_tmpl_id
@@ -1695,18 +1670,7 @@ class StockMoveExcelReport(models.Model):
                         categ_name = prod_name
                 elif line.description_picking:
                     categ_name =  line.description_picking
-                        
-                if prod_tmpl.width:
-                    other_size += "W" + str(prod_tmpl.width) + "*"
-                if prod_tmpl.depth:
-                    other_size += "D" + str(prod_tmpl.depth) + "*"
-                if prod_tmpl.height:
-                    other_size += "H" + str(prod_tmpl.height) + "*"
-                if prod_tmpl.sh:
-                    other_size += "SH" + str(prod_tmpl.sh) + "*"
-                if prod_tmpl.ah:
-                    other_size += "AH" + str(prod_tmpl.ah)
-                
+                    
                 if prod.product_template_attribute_value_ids:
                     for attribute_value in prod.product_template_attribute_value_ids:
                         attribute_name = attribute_value.attribute_id.name
@@ -1716,8 +1680,9 @@ class StockMoveExcelReport(models.Model):
                             line.product_attribute += (
                                 f"{attribute_name}:{attribute_value_name}\n"
                             )
-                    
-            other_size = other_size.rstrip('*')
+            other_size = ""
+            if line.sale_line_id and line.sale_line_id.product_size:
+                other_size = line.sale_line_id.product_size
                     
             p_type = ""            
             if line.p_type == "special":
@@ -2083,7 +2048,12 @@ class AccountMoveLineExcelReport(models.Model):
     
     acc_line_name = fields.Char(
         compute="_compute_acc_line_name",
-        string="acc line name",
+        string="acc line name excel",
+    )
+    
+    acc_line_name_pdf = fields.Char(
+        compute="_compute_acc_line_name",
+        string="acc line name pdf",
     )
     
     acc_line_price_subtotal = fields.Char(
@@ -2107,37 +2077,44 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_name(self):
         for line in self:
             name = ""
+            summary = ""
             if line.product_id: 
-                # case product is download payment 
-                # if line.product_id.product_tmpl_id.type == 'service':  
-                #     name = line.product_id.product_tmpl_id.name
-                # else:
-                # case product is configurable Products
-                if line.product_id.product_tmpl_id.config_ok :  
-                    if line.product_id.product_tmpl_id.categ_id.name:
-                        name = line.product_id.product_tmpl_id.categ_id.name
-                    elif line.product_id.product_tmpl_id.product_no :
-                        name = line.product_id.product_tmpl_id.product_no
-                    else: 
-                        name = line.product_id.product_tmpl_id.name   
-                else:
-                    # case product is standard Prod + download payment
-                    if line.product_id.product_tmpl_id.seller_ids and line.move_id.partner_id.id:
-                        matching_sup = None  
-                        for sup in line.product_id.product_tmpl_id.seller_ids:
-                            if sup.name.id == line.move_id.partner_id.id:
-                                matching_sup = sup 
-                                break
-                        if matching_sup:
-                            product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
-                            product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
-                            name = product_code + product_name
+                prod_tmpl = line.product_id.product_tmpl_id
+                if prod_tmpl:
+                    if prod_tmpl.config_ok:  
+                        if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                            name = prod_tmpl.categ_id.name
+                        elif prod_tmpl.product_no:
+                            name = prod_tmpl.product_no
+                        else: 
+                            name = prod_tmpl.name   
+                    else:
+                        # case product is standard Prod + download payment
+                        if prod_tmpl.seller_ids and line.move_id and line.move_id.partner_id and line.move_id.partner_id.id:
+                            matching_sup = None  
+                            for sup in prod_tmpl.seller_ids:
+                                if sup.name and sup.name.id and sup.name.id == line.move_id.partner_id.id:
+                                        matching_sup = sup 
+                                        break
+                            if matching_sup:
+                                product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                                product_name = matching_sup.product_name if matching_sup.product_name else ''
+                                name = product_code + product_name
+                            else:
+                                name =  line.name
                         else:
                             name =  line.name
-                    else:
-                        name =  line.name
-                
-            line.acc_line_name = name
+                if line.product_id.summary:
+                    summary = line.product_id.summary
+            
+            if name and summary:
+                line.acc_line_name = name + "\n"+ summary
+            elif name:
+                line.acc_line_name = name
+            elif summary:
+                line.acc_line_name = summary
+            
+            line.acc_line_name_pdf = name
             
     def _compute_acc_line_index(self):
         index = 0
@@ -2156,36 +2133,12 @@ class AccountMoveLineExcelReport(models.Model):
                 product_tmpl = prod.product_tmpl_id
                 if product_tmpl:
                     if product_tmpl.product_no:
-                        product_number_and_size += (
-                            str(product_tmpl.product_no) + "\n"
-                        )
-
-                    if product_tmpl.width:
-                        product_number_and_size += (
-                            "W" + str(product_tmpl.width) + "*"
-                        )
-
-                    if product_tmpl.depth:
-                        product_number_and_size += (
-                            "D" + str(product_tmpl.depth) + "*"
-                        )
-
-                    if product_tmpl.height:
-                        product_number_and_size += (
-                            "H" + str(product_tmpl.height) + "*"
-                        )
-
-                    if product_tmpl.sh:
-                        product_number_and_size += (
-                            "SH" + str(product_tmpl.sh) + "*"
-                        )
-
-                    if product_tmpl.ah:
-                        product_number_and_size += (
-                            "AH" + str(product_tmpl.ah) + "*"
-                        )
-            product_number_and_size = product_number_and_size.rstrip("*")
-            line.acc_line_number_and_size = product_number_and_size
+                        product_number_and_size +=  product_tmpl.product_no + "\n"
+                        
+            if line.sale_line_ids and line.sale_line_ids.product_size:
+                product_number_and_size += line.sale_line_ids.product_size
+            
+            line.acc_line_number_and_size = product_number_and_size.rstrip("\n")
                 
     def _compute_acc_line_product_detail(self):
         for line in self:
@@ -2764,7 +2717,44 @@ class PurChaseOrderLineExcelReport(models.Model):
     )
     
     purchase_order_line_product_uom_qty = fields.Char(string="sale order product uom qty" , compute="_compute_purchase_order_line_product_uom_qty")
-                
+        
+    purchase_order_prod_name = fields.Char(compute = '_compute_purchase_order_prod_name')
+    purchase_order_line_size = fields.Char(compute = '_compute_purchase_order_prod_name')
+
+    def _compute_purchase_order_prod_name(self):
+        for line in self:
+            categ_name = ""
+            size = ""
+            prod = line.product_id
+            if prod:
+                prod_tmpl = prod.product_tmpl_id
+                if prod_tmpl:
+                    if prod_tmpl.config_ok:  
+                        if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                            categ_name = prod_tmpl.categ_id.name
+                        elif prod_tmpl.product_no:
+                            categ_name = prod_tmpl.product_no
+                        elif prod_tmpl.name: 
+                            categ_name = prod_tmpl.name   
+                    elif line.name:
+                        categ_name = line.name
+                        
+                    if prod_tmpl.width:
+                        size += 'W' + str(prod_tmpl.width) + ' '
+                    if prod_tmpl.depth:
+                        size += '*D' + str(prod_tmpl.depth) + ' '
+                    if prod_tmpl.height:
+                        size += '*H' + str(prod_tmpl.height) + ' '
+                    if prod_tmpl.diameter:
+                        size += 'Φ' + str(prod_tmpl.diameter) + ' '
+                    if prod_tmpl.sh:
+                        size += 'SH' + str(prod_tmpl.sh) + ' '
+                    if prod_tmpl.ah:
+                        size += 'AH' + str(prod_tmpl.ah)
+                    
+            line.purchase_order_prod_name = categ_name
+            line.purchase_order_line_size = size.strip()
+            
     def _compute_purchase_order_line_product_uom_qty(self):
         for line in self:
             if line.display_type =='line_note' or line.display_type =='line_section':
@@ -2784,47 +2774,35 @@ class PurChaseOrderLineExcelReport(models.Model):
     def _compute_purchase_order_prod_detail(self):
         for line in self:
             product_number_and_size = ""
-            categ=""
-            if line.product_id.product_tmpl_id.categ_id.name:
-                categ += (
-                    str(line.product_id.product_tmpl_id.categ_id.name) 
-                )
-        
-            detail=""
-            if line.product_id.product_tmpl_id.width:
-                detail += (
-                    "W" + str(line.product_id.product_tmpl_id.width) + "*"
-                )
-
-            if line.product_id.product_tmpl_id.depth:
-                detail += (
-                    "D" + str(line.product_id.product_tmpl_id.depth) + "*"
-                )
-
-            if line.product_id.product_tmpl_id.height:
-                detail += (
-                    "H" + str(line.product_id.product_tmpl_id.height) + "*"
-                )
-
-            if line.product_id.product_tmpl_id.sh:
-                detail += (
-                    "SH" + str(line.product_id.product_tmpl_id.sh) + "*"
-                )
-
-            if line.product_id.product_tmpl_id.ah:
-                detail += (
-                    "AH" + str(line.product_id.product_tmpl_id.ah) + "*"
-                )
-
-            if detail != "":
-                product_number_and_size = categ + "\n" + detail
-            else:
+            categ = ""
+            size = ""
+            if line.product_id:
+                product_tmpl = line.product_id.product_tmpl_id
+                if product_tmpl:
+                    if product_tmpl.categ_id and product_tmpl.categ_id.name:
+                        categ += str(line.product_id.product_tmpl_id.categ_id.name)
+                    
+                    if product_tmpl.width:
+                        size += 'W' + str(product_tmpl.width) + ' '
+                    if product_tmpl.depth:
+                        size += '*D' + str(product_tmpl.depth) + ' '
+                    if product_tmpl.height:
+                        size += '*H' + str(product_tmpl.height) + ' '
+                    if product_tmpl.diameter:
+                        size += 'Φ' + str(product_tmpl.diameter) + ' '
+                    if product_tmpl.sh:
+                        size += 'SH' + str(product_tmpl.sh) + ' '
+                    if product_tmpl.ah:
+                        size += 'AH' + str(product_tmpl.ah)
+                        
+            if categ and size:
+                product_number_and_size = categ + "\n" + size
+            elif categ:
                 product_number_and_size = categ
+            elif size:
+                product_number_and_size = size
                 
-            if product_number_and_size:
-                line.purchase_order_prod_detail = product_number_and_size
-            else:
-                line.purchase_order_prod_detail = ""
+            line.purchase_order_prod_detail = product_number_and_size
             
     def _compute_purchase_order_index(self):
         index = 0

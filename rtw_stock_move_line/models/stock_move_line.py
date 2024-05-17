@@ -38,6 +38,22 @@ class rtw_stock_move_line(models.Model):
         compute="_get_warehouse_arrive_date" , store=True)
     mrp_production_id = fields.Char(
         string="製造オーダー", compute="_get_mrp_production_id", store=True)
+    product_package_quantity = fields.Integer(string="個口数")
+    
+    @api.onchange('product_id')
+    def product_id_change(self):
+        for record in self:
+            if record.product_id:
+                record.product_package_quantity = record.product_id.product_tmpl_id.two_legs_scale
+                
+    @api.model_create_multi
+    def create(self, vals_list):
+        mls = super().create(vals_list)
+        for move_line in mls:
+            if move_line.product_id:
+                move_line.product_package_quantity = move_line.product_id.product_tmpl_id.two_legs_scale
+        return mls
+    
     # @api.depends('product_id')
     # def _get_state(self):
     #     for rec in self:

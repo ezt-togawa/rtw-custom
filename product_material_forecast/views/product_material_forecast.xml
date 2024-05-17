@@ -16,6 +16,46 @@
             </tree>
         </field>
     </record>
+    <record id="view_order_form_bom_line_view" model="ir.ui.view">
+        <field name="name">mrp.bom.line.tree.view</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_tree_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="/tree/field[@name='product_qty']"
+                position="before">
+                <field name="available_quantity" optional="show" />
+                <field name="location_id" optional="show" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form_bom_line_view2" model="ir.ui.view">
+        <field name="name">mrp.bom.line.tree.view</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="priority">0</field>
+        <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_tree_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="/tree/field[@name='product_qty']"
+                position="after">
+                <field name="key_component" optional="show" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form_bom_line_view_filter" model="ir.ui.view">
+        <field name="name">mrp.bom.line.tree.view</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp_bom_component_menu.mrp_bom_line_view_filter" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//search/field[@name='bom_id']"
+                position="before">
+                <filter string="重要在庫" name="product_type"
+                    domain="[('key_component', '=', True)]" />
+            </xpath>
+        </field>
+    </record>
+
     <record id="action_product_material_forecast_tree" model="ir.actions.act_window">
         <field name="name">Product Material Forecast</field>
         <field name="type">ir.actions.act_window</field>

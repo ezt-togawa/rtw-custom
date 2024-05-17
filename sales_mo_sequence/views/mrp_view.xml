@@ -7,7 +7,12 @@
 		<field name="inherit_id" ref="mrp.mrp_production_form_view" />
 		<field name="arch" type="xml">
 		<xpath expr="//field[@name='bom_id']" position="after">
-				<field name="sale_reference"/>
+				<label for="sale_reference"/>
+				<div class="o_row no-gutters d-flex">
+					<field name="sale_reference"/>
+					<field name="sale_reference_title"/>
+				</div>
+				<field name="overseas"/>
 				<field name="mrp_reference"/>
 				<field name="production_type" widget="html"/>
 				<field name="production_memo"/>
