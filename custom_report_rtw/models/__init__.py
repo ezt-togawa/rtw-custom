@@ -7,3 +7,4 @@ from . import res_company
 from . import stock
 from . import mrp
 from . import purchase
+from . import err_pdf
