@@ -16,6 +16,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
     var data_template_form = null;
 
     const delivery_request = "配送作業依頼書"
+    const delivery_request_sale_pdf = "配送作業依頼書-pdf"
+    const delivery_request_sale_excel = "配送作業依頼書(EXCEL)"
     const inspection_order = "検品発注書"
     const shipping_form = "出荷依頼書"
     const purchase_order_part = "発注書(部材用）"
@@ -87,7 +89,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         '|',
                         ['module', '=', excel],
                         ['module', '=', pdf],
-                        '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|',
+                        '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|',
                         ['src', '=', quotation_excel], ['src', '=', quotation_oversea_excel], ['src', '=', list_price_quotation_excel], ['src', '=', unit_price_quotation_excel], ['src', '=', purchase_order2_pdf],
                         ['src', '=', quotation], ['src', '=', quotation_over_sea], ['src', '=', list_price_quotation], ['src', '=', unit_price_quotation],
                         ['src', '=', delivery_request], ['src', '=', inspection_order], ['src', '=', invoice], ['src', '=', shipping_form],
@@ -98,7 +100,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         ['src', '=', prod_label_sticker], ['src', '=', prod_spec_excel], ['src', '=', prod_spec_pdf],
                         ['src', '=', scheduled_arrival_list], ['src', '=', payment_schedule_list], ['src', '=', shipping_schedule_list],
                         ['src', '=', inventory_status_list], ['src', '=', supplied_parts_details], ['src', '=', WIP_document_list], ['src', '=', invoice_excel_account_move],
-                        ['src', '=', purchase_for_part_excel]
+                        ['src', '=', purchase_for_part_excel], ['src', '=', delivery_request_sale_pdf], ['src', '=', delivery_request_sale_excel]
                     ],
                     ['module', 'src', 'value'],
                 ]
@@ -188,6 +190,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     await this.english_name(purchase_order2_excel, unique_list_translated)
                     await this.english_name(invoice, unique_list_translated)
                     await this.english_name(invoice_excel, unique_list_translated)
+                    await this.english_name(delivery_request_sale_excel, unique_list_translated)
+                    await this.english_name(delivery_request_sale_pdf, unique_list_translated)
 
                     hidePrint = [
                         "Quotation / Order", "見積 / オーダ",
@@ -207,6 +211,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         purchase_order_excel, english_names[purchase_order_excel + "_pdf"], english_names[purchase_order_excel + "_excel"],
                         purchase_order2_excel, english_names[purchase_order2_excel + "_pdf"], english_names[purchase_order2_excel + "_excel"],
                         invoice_excel, english_names[invoice_excel + "_pdf"], english_names[invoice_excel + "_excel"],
+                        delivery_request_sale_excel, english_names[delivery_request_sale_excel + "_pdf"], english_names[delivery_request_sale_excel + "_excel"],
+                        delivery_request_sale_pdf, english_names[delivery_request_sale_pdf + "_pdf"], english_names[delivery_request_sale_pdf + "_excel"]
                     ]
                     hideExcel = [
                         prod_spec_excel, english_names[prod_spec_excel + "_pdf"], english_names[prod_spec_excel + "_excel"],
@@ -222,6 +228,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         purchase_order_excel, english_names[purchase_order_excel + "_pdf"], english_names[purchase_order_excel + "_excel"],
                         purchase_order2_excel, english_names[purchase_order2_excel + "_pdf"], english_names[purchase_order2_excel + "_excel"],
                         invoice_excel, english_names[invoice_excel + "_pdf"], english_names[invoice_excel + "_excel"],
+                        delivery_request_sale_excel, english_names[delivery_request_sale_excel + "_pdf"], english_names[delivery_request_sale_excel + "_excel"],
+                        delivery_request_sale_pdf, english_names[delivery_request_sale_pdf + "_pdf"], english_names[delivery_request_sale_pdf + "_excel"]
                     ]
 
                     this.props.items.print = prints.filter(val => !hidePrint.includes(val.name))
@@ -385,6 +393,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     await this.english_name(purchase_order2_excel, unique_list_translated)
                     await this.english_name(invoice, unique_list_translated)
                     await this.english_name(invoice_excel, unique_list_translated)
+                    await this.english_name(delivery_request_sale_excel, unique_list_translated)
+                    await this.english_name(delivery_request_sale_pdf, unique_list_translated)
 
                     const prod_spec_ex = [prod_spec_excel, english_names[prod_spec_excel + "_pdf"], english_names[prod_spec_excel + "_excel"]]
                     const pro_spec_pdf = [prod_spec_pdf, english_names[prod_spec_pdf + "_pdf"], english_names[prod_spec_pdf + "_excel"]]
@@ -407,21 +417,24 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     const purchase_order_pdf = [purchase_order, english_names[purchase_order + "_pdf"], english_names[purchase_order + "_excel"]]
                     const invoice_ex = [invoice_excel, english_names[invoice_excel + "_pdf"], english_names[invoice_excel + "_excel"]]
                     const invoice_pdf = [invoice, english_names[invoice + "_pdf"], english_names[invoice + "_excel"]]
+                    const delivery_ex = [delivery_request_sale_excel, english_names[delivery_request_sale_excel + "_pdf"], english_names[delivery_request_sale_excel + "_excel"]]
+                    const delivery_pdf = [delivery_request_sale_pdf, english_names[delivery_request_sale_pdf + "_pdf"], english_names[delivery_request_sale_pdf + "_excel"]]
 
-                    let split_name_excel = [...prod_spec_ex, ...quotation_ex, ...list_price_quotation_ex, ...unit_price_quotation_ex, ...purchase_order_ex, ...purchase_order2_ex, ...invoice_ex]
+                    let split_name_case1 = [...prod_spec_ex, ...quotation_ex, ...list_price_quotation_ex, ...unit_price_quotation_ex, ...purchase_order_ex, ...purchase_order2_ex, ...invoice_ex, ...delivery_ex]
+                    let split_name_case2 = [...quotation_oversea_ex]
                     let excel_arr = prints.filter(val => {
-                        if (split_name_excel.includes(val.display_name)) {
+                        if (split_name_case1.includes(val.display_name)) {
                             val.name = val.name.split("(")[0]
                             return val
                         }
-                        if (quotation_oversea_ex.includes(val.display_name)) {
+                        if (split_name_case2.includes(val.display_name)) {
                             val.name = val.name.split("-")[0]
                             return val
                         }
                     })
 
                     let showActionItem = [...action, ...excel_arr]
-                    let sortAction = ['', '', '', '', '', '', '', '', '', '', '']
+                    let sortAction = ['', '', '', '', '', '', '', '', '', '', '', '']
 
                     showActionItem.filter(val => {
                         if (val.name === "Generate a Payment Link" || val.name === "支払用リンクを生成" || val.name === "Genera link di pagamento") sortAction[0] = val
@@ -434,8 +447,9 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         if (purchase_order_ex.includes(val.display_name)) sortAction[7] = val
                         if (purchase_order2_ex.includes(val.display_name)) sortAction[8] = val
                         if (prod_spec_ex.includes(val.display_name)) sortAction[9] = val
-                        if (invoice_ex.includes(val.display_name)) sortAction[10] = val
-                        if (val.name === "Send a Cart Recovery Email" || val.name === "カートリカバリEメールを送信" || val.name === "Invia e-mail di recupero carrello") sortAction[11] = val
+                        if (delivery_ex.includes(val.display_name)) sortAction[10] = val
+                        if (invoice_ex.includes(val.display_name)) sortAction[11] = val
+                        if (val.name === "Send a Cart Recovery Email" || val.name === "カートリカバリEメールを送信" || val.name === "Invia e-mail di recupero carrello") sortAction[12] = val
                     })
                     this.props.items.action = sortAction
 
@@ -450,7 +464,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         ...invoice_excel,
                     ]
                     let showPrint = prints.filter(val => !printss.includes(val.display_name))
-                    let sortPrint = ['', '', '', '', '', '', '', '']
+                    let sortPrint = ['', '', '', '', '', '', '', '', '']
                     showPrint.filter(async val => {
                         if (quotation_pdf.includes(val.display_name)) sortPrint[0] = val
                         if (quotation_oversea_pdf.includes(val.display_name)) sortPrint[1] = val
@@ -459,7 +473,11 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         if (purchase_order_pdf.includes(val.display_name)) sortPrint[4] = val
                         if (purchase_order2_pd.includes(val.display_name)) sortPrint[5] = val
                         if (pro_spec_pdf.includes(val.display_name)) sortPrint[6] = val
-                        if (invoice_pdf.includes(val.display_name)) sortPrint[7] = val
+                        if (delivery_pdf.includes(val.display_name)) {
+                            val.name = val.name.split('-')[0]
+                            sortPrint[7] = val
+                        }
+                        if (invoice_pdf.includes(val.display_name)) sortPrint[8] = val
                     })
                     this.props.items.print = sortPrint
                 }
@@ -603,7 +621,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         '|',
                         ['module', '=', excel],
                         ['module', '=', pdf],
-                        '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|',
+                        '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|',
                         ['src', '=', quotation_excel], ['src', '=', quotation_oversea_excel], ['src', '=', list_price_quotation_excel], ['src', '=', unit_price_quotation_excel], ['src', '=', purchase_order2_pdf],
                         ['src', '=', quotation], ['src', '=', quotation_over_sea], ['src', '=', list_price_quotation], ['src', '=', unit_price_quotation],
                         ['src', '=', delivery_request], ['src', '=', inspection_order], ['src', '=', invoice], ['src', '=', shipping_form],
@@ -614,7 +632,7 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         ['src', '=', prod_label_sticker], ['src', '=', prod_spec_excel], ['src', '=', prod_spec_pdf],
                         ['src', '=', scheduled_arrival_list], ['src', '=', payment_schedule_list], ['src', '=', shipping_schedule_list],
                         ['src', '=', inventory_status_list], ['src', '=', supplied_parts_details], ['src', '=', WIP_document_list], ['src', '=', invoice_excel_account_move],
-                        ['src', '=', purchase_for_part_excel]
+                        ['src', '=', purchase_for_part_excel], ['src', '=', delivery_request_sale_pdf], ['src', '=', delivery_request_sale_excel]
                     ],
                     ['module', 'src', 'value'],
                 ]
@@ -688,6 +706,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                     await this.english_name(purchase_order2_excel, unique_list_translated)
                     await this.english_name(invoice, unique_list_translated)
                     await this.english_name(invoice_excel, unique_list_translated)
+                    await this.english_name(delivery_request_sale_excel, unique_list_translated)
+                    await this.english_name(delivery_request_sale_pdf, unique_list_translated)
 
                     hidePrint = [
                         "Quotation / Order", "見積 / オーダ",
@@ -707,6 +727,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         purchase_order_excel, english_names[purchase_order_excel + "_pdf"], english_names[purchase_order_excel + "_excel"],
                         purchase_order2_excel, english_names[purchase_order2_excel + "_pdf"], english_names[purchase_order2_excel + "_excel"],
                         invoice_excel, english_names[invoice_excel + "_pdf"], english_names[invoice_excel + "_excel"],
+                        delivery_request_sale_excel, english_names[delivery_request_sale_excel + "_pdf"], english_names[delivery_request_sale_excel + "_excel"],
+                        delivery_request_sale_pdf, english_names[delivery_request_sale_pdf + "_pdf"], english_names[delivery_request_sale_pdf + "_excel"]
                     ]
                     hideExcel = [
                         prod_spec_excel, english_names[prod_spec_excel + "_pdf"], english_names[prod_spec_excel + "_excel"],
@@ -722,6 +744,8 @@ odoo.define('print_item_to_action_item.ChangeProp', function (require) {
                         purchase_order_excel, english_names[purchase_order_excel + "_pdf"], english_names[purchase_order_excel + "_excel"],
                         purchase_order2_excel, english_names[purchase_order2_excel + "_pdf"], english_names[purchase_order2_excel + "_excel"],
                         invoice_excel, english_names[invoice_excel + "_pdf"], english_names[invoice_excel + "_excel"],
+                        delivery_request_sale_excel, english_names[delivery_request_sale_excel + "_pdf"], english_names[delivery_request_sale_excel + "_excel"],
+                        delivery_request_sale_pdf, english_names[delivery_request_sale_pdf + "_pdf"], english_names[delivery_request_sale_pdf + "_excel"]
                     ]
                     nextProps.items.print = prints.filter(val => !hidePrint.includes(val.name))
                     nextProps.items.action = action.filter(val => !hideExcel.includes(val.name))

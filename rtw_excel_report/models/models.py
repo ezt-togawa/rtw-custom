@@ -186,35 +186,123 @@ class SaleOrderExcelReport(models.Model):
     
     sale_order_transactions_term = fields.Char(string="sale order transactions term", compute="_compute_sale_order_transactions_term")
     
-    sale_order_print_staff= fields.Char(
-        "sale order print staff",
+    sale_order_print_staff = fields.Char(
+        "print staff",
         compute="_compute_print_staff",
     )        
-    sale_order_bank_name= fields.Char(
-        "sale order print staff",
+    sale_order_bank_name = fields.Char(
+        "bank name",
         compute="_compute_bank",
     )        
-    sale_order_bank_branch= fields.Char(
-        "sale order print staff",
+    sale_order_bank_branch = fields.Char(
+        "bank_branch",
         compute="_compute_bank",
     )        
-    sale_order_number_account= fields.Char(
-        "sale order print staff",
+    sale_order_number_account = fields.Char(
+        "number account",
         compute="_compute_bank",
     )    
-    sale_order_draff_invoice= fields.Char(
-        "sale order draff invoice",
+    sale_order_draff_invoice = fields.Char(
+        "draff invoice",
         compute="_compute_sale_order_draff_invoice",
     )    
-    sale_order_waypoint_name= fields.Char(
+    sale_order_waypoint_name = fields.Char(
         "waypoint name",
         compute="_compute_sale_order_waypoint",
     )    
-    sale_order_waypoint_address= fields.Char(
+    sale_order_waypoint_address = fields.Char(
         "waypoint address",
         compute="_compute_sale_order_waypoint",
     )  
+    sale_order_partner_info = fields.Char(
+        "partner information",
+        compute="_compute_sale_partner_info",
+    )  
+    sale_order_partner_address = fields.Char(
+        "partner address",
+        compute="_compute_sale_order_partner_address",
+    )  
+    sale_order_sipping_to = fields.Char(
+        "sipping to",
+        compute="_compute_sale_order_sipping_to",
+    )  
 
+    def _compute_sale_order_sipping_to(self):
+        for record in self:
+            sipping_to = ""
+            if record.sipping_to:
+                if record.sipping_to == "depo":
+                    sipping_to = "デポ入れまで"
+                if record.sipping_to == "inst":
+                    sipping_to = "搬入設置まで"
+                if record.sipping_to == "inst_depo":
+                    sipping_to = "搬入設置（デポ入）"
+                if record.sipping_to == "direct":
+                    sipping_to = "直送"
+                if record.sipping_to == 'container':
+                    record.sipping_to = 'オランダコンテナ出荷'
+                if record.sipping_to == 'pick_up':
+                    record.sipping_to = '引取'
+                if record.sipping_to == 'bring_in':
+                    record.sipping_to = '持込'
+            record.sale_order_sipping_to = sipping_to
+
+    def _compute_sale_order_partner_address(self):
+        for record in self:
+            partner_address = ""
+            partner = record.partner_id
+            if partner:         
+                if partner.zip:
+                    partner_address += partner.zip + " "
+                if record.lang_code == 'ja_JP':    
+                    if partner.state_id.name:
+                        partner_address += partner.state_id.name 
+                    if partner.city:
+                        partner_address += partner.city + " "
+                    if partner.street:
+                        partner_address += partner.street + " "
+                    if partner.street2:
+                        partner_address += partner.street2 + " "
+                else:
+                    if partner.street:
+                        partner_address += partner.street + " "
+                    if partner.street2:
+                        partner_address += partner.street2 + " "
+                    if partner.city:
+                        partner_address += partner.city + " "
+                    if partner.state_id.name:
+                        partner_address += partner.state_id.name 
+                    
+            record.sale_order_partner_address = partner_address
+            
+    def _compute_sale_partner_info(self):
+        for record in self:
+            partner_info = ""  
+            partner = record.partner_id
+            if partner:         
+                if partner.display_name:
+                    if "," in partner.display_name:
+                        partner_info += (
+                            partner.display_name.split(",")[0]
+                            + "-"
+                            + partner.display_name.split(",")[1]
+                            + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
+                                        )
+                    else:
+                        partner_info += partner.display_name + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
+                else:
+                    if partner.name:
+                        partner_info += partner.name + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
+                        
+                if partner.department:
+                    partner_info += partner.department + "-"
+                if partner.site:
+                    partner_info += partner.site + "-"
+                if record.name:
+                    partner_info += record.name
+                    
+            record.sale_order_partner_info = partner_info
+            
     def _compute_bank(self):
         for record in self:
             if record.lang_code =="en_US":
@@ -894,7 +982,65 @@ class SaleOrderLineExcelReport(models.Model):
         compute="_compute_sale_order_line_discount",
         string="Sale order line discount",
     )
-
+    
+    sale_line_product_uom_qty = fields.Char(string="sale_line_product_uom_qty" , compute="_compute_sale_line_product_uom_qty")
+    sale_line_calculate_packages = fields.Integer('Packages' , compute="_compute_sale_line_calculate_packages")
+    sale_line_product_pack_pdf = fields.Char(string="Calculate product pack pdf", compute="_compute_sale_line_product_pack_pdf")
+    
+    def _compute_sale_line_product_pack_pdf(self):
+        for line in self:
+                categ_name = ""
+                if line.pack_parent_line_id:
+                    prod = line.product_id
+                    if prod:
+                        prod_tmplt = prod.product_tmpl_id
+                        if prod_tmplt:
+                            if prod_tmplt.seller_ids and line.partner_id.id:
+                                matching_sup = None  
+                                for sup in prod_tmplt.seller_ids:
+                                    if sup.name.id == line.partner_id.id:
+                                        matching_sup = sup 
+                                        break
+                                if matching_sup:
+                                    product_code = ("[" + matching_sup.product_code + "]") if matching_sup.product_code else ''
+                                    product_name = matching_sup.product_name if matching_sup.product_name else ''
+                                    categ_name = product_code + product_name
+                                else:
+                                    if prod_tmplt.default_code and prod_tmplt.name:
+                                        categ_name = "[" + prod_tmplt.default_code + "]" + prod_tmplt.name
+                                    elif prod_tmplt.default_code:
+                                        categ_name = prod_tmplt.default_code 
+                                    elif prod_tmplt.name:
+                                        categ_name = prod_tmplt.name 
+                            else:
+                                if prod_tmplt.default_code and prod_tmplt.name:
+                                        categ_name = "[" + prod_tmplt.default_code + "]" + prod_tmplt.name
+                                elif prod_tmplt.default_code:
+                                    categ_name = prod_tmplt.default_code 
+                                elif prod_tmplt.name:
+                                    categ_name = prod_tmplt.name 
+                line.sale_line_product_pack_pdf = categ_name
+                
+    def _compute_sale_line_calculate_packages(self):
+        for line in self:
+            if line.product_id.two_legs_scale:
+                line.sale_line_calculate_packages =  line.product_id.two_legs_scale
+            else:
+                line.sale_line_calculate_packages = 0      
+                
+    def _compute_sale_line_product_uom_qty(self):
+        for line in self:
+            float_product_uom_qty = float(line.product_uom_qty)
+            integer_part = int(line.product_uom_qty)
+            decimal_part = round(float_product_uom_qty - integer_part,2)
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.sale_line_product_uom_qty = integer_part 
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.sale_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+                
     def _compute_sale_order_line_discount(self):
         for line in self:
             if line.discount != 0.00 or line.discount != 0.0 or line.discount != 0 :
@@ -1083,14 +1229,22 @@ class SaleOrderLineExcelReport(models.Model):
     )
     
     sale_order_line_name_excel = fields.Text(
-        compute="_compute_sale_order_line_name_excel",
+        compute="_compute_sale_order_line_name_detail",
         string="Name excel",
     )
     sale_order_line_name_pdf = fields.Text(
-        compute="_compute_sale_order_line_name_excel",
+        compute="_compute_sale_order_line_name_detail",
         string="Name pdf",
-    )
-            
+    )  
+    sale_order_line_summary_pdf = fields.Text(
+        compute="_compute_sale_order_line_name_detail",
+        string="Name pdf",
+    )  
+    sale_order_line_p_type_pdf = fields.Text(
+        compute="_compute_sale_order_line_name_detail",
+        string="Name pdf",
+    )  
+
     def _compute_sale_order_name(self):
         for line in self:
             categ_name = ""
@@ -1143,8 +1297,10 @@ class SaleOrderLineExcelReport(models.Model):
                 prod += p_type
                         
             line.sale_order_name = prod   
+            line.sale_order_line_name = categ_name   
+            line.sale_order_line_p_type = p_type   
             
-    def _compute_sale_order_line_name_excel(self):
+    def _compute_sale_order_line_name_detail(self):
         for line in self:
             categ_name = ""
             prod = line.product_id
@@ -1188,6 +1344,8 @@ class SaleOrderLineExcelReport(models.Model):
 
             line.sale_order_line_name_excel = detail       
             line.sale_order_line_name_pdf = categ_name       
+            line.sale_order_line_p_type_pdf = p_type       
+            line.sale_order_line_summary_pdf = summary       
 class StockPickingExcelReport(models.Model):
     _inherit = "stock.picking"
 
@@ -1544,30 +1702,30 @@ class StockMoveExcelReport(models.Model):
                 
     def _compute_calculate_product_pack_pdf(self):
         for line in self:
-                categ_name = ""
-                if line.product_id.product_tmpl_id.seller_ids and line.picking_id.partner_id.id:
-                    matching_sup = None  
+            categ_name = ""
+            if line.product_id.product_tmpl_id.seller_ids and line.picking_id.partner_id.id:
+                matching_sup = None  
 
-                    for sup in line.product_id.product_tmpl_id.seller_ids:
-                        if sup.name.id == line.picking_id.partner_id.id:
-                            matching_sup = sup 
-                            break
-                    if matching_sup:
-                        product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
-                        product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
-                        categ_name = product_code + product_name
-                    else:
-                        if line.product_id.product_tmpl_id.default_code:
-                            categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
-                        else:
-                            categ_name =  line.product_id.product_tmpl_id.name
+                for sup in line.product_id.product_tmpl_id.seller_ids:
+                    if sup.name.id == line.picking_id.partner_id.id:
+                        matching_sup = sup 
+                        break
+                if matching_sup:
+                    product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
+                    product_name = str(matching_sup.product_name) if matching_sup.product_name else ''
+                    categ_name = product_code + product_name
                 else:
                     if line.product_id.product_tmpl_id.default_code:
                         categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
                     else:
                         categ_name =  line.product_id.product_tmpl_id.name
-                line.calculate_product_pack_pdf =  categ_name
-           
+            else:
+                if line.product_id.product_tmpl_id.default_code:
+                    categ_name = "[" +line.product_id.product_tmpl_id.default_code +"]" + line.product_id.product_tmpl_id.name
+                else:
+                    categ_name =  line.product_id.product_tmpl_id.name
+            line.calculate_product_pack_pdf =  categ_name
+        
 
     def _compute_calculate_packages(self):
         for move in self:
