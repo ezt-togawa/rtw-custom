@@ -1,15 +1,7 @@
 <odoo>
-  <!-- <data>
-    <template id="assets_backend" inherit_id="web.assets_backend" name="Custom Assets">
-      <xpath expr="." position="inside">
-        <script type="text/javascript" src="/sale_order_approve/views/hide_print.js"></script>
-      </xpath>
-    </template>
-  </data> -->
-  <!-- <template id="custom_sale_order_action_menus" inherit_id="web.ActionMenus">
-    <xpath expr="//DropdownMenu[@title='env._t(\'Print\')']" position="replace">
+  <template id="assets_backend" name="sale_order_knowledge assets" inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+      <script type="text/javascript" src="/sale_order_knowledge/static/src/js/scroll_to_top.js"></script>
     </xpath>
-    <xpath expr="//DropdownMenu[@title='env._t(\'Action\')']" position="replace">
-    </xpath>
-  </template> -->
+  </template>
 </odoo>
