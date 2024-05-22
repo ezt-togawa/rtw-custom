@@ -2805,25 +2805,21 @@ class PurchaseOrderExcelReport(models.Model):
 
     def _compute_purchase_order_company(self):
         for record in self:
-            if record.partner_id.commercial_company_name:
-                if self.env.user.lang == 'ja_JP':
-                    record.purchase_order_company = (
-                        record.partner_id.commercial_company_name + " 御中"
-                    )
+            company = ""
+            if record.partner_id:
+                if record.lang_code == 'ja_JP':
+                    if record.partner_id.commercial_company_name:
+                        company = record.partner_id.commercial_company_name + " 御中"
+                    elif record.partner_id.name:
+                        company = record.partner_id.name + " 御中"
                 else:
-                    record.purchase_order_company = (
-                      "Dear " + record.partner_id.commercial_company_name
-                    )
-            else:
-                if self.env.user.lang == 'ja_JP':
-                    record.purchase_order_company = (
-                        record.partner_id.name + " 御中"
-                    )
-                else:
-                    record.purchase_order_company = (
-                      "Dear " + record.partner_id.name
-                    )
-
+                    if record.partner_id.commercial_company_name:
+                        company = "Dear " + record.partner_id.commercial_company_name
+                    elif record.partner_id.name:
+                        company = "Dear " + record.partner_id.name
+                    
+            record.purchase_order_company = company
+            
     def _compute_purchase_order_address_zip_city(self):
         for record in self:
             address = ""

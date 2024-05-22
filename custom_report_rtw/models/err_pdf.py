@@ -36,6 +36,6 @@ class error_export_many_pdf(models.Model):
                             allow_print = False
                             break
             if allow_print == False:
-                raise UserError('販売オーダーが複数にまたがるため出力できません。')
+                raise UserError('仕入先が複数にまたがるため出力できません。')
                 
         return res
