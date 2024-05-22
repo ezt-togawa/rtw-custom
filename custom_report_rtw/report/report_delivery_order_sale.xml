@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="report_delivery_order">
+  <template id="report_delivery_order_sale">
     <t t-call="web.html_container">
       <t t-foreach="docs" t-as="o">
         <t t-call="custom_report_rtw.so_ex_layout">
@@ -38,18 +38,15 @@
             <div class="row" style="margin-top:-50px;">
               <div class="col-4 size13">
                 <div> 発注番号 <span class="size16"
-                    t-field="docs.origin" />
+                    t-field="docs.name" />
                 </div>
                 <br />
                 <div class="d-flex"> 搬入日時 <t t-esc="' '" />
                   <span class="size14"
-                    t-if="docs.stock_picking_scheduled_date"
-                    t-esc="docs.stock_picking_scheduled_date" />
+                    t-if="docs.sale_order_warehouse_arrive_date"
+                    t-esc="docs.sale_order_warehouse_arrive_date" />
                 </div>
                 <div class="d-flex"> 入荷日 <t t-esc="' '" />
-                  <!-- <span class="size14"
-                    t-if="docs.stock_picking_scheduled_date"
-                    t-esc="docs.stock_picking_scheduled_date" /> -->
                 </div>
                 <br />
                 <div class="d-flex">
@@ -57,9 +54,9 @@
                     お届け先（物件名)
                   </div>
                   <div>
-                    <span class="size14" t-field="docs.calculate_name" />
+                    <span class="size14" t-field="docs.title" />
                     <div>
-                      <span t-field="docs.stock_picking_partner_info" />
+                      <span t-field="docs.sale_order_partner_info" />
                     </div>
                   </div>
                 </div>
@@ -73,33 +70,33 @@
                     alt="Logo" />
                 </div>
                 <div class="size12">
-                  <span t-esc="docs.sale_orders.hr_employee_company" />
+                  <span t-esc="docs.hr_employee_company" />
                 </div>
                 <div>
-                  <span t-esc="docs.sale_orders.hr_employee_department" />
+                  <span t-esc="docs.hr_employee_department" />
                 </div>
                 <div>
-                  <span t-esc="docs.sale_orders.hr_employee_zip" />
+                  <span t-esc="docs.hr_employee_zip" />
                 </div>
                 <div>
-                  <span t-esc="docs.sale_orders.hr_employee_info" />
+                  <span t-esc="docs.hr_employee_info" />
                 </div>
                 <div>
-                  <span t-esc="docs.sale_orders.hr_employee_tel" />
+                  <span t-esc="docs.hr_employee_tel" />
                 </div>
                 <div>
-                  <span t-esc="docs.sale_orders.hr_employee_fax" />
+                  <span t-esc="docs.hr_employee_fax" />
                 </div>
                 <div class="size12">
-                  <span t-esc="docs.sale_orders.hr_employee_printer" />
+                  <span t-esc="docs.hr_employee_printer" />
                 </div>
               </div>
             </div>
             <div class="row py-2 size13">
               <div class="col-6">
-                <div> 住所 <span t-esc="docs.stock_picking_partner_address" />
+                <div> 住所 <span t-esc="docs.sale_order_partner_address" />
                 </div>
-                <div> TEL／携帯 <span t-field="docs.partner_id.phone" />
+                <div> TEL／携帯 <span t-if="docs.partner_id.phone" t-field="docs.partner_id.phone" />
                   <t
                     t-if="docs.partner_id.mobile"> / <span
                       t-field="docs.partner_id.mobile" />
@@ -109,48 +106,48 @@
                 <div class="row">
                   <div class="col-6">
                     <div> 配送 <t
-                        t-if="docs.stock_picking_sipping_to"> : <span
-                          t-field="docs.stock_picking_sipping_to" />
+                        t-if="docs.sale_order_sipping_to"> : <span
+                          t-field="docs.sale_order_sipping_to" />
                       </t>
                     </div>
                     <div> デポ <t
-                        t-if="docs.sale_id.waypoint.name"> : <span
-                          t-field="docs.sale_id.waypoint.name" />
+                        t-if="docs.waypoint.name"> : <span
+                          t-field="docs.waypoint.name" />
                       </t>
                     </div>
                     <div> 配送ラベル <t
-                        t-if="docs.sale_id.shipping_to_text"> : <span
-                          t-field="docs.sale_id.shipping_to_text" />
+                        t-if="docs.shipping_to_text"> : <span
+                          t-field="docs.shipping_to_text" />
                       </t>
                     </div>
                     <div> 設置先〒 <t
-                        t-if="docs.sale_id.forwarding_address_zip"> : <span
-                          t-field="docs.sale_id.forwarding_address_zip" />
+                        t-if="docs.forwarding_address_zip"> : <span
+                          t-field="docs.forwarding_address_zip" />
                       </t>
                     </div>
                   </div>
                   <div class="col-6">
                     <div> 設置先 <t
-                        t-if="docs.sale_id.forwarding_address"> : <span
-                          t-field="docs.sale_id.forwarding_address" />
+                        t-if="docs.forwarding_address"> : <span
+                          t-field="docs.forwarding_address" />
                       </t>
                     </div>
                   </div>
                 </div>
                 <br />
                 <br />
-                <div> 搬入立会人: <span t-field="docs.calculate_witness" /> <span
-                    t-field="docs.calculate_witness_phone" />
+                <div> 搬入立会人: <span t-field="docs.witness" /> <span
+                    t-field="docs.witness_phone" />
                 </div>
               </div>
               <div class="col-6">
-                <div> 送り状注記: <span t-field="docs.note" />
+                <div> 送り状注記: <span t-field="docs.special_note" />
                 </div>
               </div>
             </div>
             <table
               class="table">
-              <t t-foreach="docs.move_ids_without_package" t-as="l" t-groupby="10"
+              <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
                 t-att-last="last">
                 <t t-if="l_index == 0">
                   <thead>
@@ -169,77 +166,36 @@
                 </t>
                 <tbody class="invoice_tbody">
                   <tr class="size13 table-border-bottom">
-                    <td t-esc="l_index+1" class="text-center size12">
+                    <td t-esc="l_index+1" class="text-center size12 six-lines">
                     </td>
                     <td class="size11">
-                      <t>
-                        <t t-if="l.product_id.product_tmpl_id.config_ok">
-                          <t t-if="l.product_id.product_tmpl_id.categ_id.name">
-                            <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                          </t>
-                          <t t-elif="l.product_id.product_tmpl_id.product_no">
-                            <span t-field="l.product_id.product_tmpl_id.product_no" />
-                          </t>
-                          <t t-else="">
-                            <span t-field="l.product_id.product_tmpl_id.name" />
-                          </t>
-                        </t>
-                        <t t-else="">
-                          <span t-field="l.product_id.product_tmpl_id.name" />
-                        </t>
-                      </t>
-                      <br />
-                      <t t-if="l.p_type == 'special'">
-                        <span>別注</span>
-                      </t>
-                      <t t-elif="l.p_type == 'custom'">
-                        <span>特注</span>
-                      </t>
+                      <div t-if="l.sale_order_line_name_pdf"
+                        t-field="l.sale_order_line_name_pdf" />
+                      <div t-if="l.sale_order_line_summary_pdf"
+                        t-field="l.sale_order_line_summary_pdf" />
+                      <div t-if="l.sale_order_line_p_type_pdf"
+                        t-field="l.sale_order_line_p_type_pdf" />
                     </td>
                     <td>
-                      <div>
-                        <t t-if="l.sale_line_id.pack_parent_line_id">
-                          <span
-                            t-field="l.calculate_product_pack_pdf"
-                          />
-                        </t>
-                      </div>
-                      <t t-if="l.sale_line_id">
-                        <span t-if="l.sale_line_id.product_size"
-                          t-esc="l.sale_line_id.product_size" />
-                      </t>
-                      <!-- <t t-if="l.product_id.width > 0">W<span
-                          t-esc="'{:.0f}'.format(l.product_id.width)" />
-                      </t>
-                      <t t-if="l.product_id.depth > 0">*D<span
-                          t-esc="'{:.0f}'.format(l.product_id.depth)" />
-                      </t>
-                      <t t-if="l.product_id.height > 0">*H<span
-                          t-esc="'{:.0f}'.format(l.product_id.height)" />
-                      </t>
-                      <t t-if="l.product_id.sh > 0"> SH<span
-                          t-esc="'{:.0f}'.format(l.product_id.sh)" />
-                      </t>
-                      <t t-if="l.product_id.ah > 0"> AH<span
-                          t-esc="'{:.0f}'.format(l.product_id.ah)" />
-                      </t> -->
+                      <div t-field="l.sale_line_product_pack_pdf" />
+                      <div t-esc="l.product_size" />
                     </td>
                     <td class="size12">
                       <t
                         t-foreach="l.product_id.product_template_attribute_value_ids"
                         t-as="string_line"> ● <span
                           t-esc="string_line.display_name" />
-                                                <br />
+                        <br />
                       </t>
                     </td>
                     <td class="text-center size14">
                       <div id="quote_qty">
-                        <span t-esc="l.stock_product_uom_qty" />
+                        <span t-esc="l.sale_line_product_uom_qty" />
                       </div>
                     </td>
                     <td class="text-center size14">
                       <div>
-                        <span t-esc="'{0:,.0f}'.format(l.calculate_packages)" />
+                        <span t-esc="'{0:,.0f}'.format(l.sale_line_calculate_packages)" />
                       </div>
                     </td>
                     <td class="text-center size13">
@@ -254,12 +210,14 @@
                 </tbody>
               </t>
             </table>
-            <div class="d-flex justify-content-end mr-5 size12"> 配送金額合計（税抜） <span
-                class="size13 bold" style="float:right"
-                t-field="docs.sale_id.amount_untaxed" />
+            <div class="d-flex justify-content-end mr-5 size12">
+              <div class="d-flex">
+                <div>配送金額合計（税抜） </div>
+                <div class="size13 bold" t-field="docs.amount_untaxed" />
+              </div>
             </div>
             <div class="d-flex justify-content-end mr-5 size12">
-              <span style="float:right" t-field="docs.sale_id.name" />
+              <span style="float:right" t-field="docs.name" />
             </div>
           </div>
           <t t-call="custom_report_rtw.page_footer_layout"></t>
@@ -267,7 +225,7 @@
       </t>
     </t>
   </template>
-  <record id="paperformat_delivery_order" model="report.paperformat">
+  <record id="paperformat_delivery_order_sale" model="report.paperformat">
     <field name="name">Delivery Order Sheet</field>
     <field name="default" eval="False" />
     <field name="format">custom</field>
@@ -283,13 +241,13 @@
     <field name="dpi">90</field>
   </record>
   <report
-    string="配送作業依頼書"
-    id="report_delivery_order_rtw"
-    model="stock.picking"
+    string="配送作業依頼書-pdf"
+    id="report_delivery_order_sale_rtw"
+    model="sale.order"
     report_type="qweb-pdf"
-    name="custom_report_rtw.report_delivery_order"
-    file="custom_report_rtw.report_delivery_order"
-    paperformat="paperformat_delivery_order"
+    name="custom_report_rtw.report_delivery_order_sale"
+    file="custom_report_rtw.report_delivery_order_sale"
+    paperformat="paperformat_delivery_order_sale"
   />
 
 </odoo>

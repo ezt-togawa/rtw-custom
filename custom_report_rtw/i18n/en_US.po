@@ -1723,6 +1723,11 @@ msgid "配送作業依頼書"
 msgstr "Delivery Work Request"
 
 #. module: custom_report_rtw
+#: model:ir.actions.report,name:custom_report_rtw.report_delivery_order_sale_rtw
+msgid "配送作業依頼書-pdf"
+msgstr "Delivery Work Request-pdf"
+
+#. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
 msgid "配送手段 : <span class=\"size16\">定期便</span>"
 msgstr "Delivery Method: <span class=\"size16\">Regular</span>"

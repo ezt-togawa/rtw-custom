@@ -407,7 +407,8 @@
                     <t t-if="docs.lang_code == 'en_US'">
                         <span class="ml-5 size15">御中 <span
                                 t-if="docs.partner_id.parent_id"
-                                t-esc="docs.partner_id.parent_id.name" /><span
+                                t-esc="docs.partner_id.parent_id.name" />
+                                <span
                                 t-if="not docs.partner_id.parent_id"
                                 t-esc="docs.partner_id.name" /> 株式会社</span>
                     </t>
@@ -420,6 +421,7 @@
                     </t>
                 </div>
                 <div class="col-4 text-right mt-2 size12">
+                    <div t-field="docs.name" />
                     <t t-if="docs.lang_code == 'en_US'">
                         <t t-esc="time.strftime('%Y-%m-%d')" />
                     </t>
