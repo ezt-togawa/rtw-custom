@@ -79,8 +79,8 @@
                             <div class="col-5">
                                 <div style="float:right;padding-right:60px;">
                                     <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
-                                    <div> 製作日数： <span t-if="docs.so_work_days"
-                                            t-esc="docs.so_work_days" /></div>
+                                    <div> 製作日数： <span t-if="docs.workday_id"
+                                            t-esc="docs.workday_id.name" /></div>
                                     <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
                                     <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
                                     <div> 支払条件：<span t-esc="docs.sale_order_transactions_term" /></div>
