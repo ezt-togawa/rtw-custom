@@ -40,7 +40,7 @@
                             'C23':'product_number_and_size${value or ""}#{style=text;fill=grey}',
                             'D23':'product_attribute#{style=text;fill=grey}',
                             'E23': 'stock_product_uom_qty${value or ""}#{style=text;fill=grey}',
-                            'F23': 'packages_number${value or ""}#{style=text;fill=grey}',
+                            'F23': 'packages_number${value or 0}#{style=text;fill=grey}',
                             'G23': 'action_packages#{style=text;fill=grey}',
                             'H23': 'action_assemble#{style=text;fill=grey}',
                             'I23': '${value or ""}#{style=text;fill=grey}',
