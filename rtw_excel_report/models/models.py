@@ -233,18 +233,18 @@ class SaleOrderExcelReport(models.Model):
             if record.sipping_to:
                 if record.sipping_to == "depo":
                     sipping_to = "デポ入れまで"
-                if record.sipping_to == "inst":
+                elif record.sipping_to == "inst":
                     sipping_to = "搬入設置まで"
-                if record.sipping_to == "inst_depo":
+                elif record.sipping_to == "inst_depo":
                     sipping_to = "搬入設置（デポ入）"
-                if record.sipping_to == "direct":
+                elif record.sipping_to == "direct":
                     sipping_to = "直送"
-                if record.sipping_to == 'container':
-                    record.sipping_to = 'オランダコンテナ出荷'
-                if record.sipping_to == 'pick_up':
-                    record.sipping_to = '引取'
-                if record.sipping_to == 'bring_in':
-                    record.sipping_to = '持込'
+                elif record.sipping_to == 'container':
+                    sipping_to = 'オランダコンテナ出荷'
+                elif record.sipping_to == 'pick_up':
+                    sipping_to = '引取'
+                elif record.sipping_to == 'bring_in':
+                    sipping_to = '持込'
             record.sale_order_sipping_to = sipping_to
 
     def _compute_sale_order_partner_address(self):
@@ -1753,7 +1753,7 @@ class StockMoveExcelReport(models.Model):
         compute="_compute_stock_move",
     )
 
-    packages_number = fields.Char(
+    packages_number = fields.Integer(
         "Number packages",
         compute="_compute_stock_move",
     )
@@ -1885,14 +1885,16 @@ class StockMoveExcelReport(models.Model):
                 line.product_number_and_size = other_size
             else:
                 line.product_number_and_size = ''
-                
-
-            if prod.two_legs_scale:
-                line.packages_number = math.ceil(
-                    line.product_uom_qty / prod.two_legs_scale
-                )
-            else:
-                line.packages_number = line.product_uom_qty
+            
+            packages_number = 0
+            move_line = self.env['stock.move.line'].search([('move_id', '=', line.id)])
+            if move_line:
+                for ml in move_line:
+                    if ml.product_package_quantity:
+                        packages_number += ml.product_package_quantity
+            elif prod.two_legs_scale:
+                packages_number = prod.two_legs_scale
+            line.packages_number = packages_number
 
             line.action_packages = "有"
             line.action_assemble = "無"

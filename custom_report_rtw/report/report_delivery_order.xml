@@ -239,7 +239,7 @@
                     </td>
                     <td class="text-center size14">
                       <div>
-                        <span t-esc="'{0:,.0f}'.format(l.calculate_packages)" />
+                        <span t-esc="'{0:,.0f}'.format(l.packages_number)" />
                       </div>
                     </td>
                     <td class="text-center size13">
