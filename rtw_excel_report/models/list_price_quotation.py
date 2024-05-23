@@ -132,7 +132,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(9,4, "備考：", format_text_right) 
             
             sheet.write(2,5, so.preferred_delivery_period if so.preferred_delivery_period else '', format_text) 
-            sheet.write(3,5, so.workdays if so.workdays else '', format_text) 
+            sheet.write(3,5, so.workday_id.name if so.workday_id else '', format_text) 
             sheet.write(4,5, so.sale_order_date_deadline if so.sale_order_date_deadline else '', format_text) 
             sheet.write(5,5, so.forwarding_address if so.forwarding_address else '', format_text) 
             sheet.write(6,5,so.sale_order_transactions_term if so.sale_order_transactions_term else '', format_text) 
