@@ -160,10 +160,11 @@
                       <th class="text-center" style="width:20%">品番・サイズ</th>
                       <th class="text-center" style="width:20%">仕様・詳細</th>
                       <th class="text-center" style="width:6%">数量</th>
-                      <th class="text-center" style="width:9%">個口数</th>
-                      <th class="text-center" style="width:6%">開梱</th>
-                      <th class="text-center" style="width:6%">組立</th>
-                      <th class="text-center" style="width:15%">配送費用</th>
+                      <th class="text-center" style="width:8%">個口数</th>
+                      <th class="text-center" style="width:5%">取説</th>
+                      <th class="text-center" style="width:5%">開梱</th>
+                      <th class="text-center" style="width:5%">組立</th>
+                      <th class="text-center" style="width:14%">配送費用</th>
                     </tr>
                   </thead>
                 </t>
@@ -208,21 +209,6 @@
                         <span t-if="l.sale_line_id.product_size"
                           t-esc="l.sale_line_id.product_size" />
                       </t>
-                      <!-- <t t-if="l.product_id.width > 0">W<span
-                          t-esc="'{:.0f}'.format(l.product_id.width)" />
-                      </t>
-                      <t t-if="l.product_id.depth > 0">*D<span
-                          t-esc="'{:.0f}'.format(l.product_id.depth)" />
-                      </t>
-                      <t t-if="l.product_id.height > 0">*H<span
-                          t-esc="'{:.0f}'.format(l.product_id.height)" />
-                      </t>
-                      <t t-if="l.product_id.sh > 0"> SH<span
-                          t-esc="'{:.0f}'.format(l.product_id.sh)" />
-                      </t>
-                      <t t-if="l.product_id.ah > 0"> AH<span
-                          t-esc="'{:.0f}'.format(l.product_id.ah)" />
-                      </t> -->
                     </td>
                     <td class="size12">
                       <t
@@ -241,6 +227,11 @@
                       <div>
                         <span t-esc="'{0:,.0f}'.format(l.packages_number)" />
                       </div>
+                    </td>
+                    <td class="text-center size14">
+                      <t t-if="l.sale_line_id.instruction_status">
+                        有
+                      </t>
                     </td>
                     <td class="text-center size13">
                       <span>有</span>

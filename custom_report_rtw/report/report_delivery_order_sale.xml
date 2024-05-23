@@ -157,10 +157,11 @@
                       <th class="text-center" style="width:20%">品番・サイズ</th>
                       <th class="text-center" style="width:20%">仕様・詳細</th>
                       <th class="text-center" style="width:6%">数量</th>
-                      <th class="text-center" style="width:9%">個口数</th>
-                      <th class="text-center" style="width:6%">開梱</th>
-                      <th class="text-center" style="width:6%">組立</th>
-                      <th class="text-center" style="width:15%">配送費用</th>
+                      <th class="text-center" style="width:8%">個口数</th>
+                      <th class="text-center" style="width:5%">取説</th>
+                      <th class="text-center" style="width:5%">開梱</th>
+                      <th class="text-center" style="width:5%">組立</th>
+                      <th class="text-center" style="width:14%">配送費用</th>
                     </tr>
                   </thead>
                 </t>
@@ -197,6 +198,11 @@
                       <div>
                         <span t-esc="'{0:,.0f}'.format(l.sale_line_calculate_packages)" />
                       </div>
+                    </td>
+                    <td class="text-center size14">
+                      <t t-if="l.instruction_status">
+                        有
+                      </t>
                     </td>
                     <td class="text-center size13">
                       <span>有</span>
