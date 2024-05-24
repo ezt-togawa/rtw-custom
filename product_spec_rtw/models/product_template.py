@@ -109,10 +109,10 @@ class SaleOrderLine(models.Model):
                 product_size += 'W' + str(self.product_id.width) + ' '
             if self.product_id.depth:
                 product_size += '*D' + str(self.product_id.depth) + ' '
-            if self.product_id.height:
-                product_size += '*H' + str(self.product_id.height) + ' '
             if self.product_id.diameter:
                 product_size += 'Φ' + str(self.product_id.diameter) + ' '
+            if self.product_id.height:
+                product_size += '*H' + str(self.product_id.height) + ' '
             if self.product_id.sh:
                 product_size += 'SH' + str(self.product_id.sh) + ' '
             if self.product_id.ah:
@@ -131,10 +131,10 @@ class SaleOrderLine(models.Model):
                 product_size += 'W' + str(product.width) + ' '
             if product.depth:
                 product_size += '*D' + str(product.depth) + ' '
-            if product.height:
-                product_size += '*H' + str(product.height) + ' '
             if product.diameter:
                 product_size += 'Φ' + str(product.diameter) + ' '
+            if product.height:
+                product_size += '*H' + str(product.height) + ' '
             if product.sh:
                 product_size += 'SH' + str(product.sh) + ' '
             if product.ah:

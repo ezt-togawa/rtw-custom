@@ -2899,10 +2899,10 @@ class PurChaseOrderLineExcelReport(models.Model):
                         size += 'W' + str(prod_tmpl.width) + ' '
                     if prod_tmpl.depth:
                         size += '*D' + str(prod_tmpl.depth) + ' '
-                    if prod_tmpl.height:
-                        size += '*H' + str(prod_tmpl.height) + ' '
                     if prod_tmpl.diameter:
                         size += 'Φ' + str(prod_tmpl.diameter) + ' '
+                    if prod_tmpl.height:
+                        size += '*H' + str(prod_tmpl.height) + ' '
                     if prod_tmpl.sh:
                         size += 'SH' + str(prod_tmpl.sh) + ' '
                     if prod_tmpl.ah:
@@ -2942,10 +2942,10 @@ class PurChaseOrderLineExcelReport(models.Model):
                         size += 'W' + str(product_tmpl.width) + ' '
                     if product_tmpl.depth:
                         size += '*D' + str(product_tmpl.depth) + ' '
-                    if product_tmpl.height:
-                        size += '*H' + str(product_tmpl.height) + ' '
                     if product_tmpl.diameter:
                         size += 'Φ' + str(product_tmpl.diameter) + ' '
+                    if product_tmpl.height:
+                        size += '*H' + str(product_tmpl.height) + ' '
                     if product_tmpl.sh:
                         size += 'SH' + str(product_tmpl.sh) + ' '
                     if product_tmpl.ah:
