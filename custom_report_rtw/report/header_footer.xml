@@ -124,7 +124,7 @@
                     <span class="ml-2 size20">御見積書</span>
                 </div>
 
-                <div class="col-6 text-right mt-2 size12">
+                <div class="col-6 text-right mt-2 size14">
                     <div t-esc="docs.name" />
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
@@ -148,7 +148,7 @@
                         alt="Logo" />
                     <span class="ml-2 size20">御見積書（海外）</span>
                 </div>
-                <div class="col-6 text-right mt-2 size12">
+                <div class="col-6 text-right mt-2 size14">
                     <div t-esc="docs.name" />
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
@@ -172,7 +172,7 @@
                         alt="Logo" />
                     <span class="ml-2 size20">定価御見積書</span>
                 </div>
-                <div class="col-6 text-right mt-2 size12">
+                <div class="col-6 text-right mt-2 size14">
                     <div t-esc="docs.name" />
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
@@ -196,7 +196,7 @@
                         alt="Logo" />
                     <span class="ml-2 size20">単価御見積書</span>
                 </div>
-                <div class="col-6 text-right mt-2 size12">
+                <div class="col-6 text-right mt-2 size14">
                     <div t-esc="docs.name" />
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">

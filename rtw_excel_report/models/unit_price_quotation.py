@@ -29,27 +29,29 @@ class ReportMrpExcel(models.AbstractModel):
         img_io_ritzwell.seek(0)
 
         # different format  width font 
-        format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':18,'font_name': font_name})
-        format_name_company = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14, 'text_wrap':True,'bottom':1})
-        format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
-        format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
-        format_note = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True,'font_name': font_name,'font_size':10})
-        format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'bottom':1})
+        format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
+        format_name_company = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'underline':1})
+        format_name_company_no_border = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14})        
+        format_text = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':11})
+        format_text_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':11})
+        format_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
+        format_text_14_border = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'underline':1})
 
-        format_date = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', 'font_name': font_name,'font_size':10})
-        format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':10})
+        format_date = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'num_format': 'yyyy-mm-dd', 'font_name': font_name, 'font_size':10})
+        format_address = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True,  'font_name': font_name, 'font_size':10})
     
-        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
+        format_table = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'bg_color': '#999999', 'font_name': font_name, 'font_size':11, 'color':'white', 'bold':True})
+        format_table_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'bg_color': '#999999', 'font_name': font_name, 'font_size':11, 'color':'white', 'bold':True})
     
-        format_lines_note = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bottom':1})
-        format_lines_section= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1})
+        format_lines_note = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':11, 'bottom':1})
+        format_lines_section= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':11, 'bg_color':'#e9ecef', 'bottom':1})
         
-        format_lines_9 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':9,'bottom':1})
-        format_lines_9_left= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':9,'bottom':1})
-        format_lines_10 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_10_left = workbook.add_format({'align': 'left','valign': 'top', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_11_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_13 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':13,'bottom':1})
+        format_lines_9_left= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':9, 'bottom':1})
+        format_lines_10 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_10_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_11_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_13 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':13, 'bottom':1})
+        format_text_12_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':12})
 
         #create sheet
         for index,so in enumerate(so_data):
@@ -103,6 +105,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_row(11, 19)
             sheet.set_row(12, 0)
             sheet.set_row(13, 0)
+            sheet.set_row(14, 0)
             sheet.set_row(16,32)
             
             sheet.insert_image(1, 0, "logo", {'image_data': img_io_R, 'x_offset': 5, 'y_offset': 1})
@@ -111,14 +114,18 @@ class ReportMrpExcel(models.AbstractModel):
             # y,x
             sheet.write(1, 1, "単価御見積書", format_sheet_title) 
 
-            sheet.merge_range(2, 0,3,2,  so.dear_to if so.dear_to else '', format_name_company)
+            if so.send_to_company and so.send_to_people:
+                sheet.write(2, 0,  so.send_to_company if so.send_to_company else '', format_name_company_no_border)
+                sheet.write(3, 0,  so.send_to_people if so.send_to_people else '', format_name_company)
+            elif so.send_to_company:
+                sheet.write(2, 0,  so.send_to_company if so.send_to_company else '', format_name_company)
+            elif so.send_to_people:
+                sheet.write(2, 0,  so.send_to_people if so.send_to_people else '', format_name_company)
 
             sheet.write(5,0, "平素より格別のお引き⽴てを賜り暑く御礼申し上げます。", format_text) 
             sheet.write(6,0, "御依頼の件、下記の通りお⾒積り致しました。", format_text)
             sheet.write(7,0, "ご査収の程宜しくお願い致します。", format_text) 
-            sheet.write(10, 0, "件名", format_text_14_border) 
-            sheet.write(10, 1, so.title if so.title else '', format_text_14_border) 
-
+            sheet.write(10, 0, "件名    " + so.title if so.title else '', format_text_14_border) 
             sheet.write(2,5, "納品希望⽇：", format_text_right) 
             sheet.write(3,5, "製作⽇数：", format_text_right) 
             sheet.write(4,5, "発注期限：", format_text_right) 
@@ -136,16 +143,15 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(9,6,11,8,so.sale_order_special_note[:130] if so.sale_order_special_note else '', format_note) 
 
             sheet.merge_range(0,11,0,12, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
-            sheet.merge_range(2,11,8,12, so.sale_order_hr_employee if so.sale_order_hr_employee else '' , format_address) 
-
-            sheet.write(15, 12,so.name if so.name else '' , format_text_right) 
+            sheet.merge_range(2,11,8,12, so.sale_order_hr_employee_split_street if so.sale_order_hr_employee_split_street else '' , format_address) 
+            sheet.write(15, 12, '消費税は含まれておりません', format_text_12_right) 
 
             #table title
             sheet.write(16, 0, "№", format_table)
-            sheet.write(16, 1, "品名", format_table)
-            sheet.merge_range(16, 2,16,3, "品番・サイズ", format_table)
-            sheet.merge_range(16, 4,16,6, "仕様・詳細", format_table)
-            sheet.write(16, 7, "仕様・詳細", format_table)
+            sheet.write(16, 1, "品名", format_table_left)
+            sheet.merge_range(16, 2,16,3, "品番・サイズ", format_table_left)
+            sheet.merge_range(16, 4,16,6, "仕様・詳細１", format_table_left)
+            sheet.write(16, 7, "仕様・詳細２", format_table_left)
             sheet.write(16,8, "数量", format_table)
             sheet.write(16, 9, "定価", format_table)
             sheet.write(16, 10, "掛率 ", format_table)

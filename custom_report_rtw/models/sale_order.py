@@ -13,6 +13,8 @@ class SaleOrder(models.Model):
     hr_employee_department = fields.Char(string="hr employee department" , compute="_compute_hr_employee")
     hr_employee_zip = fields.Char(string="hr employee zip" , compute="_compute_hr_employee")
     hr_employee_info = fields.Char(string="hr employee info" , compute="_compute_hr_employee")
+    hr_employee_address1 = fields.Char(string="hr employee address1" , compute="_compute_hr_employee")
+    hr_employee_address2= fields.Char(string="hr employee address2" , compute="_compute_hr_employee")
     hr_employee_country = fields.Char(string="hr employee country" , compute="_compute_hr_employee")
     hr_employee_tel = fields.Char(string="hr employee tel" , compute="_compute_hr_employee")
     hr_employee_fax = fields.Char(string="hr employee fax" , compute="_compute_hr_employee")
@@ -62,13 +64,13 @@ class SaleOrder(models.Model):
                                     if line.last_name:
                                             partner_name =  line.last_name+ ' 様'
             send = ""   
-            if company_name:
+            if company_name and partner_name:
+                send += company_name + '\n' + partner_name  
+            elif company_name :
                 send += company_name
-                if partner_name:
-                    send += '\n' + partner_name  
-            else:
-                if partner_name :
-                    send += partner_name
+            elif partner_name :
+                send += partner_name
+                
             so.send_to_company = company_name
             so.send_to_people = partner_name
             so.dear_to = send
@@ -105,6 +107,8 @@ class SaleOrder(models.Model):
                 'hr_employee_department': "大阪オフィス",
                 'hr_employee_zip': "〒542-0081",
                 'hr_employee_info': "大阪市中央区南船場4-7-6 B1F",
+                'hr_employee_address1': "大阪市中央区",
+                'hr_employee_address2': "南船場4-7-6 B1F",
                 'hr_employee_tel': "tel.06-4963-8777",
                 'hr_employee_fax': "fax.06-4963-8778",
                 'hr_employee_printer': so.sale_order_printing_staff
@@ -138,10 +142,14 @@ class SaleOrder(models.Model):
                                     so.hr_employee_zip = ("〒" + res.zip) if res.zip else ''
                                     
                                     if so.lang_code == 'ja_JP':
-                                        so.hr_employee_info = f"{res.state_id.name or ''} {res.city or ''} {res.street or ''} {res.street2 or ''}"
+                                        so.hr_employee_info = f"{res.state_id.name or ''}  {res.city or ''} {res.street or ''} {res.street2 or ''}"
+                                        so.hr_employee_address1 = f"{res.state_id.name or ''}  {res.city or ''}"
+                                        so.hr_employee_address2 = f"{res.street or ''} {res.street2 or ''}"
                                     else:
                                         so.hr_employee_info = f"{res.street or ''} {res.street2 or ''} {res.city or ''} {res.state_id.name or ''}"
-                                    
+                                        so.hr_employee_address1 = f"{res.street or ''} {res.street2 or ''}"
+                                        so.hr_employee_address2 = f"{res.city or ''}  {res.state_id.name or ''}  "
+                                        
                                     so.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
                                     so.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
                                     
