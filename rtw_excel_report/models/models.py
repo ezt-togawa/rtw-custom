@@ -1609,18 +1609,18 @@ class StockPickingExcelReport(models.Model):
             if record.sale_id.sipping_to:
                 if record.sale_id.sipping_to == "depo":
                     sipping_to = "デポ入れまで"
-                if record.sale_id.sipping_to == "inst":
+                elif record.sale_id.sipping_to == "inst":
                     sipping_to = "搬入設置まで"
-                if record.sale_id.sipping_to == "inst_depo":
+                elif record.sale_id.sipping_to == "inst_depo":
                     sipping_to = "搬入設置（デポ入）"
-                if record.sale_id.sipping_to == "direct":
+                elif record.sale_id.sipping_to == "direct":
                     sipping_to = "直送"
-                if record.sale_id.sipping_to == 'container':
-                    record.sipping_to = 'オランダコンテナ出荷'
-                if record.sale_id.sipping_to == 'pick_up':
-                    record.sipping_to = '引取'
-                if record.sale_id.sipping_to == 'bring_in':
-                    record.sipping_to = '持込'
+                elif record.sale_id.sipping_to == 'container':
+                    sipping_to = 'オランダコンテナ出荷'
+                elif record.sale_id.sipping_to == 'pick_up':
+                    sipping_to = '引取'
+                elif record.sale_id.sipping_to == 'bring_in':
+                    sipping_to = '持込'
             record.stock_picking_sipping_to = sipping_to
             
 
@@ -1692,7 +1692,16 @@ class StockMoveExcelReport(models.Model):
         string="Calculate product pack pdf",
         compute="_compute_calculate_product_pack_pdf",
     )
+    
+    sale_line_instruction_status = fields.Char( compute="_compute_sale_line" )
 
+    def _compute_sale_line(self):
+        for line in self:
+            status = ''
+            if line.sale_line_id and line.sale_line_id.instruction_status:
+                status = '有'
+            line.sale_line_instruction_status = status
+            
     def _compute_calculate_product_pack(self):
         for line in self:
             if line.sale_line_id.pack_parent_line_id:
@@ -1892,6 +1901,8 @@ class StockMoveExcelReport(models.Model):
                 for ml in move_line:
                     if ml.product_package_quantity:
                         packages_number += ml.product_package_quantity
+                    elif prod.two_legs_scale:
+                        packages_number = prod.two_legs_scale
             elif prod.two_legs_scale:
                 packages_number = prod.two_legs_scale
             line.packages_number = packages_number

@@ -28,10 +28,10 @@
                             'B17': 'sale_id.forwarding_address_zip${value or ""}',
                             'D14': 'sale_id.forwarding_address${value or ""}',
                             'B19': 'stock_picking_witness_name_phone${value or ""}',
-                            'G15': 'note${value or ""}',
+                            'H15': 'note${value or ""}',
                             'I1': 'stock_picking_current_date${value or ""}',
-                            'I3': 'sale_id.sale_order_hr_employee${value or ""}',
-                            'I19': 'sale_id.sale_order_amount_untaxed${value or ""}',
+                            'J3': 'sale_id.sale_order_hr_employee${value or ""}',
+                            'J19': 'sale_id.sale_order_amount_untaxed${value or ""}',
                             'I20': 'sale_id.name${value or ""}',
                         },
                         'stock_move':{
@@ -41,9 +41,10 @@
                             'D23':'product_attribute#{style=text;fill=grey}',
                             'E23': 'stock_product_uom_qty${value or ""}#{style=text;fill=grey}',
                             'F23': 'packages_number${value or 0}#{style=text;fill=grey}',
-                            'G23': 'action_packages#{style=text;fill=grey}',
-                            'H23': 'action_assemble#{style=text;fill=grey}',
-                            'I23': '${value or ""}#{style=text;fill=grey}',
+                            'G23': 'sale_line_instruction_status#{style=text;fill=grey}',
+                            'H23': 'action_packages#{style=text;fill=grey}',
+                            'I23': 'action_assemble#{style=text;fill=grey}',
+                            'J23': '${value or ""}#{style=text;fill=grey}',
                         }
                     }
                 }
