@@ -39,12 +39,32 @@
               <div class="row size13" style="margin-top:-30px;">
                 <div class="col-4">
                   <t t-if="o.lang_code == 'en_US'">
-                    <div class="size16">御中 <span
-                        t-field="o.picking_type_id.warehouse_id.partner_id.name" /></div>
+                    <t t-if="o.mrp_workorder_state">
+                      <t t-if="o.mrp_workorder_state == 'wk_001'">
+                        <div class="size16">Dear Itoshima Factory</div>
+                      </t>
+                      <t t-if="o.mrp_workorder_state == 'wk_002'">
+                        <div class="size16">Dear Quality Control</div>
+                      </t>
+                    </t>
+                    <t t-else="">
+                      <div class="size16">御中 <span
+                          t-field="o.picking_type_id.warehouse_id.partner_id.name" /></div>
+                    </t>
                   </t>
                   <t t-else="">
-                    <div class="size16"><span
-                        t-field="o.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                    <t t-if="o.mrp_workorder_state">
+                      <t t-if="o.mrp_workorder_state == 'wk_001'">
+                        <div class="size16">糸島工場 御中</div>
+                      </t>
+                      <t t-if="o.mrp_workorder_state == 'wk_002'">
+                        <div class="size16">品質管理部 御中</div>
+                      </t>
+                    </t>
+                    <t t-else="">
+                      <div class="size16"><span
+                          t-field="o.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                    </t>
                   </t>
                   <div> 発注番号 <span class="size16"
                       t-field="so.name" />
