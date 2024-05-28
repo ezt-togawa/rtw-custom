@@ -1796,6 +1796,14 @@ class StockMoveExcelReport(models.Model):
         "Shiratani date",
         compute="_compute_stock_move",
     )
+    product_pack_and_prod_no = fields.Char(
+        "Product pack and prod no",
+        compute="_compute_stock_move",
+    )
+    product_spec_size = fields.Char(
+        "Product spec size",
+        compute="_compute_stock_move",
+    )
     
     stock_product_uom_qty = fields.Char(string="stock_product_uom_qty" , compute="_compute_stock_product_uom_qty")
                 
@@ -1850,6 +1858,19 @@ class StockMoveExcelReport(models.Model):
             other_size = ""
             if line.sale_line_id and line.sale_line_id.product_size:
                 other_size = line.sale_line_id.product_size
+            elif prod.product_tmpl_id:
+                if prod.product_tmpl_id.width:
+                    other_size += 'W' + str(prod.product_tmpl_id.width) + ' '
+                if prod.product_tmpl_id.depth:
+                    other_size += '*D' + str(prod.product_tmpl_id.depth) + ' '
+                if prod.product_tmpl_id.height:
+                    other_size += '*H' + str(prod.product_tmpl_id.height) + ' '
+                if prod.product_tmpl_id.diameter:
+                    other_size += 'Φ' + str(prod.product_tmpl_id.diameter) + ' '
+                if prod.product_tmpl_id.sh:
+                    other_size += 'SH' + str(prod.product_tmpl_id.sh) + ' '
+                if prod.product_tmpl_id.ah:
+                    other_size += 'AH' + str(prod.product_tmpl_id.ah)
                     
             p_type = ""            
             if line.p_type == "special":
@@ -1885,6 +1906,8 @@ class StockMoveExcelReport(models.Model):
                         size_detail = prod_pack
                 else:
                     size_detail += prod.product_no if prod and prod.product_no else ''
+            else:
+                size_detail += prod.product_no if prod and prod.product_no else ''
 
             if size_detail and other_size :
                 line.product_number_and_size = size_detail + '\n' + other_size
@@ -1905,8 +1928,11 @@ class StockMoveExcelReport(models.Model):
                         packages_number = prod.two_legs_scale
             elif prod.two_legs_scale:
                 packages_number = prod.two_legs_scale
+                
             line.packages_number = packages_number
-
+            line.product_pack_and_prod_no = size_detail
+            line.product_spec_size= other_size
+                
             line.action_packages = "有"
             line.action_assemble = "無"
             line.stock_sai = prod_tmpl.sai if prod_tmpl.sai else ''
