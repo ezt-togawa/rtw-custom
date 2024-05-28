@@ -42,8 +42,9 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_12 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
         format_lines_10 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
         format_lines_9_left= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':9, 'bottom':1})
-        format_lines_10_left= workbook.add_format({'align': 'left', 'valign': 'center', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
-        
+        format_lines_10_left= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_custom= workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+
         allow_print = False
         if len(mrp_data) == 1 and mrp_data[0].origin:
             allow_print = True
@@ -174,7 +175,7 @@ class ReportMrpExcel(models.AbstractModel):
                     sheet.merge_range(row, 5, row + height, 5, "", format_lines_12)
                     
                 sheet.merge_range(row, 6, row + height, 6, "有" if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
-                sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_10_left)
+                sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_custom)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)
                 
                 row += height + 1
@@ -289,5 +290,5 @@ class ReportMrpExcel(models.AbstractModel):
                     sheet.merge_range(row, 5, row + height, 5, "", format_lines_12)
                     
                 sheet.merge_range(row, 6, row + height, 6, "有" if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
-                sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_10_left)
+                sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_custom)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)

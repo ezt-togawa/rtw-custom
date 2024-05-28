@@ -1816,7 +1816,7 @@ class StockMoveExcelReport(models.Model):
     def _compute_stock_move(self):
         index = 0
         for line in self:
-            line.product_attribute = ""
+            product_attribute = ""
             index = index + 1
             line.stock_index = index
             
@@ -1844,9 +1844,11 @@ class StockMoveExcelReport(models.Model):
                         attribute_value_name = attribute_value.product_attribute_value_id.name
 
                         if attribute_name and attribute_value_name:
-                            line.product_attribute += (
-                                f"{attribute_name}:{attribute_value_name}\n"
+                            product_attribute += (
+                                f"● {attribute_name}:{attribute_value_name}\n"
                             )
+            line.product_attribute = product_attribute   
+            
             other_size = ""
             if line.sale_line_id and line.sale_line_id.product_size:
                 other_size = line.sale_line_id.product_size
