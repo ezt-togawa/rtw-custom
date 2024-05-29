@@ -152,6 +152,11 @@ class SaleOrderExcelReport(models.Model):
         string="Sale order name",
     )
     
+    sale_order_hr_employee_split_street = fields.Char(
+        compute="_compute_sale_order_hr_employee",
+        string="Sale order hr employee split street",
+    )
+    
     sale_order_hr_employee = fields.Char(
         compute="_compute_sale_order_hr_employee",
         string="Sale order hr employee",
@@ -464,34 +469,46 @@ class SaleOrderExcelReport(models.Model):
                 
     def _compute_sale_order_hr_employee(self):
         for record in self:
-            hr_employee_detail = ""   
-            hr_employee_detail_invoice = ""   
+            hr_employee_detail = ""
+            hr_employee_detail_invoice = ""
+            hr_employee_split_street = ""
             if record.hr_employee_company:
                 hr_employee_detail += record.hr_employee_company + "\n"
                 hr_employee_detail_invoice += record.hr_employee_company + "\n"
+                hr_employee_split_street += record.hr_employee_company + "\n"
             if record.registration_number : 
                 hr_employee_detail_invoice += record.registration_number + "\n"
             if record.hr_employee_department:
                 hr_employee_detail += record.hr_employee_department + "\n"
                 hr_employee_detail_invoice += record.hr_employee_department + "\n"
+                hr_employee_split_street += record.hr_employee_department + "\n"
             if record.hr_employee_zip:
                 hr_employee_detail += record.hr_employee_zip + "\n"
                 hr_employee_detail_invoice += record.hr_employee_zip + "\n"
+                hr_employee_split_street += record.hr_employee_zip + "\n"
             if record.hr_employee_info:
                 hr_employee_detail += record.hr_employee_info + "\n"
                 hr_employee_detail_invoice += record.hr_employee_info + "\n"
+            if record.hr_employee_address1:
+                hr_employee_split_street += record.hr_employee_address1 + "\n"
+            if record.hr_employee_address2:
+                hr_employee_split_street += record.hr_employee_address2 + "\n"
             if record.hr_employee_tel:
                 hr_employee_detail += record.hr_employee_tel + "\n"
                 hr_employee_detail_invoice += record.hr_employee_tel + "\n"
+                hr_employee_split_street += record.hr_employee_tel + "\n"
             if record.hr_employee_fax:
                 hr_employee_detail += record.hr_employee_fax + "\n"
                 hr_employee_detail_invoice += record.hr_employee_fax + "\n"
+                hr_employee_split_street += record.hr_employee_fax + "\n"
             if record.hr_employee_printer:
                 hr_employee_detail += record.hr_employee_printer 
                 hr_employee_detail_invoice += record.hr_employee_printer 
+                hr_employee_split_street += record.hr_employee_printer 
             
             record.sale_order_hr_employee= hr_employee_detail.rstrip('\n')
             record.sale_order_hr_employee_invoice= hr_employee_detail_invoice.rstrip('\n')
+            record.sale_order_hr_employee_split_street= hr_employee_split_street.rstrip('\n')
                 
     def _compute_sale_order_preferred_delivery_period(self):
         for record in self:
