@@ -234,9 +234,19 @@ class ReportMrpExcel(models.AbstractModel):
                 
                 if mrp.picking_type_id.warehouse_id.partner_id:
                     if mrp.lang_code == "ja_JP":
-                        sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
+                        if mrp.mrp_workorder_state == 'wk_001':
+                            sheet.write(3, 0, '糸島工場 御中', format_text) 
+                        elif mrp.mrp_workorder_state == 'wk_002':
+                            sheet.write(3, 0, '品質管理部 御中', format_text)
+                        else:
+                            sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
                     else:
-                        sheet.write(3, 0, "Dear " + mrp.picking_type_id.warehouse_id.partner_id.name, format_text)  
+                        if mrp.mrp_workorder_state == 'wk_001':
+                            sheet.write(3, 0, 'Dear Itoshima Factory', format_text) 
+                        elif mrp.mrp_workorder_state == 'wk_002':
+                            sheet.write(3, 0, 'Dear Quality Control', format_text)
+                        else:
+                            sheet.write(3, 0, "Dear " + mrp.picking_type_id.warehouse_id.partner_id.name, format_text)
                                          
                 sheet.write(11, 0, "送り先", format_text) 
                 
