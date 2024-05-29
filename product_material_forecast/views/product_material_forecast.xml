@@ -50,7 +50,7 @@
             <xpath
                 expr="//search/field[@name='bom_id']"
                 position="before">
-                <filter string="重要在庫" name="product_type"
+                <filter string="重要部材" name="key_component"
                     domain="[('key_component', '=', True)]" />
             </xpath>
         </field>
