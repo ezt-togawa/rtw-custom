@@ -3,7 +3,7 @@
         <report
             id="unit_price_quotation"
             model="sale.order"
-            string="単価御見積書(EXCEL)"
+            string="単価御見積書"
             report_type="xlsx"
             name="rtw_excel_report.unit_price_quotation_xls"
             file="単価御見積書"

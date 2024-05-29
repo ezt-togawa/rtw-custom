@@ -3,7 +3,7 @@
         <report
             id="report_quotation_oversea"
             model="sale.order"
-            string="御見積書（海外）-(EXCEL)"
+            string="御見積書（海外）"
             report_type="xlsx"
             name="rtw_excel_report.report_quotation_oversea_xls"
             file="御見積書（海外）"
