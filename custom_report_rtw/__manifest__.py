@@ -34,6 +34,7 @@
         'report/purchase_order.xml',
         'report/purchase_order_fixed_price.xml',
         'report/report_product_spec.xml',
+        'report/report_delivery_order_sale.xml',
         
         # delivery
         'report/report_delivery_order.xml',

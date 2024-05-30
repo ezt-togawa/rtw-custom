@@ -6,7 +6,7 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='workdays']" position="after">
+                <xpath expr="//field[@name='workday_id']" position="after">
                     <label for="leadtime" />
                     <div class="o_row">
                         <field name="leadtime" nolabel="1" />

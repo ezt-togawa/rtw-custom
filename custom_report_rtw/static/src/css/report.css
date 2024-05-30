@@ -200,6 +200,12 @@ body {
 .size11 {
   font-size: 11px;
 }
+.size28 {
+  font-size: 28px;
+}
+.border-bottom2 {
+  border-bottom:1px solid black ;
+} 
 
 .letter-spacing {
   letter-spacing: 45px;

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-
-
 class rtw_purchase(models.Model):
     _inherit = "purchase.order"
 
@@ -55,3 +53,4 @@ class rtw_purchase(models.Model):
             #     'warranty_request_ids': [(4, self.id, {
             #     })]
             #     })
+            

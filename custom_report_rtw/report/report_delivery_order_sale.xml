@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_delivery_order_sale">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="custom_report_rtw.so_ex_layout">
+          <t t-set="total_subprice" t-value="0" />
+          <t t-set="total_listprice" t-value="0" />
+          <t t-if="not o" t-set="o" t-value="doc" />
+          <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+              <t t-set="company" t-value="company_id" />
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+              <t t-set="company" t-value="o.company_id.sudo()" />
+            </t>
+            <t t-else="else">
+              <t t-set="company" t-value="res_company" />
+            </t>
+          </t>
+          <t t-call="custom_report_rtw.SO_delivery_order_header_layout"></t>
+          <div class="page">
+            <t
+              t-set="type">quotation</t>
+            <t t-set="address">
+              <div t-field="docs.partner_id"
+                t-options='{"widget": "contact", "fields": ["address", "name"],
+                        "no_marker": True}' />
+              <p t-if="docs.partner_id.vat"><t
+                  t-esc="docs.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                  t-field="docs.partner_id.vat" />
+              </p>
+            </t>
+            <div t-if="docs.company_id.logo or docs.company_id.report_header"
+              class="row zero_min_height">
+            </div>
+            <div class="row" style="margin-top:-50px;">
+              <div class="col-4 size13">
+                <div> 発注番号 <span class="size16"
+                    t-field="docs.name" />
+                </div>
+                <br />
+                <div class="d-flex"> 搬入日時 <t t-esc="' '" />
+                  <span class="size14"
+                    t-if="docs.sale_order_warehouse_arrive_date"
+                    t-esc="docs.sale_order_warehouse_arrive_date" />
+                </div>
+                <div class="d-flex"> 入荷日 <t t-esc="' '" />
+                </div>
+                <br />
+                <div class="d-flex">
+                  <div>
+                    お届け先（物件名)
+                  </div>
+                  <div>
+                    <span class="size14" t-field="docs.title" />
+                    <div>
+                      <span t-field="docs.sale_order_partner_info" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+              </div>
+              <div class="col-4 size11" name="company_address">
+                <div>
+                  <img style="width:50%"
+                    src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                    alt="Logo" />
+                </div>
+                <div class="size12">
+                  <span t-esc="docs.hr_employee_company" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_department" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_zip" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_info" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_tel" />
+                </div>
+                <div>
+                  <span t-esc="docs.hr_employee_fax" />
+                </div>
+                <div class="size12">
+                  <span t-esc="docs.hr_employee_printer" />
+                </div>
+              </div>
+            </div>
+            <div class="row py-2 size13">
+              <div class="col-6">
+                <div> 住所 <span t-esc="docs.sale_order_partner_address" />
+                </div>
+                <div> TEL／携帯 <span t-if="docs.partner_id.phone" t-field="docs.partner_id.phone" />
+                  <t
+                    t-if="docs.partner_id.mobile"> / <span
+                      t-field="docs.partner_id.mobile" />
+                  </t>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-6">
+                    <div> 配送 <t
+                        t-if="docs.sale_order_sipping_to"> : <span
+                          t-field="docs.sale_order_sipping_to" />
+                      </t>
+                    </div>
+                    <div> デポ <t
+                        t-if="docs.waypoint.name"> : <span
+                          t-field="docs.waypoint.name" />
+                      </t>
+                    </div>
+                    <div> 配送ラベル <t
+                        t-if="docs.shipping_to_text"> : <span
+                          t-field="docs.shipping_to_text" />
+                      </t>
+                    </div>
+                    <div> 設置先〒 <t
+                        t-if="docs.forwarding_address_zip"> : <span
+                          t-field="docs.forwarding_address_zip" />
+                      </t>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div> 設置先 <t
+                        t-if="docs.forwarding_address"> : <span
+                          t-field="docs.forwarding_address" />
+                      </t>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div> 搬入立会人: <span t-field="docs.witness" /> <span
+                    t-field="docs.witness_phone" />
+                </div>
+              </div>
+              <div class="col-6">
+                <div> 送り状注記: <span t-field="docs.special_note" />
+                </div>
+              </div>
+            </div>
+            <table
+              class="table">
+              <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
+                t-att-last="last">
+                <t t-if="l_index == 0">
+                  <thead>
+                    <tr class="table-title bold">
+                      <th class="text-center" style="width:2%">№</th>
+                      <th class="text-center" style="width:15%">品名</th>
+                      <th class="text-center" style="width:20%">品番・サイズ</th>
+                      <th class="text-center" style="width:20%">仕様・詳細</th>
+                      <th class="text-center" style="width:6%">数量</th>
+                      <th class="text-center" style="width:8%">個口数</th>
+                      <th class="text-center" style="width:5%">取説</th>
+                      <th class="text-center" style="width:5%">開梱</th>
+                      <th class="text-center" style="width:5%">組立</th>
+                      <th class="text-center" style="width:14%">配送費用</th>
+                    </tr>
+                  </thead>
+                </t>
+                <tbody class="invoice_tbody">
+                  <tr class="size13 table-border-bottom">
+                    <td t-esc="l_index+1" class="text-center size12 six-lines">
+                    </td>
+                    <td class="size11">
+                      <div t-if="l.sale_order_line_name_pdf"
+                        t-field="l.sale_order_line_name_pdf" />
+                      <div t-if="l.sale_order_line_summary_pdf"
+                        t-field="l.sale_order_line_summary_pdf" />
+                      <div t-if="l.sale_order_line_p_type_pdf"
+                        t-field="l.sale_order_line_p_type_pdf" />
+                    </td>
+                    <td>
+                      <div t-field="l.sale_line_product_pack_pdf" />
+                      <div t-esc="l.product_size" />
+                    </td>
+                    <td class="size12">
+                      <t
+                        t-foreach="l.product_id.product_template_attribute_value_ids"
+                        t-as="string_line"> ● <span
+                          t-esc="string_line.display_name" />
+                        <br />
+                      </t>
+                    </td>
+                    <td class="text-center size14">
+                      <div id="quote_qty">
+                        <span t-esc="l.sale_line_product_uom_qty" />
+                      </div>
+                    </td>
+                    <td class="text-center size14">
+                      <div>
+                        <span t-esc="'{0:,.0f}'.format(l.sale_line_calculate_packages)" />
+                      </div>
+                    </td>
+                    <td class="text-center size14">
+                      <t t-if="l.instruction_status">
+                        有
+                      </t>
+                    </td>
+                    <td class="text-center size13">
+                      <span>有</span>
+                    </td>
+                    <td class="text-center size13">
+                      <span> 無 </span>
+                    </td>
+                    <td class="text-center size15">
+                    </td>
+                  </tr>
+                </tbody>
+              </t>
+            </table>
+            <div class="d-flex justify-content-end mr-5 size12">
+              <div class="d-flex">
+                <div>配送金額合計（税抜） </div>
+                <div class="size13 bold" t-field="docs.amount_untaxed" />
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mr-5 size12">
+              <span style="float:right" t-field="docs.name" />
+            </div>
+          </div>
+          <t t-call="custom_report_rtw.page_footer_layout"></t>
+        </t>
+      </t>
+    </t>
+  </template>
+  <record id="paperformat_delivery_order_sale" model="report.paperformat">
+    <field name="name">Delivery Order Sheet</field>
+    <field name="default" eval="False" />
+    <field name="format">custom</field>
+    <field name="page_width">210</field>
+    <field name="page_height">297</field>
+    <field name="orientation">Landscape</field>
+    <field name="margin_top">20</field>
+    <field name="margin_bottom">10</field>
+    <field name="margin_left">5</field>
+    <field name="margin_right">5</field>
+    <field name="header_line" eval="False" />
+    <field name="header_spacing">12</field>
+    <field name="dpi">90</field>
+  </record>
+  <report
+    string="配送作業依頼書"
+    id="report_delivery_order_sale_rtw"
+    model="sale.order"
+    report_type="qweb-pdf"
+    name="custom_report_rtw.report_delivery_order_sale"
+    file="custom_report_rtw.report_delivery_order_sale"
+    paperformat="paperformat_delivery_order_sale"
+  />
+
+</odoo>

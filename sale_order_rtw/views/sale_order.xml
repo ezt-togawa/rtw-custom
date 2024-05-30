@@ -67,7 +67,7 @@
                     <field name="estimated_shipping_date" string="Estimated shipping date" />
                     <field name="warehouse_arrive_date" string="Warehouse arrive date" />
                     <field name="shiratani_entry_date" string="Shiratani entry Date" />
-                    <field name="workdays" string="作成日数" />
+                    <field name="workday_id" string="作成日数" widget="selection" />
                 </xpath>
                 <xpath expr="//group[@name='partner_details']" position="inside">
                     <field name="sipping_to" string="配送"
@@ -96,6 +96,9 @@
                     <!--                            context="{'default_type':'delivery'}"-->
                     <!--                            domain="[('type', '=', 'delivery')]"-->
                     <!--                    />-->
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
             </field>
         </record>

@@ -29,30 +29,32 @@ class ReportMrpExcel(models.AbstractModel):
         img_io_ritzwell.seek(0)
 
         # different format  width font 
-        format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':18,'font_name': font_name})
-        format_name_company = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14, 'text_wrap':True,'bottom':1})
-        format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
-        format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
-        format_text_12_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':12})
-        format_text_13_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':13})
-        format_note = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True,'font_name': font_name,'font_size':10})
-        format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'bottom':1})
-        format_money_bgRed = workbook.add_format({'align': 'left','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
-        format_money_bgRed_right = workbook.add_format({'align': 'right','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
+        format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
+        format_name_company = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'underline':1})
+        format_name_company_no_border = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14})
+        format_text = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':11})
+        format_text_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':11})
+        format_text_12_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':12})
+        format_text_13_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':13})
+        format_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
+        format_text_14_border = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'underline': 1})
+        format_money_bgRed = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':16, 'text_wrap':True, 'color':'white','bg_color':'#C00000', 'bold':True})
+        format_money_bgRed_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':16, 'text_wrap':True, 'color':'white','bg_color':'#C00000', 'bold':True})
 
-        format_date = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', 'font_name': font_name,'font_size':10})
-        format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':10})
+        format_date = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'num_format': 'yyyy-mm-dd', 'font_name': font_name, 'font_size':10})
+        format_address = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True,  'font_name': font_name, 'font_size':10})
     
-        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
+        format_table = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'bg_color': '#999999', 'font_name': font_name, 'font_size':11,'color':'white','bold':True})
+        format_table_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'bg_color': '#999999', 'font_name': font_name, 'font_size':11,'color':'white','bold':True})
     
-        format_lines_note = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bottom':1})
-        format_lines_section= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1})
+        format_lines_note = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':11,'bottom':1})
+        format_lines_section= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':11,'bg_color':'#e9ecef','bottom':1})
         
-        format_lines_9 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':9,'bottom':1})
-        format_lines_9_left= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':9,'bottom':1})
-        format_lines_10 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_10_left = workbook.add_format({'align': 'left','valign': 'top', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_11_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
+        format_lines_9_left= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':9,'bottom':1})
+        format_lines_10 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10,'bottom':1})
+        format_lines_10_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10,'bottom':1})
+        format_lines_11_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10,'bottom':1})
+        format_lines_13 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':13,'bottom':1})
         format_lines_13 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':13,'bottom':1})
         
         #create sheet
@@ -76,7 +78,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_header( f'{"&"}R {so.name  if so.name else ""}', margin=margin_header) 
             sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)    
                      
-            sheet.set_column("A:A", width=13,cell_format=font_family)  
+            sheet.set_column("A:A", width=14,cell_format=font_family)  
             sheet.set_column("B:B", width=20,cell_format=font_family)  
             sheet.set_column("C:C", width=18,cell_format=font_family)  
 
@@ -117,16 +119,21 @@ class ReportMrpExcel(models.AbstractModel):
             # y,x
             sheet.write(1, 1, "御見積書（海外）", format_sheet_title) 
 
-            sheet.merge_range(2, 0,3,2,  so.dear_to if so.dear_to else '', format_name_company)
-
+            if so.send_to_company and so.send_to_people:
+                sheet.write(2, 0,  so.send_to_company if so.send_to_company else '', format_name_company_no_border)
+                sheet.write(3, 0,  so.send_to_people if so.send_to_people else '', format_name_company)
+            elif so.send_to_company:
+                sheet.write(2, 0,  so.send_to_company if so.send_to_company else '', format_name_company)
+            elif so.send_to_people:
+                sheet.write(2, 0,  so.send_to_people if so.send_to_people else '', format_name_company)
+            
             sheet.write(5,0, "平素より格別のお引き⽴てを賜り暑く御礼申し上げます。", format_text) 
             sheet.write(6,0, "御依頼の件、下記の通りお⾒積り致しました。", format_text)
             sheet.write(7,0, "ご査収の程宜しくお願い致します。", format_text) 
-            sheet.write(10, 0, "件名", format_text_14_border) 
+            sheet.write(10, 0, "件名    " + so.title if so.title else '', format_text_14_border) 
             sheet.write(12, 0, "税抜合計", format_text) 
             sheet.write(13, 0, "消費税", format_text) 
             sheet.write(14, 0, "税込合計", format_money_bgRed) 
-            sheet.write(10, 1, so.title if so.title else '', format_text_14_border) 
             sheet.write(12, 1, so.sale_order_amount_untaxed if so.sale_order_amount_untaxed else '', format_text_13_right) 
             sheet.write(13, 1, so.sale_order_amount_tax if so.sale_order_amount_tax else '', format_text_12_right) 
             sheet.write(14, 1, so.sale_order_amount_total if so.sale_order_amount_total else '', format_money_bgRed_right) 
@@ -140,7 +147,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(9,5, "備考：", format_text_right) 
             
             sheet.write(2,6, so.preferred_delivery_period if so.preferred_delivery_period else '', format_text) 
-            sheet.write(3,6, so.workdays if so.workdays else '', format_text) 
+            sheet.write(3,6, so.workday_id.name if so.workday_id else '', format_text) 
             sheet.write(4,6, so.sale_order_date_deadline if so.sale_order_date_deadline else '', format_text) 
             sheet.write(5,6, so.forwarding_address if so.forwarding_address else '', format_text) 
             sheet.write(6,6,so.sale_order_transactions_term if so.sale_order_transactions_term else '', format_text) 
@@ -148,19 +155,19 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(9,6,11,8,so.sale_order_special_note[:120] if so.sale_order_special_note else '', format_note) 
 
             sheet.merge_range(0,11,0,12, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
-            sheet.merge_range(2,11,8,12, so.sale_order_hr_employee if so.sale_order_hr_employee else '' , format_address) 
+            sheet.merge_range(2,11,8,12, so.sale_order_hr_employee_split_street if so.sale_order_hr_employee_split_street else '' , format_address) 
 
-            sheet.write(13, 9,'定価合計: ' + str( so.sale_order_total_list_price ) if so.sale_order_total_list_price else '', format_text_right) 
-            sheet.write(13, 12,'販売価格合計: ' + str(so.sale_order_amount_untaxed2) if so.sale_order_amount_untaxed2 else '' , format_text_right) 
-            sheet.write(14, 12,so.name if so.name else '' , format_text_right) 
+            sheet.write(15, 0, '税抜定価合計: ', format_text) 
+            sheet.write(15, 1, so.sale_order_total_list_price  if so.sale_order_total_list_price else '', format_text_12_right) 
+            sheet.write(15, 12, '消費税は含まれておりません', format_text_12_right) 
             sheet.merge_range(1, 9,1, 10,("(" + so.check_oversea + ")") if so.check_oversea else '' , format_text_right) 
 
             #table title
             sheet.write(16, 0, "№", format_table)
-            sheet.write(16, 1, "品名", format_table)
-            sheet.merge_range(16, 2,16,3, "品番・サイズ", format_table)
-            sheet.merge_range(16, 4,16,6, "仕様・詳細", format_table)
-            sheet.write(16, 7, "仕様・詳細", format_table)
+            sheet.write(16, 1, "品名", format_table_left)
+            sheet.merge_range(16, 2,16,3, "品番・サイズ", format_table_left)
+            sheet.merge_range(16, 4,16,6, "仕様・詳細１", format_table_left)
+            sheet.write(16, 7, "仕様・詳細２", format_table_left)
             sheet.write(16,8, "数量", format_table)
             sheet.write(16, 9, "定価", format_table)
             sheet.write(16, 10, "掛率 ", format_table)

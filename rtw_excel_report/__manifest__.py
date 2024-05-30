@@ -79,6 +79,7 @@
         'views/purchase_order_for_part.xml',
         'views/inspection_order_form.xml',
         'views/purchase_order_sheet.xml',
+        'views/delivery_sale_order.xml',
 
         # 'report_stock_move_pallet/actions.xml',
         # 'report_stock_move_pallet/templates.xml',

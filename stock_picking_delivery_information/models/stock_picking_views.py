@@ -3,37 +3,54 @@
 from odoo import api, fields, models
 from datetime import datetime
 
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+    
+    def action_confirm(self):
+        result = super(SaleOrder, self).action_confirm()
+        self.refresh()
+        
+        stock_picking = self.env['stock.picking'].search(
+            [('sale_id', '=', self.id)])
+        for stock in stock_picking:
+            stock.write({"waypoint":self.waypoint.id})
+            stock.write({"sipping_to":self.sipping_to})
+            stock.write({"shipping_to_text":self.shipping_to_text})
+            stock.write({"forwarding_address_zip":self.forwarding_address_zip})
+            stock.write({"forwarding_address":self.forwarding_address})
+            stock.write({"shipping_destination_text":self.shipping_destination_text})
+        return result
+    
+
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    sipping_to = fields.Char(
-        "配送",
-        compute="_compute_delivery_information",
+    waypoint = fields.Many2one(
+        comodel_name="res.partner",
+        string="デポ",
+        required=False,
+        ondelete="set null",
     )
+    sipping_to = fields.Selection([
+        ('depo', 'デポ入れまで'),
+        ('inst', '搬入設置まで'),
+        ('inst_depo', '搬入設置（デポ入）'),
+        ('direct', '直送'),
+        ('container', 'オランダコンテナ出荷'),
+        ('pick_up', '引取'),
+        ('bring_in', '持込'),
+    ], string="配送")
+    sipping_to_value = fields.Char(compute="_compute_sipping_to_value")
+    shipping_to_text = fields.Char(string="配送ラベル")
 
-    shipping_to_text = fields.Char(
-        "配送ラベル",
-        compute="_compute_delivery_information",
-    )
-
-    waypoint = fields.Char(
-        "デポ",
-        compute="_compute_delivery_information",
-    )
-
-    forwarding_address_zip = fields.Char(
-        "納品設置先郵便番号",
-        compute="_compute_delivery_information",
-    )
-
-    forwarding_address = fields.Char(
-        "納品設置先",
-        compute="_compute_delivery_information",
+    forwarding_address_zip = fields.Char("納品設置先郵便番号")
+    forwarding_address = fields.Text(
+        string="納品設置先",
+        required=False,
     )
     
-    shipping_destination_text = fields.Char(
+    shipping_destination_text = fields.Text(
         "送り先",
-        compute="_compute_delivery_information",
     )
     
     sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order")
@@ -51,42 +68,29 @@ class StockPicking(models.Model):
                     picking.sale_order_id = sale_order
                 else:
                     picking.sale_order_id = False
-
-    def _compute_delivery_information(self):
+                    
+    @api.onchange('sipping_to')
+    def sipping_to_text(self):
+        if self.sipping_to == "depo":
+            self.shipping_to_text = 'デポ入れまで'
+        if self.sipping_to == "inst":
+            self.shipping_to_text = '搬入設置まで'
+            
+    def _compute_sipping_to_value(self):
         for record in self:
-            sale_order = self.env['sale.order'].search([('id' , '=' , record.sale_id.id)])
-            if sale_order:
-                record.shipping_to_text = sale_order.shipping_to_text
-                record.forwarding_address_zip = sale_order.forwarding_address_zip
-                record.forwarding_address = sale_order.forwarding_address
-                record.shipping_destination_text = sale_order.shipping_destination_text
-                if sale_order.sipping_to == 'depo':
-                    record.sipping_to = 'デポ入れまで'
-                    record.forwarding_address_zip = ''
-                    record.forwarding_address = ''
-                elif sale_order.sipping_to == 'inst':
-                    record.sipping_to = '搬入設置まで'
-                elif sale_order.sipping_to == 'inst_depo':
-                    record.sipping_to = '搬入設置（デポ入)'
-                elif sale_order.sipping_to == 'direct':
-                    record.sipping_to = '直送'
-                elif sale_order.sipping_to == 'container':
-                    record.sipping_to = 'オランダコンテナ出荷'
-                elif sale_order.sipping_to == 'pick_up':
-                    record.sipping_to = '引取'
-                elif sale_order.sipping_to == 'bring_in':
-                    record.sipping_to = '持込'
-                else:
-                    record.sipping_to = ''
-
-                if sale_order.waypoint:
-                    record.waypoint = sale_order.waypoint.name
-                else:
-                    record.waypoint = ''
+            if record.sipping_to == 'depo':
+                record.sipping_to_value = 'デポ入れまで'
+            elif record.sipping_to == 'inst':
+                record.sipping_to_value = '搬入設置まで'
+            elif record.sipping_to == 'inst_depo':
+                record.sipping_to_value = '搬入設置（デポ入)'
+            elif record.sipping_to == 'direct':
+                record.sipping_to_value = '直送'
+            elif record.sipping_to == 'container':
+                record.sipping_to_value = 'オランダコンテナ出荷'
+            elif record.sipping_to == 'pick_up':
+                record.sipping_to_value = '引取'
+            elif record.sipping_to == 'bring_in':
+                record.sipping_to_value = '持込'
             else:
-                record.shipping_to_text = ''
-                record.forwarding_address_zip = ''
-                record.forwarding_address = ''
-                record.waypoint = ''
-                record.sipping_to = ''
-                record.shipping_destination_text = ''
+                record.sipping_to_value = ''

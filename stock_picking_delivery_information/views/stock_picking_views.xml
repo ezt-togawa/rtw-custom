@@ -8,12 +8,29 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='location_dest_id']" position="after">
                 <field name="sale_id" attrs="{'invisible': 1}" />
-                <field name="sipping_to" attrs="{'invisible': [('sale_id', '=', False)]}" />
-                <field name="shipping_to_text" attrs="{'invisible': [('sale_id', '=', False)]}" />
-                <field name="shipping_destination_text" attrs="{'invisible': ['|',('sale_id', '=', False),('sipping_to','!=','直送')]}" />
-                <field name="waypoint" attrs="{'invisible': ['|',('sale_id', '=', False),('sipping_to','=','直送')]}" />
-                <field name="forwarding_address_zip" attrs="{'invisible': [('sale_id', '=', False)]}" />
-                <field name="forwarding_address" attrs="{'invisible': [('sale_id', '=', False)]}" />
+                <field name="sipping_to" string="配送"
+                    options="{'horizontal': true}" />
+                <field name="shipping_to_text" />
+                <field
+                    name="waypoint"
+                    string="デポ"
+                    context="{'default_type':'delivery'}"
+                    domain="[('type', '=', 'delivery')]"
+                    attrs="{'invisible': [('sipping_to', '=', 'direct')]}"
+                />
+                <field
+                    name="shipping_destination_text"
+                    string="送り先"
+                    attrs="{'invisible': [('sipping_to', '!=', 'direct')]}"
+                />
+                <field
+                    name="forwarding_address_zip"
+                    string="納品設置先郵便番号"
+                    attrs="{'invisible': [('sipping_to', '=', 'depo')]}" />
+                <field
+                    name="forwarding_address"
+                    string="納品設置先"
+                    attrs="{'invisible': [('sipping_to', '=', 'depo')]}" />
             </xpath>
             <xpath expr="//field[@name='location_dest_id']" position="replace">
                 <field name="location_dest_id" options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>

@@ -22,7 +22,7 @@
                             'B15':'sale_order_amount_total${value or ""}',
   
                             'G3': 'preferred_delivery_period${value or ""}',
-                            'G4': 'workdays${value or ""}',
+                            'G4': 'workday_id.name${value or ""}',
                             'G5': 'sale_order_date_deadline${value or ""}',
                             'G6': 'forwarding_address${value or ""}',
                             'G7': 'sale_order_transactions_term${value or ""}',

@@ -25,3 +25,4 @@ from . import invoice_account_move
 from . import purchase_order_for_part
 from . import inspection_order_form
 from . import purchase_order_sheet
+from . import delivery_sale_order

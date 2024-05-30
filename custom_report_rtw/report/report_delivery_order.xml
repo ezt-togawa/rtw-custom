@@ -97,7 +97,8 @@
             </div>
             <div class="row py-2 size13">
               <div class="col-6">
-                <div> 住所 <span t-esc="docs.stock_picking_partner_address" /> </div>
+                <div> 住所 <span t-esc="docs.stock_picking_partner_address" />
+                </div>
                 <div> TEL／携帯 <span t-field="docs.partner_id.phone" />
                   <t
                     t-if="docs.partner_id.mobile"> / <span
@@ -108,30 +109,30 @@
                 <div class="row">
                   <div class="col-6">
                     <div> 配送 <t
-                        t-if="docs.stock_picking_sipping_to"> : <span
-                          t-field="docs.stock_picking_sipping_to" />
+                        t-if="docs.sipping_to_value"> : <span
+                          t-field="docs.sipping_to_value" />
                       </t>
                     </div>
                     <div> デポ <t
-                        t-if="docs.sale_id.waypoint.name"> : <span
-                          t-field="docs.sale_id.waypoint.name" />
+                        t-if="docs.waypoint.name"> : <span
+                          t-field="docs.waypoint.name" />
                       </t>
                     </div>
                     <div> 配送ラベル <t
-                        t-if="docs.sale_id.shipping_to_text"> : <span
-                          t-field="docs.sale_id.shipping_to_text" />
+                        t-if="docs.shipping_to_text"> : <span
+                          t-field="docs.shipping_to_text" />
                       </t>
                     </div>
                     <div> 設置先〒 <t
-                        t-if="docs.sale_id.forwarding_address_zip"> : <span
-                          t-field="docs.sale_id.forwarding_address_zip" />
+                        t-if="docs.forwarding_address_zip"> : <span
+                          t-field="docs.forwarding_address_zip" />
                       </t>
                     </div>
                   </div>
                   <div class="col-6">
                     <div> 設置先 <t
-                        t-if="docs.sale_id.forwarding_address"> : <span
-                          t-field="docs.sale_id.forwarding_address" />
+                        t-if="docs.forwarding_address"> : <span
+                          t-field="docs.forwarding_address" />
                       </t>
                     </div>
                   </div>
@@ -159,10 +160,11 @@
                       <th class="text-center" style="width:20%">品番・サイズ</th>
                       <th class="text-center" style="width:20%">仕様・詳細</th>
                       <th class="text-center" style="width:6%">数量</th>
-                      <th class="text-center" style="width:9%">個口数</th>
-                      <th class="text-center" style="width:6%">開梱</th>
-                      <th class="text-center" style="width:6%">組立</th>
-                      <th class="text-center" style="width:15%">配送費用</th>
+                      <th class="text-center" style="width:8%">個口数</th>
+                      <th class="text-center" style="width:5%">取説</th>
+                      <th class="text-center" style="width:5%">開梱</th>
+                      <th class="text-center" style="width:5%">組立</th>
+                      <th class="text-center" style="width:14%">配送費用</th>
                     </tr>
                   </thead>
                 </t>
@@ -184,7 +186,7 @@
                           </t>
                         </t>
                         <t t-else="">
-                          <span t-field="l.product_name" />
+                          <span t-field="l.product_id.product_tmpl_id.name" />
                         </t>
                       </t>
                       <br />
@@ -203,24 +205,10 @@
                           />
                         </t>
                       </div>
-                      <t t-if="l.sale_line_id"><span t-if="l.sale_line_id.product_size"
+                      <t t-if="l.sale_line_id">
+                        <span t-if="l.sale_line_id.product_size"
                           t-esc="l.sale_line_id.product_size" />
                       </t>
-                      <!-- <t t-if="l.product_id.width > 0">W<span
-                          t-esc="'{:.0f}'.format(l.product_id.width)" />
-                      </t>
-                      <t t-if="l.product_id.depth > 0">*D<span
-                          t-esc="'{:.0f}'.format(l.product_id.depth)" />
-                      </t>
-                      <t t-if="l.product_id.height > 0">*H<span
-                          t-esc="'{:.0f}'.format(l.product_id.height)" />
-                      </t>
-                      <t t-if="l.product_id.sh > 0"> SH<span
-                          t-esc="'{:.0f}'.format(l.product_id.sh)" />
-                      </t>
-                      <t t-if="l.product_id.ah > 0"> AH<span
-                          t-esc="'{:.0f}'.format(l.product_id.ah)" />
-                      </t> -->
                     </td>
                     <td class="size12">
                       <t
@@ -237,8 +225,13 @@
                     </td>
                     <td class="text-center size14">
                       <div>
-                        <span t-esc="'{0:,.0f}'.format(l.calculate_packages)" />
+                        <span t-esc="'{0:,.0f}'.format(l.packages_number)" />
                       </div>
+                    </td>
+                    <td class="text-center size14">
+                      <t t-if="l.sale_line_id.instruction_status">
+                        有
+                      </t>
                     </td>
                     <td class="text-center size13">
                       <span>有</span>

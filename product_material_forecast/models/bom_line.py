@@ -9,7 +9,7 @@ class bom_line_forecast(models.Model):
     series = fields.Char(related='parent_product_tmpl_id.series', store=True)
     categ_id = fields.Many2one(related='parent_product_tmpl_id.categ_id', store=True)
     virtual_available = fields.Float(related='product_id.virtual_available', store=True)
-    key_component = fields.Boolean(string="重要在庫", related='product_id.product_tmpl_id.key_component',store=True)
+    key_component = fields.Boolean(string="重要部材", related='product_id.product_tmpl_id.key_component',store=True)
     available_quantity = fields.Float(string='利用可能な数量',compute='_compute_available_quantity')
     
     def _compute_available_quantity(self):

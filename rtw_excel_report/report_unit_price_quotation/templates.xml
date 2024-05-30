@@ -18,7 +18,7 @@
                             'A3': 'send_to_people${value or ""}',
                             'B9': 'title${value or ""}',
                             'E3': 'preferred_delivery_period${value or ""}',
-                            'E4': 'workdays${value or ""}',
+                            'E4': 'workday_id.name${value or ""}',
                             'E5': 'sale_order_date_deadline${value or ""}',
                             'E6': 'forwarding_address${value or ""}',
                             'E7': 'sale_order_transactions_term${value or ""}',

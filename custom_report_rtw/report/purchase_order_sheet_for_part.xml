@@ -2,7 +2,7 @@
 <odoo>
   <template id="report_purchase_order_sheet_for_part">
     <t t-call="web.html_container">
-      <t t-foreach="docs" t-as="o">
+      <t t-foreach="docs[0]" t-as="o">
         <t t-call="custom_report_rtw.so_ex_layout">
           <t t-set="total_subprice" t-value="0" />
           <t t-set="total_listprice" t-value="0" />
@@ -21,11 +21,11 @@
           </t>
           <t t-call="custom_report_rtw.SO_purchase_order_sheet_for_part_header_layout"></t>
           <div class="page">
-            <t t-foreach="docs" t-as="po">
+            <t t-foreach="docs[0]" t-as="po">
               <t
                 t-set="type">quotation</t>
               <t t-set="address">
-                <div t-field="po.partner_id"
+                <div t-if="po.partner_id" t-field="po.partner_id"
                   t-options='{"widget": "contact", "fields": ["address", "name"],
                         "no_marker": True}' />
                 <p t-if="po.partner_id.vat"><t
@@ -43,11 +43,22 @@
                       発注番号
                     </div>
                     <div>
-                      <div t-field="po.name" />
-                      <div style="width: 300px;" t-field="po.purchase_order_origin" />
+                      <t t-foreach="docs" t-as="po_name">
+                        <span t-field="po_name.name" />
+                        <t t-set="is_last_item" t-value="po_name == docs[-1]" />
+                        <t t-if="not is_last_item">, </t>
+                      </t>
+                      <div>
+                        <t t-set="filtered_docs"
+                          t-value="docs.filtered(lambda doc: doc.purchase_order_origin)" />
+                        <t t-foreach="filtered_docs" t-as="po_name">
+                          <span style="width: 300px;" t-field="po_name.purchase_order_origin" />
+                          <t t-set="is_last_item" t-value="po_name == filtered_docs[-1]" />
+                          <t t-if="not is_last_item">, </t>
+                        </t>
+                      </div>
                     </div>
                   </div>
-
                   <br />
                   <div>送り先着日 <span class="size16" t-esc="po.purchase_line_date_planned" />
                   </div>
@@ -112,127 +123,122 @@
                     <div>送り先注記: </div>
                     <div
                       style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;"
-                      class="ml-1" t-field="docs.destination_note" />
+                      class="ml-1" t-if="po.destination_note" t-field="po.destination_note" />
                   </div>
                 </div>
                 <div class="col-4">
                 </div>
               </div>
-              <table
-                class="table">
+              <table class="table">
                 <t t-set="number" t-value="0" />
-                <t t-foreach="docs.purchase_order_line" t-as="l" t-groupby="10"
-                  t-att-last="last">
-                  <t t-set="total_subprice"
-                    t-value="total_subprice + l.price_subtotal" />
-                  <t t-set="total_listprice"
-                    t-value="total_listprice + l.price_unit * l.product_uom_qty" />
-                  <t t-if="l_index == 0">
-                    <thead>
-                      <tr
-                        style="background-color:#595959;color:#ffffff;padding:5px 0px 10px 0px;font-size:13px;">
-                        <th class="text-center" style="width:2%">№</th>
-                        <th class="text-center" style="width:20%">品名</th>
-                        <th class="text-center" style="width:25%">仕様・詳細</th>
-                        <th class="text-center" style="width:7%">数量</th>
-                        <th class="text-center" style="width:6%"></th>
-                        <th class="text-center">単価</th>
-                        <th class="text-center" style="width:10%">発注金額</th>
-                        <th class="text-center" style="width:10%">Custom</th>
-                      </tr>
-                    </thead>
-                  </t>
-                  <tbody class="invoice_tbody">
-                    <t t-if="l.display_type =='line_section' or l.display_type =='line_note'">
-                      <tr class="size15 table-border-bottom-auto">
-                        <t t-if="l.display_type =='line_section'">
-                          <td class="bg-section" />
-                          <td class="size11 bg-section" colspan="9">
-                            <span t-field="l.name" />
+                <thead>
+                  <tr
+                    style="background-color:#595959;color:#ffffff;padding:5px 0px 10px 0px;font-size:13px;">
+                    <th class="text-center" style="width:2%">№</th>
+                    <th class="text-center" style="width:20%">品名</th>
+                    <th class="text-center" style="width:25%">仕様・詳細</th>
+                    <th class="text-center" style="width:7%">数量</th>
+                    <th class="text-center" style="width:6%"></th>
+                    <th class="text-center">単価</th>
+                    <th class="text-center" style="width:10%">発注金額</th>
+                    <th class="text-center" style="width:10%">Custom</th>
+                  </tr>
+                </thead>
+                <t t-foreach="docs" t-as="po2">
+                  <t t-foreach="po2.purchase_order_line" t-as="l" t-groupby="10"
+                    t-att-last="last">
+                    <t t-set="total_subprice"
+                      t-value="total_subprice + l.price_subtotal" />
+                    <t t-set="total_listprice"
+                      t-value="total_listprice + l.price_unit * l.product_uom_qty" />
+                    <tbody class="invoice_tbody">
+                      <t t-if="l.display_type =='line_section' or l.display_type =='line_note'">
+                        <tr class="size15 table-border-bottom-auto">
+                          <t t-if="l.display_type =='line_section'">
+                            <td class="bg-section" />
+                            <td class="size11 bg-section" colspan="9">
+                              <span t-field="l.name" />
+                            </td>
+                          </t>
+                          <t t-elif="l.display_type =='line_note'">
+                            <td />
+                            <td class="size11" colspan="9">
+                              <span t-field="l.name" />
+                            </td>
+                          </t>
+                        </tr>
+                      </t>
+                      <t t-else="">
+                        <tr class="table-border-bottom-auto size15">
+                          <td class="text-center size12">
+                            <t t-set="number" t-value="number + 1" />
+                            <t t-esc="number" />
                           </td>
-                        </t>
-                        <t t-elif="l.display_type =='line_note'">
-                          <td />
-                          <td class="size11" colspan="9">
-                            <span t-field="l.name" />
+                          <td class="size12">
+                            <t t-if="l.product_id.product_tmpl_id.config_ok">
+                              <t t-if="l.product_id.product_tmpl_id.categ_id.name">
+                                <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                              </t>
+                              <t t-elif="l.product_id.product_tmpl_id.product_no">
+                                <span t-field="l.product_id.product_tmpl_id.product_no" />
+                              </t>
+                              <t t-else="">
+                                <span t-field="l.name" />
+                              </t>
+                            </t>
+                            <t t-else="">
+                              <span t-field="l.name" />
+                            </t>
+                            <br />
                           </td>
-                        </t>
-                      </tr>
-                    </t>
-                    <t t-else="">
-                      <tr class="table-border-bottom-auto size15">
-                        <td class="text-center size12">
-                          <t t-set="number" t-value="number + 1" />
-                          <t t-esc="number" />
-                        </td>
-                        <td class="size12">
-                          <div t-field="l.purchase_order_prod_name" />
-                          <t t-if="l.product_id.product_tmpl_id.width > 0">W<span
-                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.width)" />
-                          </t>
-                          <t t-if="l.product_id.product_tmpl_id.depth > 0">*D<span
-                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.depth)" />
-                          </t>
-                          <t t-if="l.product_id.product_tmpl_id.height > 0">*H<span
-                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.height)" />
-                          </t>
-                          <t t-if="l.product_id.product_tmpl_id.diameter > 0">Φ<span
-                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.diameter)" />
-                          </t>
-                          <t t-if="l.product_id.product_tmpl_id.sh > 0"> SH<span
-                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.sh)" />
-                          </t>
-                          <t t-if="l.product_id.product_tmpl_id.ah > 0"> AH<span
-                              t-esc="'{:.0f}'.format(l.product_id.product_tmpl_id.ah)" />
-                          </t>
-                          <br />
-                        </td>
-                        <td class="size13">
-                          <t
-                            t-foreach="l.product_id.product_template_attribute_value_ids"
-                            t-as="string_line"> ● <span
-                              t-esc="string_line.attribute_id.name" />: <span
-                              t-esc="string_line.product_attribute_value_id.name" />
+                          <td class="size13">
+                            <t
+                              t-foreach="l.product_id.product_template_attribute_value_ids"
+                              t-as="string_line"> ● <span
+                                t-esc="string_line.attribute_id.name" />: <span
+                                t-esc="string_line.product_attribute_value_id.name" />
                               <br />
-                          </t>
-                          <t
-                            t-if="l.sale_line_id and l.sale_line_id.config_session_id"
-                            t-foreach="l.sale_line_id.config_session_id.custom_value_ids"
-                            t-as="string_line"> ● <span
-                              t-esc="string_line.display_name" />: <span
-                              t-esc="string_line.value" />
+                            </t>
+                            <t
+                              t-if="l.sale_line_id and l.sale_line_id.config_session_id"
+                              t-foreach="l.sale_line_id.config_session_id.custom_value_ids"
+                              t-as="string_line"> ● <span
+                                t-esc="string_line.display_name" />: <span
+                                t-esc="string_line.value" />
                                 <br />
-                          </t>
-                        </td>
-                        <td class="text-center">
-                          <div id="quote_qty">
-                            <span
-                              t-field="l.purchase_order_line_product_uom_qty" />
-                          </div>
-                        </td>
-                        <td class="text-center size14">
-                          <t t-if="l.product_uom">
-                            <span
-                              t-field="l.product_uom" />
-                          </t>
-                        </td>
-                        <td class="text-center">
-                          <span
-                            t-esc="'{0:,.0f}'.format(l.price_unit)" />
-                        </td>
-                        <td class="text-center">
-                          <span
-                            t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
-                        </td>
-                        <td class="size13"></td>
-                      </tr>
-                    </t>
-                  </tbody>
+                            </t>
+                          </td>
+                          <td class="text-center">
+                            <div id="quote_qty">
+                              <span
+                                t-field="l.purchase_order_line_product_uom_qty" />
+                            </div>
+                          </td>
+                          <td class="text-center size12">個</td>
+                          <td class="text-center size14">
+                            <span t-if="l.purchase_order_sell_unit_price"
+                              t-esc="'{0:,.0f}'.format(l.purchase_order_sell_unit_price)" />
+                          </td>
+                          <td class="text-center size14">
+                            <span t-if="l.price_subtotal"
+                              t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
+                          </td>
+                          <td class="size13"></td>
+                        </tr>
+                      </t>
+                    </tbody>
+                  </t>
                 </t>
               </table>
               <div class="d-flex justify-content-end size13">
-                <div>販売価格合計 : <span class="size15"
-                    t-esc="'{0:,.0f}'.format(po.amount_untaxed)" /></div>
+                <div>販売価格合計 : <t t-set="total_amount" t-value="0" />
+                  <t t-foreach="docs"
+                    t-as="po_name2">
+                    <t t-set="total_amount" t-value="total_amount + int(po_name2.amount_untaxed)" />
+                  </t>
+                    <span
+                    class="size15" t-esc="'{0:,.0f}'.format(total_amount)" />
+                </div>
               </div>
             </t>
           </div>
@@ -241,6 +247,7 @@
       </t>
     </t>
   </template>
+
   <record id="paperformat_purchase_order_sheet_for_part" model="report.paperformat">
     <field name="name">Purchase Order Sheet For Part</field>
     <field name="default" eval="False" />
@@ -256,14 +263,17 @@
     <field name="header_spacing">12</field>
     <field name="dpi">90</field>
   </record>
-  <report
-    string="発注書(部材用）"
-    id="report_purchase_order_sheet_for_part_rtw111"
-    model="purchase.order"
-    report_type="qweb-pdf"
-    name="custom_report_rtw.report_purchase_order_sheet_for_part"
-    file="custom_report_rtw.report_purchase_order_sheet_for_part"
-    paperformat="paperformat_purchase_order_sheet_for_part"
-  />
+
+  <record id="report_purchase_order_sheet_for_part_rtw111" model="ir.actions.report">
+    <field name="name">発注書(部材用）</field>
+    <field name="model">purchase.order</field>
+    <field name="binding_model_id" ref="model_purchase_order" />
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">custom_report_rtw.report_purchase_order_sheet_for_part</field>
+    <field name="report_file">custom_report_rtw.report_purchase_order_sheet_for_part</field>
+    <field name="paperformat_id" ref="custom_report_rtw.paperformat_purchase_order_sheet_for_part" />
+    <field name="attachment_use">False</field>
+    <field name="binding_view_types">list,form</field>
+  </record>
 
 </odoo>

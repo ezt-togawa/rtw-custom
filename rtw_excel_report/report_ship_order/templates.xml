@@ -36,7 +36,7 @@
                             'C20':'product_number_and_size#{style=text;fill=grey}',
                             'D20':'product_attribute#{style=text;fill=grey}',
                             'E20': 'stock_product_uom_qty${value or ""}#{style=number;fill=grey}',
-                            'F20': 'packages_number${value or ""}#{style=number;fill=grey}',
+                            'F20': 'packages_number${value or 0}#{style=text;fill=grey}',
                             'G20': 'stock_sai#{style=text;fill=grey}',
                             'H20': 'stock_warehouse#{style=text;fill=grey}',
                             'I20': 'stock_shiratani_date#{style=text;fill=grey}',

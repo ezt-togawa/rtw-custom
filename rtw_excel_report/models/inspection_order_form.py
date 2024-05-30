@@ -42,7 +42,8 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_12 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
         format_lines_10 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
         format_lines_9_left= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':9, 'bottom':1})
-        format_lines_10_left= workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_10_left= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_custom= workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
         
         allow_print = False
         if len(mrp_data) == 1 and mrp_data[0].origin:
@@ -79,9 +80,9 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.set_column("C:C", width=30,cell_format=font_family)  
                 sheet.set_column("D:D", width=30,cell_format=font_family) 
                 sheet.set_column("E:E", width=15,cell_format=font_family)  
-                sheet.set_column("F:F", width=6.5,cell_format=font_family)  
-                sheet.set_column("G:G", width=6,cell_format=font_family)
-                sheet.set_column("H:H", width=19,cell_format=font_family)  
+                sheet.set_column("F:F", width=7.5,cell_format=font_family)  
+                sheet.set_column("G:G", width=7.5,cell_format=font_family)
+                sheet.set_column("H:H", width=0,cell_format=font_family)  
                 sheet.set_column("I:I", width=23,cell_format=font_family)  
                 sheet.set_column("J:J", width=26,cell_format=font_family)  
                 sheet.set_column("K:K", width=27,cell_format=font_family)  
@@ -110,9 +111,19 @@ class ReportMrpExcel(models.AbstractModel):
                 
                 if mrp.picking_type_id.warehouse_id.partner_id:
                     if mrp.lang_code == "ja_JP":
-                        sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
+                        if mrp.mrp_workorder_state == 'wk_001':
+                            sheet.write(3, 0, '糸島工場 御中', format_text) 
+                        elif mrp.mrp_workorder_state == 'wk_002':
+                            sheet.write(3, 0, '品質管理部 御中', format_text)
+                        else:
+                            sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
                     else:
-                        sheet.write(3, 0, "Dear " + mrp.picking_type_id.warehouse_id.partner_id.name, format_text)
+                        if mrp.mrp_workorder_state == 'wk_001':
+                            sheet.write(3, 0, 'Dear Itoshima Factory', format_text) 
+                        elif mrp.mrp_workorder_state == 'wk_002':
+                            sheet.write(3, 0, 'Dear Quality Control', format_text)
+                        else:
+                            sheet.write(3, 0, "Dear " + mrp.picking_type_id.warehouse_id.partner_id.name, format_text)
             
                 sheet.write(11, 0, "送り先", format_text) 
                 
@@ -154,8 +165,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(17, 3, "仕様・詳細", format_table)
                 sheet.write(17, 4, "数量", format_table)
                 sheet.write(17, 5, "", format_table)
-                sheet.write(17, 6, "単価", format_table)
-                sheet.write(17, 7, "発注金額 ", format_table)   
+                sheet.write(17, 6, "取説", format_table)
                 sheet.write(17, 8, "Custom", format_table)
                 sheet.write(17, 9, "メモ", format_table)
             
@@ -176,9 +186,8 @@ class ReportMrpExcel(models.AbstractModel):
                 else:
                     sheet.merge_range(row, 5, row + height, 5, "", format_lines_12)
                     
-                sheet.merge_range(row, 6, row + height, 6, "", format_lines_13)
-                sheet.merge_range(row, 7, row + height, 7, "", format_lines_13)
-                sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_10_left)
+                sheet.merge_range(row, 6, row + height, 6, "有" if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
+                sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_custom)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)
                 
                 row += height + 1
@@ -205,9 +214,9 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.set_column("C:C", width=30,cell_format=font_family)  
                 sheet.set_column("D:D", width=30,cell_format=font_family) 
                 sheet.set_column("E:E", width=15,cell_format=font_family)  
-                sheet.set_column("F:F", width=6.5,cell_format=font_family)  
-                sheet.set_column("G:G", width=6,cell_format=font_family)
-                sheet.set_column("H:H", width=19,cell_format=font_family)  
+                sheet.set_column("F:F", width=7.5,cell_format=font_family)  
+                sheet.set_column("G:G", width=7.5,cell_format=font_family)
+                sheet.set_column("H:H", width=0,cell_format=font_family)  
                 sheet.set_column("I:I", width=23,cell_format=font_family)  
                 sheet.set_column("J:J", width=26,cell_format=font_family)  
                 sheet.set_column("K:K", width=27,cell_format=font_family)  
@@ -236,9 +245,19 @@ class ReportMrpExcel(models.AbstractModel):
                 
                 if mrp.picking_type_id.warehouse_id.partner_id:
                     if mrp.lang_code == "ja_JP":
-                        sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
+                        if mrp.mrp_workorder_state == 'wk_001':
+                            sheet.write(3, 0, '糸島工場 御中', format_text) 
+                        elif mrp.mrp_workorder_state == 'wk_002':
+                            sheet.write(3, 0, '品質管理部 御中', format_text)
+                        else:
+                            sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
                     else:
-                        sheet.write(3, 0, "Dear " + mrp.picking_type_id.warehouse_id.partner_id.name, format_text)  
+                        if mrp.mrp_workorder_state == 'wk_001':
+                            sheet.write(3, 0, 'Dear Itoshima Factory', format_text) 
+                        elif mrp.mrp_workorder_state == 'wk_002':
+                            sheet.write(3, 0, 'Dear Quality Control', format_text)
+                        else:
+                            sheet.write(3, 0, "Dear " + mrp.picking_type_id.warehouse_id.partner_id.name, format_text)
                                          
                 sheet.write(11, 0, "送り先", format_text) 
                 
@@ -272,8 +291,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(17, 3, "仕様・詳細", format_table)
                 sheet.write(17, 4, "数量", format_table)
                 sheet.write(17, 5, "", format_table)
-                sheet.write(17, 6, "単価", format_table)
-                sheet.write(17, 7, "発注金額 ", format_table)   
+                sheet.write(17, 6, "取説", format_table)
                 sheet.write(17, 8, "Custom", format_table)
                 sheet.write(17, 9, "メモ", format_table)
             
@@ -293,7 +311,6 @@ class ReportMrpExcel(models.AbstractModel):
                 else:
                     sheet.merge_range(row, 5, row + height, 5, "", format_lines_12)
                     
-                sheet.merge_range(row, 6, row + height, 6, "", format_lines_13)
-                sheet.merge_range(row, 7, row + height, 7, "", format_lines_13)
+                sheet.merge_range(row, 6, row + height, 6, "有" if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
                 sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_10_left)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)

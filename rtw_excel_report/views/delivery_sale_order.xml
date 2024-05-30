@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+            id="delivery_sale_order"
+            model="sale.order"
+            string="配送作業依頼書"
+            report_type="xlsx"
+            name="rtw_excel_report.delivery_sale_order_xls"
+            file="配送作業依頼書"
+            attachment_use="False"
+        />
+    </data>
+</odoo>
