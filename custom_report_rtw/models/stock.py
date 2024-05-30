@@ -48,10 +48,61 @@ class StockPicking(models.Model):
 class StockMove(models.Model):
   _inherit = 'stock.move'
   calculate_packages = fields.Integer('Packages' , compute="_compute_calculate_packages")
- 
+  stock_move_product_size = fields.Char(compute="_compute_stock_move_related_sale_order_line")
+  stock_move_sale_line_id= fields.Many2one('sale.order.line',compute="_compute_stock_move_related_sale_order_line")
+  
   def _compute_calculate_packages(self):
     for move in self:
         if move.product_id.two_legs_scale:
             move.calculate_packages = math.ceil(move.product_uom_qty / move.product_id.two_legs_scale)
         else:
             move.calculate_packages = move.product_uom_qty
+            
+  def _compute_stock_move_related_sale_order_line(self):
+    for move in self:
+        sale_order_line = False
+        if move.sale_line_id:
+            sale_order_line = move.sale_line_id
+            move.stock_move_sale_line_id = move.sale_line_id
+        elif move.created_production_id:
+            search_criteria = [ #limit 10 times
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                    ('move_ids', 'in', [move_id.id for move_id in move.created_production_id.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ]
+
+            for search in search_criteria: #find sale_order_line
+                if self.env['sale.order.line'].search([search]):
+                    sale_order_line = self.env['sale.order.line'].search([search])
+                    break
+            move.stock_move_sale_line_id = sale_order_line    
+            sale_order_line = sale_order_line
+        else:
+            move.stock_move_sale_line_id = False
+            sale_order_line = False
+        
+        if sale_order_line:
+            move.stock_move_product_size = sale_order_line.product_size
+        elif move.product_id.product_tmpl_id:
+            if move.product_id.product_tmpl_id.width:
+                product_size += 'W' + str(move.product_id.product_tmpl_id.width) + ' '
+            if move.product_id.product_tmpl_id.depth:
+                product_size += '*D' + str(move.product_id.product_tmpl_id.depth) + ' '
+            if move.product_id.product_tmpl_id.height:
+                product_size += '*H' + str(move.product_id.product_tmpl_id.height) + ' '
+            if move.product_id.product_tmpl_id.diameter:
+                product_size += 'Φ' + str(move.product_id.product_tmpl_id.diameter) + ' '
+            if move.product_id.product_tmpl_id.sh:
+                product_size += 'SH' + str(move.product_id.product_tmpl_id.sh) + ' '
+            if move.product_id.product_tmpl_id.ah:
+                product_size += 'AH' + str(move.product_id.product_tmpl_id.ah)   
+            move.stock_move_product_size = product_size
+        else:
+            move.stock_move_product_size = ''
