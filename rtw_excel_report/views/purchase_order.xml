@@ -3,7 +3,7 @@
         <report
             id="report_purchase_order"
             model="sale.order"
-            string="注文書(EXCEL)"
+            string="注文書"
             report_type="xlsx"
             name="rtw_excel_report.report_purchase_order_xls"
             file="注文書"

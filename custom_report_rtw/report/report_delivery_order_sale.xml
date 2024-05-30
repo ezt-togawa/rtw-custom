@@ -247,7 +247,7 @@
     <field name="dpi">90</field>
   </record>
   <report
-    string="配送作業依頼書-pdf"
+    string="配送作業依頼書"
     id="report_delivery_order_sale_rtw"
     model="sale.order"
     report_type="qweb-pdf"
