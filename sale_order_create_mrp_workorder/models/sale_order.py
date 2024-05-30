@@ -46,12 +46,7 @@ class sale_order(models.Model):
                     workorder_code = False
             
             if workorder_code:
-                name = False
-                if workorder_code == 'wk_001':
-                    name='検品（糸島）'
-                elif workorder_code == 'wk_002':
-                    name='検品（品質管理部）'
-                workcenter = self.env['mrp.workcenter'].search([('code','=',workorder_code),('name','=',name)])
+                workcenter = self.env['mrp.workcenter'].search([('code','=',workorder_code)],limit=1)
                 if workcenter:
                     self.env['mrp.workorder'].create({
                         'name':workcenter.name,

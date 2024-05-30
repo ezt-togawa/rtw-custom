@@ -71,6 +71,24 @@ class MrpProduction(models.Model):
   
   mrp_product_product_qty = fields.Char(string="mrp product product qty" , compute="_compute_mrp_product_product_qty")
   
+  mrp_workorder_state = fields.Char(
+      compute="_compute_mrp_workorder_state"
+  )
+  
+  def _compute_mrp_workorder_state(self):
+    for record in self:
+        wk_001 = self.env['mrp.workcenter'].search([('code','=','wk_001')], limit=1)
+        wk_002 = self.env['mrp.workcenter'].search([('code','=','wk_002')], limit=1)
+        mrp_workorder_state = False
+        for workorder in record.workorder_ids:
+            if workorder.workcenter_id.id == wk_001.id:
+                mrp_workorder_state = 'wk_001'
+                break
+            if workorder.workcenter_id.id == wk_002.id: 
+                mrp_workorder_state = 'wk_002'
+                break
+        record.mrp_workorder_state = mrp_workorder_state
+  
   def _compute_mrp_production_order_line(self):
      for record in self:      
        sale_order_line = False
