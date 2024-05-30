@@ -203,8 +203,7 @@
                               t-if="l.sale_line_id and l.sale_line_id.config_session_id"
                               t-foreach="l.sale_line_id.config_session_id.custom_value_ids"
                               t-as="string_line"> ● <span
-                                t-esc="string_line.display_name" />: <span
-                                t-esc="string_line.value" />
+                                t-esc="string_line.display_name" />
                                 <br />
                             </t>
                           </td>
