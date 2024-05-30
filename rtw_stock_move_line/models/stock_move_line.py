@@ -28,11 +28,11 @@ class rtw_stock_move_line(models.Model):
     mrp_state = fields.Selection(related="move_id.state", store=True)
     memo = fields.Char(related='move_id.sale_line_id.memo')
     area = fields.Many2one(
-        related='sale_id.waypoint.state_id', string='エリア', store=True)
+        related='picking_id.waypoint.state_id', string='エリア', store=True)
     forwarding_address = fields.Text(
-        related='sale_id.forwarding_address', string='到着地' , store=True)
+        related='picking_id.forwarding_address', string='到着地' , store=True)
     shipping_to = fields.Selection(
-        string="配送", related='sale_id.sipping_to', store=True)
+        string="配送", related='picking_id.sipping_to', store=True)
     shizai_date = fields.Date(string="資材出荷目安", compute="_get_shizai_date")
     warehouse_arrive_date = fields.Date(
         compute="_get_warehouse_arrive_date" , store=True)

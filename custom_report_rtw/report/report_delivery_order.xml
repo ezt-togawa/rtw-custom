@@ -109,30 +109,30 @@
                 <div class="row">
                   <div class="col-6">
                     <div> 配送 <t
-                        t-if="docs.stock_picking_sipping_to"> : <span
-                          t-field="docs.stock_picking_sipping_to" />
+                        t-if="docs.sipping_to_value"> : <span
+                          t-field="docs.sipping_to_value" />
                       </t>
                     </div>
                     <div> デポ <t
-                        t-if="docs.sale_id.waypoint.name"> : <span
-                          t-field="docs.sale_id.waypoint.name" />
+                        t-if="docs.waypoint.name"> : <span
+                          t-field="docs.waypoint.name" />
                       </t>
                     </div>
                     <div> 配送ラベル <t
-                        t-if="docs.sale_id.shipping_to_text"> : <span
-                          t-field="docs.sale_id.shipping_to_text" />
+                        t-if="docs.shipping_to_text"> : <span
+                          t-field="docs.shipping_to_text" />
                       </t>
                     </div>
                     <div> 設置先〒 <t
-                        t-if="docs.sale_id.forwarding_address_zip"> : <span
-                          t-field="docs.sale_id.forwarding_address_zip" />
+                        t-if="docs.forwarding_address_zip"> : <span
+                          t-field="docs.forwarding_address_zip" />
                       </t>
                     </div>
                   </div>
                   <div class="col-6">
                     <div> 設置先 <t
-                        t-if="docs.sale_id.forwarding_address"> : <span
-                          t-field="docs.sale_id.forwarding_address" />
+                        t-if="docs.forwarding_address"> : <span
+                          t-field="docs.forwarding_address" />
                       </t>
                     </div>
                   </div>
