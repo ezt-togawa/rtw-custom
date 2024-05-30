@@ -509,7 +509,7 @@ class SaleOrderExcelReport(models.Model):
             record.sale_order_hr_employee= hr_employee_detail.rstrip('\n')
             record.sale_order_hr_employee_invoice= hr_employee_detail_invoice.rstrip('\n')
             record.sale_order_hr_employee_split_street= hr_employee_split_street.rstrip('\n')
-                
+
     def _compute_sale_order_preferred_delivery_period(self):
         for record in self:
             if record.preferred_delivery_period :
@@ -1715,14 +1715,14 @@ class StockMoveExcelReport(models.Model):
     def _compute_sale_line(self):
         for line in self:
             status = ''
-            if line.sale_line_id and line.sale_line_id.instruction_status:
+            if line.stock_move_sale_line_id and line.stock_move_sale_line_id.instruction_status:
                 status = '有'
             line.sale_line_instruction_status = status
             
     def _compute_calculate_product_pack(self):
         for line in self:
-            if line.sale_line_id.pack_parent_line_id:
-                line.calculate_product_pack = ' / ' + line.sale_line_id.pack_parent_line_id.product_id.name
+            if line.stock_move_sale_line_id.pack_parent_line_id:
+                line.calculate_product_pack = ' / ' + line.stock_move_sale_line_id.pack_parent_line_id.product_id.name
             else:
                 line.calculate_product_pack = ''
                 
@@ -1814,6 +1814,11 @@ class StockMoveExcelReport(models.Model):
         compute="_compute_stock_move",
     )
     
+    product_pack_and_prod_no = fields.Char(
+        "Product pack and prod no",
+        compute="_compute_stock_move",
+    )
+    
     stock_product_uom_qty = fields.Char(string="stock_product_uom_qty" , compute="_compute_stock_product_uom_qty")
                 
     def _compute_stock_product_uom_qty(self):
@@ -1867,8 +1872,8 @@ class StockMoveExcelReport(models.Model):
             line.product_attribute = product_attribute   
             
             other_size = ""
-            if line.sale_line_id and line.sale_line_id.product_size:
-                other_size = line.sale_line_id.product_size
+            if line.stock_move_product_size:
+                other_size = line.stock_move_product_size
                     
             p_type = ""            
             if line.p_type == "special":
@@ -1889,8 +1894,8 @@ class StockMoveExcelReport(models.Model):
             size_detail = "" 
             prod_no = ""
             prod_pack = ""
-            if line.sale_line_id:  
-                pack_parent =  line.sale_line_id.pack_parent_line_id   
+            if line.stock_move_sale_line_id:
+                pack_parent =  line.stock_move_sale_line_id.pack_parent_line_id   
                 if pack_parent:
                     if pack_parent.product_id and pack_parent.product_id.product_no:
                         prod_no = pack_parent.product_id.product_no
@@ -1930,7 +1935,8 @@ class StockMoveExcelReport(models.Model):
             line.action_assemble = "無"
             line.stock_sai = prod_tmpl.sai if prod_tmpl.sai else ''
             line.stock_warehouse = line.warehouse_id.name if line.warehouse_id and line.warehouse_id.name else ''
-            line.stock_shiratani_date = line.sale_line_id.shiratani_date if line.sale_line_id and line.sale_line_id.shiratani_date else ''
+            line.stock_shiratani_date = line.stock_move_sale_line_id.shiratani_date if line.stock_move_sale_line_id and line.stock_move_sale_line_id.shiratani_date else ''
+            line.product_pack_and_prod_no = size_detail
 class AccountMoveExcelReport(models.Model):
     _inherit = "account.move"
 
