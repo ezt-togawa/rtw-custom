@@ -1151,17 +1151,17 @@ class SaleOrderLineExcelReport(models.Model):
                                 break
                             else:
                                 count_attr +=1
-                            attr += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+                            attr += ("● " + cfg.display_name + "\n" )
                             count_cfg += 1
                             
                         for cfg2 in attributes_cfg[count_cfg:(6+count_cfg)]:
-                            attr_cfg += ("● " + cfg2.display_name  + ":" + cfg2.value  + "\n" )
+                            attr_cfg += ("● " + cfg2.display_name + "\n" )
                 elif length_normal == 6 :
                     for attribute in attributes:
                         attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
                     if attributes_cfg:                            
                         for cfg in attributes_cfg:
-                            attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+                            attr_cfg += ("● " + cfg.display_name + "\n" )
                 else:
                     for attribute in attributes[:6]:
                         attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
@@ -1172,13 +1172,13 @@ class SaleOrderLineExcelReport(models.Model):
                     if length_normal < 12 : 
                         if attributes_cfg:
                             for cfg in attributes_cfg[:(12-start)]:
-                                attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+                                attr_cfg += ("● " + cfg.display_name + "\n" )
             else: 
                 if attributes_cfg:                            
                     for cfg in attributes_cfg[:6]:
-                        attr += ("● " +  cfg.display_name  + ":" + cfg.value  + "\n" )
+                        attr += ("● " +  cfg.display_name + "\n" )
                     for cfg in attributes_cfg[6:12]:
-                        attr_cfg += ("● " +  cfg.display_name  + ":" + cfg.value  + "\n" )
+                        attr_cfg += ("● " +  cfg.display_name + "\n" )
                         
             attr = attr.rstrip()
             attr_cfg = attr_cfg.rstrip()

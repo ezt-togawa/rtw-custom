@@ -158,7 +158,9 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(2,11,8,12, so.sale_order_hr_employee_split_street if so.sale_order_hr_employee_split_street else '' , format_address) 
 
             sheet.write(15, 0, '税抜定価合計: ', format_text) 
-            sheet.write(15, 1, so.sale_order_total_list_price  if so.sale_order_total_list_price else '', format_text_12_right) 
+            if so.currency_id.symbol and so.sale_order_total_list_price:
+                total_list_price = so.currency_id.symbol + str(so.sale_order_total_list_price)
+                sheet.write(15, 1, total_list_price, format_text_12_right) 
             sheet.write(15, 12, '消費税は含まれておりません', format_text_12_right) 
             sheet.merge_range(1, 9,1, 10,("(" + so.check_oversea + ")") if so.check_oversea else '' , format_text_right) 
 

@@ -36,46 +36,46 @@
               class="row zero_min_height">
             </div>
             <div class="row size13" style="margin-top:-50px;">
-              <div class="col-3">
-                <div class="so_price" style="">
-                  <span style="border-bottom:1px solid black;">
+              <div class="col-5">
+                <div class="so_price">
+                  <span class="border-bottom2">
                     株式会社リッツウェル
                   </span>
                 </div>
                 <t t-if="docs.lang_code == 'en_US'">
-                  <span class="so_price" style="border-bottom:1px solid black;"> Mr./Mrs. <t
+                  <span class="so_price border-bottom2"> Mr./Mrs. <t
                       t-esc="' '" /> <span t-field="docs.user_id.name" /> 宛 </span>
                 </t>
                 <t t-else="">
-                  <span class="so_price" style="border-bottom:1px solid black;">
+                  <span class="so_price border-bottom2">
                     <span t-field="docs.user_id.name" /> 宛 </span>
                 </t>
-                <br />
-                <div style="font-size:12px;padding-top:10px;padding-bottom:10px;">下記の通り注文いたします。<br />
+                <div style="font-size:12px;padding-top:6px;padding-bottom:10px;">下記の通り注文いたします。<br />
                     <span
-                    class="mt-1 so_price" style="border-bottom:1px solid black;"> 件名 <span
+                    class="mt-1 so_price border-bottom2"> 件名 <span
                       t-field="docs.title" /></span>
                 </div>
-                <br />
-                <div>税抜合計: <div style="float:right">
-                    <span t-field="docs.currency_id.symbol" />
-                    <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                <div class="w-75">
+                  <div>税抜合計: <div style="float:right">
+                      <span t-field="docs.currency_id.symbol" />
+                      <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                    </div>
                   </div>
-                </div>
-                <div>消費税: <div style="float:right">
-                    <span t-field="docs.currency_id.symbol" />
-                    <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                  <div>消費税: <div style="float:right">
+                      <span t-field="docs.currency_id.symbol" />
+                      <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                    </div>
                   </div>
-                </div>
-                <div class="so_price total-price">
-                  <span>税込合計</span>
-                  <div style="float:right">
-                    <span t-field="docs.currency_id.symbol" />
-                    <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                  <div class="so_price total-price">
+                    <span>税込合計</span>
+                    <div style="float:right">
+                      <span t-field="docs.currency_id.symbol" />
+                      <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-5">
+              <div class="col-3">
                 <div>納品希望日： <span t-if="docs.preferred_delivery_period"
                     t-esc="docs.preferred_delivery_period" />
                 </div>
@@ -231,8 +231,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[0:(6 - len(l.product_id.product_template_attribute_value_ids))]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>
@@ -254,8 +253,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[(6 - len(l.product_id.product_template_attribute_value_ids)):len(l.config_session_id.custom_value_ids)]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>
@@ -264,8 +262,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[0:len(l.config_session_id.custom_value_ids)]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>

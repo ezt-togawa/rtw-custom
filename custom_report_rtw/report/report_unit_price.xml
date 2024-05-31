@@ -38,26 +38,24 @@
             <div t-if="docs.company_id.logo or docs.company_id.report_header"
               class="row zero_min_height">
             </div>
-            <div class="row size13" style="margin-top:-50px;">
+            <div class="row size13" style="margin-top:-52px">
               <div class="col-5">
-                <div class="so_price">
-                  <t t-if="docs.send_to_people == ''">
+                <div class="so_price"
+                  style="max-height:25px">
+                  <t t-if="not docs.send_to_people">
                     <span t-field="docs.send_to_company" class="border-bottom2" />
                   </t>
                   <t t-else="else">
                     <span t-field="docs.send_to_company" />
                   </t>
                 </div>
-                <div class="so_price">
-                  <span t-field="docs.send_to_people" class="border-bottom2" />
-                </div>
-                <br />
-                <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 御依頼の件、下記の通りお見積り致しました。<br />ご査収の程宜しくお願い致します。<br />
-                <span
+                <span t-field="docs.send_to_people" class="so_price border-bottom2" />
+                <div class="size12"> 平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 御依頼の件、下記の通りお見積り致しました。 <br />
+                  ご査収の程宜しくお願い致します。 <br />
+                      <span
                     class="mt-1 so_price border-bottom2"> 件名 <span
                       t-field="docs.title" /></span>
                 </div>
-                <br />
               </div>
               <div class="col-3">
                 <div style="float:right;padding-right:60px;">
@@ -81,7 +79,7 @@
                       src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
                       alt="Logo" />
                   </div>
-                  <div style="height:140px">
+                  <div>
                     <div class="size12">
                       <span t-esc="docs.hr_employee_company" />
                     </div>
@@ -212,8 +210,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[0:(6 - len(l.product_id.product_template_attribute_value_ids))]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>
@@ -235,8 +232,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[(6 - len(l.product_id.product_template_attribute_value_ids)):len(l.config_session_id.custom_value_ids)]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>
@@ -245,8 +241,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[0:len(l.config_session_id.custom_value_ids)]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>

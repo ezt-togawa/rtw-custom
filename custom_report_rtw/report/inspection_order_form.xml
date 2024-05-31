@@ -373,8 +373,7 @@
                             <t t-foreach="line.order_line" t-as="l">
                               <t t-foreach="l.config_session_id.custom_value_ids"
                                 t-as="string_line"> ● <span
-                                  t-esc="string_line.display_name" />: <span
-                                  t-esc="string_line.value" />
+                                  t-esc="string_line.display_name" />
                                   <br />
                               </t>
                             </t>

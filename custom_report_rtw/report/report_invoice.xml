@@ -40,7 +40,7 @@
                                 <div class="so_price">
                                     <t t-if="docs.send_to_people == ''">
                                         <span t-field="docs.send_to_company"
-                                            style="border-bottom:1px solid black;" />
+                                            class="border-bottom2" />
                                     </t>
                                     <t t-else="">
                                         <span t-field="docs.send_to_company" />
@@ -48,35 +48,34 @@
                                 </div>
                                 <div class="so_price">
                                     <span t-field="docs.send_to_people"
-                                        style="border-bottom:1px solid black;" />
+                                        class="border-bottom2" />
                                 </div>
-                                <br />
-                                <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 下記の通り、ご請求申し上げます。<br />  <span
-                                        class="mt-1 so_price" style="border-bottom:1px solid black;">
-                                    件名 <span
+                                <div class="mt-2">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 下記の通り、ご請求申し上げます。<br />  <span
+                                        class="mt-1 so_price border-bottom2"> 件名 <span
                                             t-esc="docs.sale_order.title" />
                                     </span>
                                 </div>
-                                <br />
-                                <div>税抜合計: <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol" />
-                                        <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                                <div class="w-75 mt-2">
+                                    <div>税抜合計: <div style="float:right">
+                                            <span t-field="docs.currency_id.symbol" />
+                                            <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div>消費税: <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol" />
-                                        <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                                    <div>消費税: <div style="float:right">
+                                            <span t-field="docs.currency_id.symbol" />
+                                            <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="so_price total-price">
-                                    <span>税込合計</span>
-                                    <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol" />
-                                        <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                                    <div class="so_price total-price">
+                                        <span>税込合計</span>
+                                        <div style="float:right">
+                                            <span t-field="docs.currency_id.symbol" />
+                                            <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5">
+                            <div class="col-3">
                                 <div style="float:right;padding-right:60px;">
                                     <div>お支払期限: <span
                                             t-if="docs.invoice_date_due"
@@ -140,8 +139,7 @@
                                 </div>
                             </div>
                         </div>
-                        <table
-                            class="table mt-1">
+                        <table class="table">
                             <t t-set="number" t-value="0" />
                             <t t-foreach="docs.account_move_line" t-as="l" t-groupby="10"
                                 t-att-last="last">
