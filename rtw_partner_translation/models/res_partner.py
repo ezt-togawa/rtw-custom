@@ -1,5 +1,4 @@
 from odoo import fields, models , api
-from lxml import etree
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -14,18 +13,6 @@ class ResPartner(models.Model):
     street = fields.Char(translate=True)
     street2 = fields.Char(translate=True)
     parent_name = fields.Char(related='parent_id.display_name', readonly=True, string='Parent name')
-
-    # @api.model
-    # def _fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
-    #     res = super(ResPartner, self)._fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
-        
-    #     doc = etree.fromstring(res['arch'])
-    #     for city_node in doc.xpath("//field[@name='city']"):
-    #         city_node.set('attrs', "")
-            
-    #     res['arch'] = etree.tostring(doc, encoding='unicode')
-        
-    #     return res
     
     def write(self, vals):
         result = super(ResPartner, self).write(vals)
