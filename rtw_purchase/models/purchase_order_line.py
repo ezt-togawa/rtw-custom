@@ -65,6 +65,22 @@ class rtw_purchase(models.Model):
             else:
                 purchase.allowed_custom_config = False
                 
+    def _get_so_from_mrp(self , mrp_production , count = 0):
+        if count >= 10:
+            return False
+        if not mrp_production.origin:
+            return False
+        
+        sale_order_id = False
+        if '/MO/' in mrp_production.origin:
+            mrp = self.env['mrp.production'].search([('name','=',mrp_production.origin)])
+            if mrp:
+                count += 1
+                sale_order_id = self._get_so_from_mrp(mrp, count)
+        else:
+            sale_order_id = self.env['sale.order'].search([('name','=',mrp_production.origin)])
+        return sale_order_id
+                
     @api.depends('move_dest_ids.group_id.mrp_production_ids')
     def _compute_sale_order(self):
         for purchase in self:
@@ -74,11 +90,16 @@ class rtw_purchase(models.Model):
             if move_dest_ids:
                 order = []
                 name = []
+                order_ids = []
                 for rec in move_dest_ids:
                     if rec.origin:
-                        order.append(rec.origin)
-                    if self.env['sale.order'].search([('name', '=', rec.origin)]).title:
-                        name.append(self.env['sale.order'].search([('name', '=', rec.origin)]).title)
+                        sale_order = self._get_so_from_mrp(rec)
+                        if sale_order and not sale_order.id in order_ids:
+                            if sale_order.name:
+                                order.append(sale_order.name)
+                            if sale_order.title:
+                                name.append(sale_order.title)
+                            order_ids.append(sale_order.id)
                 purchase.sale_order_ids = ','.join(order)
                 purchase.sale_order_names = ','.join(name)
             else:
