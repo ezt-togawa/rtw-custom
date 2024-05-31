@@ -104,3 +104,29 @@ class sale_order_rtw(models.Model):
     def update_commitment_date(self):
         for record in self:
             record.commitment_date = self.preferred_delivery_date
+            
+    @api.onchange('overseas')
+    def onchange_overseas(self):
+        for record in self:
+            additional_text = '海外プレート'
+            if record.overseas:
+                for line in record.order_line:
+                    if line.memo:
+                        memo_string = line.memo.split(',')
+                        filtered_list = []
+                        for item in memo_string:
+                            if not item == additional_text:
+                                filtered_list.append(item)
+                        if additional_text not in filtered_list:
+                            line.memo += f',{additional_text}'
+                    else:
+                        line.memo = additional_text
+            else:
+                for line in record.order_line:
+                    if line.memo and additional_text in line.memo:
+                        memo_string = line.memo.split(',')
+                        filtered_list = []
+                        for item in memo_string:
+                            if not item == additional_text:
+                                filtered_list.append(item)
+                        line.memo = ','.join(filtered_list)
