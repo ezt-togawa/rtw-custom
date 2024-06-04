@@ -36,25 +36,47 @@
                         <div t-if="docs.company_id.logo or docs.company_id.report_header"
                             class="row zero_min_height">
                         </div>
-                        <div class="row size13" style="margin-top:-52px">
-                            <div class="col-5">
-                                <div class="so_price"
-                                    style="max-height:25px">
-                                    <t t-if="not docs.send_to_people">
-                                        <span t-field="docs.send_to_company" class="border-bottom2" />
-                                    </t>
-                                    <t t-else="else">
-                                        <span t-field="docs.send_to_company" />
-                                    </t>
+                        <div class="d-flex size13">
+                            <div class="col-8">
+                                <div class="col-12 d-flex">
+                                    <div class="col-6">
+                                        <div class="so_price"
+                                            style="max-height:25px">
+                                            <span t-field="docs.send_to_company"
+                                                t-att-class="not docs.send_to_people and 'border-bottom2'  or ''" />
+                                        </div>
+                                        <span t-field="docs.send_to_people"
+                                            class="so_price border-bottom2" />
+                                        <br />
+                                        <div class="size12"> 平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
+                                            御依頼の件、下記の通りお見積り致しました。 <br /> ご査収の程宜しくお願い致します。 </div>
+                                    </div>
+                                    <div class="col-6 d-flex">
+                                        <div class="col-4"></div>
+                                        <div class="col-8">
+                                            <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
+                                            <div> 製作日数： <span t-if="docs.workday_id"
+                                                    t-esc="docs.workday_id.name" /></div>
+                                            <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
+                                            <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
+                                            <div> 支払条件：<span
+                                                    t-esc="docs.sale_order_transactions_term" /></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span t-field="docs.send_to_people" class="so_price border-bottom2" />
-                                <div class="size12"> 平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
-                                    御依頼の件、下記の通りお見積り致しました。 <br /> ご査収の程宜しくお願い致します。 <br />
-                                    <span
-                                        class="mt-1 so_price border-bottom2"> 件名 <span
-                                            t-field="docs.title" /></span>
+                                <div class="col-12 d-flex">
+                                    <div class="col-8 so_price">
+                                        <span class="border-bottom2">件名 <span t-field="docs.title" />
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
+                                        <div
+                                            style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow:hidden;max-height:60px;">
+                                            備考: <span t-field="docs.special_note" /></div>
+                                    </div>
                                 </div>
-                                <div class="w-75 size16">
+                                <div class="col-6 size16">
                                     <div>税抜合計: <div class="float-right">
                                             <span t-field="docs.currency_id.symbol" />
                                             <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
@@ -74,21 +96,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div style="float:right;padding-right:60px;">
-                                    <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
-                                    <div> 製作日数： <span t-if="docs.workday_id"
-                                            t-esc="docs.workday_id.name" /></div>
-                                    <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
-                                    <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
-                                    <div> 支払条件：<span t-esc="docs.sale_order_transactions_term" /></div>
-                                    <br />
-                                    <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
-                                    <div
-                                        style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;">
-                                        備考: <span t-field="docs.special_note" /></div>
-                                </div>
-                            </div>
                             <div class="col-4 size11" name="company_address">
                                 <div class="float-right">
                                     <div>
@@ -98,8 +105,7 @@
                                     </div>
                                     <div>
                                         <div class="size12">
-                                            <span
-                                                t-esc="docs.hr_employee_company" />
+                                            <span t-esc="docs.hr_employee_company" />
                                         </div>
                                         <div>
                                             <span t-esc="docs.hr_employee_department" />
@@ -127,16 +133,16 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center size16">
-                            <div class="col-5" style="padding:0">
-                                <div class="w-75 size16">
+                            <div class="col-4">
+                                <div class="size16">
                                     <span>税抜定価合計: </span>
-                                    <div class="float-right" style="padding-right:12px">
+                                    <div class="float-right">
                                         <span t-field="docs.currency_id.symbol" />
                                         <span t-esc="docs.sale_order_total_list_price" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-7 text-right" style="padding:0">消費税は含まれておりません</div>
+                            <div class="col-8 text-right">消費税は含まれておりません</div>
                         </div>
                         <table
                             class="table table-condensed">

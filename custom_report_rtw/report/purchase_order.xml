@@ -36,26 +36,39 @@
               class="row zero_min_height">
             </div>
             <div class="row size13" style="margin-top:-50px;">
-              <div class="col-5">
+              <div class="col-8">
+                <div class="d-flex">
+                  <div class="col-5">
+                    <div class="so_price">
+                      <span class="border-bottom2">
+                        株式会社リッツウェル
+                      </span>
+                    </div>
+                    <t t-if="docs.lang_code == 'en_US'">
+                      <span class="so_price border-bottom2"> Mr./Mrs. <t
+                          t-esc="' '" /> <span t-field="docs.user_id.name" /> 宛 </span>
+                    </t>
+                    <t t-else="">
+                      <span class="so_price border-bottom2">
+                        <span t-field="docs.user_id.name" /> 宛 </span>
+                    </t>
+                    <div style="font-size:12px;padding-top:6px;padding-bottom:10px;">下記の通り注文いたします。<br />
+                    </div>
+                  </div>
+                  <div class="col-7">
+                    <div>納品希望日： <span t-if="docs.preferred_delivery_period"
+                        t-esc="docs.preferred_delivery_period" />
+                    </div>
+                    <div> 納品場所: <span t-field="docs.forwarding_address" />
+                    </div>
+                    <div> 備考: <span t-field="docs.special_note" />
+                    </div>
+                  </div>
+                </div>
                 <div class="so_price">
-                  <span class="border-bottom2">
-                    株式会社リッツウェル
-                  </span>
+                  <span class="border-bottom2">件名 <span t-field="docs.title" /></span>
                 </div>
-                <t t-if="docs.lang_code == 'en_US'">
-                  <span class="so_price border-bottom2"> Mr./Mrs. <t
-                      t-esc="' '" /> <span t-field="docs.user_id.name" /> 宛 </span>
-                </t>
-                <t t-else="">
-                  <span class="so_price border-bottom2">
-                    <span t-field="docs.user_id.name" /> 宛 </span>
-                </t>
-                <div style="font-size:12px;padding-top:6px;padding-bottom:10px;">下記の通り注文いたします。<br />
-                    <span
-                    class="mt-1 so_price border-bottom2"> 件名 <span
-                      t-field="docs.title" /></span>
-                </div>
-                <div class="w-75">
+                <div class="col-5">
                   <div>税抜合計: <div style="float:right">
                       <span t-field="docs.currency_id.symbol" />
                       <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
@@ -73,15 +86,6 @@
                       <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
                     </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div>納品希望日： <span t-if="docs.preferred_delivery_period"
-                    t-esc="docs.preferred_delivery_period" />
-                </div>
-                <div> 納品場所: <span t-field="docs.forwarding_address" />
-                </div>
-                <div> 備考: <span t-field="docs.special_note" />
                 </div>
               </div>
               <div class="col-4" name="company_address">
