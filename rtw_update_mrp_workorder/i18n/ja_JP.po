@@ -1,0 +1,4 @@
+#. module: rtw_update_mrp_workorder
+#: model:ir.model.fields,field_description:rtw_update_mrp_workorder.field_mrp_workorder__implementation_plan_date
+msgid "Implementation Plan Date"
+msgstr "実施計画日"
