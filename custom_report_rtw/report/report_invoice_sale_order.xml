@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="col-8">
-                                        <div class="w-75">
+                                        <div class="width-money">
                                             <div>税抜合計: <div style="float:right">
                                                     <span t-field="docs.currency_id.symbol" />
                                                     <span

@@ -260,3 +260,7 @@ body {
 .bg-section{
   background: #e9ecef;
 }
+
+.width-money{
+  max-width: 325px;
+}

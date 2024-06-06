@@ -76,21 +76,23 @@
                                     </div>
                                 </div>
                                 <div class="col-6 size16">
-                                    <div>税抜合計: <div class="float-right">
-                                            <span t-field="docs.currency_id.symbol" />
-                                            <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                                    <div class="width-money">
+                                        <div>税抜合計: <div class="float-right">
+                                                <span t-field="docs.currency_id.symbol" />
+                                                <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>消費税: <div class="float-right">
-                                            <span t-field="docs.currency_id.symbol" />
-                                            <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                                        <div>消費税: <div class="float-right">
+                                                <span t-field="docs.currency_id.symbol" />
+                                                <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="size28 total-price bold">
-                                        <span>税込合計</span>
-                                        <div style="float:right">
-                                            <span t-field="docs.currency_id.symbol" />
-                                            <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                                        <div class="size28 total-price bold">
+                                            <span>税込合計</span>
+                                            <div style="float:right">
+                                                <span t-field="docs.currency_id.symbol" />
+                                                <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +141,7 @@
                         </div>
                         <div class="d-flex justify-content-center size16">
                             <div class="col-4">
-                                <div class="size16">
+                                <div class="size16 width-money">
                                     <span>税抜定価合計: </span>
                                     <div class="float-right">
                                         <span t-field="docs.currency_id.symbol" />
