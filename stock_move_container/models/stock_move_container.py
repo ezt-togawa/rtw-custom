@@ -27,9 +27,9 @@ class StockMoveContainer(models.Model):
                 [('container_id', '=', record.id)])
             if stock_move_pallet_ids:
                 for pallet in stock_move_pallet_ids:
-                    stock_move_lines = self.env['stock.move.line'].search(
+                    stock_move_ids = self.env['stock.move'].search(
                         [('pallet_id', '=', pallet.id)])
-                    for line in stock_move_lines:
+                    for line in stock_move_ids:
                         stock_container_move_lines.append(line)
 
                 all_done = all(
@@ -39,36 +39,40 @@ class StockMoveContainer(models.Model):
             record.status = status
 
 
-class stock_move_line_container(models.Model):
-    _inherit = 'stock.move.line'
+# class stock_move_line_container(models.Model):
+#     _inherit = 'stock.move.line'
+
+#     container_id = fields.Many2one(
+#         'stock.move.container', string='コンテナ', compute='_compute_container_ids', store=True)
+
+#     @api.depends('pallet_id')
+#     def _compute_container_ids(self):
+#         for line in self:
+#             if line.pallet_id.container_id:
+#                 line.container_id = line.pallet_id.container_id
+#             else:
+#                 line.container_id = False
+                
+class stock_move_container(models.Model):
+    _inherit = 'stock.move'
 
     container_id = fields.Many2one(
-        'stock.move.container', string='コンテナ', compute='_compute_container_ids', store=True)
-
-    @api.depends('pallet_id')
-    def _compute_container_ids(self):
-        for line in self:
-            if line.pallet_id.container_id:
-                line.container_id = line.pallet_id.container_id
-            else:
-                line.container_id = False
-
+        'stock.move.container', string='コンテナ', related='pallet_id.container_id')
 
 class stock_picking_container(models.Model):
     _inherit = 'stock.picking'
 
-    container_id = fields.Many2one(
-        'stock.move.container',
+    container_ids = fields.Char(
         string='コンテナ',
         compute='_compute_container_ids',
         store=True
         )
 
-    @api.depends('move_line_ids', 'move_line_ids.pallet_id')
+    @api.depends('move_ids_without_package','move_ids_without_package.pallet_id','move_ids_without_package.pallet_id.container_id','move_ids_without_package.pallet_id.container_id.name')
     def _compute_container_ids(self):
         for picking in self:
-            pallet_ids = picking.move_line_ids.mapped('pallet_id')
-            if pallet_ids:
-                picking.container_id = pallet_ids[0].container_id
+            container_ids = picking.move_ids_without_package.mapped('pallet_id').mapped('container_id').mapped('name')
+            if container_ids:
+                picking.container_ids = ','.join(container_ids)
             else:
-                picking.container_id = False
+                picking.container_ids = ''

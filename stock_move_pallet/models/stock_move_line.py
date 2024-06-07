@@ -2,10 +2,14 @@
 
 from odoo import models, fields, api
 
-class StockMoveLine(models.Model):
-    _inherit ='stock.move.line'
+# class StockMoveLine(models.Model):
+#     _inherit ='stock.move.line'
+
+#     pallet_id = fields.Many2one('stock.move.pallet', 'パレット')
+
+class StockMove(models.Model):
+    _inherit ='stock.move'
 
     pallet_id = fields.Many2one('stock.move.pallet', 'パレット')
-
-
+    
 

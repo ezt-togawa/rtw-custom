@@ -11,18 +11,17 @@ class PalletLoading(models.TransientModel):
     @api.model
     def default_get(self, fields):
         res = super(PalletLoading, self).default_get(fields)
-        move_line = self.env['stock.move.line'].browse(self.env.context.get('active_id')).exists()
+        move_line = self.env['stock.move'].browse(self.env.context.get('active_id')).exists()
         if move_line:
-            res.update(name="%s %s" % (move_line.move_id.sale_line_id.name if move_line.move_id.sale_line_id.name else move_line.move_id.product_id.name, move_line.sale_id.name if move_line.sale_id.name else ''))
+            res.update(name="%s %s" % (move_line.sale_line_id.name if move_line.sale_line_id.name else move_line.product_id.name, move_line.sale_id.name if move_line.sale_id.name else ''))
         return res
 
     name = fields.Char('Name', required=True )
 
     def pallet_loading(self):
-        move_lines = self.env['stock.move.line'].browse(
+        move_lines = self.env['stock.move'].browse(
             self._context.get('active_ids', []))
         # 明細チェック数確認
-        print(len(self._context.get('active_ids', [])))
         if len(self._context.get('active_ids', [])) < 1:
             raise UserError(
                 _('Please select at least one detail line to perform '
@@ -33,7 +32,7 @@ class PalletLoading(models.TransientModel):
                 _('Please select details line which are in assigned state '
                   'to perform the Register Operation.'))
         # 対象データ退避
-        move_line_ids = self.env['stock.move.line'].browse(self.env.context['active_ids'])
+        move_ids = self.env['stock.move'].browse(self.env.context['active_ids'])
         picking_ids = self.env['stock.picking'].browse(self.env.context['active_ids'])
         # 画面の名前取得
         for rec in self:
@@ -41,7 +40,7 @@ class PalletLoading(models.TransientModel):
         # 新しいstock.move.pallet作成
         vals_pallet = {
             'name': new_name,
-            'move_line_ids': move_line_ids,
+            'move_ids': move_ids,
             'picking_ids': picking_ids
         }
         new_pallet = self.env['stock.move.pallet'].create(vals_pallet)
