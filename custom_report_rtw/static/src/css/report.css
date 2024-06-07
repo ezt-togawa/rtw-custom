@@ -29,7 +29,7 @@ div.stamp {
   padding: 0em 0.5em 0em 0.5em;
 }
 
-div{
+div,span{
   margin: 0 !important;
   padding: 0 !important;
 }

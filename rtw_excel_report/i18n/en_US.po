@@ -1281,3 +1281,9 @@ msgstr "Delivery Work Request"
 #: model:ir.actions.report,name:rtw_excel_report.delivery_sale_order
 msgid "配送作業依頼書"
 msgstr "Delivery Work Request"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
+#, python-format
+msgid " 年 "
+msgstr "/"

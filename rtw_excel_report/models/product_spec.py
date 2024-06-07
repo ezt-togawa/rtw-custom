@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from odoo.modules.module import get_module_resource
 
 from datetime import datetime 
@@ -15,6 +15,7 @@ class productSpec(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, so_data):
+        self = self.with_context(lang=self.env.user.lang)             
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -157,9 +158,9 @@ class productSpec(models.AbstractModel):
             
             sheet.insert_image(1, 2, "logo", {'image_data': img_io_R, 'x_offset': 0, 'y_offset': 0})
             # y,x,y,x
-            sheet.merge_range(1, 5, 3, 11, "商品仕様書", format_sheet_title) 
+            sheet.merge_range(1, 5, 3, 11, _("商品仕様書"), format_sheet_title) 
             sheet.merge_range(2, 43, 2, 48, so.sale_order_current_date if so.sale_order_current_date else "", format_date)
-            sheet.merge_range(5, 2, 5, 3, "件名", format_text)
+            sheet.merge_range(5, 2, 5, 3, _("件名"), format_text)
             sheet.merge_range(5, 4, 5, 48, so.title if so.title else "", format_text_14)
             
             pagebreaks = 0    
@@ -212,7 +213,7 @@ class productSpec(models.AbstractModel):
                         price = ""
                         size = ""
                         
-                        price += '定価：' + str('{0:,.0f}'.format(sol.price_subtotal))
+                        price += _('定価：') + str('{0:,.0f}'.format(sol.price_subtotal))
                         
                         if sol.currency_id.symbol:
                             price += sol.currency_id.symbol
@@ -220,7 +221,7 @@ class productSpec(models.AbstractModel):
                         if sol.product_size:
                             size = sol.product_size
                         
-                        price_and_size += price + '\n'+ 'サイズ：' + size 
+                        price_and_size += price + '\n'+ _('サイズ：') + size 
                         
                         sheet.merge_range(24 + height + more_height, 16 + width, 26 + height + more_height, 22 + width , price_and_size if price_and_size else "", format_text_top_size9)
                         
@@ -408,7 +409,7 @@ class productSpec(models.AbstractModel):
                                 
                                 sheet.insert_image(more_height + 1, 2, "logo", {'image_data': img_io_R, 'x_offset': 0, 'y_offset': 0})
                                 # y,x,y,x
-                                sheet.merge_range(more_height + 1, 5, more_height + 3, 11, "商品仕様書", format_sheet_title) 
+                                sheet.merge_range(more_height + 1, 5, more_height + 3, 11, _("商品仕様書"), format_sheet_title) 
                                 sheet.merge_range(more_height + 2, 43,more_height + 2, 48, so.sale_order_current_date if so.sale_order_current_date else "", format_date)
-                                sheet.merge_range(more_height + 5, 2, more_height + 5, 3, "件名", format_text)
+                                sheet.merge_range(more_height + 5, 2, more_height + 5, 3, _("件名"), format_text)
                                 sheet.merge_range(more_height + 5, 4, more_height + 5, 48, so.title if so.title else "", format_text_14)

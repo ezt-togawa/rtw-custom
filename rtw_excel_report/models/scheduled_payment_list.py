@@ -1,10 +1,11 @@
-from odoo import models
+from odoo import models, _
 from datetime import datetime 
 class productSpec(models.AbstractModel):
     _name = 'report.rtw_excel_report.scheduled_payment_list_xls'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)         
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -23,9 +24,9 @@ class productSpec(models.AbstractModel):
         day = str(datetime.now().day)
         month = str(datetime.now().month)
         year = str(datetime.now().year)
-        current_date = year + " 年" + month + "月 " + day + "日 "
+        current_date = year + _(" 年") + month + _("月 ") + day + _("日 ")
 
-        sheet_name = "支給予定リスト"  
+        sheet_name = _("支給予定リスト")
         sheet = workbook.add_worksheet(sheet_name)
 
         sheet.set_column("A:A", width=4,cell_format=font_family)
@@ -44,24 +45,24 @@ class productSpec(models.AbstractModel):
         sheet.set_column("M:M", width=10,cell_format=font_family)
         sheet.set_column("N:Z", None,cell_format=font_family) 
 
-        sheet.merge_range(1,5,1,8, "≪支給予定リスト≫", format_sheet_title)
+        sheet.merge_range(1,5,1,8, _("≪支給予定リスト≫"), format_sheet_title)
         sheet.merge_range(0,12,0,13, current_date, format_current_date)
 
         #table title
-        sheet.merge_range(5, 0,6,0, "№", format_table)
-        sheet.merge_range(5, 1,6,1, "工場" +"\n"+ "出荷日", format_table)
-        sheet.merge_range(5, 2,6,2, "受注番号", format_table)
-        sheet.merge_range(5, 3,6,3, "担当者", format_table)
-        sheet.merge_range(5, 4,6,4, "張地・部材名", format_table)
-        sheet.merge_range(5, 5,6,5, "送り先", format_table)
-        sheet.merge_range(5, 6,6,6, "備考１", format_table)
-        sheet.merge_range(5, 7,6,7, "備考２", format_table)
-        sheet.merge_range(5, 8,6,8, "(M)数量", format_table)
-        sheet.merge_range(5, 9,6,9, "ロット", format_table)
-        sheet.merge_range(5, 10,6,10, "デシ"+"\n"+ "換算", format_table)
-        sheet.merge_range(5, 11,6,11, "実"+"\n"+ "枚数", format_table)
-        sheet.merge_range(5, 12,6,12, "実"+"\n"+ "ロット", format_table)
-        sheet.merge_range(5, 13,6,13,"実"+"\n"+ "支給日", format_table)
+        sheet.merge_range(5, 0,6,0, _("№"), format_table)
+        sheet.merge_range(5, 1,6,1, _("工場") + "\n" + _("出荷日"), format_table)
+        sheet.merge_range(5, 2,6,2, _("受注番号"), format_table)
+        sheet.merge_range(5, 3,6,3, _("担当者"), format_table)
+        sheet.merge_range(5, 4,6,4, _("張地・部材名"), format_table)
+        sheet.merge_range(5, 5,6,5, _("送り先"), format_table)
+        sheet.merge_range(5, 6,6,6, _("備考１"), format_table)
+        sheet.merge_range(5, 7,6,7, _("備考２"), format_table)
+        sheet.merge_range(5, 8,6,8, _("(M)数量"), format_table)
+        sheet.merge_range(5, 9,6,9, _("ロット"), format_table)
+        sheet.merge_range(5, 10,6,10, _("デシ") + "\n"  + _("換算"), format_table)
+        sheet.merge_range(5, 11,6,11, _("実") + "\n"  + _("枚数"), format_table)
+        sheet.merge_range(5, 12,6,12, _("実") + "\n"  + _("ロット"), format_table)
+        sheet.merge_range(5, 13,6,13, _("実") + "\n"  + _("支給日"), format_table)
 
         row_no_merge = 7
         row_remember=7

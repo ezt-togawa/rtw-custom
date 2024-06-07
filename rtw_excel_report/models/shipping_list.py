@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from datetime import datetime 
 import math
 class productSpec(models.AbstractModel):
@@ -6,6 +6,7 @@ class productSpec(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)         
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -23,9 +24,9 @@ class productSpec(models.AbstractModel):
         day = str(datetime.now().day)
         month = str(datetime.now().month)
         year = str(datetime.now().year)
-        current_date = year + " 年" + month + "月 " + day + "日 "
+        current_date = year + _(" 年") + month + _("月 ") + day + _("日 ")
 
-        sheet = workbook.add_worksheet('出荷予定リスト')
+        sheet = workbook.add_worksheet(_('出荷予定リスト'))
         
         sheet.set_column("A:A", width=4,cell_format=font_family)  
         sheet.set_column("B:B", width=5, cell_format=font_family)  
@@ -45,25 +46,25 @@ class productSpec(models.AbstractModel):
         sheet.set_column("P:P", width=14,cell_format=font_family )  
         sheet.set_column("Q:Z", None,cell_format=font_family )  
         
-        sheet.merge_range(1,6,1,9, "≪出荷予定リスト≫ ", format_sheet_title)
+        sheet.merge_range(1,6,1,9, _("≪出荷予定リスト≫ "), format_sheet_title)
         sheet.write(0,15, current_date, format_current_date)
 
         #table title
-        sheet.merge_range(5, 0,6,0, "№", format_table)
-        sheet.merge_range(5, 1,6,1, "出荷日", format_table)
-        sheet.merge_range(5, 2,6,2, "受注番号", format_table)
-        sheet.merge_range(5, 3,6,3, "作成済", format_table)
-        sheet.merge_range(5, 4,6,4, "商品名", format_table)
-        sheet.merge_range(5, 5,6,6, "仕様", format_table)
-        sheet.merge_range(5, 7,6,7, "数量", format_table)
-        sheet.merge_range(5, 8,6,8, "個口", format_table)
-        sheet.merge_range(5, 9,6,9, "備考１", format_table)
-        sheet.merge_range(5, 10,6,10, "備考２", format_table)
-        sheet.merge_range(5, 11,5,12, "着日", format_table)
-        sheet.write(6, 11, "白谷", format_table)
-        sheet.write(6, 12,"デポ", format_table)
-        sheet.merge_range(5, 13,6,14, "送り先", format_table)
-        sheet.merge_range(5, 15,6,15, "手段", format_table)
+        sheet.merge_range(5, 0,6,0, _("№"), format_table)
+        sheet.merge_range(5, 1,6,1, _("出荷日"), format_table)
+        sheet.merge_range(5, 2,6,2, _("受注番号"), format_table)
+        sheet.merge_range(5, 3,6,3, _("作成済"), format_table)
+        sheet.merge_range(5, 4,6,4, _("商品名"), format_table)
+        sheet.merge_range(5, 5,6,6, _("仕様"), format_table)
+        sheet.merge_range(5, 7,6,7, _("数量"), format_table)
+        sheet.merge_range(5, 8,6,8, _("個口"), format_table)
+        sheet.merge_range(5, 9,6,9, _("備考１"), format_table)
+        sheet.merge_range(5, 10,6,10, _("備考２"), format_table)
+        sheet.merge_range(5, 11,5,12, _("着日"), format_table)
+        sheet.write(6, 11, _("白谷"), format_table)
+        sheet.write(6, 12, _("デポ"), format_table)
+        sheet.merge_range(5, 13,6,14, _("送り先"), format_table)
+        sheet.merge_range(5, 15,6,15, _("手段"), format_table)
 
         row_no_merge = 7
         row_remember=7
@@ -84,9 +85,9 @@ class productSpec(models.AbstractModel):
 
             # if stock_picking.state and (stock_picking.state=='done' or stock_picking.state == 'assigned'):
             if stock_picking.state and (stock_picking.state=='done'):
-                status = "済" 
+                status = _("済") 
             else:
-                status = "未" 
+                status = _("未") 
             
             if stock_picking.partner_id.commercial_company_name :
                 company_name = stock_picking.partner_id.commercial_company_name

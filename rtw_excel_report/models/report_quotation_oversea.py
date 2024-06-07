@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
 from io import BytesIO
@@ -8,6 +8,7 @@ class ReportMrpExcel(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
     
     def generate_xlsx_report(self, workbook, data, so_data):
+        self = self.with_context(lang=self.env.user.lang)             
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -117,7 +118,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.insert_image(1, 11, "logo2", {'image_data': img_io_ritzwell})
             
             # y,x
-            sheet.write(1, 1, "御見積書（海外）", format_sheet_title) 
+            sheet.write(1, 1, _("御見積書（海外）"), format_sheet_title) 
 
             if so.send_to_company and so.send_to_people:
                 sheet.write(2, 0,  so.send_to_company if so.send_to_company else '', format_name_company_no_border)
@@ -127,24 +128,24 @@ class ReportMrpExcel(models.AbstractModel):
             elif so.send_to_people:
                 sheet.write(2, 0,  so.send_to_people if so.send_to_people else '', format_name_company)
             
-            sheet.write(5,0, "平素より格別のお引き⽴てを賜り暑く御礼申し上げます。", format_text) 
-            sheet.write(6,0, "御依頼の件、下記の通りお⾒積り致しました。", format_text)
-            sheet.write(7,0, "ご査収の程宜しくお願い致します。", format_text) 
-            sheet.write(10, 0, "件名    " + so.title if so.title else '', format_text_14_border) 
-            sheet.write(12, 0, "税抜合計", format_text) 
-            sheet.write(13, 0, "消費税", format_text) 
-            sheet.write(14, 0, "税込合計", format_money_bgRed) 
+            sheet.write(5,0, _("平素より格別のお引き⽴てを賜り暑く御礼申し上げます。"), format_text) 
+            sheet.write(6,0, _("御依頼の件、下記の通りお⾒積り致しました。"), format_text)
+            sheet.write(7,0, _("ご査収の程宜しくお願い致します。"), format_text) 
+            sheet.write(10, 0, _("件名    ") + so.title if so.title else '', format_text_14_border) 
+            sheet.write(12, 0, _("税抜合計"), format_text) 
+            sheet.write(13, 0, _("消費税"), format_text) 
+            sheet.write(14, 0, _("税込合計"), format_money_bgRed) 
             sheet.write(12, 1, so.sale_order_amount_untaxed if so.sale_order_amount_untaxed else '', format_text_13_right) 
             sheet.write(13, 1, so.sale_order_amount_tax if so.sale_order_amount_tax else '', format_text_12_right) 
             sheet.write(14, 1, so.sale_order_amount_total if so.sale_order_amount_total else '', format_money_bgRed_right) 
 
-            sheet.write(2,5, "納品希望⽇：", format_text_right) 
-            sheet.write(3,5, "製作⽇数：", format_text_right) 
-            sheet.write(4,5, "発注期限：", format_text_right) 
-            sheet.write(5,5, "納品場所：", format_text_right) 
-            sheet.write(6,5, "⽀払条件：", format_text_right) 
-            sheet.write(8,5, "⾒積有効期限：", format_text_right) 
-            sheet.write(9,5, "備考：", format_text_right) 
+            sheet.write(2,5, _("納品希望⽇："), format_text_right) 
+            sheet.write(3,5, _("製作⽇数："), format_text_right) 
+            sheet.write(4,5, _("発注期限："), format_text_right) 
+            sheet.write(5,5, _("納品場所："), format_text_right) 
+            sheet.write(6,5, _("⽀払条件："), format_text_right) 
+            sheet.write(8,5, _("⾒積有効期限："), format_text_right) 
+            sheet.write(9,5, _("備考："), format_text_right) 
             
             sheet.write(2,6, so.preferred_delivery_period if so.preferred_delivery_period else '', format_text) 
             sheet.write(3,6, so.workday_id.name if so.workday_id else '', format_text) 
@@ -157,24 +158,24 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(0,11,0,12, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
             sheet.merge_range(2,11,8,12, so.sale_order_hr_employee_split_street if so.sale_order_hr_employee_split_street else '' , format_address) 
 
-            sheet.write(15, 0, '税抜定価合計: ', format_text) 
+            sheet.write(15, 0, _("税抜定価合計: "), format_text) 
             if so.currency_id.symbol and so.sale_order_total_list_price:
                 total_list_price = so.currency_id.symbol + str(so.sale_order_total_list_price)
-                sheet.write(15, 1, total_list_price, format_text_12_right) 
-            sheet.write(15, 12, '消費税は含まれておりません', format_text_12_right) 
-            sheet.merge_range(1, 9,1, 10,("(" + so.check_oversea + ")") if so.check_oversea else '' , format_text_right) 
+                sheet.write(15, 1, total_list_price, format_text_12_right)
+            sheet.write(15, 12, _("消費税は含まれておりません"), format_text_12_right) 
+            sheet.merge_range(1, 9,1, 10, _("(海外)") if so.overseas else '' , format_text_right) 
 
             #table title
-            sheet.write(16, 0, "№", format_table)
-            sheet.write(16, 1, "品名", format_table_left)
-            sheet.merge_range(16, 2,16,3, "品番・サイズ", format_table_left)
-            sheet.merge_range(16, 4,16,6, "仕様・詳細１", format_table_left)
-            sheet.write(16, 7, "仕様・詳細２", format_table_left)
-            sheet.write(16,8, "数量", format_table)
-            sheet.write(16, 9, "定価", format_table)
-            sheet.write(16, 10, "掛率 ", format_table)
-            sheet.write(16, 11, "販売単価", format_table)
-            sheet.write(16, 12, "販売⾦額", format_table)
+            sheet.write(16, 0, _("№"), format_table)
+            sheet.write(16, 1, _("品名"), format_table_left)
+            sheet.merge_range(16, 2,16,3, _("品番・サイズ"), format_table_left)
+            sheet.merge_range(16, 4,16,6, _("仕様・詳細１"), format_table_left)
+            sheet.write(16, 7, _("仕様・詳細２"), format_table_left)
+            sheet.write(16,8, _("数量"), format_table)
+            sheet.write(16, 9, _("定価"), format_table)
+            sheet.write(16, 10, _("掛率 "), format_table)
+            sheet.write(16, 11, _("販売単価"), format_table)
+            sheet.write(16, 12, _("販売⾦額"), format_table)
 
             if so.order_line:
                 row = 17
