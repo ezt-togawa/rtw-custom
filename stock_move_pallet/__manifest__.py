@@ -14,7 +14,7 @@
         'security/ir.model.access.csv',
         'wizard/stock_move_pallet_wizard_view.xml',
         'views/stock_move_pallet.xml',
-        'views/stock_move_line.xml',
+        'views/stock_move.xml',
         'views/stock_picking.xml',
         'views/templates.xml',
     ],
