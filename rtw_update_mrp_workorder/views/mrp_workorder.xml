@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="rtw_mrp_workorder_view_list" model="ir.ui.view">
+            <field name="name">mrp.production.work.order.tree.editable2</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//tree//field[@name='date_planned_start']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="//tree//field[@name='date_planned_finished']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="//tree//field[@name='date_planned_start']" position="before">
+                    <field name="implementation_plan_date" optional="show" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="rtw_mrp_workorder_view_calendar" model="ir.ui.view">
+            <field name="name">mrp.production.work.order.calendar2</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.workcenter_line_calendar" />
+            <field name="arch" type="xml">
+                <xpath expr="//calendar" position="attributes">
+                    <attribute name="date_stop">implementation_plan_date</attribute>
+                    <attribute name="date_start">implementation_plan_date</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_planned_finished']" position="after">
+                    <field name="implementation_plan_date" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="rtw_mrp_workorder_view_form" model="ir.ui.view">
+            <field name="name">mrp.production.work.order.form2</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//group" position="replace">
+                    <group attrs="{'invisible': [('date_planned_start', '=', False)]}">
+                        <label for="date_planned_start" string="Planned Date" />
+                        <div class="oe_inline">
+                            <field name="date_planned_start" class="mr8 oe_inline"
+                                required="True" readonly="True" />
+                            <strong class="mr8 oe_inline">to</strong>
+                            <field name="date_planned_finished" class="oe_inline"
+                                required="True" readonly="True" />
+                            <field name="show_json_popover" invisible="1" />
+                            <field name="json_popover" widget="mrp_workorder_popover"
+                                class="oe_inline mx-2"
+                                attrs="{'invisible': [('show_json_popover', '=', False)]}" />
+                        </div>
+                        <label for="duration_expected" />
+                        <div class="o_row">
+                            <field name="duration_expected" widget="float_time" />
+                            <span>minutes</span>
+                        </div>
+                        <label for="implementation_plan_date" />
+                        <div class="o_row">
+                            <field name="implementation_plan_date" />
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
