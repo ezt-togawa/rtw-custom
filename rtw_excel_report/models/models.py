@@ -619,7 +619,10 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_ritzwell_staff(self):
         for line in self:
             if line.user_id.name:
-                line.sale_order_ritzwell_staff = line.user_id.name + "  様"
+                if line.lang_code == 'ja_JP':
+                    line.sale_order_ritzwell_staff = line.user_id.name + "  様宛"
+                else:
+                    line.sale_order_ritzwell_staff = "Mr/Mrs. " + line.user_id.name 
             else:
                 line.sale_order_ritzwell_staff = ""
 

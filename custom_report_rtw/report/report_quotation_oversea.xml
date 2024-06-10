@@ -47,8 +47,11 @@
                                         <span t-field="docs.send_to_people"
                                             class="so_price border-bottom2" />
                                         <br />
-                                        <div class="size12"> 平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
-                                            御依頼の件、下記の通りお見積り致しました。 <br /> ご査収の程宜しくお願い致します。 </div>
+                                        <div class="size12">
+                                            <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。</div>
+                                            <div>御依頼の件、下記の通りお見積り致しました。</div>
+                                            <div>ご査収の程宜しくお願い致します。</div>
+                                        </div>
                                     </div>
                                     <div class="col-6 d-flex">
                                         <div class="col-4"></div>

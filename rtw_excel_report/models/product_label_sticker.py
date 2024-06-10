@@ -1,10 +1,11 @@
-from odoo import models
+from odoo import models, _
 
 class productLabelSticker(models.AbstractModel):
     _name = "report.rtw_excel_report.product_label_sticker_xls"
     _inherit = "report.report_xlsx.abstract"
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)             
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -13,7 +14,7 @@ class productLabelSticker(models.AbstractModel):
         format_title = workbook.add_format({"align": "center", "valign": "vcenter", "font_size": 26,"shrink": True ,'font_name': font_name})
         format_detail_prod = workbook.add_format({"align": "center", "valign": "vcenter", "font_size": 16,"shrink": True,'font_name': font_name})
 
-        sheet_main = workbook.add_worksheet("商品ラベルシール")
+        sheet_main = workbook.add_worksheet(_("商品ラベルシール"))
         sheet_main.set_column("A:A", width=0,cell_format=font_family) 
         sheet_main.set_column("B:B", width=15,cell_format=font_family) 
         sheet_main.set_column("C:C", None,cell_format=font_family)  
@@ -73,13 +74,13 @@ class productLabelSticker(models.AbstractModel):
             if location_item_row % 2 != 0 :  # location odd 
                 sheet_main.merge_range(row_start + 0,1,row_start + 2,5,prod_name ,format_title)
                 sheet_main.merge_range(row_start + 3,1,row_start + 4,2,mrp_name ,format_detail_prod)
-                sheet_main.merge_range(row_start + 5,1,row_start + 6,2,mrp_qty + "(Ｒ " + scheduled_date_month + "月" + scheduled_date_day + "日）" ,format_detail_prod)
+                sheet_main.merge_range(row_start + 5,1,row_start + 6,2,mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日1") + ") " ,format_detail_prod)
                 sheet_main.merge_range(row_start + 3,4,row_start + 4,5,attributes[0] if len(attributes)== 1 or len(attributes)== 2  else " " ,format_detail_prod)
                 sheet_main.merge_range(row_start + 5,4,row_start + 6,5,attributes[1]  if len(attributes)== 2 else " ",format_detail_prod)
             else :  # location even
                 sheet_main.merge_range(row_start + 0,7,row_start + 2,11,prod_name,format_title)
                 sheet_main.merge_range(row_start + 3,7,row_start + 4,8,mrp_name ,format_detail_prod)
-                sheet_main.merge_range(row_start + 5,7,row_start + 6,8,mrp_qty + "(Ｒ " + scheduled_date_month + "月" + scheduled_date_day + "日）" ,format_detail_prod)
+                sheet_main.merge_range(row_start + 5,7,row_start + 6,8,mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日2") + ") " ,format_detail_prod)
                 sheet_main.merge_range(row_start + 3,10,row_start + 4,11,attributes[0] if len(attributes)== 1 or len(attributes)== 2  else " " ,format_detail_prod)
                 sheet_main.merge_range(row_start + 5,10,row_start + 6,11,attributes[1]  if len(attributes)== 2 else " " ,format_detail_prod)
                 count += 1

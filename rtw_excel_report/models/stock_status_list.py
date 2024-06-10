@@ -1,4 +1,4 @@
-from odoo import api, models
+from odoo import api, models, _
 from datetime import datetime ,timedelta
 from odoo.tools import float_is_zero, format_datetime, float_round
 from collections import defaultdict
@@ -8,6 +8,7 @@ class productSpec(models.AbstractModel):
     _inherit = ['report.report_xlsx.abstract','report.stock.report_product_product_replenishment']
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)         
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -67,11 +68,11 @@ class productSpec(models.AbstractModel):
             sheet.set_column("Q:Z", None,cell_format=font_family ) 
 
             sheet.merge_range(0,1,0,3,prod_name , format_title)
-            sheet.merge_range(1,1,1,2,"■入荷予定データ" , format_left)
-            sheet.merge_range(2,1,2,3,"仕入先" , format_table)
-            sheet.merge_range(2,4,2,6,"コメント" , format_table)
-            sheet.write(2,7,"入荷予定数" , format_table)
-            sheet.write(2,8,"入荷予定日" , format_table)
+            sheet.merge_range(1,1,1,2,_("■入荷予定データ") , format_left)
+            sheet.merge_range(2,1,2,3,_("仕入先") , format_table)
+            sheet.merge_range(2,4,2,6,_("コメント") , format_table)
+            sheet.write(2,7,_("入荷予定数") , format_table)
+            sheet.write(2,8,_("入荷予定日") , format_table)
 
             #purchase order lines confirmed but has not done --> show table 1 
             purchase_order_lines = self.env["purchase.order.line"].search([("product_id.product_tmpl_id", "=", p_template.id) ])
@@ -117,23 +118,23 @@ class productSpec(models.AbstractModel):
 
             #Table 2 
             # table2 start with table_name
-            sheet.merge_range(row_start,1,row_start,2,"■仮押・受注データ" , format_left)
+            sheet.merge_range(row_start,1,row_start,2, _("■仮押・受注データ") , format_left)
 
             # table2 start with  titles in table_name
             row_start +=1
-            sheet.write(row_start,1,"受注日" , format_table)
-            sheet.write(row_start,2,"受注No" , format_table)
-            sheet.merge_range(row_start,3,row_start,4,"得意先名" , format_table)
-            sheet.write(row_start,5,"発注期限日" , format_table)
-            sheet.write(row_start,6,"引当基準日" , format_table)
-            sheet.write(row_start,7,"数量" , format_table)
-            sheet.write(row_start,8,"伝票区分" , format_table)
+            sheet.write(row_start,1, _("受注日"), format_table)
+            sheet.write(row_start,2, _("受注No"), format_table)
+            sheet.merge_range(row_start,3,row_start,4, _("得意先名"), format_table)
+            sheet.write(row_start,5, _("発注期限日"), format_table)
+            sheet.write(row_start,6, _("引当基準日"), format_table)
+            sheet.write(row_start,7, _("数量"), format_table)
+            sheet.write(row_start,8, _("伝票区分"), format_table)
 
             # table2 start with location data
             row_start +=1
             data= self._get_report_data( lines.ids, None)
             data_table2 = []
-            voucher_class = "受注引当" 
+            voucher_class = _("受注引当") 
             if data['lines']:
                 for x in data['lines']:
                     if x['move_out']:# cause data['lines'] res all remaining  product_number (check last data['lines']) 
@@ -189,21 +190,21 @@ class productSpec(models.AbstractModel):
                     row_start +=1
             
             #TABLE 3 
-            sheet.write(2,10,"" , format_cell_white)
-            sheet.write(2,11,"入荷", format_cell_yellow)
-            sheet.write(2,12,"受注引当", format_cell_green)
-            sheet.write(2,13,"仮押え", format_cell_yellow)
-            sheet.write(2,14,"引当のみ", format_cell_blue)
-            sheet.write(2,15,"仮押え込み", format_cell_purple)
+            sheet.write(2, 10, "" , format_cell_white)
+            sheet.write(2, 11, _("入荷"), format_cell_yellow)
+            sheet.write(2, 12, _("受注引当"), format_cell_green)
+            sheet.write(2, 13, _("仮押え"), format_cell_yellow)
+            sheet.write(2, 14, _("引当のみ"), format_cell_blue)
+            sheet.write(2, 15, _("仮押え込み"), format_cell_purple)
 
-            sheet.write(3,10,"帳簿在庫" , format_cell_white)
-            sheet.write(3,11,data['quantity_on_hand'] , format_cell_yellow_right)
-            sheet.write(3,12,"" , format_cell_green_right)
-            sheet.write(3,13,"" , format_cell_yellow_right)
-            sheet.write(3,14,data['quantity_on_hand'] , format_cell_blue_right)
-            sheet.write(3,15,data['quantity_on_hand'] , format_cell_purple_right)
+            sheet.write(3, 10, _("帳簿在庫") , format_cell_white)
+            sheet.write(3, 11, data['quantity_on_hand'] , format_cell_yellow_right)
+            sheet.write(3, 12, "" , format_cell_green_right)
+            sheet.write(3, 13, "" , format_cell_yellow_right)
+            sheet.write(3, 14, data['quantity_on_hand'] , format_cell_blue_right)
+            sheet.write(3, 15, data['quantity_on_hand'] , format_cell_purple_right)
 
-            sheet.write(4,10,"過去分" , format_cell_white)
+            sheet.write(4, 10, _("過去分"), format_cell_white)
             past_qty_table1 = 0
             future_qty_table1 = 0
             if data_table1:
@@ -255,7 +256,8 @@ class productSpec(models.AbstractModel):
 
             qty_table_3_reserve_only_one_above_cell=qty_table_3_reserve_only
             qty_table_3_temporary_pressing_one_above_cell=qty_table_3_temporary_pressing
-
+            qty_table_3_reserve_only_every_row = 0
+            qty_table_3_temporary_pressing__every_row = 0
             for date in date_list:
                 sheet.write(start_row, 10, date, format_cell_white_right)
                 date_obj = datetime.strptime(date,"%A, %B %d, %Y")
@@ -291,7 +293,7 @@ class productSpec(models.AbstractModel):
                 start_row += 1
 
             # future
-            sheet.write(start_row,10,"これ以降", format_cell_white)
+            sheet.write(start_row,10,_("これ以降"), format_cell_white)
             sheet.write(start_row,11,future_qty_table1, format_cell_yellow_right)
             sheet.write(start_row,12,future_qty_table2_受注引当, format_cell_green_right)
             sheet.write(start_row,13,future_qty_table2_仮押え, format_cell_yellow_right)

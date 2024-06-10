@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from datetime import datetime 
 from odoo.modules.module import get_module_resource
 from io import BytesIO
@@ -10,6 +10,7 @@ class productSpec(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)         
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -29,9 +30,10 @@ class productSpec(models.AbstractModel):
         day = str(datetime.now().day)
         month = str(datetime.now().month)
         year = str(datetime.now().year)
-        current_date = year + " 年" + month + "月 " + day + "日 "
+        current_date = year + _(" 年 ") + month + _(" 月 ") + day + _(" 日 ")
 
-        sheet_name = f"張地支給明細"  
+
+        sheet_name = _("張地支給明細")  
         sheet = workbook.add_worksheet(sheet_name)
         sheet.set_column("A:A", width=7,cell_format=font_family)   
         sheet.set_column("B:B", width=15,cell_format=font_family)   
@@ -42,19 +44,19 @@ class productSpec(models.AbstractModel):
         sheet.set_column("G:G", width=12,cell_format=font_family)  
         sheet.set_column("H:H", width=15,cell_format=font_family)  
         sheet.set_column("I:Z", None,cell_format=font_family) 
-        sheet.merge_range(1,3,3,4, "張地支給明細 ", format_title)
+        sheet.merge_range(1,3,3,4, _("張地支給明細 "), format_title)
         sheet.merge_range(0,6,0,7, current_date, format_current_date)
-        sheet.write(7,0, "届先名", format_bold_left)
-        sheet.write(9,0, "月日", format_bold_left)
+        sheet.write(7,0, _("届先名"), format_bold_left)
+        sheet.write(9,0, _("月日"), format_bold_left)
         
         #table title
-        sheet.merge_range(12, 0,13,0, "№", format_table)
-        sheet.merge_range(12, 1,13,1, "受注番号", format_table_yellow)
-        sheet.merge_range(12, 2,13,2, "物件名", format_table)
-        sheet.merge_range(12, 3,13,3, "部材名", format_table_yellow)
-        sheet.merge_range(12, 4,13,4, "納期", format_table_yellow)
-        sheet.merge_range(12, 5,13,6,"ロット" , format_table)
-        sheet.merge_range(12, 7,13,7, "要尺" , format_table_yellow)
+        sheet.merge_range(12, 0,13,0, _("№"), format_table)
+        sheet.merge_range(12, 1,13,1, _("受注番号"), format_table_yellow)
+        sheet.merge_range(12, 2,13,2, _("物件名"), format_table)
+        sheet.merge_range(12, 3,13,3, _("部材名"), format_table_yellow)
+        sheet.merge_range(12, 4,13,4, _("納期"), format_table_yellow)
+        sheet.merge_range(12, 5,13,6, _("ロット"), format_table)
+        sheet.merge_range(12, 7,13,7, _("要尺"), format_table_yellow)
 
         row_no_merge = 14
         row_remember=14
@@ -87,20 +89,24 @@ class productSpec(models.AbstractModel):
         phone = login_user_name.partner_id.phone
         responsible = login_user_name.partner_id.name
         
-        sheet.merge_range(6,6,6,7,"株式会社 リッツウェル", format_bold_left2)
-        sheet.merge_range(7,5,7,7,address, format_add_user_login)
-        sheet.merge_range(8,5,8,6,"TEL: " + phone, format_add_user_login)
-        sheet.merge_range(9,5,9,6,"担当: " + responsible, format_add_user_login)
+        sheet.merge_range(6, 6, 6, 7, _("株式会社 リッツウェル"), format_bold_left2)
+        sheet.merge_range(7, 5, 7, 7, address, format_add_user_login)
+        sheet.merge_range(8, 5, 8, 6, _("TEL: ") + phone, format_add_user_login)
+        sheet.merge_range(9, 5, 9, 6, _("担当: ") + responsible, format_add_user_login)
 
         for  index,stock_picking in enumerate(lines):
             if stock_picking.partner_id.commercial_company_name:
-                company_name=stock_picking.partner_id.commercial_company_name +" 様"
+                company_name=stock_picking.partner_id.commercial_company_name 
+            elif stock_picking.partner_id.name:
+                company_name=stock_picking.partner_id.name 
+                
+            if stock_picking.lang_code == "ja_JP":
+                company_name +=  "様"
             else:
-                if stock_picking.partner_id.name:
-                    company_name=stock_picking.partner_id.name +" 様"
+                company_name = "Mr/Mrs. " + company_name
                     
             if stock_picking.confirmed_shipping_date:
-                confirmed_shipping_date= str(stock_picking.confirmed_shipping_date).split("-")[0] + " 年 " + str(stock_picking.confirmed_shipping_date).split("-")[1] + " 月 " + str(stock_picking.confirmed_shipping_date).split("-")[2]
+                confirmed_shipping_date= str(stock_picking.confirmed_shipping_date).split("-")[0] + _(" 年 ") + str(stock_picking.confirmed_shipping_date).split("-")[1] + _(" 月 ") + str(stock_picking.confirmed_shipping_date).split("-")[2]
 
             sheet.merge_range(7,1,7,2,company_name, format_bold_left)
             sheet.write(9,1,confirmed_shipping_date, format_bold_left)
@@ -113,7 +119,7 @@ class productSpec(models.AbstractModel):
             package=0
             
             if stock_picking.confirmed_shipping_date:
-                confirmed_shipping_date=str(stock_picking.confirmed_shipping_date).split("-")[1] + " 月 " + str(stock_picking.confirmed_shipping_date).split("-")[2] + " 日 "
+                confirmed_shipping_date=str(stock_picking.confirmed_shipping_date).split("-")[1] + _(" 月 ") + str(stock_picking.confirmed_shipping_date).split("-")[2] + _(" 日 ")
 
             if stock_picking.name:
                 order_number= stock_picking.name

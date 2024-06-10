@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from datetime import datetime 
 from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
@@ -8,6 +8,7 @@ class ReportMrpExcel(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, mrp_data):
+        self = self.with_context(lang=self.env.user.lang)             
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -59,7 +60,7 @@ class ReportMrpExcel(models.AbstractModel):
         #create sheet            
         if allow_print :
             for mrp in mrp_data[0]:
-                sheet_name = "検品発注書" 
+                sheet_name = _("検品発注書") 
                 sheet = workbook.add_worksheet(sheet_name)
                 sheet.set_paper(9)  #A4
                 sheet.set_landscape()
@@ -101,20 +102,20 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.insert_image(1, 9, "logo2", {'image_data': img_io_ritzwell})
                 
                 # y,x
-                sheet.write(1, 8, mrp.sale_order.check_oversea if mrp.sale_order.check_oversea else '', format_text_13_right) 
-                sheet.write(1, 1, "検品発注書", format_sheet_title) 
-                sheet.write(5, 0, "発注番号", format_text) 
+                sheet.write(1, 8, _('海外')if mrp.sale_order.check_oversea else '', format_text_13_right) 
+                sheet.write(1, 1, _("検品発注書"), format_sheet_title) 
+                sheet.write(5, 0, _("発注番号"), format_text) 
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else '', format_text) 
-                sheet.write(6, 0, "送り先着日", format_text) 
-                sheet.write(8, 0, "物件名", format_text) 
-                sheet.write(8, 3, "送り先注記", format_text_right)
+                sheet.write(6, 0, _("送り先着日"), format_text) 
+                sheet.write(8, 0, _("物件名"), format_text) 
+                sheet.write(8, 3, _("送り先注記"), format_text_right)
                 
                 if mrp.picking_type_id.warehouse_id.partner_id:
                     if mrp.lang_code == "ja_JP":
                         if mrp.mrp_workorder_state == 'wk_001':
-                            sheet.write(3, 0, '糸島工場 御中', format_text) 
+                            sheet.write(3, 0, _('糸島工場 御中'), format_text) 
                         elif mrp.mrp_workorder_state == 'wk_002':
-                            sheet.write(3, 0, '品質管理部 御中', format_text)
+                            sheet.write(3, 0, _('品質管理部 御中'), format_text)
                         else:
                             sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
                     else:
@@ -125,7 +126,7 @@ class ReportMrpExcel(models.AbstractModel):
                         else:
                             sheet.write(3, 0, "Dear " + mrp.picking_type_id.warehouse_id.partner_id.name, format_text)
             
-                sheet.write(11, 0, "送り先", format_text) 
+                sheet.write(11, 0, _("送り先"), format_text) 
                 
                 # mother MO
                 if mrp.origin and mrp.origin.startswith("S"):
@@ -138,15 +139,15 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.set_row(15, 0)
                     else:
                         sheet.write(6, 1, mrp.sale_order.sale_order_warehouse_arrive_date if mrp.sale_order.sale_order_warehouse_arrive_date else '', format_text_14) 
-                        sheet.write(12, 0, "住所", format_text) 
-                        sheet.write(13, 0, "TEL", format_text)
+                        sheet.write(12, 0, _("住所"), format_text) 
+                        sheet.write(13, 0, _("TEL"), format_text)
                         sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if mrp.sale_order.sale_order_waypoint_name else '', format_text_12) 
                         sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if mrp.sale_order.sale_order_waypoint_address else '', format_text_12) 
                         sheet.write(13, 1, mrp.sale_order.waypoint.phone if mrp.sale_order.waypoint.phone else '', format_text_12) 
                 else: #child MO
                     sheet.write(11, 1, mrp.date_planned_start if mrp.date_planned_start else '', format_text_12) 
-                    sheet.write(12, 0, "住所", format_text) 
-                    sheet.write(13, 0, "TEL", format_text)
+                    sheet.write(12, 0, _("住所"), format_text) 
+                    sheet.write(13, 0, _("TEL"), format_text)
                     sheet.write(11, 1, mrp.mrp_join_partner_company_name if mrp.mrp_join_partner_company_name else '', format_text_12) 
                     sheet.write(12, 1, mrp.mrp_join_partner_address if mrp.mrp_join_partner_address else '', format_text_12) 
                     sheet.write(13, 1, mrp.picking_type_id.warehouse_id.partner_id.phone if mrp.picking_type_id.warehouse_id.partner_id.phone else '', format_text_12) 
@@ -159,15 +160,15 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.merge_range(3, 9, 9, 9, mrp.mrp_hr_employee if mrp.mrp_hr_employee else '', format_remark_note)
 
                 #table title
-                sheet.write(17, 0, "№", format_table)
-                sheet.write(17, 1, "品名", format_table)
-                sheet.write(17, 2, "仕様・詳細", format_table)
-                sheet.write(17, 3, "仕様・詳細", format_table)
-                sheet.write(17, 4, "数量", format_table)
+                sheet.write(17, 0, _("№"), format_table)
+                sheet.write(17, 1, _("品名"), format_table)
+                sheet.write(17, 2, _("仕様・詳細１"), format_table)
+                sheet.write(17, 3, _("仕様・詳細２"), format_table)
+                sheet.write(17, 4, _("数量"), format_table)
                 sheet.write(17, 5, "", format_table)
-                sheet.write(17, 6, "取説", format_table)
-                sheet.write(17, 8, "Custom", format_table)
-                sheet.write(17, 9, "メモ", format_table)
+                sheet.write(17, 6, _("取説"), format_table)
+                sheet.write(17, 8, _("Custom"), format_table)
+                sheet.write(17, 9, _("メモ"), format_table)
             
             row = 18
             height = 6
@@ -186,14 +187,14 @@ class ReportMrpExcel(models.AbstractModel):
                 else:
                     sheet.merge_range(row, 5, row + height, 5, "", format_lines_12)
                     
-                sheet.merge_range(row, 6, row + height, 6, "有" if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
+                sheet.merge_range(row, 6, row + height, 6, _("有") if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
                 sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_custom)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)
                 
                 row += height + 1
         else:   
             for mrp in mrp_data[0]:
-                sheet_name = "検品発注書" 
+                sheet_name = _("検品発注書" )
                 sheet = workbook.add_worksheet(sheet_name)
                 sheet.set_paper(9)  #A4
                 sheet.set_landscape()
@@ -235,20 +236,20 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.insert_image(1, 9, "logo2", {'image_data': img_io_ritzwell})
                 
                 # y,x
-                sheet.write(1, 8, mrp.sale_order.check_oversea if mrp.sale_order.check_oversea else '', format_text_13_right) 
-                sheet.write(1, 1, "検品発注書", format_sheet_title) 
-                sheet.write(5, 0, "発注番号", format_text) 
+                sheet.write(1, 8, _("海外") if mrp.sale_order.check_oversea else '', format_text_13_right) 
+                sheet.write(1, 1, _("検品発注書"), format_sheet_title) 
+                sheet.write(5, 0, _("発注番号"), format_text) 
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else '', format_text) 
-                sheet.write(6, 0, "送り先着日", format_text) 
-                sheet.write(8, 0, "物件名", format_text) 
-                sheet.write(8, 3, "送り先注記", format_text_right)
+                sheet.write(6, 0, _("送り先着日"), format_text) 
+                sheet.write(8, 0, _("物件名"), format_text) 
+                sheet.write(8, 3, _("送り先注記"), format_text_right)
                 
                 if mrp.picking_type_id.warehouse_id.partner_id:
                     if mrp.lang_code == "ja_JP":
                         if mrp.mrp_workorder_state == 'wk_001':
-                            sheet.write(3, 0, '糸島工場 御中', format_text) 
+                            sheet.write(3, 0, _('糸島工場 御中'), format_text) 
                         elif mrp.mrp_workorder_state == 'wk_002':
-                            sheet.write(3, 0, '品質管理部 御中', format_text)
+                            sheet.write(3, 0, _('品質管理部 御中'), format_text)
                         else:
                             sheet.write(3, 0, mrp.picking_type_id.warehouse_id.partner_id.name + ' 御中', format_text) 
                     else:
@@ -258,8 +259,8 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.write(3, 0, 'Dear Quality Control', format_text)
                         else:
                             sheet.write(3, 0, "Dear " + mrp.picking_type_id.warehouse_id.partner_id.name, format_text)
-                                         
-                sheet.write(11, 0, "送り先", format_text) 
+            
+                sheet.write(11, 0, _("送り先"), format_text) 
                 
                 if mrp.origin and mrp.origin.startswith("S"):
                     if mrp.sale_order.sipping_to == 'direct':
@@ -271,8 +272,8 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.set_row(15, 0)
                     else:
                         sheet.write(6, 1, mrp.sale_order.sale_order_warehouse_arrive_date if mrp.sale_order.sale_order_warehouse_arrive_date else '', format_text_14) 
-                        sheet.write(12, 0, "住所", format_text) 
-                        sheet.write(13, 0, "TEL", format_text)
+                        sheet.write(12, 0, _("住所"), format_text) 
+                        sheet.write(13, 0, _("TEL"), format_text)
                         sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if mrp.sale_order.sale_order_waypoint_name else '', format_text_12) 
                         sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if mrp.sale_order.sale_order_waypoint_address else '', format_text_12) 
                         sheet.write(13, 1, mrp.sale_order.waypoint.phone if mrp.sale_order.waypoint.phone else '', format_text_12) 
@@ -285,15 +286,15 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.merge_range(3, 9, 9, 9, mrp.mrp_hr_employee if mrp.mrp_hr_employee else '', format_remark_note)
 
                 #table title
-                sheet.write(17, 0, "№", format_table)
-                sheet.write(17, 1, "品名", format_table)
-                sheet.write(17, 2, "仕様・詳細", format_table)
-                sheet.write(17, 3, "仕様・詳細", format_table)
-                sheet.write(17, 4, "数量", format_table)
+                sheet.write(17, 0, _("№"), format_table)
+                sheet.write(17, 1, _("品名"), format_table)
+                sheet.write(17, 2, _("仕様・詳細１"), format_table)
+                sheet.write(17, 3, _("仕様・詳細２"), format_table)
+                sheet.write(17, 4, _("数量"), format_table)
                 sheet.write(17, 5, "", format_table)
-                sheet.write(17, 6, "取説", format_table)
-                sheet.write(17, 8, "Custom", format_table)
-                sheet.write(17, 9, "メモ", format_table)
+                sheet.write(17, 6, _("取説"), format_table)
+                sheet.write(17, 8, _("Custom"), format_table)
+                sheet.write(17, 9, _("メモ"), format_table)
             
                 row = 18
                 height = 6
@@ -311,6 +312,6 @@ class ReportMrpExcel(models.AbstractModel):
                 else:
                     sheet.merge_range(row, 5, row + height, 5, "", format_lines_12)
                     
-                sheet.merge_range(row, 6, row + height, 6, "有" if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
+                sheet.merge_range(row, 6, row + height, 6, _("有") if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
                 sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_10_left)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)

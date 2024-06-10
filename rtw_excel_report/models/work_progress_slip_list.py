@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from datetime import datetime 
 
 class productSpec(models.AbstractModel):
@@ -6,6 +6,7 @@ class productSpec(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)         
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -26,7 +27,7 @@ class productSpec(models.AbstractModel):
         day = str(datetime.now().day)
         month = str(datetime.now().month)
         year = str(datetime.now().year)
-        current_date = year + " 年 " + month + " 月 " + day + " 日 "
+        current_date = year + _(" 年") + month + _("月 ") + day + _("日 ")
 
         #number sheet
         company_mrp_prod_name=[]
@@ -36,7 +37,7 @@ class productSpec(models.AbstractModel):
 
         #create sheet
         for index,name_company in enumerate(unique_name_company):
-            sheet_name = f"仕掛品伝票一覧 - {name_company}"  
+            sheet_name = _("仕掛品伝票一覧") + " - " + name_company  
             sheet = workbook.add_worksheet(sheet_name)
             sheet.set_column("A:A", width=8,cell_format=font_family)  
             sheet.set_column("B:B", width=18,cell_format=font_family)  
@@ -51,23 +52,23 @@ class productSpec(models.AbstractModel):
             sheet.set_column("K:K", width=17,cell_format=font_family) 
             sheet.set_column("L:Z", None,cell_format=font_family) 
 
-            sheet.merge_range(1, 5,1,7, "≪仕掛品伝票一覧≫ ", format_sheet_title)
+            sheet.merge_range(1, 5,1,7, _("≪仕掛品伝票一覧≫"), format_sheet_title)
             sheet.write(0,10, current_date, format_left)
-            sheet.write(3, 0, "保管場所", format_name_company)
+            sheet.write(3, 0, _("保管場所"), format_name_company)
             sheet.merge_range(3, 1,3,2,name_company, format_name_company)
 
             #table title
-            sheet.write(5, 0, "№", format_table)
-            sheet.write(5, 1, "受注No", format_table)
-            sheet.write(5, 2, "出荷予定日", format_table)
-            sheet.write(5, 3, "品番", format_table_left)
-            sheet.write(5, 4, "受注数", format_table)
-            sheet.write(5, 5, "製作", format_table)
-            sheet.write(5, 6, "工場出荷", format_table)
-            sheet.write(5, 7, "部材コード ", format_table_left)
-            sheet.write(5, 8, "部材名", format_table_left)
-            sheet.write(5, 9, "ロット", format_table)
-            sheet.write(5, 10, "使用数", format_table)
+            sheet.write(5, 0, _("№"), format_table)
+            sheet.write(5, 1, _("受注No"), format_table)
+            sheet.write(5, 2, _("出荷予定日"), format_table)
+            sheet.write(5, 3, _("品番"), format_table_left)
+            sheet.write(5, 4, _("受注数"), format_table)
+            sheet.write(5, 5, _("製作"), format_table)
+            sheet.write(5, 6, _("工場出荷"), format_table)
+            sheet.write(5, 7, _("部材コード "), format_table_left)
+            sheet.write(5, 8, _("部材名"), format_table_left)
+            sheet.write(5, 9, _("ロット"), format_table)
+            sheet.write(5, 10, _("使用数"), format_table)
 
             row=6
             for  index,mrp_prod in enumerate(lines):
@@ -88,14 +89,14 @@ class productSpec(models.AbstractModel):
                     sheet.write(row, 4, mrp_prod.product_qty, format_right_has_border)
 
                     if mrp_prod.qty_producing is None or mrp_prod.qty_producing <=0 : 
-                        sheet.write(row, 5, "未", format_wrap)   # 未  chua
+                        sheet.write(row, 5, _("未"), format_wrap)   # 未  chua
                     else:
-                        sheet.write(row, 5, "済", format_wrap)   # 済  roi
+                        sheet.write(row, 5, _("済"), format_wrap)   # 済  roi
 
                     if mrp_prod.state == 'done' : 
-                        sheet.write(row, 6, "済", format_wrap)
+                        sheet.write(row, 6, _("済"), format_wrap)
                     else:
-                        sheet.write(row, 6, "未", format_wrap)
+                        sheet.write(row, 6, _("未"), format_wrap)
 
                     materials=self.env["stock.move"].search([("reference", "=", mrp_prod.name)])
                     material_code = ""

@@ -1,10 +1,11 @@
-from odoo import models
+from odoo import models, _
 from datetime import datetime 
 class productSpec(models.AbstractModel):
     _name = 'report.rtw_excel_report.scheduled_arrival_list_xls'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)         
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -21,9 +22,9 @@ class productSpec(models.AbstractModel):
         day = str(datetime.now().day)
         month = str(datetime.now().month)
         year = str(datetime.now().year)
-        current_date = year + " 年" + month + "月 " + day + "日 "
+        current_date = year + _(" 年") + month + _("月 ") + day + _("日 ")
 
-        sheet_name = "入荷予定リスト"  
+        sheet_name = _("入荷予定リスト")  
         sheet = workbook.add_worksheet(sheet_name)
 
         sheet.set_column("A:A", width=2,cell_format=font_family)
@@ -42,23 +43,23 @@ class productSpec(models.AbstractModel):
         sheet.set_column("N:N", width=4,cell_format=font_family)
         sheet.set_column("M:Z", None,cell_format=font_family)
 
-        sheet.merge_range(1,5,1,8, "≪入荷予定リスト≫ ", format_sheet_title)
+        sheet.merge_range(1,5,1,8, _("≪入荷予定リスト≫ "), format_sheet_title)
         sheet.merge_range(0,12,0,13, current_date, format_current_date)
 
         #table title
-        sheet.merge_range(5, 0,6,0, "№", format_table)
-        sheet.merge_range(5, 1,6,1, "入荷" +"\n"+ "予定日", format_table)
-        sheet.merge_range(5, 2,6,2, "発注"+"\n"+ "番号", format_table)
-        sheet.merge_range(5, 3,6,3, "発注先", format_table)
-        sheet.merge_range(5, 4,6,5, "部材名", format_table)
-        sheet.merge_range(5, 6,6,6, "発注数" , format_table)
-        sheet.merge_range(5, 7,6,7, "入荷"+"\n"+ "残数" , format_table)
-        sheet.merge_range(5, 8,6,8, "入荷"+"\n"+ "予定数", format_table)
-        sheet.merge_range(5, 9,6,9, "入荷数", format_table)
-        sheet.merge_range(5, 10,6,10, "要検品", format_table)
-        sheet.merge_range(5, 11,6,11, "受注"+"\n"+ "番号", format_table)
-        sheet.merge_range(5, 12,6,12, "記入メモ", format_table)
-        sheet.merge_range(5, 13,6,13, "済", format_table)
+        sheet.merge_range(5, 0,6,0, _("№"), format_table)
+        sheet.merge_range(5, 1,6,1, _("入荷") +"\n"+ _("予定日"), format_table)
+        sheet.merge_range(5, 2,6,2, _("発注") +"\n"+ _("番号"), format_table)
+        sheet.merge_range(5, 3,6,3, _("発注先"), format_table)
+        sheet.merge_range(5, 4,6,5, _("部材名"), format_table)
+        sheet.merge_range(5, 6,6,6, _("発注数") , format_table)
+        sheet.merge_range(5, 7,6,7, _("入荷") + "\n" + _("残数") , format_table)
+        sheet.merge_range(5, 8,6,8, _("入荷") + "\n" + _("予定数"), format_table)
+        sheet.merge_range(5, 9,6,9, _("入荷数"), format_table)
+        sheet.merge_range(5, 10,6,10, _("要検品"), format_table)
+        sheet.merge_range(5, 11,6,11, _("受注") + "\n" + _("番号"), format_table)
+        sheet.merge_range(5, 12,6,12, _("記入メモ"), format_table)
+        sheet.merge_range(5, 13,6,13, _("済"), format_table)
 
         row_no_merge = 7
         row_remember=7
