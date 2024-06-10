@@ -1,0 +1,5 @@
+
+#. module: rtw_purchase
+#: model:ir.model.fields,field_description:rtw_purchase.field_purchase_order__resend
+msgid "再送"
+msgstr "Resend"

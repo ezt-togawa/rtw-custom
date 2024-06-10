@@ -2832,7 +2832,13 @@ class PurchaseOrderExcelReport(models.Model):
                 if res_partner :
                     for res in res_partner:
                         printing_staff = res.name if res.name else ''
-            line.purchase_order_printing_staff = printing_staff  
+            if printing_staff:  
+                if line.lang_code == 'en_US':
+                    line.purchase_order_printing_staff = "Orderer " + printing_staff
+                else:
+                    line.purchase_order_printing_staff = "発注者 " + printing_staff
+            else:
+                line.purchase_order_printing_staff = ""
 
     def _compute_purchase_order_current_date(self):
         day = str(datetime.now().day)

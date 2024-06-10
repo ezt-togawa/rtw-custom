@@ -2,18 +2,18 @@
     <record id="purchase_order_view_tree_rtw" model="ir.ui.view">
         <field name="name">purchase.order.view.tree.rtw</field>
         <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <button
-                        name="action_purchase_form"
-                        string="Open"
-                        type="object"
-                        icon="fa-external-link"
-                        class="oe_stat_button"
+                    name="action_purchase_form"
+                    string="Open"
+                    type="object"
+                    icon="fa-external-link"
+                    class="oe_stat_button"
                 />
-                <field name="sale_order_ids"/>
-                <field name="sale_order_names"/>
+                <field name="sale_order_ids" />
+                <field name="sale_order_names" />
             </xpath>
         </field>
 
@@ -24,25 +24,25 @@
         <field name="inherit_id" ref="purchase.purchase_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='id']" position="after">
-                <field name="operation_type"  widget="many2one_link" />
+                <field name="operation_type" widget="many2one_link" />
             </xpath>
         </field>
     </record>
     <record id="purchase_order_kpis_tree_rtw" model="ir.ui.view">
         <field name="name">purchase.order.inherit.purchase.order.tree.rtw</field>
         <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <button
-                        name="action_purchase_form"
-                        string="Open"
-                        type="object"
-                        icon="fa-external-link"
-                        class="oe_stat_button"
+                    name="action_purchase_form"
+                    string="Open"
+                    type="object"
+                    icon="fa-external-link"
+                    class="oe_stat_button"
                 />
-                <field name="sale_order_ids"/>
-                <field name="sale_order_names"/>
+                <field name="sale_order_ids" />
+                <field name="sale_order_names" />
             </xpath>
 
         </field>
@@ -52,14 +52,17 @@
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form" />
         <field name="arch" type="xml">
-             <xpath  expr="//field[@name='order_line']/tree//field[@name='name']" position="after">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="after">
                 <field name="name_selection" />
                 <field name="allowed_custom_config" invisible="1" />
-                <field name="sale_order_ids"/>
-                <field name="sale_order_names"/>
+                <field name="sale_order_ids" />
+                <field name="sale_order_names" />
             </xpath>
             <xpath expr="//field[@name='origin']" position="after">
                 <field name="destination_note" />
+            </xpath>
+            <xpath expr="//field[@name='destination_note']" position="before">
+                <field name="resend"/>
             </xpath>
         </field>
     </record>
