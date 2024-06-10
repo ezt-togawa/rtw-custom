@@ -6,14 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-24 01:39+0000\n"
-"PO-Revision-Date: 2024-05-24 01:39+0000\n"
+"POT-Creation-Date: 2024-06-10 07:00+0000\n"
+"PO-Revision-Date: 2024-06-10 07:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "(海外)"
+msgstr "Oversea"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
@@ -37,6 +44,15 @@ msgstr ""
 msgid ""
 "<br/>\n"
 "                <b><span>Delivery:</span><span style=\"color:red\"> DDP</span></b>"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_fixed_price
+msgid ""
+"<span class=\"border-bottom2\">\n"
+"                        株式会社リッツウェル\n"
+"                      </span>"
 msgstr ""
 
 #. module: custom_report_rtw
@@ -100,15 +116,6 @@ msgstr "<span class=\"ml-2 size20\">Purchase Order (Components)</span>"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_delivery_order_header_layout
 msgid "<span class=\"ml-2 size20\">配送依頼書</span>"
 msgstr "<span class=\"ml-2 size20\">Delivery Request Form</span>"
-
-#. module: custom_report_rtw
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_fixed_price
-msgid ""
-"<span style=\"border-bottom:1px solid black;\">\n"
-"                    株式会社リッツウェル\n"
-"                  </span>"
-msgstr ""
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
@@ -431,6 +438,13 @@ msgid "<span>特注</span>"
 msgstr "<span>Custom-made</span>"
 
 #. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+msgid "<span>税抜定価合計: </span>"
+msgstr "<span>List price w/o tax: </span>"
+
+#. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_4
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
@@ -553,6 +567,16 @@ msgstr ""
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice
 msgid "Date"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
+msgid "Dear Itoshima Factory"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
+msgid "Dear Quality Control"
 msgstr ""
 
 #. module: custom_report_rtw
@@ -731,6 +755,11 @@ msgid "Mrp Production So"
 msgstr ""
 
 #. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_mrp_production__mrp_workorder_state
+msgid "Mrp Workorder State"
+msgstr ""
+
+#. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
 msgid ""
 "NIJOYOSHII\n"
@@ -754,7 +783,6 @@ msgstr ""
 
 #. module: custom_report_rtw
 #: model:ir.model.fields,field_description:custom_report_rtw.field_stock_move__calculate_packages
-#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_reservation__calculate_packages
 msgid "Packages"
 msgstr ""
 
@@ -869,6 +897,12 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_fixed_price
+msgid "Seal"
+msgstr ""
+
+#. module: custom_report_rtw
 #: model:ir.model.fields,field_description:custom_report_rtw.field_stock_picking__calculate_shiratani_date
 msgid "Shiratani Date"
 msgstr ""
@@ -893,6 +927,16 @@ msgstr ""
 #. module: custom_report_rtw
 #: model:ir.model,name:custom_report_rtw.model_stock_move
 msgid "Stock Move"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_move__stock_move_product_size
+msgid "Stock Move Product Size"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_stock_move__stock_move_sale_line_id
+msgid "Stock Move Sale Line"
 msgstr ""
 
 #. module: custom_report_rtw
@@ -1021,6 +1065,16 @@ msgstr ""
 #. module: custom_report_rtw
 #: model:ir.model.fields,field_description:custom_report_rtw.field_mrp_production__mrp_production_date_planned_start
 msgid "date planned start"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order__hr_employee_address1
+msgid "hr employee address1"
+msgstr ""
+
+#. module: custom_report_rtw
+#: model:ir.model.fields,field_description:custom_report_rtw.field_sale_order__hr_employee_address2
+msgid "hr employee address2"
 msgstr ""
 
 #. module: custom_report_rtw
@@ -1285,6 +1339,14 @@ msgid "ご依頼分"
 msgstr "Request for"
 
 #. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "ご査収の程宜しくお願い致します。"
+msgstr "Please review it at your earliest convenience."
+
+#. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_product_spec
 msgid "サイズ:"
 msgstr "Size"
@@ -1310,20 +1372,34 @@ msgstr "Order shall be made as follows.<br/>"
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order_sale
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_4
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_fixed_price
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
+msgid "仕様・詳細"
+msgstr "Specs & details"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
-msgid "仕様・詳細"
-msgstr "Specifications/ Details"
+msgid "仕様・詳細１"
+msgstr "Specs & details 1"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "仕様・詳細２"
+msgstr "Specs & details 2"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
@@ -1363,11 +1439,6 @@ msgstr "Address:"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
 msgid "個口数"
 msgstr "Pieces Qty"
-
-#. module: custom_report_rtw
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
-msgid "値引 :"
-msgstr "Discount:"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
@@ -1420,8 +1491,6 @@ msgid "別注"
 msgstr "Special order"
 
 #. module: custom_report_rtw
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
 msgid "単価"
 msgstr "Unit Price"
@@ -1432,9 +1501,12 @@ msgid "単価見積り書"
 msgstr "Unit Price Quotation"
 
 #. module: custom_report_rtw
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
-msgid "合計 :"
-msgstr "TOTAL:"
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order_sale
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
+msgid "取説"
+msgstr "Manual"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
@@ -1467,12 +1539,17 @@ msgstr "Product Name"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
 msgid "品番・サイズ"
-msgstr "Product No/ Size"
+msgstr "Product no & size"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_mrp_order
 msgid "品番："
 msgstr "Part number:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
+msgid "品質管理部 御中"
+msgstr "Dear quality control dept"
 
 #. module: custom_report_rtw
 #: model:ir.actions.report,name:custom_report_rtw.report_product_spec_2
@@ -1489,7 +1566,7 @@ msgstr "Product Specifications"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
 msgid "定価"
-msgstr "List Price"
+msgstr "List price"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_product_spec
@@ -1501,8 +1578,6 @@ msgstr "List Price"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_4
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_fixed_price
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
 msgid "定価合計 :"
 msgstr "Total List Price:"
 
@@ -1520,12 +1595,20 @@ msgstr "List Price Quotation"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "平素より格別のお引き立てを賜り暑く御礼申し上げます。"
+msgstr ""
+"We would like to express our sincere gratitude for your continued patronage."
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_4
 msgid ""
 "平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/>\n"
-"                                    御依頼の件、下記の通りお見積り致しました。<br/>ご査収の程宜しくお願い致します。<br/>"
+"                                            下記の通り、ご請求申し上げます。<br/>"
 msgstr ""
 "We would like to express our sincere gratitude for your continued patronage. <br/>\n"
-"                                    We have prepared an estimate as requested. Please review it at your earliest convenience.<br/>"
+"                                            We have prepared an invoice as follow.<br/>"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.PO_header_layout
@@ -1537,29 +1620,20 @@ msgstr ""
 "                                    We have prepared an estimate as requested. Please review it at your earliest convenience."
 
 #. module: custom_report_rtw
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_4
-msgid "平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/> 下記の通り、ご請求申し上げます。<br/>"
-msgstr ""
-"We would like to express our sincere gratitude for your continued patronage."
-"  <br/> We have prepared an invoice as follow.<br/>"
-
-#. module: custom_report_rtw
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
-msgid ""
-"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/> "
-"御依頼の件、下記の通りお見積り致しました。<br/>ご査収の程宜しくお願い致します。<br/>"
-msgstr ""
-"We would like to express our sincere gratitude for your continued patronage. <br/>\n"
-"We have prepared an estimate as requested. Please review it at your earliest convenience.<br/>"
-
-#. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_delivery_order_header_layout
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.SO_shipping_order_header_layout
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
 msgid "御中"
 msgstr "Dear"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "御依頼の件、下記の通りお見積り致しました。"
+msgstr "We have prepared an estimate as requested."
 
 #. module: custom_report_rtw
 #: model:ir.actions.report,name:custom_report_rtw.report_quotation_rtw2
@@ -1658,12 +1732,11 @@ msgid "注文書"
 msgstr "Order Form"
 
 #. module: custom_report_rtw
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_fixed_price
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_shipping_order
 msgid "海外"
-msgstr "OVERSEAS"
+msgstr "Oversea"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
@@ -1675,6 +1748,14 @@ msgstr "OVERSEAS"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
 msgid "消費税:"
 msgstr "Consumption tax:"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
+msgid "消費税は含まれておりません"
+msgstr "Sales tax is not included"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
@@ -1728,8 +1809,6 @@ msgid "発注番号："
 msgstr "Purchase Order Number:"
 
 #. module: custom_report_rtw
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_pdf_list_form
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
 msgid "発注金額"
 msgstr "Order Amount"
@@ -1778,6 +1857,11 @@ msgstr "Witness Contact"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_4
 msgid "筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）"
 msgstr "Chikushi Dori Branch (714)"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_inspection_order_list_form
+msgid "糸島工場 御中"
+msgstr "Dear Itoshima factory"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
@@ -1841,7 +1925,7 @@ msgstr "Nishi-Nippon City Bank (0190)"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_fixed_price
 msgid "西暦"
-msgstr "AD"
+msgstr "Date:"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
@@ -1875,9 +1959,6 @@ msgstr "Invoice"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_fixed_price
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
-#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
 msgid "販売価格合計 :"
 msgstr "Total Sales Price:"
 
@@ -1953,14 +2034,10 @@ msgstr "Delivery"
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_delivery_order_sale
 msgid "配送ラベル"
-msgstr "Delivery Level"
+msgstr "Delivery label"
 
 #. module: custom_report_rtw
 #: model:ir.actions.report,name:custom_report_rtw.report_delivery_order_rtw
-msgid "配送作業依頼書"
-msgstr "Delivery Work Request"
-
-#. module: custom_report_rtw
 #: model:ir.actions.report,name:custom_report_rtw.report_delivery_order_sale_rtw
 msgid "配送作業依頼書"
 msgstr "Delivery Work Request"
