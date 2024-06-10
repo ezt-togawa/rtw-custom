@@ -183,7 +183,7 @@
                     <td class="text-center size14">
                       <div>
                         <span
-                          t-esc="'{0:,.0f}'.format(l.packages_number)" />
+                          t-esc="'{0:,.0f}'.format(l.product_package_quantity)" />
                       </div>
                     </td>
                     <td class="text-center size13">

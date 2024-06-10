@@ -1041,7 +1041,7 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_line_calculate_packages(self):
         for line in self:
             if line.product_id.two_legs_scale:
-                line.sale_line_calculate_packages =  line.product_id.two_legs_scale
+                line.sale_line_calculate_packages =  math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
             else:
                 line.sale_line_calculate_packages = 0      
                 
@@ -1779,11 +1779,6 @@ class StockMoveExcelReport(models.Model):
         compute="_compute_stock_move",
     )
 
-    packages_number = fields.Integer(
-        "Number packages",
-        compute="_compute_stock_move",
-    )
-
     action_packages = fields.Char(
         "Action packages",
         compute="_compute_stock_move",
@@ -1919,18 +1914,6 @@ class StockMoveExcelReport(models.Model):
             else:
                 line.product_number_and_size = ''
             
-            packages_number = 0
-            move_line = self.env['stock.move.line'].search([('move_id', '=', line.id)])
-            if move_line:
-                for ml in move_line:
-                    if ml.product_package_quantity:
-                        packages_number += ml.product_package_quantity
-                    elif prod.two_legs_scale:
-                        packages_number = prod.two_legs_scale
-            elif prod.two_legs_scale:
-                packages_number = prod.two_legs_scale
-            line.packages_number = packages_number
-
             line.action_packages = "有"
             line.action_assemble = "無"
             line.stock_sai = prod_tmpl.sai if prod_tmpl.sai else ''

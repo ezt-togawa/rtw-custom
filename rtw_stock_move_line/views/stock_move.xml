@@ -80,6 +80,18 @@
                 </xpath>
             </field>
         </record>
+        <record id="view_picking_form_add_product_package_quantity" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field[@name='move_ids_without_package']/tree/field[@name='product_uom']"
+                       position="after">
+                    <field name="product_package_quantity" optional="show" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
         <record model="ir.actions.act_window" id="stock_move_itoshima_action_window">
             <field name="name">配送一覧（予定）</field>
             <field name="res_model">stock.move</field>
