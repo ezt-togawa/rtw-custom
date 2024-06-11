@@ -151,7 +151,8 @@
                 t-att-last="last">
                 <t t-if="l_index == 0">
                   <thead>
-                    <tr class="table-title bold">
+                    <tr class="table-title bold"
+                      style="font-size:13px;background-color:#999999">
                       <th class="text-center" style="width:2%">№</th>
                       <th class="text-center" style="width:15%">品名</th>
                       <th class="text-center" style="width:20%">品番・サイズ</th>

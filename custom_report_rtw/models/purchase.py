@@ -35,9 +35,9 @@ class PurchaseOrderEmployee(models.Model):
                             po.hr_employee_department = (employee.address_id.site)  if employee.address_id.site else ''
                         if employee.name:
                             if po.lang_code == 'en_US':
-                                po.hr_employee_printer = employee.name +" Seal" 
+                                po.hr_employee_printer = "Orderer " + employee.name 
                             else:
-                                po.hr_employee_printer = employee.name +" 印" 
+                                po.hr_employee_printer = "発注者 " + employee.name 
                         else:
                             po.hr_employee_printer = ''
                             

@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
 from io import BytesIO
@@ -8,6 +8,7 @@ class ReportMrpExcel(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
     
     def generate_xlsx_report(self, workbook, data, so_data):
+        self = self.with_context(lang=self.env.user.lang)             
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -25,8 +26,8 @@ class ReportMrpExcel(models.AbstractModel):
         format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
         format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
         format_text_12_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':12})
-        format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13})
         format_text_14 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
+        format_text_14_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':14})
         format_text_13_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':13})
         format_note = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True,'font_name': font_name,'font_size':10})
         format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'bottom':1})
@@ -108,56 +109,57 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.insert_image(1, 0, "logo", {'image_data': img_io_R, 'x_offset': 5, 'y_offset': 1})
             
             # y,x
-            sheet.write(1, 1, "定価注文書", format_sheet_title) 
+            sheet.write(1, 1, _("定価注文書"), format_sheet_title) 
             
-            sheet.write(2, 0,'株式 会社リッツウェル', format_text_14)
-            sheet.write(3, 0,(so.sale_order_ritzwell_staff + ' 宛') if so.sale_order_ritzwell_staff else '', format_text_14)
+            sheet.write(2, 0, _("株式 会社リッツウェル"), format_text_14)
+            sheet.write(3, 0, so.sale_order_ritzwell_staff if so.sale_order_ritzwell_staff else '', format_text_14)
+            sheet.write(1, 10, _("海外")if so.overseas  else "", format_text_14_right) 
+
+            sheet.write(5,0, _("下記の通り注文いたします。"), format_text) 
             
-            sheet.write(5,0, "下記の通り注文いたします。", format_text) 
-            
-            sheet.write(7, 0, "件名", format_text_14_border) 
-            sheet.write(10, 0, "税抜合計", format_text) 
-            sheet.write(11, 0, "消費税", format_text) 
-            sheet.write(12, 0, "税込合計", format_money_bgRed) 
+            sheet.write(7, 0, _("件名"), format_text_14_border) 
+            sheet.write(10, 0, _("税抜合計"), format_text) 
+            sheet.write(11, 0, _("消費税"), format_text) 
+            sheet.write(12, 0, _("税込合計"), format_money_bgRed) 
             sheet.write(7, 1, so.title if so.title else '', format_text_14_border) 
             sheet.write(10, 1, so.sale_order_amount_untaxed if so.sale_order_amount_untaxed else '', format_text_13_right) 
             sheet.write(11, 1, so.sale_order_amount_tax if so.sale_order_amount_tax else '', format_text_12_right) 
             sheet.write(12, 1, so.sale_order_amount_total if so.sale_order_amount_total else '', format_money_bgRed_right) 
 
-            sheet.write(5,4, "納品希望日", format_text_right) 
-            sheet.write(6,4, "納品場所", format_text_right) 
-            sheet.write(7,4, "備考", format_text_right) 
+            sheet.write(5,4, _("納品希望日"), format_text_right) 
+            sheet.write(6,4, _("納品場所"), format_text_right) 
+            sheet.write(7,4, _("備考"), format_text_right) 
             
             sheet.write(5,6,so.sale_order_preferred_delivery_period if so.sale_order_preferred_delivery_period else '', format_text) 
             sheet.write(6,6, so.forwarding_address if so.forwarding_address else '', format_text) 
             sheet.merge_range(7,5,10,8,so.special_note[:115] if so.special_note else '', format_note) 
 
-            sheet.write(0,14,so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
-            sheet.write(1,13,'西暦       年   月   日' , format_text_right) 
-            if so.partner_id and so.partner_id.company_type == 'company':
-                sheet.write(3,10,'社名' , format_text) 
-                sheet.write(5,10,'担当者名' , format_text) 
-                sheet.write(6,14,'印' , format_text) 
+            sheet.write(0, 14, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
+            sheet.write(1, 13, _("西暦        年   月   日") , format_text_right) 
+            if so.partner_id and so.partner_id.company_type == "company":
+                sheet.write(3, 10, _("社名"), format_text) 
+                sheet.write(5, 10, _("担当者名"), format_text) 
+                sheet.write(6, 14, _("印"), format_text) 
             else:
-                sheet.write(3,10,'氏名' , format_text) 
+                sheet.write(3, 10, _("氏名") , format_text) 
                 
-            sheet.write(4,14,'印' , format_text) 
-            sheet.write(7,10,'納品先住所' , format_text) 
-            sheet.write(9,10,'立会者' , format_text) 
-            sheet.write(10,10,'立会者連絡先' , format_text) 
+            sheet.write(4, 14, _("印"), format_text) 
+            sheet.write(7, 10, _("納品先住所"), format_text) 
+            sheet.write(9, 10, _("立会者"), format_text) 
+            sheet.write(10, 10, _("立会者連絡先"), format_text) 
         
-            sheet.write(12, 10,'定価合計: ' + str( so.sale_order_total_list_price ) if so.sale_order_total_list_price else '', format_text_right) 
-            sheet.write(12, 14,'販売価格合計: ' + str(so.sale_order_amount_untaxed2) if so.sale_order_amount_untaxed2 else '' , format_text_right) 
+            sheet.write(12, 10, _("定価合計: ") + str( so.sale_order_total_list_price ) if so.sale_order_total_list_price else "", format_text_right) 
+            sheet.write(12, 14, _("販売価格合計: ") + str(so.sale_order_amount_untaxed2) if so.sale_order_amount_untaxed2 else "" , format_text_right) 
 
             #table title
-            sheet.write(14, 0, "№", format_table)
-            sheet.write(14, 1, "品名", format_table)
-            sheet.merge_range(14, 2,14,3, "品番・サイズ", format_table)
-            sheet.merge_range(14, 4,14,6, "仕様・詳細", format_table)
-            sheet.merge_range(14, 7,14, 9, "仕様・詳細", format_table)
-            sheet.write(14,10, "数量", format_table)
-            sheet.write(14, 11, "定価", format_table)
-            sheet.merge_range(14, 12,14, 14, "販売⾦額", format_table)
+            sheet.write(14, 0, _("№"), format_table)
+            sheet.write(14, 1, _("品名"), format_table)
+            sheet.merge_range(14, 2,14,3, _("品番・サイズ"), format_table)
+            sheet.merge_range(14, 4,14,6, _("仕様・詳細"), format_table)
+            sheet.merge_range(14, 7,14, 9, _("仕様・詳細"), format_table)
+            sheet.write(14,10, _("数量"), format_table)
+            sheet.write(14, 11, _("定価"), format_table)
+            sheet.merge_range(14, 12,14, 14, _("販売⾦額"), format_table)
             
             if so.order_line:       
                 row = 15

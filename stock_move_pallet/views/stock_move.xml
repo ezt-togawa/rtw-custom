@@ -1,0 +1,54 @@
+<odoo>
+    <data>
+        <record id="stock_move_tree_receip_picking" model="ir.ui.view">
+            <field name="name">move_list_pallet</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_tree_receipt_picking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="before">
+                    <field name="picking_id" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="sai" optional="hide"/>
+                    <field name="product_package_quantity" optional="hide"/>
+                    <field name="factory" optional="hide"/>
+                    <field name="pallet_id" optional="show"/>
+                    <field name="shiratani_date" optional="hide"/>
+                    <field name="area" optional="hide"/>
+                    <field name="warehouse_arrive_date" optional="hide"/>
+                    <field name="forwarding_address" optional="hide"/>
+                    <field name="date_planned" optional="show"/>
+                    <field name="memo" optional="hide"/>
+                    <field name="shipping_to" optional="hide"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="location_id" optional="show"/>
+                    <field name="location_dest_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_move_list_pallet" model="ir.ui.view">
+            <field name="name">move_list_pallet</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="rtw_stock_move_line.stock_move_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='shiratani_date']" position="before">
+                    <field name="pallet_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_move_form_add_pallet_id" model="ir.ui.view">
+            <field name="name">stock_move_form_add_pallet_id</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="pallet_id" string="パレット"/>
+                </xpath>
+                <xpath expr="/form" position="attributes">
+                    <attribute name="edit">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

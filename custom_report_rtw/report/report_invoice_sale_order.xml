@@ -36,69 +36,77 @@
                             class="row zero_min_height">
                         </div>
                         <div class="row size13" style="margin-top:-50px;">
-                            <div class="col-3">
-                                <div class="so_price">
-                                    <t t-if="docs.send_to_people == ''">
-                                        <span t-field="docs.send_to_company"
-                                            style="border-bottom:1px solid black;" />
-                                    </t>
-                                    <t t-else="else">
-                                        <span t-field="docs.send_to_company" />
-                                    </t>
-                                </div>
-                                <div class="so_price">
-                                    <span t-field="docs.send_to_people"
-                                        style="border-bottom:1px solid black;" />
-                                </div>
-                                <br />
-                                <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 下記の通り、ご請求申し上げます。<br /> <span
-                                        class="mt-1 so_price" style="border-bottom:1px solid black;">
-                                    件名 <span
-                                            t-esc="docs.title" />
-                                    </span>
-                                </div>
-                                <br />
-                                <div>税抜合計: <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol" />
-                                        <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
-                                    </div>
-                                </div>
-                                <div>消費税: <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol" />
-                                        <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
-                                    </div>
-                                </div>
-                                <div class="so_price total-price">
-                                    <span>税込合計</span>
-                                    <div style="float:right">
-                                        <span t-field="docs.currency_id.symbol" />
-                                        <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div style="float:right;padding-right:60px;">
-                                    <div>お支払期限:<!-- <span t-if="docs.invoice_date_due"
-                                        t-esc="docs.acc_move_invoice_date_due" /> -->
-                                    </div>
-                                    <div> お支払内容 : <span t-field="docs.payment_term_id.name" />
-                                    </div>
-                                    <div class="d-flex">
-                                        <div> お振込先: </div>
-                                        <div>
-                                            <div>西日本シティ銀行 （0190）</div>
-                                            <div>筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）</div>
-                                            <div>（普）0272585</div>
+                            <div class="col-8">
+                                <div class="d-flex">
+                                    <div class="col-4">
+                                        <div class="so_price"
+                                            style="max-height:25px">
+                                            <span t-field="docs.send_to_company"
+                                                t-att-class="not docs.send_to_people and 'border-bottom2'  or ''" />
+                                        </div>
+                                        <span t-field="docs.send_to_people"
+                                            class="so_price border-bottom2" />
+                                        <div class="mt-1">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
+                                            下記の通り、ご請求申し上げます。<br />
                                         </div>
                                     </div>
-                                    <br />
-                                    <div>納品日: <span
-                                            t-field="docs.sale_order_preferred_delivery_date" />
+                                    <div class="col-4" />
+                                    <div class="col-4">
+                                        <div>お支払期限:
+                                        </div>
+                                        <div> お支払内容 : <span t-field="docs.payment_term_id.name" />
+                                        </div>
+                                        <div class="d-flex">
+                                            <div> お振込先: </div>
+                                            <div>
+                                                <div>西日本シティ銀行 （0190）</div>
+                                                <div>筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）</div>
+                                                <div>（普）0272585</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div> 納品場所: <span t-field="docs.forwarding_address" />
-                                    <div
-                                            style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;">
-                                        備考: <span t-field="docs.special_note" /></div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-8">
+                                        <span
+                                            class="mt-1 so_price border-bottom2"> 件名 <span
+                                                t-esc="docs.title" />
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <div>納品日: <span
+                                                t-field="docs.sale_order_preferred_delivery_date" />
+                                        </div>
+                                        <div> 納品場所: <span t-field="docs.forwarding_address" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-8">
+                                        <div class="width-money">
+                                            <div>税抜合計: <div style="float:right">
+                                                    <span t-field="docs.currency_id.symbol" />
+                                                    <span
+                                                        t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                                                </div>
+                                            </div>
+                                            <div>消費税: <div style="float:right">
+                                                    <span t-field="docs.currency_id.symbol" />
+                                                    <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                                                </div>
+                                            </div>
+                                            <div class="so_price total-price">
+                                                <span>税込合計</span>
+                                                <div style="float:right">
+                                                    <span t-field="docs.currency_id.symbol" />
+                                                    <span
+                                                        t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div> 備考: <span t-field="docs.sale_order_special_note" /></div>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +147,7 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table mt-1">
+                        <table class="table">
                             <t t-set="number" t-value="0" />
                             <t t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)"
                                 t-as="l" t-groupby="10" t-att-last="last">
@@ -240,8 +248,6 @@
                                                                 t-as="string_line">
                                                                 <div class="one-lines"> ● <span
                                                                         t-esc="string_line.display_name" />
-                                                                    : <span
-                                                                        t-esc="string_line.value" />
                                                                 </div>
                                                             </t>
                                                         </t>
@@ -266,8 +272,6 @@
                                                                 t-as="string_line">
                                                                 <div class="one-lines"> ● <span
                                                                         t-esc="string_line.display_name" />
-                                                                    : <span
-                                                                        t-esc="string_line.value" />
                                                                 </div>
                                                             </t>
                                                         </t>
@@ -277,8 +281,6 @@
                                                                 t-as="string_line">
                                                                 <div class="one-lines"> ● <span
                                                                         t-esc="string_line.display_name" />
-                                                                    : <span
-                                                                        t-esc="string_line.value" />
                                                                 </div>
                                                             </t>
                                                         </t>

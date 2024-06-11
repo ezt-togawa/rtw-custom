@@ -38,50 +38,58 @@
             <div t-if="docs.company_id.logo or docs.company_id.report_header"
               class="row zero_min_height">
             </div>
-            <div class="row size13" style="margin-top:-50px;">
-              <div class="col-5">
-                <div class="so_price">
-                  <t t-if="docs.send_to_people == ''">
-                    <span t-field="docs.send_to_company" class="border-bottom2" />
-                  </t>
-                  <t t-else="else">
-                    <span t-field="docs.send_to_company" />
-                  </t>
+            <div class="d-flex size13">
+              <div class="col-8">
+                <div class="col-12 d-flex">
+                  <div class="col-6">
+                    <div class="so_price"
+                      style="max-height:25px">
+                      <span t-field="docs.send_to_company"
+                        t-att-class="not docs.send_to_people and 'border-bottom2'  or ''" />
+                    </div>
+                    <span t-field="docs.send_to_people"
+                      class="so_price border-bottom2" />
+                    <br />
+                    <div class="size12">
+                      <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。</div>
+                      <div>御依頼の件、下記の通りお見積り致しました。</div>
+                      <div>ご査収の程宜しくお願い致します。</div>
+                    </div>
+                  </div>
+                  <div class="col-6 d-flex">
+                    <div class="col-4"></div>
+                    <div class="col-8">
+                      <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
+                      <div> 製作日数： <span t-if="docs.workday_id"
+                          t-esc="docs.workday_id.name" /></div>
+                      <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
+                      <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
+                      <div> 支払条件：<span
+                          t-esc="docs.sale_order_transactions_term" /></div>
+                    </div>
+                  </div>
                 </div>
-                <div class="so_price">
-                  <span t-field="docs.send_to_people" class="border-bottom2" />
+                <div class="col-12 d-flex">
+                  <div class="col-8 so_price">
+                    <span class="border-bottom2">件名 <span t-field="docs.title" />
+                    </span>
+                  </div>
+                  <div class="col-4">
+                    <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
+                    <div
+                      style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow:hidden;max-height:60px;">
+                      備考: <span t-field="docs.special_note" /></div>
+                  </div>
                 </div>
-                <br />
-                <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br /> 御依頼の件、下記の通りお見積り致しました。<br />ご査収の程宜しくお願い致します。<br />
-                <span
-                    class="mt-1 so_price border-bottom2"> 件名 <span
-                      t-field="docs.title" /></span>
-                </div>
-                <br />
               </div>
-              <div class="col-3">
-                <div style="float:right;padding-right:60px;">
-                  <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
-                  <div> 製作日数： <span t-if="docs.workday_id" t-esc="docs.workday_id.name" /></div>
-                  <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
-                  <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
-                  <div> 支払条件：<span t-esc="docs.sale_order_transactions_term" /></div>
-                  <br />
-                  <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
-                  <div
-                    style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;">
-                    備考: <span t-field="docs.special_note" /></div>
-                </div>
-              </div>
-              <div
-                class="col-4 size11" name="company_address">
+              <div class="col-4 size11" name="company_address">
                 <div class="float-right">
                   <div>
                     <img style="width:180px;height:40px;"
                       src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
                       alt="Logo" />
                   </div>
-                  <div style="height:140px">
+                  <div>
                     <div class="size12">
                       <span t-esc="docs.hr_employee_company" />
                     </div>
@@ -107,12 +115,10 @@
                       <span t-esc="docs.hr_employee_printer" />
                     </div>
                   </div>
-                  <div class="d-flex justify-content-end size16">
-                    <div>消費税は含まれておりません</div>
-                  </div>
                 </div>
               </div>
             </div>
+            <div class="col-12 text-right size16">消費税は含まれておりません</div>
             <table
               class="table">
               <t t-set="number" t-value="0" />
@@ -212,8 +218,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[0:(6 - len(l.product_id.product_template_attribute_value_ids))]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>
@@ -235,8 +240,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[(6 - len(l.product_id.product_template_attribute_value_ids)):len(l.config_session_id.custom_value_ids)]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>
@@ -245,8 +249,7 @@
                                 t-foreach="l.config_session_id.custom_value_ids[0:len(l.config_session_id.custom_value_ids)]"
                                 t-as="string_line">
                                 <div class="one-lines"> ● <span
-                                    t-esc="string_line.display_name" />: <span
-                                    t-esc="string_line.value" />
+                                    t-esc="string_line.display_name" />
                                 </div>
                               </t>
                             </t>

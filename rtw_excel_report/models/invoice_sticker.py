@@ -1,10 +1,11 @@
-from odoo import models
+from odoo import models, _
 
 class productLabelSticker(models.AbstractModel):
     _name = 'report.rtw_excel_report.invoice_sticker_xls'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)             
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -29,9 +30,9 @@ class productLabelSticker(models.AbstractModel):
                     p_type = "\n"
                     if line.p_type:
                         if line.p_type == "special":
-                            p_type = "\n" + "別注" 
+                            p_type = "\n" + _("別注")
                         elif line.p_type == "custom":
-                            p_type = "\n" + "特注"
+                            p_type = "\n" + _("特注")
                     if line.product_id.product_tmpl_id.categ_id.name:
                         p_detail += str(line.product_id.product_tmpl_id.categ_id.name) + p_type +"\n\n\n" 
                                 
@@ -89,7 +90,7 @@ class productLabelSticker(models.AbstractModel):
                             sheet_data.write(count, 4, " ", merge_format)
 
                         if stock_picking.partner_id :
-                            sheet_data.write(count, 5, stock_picking.partner_id.display_name + "様", merge_format)
+                            sheet_data.write(count, 5, stock_picking.partner_id.display_name + _("様"), merge_format)
                         else:
                             sheet_data.write(count, 5, " ", merge_format)
 

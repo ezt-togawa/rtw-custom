@@ -619,7 +619,10 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_ritzwell_staff(self):
         for line in self:
             if line.user_id.name:
-                line.sale_order_ritzwell_staff = line.user_id.name + "  様"
+                if line.lang_code == 'ja_JP':
+                    line.sale_order_ritzwell_staff = line.user_id.name + "  様宛"
+                else:
+                    line.sale_order_ritzwell_staff = "Mr/Mrs. " + line.user_id.name 
             else:
                 line.sale_order_ritzwell_staff = ""
 
@@ -1041,7 +1044,7 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_line_calculate_packages(self):
         for line in self:
             if line.product_id.two_legs_scale:
-                line.sale_line_calculate_packages =  line.product_id.two_legs_scale
+                line.sale_line_calculate_packages =  math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
             else:
                 line.sale_line_calculate_packages = 0      
                 
@@ -1151,17 +1154,17 @@ class SaleOrderLineExcelReport(models.Model):
                                 break
                             else:
                                 count_attr +=1
-                            attr += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+                            attr += ("● " + cfg.display_name + "\n" )
                             count_cfg += 1
                             
                         for cfg2 in attributes_cfg[count_cfg:(6+count_cfg)]:
-                            attr_cfg += ("● " + cfg2.display_name  + ":" + cfg2.value  + "\n" )
+                            attr_cfg += ("● " + cfg2.display_name + "\n" )
                 elif length_normal == 6 :
                     for attribute in attributes:
                         attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
                     if attributes_cfg:                            
                         for cfg in attributes_cfg:
-                            attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+                            attr_cfg += ("● " + cfg.display_name + "\n" )
                 else:
                     for attribute in attributes[:6]:
                         attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
@@ -1172,13 +1175,13 @@ class SaleOrderLineExcelReport(models.Model):
                     if length_normal < 12 : 
                         if attributes_cfg:
                             for cfg in attributes_cfg[:(12-start)]:
-                                attr_cfg += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
+                                attr_cfg += ("● " + cfg.display_name + "\n" )
             else: 
                 if attributes_cfg:                            
                     for cfg in attributes_cfg[:6]:
-                        attr += ("● " +  cfg.display_name  + ":" + cfg.value  + "\n" )
+                        attr += ("● " +  cfg.display_name + "\n" )
                     for cfg in attributes_cfg[6:12]:
-                        attr_cfg += ("● " +  cfg.display_name  + ":" + cfg.value  + "\n" )
+                        attr_cfg += ("● " +  cfg.display_name + "\n" )
                         
             attr = attr.rstrip()
             attr_cfg = attr_cfg.rstrip()
@@ -1779,11 +1782,6 @@ class StockMoveExcelReport(models.Model):
         compute="_compute_stock_move",
     )
 
-    packages_number = fields.Integer(
-        "Number packages",
-        compute="_compute_stock_move",
-    )
-
     action_packages = fields.Char(
         "Action packages",
         compute="_compute_stock_move",
@@ -1919,18 +1917,6 @@ class StockMoveExcelReport(models.Model):
             else:
                 line.product_number_and_size = ''
             
-            packages_number = 0
-            move_line = self.env['stock.move.line'].search([('move_id', '=', line.id)])
-            if move_line:
-                for ml in move_line:
-                    if ml.product_package_quantity:
-                        packages_number += ml.product_package_quantity
-                    elif prod.two_legs_scale:
-                        packages_number = prod.two_legs_scale
-            elif prod.two_legs_scale:
-                packages_number = prod.two_legs_scale
-            line.packages_number = packages_number
-
             line.action_packages = "有"
             line.action_assemble = "無"
             line.stock_sai = prod_tmpl.sai if prod_tmpl.sai else ''
@@ -2829,7 +2815,13 @@ class PurchaseOrderExcelReport(models.Model):
                 if res_partner :
                     for res in res_partner:
                         printing_staff = res.name if res.name else ''
-            line.purchase_order_printing_staff = printing_staff  
+            if printing_staff:  
+                if line.lang_code == 'en_US':
+                    line.purchase_order_printing_staff = "Orderer " + printing_staff
+                else:
+                    line.purchase_order_printing_staff = "発注者 " + printing_staff
+            else:
+                line.purchase_order_printing_staff = ""
 
     def _compute_purchase_order_current_date(self):
         day = str(datetime.now().day)

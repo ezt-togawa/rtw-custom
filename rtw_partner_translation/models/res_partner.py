@@ -14,18 +14,26 @@ class ResPartner(models.Model):
     street = fields.Char(translate=True)
     street2 = fields.Char(translate=True)
     parent_name = fields.Char(related='parent_id.display_name', readonly=True, string='Parent name')
-
-    # @api.model
-    # def _fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
-    #     res = super(ResPartner, self)._fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+    
+    @api.model
+    def _fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        res = super(ResPartner, self)._fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
         
-    #     doc = etree.fromstring(res['arch'])
-    #     for city_node in doc.xpath("//field[@name='city']"):
-    #         city_node.set('attrs', "")
+        doc = etree.fromstring(res['arch'])
+        for street_node in doc.xpath("//field[@name='street']"):
+            street_node.set('style', 'width:100%;display:inline-block;')
+        for street2_node in doc.xpath("//field[@name='street2']"):
+            street2_node.set('style', 'width:100%;display:inline-block;')
+        for city_node in doc.xpath("//field[@name='city']"):
+            city_node.set('style', 'width:100%;display:inline-block;margin-right:0;')
+        for zip_node in doc.xpath("//field[@name='zip']"):
+            zip_node.set('style', 'width:100%;display:inline-block;')
+        for state_node in doc.xpath("//field[@name='state_id']"):
+            state_node.set('style', 'width:100%;')
             
-    #     res['arch'] = etree.tostring(doc, encoding='unicode')
+        res['arch'] = etree.tostring(doc, encoding='unicode')
         
-    #     return res
+        return res
     
     def write(self, vals):
         result = super(ResPartner, self).write(vals)
@@ -91,14 +99,15 @@ class IrTranslation(models.Model):
             
     def write(self, vals):
         result = super(IrTranslation, self).write(vals)
-        self.refresh()
-        
+        # self.refresh()
+        sync_name = ['res.partner,street','res.partner,street2','res.partner,zip','res.partner,city']
         for record in self:
-            lang = record.lang
-            parent_partner = self.env['res.partner'].search([('id', '=', record.res_id)])
-            if parent_partner:
-                for contact in parent_partner.child_ids:
-                    self.update_translation(contact,self.name,lang)
+            if record.name in sync_name:
+                lang = record.lang
+                parent_partner = self.env['res.partner'].search([('id', '=', record.res_id)])
+                if parent_partner:
+                    for contact in parent_partner.child_ids:
+                        self.update_translation(contact,self.name,lang)
 
         return result
     

@@ -29,12 +29,17 @@ div.stamp {
   padding: 0em 0.5em 0em 0.5em;
 }
 
+div,span{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .so_title {
   font-size: 20px;
 }
 
 .so_price {
-  font-size: 24px;
+  font-size: 22px;
 }
 
 body {
@@ -254,4 +259,8 @@ body {
 
 .bg-section{
   background: #e9ecef;
+}
+
+.width-money{
+  max-width: 325px;
 }

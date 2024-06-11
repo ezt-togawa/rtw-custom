@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from datetime import datetime 
 
 class productSpec(models.AbstractModel):
@@ -6,6 +6,8 @@ class productSpec(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
+        self = self.with_context(lang=self.env.user.lang)
+        
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -26,7 +28,7 @@ class productSpec(models.AbstractModel):
         day = str(datetime.now().day)
         month = str(datetime.now().month)
         year = str(datetime.now().year)
-        current_date = year + " 年 " + month + " 月 " + day + " 日 "
+        current_date = year + _(" 年 ") + month + _(" 月 ") + day + _(" 日 ")
 
         #number sheet
         company_name=[]
@@ -51,27 +53,27 @@ class productSpec(models.AbstractModel):
             sheet.set_column("J:J", width=20,cell_format=font_family) 
             sheet.set_column("K:Z", None,cell_format=font_family)
 
-            sheet.merge_range(1,3,1,5, "≪棚卸記入リスト≫ ", format_sheet_title)
+            sheet.merge_range(1,3,1,5, _("≪棚卸記入リスト≫ "), format_sheet_title)
             sheet.write(0,9, current_date, format_current_date)
-            sheet.write(3, 0, "保管場所", format_name_company)
+            sheet.write(3, 0, _("保管場所"), format_name_company)
             sheet.merge_range(3, 1,3,2,name_company, format_name_company)
 
-            sheet.write(3, 6, "担当（", format_right)
+            sheet.write(3, 6, _("担当") + " (", format_right)
             sheet.merge_range(3, 7,3,8, "", format)
             sheet.write(3, 9, ")", format_left)
 
             #table title
-            sheet.merge_range(5, 0,6,0, "№", format_table)
-            sheet.merge_range(5, 1,6,1, "部材コード", format_table)
-            sheet.merge_range(5, 2,6,2, "部材名", format_table)
-            sheet.merge_range(5, 3,6,3, "ロット", format_table)
-            sheet.merge_range(5, 4,6,4, "帳簿在庫数", format_table)
-            sheet.merge_range(5, 5,6,5, "製作中在庫", format_table)
-            sheet.merge_range(5, 6,6,6, "実在庫", format_table)
-            sheet.merge_range(5, 7,5,8, "棚卸実数 ", format_table)
-            sheet.write(6, 7, "製作中", format_table)
-            sheet.write(6, 8, "棚卸数", format_table)
-            sheet.merge_range(5, 9, 6, 9, "ﾁｪｯｸ", format_table)
+            sheet.merge_range(5, 0,6,0, _("№"), format_table)
+            sheet.merge_range(5, 1,6,1, _("部材コード"), format_table)
+            sheet.merge_range(5, 2,6,2, _("部材名"), format_table)
+            sheet.merge_range(5, 3,6,3, _("ロット"), format_table)
+            sheet.merge_range(5, 4,6,4, _("帳簿在庫数"), format_table)
+            sheet.merge_range(5, 5,6,5, _("製作中在庫"), format_table)
+            sheet.merge_range(5, 6,6,6, _("実在庫"), format_table)
+            sheet.merge_range(5, 7,5,8, _("棚卸実数 "), format_table)
+            sheet.write(6, 7, _("製作中"), format_table)
+            sheet.write(6, 8, _("棚卸数"), format_table)
+            sheet.merge_range(5, 9, 6, 9, _("ﾁｪｯｸ"), format_table)
 
             row=7
             for  index,stock_quant in enumerate(lines):
@@ -97,7 +99,7 @@ class productSpec(models.AbstractModel):
                     sheet.write(row, 6, stock_quant.quantity - stock_quant.reserved_quantity , format_wrap)
                     sheet.write(row, 5,stock_quant.quantity -(stock_quant.quantity - stock_quant.reserved_quantity ) , format_wrap)
 
-                    sheet.write(row, 7, "ｾｯﾄ" ,format_right_has_border)
-                    sheet.write(row, 8, "ｾｯﾄ" , format_right_has_border)
+                    sheet.write(row, 7, _("ｾｯﾄ") ,format_right_has_border)
+                    sheet.write(row, 8, _("ｾｯﾄ") , format_right_has_border)
                     sheet.write(row, 9, "" , format_left_has_border)
                 row += 1

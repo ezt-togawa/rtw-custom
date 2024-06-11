@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
 from io import BytesIO
@@ -7,6 +7,8 @@ class ReportMrpExcel(models.AbstractModel):
     _inherit = 'report.report_xlsx.abstract'
     
     def generate_xlsx_report(self, workbook, data, so_data):
+        self = self.with_context(lang=self.env.user.lang)
+        
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
@@ -113,7 +115,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.insert_image(1, 12, "logo2", {'image_data': img_io_ritzwell, 'y_offset': 2})
             
             # y,x
-            sheet.write(1, 1, "配送依頼書", format_sheet_title) 
+            sheet.write(1, 1, _("配送依頼書"), format_sheet_title) 
             
             send_to = ""
             company = ""
@@ -124,27 +126,27 @@ class ReportMrpExcel(models.AbstractModel):
                     
             if so.lang_code == "en_US":
                 if company:
-                    send_to += "御中 " + company + " 株式会社" 
+                    send_to += _("御中 ") + company + _(" 株式会社" )
             else:
                 if company:
-                    send_to += "株式会社 " + company + " 御中"
+                    send_to += _("株式会社 ") + company + _(" 御中")
                     
             sheet.write(1, 2, send_to, format_name_company)
             
-            sheet.write(2, 0,  "発注番号", format_text) 
+            sheet.write(2, 0,  _("発注番号"), format_text) 
             sheet.write(2, 1, so.name if so.name else "", format_text_14) 
             
-            sheet.write(4,0, "搬入日時", format_text) 
-            sheet.write(5,0, "入荷日", format_text) 
+            sheet.write(4,0, _("搬入日時"), format_text) 
+            sheet.write(5,0, _("入荷日"), format_text) 
             sheet.write(4,1, so.sale_order_warehouse_arrive_date if so.sale_order_warehouse_arrive_date else "", format_text_12) 
             sheet.write(5,1, "", format_text_12) 
             
-            sheet.write(7, 0, "お届け先（物件名）", format_text_12) 
+            sheet.write(7, 0, _("お届け先（物件名）"), format_text_12) 
             sheet.write(7, 1, so.title if so.title else "", format_text) 
             sheet.write(8, 1, so.sale_order_partner_info if so.sale_order_partner_info else "", format_text) 
             
-            sheet.write(10, 0, "住所", format_text) 
-            sheet.write(11, 0, "TEL／携帯", format_text) 
+            sheet.write(10, 0, _("住所"), format_text) 
+            sheet.write(11, 0, _("TEL／携帯"), format_text) 
             sheet.write(10, 1, so.sale_order_partner_address if so.sale_order_partner_address else "", format_text) 
             phone = ""
             if so.partner_id.phone and so.partner_id.mobile:
@@ -155,38 +157,38 @@ class ReportMrpExcel(models.AbstractModel):
                 phone += so.partner_id.mobile
             sheet.write(11, 1, phone, format_text) 
             
-            sheet.write(13, 0, "配送", format_text) 
-            sheet.write(14, 0, "デポ", format_text) 
-            sheet.write(15, 0, "配送ラベル", format_text) 
-            sheet.write(16, 0, "設置先〒", format_text) 
+            sheet.write(13, 0, _("配送"), format_text) 
+            sheet.write(14, 0, _("デポ"), format_text) 
+            sheet.write(15, 0, _("配送ラベル"), format_text) 
+            sheet.write(16, 0, _("設置先〒"), format_text) 
             sheet.write(13, 1, so.sale_order_sipping_to if so.sale_order_sipping_to else "", format_text) 
             sheet.write(14, 1, so.waypoint.name if so.waypoint and so.waypoint.name else "", format_text) 
             sheet.write(15, 1, so.shipping_to_text if so.shipping_to_text else "", format_text) 
             sheet.write(16, 1, so.forwarding_address_zip if so.forwarding_address_zip else "", format_text) 
             
-            sheet.write(13, 3, "設置先", format_text_right) 
+            sheet.write(13, 3, _("設置先"), format_text_right) 
             sheet.merge_range(13, 4, 15, 6, so.forwarding_address[:120]  if so.forwarding_address else "", format_note) 
             
-            sheet.write(18, 0, "搬入立会人", format_text) 
+            sheet.write(18, 0, _("搬入立会人"), format_text) 
             sheet.write(18, 1, so.witness if so.witness else "", format_text) 
             
-            sheet.write(10,7, "送り状注記", format_text_right) 
+            sheet.write(10,7, _("送り状注記"), format_text_right) 
             sheet.merge_range(10,8,12,11,so.sale_order_special_note[:120] if so.sale_order_special_note else '', format_note) 
             
             sheet.merge_range(2,12,8,13, so.sale_order_hr_employee if so.sale_order_hr_employee else '' , format_address) 
 
             #table title
-            sheet.write(20, 0, "№", format_table)
-            sheet.write(20, 1, "品名", format_table)
-            sheet.merge_range(20, 2,20,3, "品番・サイズ", format_table)
-            sheet.merge_range(20, 4,20,6, "仕様・詳細", format_table)
-            sheet.write(20, 7, "仕様・詳細", format_table)
-            sheet.write(20,8, "数量", format_table)
-            sheet.write(20, 9, "個口数", format_table)
-            sheet.write(20, 10, "取説", format_table)
-            sheet.write(20, 11, "開梱 ", format_table)
-            sheet.write(20, 12, "組立", format_table)
-            sheet.write(20, 13, "販売⾦額", format_table)
+            sheet.write(20, 0, _("№"), format_table)
+            sheet.write(20, 1, _("品名"), format_table)
+            sheet.merge_range(20, 2,20,3, _("品番・サイズ"), format_table)
+            sheet.merge_range(20, 4,20,6, _("仕様・詳細"), format_table)
+            sheet.write(20, 7, _("仕様・詳細"), format_table)
+            sheet.write(20,8, _("数量"), format_table)
+            sheet.write(20, 9, _("個口数"), format_table)
+            sheet.write(20, 10, _("取説"), format_table)
+            sheet.write(20, 11, _("開梱 "), format_table)
+            sheet.write(20, 12, _("組立"), format_table)
+            sheet.write(20, 13, _("販売⾦額"), format_table)
 
             if so.order_line:
                 row = 21

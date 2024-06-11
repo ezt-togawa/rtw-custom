@@ -60,7 +60,6 @@
         "views/res_company_view.xml",
         
         'report/purchase.xml',
-        'report/spec_list.xml',
         'report/mrp.xml',
         'report/invoice.xml',
         
