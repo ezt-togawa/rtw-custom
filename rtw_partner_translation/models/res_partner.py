@@ -99,7 +99,7 @@ class IrTranslation(models.Model):
             
     def write(self, vals):
         result = super(IrTranslation, self).write(vals)
-        self.refresh()
+        # self.refresh()
         sync_name = ['res.partner,street','res.partner,street2','res.partner,zip','res.partner,city']
         for record in self:
             if record.name in sync_name:
