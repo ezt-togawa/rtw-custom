@@ -2,8 +2,9 @@
 
 from odoo import models, fields, api
 import datetime
+import math
 
-class rtw_stock_move_line(models.Model):
+class rtw_stock_move(models.Model):
     _inherit = "stock.move"
 
     sai = fields.Float(compute="_get_sai", group_operator="sum", store=True)
@@ -38,18 +39,14 @@ class rtw_stock_move_line(models.Model):
         string="製造オーダー", compute="_get_mrp_production_id", store=True)
     product_package_quantity = fields.Integer(string="個口数")
 
-    @api.onchange('product_id')
-    def product_id_change(self):
-        for record in self:
-            if record.product_id:
-                record.product_package_quantity = record.product_id.product_tmpl_id.two_legs_scale
-                
     @api.model_create_multi
     def create(self, vals_list):
         mls = super().create(vals_list)
-        for move_line in mls:
-            if move_line.product_id:
-                move_line.product_package_quantity = move_line.product_id.product_tmpl_id.two_legs_scale
+        for move in mls:
+            if move.product_id.product_tmpl_id.two_legs_scale > 0:
+                move.product_package_quantity = math.ceil(move.product_qty /move.product_id.product_tmpl_id.two_legs_scale)
+            else:
+                move.product_package_quantity = 0
         return mls
 
     @api.depends('date_planned')

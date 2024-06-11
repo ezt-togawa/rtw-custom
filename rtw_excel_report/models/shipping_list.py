@@ -138,13 +138,12 @@ class productSpec(models.AbstractModel):
                     if line.product_qty :
                         prod_qty = line.product_qty
 
-                    if line.product_id.two_legs_scale and line.product_uom_qty:
+                    if line.product_id.product_tmpl_id.two_legs_scale > 0:
                         package= math.ceil(
-                            line.product_uom_qty / line.product_id.two_legs_scale
+                            line.product_qty / line.product_id.product_tmpl_id.two_legs_scale
                         )
                     else:
-                        if line.product_uom_qty :
-                            package = line.product_uom_qty   
+                        package = 0
 
                     if stock_picking.note :
                         note =stock_picking.note
