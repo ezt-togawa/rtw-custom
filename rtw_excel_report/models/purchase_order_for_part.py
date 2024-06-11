@@ -94,7 +94,7 @@ class ReportMrpExcel(models.AbstractModel):
         sheet.set_row(5, 15)
         sheet.set_row(6, 15)
         sheet.set_row(7, 15)
-        sheet.set_row(8, 12)
+        sheet.set_row(8, 13)
         sheet.set_row(9, 12)
         sheet.set_row(11, 22)
         sheet.set_row(12, 24)
@@ -117,7 +117,7 @@ class ReportMrpExcel(models.AbstractModel):
             
 
             sheet.write(6,0, _("送り先着日"), format_text) 
-            sheet.write(6,1, po.purchase_line_date_planned, format_text) 
+            sheet.write(6,1, po.purchase_line_date_planned, format_text)
             
             sheet.write(9,0, _("送り先:"), format_text) 
             sheet.merge_range(9,1,9,4, po.picking_type_id.warehouse_id.name, format_text_wrap) 
@@ -125,6 +125,8 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(10,1,10,4, po.purchase_order_address, format_text_wrap) 
             sheet.write(11,0, _("TEL:"), format_text) 
             sheet.merge_range(11,1,11,4, po.picking_type_id.warehouse_id.partner_id.phone if po.picking_type_id.warehouse_id.partner_id.phone else '', format_text_wrap) 
+            
+            sheet.merge_range(8, 5, 8, 8, po.resend if po.resend else "", format_text_wrap) 
 
             sheet.write(9,5, _("送り先注記:"), format_address) 
             sheet.merge_range(9,6,11,8,po.destination_note if po.destination_note else '', format_note)
@@ -132,7 +134,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(11,11, _("販売価格合計:"), format_text_right) 
 
             sheet.merge_range(0,11,0,12, po.purchase_order_current_date if po.purchase_order_current_date else '' , format_date )
-            sheet.merge_range(3,11,8,12, po.purchase_order_hr_employee if po.purchase_order_hr_employee else '' , format_address) 
+            sheet.merge_range(2,11,9,12, po.purchase_order_hr_employee if po.purchase_order_hr_employee else '' , format_address) 
 
             #table title
             sheet.write(13, 0, _("№"), format_table)

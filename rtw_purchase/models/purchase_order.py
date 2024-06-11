@@ -8,6 +8,7 @@ class rtw_purchase(models.Model):
     sale_order_names = fields.Char("sale order title")
     operation_type = fields.Many2one('stock.picking.type' , string="オペレーションタイプ", compute='_compute_operation_type')
     destination_note = fields.Text('送り先注記')
+    resend = fields.Char('再送')
 
     def _compute_operation_type(self):
             operation_type_value = self.order_line.move_dest_ids.group_id.mrp_production_ids | self.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
