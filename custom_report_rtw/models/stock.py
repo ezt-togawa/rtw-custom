@@ -61,6 +61,7 @@ class StockMove(models.Model):
   def _compute_stock_move_related_sale_order_line(self):
     for move in self:
         sale_order_line = False
+        product_size = ''
         if move.sale_line_id:
             sale_order_line = move.sale_line_id
             move.stock_move_sale_line_id = move.sale_line_id
