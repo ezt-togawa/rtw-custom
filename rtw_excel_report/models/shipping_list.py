@@ -109,7 +109,6 @@ class productSpec(models.AbstractModel):
                     prod_name=""
                     attrs=""
                     prod_qty=0
-                    package=""
                     note = ""
                     shiratani_date=""
                     depo_date=""
@@ -138,13 +137,6 @@ class productSpec(models.AbstractModel):
                     if line.product_qty :
                         prod_qty = line.product_qty
 
-                    if line.product_id.product_tmpl_id.two_legs_scale > 0:
-                        package= math.ceil(
-                            line.product_qty / line.product_id.product_tmpl_id.two_legs_scale
-                        )
-                    else:
-                        package = 0
-
                     if stock_picking.note :
                         note =stock_picking.note
 
@@ -164,7 +156,7 @@ class productSpec(models.AbstractModel):
                     sheet.write(row_no_merge, 4 , prod_name, format_left)
                     sheet.merge_range(row_no_merge, 5,row_no_merge,6,attrs , format_attr)
                     sheet.write(row_no_merge, 7, prod_qty, format_wrap)
-                    sheet.write(row_no_merge, 8, package, format_wrap)
+                    sheet.write(row_no_merge, 8, line.product_package_quantity, format_wrap)
 
                     row_no_merge += 1
                     
