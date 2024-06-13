@@ -1494,12 +1494,10 @@ class StockPickingExcelReport(models.Model):
     
     def _compute_stock_move(self):
         for line in self:
-            prod=self.env["stock.move"].search(
+            line.stock_move = self.env["stock.move"].search(
                 [("picking_id", "=", line.id)]
             )
-            if prod :
-                line.stock_move=prod
-
+                
     def _compute_stock_move_line(self):
         for line in self:
             line.stock_move_line = self.env["stock.move.line"].search(

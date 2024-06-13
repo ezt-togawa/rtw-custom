@@ -2934,3 +2934,13 @@ msgstr "Set"
 #, python-format
 msgid "ﾁｪｯｸ"
 msgstr "Check"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.stock_picking_delivery_excel
+msgid "配送依頼書"
+msgstr "Delivery Work Request"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.stock_picking_ship_order_excel
+msgid "出荷依頼書"
+msgstr "Shipping Request Form"

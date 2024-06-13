@@ -50,10 +50,10 @@
 
         # 'report_purchase_order_for_part/actions.xml',
         # 'report_purchase_order_for_part/templates.xml',
-        'report_delivery_request_form/actions.xml',
-        'report_delivery_request_form/templates.xml',
-        'report_ship_order/actions.xml',
-        'report_ship_order/templates.xml',
+        # 'report_delivery_request_form/actions.xml',
+        # 'report_delivery_request_form/templates.xml',
+        # 'report_ship_order/actions.xml',
+        # 'report_ship_order/templates.xml',
 
         'views/views.xml',
         'views/product_spec.xml',
@@ -80,6 +80,8 @@
         'views/inspection_order_form.xml',
         'views/purchase_order_sheet.xml',
         'views/delivery_sale_order.xml',
+        'views/stock_picking_delivery.xml',
+        'views/stock_picking_ship_order.xml',
 
         # 'report_stock_move_pallet/actions.xml',
         # 'report_stock_move_pallet/templates.xml',
