@@ -63,7 +63,7 @@ class sale_order(models.Model):
             for stock in stock_picking:
                 if stock.state not in ('done', 'cancel'):
                     stock.write({"scheduled_date": max_schedule_date})
-                    stock.write({"date_deadline": max_schedule_date})
+                    # stock.write({"date_deadline": max_schedule_date})
         return result
 
     def action_confirm(self):
@@ -83,6 +83,6 @@ class sale_order(models.Model):
             for stock in stock_picking:
                 if stock.state not in ('done', 'cancel'):
                     stock.write({"scheduled_date": max_schedule_date})
-                    stock.write({"date_deadline": max_schedule_date})
+                    # stock.write({"date_deadline": max_schedule_date})
 
         return result
