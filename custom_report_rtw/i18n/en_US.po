@@ -2004,6 +2004,11 @@ msgstr "Shipping Notes:"
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
+msgid "発注者"
+msgstr "Orderer"
+
+#. module: custom_report_rtw
+#: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_purchase_order_sheet_for_part
 msgid "送り先着日"
 msgstr "Shipment Arrival Date"
 

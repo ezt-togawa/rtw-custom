@@ -122,7 +122,7 @@
                         <span t-esc="po.hr_employee_fax" />
                       </div>
                       <div class="size12">
-                        <span t-esc="po.hr_employee_printer" />
+                        <t t-if="po.hr_employee_printer"> 発注者 <span t-esc="po.hr_employee_printer" /></t>
                       </div>
                     </div>
                   </div>
