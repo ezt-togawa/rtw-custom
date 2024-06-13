@@ -20,7 +20,7 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp'],
+    'depends': ['base', 'mrp','rtw_mrp_add_sol_date'],
 
     # always loaded
     'data': [
