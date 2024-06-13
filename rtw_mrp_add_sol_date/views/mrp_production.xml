@@ -8,7 +8,7 @@
                 <xpath expr="//field[@name='user_id']" position="before">
                     <field name="shiratani_date" />
                     <field name="depo_date" />
-                    <field name="preferred_delivery_date" />
+                    <field name="estimated_shipping_date" />
                 </xpath>
             </field>
         </record>

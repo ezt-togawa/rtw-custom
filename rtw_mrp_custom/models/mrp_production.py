@@ -39,10 +39,29 @@ class rtw_mrp_production_revised_edition(models.Model):
                 if sale_order:
                     if sale_order.estimated_shipping_date:
                         date_planned = '/' + str(sale_order.estimated_shipping_date)
-                    # if self.env['sale.order.line'].search([('order_id','=',sale_order.id),('product_id','=',record.product_id.id)], order='date_planned desc', limit=1):
-                    #     date_planned = '/' + self.env['sale.order.line'].search([('order_id','=',sale_order.id),('product_id','=',record.product_id.id)], order='date_planned desc', limit=1).date_planned.strftime('%Y-%m-%d')
                     record.display_name = f'{record.sale_reference}{product_no}{date_planned}'
             else:
                 if record.product_id.product_no:
                     product_no = f'/{record.product_id.product_no}'
                 record.display_name = f'{record.name}{product_no}'
+
+    def write(self,vals):
+        result = super(rtw_mrp_production_revised_edition, self).write(vals)
+        if self.sale_reference:
+            sale_order = self.env['sale.order'].search([('name','=', self.sale_reference)])
+            if sale_order and 'estimated_shipping_date' in vals:
+                sale_order.estimated_shipping_date = vals['estimated_shipping_date']
+        return result
+
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+    
+    def action_confirm(self):
+        result = super(SaleOrder, self).action_confirm()
+        if self.estimated_shipping_date:
+            mrp_production = self.env['mrp.production'].search(
+                [('sale_reference', '=', self.name)])
+            for mrp in mrp_production:
+                mrp.write({"estimated_shipping_date":self.estimated_shipping_date})
+
+        return result

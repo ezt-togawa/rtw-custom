@@ -9,6 +9,7 @@ class rtw_mrp_production_add_sol_date(models.Model):
     shiratani_date = fields.Date(string='白谷到着日',compute='_compute_sol_date')
     depo_date = fields.Date(string='デポ到着日',compute='_compute_sol_date')
     preferred_delivery_date = fields.Date(string='配達希望日',compute='_compute_sol_date')
+    estimated_shipping_date = fields.Date(string='発送予定日')
 
     def _compute_sol_date(self):
         sale_id = self.procurement_group_id.mrp_production_ids.move_dest_ids.group_id.sale_id
