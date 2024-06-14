@@ -130,3 +130,23 @@ class sale_order_rtw(models.Model):
                             if not item == additional_text:
                                 filtered_list.append(item)
                         line.memo = ','.join(filtered_list)
+        
+class rtw_sale_order_line(models.Model):
+    _inherit = "sale.order.line"
+    
+    def _prepare_add_missing_fields(self, values):
+        res = super(rtw_sale_order_line,
+                    self)._prepare_add_missing_fields(values)
+        print('res',res)
+        sale_order = self.env['sale.order'].search(
+            [('id', '=', values['order_id'])])
+        if sale_order.overseas:
+            res['memo'] = '海外プレート'
+        return res
+    
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        for line in self:
+            if line.order_id.overseas:
+                if not line.memo:
+                    line.memo = '海外プレート'
