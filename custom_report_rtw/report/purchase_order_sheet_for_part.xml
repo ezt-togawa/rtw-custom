@@ -213,7 +213,9 @@
                                 t-field="l.purchase_order_line_product_uom_qty" />
                             </div>
                           </td>
-                          <td class="text-center size12">個</td>
+                          <td class="text-center size12">
+                            <span t-if="l.product_uom.name" t-esc="l.product_uom.name" />
+                          </td>
                           <td class="text-center size14">
                             <span t-if="l.purchase_order_sell_unit_price"
                               t-esc="'{0:,.0f}'.format(l.purchase_order_sell_unit_price)" />
