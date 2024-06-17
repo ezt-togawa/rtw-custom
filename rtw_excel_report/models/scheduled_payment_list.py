@@ -55,7 +55,7 @@ class productSpec(models.AbstractModel):
         sheet.merge_range(5, 3, 6, 3, _("担当者"), format_table)
         sheet.merge_range(5, 4, 6, 4, _("張地・部材名"), format_table)
         sheet.merge_range(5, 5, 6, 5, _("送り先"), format_table)
-        sheet.merge_range(5, 6, 6, _("備考１"), format_table)
+        sheet.merge_range(5, 6, 6, 6, _("備考１"), format_table)
         sheet.merge_range(5, 7, 6, 7, _("備考２"), format_table)
         sheet.merge_range(5, 8, 6, 8, _("(M)数量"), format_table)
         sheet.merge_range(5, 9, 6, 9, _("ロット"), format_table)
@@ -64,9 +64,10 @@ class productSpec(models.AbstractModel):
         sheet.merge_range(5, 12, 6, 12, _("実") + "\n"  + _("ロット"), format_table)
         sheet.merge_range(5, 13, 6, 13, _("実") + "\n"  + _("支給日"), format_table)
 
-        row_no_merge = 7
-        row_remember = 7
+        row_start = 7
         merge_to = 7
+        
+        row_inside = 7
         for index,stock_picking in enumerate(lines):
             confirmed_shipping_date = ""
             user = ""
@@ -74,7 +75,7 @@ class productSpec(models.AbstractModel):
             note = ""
 
             if stock_picking.confirmed_shipping_date:
-                confirmed_shipping_date=str(stock_picking.confirmed_shipping_date).split("-")[1] + "/" + str(stock_picking.confirmed_shipping_date).split("-")[2]
+                confirmed_shipping_date = str(stock_picking.confirmed_shipping_date).split("-")[1] + "/" + str(stock_picking.confirmed_shipping_date).split("-")[2]
 
             if stock_picking.user_id.name:
                 user = stock_picking.user_id.name
@@ -100,13 +101,13 @@ class productSpec(models.AbstractModel):
                         p_name = line.product_id.product_tmpl_id.name
 
                     prod_name = p_code + p_name
-                    sheet.write(row_no_merge, 4, prod_name, format_left)
+                    sheet.write(row_inside, 4, prod_name, format_left)
 
                     if line.qty_done or line.qty_done == 0:
                         qty_done = str(line.qty_done) 
                     else:
                         qty_done = 0
-                    sheet.write(row_no_merge, 8, qty_done, format_wrap)
+                    sheet.write(row_inside, 8, qty_done, format_wrap)
 
                     stock_inventory_lines = self.env["stock.inventory.line"].search([("product_id", "=", line.product_id.id)])
                     #has lot
@@ -116,40 +117,45 @@ class productSpec(models.AbstractModel):
                             if line.prod_lot_id.name:
                                 lot += line.prod_lot_id.name + '\n'
                             else:
-                                sheet.write(row_no_merge, 9, ' ', format_size10)
+                                sheet.write(row_inside, 9, ' ', format_size10)
                         lot = lot.rstrip("\n")
-                        sheet.write(row_no_merge, 9, lot, format_size10)
+                        sheet.write(row_inside, 9, lot, format_size10)
                     else:
-                        sheet.write(row_no_merge, 9, ' ', format_size10)
+                        sheet.write(row_inside, 9, ' ', format_size10)
 
-                    row_no_merge += 1
-
-                merge_to = merge_to + len(stock_move_lines) - 1
-
-            if(len(stock_move_lines) == 1):
-                sheet.write(row_remember , 0, index+1, format_wrap)
-                sheet.write(row_remember , 1, confirmed_shipping_date, format_date)
-                sheet.write(row_remember , 2, stock_picking.name, format_wrap)
-                sheet.write(row_remember , 3, user, format_wrap)
-                sheet.write(row_remember , 5, location_dest, format_wrap)
-                sheet.write(row_remember , 6, note, format_wrap)
-                sheet.write(row_remember , 7, "", format_wrap)
-                sheet.write(row_remember , 10, "", format_wrap)
-                sheet.write(row_remember , 11, "", format_wrap)
-                sheet.write(row_remember , 12, "", format_wrap)
-                sheet.write(row_remember , 13, "", format_wrap)
+                    row_inside += 1
             else:
-                sheet.merge_range(row_remember , 0, merge_to,0, index+1, format_wrap)
-                sheet.merge_range(row_remember , 1, merge_to,1, confirmed_shipping_date, format_date)
-                sheet.merge_range(row_remember , 2, merge_to,2, stock_picking.name, format_wrap)
-                sheet.merge_range(row_remember , 3, merge_to,3, user, format_wrap)
-                sheet.merge_range(row_remember , 5, merge_to,5, location_dest, format_wrap)
-                sheet.merge_range(row_remember , 6, merge_to,6, note, format_wrap)
-                sheet.merge_range(row_remember , 7, merge_to,7, "", format_wrap)
-                sheet.merge_range(row_remember , 10, merge_to,10, "", format_wrap)
-                sheet.merge_range(row_remember , 11, merge_to,11, "", format_wrap)
-                sheet.merge_range(row_remember , 12, merge_to,12, "", format_wrap)
-                sheet.merge_range(row_remember , 13, merge_to,13, "", format_wrap)
-
-            merge_to = merge_to + 1 
-            row_remember = merge_to 
+                sheet.merge_range(row_start , 4, row_inside, 4, "", format_left)
+                sheet.merge_range(row_start , 8, row_inside, 8, 0, format_wrap)
+                sheet.merge_range(row_start , 8, row_inside, 8, "", format_size10)
+                
+                row_inside += 1
+                
+            merge_to  = row_inside - 1
+            
+            if row_start != merge_to:
+                sheet.merge_range(row_start, 0, merge_to, 0, index + 1, format_wrap)
+                sheet.merge_range(row_start, 1, merge_to, 1, confirmed_shipping_date, format_date)
+                sheet.merge_range(row_start, 2, merge_to, 2, stock_picking.name, format_wrap)
+                sheet.merge_range(row_start, 3, merge_to, 3, user, format_wrap)
+                sheet.merge_range(row_start, 5, merge_to, 5, location_dest, format_wrap)
+                sheet.merge_range(row_start, 6, merge_to, 6, note, format_wrap)
+                sheet.merge_range(row_start, 7, merge_to, 7, "", format_wrap)
+                sheet.merge_range(row_start, 10, merge_to, 10, "", format_wrap)
+                sheet.merge_range(row_start, 11, merge_to, 11, "", format_wrap)
+                sheet.merge_range(row_start, 12, merge_to, 12, "", format_wrap)
+                sheet.merge_range(row_start, 13, merge_to, 13, "", format_wrap)
+            else:
+                sheet.write(row_start, 0, index + 1, format_wrap)
+                sheet.write(row_start, 1, confirmed_shipping_date, format_date)
+                sheet.write(row_start, 2, stock_picking.name, format_wrap)
+                sheet.write(row_start, 3, user, format_wrap)
+                sheet.write(row_start, 5, location_dest, format_wrap)
+                sheet.write(row_start, 6, note, format_wrap)
+                sheet.write(row_start, 7, "", format_wrap)
+                sheet.write(row_start, 10, "", format_wrap)
+                sheet.write(row_start, 11, "", format_wrap)
+                sheet.write(row_start, 12, "", format_wrap)
+                sheet.write(row_start, 13, "", format_wrap)
+                
+            row_start = merge_to + 1
