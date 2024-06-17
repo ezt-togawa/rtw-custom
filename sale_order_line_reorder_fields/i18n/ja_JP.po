@@ -1,0 +1,5 @@
+
+#. module: sale_order_line_reorder_fields
+#: model:ir.model.fields,field_description:sale_order_line_reorder_fields.field_sale_order_line__call_rate
+msgid "Call Rate"
+msgstr "掛率"
