@@ -134,7 +134,24 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(11,11, _("販売価格合計:"), format_text_right) 
 
             sheet.merge_range(0,11,0,12, po.purchase_order_current_date if po.purchase_order_current_date else '' , format_date )
-            sheet.merge_range(2,11,9,12, po.purchase_order_hr_employee if po.purchase_order_hr_employee else '' , format_address) 
+            
+            hr_employee = ""
+            if po.hr_employee_company:
+                hr_employee += po.hr_employee_company + "\n"
+            if po.hr_employee_department:
+                hr_employee += po.hr_employee_department + "\n"
+            if po.hr_employee_zip:
+                hr_employee += po.hr_employee_zip + "\n"
+            if po.hr_employee_info:
+                hr_employee += po.hr_employee_info + "\n"
+            if po.hr_employee_tel:
+                hr_employee += po.hr_employee_tel + "\n"
+            if po.hr_employee_fax:
+                hr_employee += po.hr_employee_fax + "\n"
+            if po.hr_employee_printer:
+                hr_employee += _("発注者 ")+ po.hr_employee_printer
+                
+            sheet.merge_range(2,11,9,12, hr_employee.rstrip('\n') , format_address) 
 
             #table title
             sheet.write(13, 0, _("№"), format_table)
@@ -188,7 +205,7 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row,1,row + merge_line,2, line.purchase_order_prod_name if line.purchase_order_prod_name else '' , format_lines_11_left) 
                             sheet.merge_range(row,3,row + merge_line,6, line.purchase_order_product_detail if line.purchase_order_product_detail else '' , format_lines_10_left) 
                             sheet.merge_range(row,7,row + merge_line,7, line.purchase_order_line_product_uom_qty if line.purchase_order_line_product_uom_qty else 0 , format_lines_13) 
-                            sheet.merge_range(row,8,row + merge_line,8, _('個') , format_lines_10) 
+                            sheet.merge_range(row,8,row + merge_line,8, line.product_uom.name if line.product_uom.name else "", format_lines_10) 
                             sheet.merge_range(row,9,row + merge_line,9, "{:,.0f}".format(line.purchase_order_sell_unit_price) if line.purchase_order_sell_unit_price else 0 , format_lines_13) 
                             sheet.merge_range(row,10,row + merge_line,10, "{:,.0f}".format(line.price_subtotal) if line.price_subtotal else 0 , format_lines_13) 
                             sheet.merge_range(row,11,row + merge_line,12, '' , format_lines_13) 
@@ -223,7 +240,7 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row,1,row + merge_line,2, line.purchase_order_prod_name if line.purchase_order_prod_name else '' , format_lines_11_left) 
                             sheet.merge_range(row,3,row + merge_line,6, line.purchase_order_product_detail if line.purchase_order_product_detail else '' , format_lines_10_left) 
                             sheet.merge_range(row,7,row + merge_line,7, line.purchase_order_line_product_uom_qty if line.purchase_order_line_product_uom_qty else 0 , format_lines_13) 
-                            sheet.merge_range(row,8,row + merge_line,8, _('個') , format_lines_10) 
+                            sheet.merge_range(row,8,row + merge_line,8, line.product_uom.name if line.product_uom.name else "", format_lines_10) 
                             sheet.merge_range(row,9,row + merge_line,9, "{:,.0f}".format(line.purchase_order_sell_unit_price) if line.purchase_order_sell_unit_price else 0 , format_lines_13) 
                             sheet.merge_range(row,10,row + merge_line,10, "{:,.0f}".format(line.price_subtotal) if line.price_subtotal else 0 , format_lines_13) 
                             sheet.merge_range(row,11,row + merge_line,12, '' , format_lines_13) 

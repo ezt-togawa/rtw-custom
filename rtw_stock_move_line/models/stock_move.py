@@ -38,6 +38,7 @@ class rtw_stock_move(models.Model):
     mrp_production_id = fields.Char(
         string="製造オーダー", compute="_get_mrp_production_id", store=True)
     product_package_quantity = fields.Integer(string="個口数")
+    invoice_number = fields.Char(string="送り状番号")
 
     @api.model_create_multi
     def create(self, vals_list):

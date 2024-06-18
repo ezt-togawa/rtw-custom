@@ -25,6 +25,7 @@
                     <field name="area" string="デポ先" optional="show" />
                     <field name="warehouse_arrive_date" string="デポ到着日" optional="show" />
                     <field name="forwarding_address" string="納品設置先" optional="show" />
+                    <field name="invoice_number" optional="show" />
                     <field name="date_planned" string="出荷日" />
                     <field name="shizai_date" />
                     <field name="memo" string="備考" />
@@ -73,6 +74,7 @@
             <field name="inherit_id" ref="stock.view_move_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='date_deadline']" position="after">
+                    <field name="invoice_number"/>
                     <field name="product_package_quantity" optional="show"/>
                 </xpath>
                 <xpath expr="//form" position="attributes">

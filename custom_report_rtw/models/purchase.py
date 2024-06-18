@@ -33,14 +33,9 @@ class PurchaseOrderEmployee(models.Model):
                             po.hr_employee_department = (employee.address_id.site)  if employee.address_id.site else ''
                         else:
                             po.hr_employee_department = (employee.address_id.site)  if employee.address_id.site else ''
-                        if employee.name:
-                            if po.lang_code == 'en_US':
-                                po.hr_employee_printer = "Orderer " + employee.name 
-                            else:
-                                po.hr_employee_printer = "発注者 " + employee.name 
-                        else:
-                            po.hr_employee_printer = ''
                             
+                        po.hr_employee_printer = employee.name if employee.name else ''
+                        
                         if employee.address_id:
                             res_partner = self.env['res.partner'].search([('id','=',employee.address_id.id)])
                             if res_partner:
@@ -95,25 +90,4 @@ class PurchaseOrderEmployee(models.Model):
                 address += purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name 
             
         po.purchase_order_address = address
-        
-    purchase_order_hr_employee = fields.Char(string="purchase order hr employee" , compute="_compute_purchase_order_hr_employee")
-    def _compute_purchase_order_hr_employee(self):
-      for record in self:
-        hr_employee_detail = ""
-        if record.hr_employee_company:
-            hr_employee_detail += record.hr_employee_company + "\n"
-        if record.hr_employee_department:
-            hr_employee_detail += record.hr_employee_department + "\n"
-        if record.hr_employee_zip:
-            hr_employee_detail += record.hr_employee_zip + "\n"
-        if record.hr_employee_info:
-            hr_employee_detail += record.hr_employee_info + "\n"
-        if record.hr_employee_tel:
-            hr_employee_detail += record.hr_employee_tel + "\n"
-        if record.hr_employee_fax:
-            hr_employee_detail += record.hr_employee_fax + "\n"
-        if record.hr_employee_printer:
-            hr_employee_detail += record.hr_employee_printer 
-        
-        record.purchase_order_hr_employee= hr_employee_detail
         

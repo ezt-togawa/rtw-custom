@@ -5,7 +5,7 @@ from odoo import models, fields, api
 class sale_order_leadtime(models.Model):
     _inherit = "sale.order"
 
-    leadtime = fields.Datetime(string="リードタイム")
+    leadtime = fields.Datetime(string="製造リードタイム")
 
     def update_leadtime(self):
         if self.leadtime:
