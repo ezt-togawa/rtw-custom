@@ -27,7 +27,7 @@ class ResPartner(models.Model):
         for city_node in doc.xpath("//field[@name='city']"):
             city_node.set('style', 'width:100%;display:inline-block;margin-right:0;')
         for zip_node in doc.xpath("//field[@name='zip']"):
-            zip_node.set('style', 'width:100%;display:inline-block;')
+            zip_node.set('style', 'width:100%;display:inline-block;margin-right:0;')
         for state_node in doc.xpath("//field[@name='state_id']"):
             state_node.set('style', 'width:100%;')
             
