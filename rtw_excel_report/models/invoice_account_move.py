@@ -29,33 +29,30 @@ class ReportMrpExcel(models.AbstractModel):
         img_io_ritzwell.seek(0)
 
         # different format  width font 
-        format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':18,'font_name': font_name})
-        format_name_company = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14, 'text_wrap':True,'bottom':1})
-        format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
-        format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
-        format_text_12_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':12})
-        format_text_13_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':13})
-        format_note = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True,'font_name': font_name,'font_size':10})
-        format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'bottom':1})
-        format_money_bgRed = workbook.add_format({'align': 'left','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
-        format_money_bgRed_right = workbook.add_format({'align': 'right','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
-
-        format_date = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', 'font_name': font_name,'font_size':10})
-        format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':10})
-    
-        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
-        
-        format_lines_9_left= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':9,'bottom':1})
-        format_lines_10 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_10_left = workbook.add_format({'align': 'left','valign': 'top', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_11_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_13 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':13,'bottom':1})
+        format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
+        format_name_company = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'text_wrap':True, 'bottom':1})
+        format_text = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':11})
+        format_text_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':11})
+        format_text_12_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':12})
+        format_text_13_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':13})
+        format_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
+        format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name, 'font_size':14, 'bottom':1})
+        format_money_bgRed = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':14, 'text_wrap':True, 'color':'white', 'bg_color':'#C00000'})
+        format_money_bgRed_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':14, 'text_wrap':True, 'color':'white', 'bg_color':'#C00000'})
+        format_date = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'num_format': 'yyyy-mm-dd', 'font_name': font_name, 'font_size':10})
+        format_address = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
+        format_table = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'bg_color': '#999999', 'font_name': font_name, 'font_size':11, 'color':'white', 'bold':True})
+        format_lines_9_left= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':9, 'bottom':1})
+        format_lines_10 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_10_left = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_11_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
+        format_lines_13 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':13, 'bottom':1})
 
         #create sheet
         for index,so in enumerate(so_data):
             sheet_name = f"{so.name}" 
-            sheet= workbook.add_worksheet(sheet_name)
-            sheet_data= workbook.add_worksheet("data")
+            sheet = workbook.add_worksheet(sheet_name)
+            sheet_data = workbook.add_worksheet("data")
             sheet_data.hide()
             
             sheet.set_paper(9)  #A4
@@ -68,29 +65,29 @@ class ReportMrpExcel(models.AbstractModel):
             right_margin = 0.7
             top_margin = 0.5
             bottom_margin = 0.5
-            sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
+            sheet.set_margins(left=left_margin, right=right_margin, top=top_margin, bottom=bottom_margin)
             sheet.set_header(f'{"&"}R {so.sale_order.name  if so.sale_order.name else ""}', margin=margin_header) 
             sheet.set_footer(f'{"&"}P/{"&"}N', margin=margin_footer)   
 
-            sheet.set_column("A:A", width=13,cell_format=font_family)  
-            sheet.set_column("B:B", width=20,cell_format=font_family)  
-            sheet.set_column("C:C", width=18,cell_format=font_family)  
+            sheet.set_column("A:A", width=13, cell_format=font_family)  
+            sheet.set_column("B:B", width=20, cell_format=font_family)  
+            sheet.set_column("C:C", width=18, cell_format=font_family)  
 
-            sheet.set_column("D:D", width=16,cell_format=font_family)  
+            sheet.set_column("D:D", width=16, cell_format=font_family)  
 
-            sheet.set_column("E:E", width=10,cell_format=font_family)  
-            sheet.set_column("F:F", width=10,cell_format=font_family)
+            sheet.set_column("E:E", width=10, cell_format=font_family)  
+            sheet.set_column("F:F", width=10, cell_format=font_family)
 
-            sheet.set_column("G:G", width=10,cell_format=font_family)  
-            sheet.set_column("H:H", width=26,cell_format=font_family)  
+            sheet.set_column("G:G", width=10, cell_format=font_family)  
+            sheet.set_column("H:H", width=26, cell_format=font_family)  
 
-            sheet.set_column("I:I", width=6.5,cell_format=font_family)  
-            sheet.set_column("J:J", width=14.5,cell_format=font_family)  
-            sheet.set_column("K:K", width=6.5,cell_format=font_family) 
+            sheet.set_column("I:I", width=6.5, cell_format=font_family)  
+            sheet.set_column("J:J", width=14.5, cell_format=font_family)  
+            sheet.set_column("K:K", width=6.5, cell_format=font_family) 
 
-            sheet.set_column("L:L", width=14.5,cell_format=font_family) 
-            sheet.set_column("M:M", width=14.5,cell_format=font_family) 
-            sheet.set_column("N:Z", None,cell_format=font_family) 
+            sheet.set_column("L:L", width=14.5, cell_format=font_family) 
+            sheet.set_column("M:M", width=14.5, cell_format=font_family) 
+            sheet.set_column("N:Z", None, cell_format=font_family) 
             
             sheet.set_row(1, 46)
             sheet.set_row(2, 17)
@@ -165,15 +162,15 @@ class ReportMrpExcel(models.AbstractModel):
                 row = 17
                 merge_line = 6 
                 for line in so.invoice_line_ids:
-                        sheet.merge_range(row, 0, row + merge_line, 0, line.acc_line_index if line.acc_line_index else '' , format_lines_10) 
-                        sheet.merge_range(row, 1, row + merge_line, 1, line.acc_line_name if line.acc_line_name else '' , format_lines_9_left) 
-                        sheet.merge_range(row, 2, row + merge_line, 3, line.acc_line_number_and_size if line.acc_line_number_and_size else '' , format_lines_11_left) 
-                        sheet.merge_range(row, 4, row + merge_line, 6, line.acc_line_product_detail if line.acc_line_product_detail else '' , format_lines_10_left) 
-                        sheet.merge_range(row, 7, row + merge_line, 7, line.acc_line_product_detail2 if line.acc_line_product_detail2 else '' , format_lines_10_left) 
-                        sheet.merge_range(row, 8, row + merge_line, 8, line.acc_move_line_qty if line.acc_move_line_qty else '' , format_lines_13) 
-                        sheet.merge_range(row, 9, row + merge_line, 9, line.acc_line_price_unit if line.acc_line_price_unit else '' , format_lines_13) 
-                        sheet.merge_range(row, 10, row + merge_line, 10, line.acc_line_discount if line.acc_line_discount else '' , format_lines_13) 
-                        sheet.merge_range(row, 11, row + merge_line, 11, line.acc_line_sell_unit_price if line.acc_line_sell_unit_price else '' , format_lines_13) 
-                        sheet.merge_range(row, 12, row + merge_line, 12, line.acc_line_price_subtotal if line.acc_line_price_subtotal else '' , format_lines_13) 
-                        
-                        row += merge_line + 1
+                    sheet.merge_range(row, 0, row + merge_line, 0, line.acc_line_index if line.acc_line_index else '' , format_lines_10) 
+                    sheet.merge_range(row, 1, row + merge_line, 1, line.acc_line_name if line.acc_line_name else '' , format_lines_9_left) 
+                    sheet.merge_range(row, 2, row + merge_line, 3, line.acc_line_number_and_size if line.acc_line_number_and_size else '' , format_lines_11_left) 
+                    sheet.merge_range(row, 4, row + merge_line, 6, line.acc_line_product_detail if line.acc_line_product_detail else '' , format_lines_10_left) 
+                    sheet.merge_range(row, 7, row + merge_line, 7, line.acc_line_product_detail2 if line.acc_line_product_detail2 else '' , format_lines_10_left) 
+                    sheet.merge_range(row, 8, row + merge_line, 8, line.acc_move_line_qty if line.acc_move_line_qty else '' , format_lines_13) 
+                    sheet.merge_range(row, 9, row + merge_line, 9, line.acc_line_price_unit if line.acc_line_price_unit else '' , format_lines_13) 
+                    sheet.merge_range(row, 10, row + merge_line, 10, line.acc_line_discount if line.acc_line_discount else '' , format_lines_13) 
+                    sheet.merge_range(row, 11, row + merge_line, 11, line.acc_line_sell_unit_price if line.acc_line_sell_unit_price else '' , format_lines_13) 
+                    sheet.merge_range(row, 12, row + merge_line, 12, line.acc_line_price_subtotal if line.acc_line_price_subtotal else '' , format_lines_13) 
+                    
+                    row += merge_line + 1

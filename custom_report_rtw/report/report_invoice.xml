@@ -41,10 +41,10 @@
                                     <div class="col-4">
                                         <div class="so_price"
                                             style="max-height:25px">
-                                            <span t-field="docs.send_to_company"
-                                                t-att-class="not docs.send_to_people and 'border-bottom2'  or ''" />
+                                            <span t-field="docs.sale_order.send_to_company"
+                                                t-att-class="not docs.sale_order.send_to_people and 'border-bottom2'  or ''" />
                                         </div>
-                                        <span t-field="docs.send_to_people"
+                                        <span t-field="docs.sale_order.send_to_people"
                                             class="so_price border-bottom2" />
                                         <div class="mt-1">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
                                             下記の通り、ご請求申し上げます。<br />

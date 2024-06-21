@@ -29,40 +29,32 @@ class SaleOrder(models.Model):
         for so in self:
             partner_name = ''
             company_name = ''
-            if so.partner_id:
-                res_partner= self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id','=',so.partner_id.id)])
+            if so.partner_invoice_id:
+                res_partner= self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id', '=', so.partner_invoice_id.id)])
                 if res_partner:
                     for line in res_partner:
                         if so.lang_code == 'en_US':
                             if line.company_type == 'company':
                                 company_name =  "Dear " + line.name if line.name else ''
-                            else:
-                                if line.parent_id :
-                                    if line.dummy:
-                                        partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
-                                    else:
-                                        if line.parent_id.name:
-                                            company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.'
-                                        partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                            elif line.parent_id :
+                                if line.dummy and line.last_name:
+                                    partner_name =  'Mr./Mrs. ' + line.last_name
                                 else:
-                                    partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                                    company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
+                                    partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                            else:
+                                partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
                         else:   
                             if line.company_type == 'company':
-                                if line.name:
-                                    company_name =  line.name+ ' 御中'
-                            else:
-                                if line.parent_id :
-                                    if line.dummy:
-                                        if line.last_name:
-                                            partner_name =  line.last_name+ ' 様'
-                                    else:
-                                        if line.parent_id.name:
-                                            company_name =  line.parent_id.name
-                                        if line.last_name:
-                                            partner_name =  line.last_name+ ' 様'
+                                company_name =  line.name + ' 御中' if line.name else '' 
+                            elif line.parent_id :
+                                if line.dummy and line.last_name:
+                                    partner_name =  line.last_name+ ' 様'
                                 else:
-                                    if line.last_name:
-                                            partner_name =  line.last_name+ ' 様'
+                                    company_name =  line.parent_id.name if line.parent_id.name else ''
+                                    partner_name =  line.last_name + ' 様' if line.last_name else ''
+                            else:
+                                partner_name =  line.last_name + ' 様' if line.last_name else ''
             send = ""   
             if company_name and partner_name:
                 send += company_name + '\n' + partner_name  
