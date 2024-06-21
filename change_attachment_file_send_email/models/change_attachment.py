@@ -68,11 +68,11 @@ class CustomIrActionsReport(models.Model):
         #custom
         active_model = self.env.context.get('active_model')
         if active_model == "sale.order":
-            paperformat_id = self.env["report.paperformat"].search([('name',"=","Quotation")])
+            paperformat_id = self.env["report.paperformat"].search([('name',"=","Quotation")], order='create_date desc', limit=1)
         if active_model == "purchase.order":
-            paperformat_id = self.env["report.paperformat"].search([('name',"=","Purchase Order")])
+            paperformat_id = self.env["report.paperformat"].search([('name',"=","Purchase Order")], order='create_date desc', limit=1)
         if active_model == "account.move":
-            paperformat_id = self.env["report.paperformat"].search([('name',"=","Invoice")])
+            paperformat_id = self.env["report.paperformat"].search([('name',"=","Invoice")], order='create_date desc', limit=1)
         #custom
     
         command_args = self._build_wkhtmltopdf_args(
