@@ -28,12 +28,12 @@ class sale_order_line(models.Model):
             product_quantity = product.qty_available
             template_attribute_value_ids = product.product_template_attribute_value_ids
             
-            for route in product.route_ids:
-                for rule in route.rule_ids:
-                    if rule.action == 'buy':
-                        is_route_buy = True
+            # for route in product.route_ids:
+            #     for rule in route.rule_ids:
+            #         if rule.action == 'buy':
+            #             is_route_buy = True
 
-            if bom_ids and not is_route_buy: #CALCULATE FOR MATERIALS
+            if bom_ids: #CALCULATE FOR MATERIALS
                 for bom in bom_ids:
                     for bom_line in bom.bom_line_ids:
                         if (not bom_line.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in bom_line.bom_product_template_attribute_value_ids.ids)) and bom_line.product_id.product_tmpl_id.type == 'product':
@@ -46,12 +46,32 @@ class sale_order_line(models.Model):
                             bom_product_quantity = bom_product.qty_available
                             sale_order_line_product_qty = line.product_uom_qty
                             amount_consumed = bom_line.available_quantity - (sale_order_line_product_qty * bom_line.product_qty)
-                            for route in bom_product_routes:
-                                for rule in route.rule_ids:
-                                    if rule.action == 'buy':
-                                        is_bom_route_buy = True
+                            # for route in bom_product_routes:
+                            #     for rule in route.rule_ids:
+                            #         if rule.action == 'buy':
+                            #             is_bom_route_buy = True
                                         
-                            if  not is_bom_route_buy and amount_consumed < 0: # DELIVERY LEAD TIME CALCULATED ONLY WHEN QUANTITY <0
+                            if amount_consumed < 0: # DELIVERY LEAD TIME CALCULATED ONLY WHEN QUANTITY <0      
+                                bom_child_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=' , bom_product.product_tmpl_id.id)])
+                                for child_bom in bom_child_ids:
+                                    for child_bom_line in child_bom.bom_line_ids:
+                                        if (not child_bom_line.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in child_bom_line.bom_product_template_attribute_value_ids.ids)) and child_bom_line.product_id.product_tmpl_id.type == 'product':
+                                            child_bom_product = self.env['product.product'].search([('id' , '=' , child_bom_line.product_id.id)])
+                                            child_bom_product_routes = child_bom_product.route_ids
+                                            child_bom_supplier_info = self.env['product.supplierinfo'].search([('product_tmpl_id' , '=' , child_bom_line.product_tmpl_id.id)])
+                                            child_bom_total_lead_time = 0
+                                            child_bom_supplier_delay = 0
+                                            child_amount_consumed = child_bom_line.available_quantity - (sale_order_line_product_qty * child_bom_line.product_qty)
+                                            if child_amount_consumed < 0:
+                                                for route in child_bom_product_routes:
+                                                    if route.delivery_lead_time:
+                                                        child_bom_total_lead_time += route.delivery_lead_time
+                                                for bom_supplier in child_bom_supplier_info:
+                                                    if bom_supplier.delay and bom_supplier.delay > child_bom_supplier_delay:
+                                                        child_bom_supplier_delay = bom_supplier.delay
+                                                if bom_supplier_delay < child_bom_total_lead_time + child_bom_supplier_delay + child_bom_product.product_tmpl_id.produce_delay:
+                                                    bom_supplier_delay = child_bom_total_lead_time + child_bom_supplier_delay + child_bom_product.product_tmpl_id.produce_delay
+                                    
                                 for route in bom_product_routes:
                                     if route.delivery_lead_time:
                                         bom_total_lead_time += route.delivery_lead_time
@@ -91,11 +111,11 @@ class sale_order_line(models.Model):
           bom_lead_time_list = []
           product_quantity = product.qty_available
           template_attribute_value_ids = product.product_template_attribute_value_ids
-          for route in product.route_ids:
-                    for rule in route.rule_ids:
-                        if rule.action == 'buy':
-                            is_route_buy = True
-          if bom_ids and not is_route_buy:
+        #   for route in product.route_ids:
+        #             for rule in route.rule_ids:
+        #                 if rule.action == 'buy':
+        #                     is_route_buy = True
+          if bom_ids:
                 for bom in bom_ids:
                     for bom_line in bom.bom_line_ids:
                         if (not bom_line.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in bom_line.bom_product_template_attribute_value_ids.ids)) and bom_line.product_id.product_tmpl_id.type == 'product':
@@ -110,12 +130,32 @@ class sale_order_line(models.Model):
                             if 'product_uom' in res:
                                 sale_order_line_product_qty = res['product_uom']
                             amount_consumed = bom_line.available_quantity - (sale_order_line_product_qty * bom_line.product_qty)
-                            for route in bom_product_routes:
-                                for rule in route.rule_ids:
-                                    if rule.action == 'buy':
-                                        is_bom_route_buy = True
+                            # for route in bom_product_routes:
+                            #     for rule in route.rule_ids:
+                            #         if rule.action == 'buy':
+                            #             is_bom_route_buy = True
 
-                            if not is_bom_route_buy and amount_consumed < 0: # DELIVERY LEAD TIME CALCULATED ONLY WHEN QUANTITY <0
+                            if amount_consumed < 0: # DELIVERY LEAD TIME CALCULATED ONLY WHEN QUANTITY <0
+                                bom_child_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=' , bom_product.product_tmpl_id.id)])
+                                for child_bom in bom_child_ids:
+                                    for child_bom_line in child_bom.bom_line_ids:
+                                        if (not child_bom_line.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in child_bom_line.bom_product_template_attribute_value_ids.ids)) and child_bom_line.product_id.product_tmpl_id.type == 'product':
+                                            child_bom_product = self.env['product.product'].search([('id' , '=' , child_bom_line.product_id.id)])
+                                            child_bom_product_routes = child_bom_product.route_ids
+                                            child_bom_supplier_info = self.env['product.supplierinfo'].search([('product_tmpl_id' , '=' , child_bom_line.product_tmpl_id.id)])
+                                            child_bom_total_lead_time = 0
+                                            child_bom_supplier_delay = 0
+                                            child_amount_consumed = child_bom_line.available_quantity - (sale_order_line_product_qty * child_bom_line.product_qty)
+                                            if child_amount_consumed < 0:
+                                                for route in child_bom_product_routes:
+                                                    if route.delivery_lead_time:
+                                                        child_bom_total_lead_time += route.delivery_lead_time
+                                                for bom_supplier in child_bom_supplier_info:
+                                                    if bom_supplier.delay and bom_supplier.delay > child_bom_supplier_delay:
+                                                        child_bom_supplier_delay = bom_supplier.delay
+                                                if bom_supplier_delay < child_bom_total_lead_time + child_bom_supplier_delay + child_bom_product.product_tmpl_id.produce_delay:
+                                                    bom_supplier_delay = child_bom_total_lead_time + child_bom_supplier_delay + child_bom_product.product_tmpl_id.produce_delay
+                                
                                 for route in bom_product_routes:
                                     if route.delivery_lead_time:
                                         bom_total_lead_time += route.delivery_lead_time
