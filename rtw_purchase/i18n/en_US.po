@@ -3,3 +3,8 @@
 #: model:ir.model.fields,field_description:rtw_purchase.field_purchase_order__resend
 msgid "再送"
 msgstr "Resend"
+
+#. module: rtw_purchase
+#: model_terms:ir.ui.view,arch_db:rtw_purchase.purchase_order_search_rtw
+msgid "販売オーダー"
+msgstr "Sale Orders"

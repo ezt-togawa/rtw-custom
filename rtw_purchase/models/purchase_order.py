@@ -4,7 +4,7 @@ from odoo import models, fields, api
 class rtw_purchase(models.Model):
     _inherit = "purchase.order"
 
-    sale_order_ids = fields.Char("sale order", compute='_compute_sale_order')
+    sale_order_ids = fields.Char("sale order", compute='_compute_sale_order', search="_search_sale_order_id")
     sale_order_names = fields.Char("sale order title")
     operation_type = fields.Many2one('stock.picking.type' , string="オペレーションタイプ", compute='_compute_operation_type')
     destination_note = fields.Text('送り先注記')
@@ -77,3 +77,18 @@ class rtw_purchase(models.Model):
             #     })]
             #     })
             
+    def _search_sale_order_id( self, operator, value):
+        purchase_order = self.env['purchase.order'].search([])
+            
+        list_search_po = []
+        if purchase_order:
+            for po in purchase_order:
+                if po.sale_order_ids and str(value) in po.sale_order_ids:
+                    list_search_po.append(('id', '=', po.id))        
+                    
+        if not list_search_po:
+            return [('id', '=', False)]
+        
+        domain = ['|'] * (len(list_search_po) - 1) + list_search_po
+        return domain
+    
