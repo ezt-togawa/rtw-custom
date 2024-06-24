@@ -72,7 +72,7 @@
         <field name="inherit_id" ref="purchase.view_purchase_order_filter" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <field name="sale_order_ids" string="販売オーダー" />
+                <field name="filter_so_ids" string="販売オーダー" />
             </xpath>
         </field>
     </record>
