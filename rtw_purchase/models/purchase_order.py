@@ -4,12 +4,13 @@ from odoo import models, fields, api
 class rtw_purchase(models.Model):
     _inherit = "purchase.order"
 
-    sale_order_ids = fields.Char("sale order", compute='_compute_sale_order', search="_search_sale_order_id")
+    sale_order_ids = fields.Char("sale order", compute='_compute_sale_order')
     sale_order_names = fields.Char("sale order title")
     operation_type = fields.Many2one('stock.picking.type' , string="オペレーションタイプ", compute='_compute_operation_type')
     destination_note = fields.Text('送り先注記')
     resend = fields.Char('再送')
-
+    filter_so_ids = fields.Char("filter so ids")
+    
     def _compute_operation_type(self):
             operation_type_value = self.order_line.move_dest_ids.group_id.mrp_production_ids | self.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
             if operation_type_value:
@@ -65,10 +66,12 @@ class rtw_purchase(models.Model):
                             order_ids.append(sale_order.id)
                     
                     purchase.sale_order_ids = ','.join(order)
+                    purchase.filter_so_ids = ','.join(order)
                     purchase.sale_order_names = ','.join(name)
             else:
-                purchase.sale_order_ids = False
-                purchase.sale_order_names = False
+                purchase.sale_order_ids = ''
+                purchase.filter_so_ids = ''
+                purchase.sale_order_names = ''
                 # sale_order = self.env['sale.order'].search([('name', '=', move_dest_ids)])
                 # print(sale_order)
             # move_dest_ids.write({
@@ -77,18 +80,3 @@ class rtw_purchase(models.Model):
             #     })]
             #     })
             
-    def _search_sale_order_id( self, operator, value):
-        purchase_order = self.env['purchase.order'].search([])
-            
-        list_search_po = []
-        if purchase_order:
-            for po in purchase_order:
-                if po.sale_order_ids and str(value) in po.sale_order_ids:
-                    list_search_po.append(('id', '=', po.id))        
-                    
-        if not list_search_po:
-            return [('id', '=', False)]
-        
-        domain = ['|'] * (len(list_search_po) - 1) + list_search_po
-        return domain
-    
