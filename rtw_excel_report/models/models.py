@@ -1005,41 +1005,42 @@ class SaleOrderLineExcelReport(models.Model):
     
     sale_line_product_uom_qty = fields.Char(string="sale_line_product_uom_qty" , compute="_compute_sale_line_product_uom_qty")
     sale_line_calculate_packages = fields.Integer('Packages' , compute="_compute_sale_line_calculate_packages")
-    sale_line_product_pack_pdf = fields.Char(string="Calculate product pack pdf", compute="_compute_sale_line_product_pack_pdf")
+    sale_line_product_no_delivery = fields.Char(string="Calculate product no delivery", compute="_compute_sale_line_product_no_pack")
+    sale_line_product_pack_delivery = fields.Char(string="Calculate product pack delivery", compute="_compute_sale_line_product_no_pack")
     
-    def _compute_sale_line_product_pack_pdf(self):
+    def _compute_sale_line_product_no_pack(self):
         for line in self:
-                categ_name = ""
-                if line.pack_parent_line_id:
-                    prod = line.product_id
-                    if prod:
-                        prod_tmplt = prod.product_tmpl_id
-                        if prod_tmplt:
-                            if prod_tmplt.seller_ids and line.partner_id.id:
-                                matching_sup = None  
-                                for sup in prod_tmplt.seller_ids:
-                                    if sup.name.id == line.partner_id.id:
-                                        matching_sup = sup 
-                                        break
-                                if matching_sup:
-                                    product_code = ("[" + matching_sup.product_code + "]") if matching_sup.product_code else ''
-                                    product_name = matching_sup.product_name if matching_sup.product_name else ''
-                                    categ_name = product_code + product_name
-                                else:
-                                    if prod_tmplt.default_code and prod_tmplt.name:
-                                        categ_name = "[" + prod_tmplt.default_code + "]" + prod_tmplt.name
-                                    elif prod_tmplt.default_code:
-                                        categ_name = prod_tmplt.default_code 
-                                    elif prod_tmplt.name:
-                                        categ_name = prod_tmplt.name 
-                            else:
-                                if prod_tmplt.default_code and prod_tmplt.name:
-                                        categ_name = "[" + prod_tmplt.default_code + "]" + prod_tmplt.name
-                                elif prod_tmplt.default_code:
-                                    categ_name = prod_tmplt.default_code 
-                                elif prod_tmplt.name:
-                                    categ_name = prod_tmplt.name 
-                line.sale_line_product_pack_pdf = categ_name
+            prod_no = ""
+            prod_pack = ""
+            pack_parent =  line.pack_parent_line_id   
+            if pack_parent:
+                if pack_parent.product_id and pack_parent.product_id.product_no:
+                    prod_no = pack_parent.product_id.product_no
+                prod = line.product_id
+                if prod:
+                    prod_tmplt = prod.product_tmpl_id
+                    if prod_tmplt:
+                        if prod_tmplt.seller_ids and line.order_partner_id.id:    
+                            matching_sup = None  
+                            for sup in prod_tmplt.seller_ids:
+                                if sup.name.id == line.order_partner_id.id:
+                                    matching_sup = sup 
+                                    break
+                            if matching_sup:
+                                product_code = ("[" + matching_sup.product_code + "]") if matching_sup.product_code else ''
+                                product_name = matching_sup.product_name if matching_sup.product_name else ''
+                                prod_pack = product_code + product_name
+                                
+                        if not prod_pack:
+                            if prod_tmplt.default_code and prod_tmplt.name:
+                                prod_pack = "[" + prod_tmplt.default_code + "]" + prod_tmplt.name
+                            elif prod_tmplt.default_code:
+                                prod_pack = prod_tmplt.default_code 
+                            elif prod_tmplt.name:
+                                prod_pack = prod_tmplt.name 
+                            
+            line.sale_line_product_no_delivery = prod_no
+            line.sale_line_product_pack_delivery = prod_pack
                 
     def _compute_sale_line_calculate_packages(self):
         for line in self:
@@ -1125,14 +1126,21 @@ class SaleOrderLineExcelReport(models.Model):
 
     def _compute_sale_order_number_and_size(self):
         for line in self:
-            product_number_and_size = ""
-            if line.product_id and line.product_id.product_tmpl_id and line.product_id.product_tmpl_id.product_no:
-                product_number_and_size += str(line.product_id.product_tmpl_id.product_no) + "\n"
+            product_no_pack_and_size = ""
+            
+            if line.sale_line_product_no_delivery and line.sale_line_product_pack_delivery:
+                product_no_pack_and_size += line.sale_line_product_no_delivery + " / " + line.sale_line_product_pack_delivery
+            elif line.sale_line_product_no_delivery:
+                product_no_pack_and_size += line.sale_line_product_no_delivery
+            elif line.sale_line_product_pack_delivery:
+                product_no_pack_and_size += line.sale_line_product_pack_delivery
                 
+            product_no_pack_and_size += "\n"
+            
             if line.product_size:
-                product_number_and_size += line.product_size
+                product_no_pack_and_size += line.product_size
                 
-            line.sale_order_number_and_size = product_number_and_size.rstrip("\n")
+            line.sale_order_number_and_size = product_no_pack_and_size.rstrip("\n")
 
     def _compute_sale_order_product_detail(self):
         for line in self:
