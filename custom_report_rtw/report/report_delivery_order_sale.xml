@@ -147,7 +147,8 @@
             </div>
             <table
               class="table">
-              <t t-foreach="docs.order_line" t-as="l" t-groupby="10"
+              <t t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l"
+                t-groupby="10"
                 t-att-last="last">
                 <t t-if="l_index == 0">
                   <thead>
@@ -179,7 +180,13 @@
                         t-field="l.sale_order_line_p_type_pdf" />
                     </td>
                     <td>
-                      <div t-field="l.sale_line_product_pack_pdf" />
+                      <div>
+                        <t t-if="l.sale_line_product_no_delivery">
+                          <span
+                            t-field="l.sale_line_product_no_delivery" />/ </t>
+                        <span t-if="l.sale_line_product_pack_delivery"
+                          t-field="l.sale_line_product_pack_delivery" />
+                      </div>
                       <div t-esc="l.product_size" />
                     </td>
                     <td class="size12">
