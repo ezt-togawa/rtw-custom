@@ -62,7 +62,17 @@
                 <field name="destination_note" />
             </xpath>
             <xpath expr="//field[@name='destination_note']" position="before">
-                <field name="resend"/>
+                <field name="resend" />
+            </xpath>
+        </field>
+    </record>
+    <record id="purchase_order_search_rtw" model="ir.ui.view">
+        <field name="name">purchase.order.search</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="filter_so_ids" string="販売オーダー" />
             </xpath>
         </field>
     </record>
