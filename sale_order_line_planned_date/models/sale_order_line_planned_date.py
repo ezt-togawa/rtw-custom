@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-
+from dateutil.relativedelta import relativedelta
 class sale_order_line_confirm(models.Model):
     _inherit = "sale.order.line"
 
@@ -47,42 +47,27 @@ class sale_order(models.Model):
             self.error_context = False
         # print('_compute_error_context 2', self.error_context)
 
-    def write(self, vals):
-        result = super(sale_order, self).write(vals)
-        self.refresh()
-        stock_picking = self.env['stock.picking'].search(
-            [('sale_id', '=', self.id)])
-        max_schedule_date = ''
-        for line in self.order_line:
-            if line.date_planned:
-                if max_schedule_date == '':
-                    max_schedule_date = line.date_planned
-                elif line.date_planned > max_schedule_date:
-                    max_schedule_date = line.date_planned
-        if max_schedule_date:
-            for stock in stock_picking:
-                if stock.state not in ('done', 'cancel'):
-                    stock.write({"scheduled_date": max_schedule_date})
-                    # stock.write({"date_deadline": max_schedule_date})
-        return result
-
     def action_confirm(self):
         result = super(sale_order, self).action_confirm()
         self.refresh()
         stock_picking = self.env['stock.picking'].search(
-            [('sale_id', '=', self.id)])
-        max_schedule_date = ''
-        for line in self.order_line:
-            if line.date_planned:
-                if max_schedule_date == '':
-                    max_schedule_date = line.date_planned
-                elif line.date_planned > max_schedule_date:
-                    max_schedule_date = line.date_planned
+            [('sale_id', '=', self.id),('state','not in',('cancel','draft'))])
+        
+        def get_delay_by_rule(move,moves):
+            delay = 0
+            next_move = next((m for m in moves if m.location_id == move.location_dest_id), None)
+            if next_move:
+                delay += get_delay_by_rule(next_move,moves)
+            delay += move.rule_id.delay
+            return delay
 
-        if max_schedule_date:
-            for stock in stock_picking:
-                if stock.state not in ('done', 'cancel'):
-                    stock.write({"scheduled_date": max_schedule_date})
-                    # stock.write({"date_deadline": max_schedule_date})
-
+        for delivery in stock_picking:
+            moves = [move for move in delivery.group_id.stock_move_ids if move.state != 'cancel']
+            for move in moves:
+                if move.sale_id and move.sale_id.estimated_shipping_date:
+                    delay = get_delay_by_rule(move,moves)
+                    new_date = move.sale_id.estimated_shipping_date - relativedelta(days=delay)
+                    move.date = new_date
+                    move.picking_id.scheduled_date = new_date
         return result
+
