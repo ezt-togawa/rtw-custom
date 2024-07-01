@@ -10,9 +10,84 @@ class stock_location_route_delivery_lead(models.Model):
     delivery_lead_time = fields.Float(
         '配送リードタイム', default=0.0
     )
+    
+class sale_order(models.Model):
+    _inherit = "sale.order"
+    
+    def get_sale_order_line_from_mrp(self,mrp):
+        search_criteria = [ #limit 10 times
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ('move_ids', 'in', [move_id.id for move_id in mrp.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+        ]
+        for search in search_criteria: #find sale_order_line
+            if self.env['sale.order.line'].search([search]):
+                return self.env['sale.order.line'].search([search])
+    
+    def action_confirm(self):
+        result = super(sale_order, self).action_confirm()
+        self.refresh()       
+        mrp_production = self.env['mrp.production'].search([('sale_reference','=',self.name)])
+        for mrp in mrp_production:
+            sale_order_line = self.get_sale_order_line_from_mrp(mrp)
+            
+            if mrp.estimated_shipping_date:
+                if mrp.origin == self.name and sale_order_line: #parent
+                    mrp.date_planned_start = mrp.estimated_shipping_date - timedelta(days=sale_order_line.total_delivery_leadtime)
+                else: #child
+                    product = self.env['product.product'].search([('id' , '=' , mrp.product_id.id)])
+                    supplier_info = self.env['product.supplierinfo'].search([('product_tmpl_id' , '=' , product.product_tmpl_id.id)])
+                    bom_ids = self.env['mrp.bom'].search([('product_tmpl_id', '=' , product.product_tmpl_id.id)])
+                    product_routes = product.route_ids
+                    supplier_delay = 0
+                    total_delivery_lead_time = 0
+                    bom_lead_time_list = []
+                    template_attribute_value_ids = product.product_template_attribute_value_ids
+                    if bom_ids: #CALCULATE FOR MATERIALS
+                        for bom in bom_ids:
+                            for bom_line in bom.bom_line_ids:
+                                if (not bom_line.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in bom_line.bom_product_template_attribute_value_ids.ids)) and bom_line.product_id.product_tmpl_id.type == 'product':
+                                    bom_product = self.env['product.product'].search([('id' , '=' , bom_line.product_id.id)])
+                                    bom_product_routes = bom_product.route_ids
+                                    bom_supplier_info = self.env['product.supplierinfo'].search([('product_tmpl_id' , '=' , bom_product.product_tmpl_id.id)])
+                                    bom_total_lead_time = 0
+                                    bom_supplier_delay = 0
+
+                                    for route in bom_product_routes:
+                                        if route.delivery_lead_time:
+                                            bom_total_lead_time += route.delivery_lead_time
+                                    for bom_supplier in bom_supplier_info:
+                                        if bom_supplier.delay and bom_supplier.delay > bom_supplier_delay:
+                                            bom_supplier_delay = bom_supplier.delay
+
+                                    bom_total_lead_time = bom_total_lead_time + bom_supplier_delay + bom_product.product_tmpl_id.produce_delay
+                                    bom_lead_time_list.append(bom_total_lead_time)
+
+                    if bom_lead_time_list:
+                        supplier_delay = max(bom_lead_time_list)
+
+                    for route in product_routes:
+                        if route.delivery_lead_time:
+                            total_delivery_lead_time += route.delivery_lead_time
+                    for supplier in supplier_info:
+                        if supplier.delay and supplier.delay > supplier_delay:
+                            supplier_delay = supplier.delay
+
+                    additional_time = math.ceil(supplier_delay + total_delivery_lead_time + product.product_tmpl_id.produce_delay)
+                    mrp.date_planned_start = mrp.estimated_shipping_date - timedelta(days=additional_time)
+                
+        return result
 
 class sale_order_line(models.Model):
     _inherit = "sale.order.line"
+    total_delivery_leadtime = fields.Float(default=0)
 
     @api.onchange('product_id','product_uom_qty')
     def _onchange_product_id(self):
@@ -33,7 +108,7 @@ class sale_order_line(models.Model):
             #         if rule.action == 'buy':
             #             is_route_buy = True
 
-            if bom_ids: #CALCULATE FOR MATERIALS
+            if bom_ids and product.qty_available - line.product_uom_qty <= 0: #CALCULATE FOR MATERIALS
                 for bom in bom_ids:
                     for bom_line in bom.bom_line_ids:
                         if (not bom_line.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in bom_line.bom_product_template_attribute_value_ids.ids)) and bom_line.product_id.product_tmpl_id.type == 'product':
@@ -86,16 +161,16 @@ class sale_order_line(models.Model):
             if bom_lead_time_list:
                 supplier_delay = max(bom_lead_time_list)
 
-            if product_quantity <= 0:
-                for route in product_routes:
-                    if route.delivery_lead_time:
-                        total_delivery_lead_time += route.delivery_lead_time
-
-                for supplier in supplier_info:
-                    if supplier.delay and supplier.delay > supplier_delay:
-                        supplier_delay = supplier.delay
+            for route in product_routes:
+                if route.delivery_lead_time:
+                    total_delivery_lead_time += route.delivery_lead_time
+                    
+            for supplier in supplier_info:
+                if supplier.delay and supplier.delay > supplier_delay:
+                    supplier_delay = supplier.delay
 
             additional_time = math.ceil(supplier_delay + total_delivery_lead_time + product.product_tmpl_id.produce_delay)
+            line.total_delivery_leadtime = additional_time
             line.date_planned = datetime.today() + timedelta(days=additional_time)
 
     @api.model
@@ -115,7 +190,7 @@ class sale_order_line(models.Model):
         #             for rule in route.rule_ids:
         #                 if rule.action == 'buy':
         #                     is_route_buy = True
-          if bom_ids:
+          if bom_ids and product.qty_available < 1:
                 for bom in bom_ids:
                     for bom_line in bom.bom_line_ids:
                         if (not bom_line.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in bom_line.bom_product_template_attribute_value_ids.ids)) and bom_line.product_id.product_tmpl_id.type == 'product':
@@ -168,17 +243,16 @@ class sale_order_line(models.Model):
                                 bom_lead_time_list.append(bom_total_lead_time)
           if bom_lead_time_list:
               supplier_delay = max(bom_lead_time_list)
-          if product_quantity <= 0:
-            for route in product_routes:
-                if route.delivery_lead_time:
-                    total_delivery_lead_time += route.delivery_lead_time
-
-            for supplier in supplier_info:
-                if supplier.delay and supplier.delay > supplier_delay:
-                    supplier_delay = supplier.delay
+          for route in product_routes:
+              if route.delivery_lead_time:
+                  total_delivery_lead_time += route.delivery_lead_time  
+          for supplier in supplier_info:
+              if supplier.delay and supplier.delay > supplier_delay:
+                  supplier_delay = supplier.delay
 
           additional_time = math.ceil(supplier_delay + total_delivery_lead_time + product.product_tmpl_id.produce_delay)
-
+          
+          res['total_delivery_leadtime'] = additional_time
           res['date_planned'] = datetime.today() + timedelta(days=additional_time)
 
           return res
