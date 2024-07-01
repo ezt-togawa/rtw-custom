@@ -1,0 +1,6 @@
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__prod_parts_arrival_schedule
+msgid "製造部材入荷予定"
+msgstr "Prod Parts Arrival Schedule"
+
