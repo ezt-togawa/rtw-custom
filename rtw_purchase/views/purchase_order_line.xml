@@ -2,14 +2,14 @@
     <record id="purchase_order_line_view_tree_rtw" model="ir.ui.view">
         <field name="name">purchase.order.line.view.tree.rtw</field>
         <field name="model">purchase.order.line</field>
-        <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+        <field name="inherit_id" ref="purchase.purchase_order_line_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <field name="name_selection"/>
-                <field name="sale_order_ids"/>
-                <field name="sale_order_names"/>
+                <field name="name_selection" />
+                <field name="sale_order_ids" />
+                <field name="sale_order_names" />
+                <field name="allowed_custom_config" invisible="1" />
             </xpath>
-
         </field>
     </record>
 </odoo>

@@ -1,7 +1,13 @@
 <odoo>
+  <template id="rtw_purchase_warning_icon" name="rtw purchase warning icon"
+    inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+      <script type="text/javascript" src="/rtw_purchase/static/src/js/activity.js" />
+    </xpath>
+  </template>
   <data>
     <!-- explicit list view definition -->
-<!--
+    <!--
     <record model="ir.ui.view" id="rtw_purchase.list">
       <field name="name">rtw_purchase list</field>
       <field name="model">rtw_purchase.rtw_purchase</field>
@@ -16,7 +22,7 @@
 -->
 
     <!-- actions opening views on models -->
-<!--
+    <!--
     <record model="ir.actions.act_window" id="rtw_purchase.action_window">
       <field name="name">rtw_purchase window</field>
       <field name="res_model">rtw_purchase.rtw_purchase</field>
@@ -25,7 +31,7 @@
 -->
 
     <!-- server action to the one above -->
-<!--
+    <!--
     <record model="ir.actions.server" id="rtw_purchase.action_server">
       <field name="name">rtw_purchase server</field>
       <field name="model_id" ref="model_rtw_purchase_rtw_purchase"/>
@@ -41,16 +47,16 @@
 -->
 
     <!-- Top menu item -->
-<!--
+    <!--
     <menuitem name="rtw_purchase" id="rtw_purchase.menu_root"/>
 -->
     <!-- menu categories -->
-<!--
+    <!--
     <menuitem name="Menu 1" id="rtw_purchase.menu_1" parent="rtw_purchase.menu_root"/>
     <menuitem name="Menu 2" id="rtw_purchase.menu_2" parent="rtw_purchase.menu_root"/>
 -->
     <!-- actions -->
-<!--
+    <!--
     <menuitem name="List" id="rtw_purchase.menu_1_list" parent="rtw_purchase.menu_1"
               action="rtw_purchase.action_window"/>
     <menuitem name="Server to list" id="rtw_purchase" parent="rtw_purchase.menu_2"
