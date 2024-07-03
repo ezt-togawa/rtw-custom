@@ -29,14 +29,21 @@ class MrpProductionCus(models.Model):
 
     def _compute_display_name(self):
         for record in self:
-            # record.display_name = record.name
+            
             order_no = ''
             product_no = ''
             date_planned = ''
-            child_MO = None
+            
             if record.sale_reference:
                 order_no = record.sale_reference
                 child_MO = self.env["mrp.production"].search([('sale_reference', '=', order_no), ('origin', '=', record.name)])
+                if child_MO and record.move_raw_ids:
+                    arrival_schedule = ''
+                    for move in record.move_raw_ids:
+                        if move.forecast_expected_date:
+                            arrival_schedule += str(move.forecast_expected_date) + "\n"
+                            
+                    record.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n')
                 
             if record.product_id and record.product_id.product_no:
                 product_no = record.product_id.product_no
@@ -65,14 +72,6 @@ class MrpProductionCus(models.Model):
                 display_name += date_planned
                 
             record.display_name = display_name
-            
-            if child_MO:
-                for child in child_MO:
-                    arrival_schedule = ''
-                    if child.date_planned_start:
-                        arrival_schedule += str(child.date_planned_start) + "\n"
-                        
-                    record.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n')
                 
     def write(self, vals):
         old_date_planned_start = {record.id: record.date_planned_start for record in self}
