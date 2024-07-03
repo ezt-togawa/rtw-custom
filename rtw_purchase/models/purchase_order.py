@@ -3,6 +3,11 @@
 from odoo import models, fields, api
 class rtw_purchase(models.Model):
     _inherit = "purchase.order"
+    
+    check_schedule_option = fields.Selection([('warning', 'Alert'), ('danger', 'Error')])
+    
+    check_schedule_boolean = fields.Boolean()
+    check_schedule_icon = fields.Char('Icon', default="fa-warning")
 
     sale_order_ids = fields.Char("sale order", compute='_compute_sale_order')
     sale_order_names = fields.Char("sale order title")
@@ -80,3 +85,6 @@ class rtw_purchase(models.Model):
             #     })]
             #     })
             
+    def toggle_check_schedule(self):
+        for line in self:
+            print()
