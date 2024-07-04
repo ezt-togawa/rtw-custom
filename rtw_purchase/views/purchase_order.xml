@@ -36,7 +36,6 @@
                     icon="fa-warning"
                     string="日程確認"
                     attrs="{'invisible': [('check_schedule_boolean', '=', False)]}"
-                    disabled="disabled"
                 />
             </xpath>
         </field>
@@ -58,7 +57,7 @@
                 <field name="sale_order_names" />
             </xpath>
             <xpath expr="//field[@name='state']" position="before">
-                <field name="check_schedule_option" string="日程確認" widget="check_schedule_activity" />
+                <field name="日程確認" widget="check_schedule_activity" optional="show" />
             </xpath>
         </field>
     </record>
@@ -68,7 +67,7 @@
         <field name="inherit_id" ref="purchase.purchase_order_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='amount_total']" position="after">
-                <field name="check_schedule_option" string="日程確認" widget="check_schedule_activity" />
+                <field name="日程確認" widget="check_schedule_activity" optional="show" />
             </xpath>
         </field>
     </record>
