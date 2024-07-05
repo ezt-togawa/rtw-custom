@@ -9,12 +9,6 @@ msgstr "Resend"
 msgid "販売オーダー"
 msgstr "Sale Orders"
 
-
-#. module: rtw_purchase
-#: model:ir.model.fields,field_description:rtw_purchase.field_purchase_order__日程確認
-msgid "日程確認"
-msgstr "Schedule Check"
-
 #. module: rtw_purchase
 #. openerp-web
 #: code:rtw_purchase/static/src/js/activity.js:0
