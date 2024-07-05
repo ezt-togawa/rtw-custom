@@ -5,16 +5,19 @@ msgid "再送"
 msgstr "Resend"
 
 #. module: rtw_purchase
-#: model:ir.model.fields,field_description:rtw_purchase.field_purchase_order__check_schedule_option
-msgid "日程確認"
-msgstr "Schedule Check"
-
-#. module: rtw_purchase
-#: model_terms:ir.ui.view,arch_db:rtw_purchase.view_purchase_form_inherit
-msgid "日程確認"
-msgstr "Schedule Check"
-
-#. module: rtw_purchase
 #: model_terms:ir.ui.view,arch_db:rtw_purchase.purchase_order_search_rtw
 msgid "販売オーダー"
 msgstr "Sale Orders"
+
+
+#. module: rtw_purchase
+#: model:ir.model.fields,field_description:rtw_purchase.field_purchase_order__日程確認
+msgid "日程確認"
+msgstr "Schedule Check"
+
+#. module: rtw_purchase
+#. openerp-web
+#: code:rtw_purchase/static/src/js/activity.js:0
+#, python-format
+msgid "日程確認"
+msgstr "Schedule Check"
