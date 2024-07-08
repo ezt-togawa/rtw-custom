@@ -70,7 +70,6 @@ class MrpProductionCus(models.Model):
                     display_name += product_no
             elif date_planned:
                 display_name += date_planned
-                
             record.display_name = display_name
                 
     def write(self, vals):
@@ -89,19 +88,22 @@ class MrpProductionCus(models.Model):
                 if isinstance(new_date, str):
                     new_date = parse(new_date)
 
-                if new_date and old_date and new_date < old_date:
-                    po = self.env["purchase.order"].search([('origin', 'ilike', record.name)])
-                    if po:
-                        for p in po:
-                            p.check_schedule_boolean = True
-                            
-                    mo_child = self.env["mrp.production"].search([('mrp_reference', 'ilike', record.name)])
-                    if mo_child:
-                        for mo in mo_child:
-                            po_child = self.env["purchase.order"].search([('origin', 'ilike', mo.name)])
-                            if po_child:
-                                for po in po_child:
-                                    po.check_schedule_boolean = True
+                if new_date and old_date: 
+                    record.is_drag_drop_calendar = True
+                    
+                    if new_date < old_date:
+                        po = self.env["purchase.order"].search([('origin', 'ilike', record.name)])
+                        if po:
+                            for p in po:
+                                p.check_schedule_boolean = True
+                                
+                        mo_child = self.env["mrp.production"].search([('mrp_reference', 'ilike', record.name)])
+                        if mo_child:
+                            for mo in mo_child:
+                                po_child = self.env["purchase.order"].search([('origin', 'ilike', mo.name)])
+                                if po_child:
+                                    for po in po_child:
+                                        po.check_schedule_boolean = True
         return res
     
     @api.model
