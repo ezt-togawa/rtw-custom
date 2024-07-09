@@ -42,10 +42,14 @@ class sale_order(models.Model):
             for route in product_routes:
                 if route.delivery_lead_time:
                         total_delivery_lead_time += route.delivery_lead_time
-            additional_time = math.ceil(total_delivery_lead_time + product.product_tmpl_id.produce_delay)            
+
+            additional_time = total_delivery_lead_time + product.product_tmpl_id.produce_delay
+            days = int(additional_time)
+            hours = (additional_time - int(additional_time)) * 24
             if mrp.estimated_shipping_date:
+                estimated_shipping_datetime = datetime.combine(mrp.estimated_shipping_date, datetime.min.time())
                 if mrp.origin == self.name: #parent
-                    mrp.date_planned_start = mrp.estimated_shipping_date - timedelta(days=additional_time)
+                    mrp.date_planned_start = estimated_shipping_datetime - timedelta(days=days , hours=hours)
                 else: #child
                     parent_mrp = self.env['mrp.production'].search([('name','=',mrp.origin)])
                     parent_delivery_lead_time = 0
@@ -55,8 +59,11 @@ class sale_order(models.Model):
                         if route.delivery_lead_time:
                                 parent_delivery_lead_time += route.delivery_lead_time
                     child_additional_time = additional_time + parent_delivery_lead_time + parent_product.product_tmpl_id.produce_delay
-                    mrp.date_planned_start = mrp.estimated_shipping_date - timedelta(days=child_additional_time)
-                    
+                    child_days = int(child_additional_time)
+                    child_hours = (child_additional_time - int(child_additional_time)) * 24
+
+                    mrp.date_planned_start = estimated_shipping_datetime - timedelta(days=child_days , hours=child_hours)
+                
         return result
 
 class sale_order_line(models.Model):
@@ -143,9 +150,12 @@ class sale_order_line(models.Model):
                 if supplier.delay and supplier.delay > supplier_delay:
                     supplier_delay = supplier.delay
 
-            additional_time = math.ceil(supplier_delay + total_delivery_lead_time + product.product_tmpl_id.produce_delay)
+            additional_time = supplier_delay + total_delivery_lead_time + product.product_tmpl_id.produce_delay
+            days = int(additional_time)
+            hours = (additional_time - int(additional_time)) * 24
+            
             line.total_delivery_leadtime = additional_time
-            line.date_planned = datetime.today() + timedelta(days=additional_time)
+            line.date_planned = datetime.today() + timedelta(days=days,hours=hours)
 
     @api.model
     def _prepare_add_missing_fields(self , values):
@@ -224,9 +234,11 @@ class sale_order_line(models.Model):
               if supplier.delay and supplier.delay > supplier_delay:
                   supplier_delay = supplier.delay
 
-          additional_time = math.ceil(supplier_delay + total_delivery_lead_time + product.product_tmpl_id.produce_delay)
+          additional_time = supplier_delay + total_delivery_lead_time + product.product_tmpl_id.produce_delay
+          days = int(additional_time)
+          hours = (additional_time - int(additional_time)) * 24
           
           res['total_delivery_leadtime'] = additional_time
-          res['date_planned'] = datetime.today() + timedelta(days=additional_time)
+          res['date_planned'] = datetime.today() + timedelta(days=days , hours=hours)
 
           return res
