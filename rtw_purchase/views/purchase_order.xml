@@ -57,7 +57,7 @@
                 <field name="sale_order_names" />
             </xpath>
             <xpath expr="//field[@name='state']" position="before">
-                <field name="日程確認" widget="check_schedule_activity" optional="show" />
+                <field name="schedule_check" widget="check_schedule_activity" optional="show" />
             </xpath>
         </field>
     </record>
@@ -67,7 +67,7 @@
         <field name="inherit_id" ref="purchase.purchase_order_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='amount_total']" position="after">
-                <field name="日程確認" widget="check_schedule_activity" optional="show" />
+                <field name="schedule_check" widget="check_schedule_activity" optional="show" />
             </xpath>
         </field>
     </record>
@@ -97,6 +97,19 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="filter_so_ids" string="販売オーダー" />
+            </xpath>
+        </field>
+    </record>
+    <record id="purchase_order_search_schedule_check" model="ir.ui.view">
+        <field name="name">purchase.order.search.schedule.check</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='activities_exception']" position="before">
+                <separator />
+                <filter string="Schedule Check" name="check_schedule_activity"
+                    domain="[('check_schedule_boolean', '!=', False)]" />
+                <separator />
             </xpath>
         </field>
     </record>
