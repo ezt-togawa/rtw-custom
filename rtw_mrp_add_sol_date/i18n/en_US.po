@@ -1,0 +1,4 @@
+#. module: rtw_mrp_add_sol_date
+#: model:ir.model.fields,field_description:rtw_mrp_add_sol_date.field_mrp_production__itoshima_shipping_date
+msgid "糸島出荷日"
+msgstr "Itoshima Shipping Date"
