@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
@@ -34,10 +35,10 @@ class sale_order(models.Model):
     def action_confirm(self):
         result = super(sale_order, self).action_confirm()
         self.refresh()       
-        mrp_production = self.env['mrp.production'].search([('sale_reference','=',self.name),('state','not in',('done','cancel'))])
+        mrp_production = self.env['mrp.production'].search([('sale_reference', '=', self.name), ('state', 'not in', ('done','cancel'))])
         for mrp in mrp_production:
             total_delivery_lead_time = 0
-            product = self.env['product.product'].search([('id' , '=' , mrp.product_id.id)])
+            product = self.env['product.product'].search([('id', '=', mrp.product_id.id)])
             product_routes = product.route_ids
             for route in product_routes:
                 if route.delivery_lead_time:
@@ -46,14 +47,14 @@ class sale_order(models.Model):
             additional_time = total_delivery_lead_time + product.product_tmpl_id.produce_delay
             days = int(additional_time)
             hours = (additional_time - int(additional_time)) * 24
-            if mrp.estimated_shipping_date:
-                estimated_shipping_datetime = datetime.combine(mrp.estimated_shipping_date, datetime.min.time())
+            if mrp.itoshima_shipping_date:
+                itoshima_shipping_datetime = datetime.combine(mrp.itoshima_shipping_date, datetime.min.time())
                 if mrp.origin == self.name: #parent
-                    mrp.date_planned_start = estimated_shipping_datetime - timedelta(days=days , hours=hours)
+                    mrp.date_planned_start = itoshima_shipping_datetime - timedelta(days=days , hours=hours)
                 else: #child
-                    parent_mrp = self.env['mrp.production'].search([('name','=',mrp.origin)])
+                    parent_mrp = self.env['mrp.production'].search([('name', '=', mrp.origin)])
                     parent_delivery_lead_time = 0
-                    parent_product = self.env['product.product'].search([('id' , '=' , parent_mrp.product_id.id)])
+                    parent_product = self.env['product.product'].search([('id', '=', parent_mrp.product_id.id)])
                     parent_product_routes = parent_product.route_ids
                     for route in parent_product_routes:
                         if route.delivery_lead_time:
@@ -61,9 +62,7 @@ class sale_order(models.Model):
                     child_additional_time = additional_time + parent_delivery_lead_time + parent_product.product_tmpl_id.produce_delay
                     child_days = int(child_additional_time)
                     child_hours = (child_additional_time - int(child_additional_time)) * 24
-
-                    mrp.date_planned_start = estimated_shipping_datetime - timedelta(days=child_days , hours=child_hours)
-                
+                    mrp.date_planned_start = itoshima_shipping_datetime - timedelta(days=child_days, hours=child_hours)
         return result
 
 class sale_order_line(models.Model):

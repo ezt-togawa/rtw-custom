@@ -28,7 +28,7 @@
                     <attribute name="date_stop"></attribute>
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="before">
-                    <field name="estimated_shipping_date" />
+                    <field name="itoshima_shipping_date" />
                     <field name="shiratani_date" />
                 </xpath>
                 <xpath expr="//field[@name='product_qty']" position="after">
