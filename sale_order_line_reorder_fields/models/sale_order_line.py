@@ -27,12 +27,11 @@ class SaleOrderLineExtend(models.Model):
         if self.updating_discount or self.updating_call_rate:
             return
         elif self.order_id and self.order_id.pricelist_id and self.order_id.pricelist_id.discount_policy == 'without_discount' and self.order_id.pricelist_id.item_ids:
-            last_item = self.order_id.pricelist_id.item_ids[-1]
-            price_str = last_item.price
-            percent_value = float(price_str.split()[0].replace('%', ''))
-            
-            self.discount = percent_value
-            self.call_rate = 100 - self.discount
+            price_item = self.order_id.pricelist_id.item_ids[0]
+            if price_item.percent_price:
+                percent_value = price_item.percent_price
+                self.discount = percent_value
+                self.call_rate = 100 - self.discount
         
     def write(self, vals):
         res = super(SaleOrderLineExtend, self).write(vals)
