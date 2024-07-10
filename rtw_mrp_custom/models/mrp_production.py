@@ -77,10 +77,6 @@ class MrpProductionCus(models.Model):
 
         res = super(MrpProductionCus, self).write(vals)
         for record in self:
-            if record.sale_reference and 'estimated_shipping_date' in vals:
-                so = self.env['sale.order'].search([('name', '=', record.sale_reference)])
-                so.estimated_shipping_date = vals['estimated_shipping_date']
-
             if 'date_planned_start' in vals:
                 old_date = old_date_planned_start.get(record.id)
                 new_date = vals['date_planned_start']
