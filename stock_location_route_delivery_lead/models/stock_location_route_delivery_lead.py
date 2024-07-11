@@ -46,10 +46,10 @@ class sale_order(models.Model):
             additional_time = total_delivery_lead_time + product.product_tmpl_id.produce_delay
             days = int(additional_time)
             hours = (additional_time - int(additional_time)) * 24
-            if mrp.estimated_shipping_date:
-                estimated_shipping_datetime = datetime.combine(mrp.estimated_shipping_date, datetime.min.time())
+            if mrp.itoshima_shipping_date:
+                itoshima_shipping_datetime = datetime.combine(mrp.itoshima_shipping_date, datetime.min.time())
                 if mrp.origin == self.name: #parent
-                    mrp.date_planned_start = estimated_shipping_datetime - timedelta(days=days , hours=hours)
+                    mrp.date_planned_start = itoshima_shipping_datetime - timedelta(days=days , hours=hours)
                 else: #child
                     parent_mrp = self.env['mrp.production'].search([('name','=',mrp.origin)])
                     parent_delivery_lead_time = 0
@@ -62,9 +62,71 @@ class sale_order(models.Model):
                     child_days = int(child_additional_time)
                     child_hours = (child_additional_time - int(child_additional_time)) * 24
 
-                    mrp.date_planned_start = estimated_shipping_datetime - timedelta(days=child_days , hours=child_hours)
-                
+                    mrp.date_planned_start = itoshima_shipping_datetime - timedelta(days=child_days , hours=child_hours)
+            stock_picking = self.env['stock.picking'].search([('origin','=',mrp.name)])
+            if stock_picking:
+                for picking in stock_picking:
+                    moves = self.env['stock.move'].search([('picking_id','=',picking.id)])
+                    for move in moves:
+                        total_route_leadtime = 0
+                        for route in move.product_id.route_ids:
+                            if route.delivery_lead_time:
+                                total_route_leadtime += route.delivery_lead_time
+                        route_days = int(total_route_leadtime)
+                        route_hours = (total_route_leadtime - int(total_route_leadtime)) * 24
+                        move.date =  mrp.date_planned_start - timedelta(days=route_days , hours=route_hours)
         return result
+
+    def write(self,vals):
+        res = super(sale_order, self).write(vals)
+        if 'order_line' in vals and self.state == 'sale':
+            mrp_production = self.env['mrp.production'].search([('origin','=',self.name),('state','not in',('done','cancel'))])
+            for mrp in mrp_production:
+                if self.estimated_shipping_date and not mrp.estimated_shipping_date:
+                    child_mrp = self.env['mrp.production'].search([('origin','=',mrp.name),('state','not in',('done','cancel'))])
+                    mrp_production += child_mrp
+            for mrp in mrp_production:
+                if self.estimated_shipping_date and not mrp.estimated_shipping_date:
+                    mrp.estimated_shipping_date = self.estimated_shipping_date
+
+                total_delivery_lead_time = 0
+                product = self.env['product.product'].search([('id' , '=' , mrp.product_id.id)])
+                product_routes = product.route_ids
+                for route in product_routes:
+                    if route.delivery_lead_time:
+                            total_delivery_lead_time += route.delivery_lead_time
+                additional_time = total_delivery_lead_time + product.product_tmpl_id.produce_delay
+                days = int(additional_time)
+                hours = (additional_time - int(additional_time)) * 24
+                if mrp.itoshima_shipping_date:
+                    itoshima_estimated_shipping_datetime = datetime.combine(mrp.itoshima_shipping_date, datetime.min.time())
+                    if mrp.origin == self.name: #parent
+                        mrp.date_planned_start = itoshima_estimated_shipping_datetime - timedelta(days=days , hours=hours)
+                    else: #child
+                        parent_mrp = self.env['mrp.production'].search([('name','=',mrp.origin)])
+                        parent_delivery_lead_time = 0
+                        parent_product = self.env['product.product'].search([('id' , '=' , parent_mrp.product_id.id)])
+                        parent_product_routes = parent_product.route_ids
+                        for route in parent_product_routes:
+                            if route.delivery_lead_time:
+                                    parent_delivery_lead_time += route.delivery_lead_time
+                        child_additional_time = additional_time + parent_delivery_lead_time + parent_product.product_tmpl_id.produce_delay
+                        child_days = int(child_additional_time)
+                        child_hours = (child_additional_time - int(child_additional_time)) * 24
+                        mrp.date_planned_start = itoshima_estimated_shipping_datetime - timedelta(days=child_days , hours=child_hours)
+                stock_picking = self.env['stock.picking'].search([('origin','=',mrp.name)])
+                if stock_picking:
+                    for picking in stock_picking:
+                        moves = self.env['stock.move'].search([('picking_id','=',picking.id)])
+                        for move in moves:
+                            total_route_leadtime = 0
+                            for route in move.product_id.route_ids:
+                                if route.delivery_lead_time:
+                                    total_route_leadtime += route.delivery_lead_time
+                            route_days = int(total_route_leadtime)
+                            route_hours = (total_route_leadtime - int(total_route_leadtime)) * 24
+                            move.date =  mrp.date_planned_start - timedelta(days=route_days , hours=route_hours)
+            return res
 
 class sale_order_line(models.Model):
     _inherit = "sale.order.line"
