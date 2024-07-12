@@ -329,3 +329,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__shipping_to_text
 msgid "配送ラベル"
 msgstr ""
+
+#. module: sale_order_rtw
+#: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__time_text
+msgid "Time"
+msgstr "時間"
