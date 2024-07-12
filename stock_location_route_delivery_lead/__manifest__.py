@@ -9,7 +9,7 @@
     'description': """
 """,
     'version': '14.0.0.0',
-    'depends': ['sale' , 'base', 'stock'],
+    'depends': ['sale' , 'base', 'stock','sale_order_line_planned_date'],
     'data': [
         'views/templates.xml',
         'views/stock_location_route_delivery_lead.xml'
