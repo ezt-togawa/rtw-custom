@@ -39,7 +39,7 @@ class StockPickingDelivery(models.AbstractModel):
         format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
 
         format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':10})
-        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
+        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#808080', 'font_name': font_name,'font_size':14,'color':'white','bold':True})
     
         format_lines_10 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
         format_lines_10_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
@@ -123,10 +123,10 @@ class StockPickingDelivery(models.AbstractModel):
             sheet.write(2, 0,  _("発注番号"), format_text) 
             sheet.write(2, 1, so.sale_id.name if so.sale_id.name else "", format_text_13) 
             sheet.write(3,0, _("入荷日"), format_text) 
-            sheet.write(3, 1, str(so.sale_id.warehouse_arrive_date) if so.sale_id.warehouse_arrive_date else "", format_text_13) 
+            sheet.write(3, 1, str(so.sale_id.sale_order_warehouse_arrive_date) if so.sale_id.sale_order_warehouse_arrive_date else "", format_text_13) 
             
             sheet.write(5,0, _("搬入設置日"), format_text_12) 
-            sheet.write(5,1, str(so.sale_id.preferred_delivery_date) if so.sale_id.preferred_delivery_date else "", format_text_12) 
+            sheet.write(5,1, str(so.sale_id.sale_order_preferred_delivery_date) if so.sale_id.sale_order_preferred_delivery_date else "", format_text_12) 
             sheet.write(6,0, _("時間"), format_text_12) 
             sheet.write(6,1, so.sale_id.time_text if so.sale_id.time_text else "", format_text_12) 
             
