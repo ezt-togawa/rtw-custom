@@ -13,7 +13,8 @@ class MrpProductionCus(models.Model):
         string="revised edition")
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定")
     is_drag_drop_calendar = fields.Boolean()
-    
+    new_mrp_production = fields.Integer()
+
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',
@@ -78,14 +79,18 @@ class MrpProductionCus(models.Model):
         res = super(MrpProductionCus, self).write(vals)
         for record in self:
             if 'date_planned_start' in vals:
+                record.new_mrp_production += 1
                 old_date = old_date_planned_start.get(record.id)
                 new_date = vals['date_planned_start']
 
                 if isinstance(new_date, str):
                     new_date = parse(new_date)
 
-                if new_date and old_date: 
-                    record.is_drag_drop_calendar = True
+                if new_date and old_date:
+                    if  record.new_mrp_production == 1:
+                        record.is_drag_drop_calendar = False
+                    else:
+                        record.is_drag_drop_calendar = True
                     
                     if new_date < old_date:
                         po = self.env["purchase.order"].search([('origin', 'ilike', record.name)])

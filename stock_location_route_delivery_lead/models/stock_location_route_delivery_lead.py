@@ -36,6 +36,7 @@ class sale_order(models.Model):
         result = super(sale_order, self).action_confirm()
         mrp_production = self.env['mrp.production'].search([('sale_reference', '=', self.name), ('state', 'not in', ('done','cancel'))])
         for mrp in mrp_production:
+            mrp.new_mrp_production = 0
             total_delivery_lead_time = 0
             product = self.env['product.product'].search([('id', '=', mrp.product_id.id)])
             product_routes = product.route_ids
