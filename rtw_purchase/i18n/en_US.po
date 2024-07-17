@@ -8,3 +8,10 @@ msgstr "Resend"
 #: model_terms:ir.ui.view,arch_db:rtw_purchase.purchase_order_search_rtw
 msgid "販売オーダー"
 msgstr "Sale Orders"
+
+#. module: rtw_purchase
+#. openerp-web
+#: code:rtw_purchase/static/src/js/activity.js:0
+#, python-format
+msgid "日程確認"
+msgstr "Schedule Check"

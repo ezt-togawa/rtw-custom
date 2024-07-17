@@ -1,0 +1,5 @@
+#. module: mrp
+#: model:ir.model.fields,field_description:mrp.field_mrp_production__date_planned_start
+msgid "Scheduled Date"
+msgstr "製造開始予定日"
+

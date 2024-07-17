@@ -231,7 +231,87 @@ class SaleOrderExcelReport(models.Model):
         "sipping to",
         compute="_compute_sale_order_sipping_to",
     )  
-
+    
+    send_to_company_delivery = fields.Char(compute="_compute_send_to_company_delivery")  
+    send_to_people_delivery = fields.Char(compute="_compute_send_to_company_delivery")  
+    send_to_tel_fax = fields.Char(compute="_compute_send_to_company_delivery")  
+    dear_to_delivery = fields.Char(compute="_compute_send_to_company_delivery")
+    sale_witness_name_phone = fields.Char(compute="_compute_sale_witness_name_phone")
+    
+    def _compute_sale_witness_name_phone(self):
+        for record in self:
+            witness_name_phone = ""
+            if record.witness:
+                witness_name_phone += record.witness + " " 
+            if record.witness_phone:
+                witness_name_phone += record.witness_phone
+            record.sale_witness_name_phone = witness_name_phone.rstrip()
+            
+    def _compute_send_to_company_delivery(self):
+        for so in self:
+            partner_name = ''
+            company_name = ''
+            tel = ''
+            fax = ''
+            send = ''
+            
+            if so.sipping_to == 'direct':
+                send = so.shipping_to_text if so.shipping_to_text else ''
+            elif so.waypoint:
+                res = self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id', '=', so.waypoint.id)])
+                
+                if so.lang_code == 'en_US':
+                    if res.company_type == 'company':
+                        company_name =  "Dear " + res.name if res.name else ''
+                    elif res.parent_id :
+                        if res.dummy and res.last_name:
+                            partner_name =  'Mr./Mrs. ' + res.last_name
+                        else:
+                            company_name =  "Dear " + res.parent_id.name + ' Co., Ltd.' if res.parent_id.name else ''
+                            partner_name =  'Mr./Mrs. ' +  res.last_name if res.last_name else ''
+                    else:
+                        partner_name =  'Mr./Mrs. ' + res.last_name if res.last_name else ''
+                    
+                else:   
+                    if res.company_type == 'company':
+                        company_name =  res.name + ' 御中' if res.name else '' 
+                    elif res.parent_id :
+                        if res.dummy and res.last_name:
+                            partner_name =  res.last_name+ ' 様'
+                        else:
+                            company_name =  res.parent_id.name if res.parent_id.name else ''
+                            partner_name =  res.last_name + ' 様' if res.last_name else ''
+                    else:
+                        partner_name =  res.last_name + ' 様' if res.last_name else ''
+                
+                if res.phone:
+                    tel = res.phone
+                elif res.mobile:
+                    tel = res.mobile
+                
+                if res.fax:
+                    fax = res.fax
+                    
+            if company_name and partner_name:
+                send += company_name + '\n' + partner_name  
+            elif company_name:
+                send += company_name
+            elif partner_name:
+                send += partner_name 
+                
+            so.send_to_company_delivery = company_name
+            so.send_to_people_delivery = partner_name
+            so.dear_to_delivery = send
+            
+            if tel and fax:
+                so.send_to_tel_fax = "TEL:" + tel + "/FAX:" + fax
+            elif tel:
+                so.send_to_tel_fax = "TEL:" + tel
+            elif fax:
+                so.send_to_tel_fax = "FAX:" + fax
+            else:
+                so.send_to_tel_fax = ""
+            
     def _compute_sale_order_sipping_to(self):
         for record in self:
             sipping_to = ""
@@ -1007,15 +1087,17 @@ class SaleOrderLineExcelReport(models.Model):
     sale_line_calculate_packages = fields.Integer('Packages' , compute="_compute_sale_line_calculate_packages")
     sale_line_product_no_delivery = fields.Char(string="Calculate product no delivery", compute="_compute_sale_line_product_no_pack")
     sale_line_product_pack_delivery = fields.Char(string="Calculate product pack delivery", compute="_compute_sale_line_product_no_pack")
+    product_spec_detail = fields.Char(compute="_compute_sale_order_product_detail")
     
     def _compute_sale_line_product_no_pack(self):
         for line in self:
             prod_no = ""
+            if line.product_id and line.product_id.product_no:
+                prod_no = line.product_id.product_no
+            
             prod_pack = ""
             pack_parent =  line.pack_parent_line_id   
             if pack_parent:
-                if pack_parent.product_id and pack_parent.product_id.product_no:
-                    prod_no = pack_parent.product_id.product_no
                 prod = line.product_id
                 if prod:
                     prod_tmplt = prod.product_tmpl_id
@@ -1195,6 +1277,7 @@ class SaleOrderLineExcelReport(models.Model):
             attr_cfg = attr_cfg.rstrip()
             
             line.sale_order_product_detail = attr
+            line.product_spec_detail = attr.split("\n")[:6]
             line.sale_order_product_detail_2 = attr_cfg
             
     def _compute_sale_order_all_attribute(self):
@@ -1652,10 +1735,10 @@ class StockPickingExcelReport(models.Model):
 
             witness_name_phone = ""
             if record.sale_id.witness:
-                witness_name_phone += record.sale_id.witness
+                witness_name_phone += record.sale_id.witness + " " 
             if record.sale_id.witness_phone:
-                witness_name_phone += "-" + record.sale_id.witness_phone
-            record.stock_picking_witness_name_phone = witness_name_phone
+                witness_name_phone += record.sale_id.witness_phone
+            record.stock_picking_witness_name_phone = witness_name_phone.rstrip()
 
             printing_staff = ""
             if record.sale_id and record.sale_id.user_id:
@@ -1929,6 +2012,57 @@ class StockMoveExcelReport(models.Model):
             line.stock_warehouse = line.warehouse_id.name if line.warehouse_id and line.warehouse_id.name else ''
             line.stock_shiratani_date = line.stock_move_sale_line_id.shiratani_date if line.stock_move_sale_line_id and line.stock_move_sale_line_id.shiratani_date else ''
             line.product_pack_and_prod_no = size_detail
+            
+    stock_move_line_name_excel = fields.Text(compute="_compute_stock_move_line_name_detail")
+    stock_move_line_name_pdf = fields.Text(compute="_compute_stock_move_line_name_detail")  
+    stock_move_line_summary_pdf = fields.Text(compute="_compute_stock_move_line_name_detail")  
+    stock_move_line_p_type_pdf = fields.Text(compute="_compute_stock_move_line_name_detail")          
+    def _compute_stock_move_line_name_detail(self):
+        for line in self:
+            categ_name = ""
+            prod = line.product_id
+            summary = ""
+            if prod:
+                prod_tmpl = prod.product_tmpl_id
+                if prod_tmpl.config_ok:  
+                    if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                        categ_name = prod_tmpl.categ_id.name
+                    elif prod_tmpl.product_no:
+                        categ_name = prod_tmpl.product_no
+                    elif prod_tmpl.name: 
+                        categ_name = prod_tmpl.name   
+                elif line.name:
+                    categ_name = line.name
+                
+                if prod_tmpl.summary:
+                    summary = prod_tmpl.summary
+                        
+            p_type = ""
+            if line.p_type == "special":
+                p_type = "別注"
+            elif line.p_type == "custom":
+                p_type = "特注"
+                    
+            detail = ""
+            if categ_name and summary and p_type:
+                detail = categ_name + "\n" + summary + "\n" + p_type
+            elif categ_name and summary:
+                detail = categ_name + "\n" + summary
+            elif categ_name and p_type:
+                detail = categ_name + "\n" + p_type
+            elif summary and p_type:
+                detail = summary + "\n" + p_type 
+            elif categ_name:
+                detail = categ_name 
+            elif summary:
+                detail = summary 
+            elif p_type:
+                detail = p_type 
+
+            line.stock_move_line_name_excel = detail    
+            line.stock_move_line_name_pdf = categ_name   
+            line.stock_move_line_p_type_pdf = p_type 
+            line.stock_move_line_summary_pdf = summary
 class AccountMoveExcelReport(models.Model):
     _inherit = "account.move"
 

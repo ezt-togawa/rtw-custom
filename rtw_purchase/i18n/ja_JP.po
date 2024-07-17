@@ -1,0 +1,9 @@
+#. module: rtw_purchase
+#: model:ir.model.fields,field_description:rtw_purchase.field_purchase_order__schedule_check
+msgid "Schedule Check"
+msgstr "日程確認"
+
+#. module: rtw_purchase
+#: model_terms:ir.ui.view,arch_db:rtw_purchase.purchase_order_search_schedule_check
+msgid "Schedule Check"
+msgstr "日程確認"

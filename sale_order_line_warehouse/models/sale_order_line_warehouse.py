@@ -57,7 +57,9 @@ class sale_order_line_warehouse(models.Model):
                           
         if warehouses:
              res['warehouse_id'] = warehouses[0]
-             
+        else:
+             res['warehouse_id'] = ''
+
         for bom in bom_ids:
             if res['warehouse_id'] == bom.picking_type_id.warehouse_id.id:
                   result_bom_id = bom.id

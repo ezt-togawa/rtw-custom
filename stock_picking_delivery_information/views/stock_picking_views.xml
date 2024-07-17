@@ -36,8 +36,8 @@
                 <field name="location_dest_id" options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>
             </xpath>
             <xpath expr="//field[@name='origin']" position="after">
-                <field name="estimated_shipping_date"/>
                 <field name="shiratani_entry_date"/>
+                <field name="estimated_shipping_date"/>
                 <field name="warehouse_arrive_date"/>
             </xpath>
         </field>

@@ -397,32 +397,90 @@
     </template>
     <template id="SO_delivery_order_header_layout">
         <div t-attf-class="header" t-att-style="report_header_style">
-            <div class="row">
-                <div class="col-8 mb4">
-                    <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
-                        alt="Logo" />
-                    <span class="ml-2 size20">配送依頼書</span>
-                    <t t-if="docs.lang_code == 'en_US'">
-                        <span class="ml-5 size15">御中 <span
-                                t-if="docs.partner_id.parent_id"
-                                t-esc="docs.partner_id.parent_id.name" />
-                                <span
-                                t-if="not docs.partner_id.parent_id"
-                                t-esc="docs.partner_id.name" /> 株式会社</span>
-                    </t>
-                    <t t-else="">
-                        <span class="ml-5 size15">株式会社 <span
-                                t-if="docs.partner_id.parent_id"
-                                t-esc="docs.partner_id.parent_id.name" /><span
-                                t-if="not docs.partner_id.parent_id"
-                                t-esc="docs.partner_id.name" /> 御中</span>
-                    </t>
+            <div class="d-flex">
+                <div class="col-10 mb4 d-flex">
+                    <div>
+                        <img
+                            src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                            style="max-height: 45px;"
+                            alt="Logo" />
+                    </div>
+                    <div class="ml-2 size22">配送依頼書</div>
+                    <div class="ml-2 size18">
+                        <t t-if="docs.sipping_to == 'direct'">
+                            <span t-if="docs.shipping_to_text" t-field="docs.shipping_to_text" />
+                        </t>
+                        <t t-else="">
+                            <div class="d-flex">
+                                <div>
+                                    <div t-if="docs.send_to_company_delivery"
+                                        t-field="docs.send_to_company_delivery" />
+                                    <div t-if="docs.send_to_people_delivery"
+                                        t-field="docs.send_to_people_delivery" />
+                                </div>
+                                <div class="pl-2">
+                                    <t
+                                        t-if="docs.send_to_company_delivery and docs.send_to_people_delivery">
+                                        <br />
+                                    </t>
+                                    <div t-if="docs.send_to_tel_fax"
+                                        t-field="docs.send_to_tel_fax" />
+                                </div>
+                            </div>
+                        </t>
+                    </div>
                 </div>
-                <div class="col-4 text-right mt-2 size12">
+                <div class="col-2 text-right mt-2 size12">
                     <div t-field="docs.name" />
                     <t t-if="docs.lang_code == 'en_US'">
+                        <t t-esc="time.strftime('%Y-%m-%d')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                            t-esc="time.strftime('%d')" /> 日 </t>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="SO_delivery_order_stock_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="d-flex">
+                <div class="col-10 mb4 d-flex">
+                    <div>
+                        <img
+                            src="/custom_report_rtw/static/src/images/company_logo.jpeg"
+                            style="max-height: 45px;"
+                            alt="Logo" />
+                    </div>
+                    <div class="ml-2 size22">配送依頼書</div>
+                    <div class="ml-2 size18">
+                        <t t-if="docs.sale_orders.sipping_to == 'direct'">
+                            <span t-if="docs.sale_orders.shipping_to_text"
+                                t-field="docs.sale_orders.shipping_to_text" />
+                        </t>
+                        <t t-else="">
+                            <div class="d-flex">
+                                <div>
+                                    <div t-if="docs.sale_orders.send_to_company_delivery"
+                                        t-field="docs.sale_orders.send_to_company_delivery" />
+                                    <div t-if="docs.sale_orders.send_to_people_delivery"
+                                        t-field="docs.sale_orders.send_to_people_delivery" />
+                                </div>
+                                <div class="pl-2">
+                                    <t
+                                        t-if="docs.sale_orders.send_to_company_delivery and docs.sale_orders.send_to_people_delivery">
+                                        <br />
+                                    </t>
+                                    <div t-if=" docs.sale_orders.send_to_tel_fax"
+                                        t-field="docs.sale_orders.send_to_tel_fax" />
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div class="col-2 text-right mt-2 size12">
+                    <div t-field="docs.sale_orders.name" />
+                    <t t-if="docs.sale_orders.lang_code == 'en_US'">
                         <t t-esc="time.strftime('%Y-%m-%d')" />
                     </t>
                     <t t-else="">

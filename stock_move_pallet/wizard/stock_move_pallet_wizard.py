@@ -27,10 +27,9 @@ class PalletLoading(models.TransientModel):
                 _('Please select at least one detail line to perform '
                   'the Register Operation.'))
         # 明細ステータス確認
-        if any(move_line.state != 'assigned' for move_line in move_lines):
+        if any(move_line.state in ('cancel','done') for move_line in move_lines):
             raise UserError(
-                _('Please select details line which are in assigned state '
-                  'to perform the Register Operation.'))
+                _('パレッド登録を行うためには適切なステータス（完了/取消以外）の詳細行を選択してください。'))
         # 対象データ退避
         move_ids = self.env['stock.move'].browse(self.env.context['active_ids'])
         picking_ids = self.env['stock.picking'].browse(self.env.context['active_ids'])

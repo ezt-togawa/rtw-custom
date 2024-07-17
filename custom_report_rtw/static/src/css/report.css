@@ -264,3 +264,11 @@ body {
 .width-money{
   max-width: 325px;
 }
+
+.six-lines{
+  height:110px;
+}
+
+.four-lines{
+  height:78px;
+}
