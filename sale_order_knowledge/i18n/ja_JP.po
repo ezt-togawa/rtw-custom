@@ -1,0 +1,136 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_order_knowledge
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-17 02:43+0000\n"
+"PO-Revision-Date: 2024-07-17 02:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.sale_view_order_knowledge
+msgid "<strong>別注/特注補足</strong>"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.sale_view_order_knowledge
+msgid "<strong>配送補足</strong>"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "Category"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.actions.act_window,help:sale_order_knowledge.action_page_2
+msgid "Click to create a new web page."
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.sale_view_order_knowledge
+msgid "Customer Order Number"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model:ir.model.fields,field_description:sale_order_knowledge.field_sale_order__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "Document Page"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "Document footer"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "History"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model:ir.model.fields,field_description:sale_order_knowledge.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "Information"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.sale_view_order_knowledge
+msgid "Knowledge Special Name"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.sale_view_order_knowledge
+msgid "Knowledge Supplement Name"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model:ir.model.fields,field_description:sale_order_knowledge.field_sale_order____last_update
+msgid "Last Modified on"
+msgstr "最終更新日"
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "Name"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "Rev 01"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "Revision"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "e.g. Once upon a time..."
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.view_wiki_form_2
+msgid "eg: Changed ... for ..."
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model:ir.model,name:sale_order_knowledge.model_sale_order
+msgid "sale_order_rtw.sale_order_rtw"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model_terms:ir.ui.view,arch_db:sale_order_knowledge.sale_view_order_knowledge
+msgid "status"
+msgstr "受注状態"
+
+#. module: sale_order_knowledge
+#: model:ir.model.fields,field_description:sale_order_knowledge.field_sale_order__knowledge_special_name
+msgid "別注/特注補足"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model:ir.actions.act_window,name:sale_order_knowledge.action_page_2
+msgid "補足情報"
+msgstr ""
+
+#. module: sale_order_knowledge
+#: model:ir.model.fields,field_description:sale_order_knowledge.field_sale_order__knowledge_supplement_name
+msgid "配送補足"
+msgstr ""
