@@ -196,6 +196,9 @@ body {
 .size20 {
   font-size: 20px;
 }
+.size22 {
+  font-size: 22px;
+}
 .size16 {
   font-size: 16px;
 }
@@ -222,7 +225,12 @@ body {
   font-size: 11px;
   padding: 5px 0px 10px 0px;
 }
-
+.table-title2 {
+  color: #fff;
+  background-color: #808080;
+  font-size: 16px;
+  padding: 4px 0px 8px 0px;
+}
 
 .table-border-bottom{
   border-bottom:1px solid black;

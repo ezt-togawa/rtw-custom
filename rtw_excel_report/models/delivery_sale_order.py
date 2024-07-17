@@ -40,7 +40,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13})
 
         format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':10})
-        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
+        format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#808080', 'font_name': font_name,'font_size':14,'color':'white','bold':True})
     
         format_lines_note = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bottom':1})
         format_lines_section= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1})
@@ -119,7 +119,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.insert_image(1, 12, "logo2", {'image_data': img_io_ritzwell, 'y_offset': 2})
             
             # y,x
-            sheet.write(1, 1, _("配送依頼書"), format_sheet_title) 
+            sheet.write(1, 1, _("配送依頼書"), format_sheet_title)
             
             sheet.merge_range(1, 2, 1, 3, so.dear_to_delivery if so.dear_to_delivery else '', format_name_company)
             
@@ -128,10 +128,10 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(2, 0,  _("発注番号"), format_text)
             sheet.write(2, 1, so.name if so.name else "", format_text_13)
             sheet.write(3,0, _("入荷日"), format_text)
-            sheet.write(3, 1, str(so.warehouse_arrive_date) if so.warehouse_arrive_date else "", format_text_13)
+            sheet.write(3, 1, so.sale_order_warehouse_arrive_date if so.sale_order_warehouse_arrive_date else "", format_text_13)
             
             sheet.write(5,0, _("搬入設置日"), format_text_12)
-            sheet.write(5,1, str(so.preferred_delivery_date) if so.preferred_delivery_date else "", format_text_12)
+            sheet.write(5,1, so.sale_order_preferred_delivery_date if so.sale_order_preferred_delivery_date else "", format_text_12)
             sheet.write(6,0, _("時間"), format_text_12)
             sheet.write(6,1, so.time_text if so.time_text else "", format_text_12)
             
