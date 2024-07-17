@@ -4,3 +4,18 @@
 msgid "製造部材入荷予定"
 msgstr "Prod Parts Arrival Schedule"
 
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__mrp_ship_address_id
+msgid "最終配送先"
+msgstr "Final Delivery First"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__ship_to_address
+msgid "送付先"
+msgstr "Address Ship"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__address
+msgid "住所"
+msgstr "Address"
+

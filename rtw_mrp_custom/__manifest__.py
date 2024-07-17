@@ -20,14 +20,18 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp','rtw_mrp_add_sol_date'],
+    'depends': ['base', 'mrp','rtw_mrp_add_sol_date','sales_mo_sequence','sales_team'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+
+        'security/ir.model.access.csv',
         'views/revised_edition.xml',
         'views/mrp_production.xml',
         'views/mrp_workorder.xml',
+        
+        'views/mrp_ship_address.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

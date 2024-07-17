@@ -14,13 +14,15 @@ class MrpProductionCus(models.Model):
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定")
     is_drag_drop_calendar = fields.Boolean()
     new_mrp_production = fields.Integer()
+    mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
+    ship_to_address = fields.Selection([('1', '糸島'), ('2', '白谷'), ('3', 'デポ/直送') ], string="送付先", required=True, default='3')
 
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'mrp.revised_edition',
             'view_type': 'form',
-            'view_mode': 'form',
+            'view_mode': 'form', 
             'target': 'new',
             'context': {
                 'default_mrp_id': self.id,

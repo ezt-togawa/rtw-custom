@@ -150,125 +150,46 @@
               <div class="row py-2">
                 <div class="col-4 size13">
                   <t t-if="not o.mrp_production_parent_id">
-                    <div> 送り先: <t t-if="not so.sipping_to =='direct'">
-                        <span class="size14" t-if="not so.waypoint.parent_id"
-                          t-field="so.waypoint.name" />
-                        <span
-                          t-if="so.waypoint.parent_id"
-                          t-field="so.waypoint.parent_id.name" />
+                    <div> 送り先: <t t-if="so.sipping_to =='direct'">
+                        <span t-field="so.shipping_destination_text" />
                       </t>
                       <t
                         t-else="">
-                        <span t-field="so.shipping_destination_text" />
+                        <t t-if="o.ship_to_address and o.ship_to_address == '3'">
+                          <span class="size14" t-if="so.sale_order_waypoint_name"
+                            t-field="so.sale_order_waypoint_name" />
+                        </t>
+                        <t
+                          t-else="">
+                          <span class="size14" t-if="o.mrp_address_mother"
+                            t-field="o.mrp_address_mother" />
+                        </t>
                       </t>
                     </div>
                     <t t-if="not so.sipping_to =='direct'">
-                      <t t-if="o.lang_code == 'ja_JP'">
-                        <div> 住所: <t t-if="so.waypoint.zip"> 〒<span t-field="so.waypoint.zip" />
-                          </t>
-                            <t
-                            t-if="so.waypoint.state_id.name">
-                            <span t-field="so.waypoint.state_id.name" />
-                          </t>
-                            <t
-                            t-if="so.waypoint.city">
-                            <span t-field="so.waypoint.city" />
-                          </t>
-                            <t
-                            t-if="so.waypoint.street">
-                            <span t-field="so.waypoint.street" />
-                          </t>
-                            <t
-                            t-if="so.waypoint.street2">
-                            <span t-field="so.waypoint.street2" />
-                          </t>
+                      <t t-if="o.ship_to_address and o.ship_to_address == '3'">
+                        <div> 住所: <span t-field="so.sale_order_waypoint_address" /></div>
+                        <div> TEL: <span class="size14" t-field="so.waypoint.phone" />
                         </div>
                       </t>
                       <t t-else="">
-                        <div> 住所: <t t-if="so.waypoint.zip"> 〒<span t-field="so.waypoint.zip" />
-                          </t>
-                            <t
-                            t-if="so.waypoint.street">
-                            <span t-field="so.waypoint.street" />
-                          </t>
-                            <t
-                            t-if="so.waypoint.street2">
-                            <span t-field="so.waypoint.street2" />
-                          </t>
-                            <t
-                            t-if="so.waypoint.city">
-                            <span t-field="so.waypoint.city" />
-                          </t>
-                            <t
-                            t-if="so.waypoint.state_id.name">
-                            <span t-field="so.waypoint.state_id.name" />
-                          </t>
+                        <div> 住所: <span
+                            t-if="o.mrp_picking_type_warehouse_address"
+                            t-esc="o.mrp_picking_type_warehouse_address" />
+                        </div>
+                        <div> TEL: <span class="size14"
+                            t-if="o.picking_type_id.warehouse_id.partner_id.phone"
+                            t-esc="o.picking_type_id.warehouse_id.partner_id.phone" />
                         </div>
                       </t>
-                      <div> TEL: <span class="size14" t-field="so.waypoint.phone" />
-                      </div>
                     </t>
                   </t>
                   <t t-else="">
-                    <div> 送り先: <span
-                        t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.name" />
+                    <div> 送り先: <span t-field="o.mrp_picking_type_warehouse_company" />
                     </div>
-                    <t t-if="o.lang_code == 'ja_JP'">
-                      <div> 住所: <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
-                        〒<span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
-                        </t>
-                          <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
-                          <span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
-                        </t>
-                          <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
-                          <span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
-                        </t>
-                          <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
-                          <span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
-                        </t>
-                          <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
-                          <span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />
-                        </t>
-                      </div>
-                    </t>
-                    <t t-else="">
-                      <div> 住所: <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip">
-                        〒<span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.zip" />
-                        </t>
-                          <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street">
-                          <span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street" />
-                        </t>
-                          <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2">
-                          <span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.street2" />
-                        </t>
-                          <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city">
-                          <span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.city" />
-                        </t>
-                          <t
-                          t-if="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name">
-                          <span
-                            t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.state_id.name" />
-                        </t>
-                      </div>
-                    </t>
+                    <div> 住所: <span t-if="o.mrp_picking_type_warehouse_address"
+                        t-field="o.mrp_picking_type_warehouse_address" />
+                    </div>
                     <div> TEL: <span class="size14"
                         t-field="o.mrp_production_parent_id.picking_type_id.warehouse_id.partner_id.phone" />
                     </div>
