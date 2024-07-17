@@ -263,24 +263,12 @@ class SaleOrderExcelReport(models.Model):
                 if so.lang_code == 'en_US':
                     if res.company_type == 'company':
                         company_name =  "Dear " + res.name if res.name else ''
-                    elif res.parent_id :
-                        if res.dummy and res.last_name:
-                            partner_name =  'Mr./Mrs. ' + res.last_name
-                        else:
-                            company_name =  "Dear " + res.parent_id.name + ' Co., Ltd.' if res.parent_id.name else ''
-                            partner_name =  'Mr./Mrs. ' +  res.last_name if res.last_name else ''
                     else:
                         partner_name =  'Mr./Mrs. ' + res.last_name if res.last_name else ''
                     
                 else:   
                     if res.company_type == 'company':
                         company_name =  res.name + ' 御中' if res.name else '' 
-                    elif res.parent_id :
-                        if res.dummy and res.last_name:
-                            partner_name =  res.last_name+ ' 様'
-                        else:
-                            company_name =  res.parent_id.name if res.parent_id.name else ''
-                            partner_name =  res.last_name + ' 様' if res.last_name else ''
                     else:
                         partner_name =  res.last_name + ' 様' if res.last_name else ''
                 
