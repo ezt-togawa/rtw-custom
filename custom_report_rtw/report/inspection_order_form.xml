@@ -161,8 +161,9 @@
                         </t>
                         <t
                           t-else="">
-                          <span class="size14" t-if="o.mrp_address_mother"
-                            t-field="o.mrp_address_mother" />
+                          <span class="size14"
+                            t-if="o.mrp_choose_option_find_warehouse_company_name"
+                            t-field="o.mrp_choose_option_find_warehouse_company_name" />
                         </t>
                       </t>
                     </div>
@@ -174,12 +175,12 @@
                       </t>
                       <t t-else="">
                         <div> 住所: <span
-                            t-if="o.mrp_picking_type_warehouse_address"
-                            t-esc="o.mrp_picking_type_warehouse_address" />
+                            t-if="o.mrp_choose_option_find_warehouse_address"
+                            t-esc="o.mrp_choose_option_find_warehouse_address" />
                         </div>
                         <div> TEL: <span class="size14"
-                            t-if="o.picking_type_id.warehouse_id.partner_id.phone"
-                            t-esc="o.picking_type_id.warehouse_id.partner_id.phone" />
+                            t-if="o.mrp_choose_option_find_warehouse_phone"
+                            t-esc="o.mrp_choose_option_find_warehouse_phone" />
                         </div>
                       </t>
                     </t>
