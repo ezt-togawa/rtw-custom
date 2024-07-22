@@ -53,5 +53,29 @@
             <field name="context">{'search_default_todo': True, 'default_company_id':
                 allowed_company_ids[0],'search_default_filter_itoshima':1}</field>
         </record>
+
+        <record id="mrp_production_form_view_mrp_ship_address" model="ir.ui.view">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id"
+                ref="sales_mo_sequence.mrp_production_form_view_inherit_mrp_sale_mo_sequence" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='overseas']" position="before">
+                    <field name="ship_to_address" widget="radio" />
+                    <field name="mrp_ship_address_id" widget="selection" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mrp_production_tree_view_mrp_ship_address" model="ir.ui.view">
+            <field name="name">mrp.production.tree</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reservation_state']" position="before">
+                    <field name="ship_to_address" optional="show" />
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

@@ -2589,7 +2589,65 @@ class MrpProductionExcelReport(models.Model):
     hr_employee_fax = fields.Char(string="hr employee fax" , compute="_compute_hr_employee")
     
     mrp_hr_employee = fields.Char(compute="_compute_mrp_hr_employee", string="hr employee")  
+    mrp_picking_type_warehouse_address = fields.Char(compute="_compute_mrp_picking_type_warehouse_address")
+    mrp_picking_type_warehouse_company = fields.Char(compute="_compute_mrp_picking_type_warehouse_address")
+    mrp_address_mother = fields.Char(compute="_compute_mrp_picking_type_warehouse_address")
     
+    def _compute_mrp_picking_type_warehouse_address(self):
+        for line in self:
+            address = ""
+            company_name = ""
+            company_name_mother = ""
+            
+            picking = line.picking_type_id
+            if picking:
+                warehouse = picking.warehouse_id
+                if warehouse :
+                    partner = warehouse.partner_id
+                    if partner :
+                        if partner.zip:
+                            address += "〒" + partner.zip + " "
+                            
+                        if line.lang_code == 'ja_JP':
+                            if partner.state_id and partner.state_id.name:
+                                address += partner.state_id.name + " "
+                            if partner.city:
+                                address += partner.city + " "
+                            if partner.street:
+                                address += partner.street + " "
+                            if partner.street2:
+                                address += partner.street2 
+                        else:
+                            if partner.street:
+                                address += partner.street + " "
+                            if partner.street2:
+                                address += partner.street2 + " "
+                            if partner.city:
+                                address += partner.city + " "
+                            if partner.state_id and partner.state_id.name:
+                                address += partner.state_id.name + " "
+                                
+                        if partner.commercial_company_name:
+                            company_name = partner.commercial_company_name
+                        elif partner.name:
+                            company_name = partner.name
+                            
+                        if partner.department:
+                            company_name += " " + partner.department
+                            
+                        if partner.user_id and partner.user_id.name :
+                            company_name += " " + partner.user_id.name + " ご依頼分"
+                            
+                        if partner.company_type == "company" :
+                            company_name_mother += partner.name 
+                        else:
+                            company_name_mother += partner.last_name 
+                        
+            line.mrp_picking_type_warehouse_address = address.strip()
+            line.mrp_picking_type_warehouse_company = company_name.strip()
+            line.mrp_address_mother = company_name_mother.strip()
+
+            
     def _compute_hr_employee(self):
         for so in self:
             hr_defaults = {
