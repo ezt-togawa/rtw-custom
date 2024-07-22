@@ -2,6 +2,10 @@
 
 from odoo import models, fields, api
 
+class mrp_bom_line_cus(models.Model):
+    _inherit = 'mrp.bom.line'
+    
+    material_qty = fields.Float("数量")
 
 class sale_order_line_outlook_stock(models.Model):
     _inherit = "sale.order.line"
@@ -35,7 +39,17 @@ class sale_order_line_outlook_stock(models.Model):
             [('bom_id', '=', self.bom_id.id)])
         template_attribute_value_ids = self.product_id.product_template_attribute_value_ids
 
+        qty_order_sale =  self.product_uom_qty or 0
+        
         for bom in bom_lines:
+            bom.material_qty = bom.product_qty * qty_order_sale
+            
+            prod_tmpl = self.env["product.template"].search([('id', '=', bom.product_id.product_tmpl_id.id)], limit=1)
+            if prod_tmpl:
+                mrp_bom = self.env["mrp.bom"].search([('product_tmpl_id', '=', prod_tmpl.id)], limit=1)
+                if mrp_bom:
+                    self.update_material_qty(mrp_bom, qty_order_sale)
+            
             if (not bom.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in bom.bom_product_template_attribute_value_ids.ids)) and bom.product_id.product_tmpl_id.type == 'product' and bom.id not in list_satisfy_id:
                 list_satisfy_id.append(bom.id)
                 list_child_bom = self.env['mrp.bom'].search(
@@ -69,6 +83,18 @@ class sale_order_line_outlook_stock(models.Model):
         action["views"] = [(form.id, "tree")]
         action["target"] = "new"
         return action
+    
+    def update_material_qty(self, bom, qty_order_sale):
+        if bom and bom.bom_line_ids:
+            for b in bom.bom_line_ids:
+                b.material_qty = b.product_qty * qty_order_sale
+
+                # Check for nested BOMs
+                nested_prod_tmpl = self.env["product.template"].search([('id', '=', b.product_id.product_tmpl_id.id)], limit=1)
+                if nested_prod_tmpl:
+                    nested_bom = self.env["mrp.bom"].search([('product_tmpl_id', '=', nested_prod_tmpl.id)], limit=1)
+                    if nested_bom:
+                        self.update_material_qty(nested_bom, qty_order_sale)
 
 
 class mrp_bom_line_outlook_stock(models.Model):
