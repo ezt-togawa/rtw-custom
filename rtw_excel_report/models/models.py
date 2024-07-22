@@ -2591,13 +2591,63 @@ class MrpProductionExcelReport(models.Model):
     mrp_hr_employee = fields.Char(compute="_compute_mrp_hr_employee", string="hr employee")  
     mrp_picking_type_warehouse_address = fields.Char(compute="_compute_mrp_picking_type_warehouse_address")
     mrp_picking_type_warehouse_company = fields.Char(compute="_compute_mrp_picking_type_warehouse_address")
-    mrp_address_mother = fields.Char(compute="_compute_mrp_picking_type_warehouse_address")
     
+    mrp_choose_option_find_warehouse_company_name = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
+    mrp_choose_option_find_warehouse_address = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
+    mrp_choose_option_find_warehouse_phone = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
+    
+    def _compute_mrp_choose_option_find_warehouse(self):
+        for line in self:
+            company_name = ""
+            address = ""
+            phone = ""
+            
+            if line.ship_to_address == "1":
+                ware_house = self.env["stock.warehouse"].search([("name", "=", "糸島工場")], limit=1)
+            elif line.ship_to_address == "2":
+                ware_house = self.env["stock.warehouse"].search([("name", "=", "白谷運輸")], limit=1)
+
+            if ware_house:
+                partner = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", ware_house.partner_id.id)], limit=1)
+                if partner :
+                    if partner.company_type == "company":
+                        company_name = partner.name if partner.name else ''
+                    else:
+                        company_name = partner.last_name if partner.last_name else ''
+                        
+                    if partner.zip:
+                        address += "〒" + partner.zip + " "
+                        
+                    if line.lang_code == 'ja_JP':
+                        if partner.state_id and partner.state_id.name:
+                            address += partner.state_id.name + " "
+                        if partner.city:
+                            address += partner.city + " "
+                        if partner.street:
+                            address += partner.street + " "
+                        if partner.street2:
+                            address += partner.street2 
+                    else:
+                        if partner.street:
+                            address += partner.street + " "
+                        if partner.street2:
+                            address += partner.street2 + " "
+                        if partner.city:
+                            address += partner.city + " "
+                        if partner.state_id and partner.state_id.name:
+                            address += partner.state_id.name + " "
+                    
+                    if partner.phone:
+                        phone = partner.phone
+
+            line.mrp_choose_option_find_warehouse_company_name = company_name.strip()
+            line.mrp_choose_option_find_warehouse_address = address.strip()
+            line.mrp_choose_option_find_warehouse_phone = phone.strip()
+                
     def _compute_mrp_picking_type_warehouse_address(self):
         for line in self:
             address = ""
             company_name = ""
-            company_name_mother = ""
             
             picking = line.picking_type_id
             if picking:
@@ -2637,16 +2687,9 @@ class MrpProductionExcelReport(models.Model):
                             
                         if partner.user_id and partner.user_id.name :
                             company_name += " " + partner.user_id.name + " ご依頼分"
-                            
-                        if partner.company_type == "company" :
-                            company_name_mother += partner.name 
-                        else:
-                            company_name_mother += partner.last_name 
                         
             line.mrp_picking_type_warehouse_address = address.strip()
             line.mrp_picking_type_warehouse_company = company_name.strip()
-            line.mrp_address_mother = company_name_mother.strip()
-
             
     def _compute_hr_employee(self):
         for so in self:
