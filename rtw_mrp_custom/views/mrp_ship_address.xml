@@ -5,11 +5,11 @@
         <field name="model">mrp.ship.address</field>
         <field name="arch" type="xml">
             <tree string="Ship Address" editable="bottom">
+                <field name="sequence" widget="handle" />
                 <field name="address" string="Ship Address" />
             </tree>
         </field>
     </record>
-
     <record id="action_mrp_ship_address" model="ir.actions.act_window">
         <field name="name">Ship Address</field>
         <field name="type">ir.actions.act_window</field>
