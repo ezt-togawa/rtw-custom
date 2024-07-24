@@ -38,7 +38,7 @@
                         <div class="row size13" style="margin-top:-50px;">
                             <div class="col-8">
                                 <div class="d-flex">
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <div class="so_price"
                                             style="max-height:25px">
                                             <span t-field="docs.send_to_company"
@@ -51,7 +51,7 @@
                                             下記の通り、ご請求申し上げます。<br />
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div>お支払期限:
                                         </div>
                                         <div> お支払内容 : <span t-field="docs.payment_term_id.name" />
