@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class sale_order_rtw(models.Model):
@@ -76,6 +76,21 @@ class sale_order_rtw(models.Model):
 
     def accepting_order(self):
         self.status = "done"
+
+    def action_confirm(self):
+        if not self.estimated_shipping_date:
+            raise ValidationError(_('Estimated Shipping Date Is Required'))
+        res = super(sale_order_rtw, self).action_confirm()
+        return res
+    
+    def write(self, vals):
+        update_vals = vals.copy()
+        for order in self:
+            #edit
+            if order.write_date != order.create_date and not order.estimated_shipping_date:
+                raise ValidationError(_('Estimated Shipping Date Is Required'))
+        res = super(sale_order_rtw, self).write(update_vals)
+        return res
 
     def back_to_draft(self):
         self.status = "draft"
