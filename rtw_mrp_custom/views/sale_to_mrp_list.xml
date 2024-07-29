@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record id="sale_to_mrp_list_view_tree" model="ir.ui.view">
+            <field name="name">sale.to.mrp.list</field>
+            <field name="model">sale.to.mrp.list</field>
+            <field name="priority" eval="16" />
+            <field name="arch" type="xml">
+                <tree default_order="id asc">
+                    <field name="priority" optional="show" widget="priority" nolabel="1" />
+                    <field name="name" optional="show" />
+                    <field name="date_planned_start" optional="show" />
+                    <field name="date_deadline" optional="hide" />
+                    <field name="product_id" optional="show" />
+                    <field name="inspected_button" optional="show" />
+                    <field name="mrp_order_status" optional="show" />
+                    <field name="lot_producing_id" optional="hide" />
+                    <field name="bom_id" optional="hide" />
+                    <field name="origin" optional="show" />
+                    <field name="user_id" optional="hide" />
+                    <field name="write_uid" optional="hide" />
+                    <field name="write_date" optional="hide" />
+                    <field name="ship_to_address" optional="show" />
+                    <field name="reservation_state" optional="show" />
+                    <field name="product_qty" optional="show" />
+                    <field name="company_id" optional="show" />
+                    <field name="state" optional="show" />
+                    <field name="activity_exception_decoration" widget="activity_exception" />
+                    <field name="delay_alert_date" invisible="1" />
+                    <field name="json_popover" widget="stock_rescheduling_popover" nolabel="1"
+                        attrs="{'invisible': [('delay_alert_date', '=', False)]}" />
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
