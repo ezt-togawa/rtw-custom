@@ -48,7 +48,7 @@ class sale_order_rtw(models.Model):
         ('bring_in', '持込'),
     ], string="配送")
     shipping_to_text = fields.Char(string="配送ラベル")
-    estimated_shipping_date = fields.Date('Estimated shipping date')
+    estimated_shipping_date = fields.Date('Estimated shipping date', required=True)
     overseas = fields.Boolean(string="海外")
     workday_id = fields.Many2one(comodel_name='sale.order.work.day',string="作成日数")
     # workdays = fields.Selection([
@@ -76,21 +76,6 @@ class sale_order_rtw(models.Model):
 
     def accepting_order(self):
         self.status = "done"
-
-    def action_confirm(self):
-        if not self.estimated_shipping_date:
-            raise ValidationError(_('Estimated Shipping Date Is Required'))
-        res = super(sale_order_rtw, self).action_confirm()
-        return res
-    
-    def write(self, vals):
-        update_vals = vals.copy()
-        for order in self:
-            #edit
-            if order.write_date != order.create_date and not order.estimated_shipping_date:
-                raise ValidationError(_('Estimated Shipping Date Is Required'))
-        res = super(sale_order_rtw, self).write(update_vals)
-        return res
 
     def back_to_draft(self):
         self.status = "draft"
