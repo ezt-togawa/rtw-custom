@@ -88,3 +88,12 @@ class rtw_purchase(models.Model):
     def toggle_check_schedule(self):
         for line in self:
             line.check_schedule_boolean = False
+            
+    def button_confirm(self):
+        res = super(rtw_purchase, self).button_confirm()
+        user_login = self.env.user
+        res_user = self.env["res.users"].search([("id", "=", user_login.id)])
+        po = self.env["purchase.order"].search([("id", "=", self.id)])
+        if not po.user_id:
+            po.user_id = res_user
+        return res

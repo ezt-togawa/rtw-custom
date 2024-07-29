@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class sale_order_rtw(models.Model):
@@ -48,7 +48,7 @@ class sale_order_rtw(models.Model):
         ('bring_in', '持込'),
     ], string="配送")
     shipping_to_text = fields.Char(string="配送ラベル")
-    estimated_shipping_date = fields.Date('Estimated shipping date')
+    estimated_shipping_date = fields.Date('Estimated shipping date', required=True)
     overseas = fields.Boolean(string="海外")
     workday_id = fields.Many2one(comodel_name='sale.order.work.day',string="作成日数")
     # workdays = fields.Selection([

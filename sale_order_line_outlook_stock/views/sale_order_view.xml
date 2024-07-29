@@ -78,6 +78,13 @@
                 position="attributes">
                 <attribute name="default_order">priority_sort</attribute>
             </xpath>
+            <xpath expr="/tree/field[@name='product_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="/tree/field[@name='bom_product_template_attribute_value_ids']"
+                position="before">
+                <field name="material_qty" optional="show" />
+            </xpath>
         </field>
     </record>
     <record id="view_order_form_bom_line_view_filter" model="ir.ui.view">

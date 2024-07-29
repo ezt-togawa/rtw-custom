@@ -1,0 +1,4 @@
+#. module: sale_order_line_outlook_stock
+#: model:ir.model.fields,field_description:sale_order_line_outlook_stock.field_mrp_bom_line__material_qty
+msgid "数量"
+msgstr "Material Qty"
