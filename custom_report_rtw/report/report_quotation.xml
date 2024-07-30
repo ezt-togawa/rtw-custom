@@ -361,14 +361,17 @@
         <field name="header_spacing">12</field>
         <field name="dpi">90</field>
     </record>
-    <report
-        string="御見積書"
-        id="report_quotation_rtw2"
-        model="sale.order"
-        report_type="qweb-pdf"
-        name="custom_report_rtw.report_quotation"
-        file="custom_report_rtw.report_quotation"
-        paperformat="paperformat_quotation_report"
-    />
+
+    <record id="report_quotation_rtw2" model="ir.actions.report">
+        <field name="name">御見積書</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_report_rtw.report_quotation</field>
+        <field name="report_file">custom_report_rtw.report_quotation</field>
+        <field name="print_report_name">'御見積書'</field>
+        <field name="binding_model_id" ref="model_sale_order" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_quotation_report" />
+    </record>
 
 </odoo>
