@@ -334,14 +334,18 @@
         <field name="header_spacing">12</field>
         <field name="dpi">90</field>
     </record>
-    <report
-        string="請求書"
-        id="report_invoice_rtw_3"
-        model="account.move"
-        report_type="qweb-pdf"
-        name="custom_report_rtw.report_invoice_3"
-        file="custom_report_rtw.report_invoice_3"
-        paperformat="paperformat_invoice_report_3"
-    />
+
+    <record id="report_invoice_rtw_3" model="ir.actions.report">
+        <field name="name">請求書</field>
+        <field name="model">account.move</field>
+        <field name="binding_model_id" ref="model_account_move" />
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">'請求書'</field>
+        <field name="report_name">custom_report_rtw.report_invoice_3</field>
+        <field name="report_file">custom_report_rtw.report_invoice_3</field>
+        <field name="paperformat_id" ref="custom_report_rtw.paperformat_invoice_report_3" />
+        <field name="attachment_use">True</field>
+        <field name="binding_view_types">form</field>
+    </record>
 
 </odoo>
