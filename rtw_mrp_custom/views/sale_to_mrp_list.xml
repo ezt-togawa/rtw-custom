@@ -5,28 +5,45 @@
             <field name="model">sale.to.mrp.list</field>
             <field name="priority" eval="16" />
             <field name="arch" type="xml">
-                <tree default_order="id asc">
+                <tree string="Manufacturing Orders"
+                    default_order="priority desc, id asc, date_planned_start desc" multi_edit="1"
+                    sample="1">
+                    <header>
+                        <button name="button_plan" type="object" string="Plan" />
+                        <button name="do_unreserve" type="object" string="Unreserve" />
+                    </header>
                     <field name="priority" optional="show" widget="priority" nolabel="1" />
-                    <field name="name" optional="show" />
-                    <field name="date_planned_start" optional="show" />
-                    <field name="date_deadline" optional="hide" />
-                    <field name="product_id" optional="show" />
-                    <field name="inspected_button" optional="show" />
-                    <field name="mrp_order_status" optional="show" />
-                    <field name="lot_producing_id" optional="hide" />
-                    <field name="bom_id" optional="hide" />
-                    <field name="origin" optional="show" />
-                    <field name="user_id" optional="hide" />
-                    <field name="write_uid" optional="hide" />
-                    <field name="write_date" optional="hide" />
-                    <field name="ship_to_address" optional="show" />
-                    <field name="reservation_state" optional="show" />
-                    <field name="product_qty" optional="show" />
-                    <field name="company_id" optional="show" />
-                    <field name="state" optional="show" />
+                    <field name="message_needaction" invisible="1" />
+                    <field name="name" decoration-bf="1" string="Reference" />
+                    <field name="date_planned_start" readonly="1" optional="show"
+                        widget="remaining_days" string="Scheduled Date" />
+                    <field name="date_deadline" widget="remaining_days"
+                        attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}" optional="hide"
+                        string="Deadline" />
+                    <field name="product_id" readonly="1" optional="show" string="Product" />
+                    <field name="inspected_button" optional="show" string="Inspected Button" />
+                    <field name="mrp_order_status" optional="show" string="Mrp Order Status" />
+                    <field name="product_uom_id" string="Unit of Measure"
+                        options="{'no_open':True,'no_create':True}" optional="show" />
+                    <field name="lot_producing_id" optional="hide" string="Lot/Serial Number" />
+                    <field name="bom_id" readonly="1" optional="hide" string="Bill of Material" />
+                    <field name="origin" optional="show" string="Source" />
+                    <field name="user_id" optional="hide" widget="many2one_avatar_user"
+                        string="Responsible" />
+                    <field name="write_uid" optional="hide" string="Last Updated by" />
+                    <field name="write_date" optional="hide" string="Last Updated on" />
+                    <field name="ship_to_address" optional="show" string="Address Ship" />
+                    <field name="reservation_state" optional="show" string="Material Availability" />
+                    <field name="product_qty" sum="Total Qty" string="Quantity" readonly="1"
+                        optional="show" />
+                    <field name="company_id" readonly="1" groups="base.group_multi_company"
+                        optional="show" string="Company" />
+                    <field name="state" optional="show" widget="badge"
+                        decoration-success="state == 'done'"
+                        decoration-info="state not in ('done', 'cancel')" string="State" />
                     <field name="activity_exception_decoration" widget="activity_exception" />
                     <field name="delay_alert_date" invisible="1" />
-                    <field name="json_popover" widget="stock_rescheduling_popover" nolabel="1"
+                    <field string=" " name="json_popover" widget="stock_rescheduling_popover"
                         attrs="{'invisible': [('delay_alert_date', '=', False)]}" />
                 </tree>
             </field>

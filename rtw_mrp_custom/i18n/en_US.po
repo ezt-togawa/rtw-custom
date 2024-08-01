@@ -18,4 +18,3 @@ msgstr "Address Ship"
 #: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__address
 msgid "住所"
 msgstr "Address"
-
