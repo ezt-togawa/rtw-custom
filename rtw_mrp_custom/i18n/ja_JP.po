@@ -1,26 +1,1074 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rtw_mrp_custom
+#
 msgid ""
 msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-01 09:14+0000\n"
+"PO-Revision-Date: 2024-08-01 09:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: sale_to_mrp_list 1.0\n"
-"Language: ja\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-
-#. module: mrp
-#: model:ir.model.fields,field_description:mrp.field_mrp_production__date_planned_start
-msgid "Scheduled Date"
-msgstr "製造開始予定日"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: rtw_mrp_custom
-#: model:ir.ui.menu,name:rtw_mrp_custom.action_menu_mrp_ship_address
-msgid "Ship Address"
-msgstr "最終配送先"
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__state
+msgid ""
+" * Draft: The MO is not confirmed yet.\n"
+" * Confirmed: The MO is confirmed, the stock rules and the reordering of the components are trigerred.\n"
+" * In Progress: The production has started (on the MO or on the WO).\n"
+" * To Close: The production is done, the MO has to be closed.\n"
+" * Done: The MO is closed, the stock moves are posted. \n"
+" * Cancelled: The MO has been cancelled, can't be confirmed anymore."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__reservation_state
+msgid ""
+" * Ready: The material is available to start the production.\n"
+"            * Waiting: The material is not available to start the production.\n"
+"            The material availability is impacted by the manufacturing readiness            defined on the BoM."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__workorder_done_count
+msgid "# Done Work Orders"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_needaction
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_ids
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_exception_decoration
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_state
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_type_icon
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Address Ship"
+msgstr "送付先"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__use_create_components_lots
+msgid "Allow to create new lot/serial numbers for the components"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__allowed_product_ids
+msgid "Allowed Product"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__reserve_visible
+msgid "Allowed to Reserve Production"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__unreserve_visible
+msgid "Allowed to Unreserve Production"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_attachment_count
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__backorder_sequence
+msgid "Backorder Sequence"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__backorder_sequence
+msgid ""
+"Backorder sequence, if equals to 0 means there is not related backorder"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__bom_id
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Bill of Material"
+msgstr "部品表"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__bom_id
+msgid ""
+"Bill of Materials allow you to define the list of required components to "
+"make a finished product."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__crm_id
+msgid "CRM"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__case_id
+msgid "Case"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__product_uom_category_id
+msgid "Category"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__company_id
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Company"
+msgstr "会社"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__components_availability
+msgid "Component Availability"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__move_raw_ids
+msgid "Components"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__components_availability_state
+msgid "Components Availability State"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__location_src_id
+msgid "Components Location"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__priority
+msgid ""
+"Components will be reserved first for the MO with the highest priorities."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__confirm_cancel
+msgid "Confirm Cancel"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__consumption
+msgid "Consumption"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__product_uom_category_id
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__sale_order_count
+msgid "Count of Source SO"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__purchase_order_count
+msgid "Count of generated PO"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__mrp_production_backorder_count
+msgid "Count of linked backorder"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__use_create_components_lots
+msgid "Create New Lots/Serial Numbers for Components"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.view_mrp_production_form_rtw
+msgid "Create Revised Edition"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__create_uid
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__create_uid
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__create_date
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__create_date
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__product_description_variants
+msgid "Custom Description"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__date
+msgid "Date"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__date_planned_finished
+msgid "Date at which you plan to finish the production."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__date_planned_start
+msgid "Date at which you plan to start the production."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__date_deadline
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Deadline"
+msgstr "期日"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__delay_alert_date
+msgid "Delay Alert Date"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__delivery_count
+msgid "Delivery Orders"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__description
+msgid "Description"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__move_line_raw_ids
+msgid "Detail Component"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__display_name
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__display_name
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_order__display_name
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__show_lot_ids
+msgid "Display the serial number shortcut on the moves"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__date_finished
+msgid "End Date"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__product_tracking
+msgid "Ensure the traceability of a storable product in your warehouse."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__extra_cost
+msgid "Extra Cost"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__extra_cost
+msgid "Extra cost per produced unit"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__finished_move_line_ids
+msgid "Finished Product"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__move_finished_ids
+msgid "Finished Products"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__location_dest_id
+msgid "Finished Products Location"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_follower_ids
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_channel_ids
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_partner_ids
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__activity_type_icon
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__id
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__id
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__id
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_order__id
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__id
+msgid "ID"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_exception_icon
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__activity_exception_icon
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__message_needaction
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__message_unread
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__message_needaction
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__message_has_error
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__message_has_sms_error
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__message_has_error
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__propagate_cancel
+msgid ""
+"If checked, when the previous move of the move (which was generated by a "
+"next procurement) is cancelled or split, the move generated by this move "
+"will too"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__date_deadline
+msgid ""
+"Informative date allowing to define when the manufacturing order should be "
+"processed at the latest to fulfill delivery on time."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__inspected_button
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Inspected Button"
+msgstr "検品状態"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__inspected_status
+msgid "Inspected Status"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__is_drag_drop_calendar
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__is_drag_drop_calendar
+msgid "Is Drag Drop Calendar"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_is_follower
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__is_linked_to_crm
+msgid "Is Linked To Crm"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__is_locked
+msgid "Is Locked"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__itoshima_shipping_date_edit
+msgid "Itoshima Shipping Date Edit"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__is_planned
+msgid "Its Operations are Planned"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__json_popover
+msgid "JSON data for the popover widget"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production____last_update
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition____last_update
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address____last_update
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_order____last_update
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list____last_update
+msgid "Last Modified on"
+msgstr "最終更新日"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__write_uid
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__write_uid
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__write_uid
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Last Updated by"
+msgstr "更新者"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__write_date
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__write_date
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__write_date
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Last Updated on"
+msgstr "更新日"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__location_src_id
+msgid "Location where the system will look for components."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__location_dest_id
+msgid "Location where the system will stock the finished products."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__lot_producing_id
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Lot/Serial Number"
+msgstr "ロット/シリアル番号"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__mrp_reference
+msgid "MO Reference"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__mrp_id
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_form
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_list
+msgid "MRP order"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_main_attachment_id
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Manufacturing Orders"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: code:addons/rtw_mrp_custom/models/mrp_production.py:0
+#, python-format
+msgid "Manufacturing Orders Generated by %s"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__reservation_state
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Material Availability"
+msgstr "構成品利用可能性"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_has_error
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_ids
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__move_byproduct_ids
+msgid "Move Byproduct"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__mrp_order_status
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Mrp Order Status"
+msgstr "発注状態"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__mrp_sale_order
+msgid "Mrp Sale Order"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__my_activity_date_deadline
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__new_mrp_production
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__new_mrp_production
+msgid "New Mrp Production"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_date_deadline
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_summary
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_type_id
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_needaction_counter
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_has_error_counter
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__mrp_production_child_count
+msgid "Number of generated MO"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__message_needaction_counter
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__message_has_error_counter
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__mrp_production_source_count
+msgid "Number of source MO"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__message_unread_counter
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__picking_type_id
+msgid "Operation Type"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__orderpoint_id
+msgid "Orderpoint"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__owner_id
+msgid "OwnerId"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__picking_ids
+msgid "Picking associated to this manufacturing order"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Plan"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__priority
+msgid "Priority"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__procurement_group_id
+msgid "Procurement Group"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__product_id
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Product"
+msgstr "プロダクト"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__product_tmpl_id
+msgid "Product Template"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__product_uom_id
+msgid "Product Unit of Measure"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__production_location_id
+msgid "Production Location"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model,name:rtw_mrp_custom.model_mrp_production
+msgid "Production Order"
+msgstr "製造オーダ"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__propagate_cancel
+msgid "Propagate cancel and split"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Quantity"
+msgstr "数量"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__qty_produced
+msgid "Quantity Produced"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__qty_producing
+msgid "Quantity Producing"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__product_qty
+msgid "Quantity To Produce"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__name
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Reference"
+msgstr "参照"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__origin
+msgid ""
+"Reference of the document that generated this production order request."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__user_id
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Responsible"
+msgstr "担当者"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__activity_user_id
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.view_mrp_production_form_rtw
+msgid "Revised Edition"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_has_sms_error
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__sale_reference
+msgid "SO Reference"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__sale_reference_title
+msgid "SO Title"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__date_planned_start
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Scheduled Date"
+msgstr "予定日"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__date_planned_finished
+msgid "Scheduled End Date"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__scrap_count
+msgid "Scrap Move"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__scrap_ids
+msgid "Scraps"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model,name:rtw_mrp_custom.model_mrp_ship_address
+msgid "Selection Ship Address"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__sequence
+msgid "Sequence"
+msgstr ""
 
 #. module: rtw_mrp_custom
 #: model:ir.actions.act_window,name:rtw_mrp_custom.action_mrp_ship_address
+#: model:ir.ui.menu,name:rtw_mrp_custom.action_menu_mrp_ship_address
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.view_mrp_ship_address_tree
 msgid "Ship Address"
 msgstr "最終配送先"
 
 #. module: rtw_mrp_custom
-#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.view_mrp_ship_address_tree
-msgid "Ship Address"
-msgstr "最終配送先"
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__show_final_lots
+msgid "Show Final Lots"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__show_lock
+msgid "Show Lock/unlock buttons"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__show_valuation
+msgid "Show Valuation"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__origin
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Source"
+msgstr "要求元"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__date_start
+msgid "Start Date"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__state
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "State"
+msgstr "ステータス"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__activity_state
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__move_dest_ids
+msgid "Stock Movements of Produced Goods"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__reserve_visible
+msgid "Technical field to check when we can reserve quantities"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__unreserve_visible
+msgid "Technical field to check when we can unreserve"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__name
+msgid "Title"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Total Qty"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__product_uom_qty
+msgid "Total Quantity"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__product_tracking
+msgid "Tracking"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__incoming_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__activity_exception_decoration
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Unit of Measure"
+msgstr "単位"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_unread
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__message_unread_counter
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.sale_to_mrp_list_view_tree
+msgid "Unreserve"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__website_message_ids
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,help:rtw_mrp_custom.field_mrp_revised_edition__website_message_ids
+#: model:ir.model.fields,help:rtw_mrp_custom.field_sale_to_mrp_list__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__workorder_ids
+msgid "Work Orders"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_revised_edition__confirmation
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_form
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_list
+msgid "confirmation"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_form
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_list
+msgid "date"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_form
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_list
+msgid "description"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__production_memo
+msgid "memo"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_list
+msgid "name"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_form
+msgid "owner"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_list
+msgid "owner_id"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model,name:rtw_mrp_custom.model_mrp_revised_edition
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__revised_edition_ids
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__revised_edition_ids
+msgid "revised edition"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model,name:rtw_mrp_custom.model_sale_to_mrp_list
+msgid "sale.to.mrp.list"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model,name:rtw_mrp_custom.model_sale_order
+msgid "sale_order_rtw.sale_order_rtw"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__location_item_excel_prod_label_ids
+msgid "set location item excel prod label"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields.selection,name:rtw_mrp_custom.selection__mrp_production__ship_to_address__3
+#: model:ir.model.fields.selection,name:rtw_mrp_custom.selection__sale_to_mrp_list__ship_to_address__3
+msgid "デポ/直送"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__depo_date
+msgid "デポ到着日"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.rtw_revised_edition_form
+msgid "件名："
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__special_note
+msgid "伝票用特記事項"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__address
+msgid "住所"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__remark
+msgid "共通備考"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__mrp_ship_address_id
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__mrp_ship_address_id
+msgid "最終配送先"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__overseas
+msgid "海外"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__estimated_shipping_date
+msgid "発送予定日"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields.selection,name:rtw_mrp_custom.selection__mrp_production__ship_to_address__2
+#: model:ir.model.fields.selection,name:rtw_mrp_custom.selection__sale_to_mrp_list__ship_to_address__2
+msgid "白谷"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__shiratani_date
+msgid "白谷到着日"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields.selection,name:rtw_mrp_custom.selection__mrp_production__ship_to_address__1
+#: model:ir.model.fields.selection,name:rtw_mrp_custom.selection__sale_to_mrp_list__ship_to_address__1
+msgid "糸島"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__itoshima_shipping_date
+msgid "糸島出荷日"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model_terms:ir.ui.view,arch_db:rtw_mrp_custom.modify_filter_add_itoshima
+msgid "糸島製造"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__production_type
+msgid "製品タイプ"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__prod_parts_arrival_schedule
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__prod_parts_arrival_schedule
+msgid "製造部材入荷予定"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__ship_to_address
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__ship_to_address
+msgid "送付先"
+msgstr ""
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_sale_to_mrp_list__preferred_delivery_date
+msgid "配達希望日"
+msgstr ""
