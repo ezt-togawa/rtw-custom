@@ -20,7 +20,8 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp','rtw_mrp_add_sol_date','sales_mo_sequence','sales_team'],
+    'depends': ['base', 'mrp','rtw_mrp_add_sol_date', 'sales_mo_sequence', 'sales_team',
+                'sale_mrp', 'sale_order_crm_case', 'rtw_mrp_order_manage','mail','stock'],
 
     # always loaded
     'data': [
@@ -32,6 +33,7 @@
         'views/mrp_workorder.xml',
         
         'views/mrp_ship_address.xml',
+        'views/sale_to_mrp_list.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

@@ -20,9 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account'],
+    'depends': ['base', 'account', 'sale', 'purchase', 'custom_report_rtw','mail'],
 
     # always loaded
     'data': [
+        'views/attachment_sale.xml',
+        'views/attachment_po.xml',
+        'views/attachment_invoice.xml'
     ],
 }
