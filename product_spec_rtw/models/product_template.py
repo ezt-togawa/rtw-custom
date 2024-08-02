@@ -89,9 +89,10 @@ class SaleOrderLine(models.Model):
     product_size = fields.Char("製品サイズ")
     
     @api.onchange('product_id' , 'config_session_id')
-    def product_id_change(self):
+    def _product_id_change_line(self):
+        print(self.product_id)
         if self.product_id:
-            res = super(SaleOrderLine, self).product_id_change()
+            # res = super(SaleOrderLine, self).product_id_change()
             string = ""
             if self.product_id.product_no != False:
                 string += '品番/' + str(self.product_id.product_no) + '\n'
@@ -119,7 +120,7 @@ class SaleOrderLine(models.Model):
                 product_size += 'AH' + str(self.product_id.ah)
                 
             self.product_size = product_size
-            return res
+            # return res
     
     def _prepare_add_missing_fields(self , values): # SET DEFAULT PRODUCT_SIZE WHEN CREATE SALE ORDER LINE WITH CONFIGURE PRODUCT
           res = super(SaleOrderLine, self)._prepare_add_missing_fields(values)
