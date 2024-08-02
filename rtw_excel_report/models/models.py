@@ -631,16 +631,16 @@ class SaleOrderExcelReport(models.Model):
             
     def _compute_sale_order_waypoint(self):
         for line in self:
-            waypoint = line.waypoint
+            waypoint = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", line.waypoint.id)], limit=1)
 
             company_name = ""
             address = ""
 
             if waypoint:
-                if waypoint.parent_id:
-                    company_name = waypoint.parent_id.name if waypoint.parent_id.name else ''
-                elif waypoint.name:
+                if waypoint.company_type == "company":
                     company_name = waypoint.name
+                else:
+                    company_name = (waypoint.last_name + " " or '') + (waypoint.first_name or '')
 
                 if waypoint.zip:
                     address += "〒" + waypoint.zip + " "
@@ -2782,9 +2782,12 @@ class MrpProductionExcelReport(models.Model):
 
     def _compute_sale_order(self):
         for line in self:
-            line.sale_order = self.env["sale.order"].search(
-                [("name", "=", line.sale_reference)]
-            )
+            if line.origin.startswith("S"):# mo mother
+                line.sale_order = self.env["sale.order"].search([("name", "=", line.origin)])
+            else: # mo child
+                mrp =  self.env["mrp.production"].search([("name", "=", line.origin)])
+                if mrp:
+                    line.sale_order = self.env["sale.order"].search([("name", "=", mrp.origin)])                    
 class StockMoveContainerReport(models.Model):
     _inherit = "stock.move.container"
 
