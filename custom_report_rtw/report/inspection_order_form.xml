@@ -121,25 +121,25 @@
                         </div>
                         <div>
                           <div class="size12">
-                            <span t-esc="so.hr_employee_company" />
+                            <span t-esc="o.hr_employee_company" />
                           </div>
                           <div>
-                            <span t-esc="so.hr_employee_department" />
+                            <span t-esc="o.hr_employee_department" />
                           </div>
                           <div>
-                            <span t-esc="so.hr_employee_zip" />
+                            <span t-esc="o.hr_employee_zip" />
                           </div>
                           <div>
-                            <span t-esc="so.hr_employee_info" />
+                            <span t-esc="o.hr_employee_info" />
                           </div>
                           <div>
-                            <span t-esc="so.hr_employee_tel" />
+                            <span t-esc="o.hr_employee_tel" />
                           </div>
                           <div>
-                            <span t-esc="so.hr_employee_fax" />
+                            <span t-esc="o.hr_employee_fax" />
                           </div>
                           <div class="size12">
-                            <span t-esc="so.hr_employee_printer" />
+                            <span t-esc="o.hr_employee_printer" />
                           </div>
                         </div>
                       </div>
