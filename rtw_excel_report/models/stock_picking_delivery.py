@@ -25,7 +25,7 @@ class StockPickingDelivery(models.AbstractModel):
         image_logo_ritzwell = get_module_resource('rtw_excel_report', 'img', 'ritzwell.png')
         img_ritzwell = PILImage.open(image_logo_ritzwell)
         img_ritzwell = img_ritzwell.convert('RGB')
-        img_ritzwell = img_ritzwell.resize((232, 40))
+        img_ritzwell = img_ritzwell.resize((234, 40))
         img_io_ritzwell = BytesIO()
         img_ritzwell.save(img_io_ritzwell, 'PNG')
         img_io_ritzwell.seek(0)
@@ -36,15 +36,14 @@ class StockPickingDelivery(models.AbstractModel):
         format_tel_fax = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
         format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
         format_text_12 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12})
-        format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
+        format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13})
+        format_text_14 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
 
-        format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':10})
+        format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':11})
         format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#808080', 'font_name': font_name,'font_size':14,'color':'white','bold':True})
-    
-        format_lines_10 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_10_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_12 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1})
-        format_lines_13 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':13,'bottom':1})
+        
+        format_lines_14_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':14,'bottom':1})
+        format_lines_14 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':14,'bottom':1})
 
         #create sheet
         for index,so in enumerate(so_data):
@@ -55,13 +54,13 @@ class StockPickingDelivery(models.AbstractModel):
             
             sheet.set_paper(9)  #A4
             sheet.set_landscape()
-            sheet.set_print_scale(74)
+            sheet.set_print_scale(72)
             
             margin_header = 0.3
             margin_footer = 0.3
-            left_margin = 0.8
-            right_margin = 0.7
-            top_margin = 0.5
+            left_margin = 0.4
+            right_margin = 0.4
+            top_margin = 0.6
             bottom_margin = 0.5
 
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
@@ -93,8 +92,9 @@ class StockPickingDelivery(models.AbstractModel):
 
             sheet.set_column("L:L", width=8,cell_format=font_family) 
             sheet.set_column("M:M", width=8,cell_format=font_family) 
-            sheet.set_column("N:N", width=24,cell_format=font_family) 
-            sheet.set_column("O:Z", None,cell_format=font_family) 
+            sheet.set_column("N:N", width=8, cell_format=font_family) 
+            sheet.set_column("O:O", width=24, cell_format=font_family) 
+            sheet.set_column("P:Z", None, cell_format=font_family) 
             
             sheet.set_row(1, 35)
             sheet.set_row(2, 17)
@@ -102,8 +102,9 @@ class StockPickingDelivery(models.AbstractModel):
             sheet.set_row(5, 15)
             sheet.set_row(6, 15)
             sheet.set_row(7, 15)
-            sheet.set_row(8, 12)
+            sheet.set_row(8, 14)
             sheet.set_row(9, 12)
+            sheet.set_row(14, 7)
             sheet.set_row(15, 0)
             sheet.set_row(16, 0)
             sheet.set_row(17, 0)
@@ -112,7 +113,7 @@ class StockPickingDelivery(models.AbstractModel):
             sheet.set_row(20,32)
             
             sheet.insert_image(0, 0, "logo", {'image_data': img_io_R})
-            sheet.insert_image(1, 12, "logo2", {'image_data': img_io_ritzwell, 'y_offset': 2})
+            sheet.insert_image(1, 13, "logo2", {'image_data': img_io_ritzwell, 'y_offset': 2})
             
             # y,x
             sheet.write(1, 1, _("配送依頼書"), format_sheet_title) 
@@ -122,68 +123,68 @@ class StockPickingDelivery(models.AbstractModel):
 
             sheet.write(2, 0,  _("発注番号"), format_text) 
             sheet.write(2, 1, so.sale_id.name if so.sale_id.name else "", format_text_13) 
-            sheet.write(3,0, _("入荷日"), format_text) 
+            sheet.write(3, 0, _("入荷日"), format_text) 
             sheet.write(3, 1, str(so.sale_id.sale_order_warehouse_arrive_date) if so.sale_id.sale_order_warehouse_arrive_date else "", format_text_13) 
             
-            sheet.write(5,0, _("搬入設置日"), format_text_12) 
-            sheet.write(5,1, str(so.sale_id.sale_order_preferred_delivery_date) if so.sale_id.sale_order_preferred_delivery_date else "", format_text_12) 
-            sheet.write(6,0, _("時間"), format_text_12) 
-            sheet.write(6,1, so.sale_id.time_text if so.sale_id.time_text else "", format_text_12) 
+            sheet.write(5, 0, _("搬入設置日"), format_text_12) 
+            sheet.write(5, 1, str(so.sale_id.sale_order_preferred_delivery_date) if so.sale_id.sale_order_preferred_delivery_date else "", format_text_12) 
+            sheet.write(6, 0, _("時間"), format_text_12) 
+            sheet.write(6, 1, so.sale_id.time_text if so.sale_id.time_text else "", format_text_12) 
             
             sheet.write(8, 0, _("お届け先（物件名）"), format_text_12) 
             sheet.write(8, 1, so.sale_id.title if so.sale_id.title else "", format_text) 
-            sheet.write(9, 1, so.stock_picking_partner_info if so.stock_picking_partner_info else "", format_text) 
+            sheet.write(9, 1,  so.sale_orders.sale_order_partner_info if so.sale_orders.sale_order_partner_info else "", format_text) 
             
-            sheet.write(11, 0, _("郵便番号："), format_text) 
-            sheet.write(11, 1, ("〒 " + so.forwarding_address_zip )if so.forwarding_address_zip else "", format_text) 
+            sheet.write(11, 0, _("郵便番号："), format_text_14) 
+            sheet.write(11, 1, ("〒 " + so.forwarding_address_zip )if so.forwarding_address_zip else "", format_text_14) 
             
-            sheet.write(12, 0, _("住    所："), format_text) 
-            sheet.write(12, 1, ("〒 " + so.forwarding_address )if so.forwarding_address else "", format_text) 
+            sheet.write(12, 0, _("住    所："), format_text_14) 
+            sheet.write(12, 1, ("〒 " + so.forwarding_address )if so.forwarding_address else "", format_text_14) 
             
-            sheet.write(12, 11, "搬入費用：", format_text) 
+            sheet.write(12, 12, "搬入費用：", format_text_12) 
             
-            sheet.write(13, 0, _("立 会 人："), format_text) 
-            sheet.write(13, 1, so.stock_picking_witness_name_phone if so.stock_picking_witness_name_phone else "", format_text) 
+            sheet.write(13, 0, _("立 会 人："), format_text_14) 
+            sheet.write(13, 1, so.stock_picking_witness_name_phone if so.stock_picking_witness_name_phone else "", format_text_14) 
             
-            sheet.merge_range(2,12,8,13, so.sale_id.sale_order_hr_employee if so.sale_id.sale_order_hr_employee else '' , format_address) 
+            sheet.merge_range(2, 13, 8, 14, so.sale_id.sale_order_hr_employee if so.sale_id.sale_order_hr_employee else '' , format_address) 
             
             #table title
             sheet.write(20, 0, _("№"), format_table)
             sheet.write(20, 1, _("品名"), format_table)
-            sheet.merge_range(20, 2,20,3, _("品番・サイズ"), format_table)
-            sheet.merge_range(20, 4,20,6, _("仕様・詳細"), format_table)
-            sheet.write(20,8, _("数量"), format_table)
+            sheet.merge_range(20, 2, 20, 3, _("品番・サイズ"), format_table)
+            sheet.merge_range(20, 4, 20, 6, _("仕様・詳細"), format_table)
+            sheet.write(20, 8, _("数量"), format_table)
             sheet.write(20, 9, _("個口数"), format_table)
-            sheet.write(20, 10, _("取説"), format_table)
-            sheet.write(20, 11, _("開梱 "), format_table)
-            sheet.write(20, 12, _("組立"), format_table)
-            sheet.write(20, 13, _("備考"), format_table)
+            sheet.write(20, 10, _("才数"), format_table)
+            sheet.write(20, 11, _("取説"), format_table)
+            sheet.write(20, 12, _("開梱 "), format_table)
+            sheet.write(20, 13, _("組立"), format_table)
+            sheet.write(20, 14, _("備考"), format_table)
 
             if so.stock_move:
                 row = 21
+
                 for ind,line in enumerate(so.stock_move):
-                    if len(line.product_id.product_template_attribute_value_ids) < 4:
-                        merge_line = 3
-                    else:
-                        merge_line = 5
-                    sheet.merge_range(row, 0, row + merge_line, 0, line.stock_index if line.stock_index else '' , format_lines_10) 
-                    sheet.merge_range(row, 1, row + merge_line, 1, line.stock_move_line_name_excel if line.stock_move_line_name_excel else '', format_lines_10_left) 
+                    merge_line = 5
+                    sheet.merge_range(row, 0, row + merge_line, 0, line.stock_index if line.stock_index else '' , format_lines_14) 
+                    sheet.merge_range(row, 1, row + merge_line, 1, line.stock_move_line_name_excel if line.stock_move_line_name_excel else '', format_lines_14_left) 
                     
-                    sheet.merge_range(row, 2, row + merge_line, 3, line.product_number_and_size if line.product_number_and_size else '', format_lines_10_left) 
+                    sheet.merge_range(row, 2, row + merge_line, 3, line.product_number_and_size if line.product_number_and_size else '', format_lines_14_left) 
                     
                     prod_spec_detail = ""
                     if line.product_id and line.product_id.product_template_attribute_value_ids:
-                        for l in line.product_id.product_template_attribute_value_ids[:6]:
+                        for l in line.product_id.product_template_attribute_value_ids[:5]:
                                 prod_spec_detail += "● " + l.display_name + "\n"
                     
-                    sheet.merge_range(row, 4, row + merge_line, 6, prod_spec_detail if prod_spec_detail else '', format_lines_10_left) 
+                    sheet.merge_range(row, 4, row + merge_line, 6, prod_spec_detail.rstrip("\n") if prod_spec_detail else '', format_lines_14_left) 
                     
-                    sheet.merge_range(row, 8, row + merge_line, 8, line.stock_product_uom_qty if line.stock_product_uom_qty else '', format_lines_13) 
-                    sheet.merge_range(row, 9, row + merge_line, 9, '{0:,.0f}'.format(line.product_package_quantity)if line.product_package_quantity else 0, format_lines_12) 
-                    
-                    sheet.merge_range(row, 10, row + merge_line, 10, _('有') if line.sale_line_instruction_status else '', format_lines_13) 
-                    sheet.merge_range(row, 11, row + merge_line, 11, _('有'), format_lines_13) 
-                    sheet.merge_range(row, 12, row + merge_line, 12, _('無'), format_lines_13) 
-                    sheet.merge_range(row, 13, row + merge_line, 13, '', format_lines_13) 
+                    sheet.merge_range(row, 8, row + merge_line, 8, line.stock_product_uom_qty if line.stock_product_uom_qty else '', format_lines_14) 
+                    sheet.merge_range(row, 9, row + merge_line, 9, '{0:,.0f}'.format(line.product_package_quantity)if line.product_package_quantity else 0, format_lines_14) 
+                    sheet.merge_range(row, 10, row + merge_line, 10, '{0:,.0f}'.format(line.product_id.sai) if line.product_id.sai else '', format_lines_14) 
+                    sheet.merge_range(row, 11, row + merge_line, 11, _('有') if line.sale_line_instruction_status else '', format_lines_14) 
+                    sheet.merge_range(row, 12, row + merge_line, 12, _('有'), format_lines_14) 
+                    sheet.merge_range(row, 13, row + merge_line, 13, _('無'), format_lines_14) 
+                    sheet.merge_range(row, 14, row + merge_line, 14, '', format_lines_14) 
                     
                     row += merge_line + 1
+                

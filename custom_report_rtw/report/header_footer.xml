@@ -406,7 +406,7 @@
                             alt="Logo" />
                     </div>
                     <div class="ml-2 size22">配送依頼書</div>
-                    <div class="ml-2 size18">
+                    <div class="ml-3 size18">
                         <t t-if="docs.sipping_to == 'direct'">
                             <span t-if="docs.shipping_to_text" t-field="docs.shipping_to_text" />
                         </t>
@@ -453,7 +453,7 @@
                             alt="Logo" />
                     </div>
                     <div class="ml-2 size22">配送依頼書</div>
-                    <div class="ml-2 size18">
+                    <div class="ml-3 size18">
                         <t t-if="docs.sale_orders.sipping_to == 'direct'">
                             <span t-if="docs.sale_orders.shipping_to_text"
                                 t-field="docs.sale_orders.shipping_to_text" />
