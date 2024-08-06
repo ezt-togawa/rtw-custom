@@ -128,7 +128,7 @@ class ReportMrpExcel(models.AbstractModel):
                     sheet.write(6, 1, mrp.sale_order.sale_order_warehouse_arrive_date if mrp.sale_order.sale_order_warehouse_arrive_date else '', format_text_14) 
                     sheet.write(12, 0, _("住所"), format_text) 
                     sheet.write(13, 0, _("TEL"), format_text)
-                    if mrp.ship_to_address and mrp.ship_to_address == "3":
+                    if mrp.address_ship and mrp.address_ship == "デポ/直送":
                         sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if mrp.sale_order.sale_order_waypoint_name else '', format_text_12) 
                         sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if mrp.sale_order.sale_order_waypoint_address else '', format_text_12) 
                         sheet.write(13, 1, mrp.sale_order.waypoint.phone if mrp.sale_order.waypoint.phone else '', format_text_12) 
@@ -248,7 +248,7 @@ class ReportMrpExcel(models.AbstractModel):
                     sheet.write(6, 1, mrp.sale_order.sale_order_warehouse_arrive_date if mrp.sale_order.sale_order_warehouse_arrive_date else '', format_text_14) 
                     sheet.write(12, 0, _("住所"), format_text) 
                     sheet.write(13, 0, _("TEL"), format_text)
-                    if mrp.ship_to_address and mrp.ship_to_address == "3":
+                    if mrp.address_ship and mrp.address_ship == "デポ/直送":
                         sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if mrp.sale_order.sale_order_waypoint_name else '', format_text_12) 
                         sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if mrp.sale_order.sale_order_waypoint_address else '', format_text_12) 
                         sheet.write(13, 1, mrp.sale_order.waypoint.phone if mrp.sale_order.waypoint.phone else '', format_text_12) 
