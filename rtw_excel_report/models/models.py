@@ -1,4 +1,4 @@
-from odoo import models, fields ,api
+from odoo import models, fields, _
 from datetime import datetime
 import math
 class SaleOrderExcelReport(models.Model):
@@ -2581,14 +2581,15 @@ class MrpProductionExcelReport(models.Model):
     
     lang_code = fields.Char(string="Language Code", compute="_compute_lang_code")
     
-    hr_employee_company = fields.Char(string="hr employee company" , compute="_compute_hr_employee")
-    hr_employee_department = fields.Char(string="hr employee department" , compute="_compute_hr_employee")
-    hr_employee_zip = fields.Char(string="hr employee zip" , compute="_compute_hr_employee")
-    hr_employee_info = fields.Char(string="hr employee info" , compute="_compute_hr_employee")
-    hr_employee_tel = fields.Char(string="hr employee tel" , compute="_compute_hr_employee")
-    hr_employee_fax = fields.Char(string="hr employee fax" , compute="_compute_hr_employee")
+    hr_employee_company = fields.Char(compute="_compute_hr_employee")
+    hr_employee_department = fields.Char(compute="_compute_hr_employee")
+    hr_employee_zip = fields.Char(compute="_compute_hr_employee")
+    hr_employee_info = fields.Char(compute="_compute_hr_employee")
+    hr_employee_tel = fields.Char(compute="_compute_hr_employee")
+    hr_employee_fax = fields.Char(compute="_compute_hr_employee")
+    hr_employee_printer = fields.Char(compute="_compute_hr_employee")
     
-    mrp_hr_employee = fields.Char(compute="_compute_mrp_hr_employee", string="hr employee")  
+    mrp_hr_employee = fields.Char(compute="_compute_mrp_hr_employee")  
     mrp_picking_type_warehouse_address = fields.Char(compute="_compute_mrp_picking_type_warehouse_address")
     mrp_picking_type_warehouse_company = fields.Char(compute="_compute_mrp_picking_type_warehouse_address")
     
@@ -2692,7 +2693,7 @@ class MrpProductionExcelReport(models.Model):
             line.mrp_picking_type_warehouse_company = company_name.strip()
             
     def _compute_hr_employee(self):
-        for so in self:
+        for mo in self:
             hr_defaults = {
                 'hr_employee_company': "株式会社リッツウェル",
                 'hr_employee_department': "大阪オフィス",
@@ -2700,49 +2701,51 @@ class MrpProductionExcelReport(models.Model):
                 'hr_employee_info': "大阪市中央区南船場4-7-6 B1F",
                 'hr_employee_tel': "tel.06-4963-8777",
                 'hr_employee_fax': "fax.06-4963-8778",
+                'hr_employee_printer': mo.mrp_production_so_id and mo.mrp_production_so_id.sale_order_printing_staff or '',
             }
             
-            picking_type = so.picking_type_id
-            if picking_type:
-                warehouse = picking_type.warehouse_id
-                if warehouse :
-                    partner = warehouse.partner_id
-                    if partner:
-                        res_partner= self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id','=',partner.id)])
-                        for res in res_partner:
-                                if res.company_type == 'company':
-                                    so.hr_employee_company =  res.name if res.name else ''
-                                else:
-                                    if res.parent_id :
-                                        so.hr_employee_company   =  res.parent_id.name if res.parent_id.name else ''
+            if mo.user_id:
+                lang = mo.lang_code
+                hr_employee = self.env['hr.employee'].with_context({'lang':lang}).search([('user_id', '=', mo.user_id.id)])
+                if hr_employee:
+                    for employee in hr_employee:
+                        mo.hr_employee_company = employee.company_id and employee.company_id.name or ''
+                        
+                        if employee.address_id:
+                            res_partner = self.env['res.partner'].with_context({'lang':lang}).search([('id', '=', employee.address_id.id)])
+                            if res_partner:
+                                for res in res_partner:
+                                    mo.hr_employee_department = res.site or ''
+                                    
+                                    mo.hr_employee_zip = (_("〒") + res.zip) if res.zip != False else ''
+                                    
+                                    if mo.lang_code == 'ja_JP':
+                                        mo.hr_employee_info = f"{res.state_id.name or ''} {res.city or ''} {res.street or ''} { res.street2 or ''}".strip()
                                     else:
-                                        so.hr_employee_company =  ''
-                                        
-                                if res.site:
-                                    if so.lang_code == 'ja_JP':
-                                        so.hr_employee_department = (res.site)
-                                    else:
-                                        so.hr_employee_department = (res.site)
-                                else:
-                                    so.hr_employee_department = ''
-                                
-                                so.hr_employee_zip = ("〒" + res.zip) if res.zip else ''
-                                
-                                if so.lang_code == 'ja_JP':
-                                    so.hr_employee_info = f"{res.state_id.name or ''} {res.city or ''} {res.street or ''} {res.street2 or ''}"
-                                else:
-                                    so.hr_employee_info = f"{res.street or ''} {res.street2 or ''} {res.city or ''} {res.state_id.name or ''}"
-                                
-                                so.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
-                                so.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
-                                
-                    else:
-                        so.update(hr_defaults)
+                                        mo.hr_employee_info = f"{res.street or ''} { res.street2 or ''} {res.city or ''} {res.state_id.name or ''}".strip()
+                                    
+                                    mo.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
+                                    mo.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
+                            else:
+                                mo.hr_employee_zip = ''
+                                mo.hr_employee_info = ''
+                                mo.hr_employee_tel = ''
+                                mo.hr_employee_fax = ''
+                        else:
+                            mo.hr_employee_zip = ''
+                            mo.hr_employee_info = ''
+                            mo.hr_employee_tel = ''
+                            mo.hr_employee_fax = ''
+                            
+                        if employee.name:
+                            mo.hr_employee_printer = "発注者 " +  employee.name
+                        else:
+                            mo.hr_employee_printer = ""
                 else:
-                    so.update(hr_defaults)
+                    mo.update(hr_defaults)
             else:
-                so.update(hr_defaults)
-          
+                mo.update(hr_defaults)
+        
     def _compute_mrp_hr_employee(self):
         for record in self:
             hr_employee_detail = ""   
@@ -2758,8 +2761,10 @@ class MrpProductionExcelReport(models.Model):
                 hr_employee_detail += record.hr_employee_tel + "\n"
             if record.hr_employee_fax:
                 hr_employee_detail += record.hr_employee_fax + "\n"          
-            record.mrp_hr_employee= hr_employee_detail.rstrip('\n')
-
+            if record.hr_employee_printer:
+                hr_employee_detail += record.hr_employee_printer        
+            record.mrp_hr_employee = hr_employee_detail.rstrip('\n')
+    
     def _compute_lang_code(self):
         for l in self:
             l.lang_code = self.env.user.lang or 'en_US'
