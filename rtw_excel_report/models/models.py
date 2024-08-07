@@ -1,6 +1,8 @@
 from odoo import models, fields, _
 from datetime import datetime
 import math
+import babel.dates
+
 class SaleOrderExcelReport(models.Model):
     _inherit = "sale.order"
 
@@ -359,20 +361,16 @@ class SaleOrderExcelReport(models.Model):
                             partner.display_name.split(",")[0]
                             + "-"
                             + partner.display_name.split(",")[1]
-                            + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
-                                        )
+                            + _(" 様 ご依頼分"))
                     else:
-                        partner_info += partner.display_name + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
-                else:
-                    if partner.name:
-                        partner_info += partner.name + (" Requesting-" if record.lang_code == "en_US" else " 様 ご依頼分-")
+                        partner_info += partner.display_name + _(" 様 ご依頼分")
+                elif partner.name:
+                        partner_info += partner.name + _(" 様 ご依頼分")
                         
                 if partner.department:
-                    partner_info += partner.department + "-"
+                    partner_info += "-" + partner.department 
                 if partner.site:
-                    partner_info += partner.site + "-"
-                if record.name:
-                    partner_info += record.name
+                    partner_info += "-" + partner.site
                     
             record.sale_order_partner_info = partner_info
             
@@ -824,92 +822,53 @@ class SaleOrderExcelReport(models.Model):
 
     def _compute_sale_order_format_date(self):
         for record in self:
-            shipping_date = record.estimated_shipping_date
-            date_order = record.date_order
-            validity_date = record.validity_date
-            shiratani_entry_date = record.shiratani_entry_date
-            preferred_delivery_date = record.preferred_delivery_date
-            warehouse_arrive_date = record.warehouse_arrive_date
-            date_deadline = record.date_deadline
-
-            if shipping_date:
-                record.sale_order_estimated_shipping_date = (
-                    str(shipping_date.year)
-                    + record.yearUnit
-                    + str(shipping_date.month)
-                    + record.monthUnit
-                    + str(shipping_date.day)
-                    + record.dayUnit
-                )
+            if record.estimated_shipping_date:
+                record.sale_order_estimated_shipping_date = record._format_date(record.estimated_shipping_date, record.lang_code)
             else:
                 record.sale_order_estimated_shipping_date = ""
-            if date_order:
-
-                record.sale_order_date_order = (
-                    str(date_order.year)
-                    + record.yearUnit
-                    + str(date_order.month)
-                    + record.monthUnit
-                    + str(date_order.day)
-                    + record.dayUnit
-                )
+                
+            if record.date_order:
+                record.sale_order_date_order = record._format_date(record.date_order, record.lang_code)
             else:
                 record.sale_order_date_order = ""
-            if validity_date:
-                record.sale_order_validity_date = (
-                    str(validity_date.year)
-                    + record.yearUnit
-                    + str(validity_date.month)
-                    + record.monthUnit
-                    + str(validity_date.day)
-                    + record.dayUnit
-                )
+                
+            if record.validity_date:
+                record.sale_order_validity_date = record._format_date(record.validity_date, record.lang_code)
             else:
                 record.sale_order_validity_date = ""
-            if shiratani_entry_date:
-                record.sale_order_shiratani_entry_date = (
-                    str(shiratani_entry_date.year)
-                    + record.yearUnit
-                    + str(shiratani_entry_date.month)
-                    + record.monthUnit
-                    + str(shiratani_entry_date.day)
-                    + record.dayUnit
-                )
+                
+            if record.shiratani_entry_date:
+                record.sale_order_shiratani_entry_date = record._format_date(record.shiratani_entry_date, record.lang_code)
             else:
                 record.sale_order_shiratani_entry_date = ""
-            if preferred_delivery_date:
-                record.sale_order_preferred_delivery_date = (
-                    str(preferred_delivery_date.year)
-                    + record.yearUnit
-                    + str(preferred_delivery_date.month)
-                    + record.monthUnit
-                    + str(preferred_delivery_date.day)
-                    + record.dayUnit
-                )
+                
+            if record.preferred_delivery_date:
+                record.sale_order_preferred_delivery_date = record._format_date(record.preferred_delivery_date, record.lang_code, True)
             else:
                 record.sale_order_preferred_delivery_date = ""
-            if warehouse_arrive_date:
-                record.sale_order_warehouse_arrive_date = (
-                    str(warehouse_arrive_date.year)
-                    + record.yearUnit
-                    + str(warehouse_arrive_date.month)
-                    + record.monthUnit
-                    + str(warehouse_arrive_date.day)
-                    + record.dayUnit  
-                )
+                
+            if record.warehouse_arrive_date:
+                record.sale_order_warehouse_arrive_date = record._format_date(record.warehouse_arrive_date, record.lang_code)
             else:
                 record.sale_order_warehouse_arrive_date = ""
-            if date_deadline:
-                record.sale_order_date_deadline = (
-                    str(date_deadline.year)
-                    + record.yearUnit
-                    + str(date_deadline.month)
-                    + record.monthUnit
-                    + str(date_deadline.day)
-                    + record.dayUnit
-                )
+                
+            if record.date_deadline:
+                record.sale_order_date_deadline = record._format_date(record.date_deadline, record.lang_code)
             else:
                 record.sale_order_date_deadline = ""
+                
+    def _format_date(self, date, lang_code, is_preferred_delivery_date = False):
+        format = 'yyyy-MM-dd'
+        if lang_code == "ja_JP":
+            format = 'y年M月d日'
+            
+        formatted_date = babel.dates.format_date(date, format=format, locale = lang_code)
+        
+        if is_preferred_delivery_date:
+            day_of_week = babel.dates.format_date(date, format='EEE', locale = lang_code)
+            return f"{formatted_date} [{day_of_week}]"
+        
+        return f"{formatted_date}"
 
     def _compute_sale_order_company_owner(self):
         for record in self:
