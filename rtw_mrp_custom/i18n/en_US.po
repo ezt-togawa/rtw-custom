@@ -18,3 +18,13 @@ msgstr "Address Ship"
 #: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_ship_address__address
 msgid "住所"
 msgstr "Address"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__address_ship
+msgid "送付先"
+msgstr "Address Ship"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__storehouse_id
+msgid "倉庫"
+msgstr "Store House"

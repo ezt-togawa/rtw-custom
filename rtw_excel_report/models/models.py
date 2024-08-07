@@ -2562,13 +2562,8 @@ class MrpProductionExcelReport(models.Model):
             address = ""
             phone = ""
             
-            if line.ship_to_address == "1":
-                ware_house = self.env["stock.warehouse"].search([("name", "=", "糸島工場")], limit=1)
-            elif line.ship_to_address == "2":
-                ware_house = self.env["stock.warehouse"].search([("name", "=", "白谷運輸")], limit=1)
-
-            if ware_house:
-                partner = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", ware_house.partner_id.id)], limit=1)
+            if line.storehouse_id and line.storehouse_id.partner_id:
+                partner = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", line.storehouse_id.partner_id.id)], limit=1)
                 if partner :
                     if partner.company_type == "company":
                         company_name = partner.name if partner.name else ''
