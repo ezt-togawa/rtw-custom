@@ -129,10 +129,9 @@
                 <t t-if="l_index == 0">
                   <thead>
                     <tr class="table-title2 bold">
-                      <th class="text-center" style="width:2%">№</th>
-                      <th class="text-center" style="width:15%">品名</th>
-                      <th class="text-center" style="width:19%">品番・サイズ</th>
-                      <th class="text-center" style="width:19%">仕様・詳細</th>
+                      <th class="text-center" style="width:3%">№</th>
+                      <th class="text-center" style="width:25%">品名</th>
+                      <th class="text-center" style="width:27%">品番・サイズ</th>
                       <th class="text-center" style="width:5%">数量</th>
                       <th class="text-center" style="width:7%">個口数</th>
                       <th class="text-center" style="width:5%">才数</th>
@@ -148,12 +147,12 @@
                     t-if="l.display_type =='line_section' or l.display_type =='line_note'">
                     <tr class="table-border-bottom-auto">
                       <t t-if="l.display_type =='line_section'">
-                        <td class="bg-section " style="height:100px" colspan="11">
+                        <td class="bg-section five-lines" colspan="11">
                           <span t-field="l.name" />
                         </td>
                       </t>
                       <t t-elif="l.display_type =='line_note'">
-                        <td style="height:100px" colspan="11">
+                        <td class="five-lines" colspan="11">
                           <span t-field="l.name" />
                         </td>
                       </t>
@@ -161,7 +160,7 @@
                   </t>
                   <t t-else="">
                     <tr class="border-bottom2">
-                      <td t-esc="l_index+1" class="text-center" />
+                      <td t-esc="l_index+1" class="text-center five-lines" />
                       <td>
                         <div t-if="l.sale_order_line_name_pdf"
                           t-field="l.sale_order_line_name_pdf" />
@@ -181,12 +180,6 @@
                             t-field="l.sale_line_product_pack_delivery" />
                         </div>
                         <div t-esc="l.product_size" />
-                      </td>
-                      <td class="five-lines">
-                        <t t-foreach="l.product_id.product_template_attribute_value_ids[:5]"
-                          t-as="string_line"> ● <span t-esc="string_line.display_name" />
-                        <br />
-                        </t>
                       </td>
                       <td class="text-center">
                         <div id="quote_qty">

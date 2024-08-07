@@ -33,7 +33,7 @@ class ReportMrpExcel(models.AbstractModel):
 
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'bottom','font_size':18,'font_name': font_name})
-        format_name_company = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14, 'text_wrap':True})
+        format_name_company = workbook.add_format({'align': 'right','font_name': font_name,'font_size':14, 'text_wrap':True})
         format_tel_fax = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
         format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
         format_text_12 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12})
@@ -80,20 +80,15 @@ class ReportMrpExcel(models.AbstractModel):
 
             sheet.set_column("A:A", width=17, cell_format=font_family)  
             sheet.set_column("B:B", width=20, cell_format=font_family)  
-            sheet.set_column("C:C", width=18, cell_format=font_family)  
-
-            sheet.set_column("D:D", width=16, cell_format=font_family)  
-
-            sheet.set_column("E:E", width=10, cell_format=font_family)  
-            sheet.set_column("F:F", width=10, cell_format=font_family)
-
-            sheet.set_column("G:G", width=10, cell_format=font_family)  
+            sheet.set_column("C:C", width=20, cell_format=font_family)  
+            sheet.set_column("D:D", width=2, cell_format=font_family)  
+            sheet.set_column("E:E", width=15, cell_format=font_family)  
+            sheet.set_column("F:F", width=15, cell_format=font_family)
+            sheet.set_column("G:G", width=12, cell_format=font_family)  
             sheet.set_column("H:H", width=0, cell_format=font_family)  
-
             sheet.set_column("I:I", width=8, cell_format=font_family)  
             sheet.set_column("J:J", width=8, cell_format=font_family)  
             sheet.set_column("K:K", width=8, cell_format=font_family) 
-
             sheet.set_column("L:L", width=8, cell_format=font_family) 
             sheet.set_column("M:M", width=8, cell_format=font_family) 
             sheet.set_column("N:N", width=8, cell_format=font_family) 
@@ -124,7 +119,7 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.merge_range(1, 2, 1, 3, so.dear_to_delivery if so.dear_to_delivery else '', format_name_company)
             
-            sheet.write(1, 4,  so.send_to_tel_fax if so.send_to_tel_fax else '', format_tel_fax)
+            sheet.write(1, 4,  "  " + so.send_to_tel_fax if so.send_to_tel_fax else '', format_tel_fax)
             
             sheet.write(2, 0,  _("発注番号"), format_text)
             sheet.write(2, 1, so.name if so.name else "", format_text_13)
@@ -156,9 +151,8 @@ class ReportMrpExcel(models.AbstractModel):
 
             #table title
             sheet.write(20, 0, _("№"), format_table)
-            sheet.write(20, 1, _("品名"), format_table)
-            sheet.merge_range(20, 2, 20, 3, _("品番・サイズ"), format_table)
-            sheet.merge_range(20, 4, 20, 6, _("仕様・詳細"), format_table)
+            sheet.merge_range(20, 1, 20, 3,  _("品名"), format_table)
+            sheet.merge_range(20, 4, 20, 6, _("品番・サイズ"), format_table)
             sheet.write(20, 8, _("数量"), format_table)
             sheet.write(20, 9, _("個口数"), format_table)
             sheet.write(20, 10, _("才数"), format_table)
@@ -183,16 +177,8 @@ class ReportMrpExcel(models.AbstractModel):
                     else:
                         merge_line = 5
                         sheet.merge_range(row, 0, row + merge_line, 0, line.sale_order_index if line.sale_order_index else '' , format_lines_14) 
-                        sheet.merge_range(row, 1, row + merge_line, 1, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '', format_lines_14_left) 
-                        
-                        sheet.merge_range(row, 2, row + merge_line, 3, line.sale_order_number_and_size if line.sale_order_number_and_size else '', format_lines_14_left) 
-                        
-                        prod_spec_detail = ""
-                        if line.product_id and line.product_id.product_template_attribute_value_ids:
-                            for l in line.product_id.product_template_attribute_value_ids[:5]:
-                                prod_spec_detail += "● " + l.display_name + "\n"
-                        sheet.merge_range(row, 4, row + merge_line, 6, prod_spec_detail.rstrip("\n") if prod_spec_detail else '', format_lines_14_left)
-                        
+                        sheet.merge_range(row, 1, row + merge_line, 3, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '', format_lines_14_left) 
+                        sheet.merge_range(row, 4, row + merge_line, 6, line.sale_order_number_and_size if line.sale_order_number_and_size else '', format_lines_14_left) 
                         sheet.merge_range(row, 8, row + merge_line, 8, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '', format_lines_14)
                         sheet.merge_range(row, 9, row + merge_line, 9, '{0:,.0f}'.format(line.sale_line_calculate_packages)if line.sale_line_calculate_packages else '', format_lines_14) 
                         sheet.merge_range(row, 10, row + merge_line, 10, '{0:,.0f}'.format(line.product_id.sai) if line.product_id.sai else '', format_lines_14) 

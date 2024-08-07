@@ -132,10 +132,9 @@
                 <t t-if="l_index == 0">
                   <thead>
                     <tr class="table-title2 bold">
-                      <th class="text-center" style="width:2%">№</th>
-                      <th class="text-center" style="width:15%">品名</th>
-                      <th class="text-center" style="width:19%">品番・サイズ</th>
-                      <th class="text-center" style="width:19%">仕様・詳細</th>
+                      <th class="text-center" style="width:3%">№</th>
+                      <th class="text-center" style="width:25%">品名</th>
+                      <th class="text-center" style="width:27%">品番・サイズ</th>
                       <th class="text-center" style="width:5%">数量</th>
                       <th class="text-center" style="width:7%">個口数</th>
                       <th class="text-center" style="width:5%">才数</th>
@@ -148,8 +147,7 @@
                 </t>
                 <tbody class="invoice_tbody size14">
                   <tr class="border-bottom2">
-                    <td t-esc="l_index+1" class="text-center">
-                    </td>
+                    <td t-esc="l_index+1" class="text-center five-lines" />
                     <td>
                       <div t-if="l.stock_move_line_name_pdf"
                         t-field="l.stock_move_line_name_pdf" />
@@ -161,12 +159,6 @@
                     <td>
                       <div t-esc="l.product_pack_and_prod_no" />
                       <div t-esc="l.stock_move_product_size" />
-                    </td>
-                    <td class="five-lines">
-                      <t t-foreach="l.product_id.product_template_attribute_value_ids[:5]"
-                        t-as="string_line"> ● <span t-esc="string_line.display_name" />
-                        <br />
-                      </t>
                     </td>
                     <td class="text-center">
                       <div id="quote_qty">
