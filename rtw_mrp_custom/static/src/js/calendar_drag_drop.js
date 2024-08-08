@@ -52,7 +52,7 @@ odoo.define('rtw_mrp_custom.calendar_drag_drop', function (require) {
                             element.addClass('o_cw_nobg');
                             if (event.extendedProps.showTime && !self.hideTime) {
                                 const displayTime = moment(start).clone().format(self._getDbTimeFormat());
-                                if (event.extendedProps.record.product_qty != 0) {
+                                if (event.extendedProps.record.product_qty !== undefined && event.extendedProps.record.product_qty !== null && event.extendedProps.record.product_qty != 0) {
                                     element.find('.fc-content .fc-time').text(`${displayTime} ${event.extendedProps.record.product_qty}`);
                                 } else {
                                     element.find('.fc-content .fc-time').text(`${displayTime}`);
