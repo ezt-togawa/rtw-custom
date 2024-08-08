@@ -147,7 +147,7 @@
                 </t>
                 <tbody class="invoice_tbody size14">
                   <tr class="border-bottom2">
-                    <td t-esc="l_index+1" class="text-center five-lines" />
+                    <td t-esc="l_index+1" class="text-center lines" />
                     <td>
                       <div t-if="l.stock_move_line_name_pdf"
                         t-field="l.stock_move_line_name_pdf" />
