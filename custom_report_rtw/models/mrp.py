@@ -276,64 +276,29 @@ class MrpProduction(models.Model):
             record.mrp_production_date_planned_start = ''
   def _compute_mrp_product_attribute(self):
       for line in self:
-            attr = ""
-            attr_cfg = ""
+            attr_column1 = ""
+            attr_column2 = ""
+            attr_all = ""
             
-            attributes = line.product_id.product_template_attribute_value_ids  #attr default
-            attributes_cfg = [] 
-            
-            so = self.env['sale.order'].search([("name", '=', line.sale_reference)])
-            if so:
-                sol = self.env['sale.order.line'].search([("order_id", '=', so[0].id),("product_id", '=',line.product_id.id)])
-                if sol:
-                    attributes_cfg = sol[0].config_session_id.custom_value_ids #attr custom 
-                    
-            length_normal = len(attributes)
-            
-            if attributes:
-                if length_normal < 6:
-                    for attribute in attributes:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
-                    if attributes_cfg:
-                        count_cfg = 0 
-                        count_attr = length_normal
-                        for cfg in attributes_cfg:
-                            if count_attr >= 6 :
-                                break
-                            else:
-                                count_attr +=1
-                            attr += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
-                            count_cfg += 1
-                            
-                        for cfg2 in attributes_cfg[count_cfg:(6+count_cfg)]:
-                            attr_cfg += ("● " + cfg2.display_name + "\n" )
-                elif length_normal == 6 :
-                    for attribute in attributes:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
-                    if attributes_cfg:                            
-                        for cfg in attributes_cfg:
-                            attr_cfg += ("● " + cfg.display_name + "\n" )
+            if line.product_id and line.product_id.product_template_attribute_value_ids:
+                attributes = line.product_id.product_template_attribute_value_ids 
+                len_attributes = len(attributes)
+
+                if len_attributes <= 6:
+                    for attr in attributes:
+                        attr_column1 += f"● {attr.display_name}\n"                    
                 else:
-                    for attribute in attributes[:6]:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
-                    start = 6   
-                    for attribute in attributes[6:length_normal]:
-                        attr_cfg +=  ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
-                        start += 1
-                    if length_normal < 12 : 
-                        if attributes_cfg:
-                            for cfg in attributes_cfg[:(12-start)]:
-                                attr_cfg += ("● " + cfg.display_name + "\n" )
-            else: 
-                if attributes_cfg:                            
-                    for cfg in attributes_cfg[:6]:
-                        attr += ("● " +  cfg.display_name + "\n" )
-                    for cfg in attributes_cfg[6:12]:
-                        attr_cfg += ("● " +  cfg.display_name + "\n" )
+                    for attr in attributes[:6]:
+                        attr_column1 += f"● {attr.display_name}\n"
+                    for attr in attributes[6:12]:
+                        attr_column2 += f"● {attr.display_name}\n"
                         
-            attr = attr.rstrip()
-            attr_cfg = attr_cfg.rstrip() 
+                for attr in attributes:
+                    attr_all += f"● {attr.display_name}\n"                    
+                        
+                attr_column1 = attr_column1.rstrip()
+                attr_column2 = attr_column2.rstrip()
             
-            line.mrp_product_attribute = attr
-            line.mrp_product_attribute2 = attr_cfg
+            line.mrp_product_attribute = attr_column1
+            line.mrp_product_attribute2 = attr_column2
 

@@ -210,26 +210,26 @@
                             </t>
                           </div>
                         </td>
-                        <td class="size13">
+                        <td class="size12">
                           <div class="six-lines">
                             <t
+                              t-if="line.product_id.product_template_attribute_value_ids"
                               t-foreach="line.product_id.product_template_attribute_value_ids[0:6]"
-                              t-as="string_line">
+                              t-as="attr_value">
                               <div class="one-lines"> ● <span
-                                  t-esc="string_line.display_name" />
-                                                    <br />
+                                  t-esc="attr_value.display_name" />
                               </div>
                             </t>
                           </div>
                         </td>
-                        <td class="size13">
+                        <td class="size12">
                           <div class="six-lines">
                             <t
+                              t-if="len(line.product_id.product_template_attribute_value_ids) &gt; 6"
                               t-foreach="line.product_id.product_template_attribute_value_ids[6:12]"
-                              t-as="string_line">
+                              t-as="attr_value">
                               <div class="one-lines"> ● <span
-                                  t-esc="string_line.display_name" />
-                                                    <br />
+                                  t-esc="attr_value.display_name" />
                               </div>
                             </t>
                           </div>

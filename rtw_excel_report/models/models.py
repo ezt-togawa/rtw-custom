@@ -953,7 +953,7 @@ class SaleOrderLineExcelReport(models.Model):
         string="仕様・詳細",
     )
     sale_order_all_attribute = fields.Char(
-        compute="_compute_sale_order_all_attribute",
+        compute="_compute_sale_order_product_detail",
         string="All attributes",
     )
 
@@ -1173,76 +1173,34 @@ class SaleOrderLineExcelReport(models.Model):
 
     def _compute_sale_order_product_detail(self):
         for line in self:
-            attr = ""
-            attr_cfg = ""
-            attributes = line.product_id.product_template_attribute_value_ids  #attr default
-            attributes_cfg=line.config_session_id.custom_value_ids             #attr custom 
-            length_normal = len(attributes)
+            attr_column1 = ""
+            attr_column2 = ""
+            attr_all = ""
             
-            if attributes:
-                if length_normal < 6:
-                    for attribute in attributes:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
-                    if attributes_cfg:
-                        count_cfg = 0 
-                        count_attr = length_normal
-                        for cfg in attributes_cfg:
-                            if count_attr >= 6 :
-                                break
-                            else:
-                                count_attr +=1
-                            attr += ("● " + cfg.display_name + "\n" )
-                            count_cfg += 1
-                            
-                        for cfg2 in attributes_cfg[count_cfg:(6+count_cfg)]:
-                            attr_cfg += ("● " + cfg2.display_name + "\n" )
-                elif length_normal == 6 :
-                    for attribute in attributes:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
-                    if attributes_cfg:                            
-                        for cfg in attributes_cfg:
-                            attr_cfg += ("● " + cfg.display_name + "\n" )
+            if line.product_id and line.product_id.product_template_attribute_value_ids:
+                attributes = line.product_id.product_template_attribute_value_ids 
+                len_attributes = len(attributes)
+
+                if len_attributes <= 6:
+                    for attr in attributes:
+                        attr_column1 += f"● {attr.display_name}\n"                    
                 else:
-                    for attribute in attributes[:6]:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
-                    start = 6   
-                    for attribute in attributes[6:length_normal]:
-                        attr_cfg +=  ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
-                        start += 1
-                    if length_normal < 12 : 
-                        if attributes_cfg:
-                            for cfg in attributes_cfg[:(12-start)]:
-                                attr_cfg += ("● " + cfg.display_name + "\n" )
-            else: 
-                if attributes_cfg:                            
-                    for cfg in attributes_cfg[:6]:
-                        attr += ("● " +  cfg.display_name + "\n" )
-                    for cfg in attributes_cfg[6:12]:
-                        attr_cfg += ("● " +  cfg.display_name + "\n" )
+                    for attr in attributes[:6]:
+                        attr_column1 += f"● {attr.display_name}\n"
+                    for attr in attributes[6:12]:
+                        attr_column2 += f"● {attr.display_name}\n"
                         
-            attr = attr.rstrip()
-            attr_cfg = attr_cfg.rstrip()
-            
-            line.sale_order_product_detail = attr
-            line.product_spec_detail = attr.split("\n")[:6]
-            line.sale_order_product_detail_2 = attr_cfg
-            
-    def _compute_sale_order_all_attribute(self):
-        for line in self:
-            attr = ""
-            attributes = line.product_id.product_template_attribute_value_ids  #attr default
-            attributes_cfg=line.config_session_id.custom_value_ids             #attr custom 
-            
-            if attributes:
-                for attribute in attributes:
-                    attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" ) 
-            if attributes_cfg: 
-                for cfg2 in attributes_cfg:
-                    attr += ("● " + cfg2.display_name  + ":" + cfg2.value  + "\n" )
+                for attr in attributes:
+                    attr_all += f"● {attr.display_name}\n"                    
                         
-            attr = attr.rstrip()
+                attr_column1 = attr_column1.rstrip()
+                attr_column2 = attr_column2.rstrip()
+                attr_all = attr_all.rstrip()
             
-            line.sale_order_all_attribute = attr
+            line.sale_order_product_detail = attr_column1
+            line.sale_order_product_detail_2 = attr_column2
+            line.sale_order_all_attribute = attr_all
+            line.product_spec_detail = attr_all.split("\n")[:6]
 
     def _compute_sale_order_product_summary(self):
         for line in self:
@@ -1895,14 +1853,9 @@ class StockMoveExcelReport(models.Model):
                     categ_name =  line.description_picking
                     
                 if prod.product_template_attribute_value_ids:
-                    for attribute_value in prod.product_template_attribute_value_ids:
-                        attribute_name = attribute_value.attribute_id.name
-                        attribute_value_name = attribute_value.product_attribute_value_id.name
-
-                        if attribute_name and attribute_value_name:
-                            product_attribute += (
-                                f"● {attribute_name}:{attribute_value_name}\n"
-                            )
+                    for att in prod.product_template_attribute_value_ids:
+                        if att.display_name :
+                            product_attribute += f"● {att.display_name}\n"
             line.product_attribute = product_attribute   
             
             other_size = ""
@@ -2420,12 +2373,12 @@ class AccountMoveLineExcelReport(models.Model):
                 
                 if length_attribute_values <= 6 :
                     for l in attribute_values:
-                        attr += ("● " + l.attribute_id.name + ":" + l.product_attribute_value_id.name + "\n" ) 
+                        attr += ("● " + l.display_name + "\n" ) 
                 else:
                     for l in attribute_values[:6]:
-                        attr += ("● " + l.attribute_id.name + ":" + l.product_attribute_value_id.name + "\n" ) 
+                        attr += ("● " + l.display_name + "\n" ) 
                     for l in attribute_values[6:12]:
-                        attr_2 += ("● " + l.attribute_id.name + ":" + l.product_attribute_value_id.name + "\n" )
+                        attr_2 += ("● " + l.display_name + "\n" )
                                     
             attr = attr.rstrip()
             attr_2 = attr_2.rstrip()                        
