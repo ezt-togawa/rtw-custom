@@ -131,7 +131,11 @@ class sale_order_rtw(models.Model):
                             if not item == additional_text:
                                 filtered_list.append(item)
                         line.memo = ','.join(filtered_list)
-        
+                        
+    def action_confirm(self):
+        res = super(sale_order_rtw, self).action_confirm()
+        self.state = 'sale'
+        return res
 class rtw_sale_order_line(models.Model):
     _inherit = "sale.order.line"
     
