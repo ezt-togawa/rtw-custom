@@ -1,154 +1,97 @@
 from odoo import fields, models
 
 class MrpProduction(models.Model):
-  _inherit = 'mrp.production'
+    _inherit = 'mrp.production'
 
-  order_line=fields.One2many(
-      "sale.order.line",
-      "order_id",
-      string="Sale order line",
-      compute="_compute_get_sale_order_line",
-  )
+    order_line=fields.One2many(
+        "sale.order.line",
+        "order_id",
+        compute="_compute_get_sale_order_line",
+    )
+    mrp_production_parent_id = fields.One2many("mrp.production",compute="_compute_mrp_production_parent_id")
+    mrp_production_so_id = fields.One2many("sale.order",compute="_compute_mrp_production_so_id")
+    mrp_production_order_line = fields.One2many('sale.order.line',compute="_compute_mrp_production_order_line")
+    
+    mrp_product_name=fields.Char("mrp product name",compute="_compute_mrp_product_name")
+    mrp_product_name_excel=fields.Char("mrp product name",compute="_compute_mrp_product_name_excel")
+    mrp_product_config_cus_excel = fields.Char("mrp product config cus excel",compute="_compute_mrp_product_config_cus_excel")
+    mrp_product_type = fields.Char("mrp product type",compute="_compute_mrp_product_type")
+    mrp_product_attribute = fields.Char("mrp product attribute",compute="_compute_mrp_product_attribute")
+    mrp_product_attribute2 = fields.Char("mrp product attribute 2",compute="_compute_mrp_product_attribute")
+    mrp_product_attribute_summary = fields.Char("mrp product attribute summary",compute="_compute_mrp_product_attribute_summary")
+    mrp_product_product_qty = fields.Char(compute="_compute_mrp_product_product_qty")
+    mrp_workorder_state = fields.Char(compute="_compute_mrp_workorder_state")
+    mrp_production_date_planned_start = fields.Date(compute="_compute_mrp_production_date_planned_start")
+    
+    def _compute_mrp_workorder_state(self):
+        for record in self:
+            wk_001 = self.env['mrp.workcenter'].search([('code','=','wk_001')], limit=1)
+            wk_002 = self.env['mrp.workcenter'].search([('code','=','wk_002')], limit=1)
+            mrp_workorder_state = False
+            for workorder in record.workorder_ids:
+                if workorder.workcenter_id.id == wk_001.id:
+                    mrp_workorder_state = 'wk_001'
+                    break
+                if workorder.workcenter_id.id == wk_002.id: 
+                    mrp_workorder_state = 'wk_002'
+                    break
+            record.mrp_workorder_state = mrp_workorder_state
+    
+    def _compute_mrp_production_order_line(self):
+        for record in self:      
+            sale_order_line = False
+            search_criteria = [ #limit 10 times
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+                ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
+            ]
 
-  mrp_product_name=fields.Char(
-      "mrp product name",
-      compute="_compute_mrp_product_name",
-  )
-  
-  mrp_product_name_excel=fields.Char(
-      "mrp product name",
-      compute="_compute_mrp_product_name_excel",
-  )
-  
-  # mrp_product_config_cus = fields.Char(
-  #     "mrp product config cus",
-  #     compute="_compute_mrp_product_config_cus",
-  # )
-  mrp_product_config_cus_excel = fields.Char(
-      "mrp product config cus excel",
-      compute="_compute_mrp_product_config_cus_excel",
-  )
-  
-  mrp_product_type = fields.Char(
-      "mrp product type",
-      compute="_compute_mrp_product_type",
-  )
-  
-  mrp_product_attribute = fields.Char(
-      "mrp product attribute",
-      compute="_compute_mrp_product_attribute",
-  )
-  
-  mrp_product_attribute2 = fields.Char(
-      "mrp product attribute 2",
-      compute="_compute_mrp_product_attribute",
-  )
-  
-  mrp_product_attribute_summary = fields.Char(
-      "mrp product attribute summary",
-      compute="_compute_mrp_product_attribute_summary",
-  )
-  
-  mrp_production_parent_id = fields.One2many(
-      "mrp.production",
-      compute="_compute_mrp_production_parent_id",
-  )
-  
-  mrp_production_so_id = fields.One2many(
-      "sale.order",
-      compute="_compute_mrp_production_so_id",
-  )
-  
-  mrp_production_date_planned_start = fields.Date(
-      string='date planned start',
-      compute="_compute_mrp_production_date_planned_start"
-  )
-  
-  mrp_production_order_line = fields.One2many(
-      'sale.order.line',
-      compute="_compute_mrp_production_order_line"
-  )
-  
-  mrp_product_product_qty = fields.Char(string="mrp product product qty" , compute="_compute_mrp_product_product_qty")
-  
-  mrp_workorder_state = fields.Char(
-      compute="_compute_mrp_workorder_state"
-  )
-  
-  def _compute_mrp_workorder_state(self):
-    for record in self:
-        wk_001 = self.env['mrp.workcenter'].search([('code','=','wk_001')], limit=1)
-        wk_002 = self.env['mrp.workcenter'].search([('code','=','wk_002')], limit=1)
-        mrp_workorder_state = False
-        for workorder in record.workorder_ids:
-            if workorder.workcenter_id.id == wk_001.id:
-                mrp_workorder_state = 'wk_001'
-                break
-            if workorder.workcenter_id.id == wk_002.id: 
-                mrp_workorder_state = 'wk_002'
-                break
-        record.mrp_workorder_state = mrp_workorder_state
-  
-  def _compute_mrp_production_order_line(self):
-     for record in self:      
-       sale_order_line = False
-       search_criteria = [ #limit 10 times
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
-           ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
-       ]
+            for search in search_criteria: #find sale_order_line
+                if self.env['sale.order.line'].search([search]):
+                    sale_order_line = self.env['sale.order.line'].search([search])
+                    break
+                
+            record.mrp_production_order_line = sale_order_line
 
-       for search in search_criteria: #find sale_order_line
-           if self.env['sale.order.line'].search([search]):
-               sale_order_line = self.env['sale.order.line'].search([search])
-               break
-           
-       if sale_order_line:
-           record.mrp_production_order_line = sale_order_line
-       else:
-          record.mrp_production_order_line = False
-  
-  def _compute_mrp_product_product_qty(self):
-      for line in self:
-          float_product_qty = float(line.product_qty)
-          integer_part = int(line.product_qty)
-          decimal_part = round(float_product_qty - integer_part,2)
-          decimal_part_after_dot = int(str(decimal_part).split('.')[1])
-          if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
-              line.mrp_product_product_qty = integer_part
-          else:
-              while decimal_part_after_dot % 10 == 0:
-                  decimal_part_after_dot = decimal_part_after_dot / 10
-              line.mrp_product_product_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+    def _compute_mrp_product_product_qty(self):
+        for line in self:
+            float_product_qty = float(line.product_qty)
+            integer_part = int(line.product_qty)
+            decimal_part = round(float_product_qty - integer_part,2)
+            decimal_part_after_dot = int(str(decimal_part).split('.')[1])
+            if str(decimal_part).split('.')[1] == "00" or str(decimal_part).split('.')[1] == "0" :
+                line.mrp_product_product_qty = integer_part
+            else:
+                while decimal_part_after_dot % 10 == 0:
+                    decimal_part_after_dot = decimal_part_after_dot / 10
+                line.mrp_product_product_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
 
-  def _compute_get_sale_order_line(self):
-      for record in self:
-        sale_order = self.env['sale.order'].search([('name','=',record.origin)])
-        order_lines = self.env["sale.order.line"].search([("order_id", "in", sale_order.ids)])
+    def _compute_get_sale_order_line(self):
+        for record in self:
+            sale_order = self.env['sale.order'].search([('name','=',record.origin)])
+            order_lines = self.env["sale.order.line"].search([("order_id", "in", sale_order.ids)])
 
-        record.order_line = order_lines
-      
-  def _compute_mrp_product_name(self):   
-      for line in self:
-          name = ""
-          if line.product_id: 
-              if line.product_id.product_tmpl_id.config_ok :
-                  if line.product_id.product_tmpl_id.product_no :
-                      name = line.product_id.product_tmpl_id.product_no
-                  else: 
-                      name = line.product_id.product_tmpl_id.name   
-              else:
-                  name = line.product_id.product_tmpl_id.name
-          line.mrp_product_name = name
-          
-  def _compute_mrp_product_config_cus_excel(self):
+            record.order_line = order_lines
+        
+    def _compute_mrp_product_name(self):   
+        for line in self:
+            name = ""
+            if line.product_id and line.product_id.product_tmpl_id: 
+                prod_tmpl =line.product_id.product_tmpl_id
+                if prod_tmpl.config_ok and prod_tmpl.product_no:
+                    name = prod_tmpl.product_no
+                else: 
+                    name = name = prod_tmpl.name or ""
+            line.mrp_product_name = name
+            
+    def _compute_mrp_product_config_cus_excel(self):
         for line in self:
             mrp_prod_detail =  ''   
             type = line.mrp_product_type
@@ -173,82 +116,81 @@ class MrpProduction(models.Model):
                 mrp_prod_detail = config
                     
             line.mrp_product_config_cus_excel = mrp_prod_detail.strip()
-            
-  def _compute_mrp_product_type(self):
-      for line in self:
-          p_type = ""
-          if line.origin and line.origin.startswith('S'):
-            so = self.env['sale.order'].search([("name",'=',line.sale_reference)])
-            if so:
-                sol = self.env['sale.order.line'].search([("order_id",'=',so[0].id)])
-                if sol:
-                    for l in sol:
-                        if l.p_type:
-                            if l.p_type == "special":
-                                p_type = "別注"
-                            elif l.p_type == "custom":
-                                p_type = "特注"
-          line.mrp_product_type = p_type
-      
-  def _compute_mrp_product_name_excel(self):   
-      for line in self: 
-        prod = line.product_id
+                
+    def _compute_mrp_product_type(self):
+        for line in self:
+            p_type = ""
+            if line.origin and line.origin.startswith('S'):
+                so = self.env['sale.order'].search([("name",'=',line.sale_reference)])
+                if so:
+                    sol = self.env['sale.order.line'].search([("order_id",'=',so[0].id)])
+                    if sol:
+                        for l in sol:
+                            if l.p_type:
+                                if l.p_type == "special":
+                                    p_type = "別注"
+                                elif l.p_type == "custom":
+                                    p_type = "特注"
+            line.mrp_product_type = p_type
         
-        detail = ""
-        name = ""
-        summary = ""
-        size = ""
-        type = ""
-        if prod: 
-            prod_tmpl = prod.product_tmpl_id
-            if prod_tmpl:
-                if prod_tmpl.config_ok :  
-                    if prod_tmpl.product_no :
-                        name = prod_tmpl.product_no
-                    else: 
-                        name = prod_tmpl.name   
-                else:
-                    name = prod_tmpl.name
-            if prod.summary:
-                summary = prod.summary
-                
-        if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
-            size += line.mrp_production_order_line.product_size
+    def _compute_mrp_product_name_excel(self):   
+        for line in self: 
+            prod = line.product_id
             
-        type = line.mrp_product_type
-            
-        if name and summary and type :
-            detail += name +'\n' + summary +'\n' + type
-        elif name and summary:
-            detail += name +'\n' + summary
-        elif name and type:
-            detail += name +'\n' + type
-        elif summary and type:
-            detail += summary +'\n' + type
-        elif name :
-            detail += name 
-        elif name :
-            summary += summary
-        elif type :
-            detail += type 
+            detail = ""
+            name = ""
+            summary = ""
+            size = ""
+            type = ""
+            if prod: 
+                prod_tmpl = prod.product_tmpl_id
+                if prod_tmpl:
+                    if prod_tmpl.config_ok :  
+                        if prod_tmpl.product_no :
+                            name = prod_tmpl.product_no
+                        else: 
+                            name = prod_tmpl.name   
+                    else:
+                        name = prod_tmpl.name
+                if prod.summary:
+                    summary = prod.summary
+                    
+            if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
+                size += line.mrp_production_order_line.product_size
                 
-        if size:
-            detail += "\n" + size
+            type = line.mrp_product_type
                 
-        line.mrp_product_name_excel = detail 
+            if name and summary and type :
+                detail += name +'\n' + summary +'\n' + type
+            elif name and summary:
+                detail += name +'\n' + summary
+            elif name and type:
+                detail += name +'\n' + type
+            elif summary and type:
+                detail += summary +'\n' + type
+            elif name :
+                detail += name 
+            elif name :
+                summary += summary
+            elif type :
+                detail += type 
+                    
+            if size:
+                detail += "\n" + size
+                    
+            line.mrp_product_name_excel = detail 
 
-  def _compute_mrp_production_parent_id(self):
-      for record in self:
-        if record.origin and '/MO/' in record.origin:
-            mrp_parent_id = self.env['mrp.production'].search([('name','=',record.origin)],limit=1)
-            if mrp_parent_id:
-                record.mrp_production_parent_id = mrp_parent_id
-            else:
-                record.mrp_production_parent_id = False
-        else:
-            record.mrp_production_parent_id = False
-  
-  def _get_so_from_mrp(self , mrp_production , count = 0):
+    def _compute_mrp_production_parent_id(self):
+        for record in self:
+            mrp_parent = False
+            if record.origin and '/MO/' in record.origin:
+                mrp_parent_id = self.env['mrp.production'].search([('name', '=', record.origin)], limit=1)
+                if mrp_parent_id:
+                    mrp_parent = mrp_parent_id
+                    
+            record.mrp_production_parent_id = mrp_parent
+    
+    def _get_so_from_mrp(self , mrp_production , count = 0):
         if count >= 10:
             return False
         if not mrp_production.origin:
@@ -263,77 +205,48 @@ class MrpProduction(models.Model):
         else:
             sale_order_id = self.env['sale.order'].search([('name','=',mrp_production.origin)])
         return sale_order_id
-  
-  def _compute_mrp_production_so_id(self):
-      for record in self:
-        record.mrp_production_so_id = self._get_so_from_mrp(record)
-                       
-  def _compute_mrp_production_date_planned_start(self):
-      for record in self:
-        if record.date_planned_start:
-            record.mrp_production_date_planned_start = record.date_planned_start.date()
-        else:
-            record.mrp_production_date_planned_start = ''
-  def _compute_mrp_product_attribute(self):
-      for line in self:
-            attr = ""
-            attr_cfg = ""
-            
-            attributes = line.product_id.product_template_attribute_value_ids  #attr default
-            attributes_cfg = [] 
-            
-            so = self.env['sale.order'].search([("name", '=', line.sale_reference)])
-            if so:
-                sol = self.env['sale.order.line'].search([("order_id", '=', so[0].id),("product_id", '=',line.product_id.id)])
-                if sol:
-                    attributes_cfg = sol[0].config_session_id.custom_value_ids #attr custom 
-                    
-            length_normal = len(attributes)
-            
-            if attributes:
-                if length_normal < 6:
-                    for attribute in attributes:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
-                    if attributes_cfg:
-                        count_cfg = 0 
-                        count_attr = length_normal
-                        for cfg in attributes_cfg:
-                            if count_attr >= 6 :
-                                break
-                            else:
-                                count_attr +=1
-                            attr += ("● " + cfg.display_name  + ":" + cfg.value  + "\n" )
-                            count_cfg += 1
-                            
-                        for cfg2 in attributes_cfg[count_cfg:(6+count_cfg)]:
-                            attr_cfg += ("● " + cfg2.display_name + "\n" )
-                elif length_normal == 6 :
-                    for attribute in attributes:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )                    
-                    if attributes_cfg:                            
-                        for cfg in attributes_cfg:
-                            attr_cfg += ("● " + cfg.display_name + "\n" )
-                else:
-                    for attribute in attributes[:6]:
-                        attr += ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
-                    start = 6   
-                    for attribute in attributes[6:length_normal]:
-                        attr_cfg +=  ("● " + attribute.attribute_id.name + ":" + attribute.product_attribute_value_id.name + "\n" )
-                        start += 1
-                    if length_normal < 12 : 
-                        if attributes_cfg:
-                            for cfg in attributes_cfg[:(12-start)]:
-                                attr_cfg += ("● " + cfg.display_name + "\n" )
-            else: 
-                if attributes_cfg:                            
-                    for cfg in attributes_cfg[:6]:
-                        attr += ("● " +  cfg.display_name + "\n" )
-                    for cfg in attributes_cfg[6:12]:
-                        attr_cfg += ("● " +  cfg.display_name + "\n" )
+    
+    def _compute_mrp_production_so_id(self):
+        for record in self:
+            record.mrp_production_so_id = self._get_so_from_mrp(record)
                         
-            attr = attr.rstrip()
-            attr_cfg = attr_cfg.rstrip() 
+    def _compute_mrp_production_date_planned_start(self):
+        for record in self:
+            if record.date_planned_start:
+                record.mrp_production_date_planned_start = record.date_planned_start.date()
+            else:
+                record.mrp_production_date_planned_start = ''
+                
+    def _compute_mrp_product_attribute(self):
+        for line in self:
+            attr_column1 = ""
+            attr_column2 = ""
             
-            line.mrp_product_attribute = attr
-            line.mrp_product_attribute2 = attr_cfg
+            attributes = line.product_id.product_template_attribute_value_ids  # existing attr 
+            attributes_cfg = [] 
+            sol = line.mrp_production_order_line
+            if sol:
+                attributes_cfg = sol[0].config_session_id.custom_value_ids     # custom attr
+                
+            attr_list = [{"attribute_id": attr.attribute_id.id, "display_name": attr.display_name} for attr in attributes]
+            attr_cfg_list = [{"attribute_id": attr.attribute_id.id, "display_name": attr.display_name} for attr in attributes_cfg]
+            
+            # sort order by id 
+            sort_order_id = []
+            for sort in line.product_id.attribute_line_ids:
+                sort_order_id.append(sort.attribute_id.id)
+            
+            attr_all = sorted(attr_list + attr_cfg_list, key=lambda x: sort_order_id.index(x['attribute_id']) if x['attribute_id'] in sort_order_id else float('inf'))
+            
+            if len(attr_all) < 7:
+                for a in attr_all:
+                    attr_column1 += ("● " + a["display_name"] + "\n" )
+            else:
+                for a in attr_all[:6]:
+                    attr_column1 += ("● " + a["display_name"] + "\n" )
+                for a in attr_all[6:12]:
+                    attr_column2 += ("● " + a["display_name"] + "\n" )
+            
+            line.mrp_product_attribute = attr_column1.rstrip("\n") 
+            line.mrp_product_attribute2 = attr_column2.rstrip("\n") 
 

@@ -165,14 +165,18 @@
                       </t>
                     </td>
                     <td class="size13">
-                      <div t-esc="l.product_pack_and_prod_no"/>
+                      <div t-esc="l.product_pack_and_prod_no" />
                       <div t-esc="l.stock_move_product_size" />
                     </td>
                     <td class="size12">
-                      <t t-foreach="l.product_id.product_template_attribute_value_ids"
-                        t-as="string_line"> ● <span
-                          t-esc="string_line.display_name" />
-                                                <br />
+                      <t t-if="l.product_attribute">
+                        <t t-set="attr_arr"
+                          t-value="l.product_attribute.split('\n')" />
+                        <t t-foreach="attr_arr[:5]" t-as="att">
+                          <div>
+                            <span t-esc="att.strip()" />
+                          </div>
+                        </t>
                       </t>
                     </td>
                     <td class="text-center size14">
