@@ -39,6 +39,9 @@ class rtw_stock_move(models.Model):
         string="製造オーダー", compute="_get_mrp_production_id", store=True)
     product_package_quantity = fields.Integer(string="個口数")
     invoice_number = fields.Char(string="送り状番号")
+    manu_date_planned_start = fields.Datetime(string="製造開始予定日", compute="_get_mrp_production_id", store=True)
+    pearl_tone_attr = fields.Char(string="パールトーン", compute="_compute_pearl_tone_attr")
+    is_pearl_tone_attr = fields.Boolean()
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -105,8 +108,10 @@ class rtw_stock_move(models.Model):
                     [('origin', '=', rec.picking_id.sale_id.name), ('product_id', '=', rec.product_id.id)], limit=1)
                 if mrp:
                     rec.mrp_production_id = mrp.name
+                    rec.manu_date_planned_start = mrp.date_planned_start or None
                 else:
                     rec.mrp_production_id = None
+                    rec.manu_date_planned_start = None
 
     @api.depends('sale_line_id.shiratani_date','sale_id','sale_id.shiratani_entry_date')
     def _get_shiratani_date(self):
@@ -118,4 +123,19 @@ class rtw_stock_move(models.Model):
             else:
                 rec.shiratani_date = False
                     
-    
+    def _compute_pearl_tone_attr(self):
+        for line in self:
+            attribute = ''
+            
+            if line.product_id and line.product_id.product_template_attribute_value_ids:
+                for attr in line.product_id.product_template_attribute_value_ids:
+                    name_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute'),('res_id', '=', attr.attribute_id.id)]).name
+                    value_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute.value'),('res_id', '=', attr.product_attribute_value_id.id)]).name
+                    
+                    if name_att and name_att.isdigit() and int(name_att) == 951 and \
+                        value_att and value_att.isdigit() and int(value_att) == 951002:
+                        attribute = '有'
+                        line.is_pearl_tone_attr = True
+                    
+            line.pearl_tone_attr = attribute
+            

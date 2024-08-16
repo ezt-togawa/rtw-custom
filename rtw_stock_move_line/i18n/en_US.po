@@ -1,0 +1,34 @@
+#. module: rtw_stock_move_line
+#: model:ir.model.fields,field_description:rtw_stock_move_line.field_stock_move__manu_date_planned_start
+msgid "製造開始予定日"
+msgstr "Manu Date Planned Start"
+
+#. module: rtw_stock_move_line
+#: model_terms:ir.ui.view,arch_db:rtw_stock_move_line.stock_move_search_view_rtw
+msgid "パールトーン"
+msgstr "Pearl Tone"
+
+#. module: rtw_stock_move_line
+#: model_terms:ir.ui.view,arch_db:rtw_stock_move_line.stock_move_search_view_rtw
+msgid "製品"
+msgstr "Product Config"
+
+#. module: rtw_stock_move_line
+#: model_terms:ir.ui.view,arch_db:rtw_stock_move_line.stock_move_search_view_rtw
+msgid "移動先が糸島"
+msgstr "To Itoshima"
+
+#. module: rtw_stock_move_line
+#: model_terms:ir.ui.view,arch_db:rtw_stock_move_line.stock_move_search_view_rtw
+msgid "移動元が糸島"
+msgstr "From Itoshima"
+
+#. module: rtw_stock_move_line
+#: model_terms:ir.ui.view,arch_db:rtw_stock_move_line.stock_move_search_view_rtw
+msgid "移動先が白谷"
+msgstr "To Shiratani"
+
+#. module: rtw_stock_move_line
+#: model_terms:ir.ui.view,arch_db:rtw_stock_move_line.stock_move_search_view_rtw
+msgid "移動元が白谷"
+msgstr "From Shiratani"
