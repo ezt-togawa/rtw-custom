@@ -1,0 +1,14 @@
+#. module: stock_move_pallet
+#: model_terms:ir.ui.view,arch_db:stock_move_pallet.stock_move_list_pallet
+msgid "製造開始予定日"
+msgstr "Manu Date Planned Start"
+
+#. module: stock_move_pallet
+#: model_terms:ir.ui.view,arch_db:stock_move_pallet.stock_move_list_pallet
+msgid "パールトーン"
+msgstr "Pearl Tone"
+
+#. module: stock_move_pallet
+#: model_terms:ir.ui.view,arch_db:stock_move_pallet.stock_move_filter_pearl_tone
+msgid "パールトーン"
+msgstr "Pearl Tone"
