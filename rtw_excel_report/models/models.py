@@ -2555,7 +2555,21 @@ class MrpProductionExcelReport(models.Model):
     mrp_choose_option_find_warehouse_company_name = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
     mrp_choose_option_find_warehouse_address = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
     mrp_choose_option_find_warehouse_phone = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
+    mrp_child_mo_desired_delivery_date = fields.Datetime(compute="_compute_mrp_child_mo_desired_delivery_date")
     
+    def _compute_mrp_child_mo_desired_delivery_date(self):
+        for line in self:
+            desired_delivery_date = None
+            if line.origin and '/MO/' in line.origin:
+                print('line.product_id: ', line.product_id)
+                source_mo = self.env["mrp.production"].search([('name', '=', line.origin)], limit=1)
+                if source_mo:
+                    for move in source_mo.move_raw_ids:
+                        if move.product_id == line.product_id and move.forecast_expected_date:
+                            desired_delivery_date = move.forecast_expected_date
+            
+            line.mrp_child_mo_desired_delivery_date = desired_delivery_date
+                
     def _compute_mrp_choose_option_find_warehouse(self):
         for line in self:
             company_name = ""
