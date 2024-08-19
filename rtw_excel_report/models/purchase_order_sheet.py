@@ -36,6 +36,10 @@ class ReportMrpExcel(models.AbstractModel):
         format_text_13 = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':13})
         format_text_13_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':13})
         format_text_14 = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14})
+        format_date = 'yyyy-MM-dd'
+        if self.env.user.lang == "ja_JP":
+            format_date = 'yyyy年M月d日'
+        format_text_date = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'num_format': format_date})
         format_text_12 = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':12})
         format_remark_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
         format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11, 'color':'white','bold':True})
@@ -104,7 +108,11 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(1, 1, _("発注書"), format_sheet_title) 
                 sheet.write(5, 0, _("発注番号"), format_text) 
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else '', format_text) 
-                sheet.write(6, 0, _("送り先着日"), format_text) 
+                sheet.write(6, 0, _("配達希望日"), format_text)
+                if mrp.is_child_mo:
+                    sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date) 
+                else:
+                    sheet.write(6, 1, mrp.mrp_production_parent_id.mrp_production_date_planned_start if mrp.mrp_production_parent_id.mrp_production_date_planned_start else '', format_text_date) 
                 sheet.write(8, 0, _("物件名"), format_text) 
                 sheet.write(8, 3, _("送り先注記"), format_text_right)
                 
@@ -118,14 +126,14 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(11, 0, _("送り先"), format_text) 
                 
                 if mrp.sale_order.sipping_to == 'direct':
-                    sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_14) 
+                    # sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_14) 
                     sheet.write(11, 1, mrp.sale_order.shipping_destination_text  if mrp.sale_order.shipping_destination_text  else '', format_text_12) 
                     sheet.set_row(12, 0)
                     sheet.set_row(13, 0)
                     sheet.set_row(14, 0)
                     sheet.set_row(15, 0)
                 else:
-                    sheet.write(6, 1, mrp.sale_order.sale_order_warehouse_arrive_date if mrp.sale_order.sale_order_warehouse_arrive_date else '', format_text_14) 
+                    # sheet.write(6, 1, mrp.sale_order.sale_order_warehouse_arrive_date if mrp.sale_order.sale_order_warehouse_arrive_date else '', format_text_14) 
                     sheet.write(12, 0, _("住所"), format_text) 
                     sheet.write(13, 0, _("TEL"), format_text)
                     if mrp.address_ship and mrp.address_ship == "デポ/直送":
@@ -225,7 +233,12 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(1, 1, _("発注書"), format_sheet_title) 
                 sheet.write(5, 0, _("発注番号"), format_text) 
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else '', format_text) 
-                sheet.write(6, 0, _("送り先着日"), format_text) 
+                sheet.write(6, 0, _("配達希望日"), format_text)
+                if mrp.is_child_mo:
+                    sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date) 
+                else:
+                    sheet.write(6, 1, mrp.mrp_production_parent_id.mrp_production_date_planned_start if mrp.mrp_production_parent_id.mrp_production_date_planned_start else '', format_text_date) 
+                    
                 sheet.write(8, 0, _("物件名"), format_text) 
                 sheet.write(8, 3, _("送り先注記"), format_text_right)
                 
@@ -238,14 +251,14 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(11, 0, _("送り先"), format_text) 
                 
                 if mrp.sale_order.sipping_to == 'direct':
-                    sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_14) 
+                    # sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_14) 
                     sheet.write(11, 1, mrp.sale_order.shipping_destination_text  if mrp.sale_order.shipping_destination_text  else '', format_text_12) 
                     sheet.set_row(12, 0)
                     sheet.set_row(13, 0)
                     sheet.set_row(14, 0)
                     sheet.set_row(15, 0)
                 else:
-                    sheet.write(6, 1, mrp.sale_order.sale_order_warehouse_arrive_date if mrp.sale_order.sale_order_warehouse_arrive_date else '', format_text_14) 
+                    # sheet.write(6, 1, mrp.sale_order.sale_order_warehouse_arrive_date if mrp.sale_order.sale_order_warehouse_arrive_date else '', format_text_14) 
                     sheet.write(12, 0, _("住所"), format_text) 
                     sheet.write(13, 0, _("TEL"), format_text)
                     if mrp.address_ship and mrp.address_ship == "デポ/直送":
