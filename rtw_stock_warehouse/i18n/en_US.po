@@ -1,0 +1,4 @@
+#. module: rtw_stock_warehouse
+#: model:ir.model.fields,field_description:rtw_stock_warehouse.field_stock.warehouse__user_id
+msgid "発注担当者"
+msgstr "Responsible"
