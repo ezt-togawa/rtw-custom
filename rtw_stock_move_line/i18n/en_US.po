@@ -1,14 +1,4 @@
 #. module: rtw_stock_move_line
-#: model:ir.model.fields,field_description:rtw_stock_move_line.field_stock_move__manu_date_planned_start
-msgid "製造開始予定日"
-msgstr "Manu Date Planned Start"
-
-#. module: rtw_stock_move_line
-#: model_terms:ir.ui.view,arch_db:rtw_stock_move_line.stock_move_search_view_rtw
-msgid "パールトーン"
-msgstr "Pearl Tone"
-
-#. module: rtw_stock_move_line
 #: model_terms:ir.ui.view,arch_db:rtw_stock_move_line.stock_move_search_view_rtw
 msgid "製品"
 msgstr "Product Config"
