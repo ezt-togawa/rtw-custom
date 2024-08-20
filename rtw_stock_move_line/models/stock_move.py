@@ -32,7 +32,7 @@ class rtw_stock_move(models.Model):
         related='picking_id.forwarding_address', string='到着地',store=True)
     shipping_to = fields.Selection(
         string="配送", related='picking_id.sipping_to',store=True)
-    shizai_date = fields.Date(string="資材出荷目安1", compute="_get_shizai_date")
+    # shizai_date = fields.Date(string="資材出荷目安1", compute="_get_shizai_date")
     warehouse_arrive_date = fields.Date(
         compute="_get_warehouse_arrive_date" , store=True)
     mrp_production_id = fields.Char(
@@ -50,14 +50,14 @@ class rtw_stock_move(models.Model):
                 move.product_package_quantity = 0
         return mls
 
-    @api.depends('date_planned')
-    def _get_shizai_date(self):
-        for rec in self:
-            if rec.date_planned:
-                rec.shizai_date = rec.date_planned + \
-                    datetime.timedelta(days=-20)
-            else:
-                rec.shizai_date = False
+    # @api.depends('date_planned')
+    # def _get_shizai_date(self):
+    #     for rec in self:
+    #         if rec.date_planned:
+    #             rec.shizai_date = rec.date_planned + \
+    #                 datetime.timedelta(days=-20)
+    #         else:
+    #             rec.shizai_date = False
 
     @api.depends('product_id')
     def _get_sai(self):
