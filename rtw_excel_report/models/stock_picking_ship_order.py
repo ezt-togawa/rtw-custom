@@ -62,13 +62,13 @@ class StockPickingShipOrder(models.AbstractModel):
             
             sheet.set_paper(9)  #A4
             sheet.set_landscape()
-            # sheet.set_print_scale(66)
+            sheet.set_print_scale(74)
             
             margin_header = 0.3
             margin_footer = 0.3
-            left_margin = 0.8
-            right_margin = 0.7
-            top_margin = 0.5
+            left_margin = 0.4
+            right_margin = 0.4
+            top_margin = 0.6
             bottom_margin = 0.5
 
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
@@ -187,10 +187,10 @@ class StockPickingShipOrder(models.AbstractModel):
             sheet.merge_range(20, 11,20, 12, _("入荷元 "), format_table)
             sheet.write(20, 13, _("白谷着日"), format_table)
 
-            if so.stock_move:
+            if so.move_ids_without_package:
                 row = 21
-                for ind,line in enumerate(so.stock_move):
-                    merge_line = 2 + len(line.product_id.product_template_attribute_value_ids) if len(line.product_id.product_template_attribute_value_ids) > 1 else 2
+                for ind,line in enumerate(so.move_ids_without_package):
+                    merge_line = 4
 
                     sheet.merge_range(row, 0, row + merge_line, 0, line.stock_index if line.stock_index else '' , format_lines_10) 
                     sheet.merge_range(row, 1, row + merge_line, 1, line.product_name if line.product_name else '', format_lines_9_left) 

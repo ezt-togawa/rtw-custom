@@ -205,9 +205,14 @@ class productSpec(models.AbstractModel):
                         # name product
                         sheet.merge_range(7 + height + more_height, 2 + width, 7 + height + more_height, 22 + width, sol.name if sol.name else "", format_text_12)
                         
-                        # all 12 attribute
-                        sheet.merge_range(9 + height + more_height, 16 + width, 23 + height + more_height , 22 + width , sol.sale_order_all_attribute if sol.sale_order_all_attribute else "", format_text_top)
-                        
+                        # all 12 attributes
+                        attr_all = ''
+                        if sol.sale_order_product_attr_all:
+                            attr_arr = sol.sale_order_product_attr_all.split(',')
+                            for a in attr_arr:
+                                attr_all += a.strip() + "\n"
+                        sheet.merge_range(9 + height + more_height, 16 + width, 23 + height + more_height, 22 + width, attr_all, format_text_top)
+
                         # price and size
                         price_and_size = ""
                         price = ""
