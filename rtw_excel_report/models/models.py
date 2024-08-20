@@ -2,6 +2,7 @@ from odoo import models, fields, _
 from datetime import datetime
 import math
 import babel.dates
+import pytz
 
 class SaleOrderExcelReport(models.Model):
     _inherit = "sale.order"
@@ -2566,7 +2567,11 @@ class MrpProductionExcelReport(models.Model):
                 if source_mo:
                     for move in source_mo.move_raw_ids:
                         if move.product_id == line.product_id and move.forecast_expected_date:
-                            desired_delivery_date = move.forecast_expected_date
+                            local_tz = pytz.timezone('Asia/Tokyo')
+                            utc_tz = pytz.utc
+                            forecast_expected_date = move.forecast_expected_date.astimezone(utc_tz)
+                            local_date = forecast_expected_date.astimezone(local_tz)
+                            desired_delivery_date = local_date.date()
             
             line.mrp_child_mo_desired_delivery_date = desired_delivery_date
                 
