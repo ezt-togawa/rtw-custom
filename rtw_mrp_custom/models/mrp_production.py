@@ -18,6 +18,8 @@ class MrpProductionCus(models.Model):
     ship_to_address = fields.Selection([('1', '糸島'), ('2', '白谷'), ('3', 'デポ/直送') ], string="送付先", required=True, default='3')
     address_ship = fields.Selection([('倉庫', '倉庫'),('デポ/直送', 'デポ/直送') ], string="送付先", required=True, default='デポ/直送')
     storehouse_id = fields.Many2one(comodel_name='stock.warehouse', string="倉庫")
+    duration = fields.Float('Duration', help="Track duration in hours.")
+    color = fields.Integer(string='Event Color', default=1)
 
     def create_revised_edition(self):
         return {
@@ -58,6 +60,7 @@ class MrpProductionCus(models.Model):
             display_name = ''
             if record.is_drag_drop_calendar:
                 display_name = '[✔] '
+                record.color = 4
                 
             if order_no:
                 if product_no and date_planned:
