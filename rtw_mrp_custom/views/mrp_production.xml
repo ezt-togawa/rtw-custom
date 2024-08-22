@@ -26,6 +26,8 @@
                     <attribute name="mode">month</attribute>
                     <attribute name="date_start">date_planned_start</attribute>
                     <attribute name="date_stop"></attribute>
+                    <attribute name="date_delay">duration</attribute>
+                    <attribute name="color">color</attribute>
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="before">
                     <field name="itoshima_shipping_date" />
