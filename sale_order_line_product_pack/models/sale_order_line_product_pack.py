@@ -94,40 +94,41 @@ class product_pack(models.Model):
         return vals
 
 
-class product_template_product_pack(models.Model):
+class ProductTemplateProductPack(models.Model):
     _inherit = 'product.template'
 
     def write(self, vals):
         _vals = vals.copy()
-        list_vals = []
-        child_products = []
-        child_product = self.env['product.product'].search(
-            [('product_tmpl_id', '=', self.id)])
-        for product in child_product:
-            child_products.append(product.id)
-        if vals.get("pack_line_ids", False):
-            for val in vals.get("pack_line_ids", False):
-                if not val[0] == 4:  # CREATE
-                    list_vals.append(val)
-                if val[0] == 2:  # DELETE
-                    pack_line_product_id = self.env['product.pack.line'].search(
-                        [('id', '=', val[1])]).product_id.id
-                    pack_line = self.env['product.pack.line'].search(
-                        [('parent_product_id', 'in', child_products), ('product_id', '=', pack_line_product_id)])
-                    if pack_line:
-                        for pack in pack_line:
-                            if [2, pack.id, False] not in list_vals:
-                                list_vals.append([2, pack.id, False])
-                if val[0] == 1:  # UPDATE
-                    pack_line_product_id = self.env['product.pack.line'].search(
-                        [('id', '=', val[1])]).product_id.id
-                    pack_line = self.env['product.pack.line'].search(
-                        [('parent_product_id', 'in', child_products), ('product_id', '=', pack_line_product_id)])
-                    if pack_line:
-                        for pack in pack_line:
-                            if [1, pack.id, val[2]] not in list_vals:
-                                list_vals.append([1, pack.id, val[2]])
-        self.product_variant_ids.write({"pack_line_ids": list_vals})
-        if 'pack_line_ids' in vals:
-            _vals.pop("pack_line_ids")
-        return super().write(_vals)
+        for template in self:
+            list_vals = []
+            child_products = []
+            child_product = self.env['product.product'].search(
+                [('product_tmpl_id', '=', template.id)])
+            for product in child_product:
+                child_products.append(product.id)
+            if vals.get("pack_line_ids", False):
+                for val in vals.get("pack_line_ids", False):
+                    if not val[0] == 4:  # CREATE
+                        list_vals.append(val)
+                    if val[0] == 2:  # DELETE
+                        pack_line_product_id = self.env['product.pack.line'].search(
+                            [('id', '=', val[1])]).product_id.id
+                        pack_line = self.env['product.pack.line'].search(
+                            [('parent_product_id', 'in', child_products), ('product_id', '=', pack_line_product_id)])
+                        if pack_line:
+                            for pack in pack_line:
+                                if [2, pack.id, False] not in list_vals:
+                                    list_vals.append([2, pack.id, False])
+                    if val[0] == 1:  # UPDATE
+                        pack_line_product_id = self.env['product.pack.line'].search(
+                            [('id', '=', val[1])]).product_id.id
+                        pack_line = self.env['product.pack.line'].search(
+                            [('parent_product_id', 'in', child_products), ('product_id', '=', pack_line_product_id)])
+                        if pack_line:
+                            for pack in pack_line:
+                                if [1, pack.id, val[2]] not in list_vals:
+                                    list_vals.append([1, pack.id, val[2]])
+            template.product_variant_ids.write({"pack_line_ids": list_vals})
+            if 'pack_line_ids' in vals:
+                _vals.pop("pack_line_ids")
+        return super(ProductTemplateProductPack, self).write(_vals)
