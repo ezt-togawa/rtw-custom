@@ -62,7 +62,7 @@
                       </t>
                       <t t-else="">
                         <span class="size14"
-                          t-field="o.mrp_production_parent_id.mrp_production_date_planned_start" />
+                          t-field="o.mrp_production_date_planned_start" />
                       </t>
                     </t>
                   </div>

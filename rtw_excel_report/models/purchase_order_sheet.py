@@ -112,7 +112,7 @@ class ReportMrpExcel(models.AbstractModel):
                 if mrp.is_child_mo:
                     sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date) 
                 else:
-                    sheet.write(6, 1, mrp.mrp_production_parent_id.mrp_production_date_planned_start if mrp.mrp_production_parent_id.mrp_production_date_planned_start else '', format_text_date) 
+                    sheet.write(6, 1, mrp.mrp_production_date_planned_start if mrp.mrp_production_date_planned_start else '', format_text_date) 
                 sheet.write(8, 0, _("物件名"), format_text) 
                 sheet.write(8, 3, _("送り先注記"), format_text_right)
                 
@@ -237,7 +237,7 @@ class ReportMrpExcel(models.AbstractModel):
                 if mrp.is_child_mo:
                     sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date) 
                 else:
-                    sheet.write(6, 1, mrp.mrp_production_parent_id.mrp_production_date_planned_start if mrp.mrp_production_parent_id.mrp_production_date_planned_start else '', format_text_date) 
+                    sheet.write(6, 1, mrp.mrp_production_date_planned_start if mrp.mrp_production_date_planned_start else '', format_text_date) 
                     
                 sheet.write(8, 0, _("物件名"), format_text) 
                 sheet.write(8, 3, _("送り先注記"), format_text_right)

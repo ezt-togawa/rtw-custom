@@ -1,4 +1,5 @@
 from odoo import fields, models
+import pytz
 
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
@@ -213,9 +214,14 @@ class MrpProduction(models.Model):
     def _compute_mrp_production_date_planned_start(self):
         for record in self:
             if record.date_planned_start:
-                record.mrp_production_date_planned_start = record.date_planned_start.date()
+                record.mrp_production_date_planned_start = record._convert_timezone(record.date_planned_start)
             else:
                 record.mrp_production_date_planned_start = ''
+                
+    def _convert_timezone(self, date):            
+        timezone = pytz.timezone(self.env.user.tz or 'UTC')
+        utc_dt = fields.Datetime.from_string(date)
+        return utc_dt.astimezone(timezone)
                 
     def _compute_mrp_product_attribute(self):
         for line in self:
