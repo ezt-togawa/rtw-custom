@@ -2549,9 +2549,10 @@ class MrpProductionExcelReport(models.Model):
     mrp_choose_option_find_warehouse_company_name = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
     mrp_choose_option_find_warehouse_address = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
     mrp_choose_option_find_warehouse_phone = fields.Char(compute="_compute_mrp_choose_option_find_warehouse")
-    mrp_child_mo_desired_delivery_date = fields.Date(compute="_compute_mrp_child_mo_desired_delivery_date")
+    mrp_child_mo_desired_delivery_date = fields.Char(compute="_compute_mrp_child_mo_desired_delivery_date")
     is_child_mo= fields.Boolean(compute="_compute_is_child_mo")
     
+
     def _compute_is_child_mo(self):
         for line in self:
             is_child_mo = False
@@ -2569,7 +2570,18 @@ class MrpProductionExcelReport(models.Model):
                         if move.product_id == line.product_id and move.forecast_expected_date:
                             desired_delivery_date = line._convert_timezone(move.forecast_expected_date)
             
-            line.mrp_child_mo_desired_delivery_date = desired_delivery_date
+            line.mrp_child_mo_desired_delivery_date = line._format_date(desired_delivery_date, self.env.user.lang or 'en_US')
+            
+    def _format_date(self, date, lang_code):
+        if not date:
+            return ''
+        format = 'yyyy-MM-dd'
+        if lang_code == "ja_JP":
+            format = 'y年M月d日'
+            
+        formatted_date = babel.dates.format_date(date, format=format, locale = lang_code)
+        day_of_week = babel.dates.format_date(date, format='EEE', locale = lang_code)
+        return f"{formatted_date} [{day_of_week}]"    
             
     def _convert_timezone(self, date):            
         timezone = pytz.timezone(self.env.user.tz or 'UTC')
