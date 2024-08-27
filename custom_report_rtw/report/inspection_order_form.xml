@@ -72,17 +72,15 @@
                   <br />
                   <div> 配達希望日 <t>
                       <t t-if="o.is_child_mo">
-                        <!-- <t t-if="so.sipping_to == 'direct'">
-                        <span class="size14" t-field="so.sale_order_preferred_delivery_date" />
-                      </t>
-                      <t t-else="">
-                        <span class="size14" t-field="so.warehouse_arrive_date" />
-                      </t> -->
                         <span class="size14" t-field="o.mrp_child_mo_desired_delivery_date" />
                       </t>
                       <t t-else="">
-                        <span class="size14"
-                          t-field="o.mrp_production_date_planned_start" />
+                        <t t-if="so.sipping_to == 'direct'">
+                          <span class="size14" t-field="so.sale_order_preferred_delivery_date" />
+                        </t>
+                        <t t-else="">
+                          <span class="size14" t-field="so.warehouse_arrive_date" />
+                        </t>
                       </t>
                     </t>
                   </div>
