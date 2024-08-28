@@ -79,7 +79,7 @@
                           <span class="size14" t-field="so.sale_order_preferred_delivery_date" />
                         </t>
                         <t t-else="">
-                          <span class="size14" t-field="so.warehouse_arrive_date" />
+                          <span class="size14" t-field="so.so_warehouse_arrive_date_has_day" />
                         </t>
                       </t>
                     </t>
@@ -149,7 +149,14 @@
               <div class="row py-2">
                 <div class="col-4 size14">
                   <t t-if="so.sipping_to =='direct'">
-                    <div> 送り先: <span t-field="so.shipping_destination_text" /></div>
+                    <t t-if="o.address_ship == '倉庫'">
+                      <div> 送り先: <span t-field="o.mrp_choose_option_find_warehouse_company_name" /></div>
+                      <div> 住所: <span t-field="o.mrp_choose_option_find_warehouse_address" /></div>
+                      <div> TEL: <span t-field="o.mrp_choose_option_find_warehouse_phone" /></div>
+                    </t>
+                    <t t-else="">
+                      <div> 送り先: <span t-field="so.shipping_destination_text" /></div>
+                    </t>
                   </t>
                   <t t-elif="o.address_ship and o.address_ship == 'デポ/直送'">
                     <div> 送り先: <span t-field="so.sale_order_waypoint_name" /></div>
