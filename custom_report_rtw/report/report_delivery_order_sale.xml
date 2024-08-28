@@ -96,16 +96,16 @@
                 </div>
               </div>
             </div>
-            <div class="row py-2 size13 d-flex">
+            <div class="row py-2 size14 d-flex">
               <div class="col-9">
                 <div class="d-flex">
-                  <div style="width:65px"> 郵便番号：</div>
+                  <div style="width:70px"> 郵便番号：</div>
                   <t t-if="docs.forwarding_address_zip"> 〒 <div
                       t-field="docs.forwarding_address_zip" />
                   </t>
                 </div>
                 <div class="d-flex">
-                  <div style="width:65px" class="d-flex">
+                  <div style="width:70px" class="d-flex">
                     <div class="w-50"> 住 </div>
                     <div class="w-50">
                       <span class=" text-end"> 所：</span>
@@ -114,11 +114,11 @@
                   <div t-if="docs.forwarding_address" t-field="docs.forwarding_address" />
                 </div>
                 <div class="d-flex">
-                  <div style="width:65px">立 会 人：</div>
+                  <div style="width:70px">立 会 人：</div>
                   <div t-if="docs.sale_witness_name_phone" t-field="docs.sale_witness_name_phone" />
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-3 size14">
                 <div class="pt-4 ml-5">搬入費用：</div>
               </div>
             </div>
@@ -129,41 +129,39 @@
                 <t t-if="l_index == 0">
                   <thead>
                     <tr class="table-title2 bold">
-                      <th class="text-center" style="width:2%">№</th>
-                      <th class="text-center" style="width:15%">品名</th>
-                      <th class="text-center" style="width:20%">品番・サイズ</th>
-                      <th class="text-center" style="width:20%">仕様・詳細</th>
-                      <th class="text-center" style="width:6%">数量</th>
-                      <th class="text-center" style="width:8%">個口数</th>
+                      <th class="text-center" style="width:3%">№</th>
+                      <th class="text-center" style="width:25%">品名</th>
+                      <th class="text-center" style="width:27%">品番・サイズ</th>
+                      <th class="text-center" style="width:5%">数量</th>
+                      <th class="text-center" style="width:7%">個口数</th>
+                      <th class="text-center" style="width:5%">才数</th>
                       <th class="text-center" style="width:5%">取説</th>
                       <th class="text-center" style="width:5%">開梱</th>
                       <th class="text-center" style="width:5%">組立</th>
-                      <th class="text-center" style="width:14%">備考</th>
+                      <th class="text-center" style="width:13%">備考</th>
                     </tr>
                   </thead>
                 </t>
-                <tbody class="invoice_tbody">
+                <tbody class="invoice_tbody size14">
                   <t
                     t-if="l.display_type =='line_section' or l.display_type =='line_note'">
-                    <tr class="size15 table-border-bottom-auto four-lines">
+                    <tr class="table-border-bottom-auto">
                       <t t-if="l.display_type =='line_section'">
-                        <td class="bg-section " />
-                        <td class="size11 bg-section" colspan="9">
+                        <td class="bg-section lines" colspan="11">
                           <span t-field="l.name" />
                         </td>
                       </t>
                       <t t-elif="l.display_type =='line_note'">
-                        <td />
-                        <td class="size11" colspan="9">
+                        <td class="lines" colspan="11">
                           <span t-field="l.name" />
                         </td>
                       </t>
                     </tr>
                   </t>
                   <t t-else="">
-                    <tr class="size15 border-bottom2">
-                      <td t-esc="l_index+1" class="text-center size12" />
-                      <td class="size12">
+                    <tr class="border-bottom2">
+                      <td t-esc="l_index+1" class="text-center lines" />
+                      <td>
                         <div t-if="l.sale_order_line_name_pdf"
                           t-field="l.sale_order_line_name_pdf" />
                         <div t-if="l.sale_order_line_summary_pdf"
@@ -171,7 +169,7 @@
                         <div t-if="l.sale_order_line_p_type_pdf"
                           t-field="l.sale_order_line_p_type_pdf" />
                       </td>
-                      <td class="size12">
+                      <td>
                         <div>
                           <span
                             t-field="l.sale_line_product_no_delivery" />
@@ -183,37 +181,33 @@
                         </div>
                         <div t-esc="l.product_size" />
                       </td>
-                      <td
-                        t-att-class="len(l.product_id.product_template_attribute_value_ids) > 4 and 'size12 six-lines' or 'size12 four-lines'">
-                        <t
-                          t-foreach="l.product_id.product_template_attribute_value_ids[:6]"
-                          t-as="string_line"> ● <span
-                            t-esc="string_line.display_name" />
-                        <br />
-                        </t>
-                      </td>
                       <td class="text-center">
                         <div id="quote_qty">
                           <span t-esc="l.sale_line_product_uom_qty" />
                         </div>
                       </td>
-                      <td class="text-center size14">
+                      <td class="text-center">
                         <div>
                           <span t-esc="'{0:,.0f}'.format(l.sale_line_calculate_packages)" />
                         </div>
                       </td>
-                      <td class="text-center size13">
+                      <td class="text-center">
+                        <div t-if="l.product_id.sai">
+                          <span t-esc="'{0:,.0f}'.format(l.product_id.sai)" />
+                        </div>
+                      </td>
+                      <td class="text-center">
                         <t t-if="l.instruction_status">
                           有
                         </t>
                       </td>
-                      <td class="text-center size13">
+                      <td class="text-center">
                         <span>有</span>
                       </td>
-                      <td class="text-center size13">
+                      <td class="text-center">
                         <span> 無 </span>
                       </td>
-                      <td class="text-center size13">
+                      <td class="text-center">
                       </td>
                     </tr>
                   </t>

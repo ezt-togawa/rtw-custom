@@ -2768,6 +2768,16 @@ msgid "営業対象外"
 msgstr "Not subject to business"
 
 #. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__situation__6
+msgid "仮取引中"
+msgstr "Temp partner"
+
+#. module: rtw_sf
+#: model:ir.model.fields.selection,name:rtw_sf.selection__res_partner__situation__7
+msgid "取引中"
+msgstr "Partner"
+
+#. module: rtw_sf
 #: model:ir.model.fields.selection,name:rtw_sf.selection__rtw_sf_case__status__sales_representative_is_responding
 msgid "営業担当対応中"
 msgstr "Sales representatives are responding."

@@ -26,6 +26,8 @@
                     <attribute name="mode">month</attribute>
                     <attribute name="date_start">date_planned_start</attribute>
                     <attribute name="date_stop"></attribute>
+                    <attribute name="date_delay">duration</attribute>
+                    <attribute name="color">color</attribute>
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="before">
                     <field name="itoshima_shipping_date" />
@@ -61,7 +63,9 @@
                 ref="sales_mo_sequence.mrp_production_form_view_inherit_mrp_sale_mo_sequence" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='overseas']" position="before">
-                    <field name="ship_to_address" widget="radio" />
+                    <field name="address_ship" widget="radio" options="{'horizontal': true}" />
+                    <field name="storehouse_id" widget="many2one"
+                        attrs="{'invisible': [('address_ship', '=', 'デポ/直送')]}" />
                     <field name="mrp_ship_address_id" widget="selection" />
                 </xpath>
             </field>
@@ -73,7 +77,7 @@
             <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='reservation_state']" position="before">
-                    <field name="ship_to_address" optional="show" />
+                    <field name="address_ship" optional="show" />
                 </xpath>
             </field>
         </record>

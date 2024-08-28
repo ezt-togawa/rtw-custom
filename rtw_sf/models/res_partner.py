@@ -97,10 +97,12 @@ class rtw_sf_partner(models.Model):
     situation = fields.Selection([
         ('1', '新規'),
         ('2', '既存'),
+        ('6', '仮取引中'),
+        ('7', '取引中'),
         ('3', '休眠'),
         ('4', '未取引'),
         ('5', '営業対象外'),
-    ], default='1',
+    ], default='6',
         string="situation", tracking=True)  # 状況 OK Field11__c
     address_confirmation_required = fields.Selection([('moving', '（不達）転居'), ('unknown', '（不達）不明')],
                                                      string="address_confirmation_required",

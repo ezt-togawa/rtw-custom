@@ -51,17 +51,16 @@
                   </div>
                   <br />
                   <div> 配達希望日 <t>
-                      <t t-if="not o.mrp_production_parent_id">
+                      <t t-if="o.is_child_mo">
+                        <span class="size14" t-field="o.mrp_child_mo_desired_delivery_date" />
+                      </t>
+                      <t t-else="">
                         <t t-if="so.sipping_to == 'direct'">
                           <span class="size14" t-field="so.sale_order_preferred_delivery_date" />
                         </t>
                         <t t-else="">
                           <span class="size14" t-field="so.warehouse_arrive_date" />
                         </t>
-                      </t>
-                      <t t-else="">
-                        <span class="size14"
-                          t-field="o.mrp_production_parent_id.mrp_production_date_planned_start" />
                       </t>
                     </t>
                   </div>
@@ -129,18 +128,15 @@
               <div class="row py-2">
                 <div class="col-4 size14">
                   <t t-if="so.sipping_to =='direct'">
-                    <div> 送り先: <span t-field="so.shipping_destination_text" />
-                    </div>
+                    <div> 送り先: <span t-field="so.shipping_destination_text" /></div>
                   </t>
-                  <t t-elif="o.ship_to_address and o.ship_to_address == '3'">
-                    <div> 送り先: <span t-field="so.sale_order_waypoint_name" />
-                    </div>
+                  <t t-elif="o.address_ship and o.address_ship == 'デポ/直送'">
+                    <div> 送り先: <span t-field="so.sale_order_waypoint_name" /></div>
                     <div> 住所: <span t-field="so.sale_order_waypoint_address" /></div>
                     <div> TEL: <span t-if="so.waypoint.phone" t-field="so.waypoint.phone" /></div>
                   </t>
                   <t t-else="">
-                    <div> 送り先: <span t-field="o.mrp_choose_option_find_warehouse_company_name" />
-                    </div>
+                    <div> 送り先: <span t-field="o.mrp_choose_option_find_warehouse_company_name" /></div>
                     <div> 住所: <span t-field="o.mrp_choose_option_find_warehouse_address" /></div>
                     <div> TEL: <span t-field="o.mrp_choose_option_find_warehouse_phone" /></div>
                   </t>
@@ -194,25 +190,27 @@
                         </td>
                         <td class="size12">
                           <div class="six-lines">
-                            <t
-                              t-foreach="line.product_id.product_template_attribute_value_ids[0:6]"
-                              t-as="string_line">
-                              <div class="one-lines"> ● <span
-                                  t-esc="string_line.display_name" />
-                                                    <br />
-                              </div>
+                            <t t-if="line.mrp_product_attribute">
+                              <t t-set="attr_arr"
+                                t-value="line.mrp_product_attribute.split('\n')" />
+                              <t t-foreach="attr_arr" t-as="att">
+                                <div>
+                                  <span t-esc="att.strip()" />
+                                </div>
+                              </t>
                             </t>
                           </div>
                         </td>
                         <td class="size12">
                           <div class="six-lines">
-                            <t
-                              t-foreach="line.product_id.product_template_attribute_value_ids[6:12]"
-                              t-as="string_line">
-                              <div class="one-lines"> ● <span
-                                  t-esc="string_line.display_name" />
-                                                    <br />
-                              </div>
+                            <t t-if="line.mrp_product_attribute2">
+                              <t t-set="attr_arr"
+                                t-value="line.mrp_product_attribute2.split('\n')" />
+                              <t t-foreach="attr_arr" t-as="att">
+                                <div>
+                                  <span t-esc="att.strip()" />
+                                </div>
+                              </t>
                             </t>
                           </div>
                         </td>
