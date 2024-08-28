@@ -1081,7 +1081,7 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_line_calculate_packages(self):
         for line in self:
             if line.product_id.two_legs_scale:
-                line.sale_line_calculate_packages =  math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
+                line.sale_line_calculate_packages =  math.ceil(line.product_uom_qty * line.product_id.two_legs_scale)
             else:
                 line.sale_line_calculate_packages = 0      
                 
@@ -1154,9 +1154,7 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_order_packages(self):
         for line in self:
             if line.product_id.two_legs_scale:
-                line.sale_order_packages = math.ceil(
-                    line.product_uom_qty / line.product_id.two_legs_scale
-                )
+                line.sale_order_packages = math.ceil(line.product_uom_qty * line.product_id.two_legs_scale)
             else:
                 line.sale_order_packages = line.product_uom_qty
 
@@ -1783,7 +1781,7 @@ class StockMoveExcelReport(models.Model):
     def _compute_calculate_packages(self):
         for move in self:
             if move.product_id.two_legs_scale:
-                move.calculate_packages = math.ceil(move.product_uom_qty / move.product_id.two_legs_scale)
+                move.calculate_packages = math.ceil(move.product_uom_qty * move.product_id.two_legs_scale)
             else:
                 move.calculate_packages = move.product_uom_qty
 
@@ -1855,8 +1853,18 @@ class StockMoveExcelReport(models.Model):
                 while decimal_part_after_dot % 10 == 0:
                     decimal_part_after_dot = decimal_part_after_dot / 10
                 line.stock_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
-
-
+    
+    prod_package_qty = fields.Float(compute="_compute_prod_package_qty")
+    
+    def _compute_prod_package_qty(self):
+        for line in self:
+            pack = 0.0
+            if line.product_package_quantity:
+                pack =  math.ceil(line.product_uom_qty * line.product_package_quantity)
+            else:
+                pack = line.product_uom_qty
+            line.prod_package_qty = '{0:,.0f}'.format(pack)
+    
     def _compute_stock_move(self):
         index = 0
         for line in self:

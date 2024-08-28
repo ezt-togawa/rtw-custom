@@ -148,7 +148,7 @@ class productSpec(models.AbstractModel):
                     sheet.write(row_inside, 4 , prod_name, format_left)
                     sheet.merge_range(row_inside, 5, row_inside, 6, attrs, format_attr)
                     sheet.write(row_inside, 7, prod_qty, format_wrap)
-                    sheet.write(row_inside, 8, line.product_package_quantity if line.product_package_quantity else 0, format_wrap)
+                    sheet.write(row_inside, 8, line.prod_package_qty if line.prod_package_qty else 0, format_wrap)
 
                     row_inside += 1
             else:

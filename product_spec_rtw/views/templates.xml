@@ -6,37 +6,37 @@
             <field name="inherit_id" ref="product.product_template_only_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='categ_id']" position="after">
-                    <field name="product_no" class="product_no"/>
-                    <field name="key_component" class="key_component"/>
-                    <field name="width" class="width"/>
-                    <field name="height" class="height"/>
-                    <field name="depth" class="depth"/>
-                    <field name="diameter" class="diameter"/>
-                    <field name="sh" class="sh"/>
-                    <field name="ah" class="ah"/>
-                    <field name="cloth" class="cloth A(M)"/>
-                    <field name="cloth_b" class="cloth B(M)"/>
-                    <field name="leather" class="leather(sheet)"/>
-                    <field name="leather_ds" class="leather(ds)"/>
-                    <field name="sai" class="sai"/>
-                    <field name="series" class="series"/>
-<!--                    <field name="shipping_cost" class="shipping cost"/>-->
-                    <field name="lx_key_figure" class="LX Key Figure"/>
-                    <field name="catalog"/>
+                    <field name="product_no" class="product_no" />
+                    <field name="key_component" class="key_component" />
+                    <field name="width" class="width" />
+                    <field name="height" class="height" />
+                    <field name="depth" class="depth" />
+                    <field name="diameter" class="diameter" />
+                    <field name="sh" class="sh" />
+                    <field name="ah" class="ah" />
+                    <field name="cloth" class="cloth A(M)" />
+                    <field name="cloth_b" class="cloth B(M)" />
+                    <field name="leather" class="leather(sheet)" />
+                    <field name="leather_ds" class="leather(ds)" />
+                    <field name="sai" class="sai" />
+                    <field name="series" class="series" />
+                    <!--                    <field name="shipping_cost" class="shipping cost"/>-->
+                    <field name="lx_key_figure" class="LX Key Figure" />
+                    <field name="catalog" />
                 </xpath>
                 <xpath expr="//div[@name='options']" position="before">
-                    <label for="summary" string="summary"/>
-                    <field name="summary" class="summary"/>
+                    <label for="summary" string="summary" />
+                    <field name="summary" class="summary" />
                 </xpath>
                 <xpath expr="//page[@name='variants']" position="after">
                     <page name="bom_info" string="BOM info">
                         <group>
-                            <field name="classification"/>
-                            <field name="storage_location"/>
-                            <field name="two_legs_scale"/>
-                            <field name="minimum_scale"/>
-                            <field name="necessary_length_of_the_cloth_a"/>
-                            <field name="necessary_length_of_the_cloth_b"/>
+                            <field name="classification" />
+                            <field name="storage_location" />
+                            <field name="two_legs_scale" />
+                            <field name="minimum_scale" />
+                            <field name="necessary_length_of_the_cloth_a" />
+                            <field name="necessary_length_of_the_cloth_b" />
                         </group>
                         <group>
 

@@ -167,7 +167,7 @@
                     </td>
                     <td class="text-center">
                       <div>
-                        <span t-esc="'{0:,.0f}'.format(l.product_package_quantity)" />
+                        <span t-esc="l.prod_package_qty" />
                       </div>
                     </td>
                     <td class="text-center">
