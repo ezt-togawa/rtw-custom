@@ -240,7 +240,8 @@ class SaleOrderExcelReport(models.Model):
     send_to_tel_fax = fields.Char(compute="_compute_send_to_company_delivery")  
     dear_to_delivery = fields.Char(compute="_compute_send_to_company_delivery")
     sale_witness_name_phone = fields.Char(compute="_compute_sale_witness_name_phone")
-    
+    so_warehouse_arrive_date_has_day = fields.Char(compute="_compute_sale_order_format_date")
+
     def _compute_sale_witness_name_phone(self):
         for record in self:
             witness_name_phone = ""
@@ -853,19 +854,24 @@ class SaleOrderExcelReport(models.Model):
             else:
                 record.sale_order_warehouse_arrive_date = ""
                 
+            if record.warehouse_arrive_date:
+                record.so_warehouse_arrive_date_has_day = record._format_date(record.warehouse_arrive_date, record.lang_code, True)
+            else:
+                record.so_warehouse_arrive_date_has_day = ""
+                
             if record.date_deadline:
                 record.sale_order_date_deadline = record._format_date(record.date_deadline, record.lang_code)
             else:
                 record.sale_order_date_deadline = ""
                 
-    def _format_date(self, date, lang_code, is_preferred_delivery_date = False):
+    def _format_date(self, date, lang_code, has_day = False):
         format = 'yyyy-MM-dd'
         if lang_code == "ja_JP":
             format = 'y年M月d日'
             
         formatted_date = babel.dates.format_date(date, format=format, locale = lang_code)
         
-        if is_preferred_delivery_date:
+        if has_day:
             day_of_week = babel.dates.format_date(date, format='EEE', locale = lang_code)
             return f"{formatted_date} [{day_of_week}]"
         
