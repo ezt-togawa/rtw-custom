@@ -1,5 +1,6 @@
 from odoo import fields, models
 import pytz
+from datetime import datetime
 
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
@@ -23,7 +24,12 @@ class MrpProduction(models.Model):
     mrp_product_product_qty = fields.Char(compute="_compute_mrp_product_product_qty")
     mrp_workorder_state = fields.Char(compute="_compute_mrp_workorder_state")
     mrp_production_date_planned_start = fields.Date(compute="_compute_mrp_production_date_planned_start")
+    current_print = fields.Char(compute="_compute_current_print")
     
+    def _compute_current_print(self):
+        for so in self:
+            so.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
+            
     def _compute_mrp_workorder_state(self):
         for record in self:
             wk_001 = self.env['mrp.workcenter'].search([('code','=','wk_001')], limit=1)

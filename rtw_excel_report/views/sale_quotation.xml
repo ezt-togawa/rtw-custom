@@ -1,0 +1,12 @@
+<odoo>
+    <record id="report_quotation" model="ir.actions.report">
+        <field name="model">sale.order</field>
+        <field name="name">御見積書</field>
+        <field name="report_name">rtw_excel_report.report_quotation_xls</field>
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="binding_view_types">form</field>
+        <field name="print_report_name">'御見積書-' + object.current_print</field>
+    </record>
+</odoo>

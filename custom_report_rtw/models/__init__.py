@@ -8,3 +8,4 @@ from . import stock
 from . import mrp
 from . import purchase
 from . import err_pdf
+from . import product

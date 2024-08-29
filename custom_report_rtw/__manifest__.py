@@ -26,30 +26,30 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        # quotation
-        'report/report_quotation.xml',
-        'report/report_quotation_oversea.xml',
-        'report/report_list_price_quotation.xml',
-        'report/report_unit_price.xml',
-        'report/purchase_order.xml',
-        'report/purchase_order_fixed_price.xml',
-        'report/report_product_spec.xml',
-        'report/report_delivery_order_sale.xml',
+        # sale
+        'report/sale_quotation.xml',
+        'report/sale_quotation_oversea.xml',
+        'report/sale_list_price_quotation.xml',
+        'report/sale_unit_price.xml',
+        'report/sale_order_form.xml',
+        'report/sale_list_order_form.xml',
+        'report/sale_product_spec.xml',
+        'report/sale_delivery_order.xml',
+        'report/sale_invoice.xml',
         
         # delivery
-        'report/report_delivery_order.xml',
-        'report/report_shipping_order.xml',
+        'report/picking_delivery_order.xml',
+        'report/picking_shipping_order.xml',
         
         # invoice
-        'report/report_invoice.xml',
-        'report/report_invoice_sale_order.xml',
+        'report/account_invoice.xml',
         
         # purchase order
-        'report/purchase_order_sheet_for_part.xml',
+        'report/purchase_order_component.xml',
         
         # mrp
-        'report/purchase_order_sheet.xml',
-        'report/inspection_order_form.xml',
+        'report/mrp_purchase_order.xml',
+        'report/mrp_purchase_order_inspection.xml',
         
         #general
         'report/external_layout.xml',

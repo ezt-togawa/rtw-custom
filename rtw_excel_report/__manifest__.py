@@ -56,33 +56,50 @@
         # 'report_ship_order/templates.xml',
 
         'views/views.xml',
-        'views/product_spec.xml',
-        'views/work_progress_slip_list.xml',
-        'views/product_label_sticker.xml',
-        'views/inventory_import_list.xml',
-        'views/inspection_check_sheet.xml',
-        'views/stock_status_list.xml',
-        'views/shipping_list.xml',
-        'views/invoice_sticker.xml',
-        'views/scheduled_payment_list.xml',
-        'views/scheduled_arrival_list.xml',
-        'views/supplied_material_detail.xml',
-        'views/stock_move_pallet.xml',
-        'views/report_quotation.xml',
-        'views/report_quotation_oversea.xml',
-        'views/list_price_quotation.xml',
-        'views/unit_price_quotation.xml',
-        'views/purchase_order.xml',
-        'views/purchase_order2.xml',
-        'views/invoice_sale_order.xml',
-        'views/invoice_account_move.xml',
-        'views/purchase_order_for_part.xml',
-        'views/inspection_order_form.xml',
-        'views/purchase_order_sheet.xml',
-        'views/delivery_sale_order.xml',
-        'views/stock_picking_delivery.xml',
-        'views/stock_picking_ship_order.xml',
+        # sale form
+        'views/sale_quotation.xml',
+        'views/sale_quotation_oversea.xml',
+        'views/sale_list_price_quotation.xml',
+        'views/sale_unit_price_quotation.xml',
+        'views/sale_order_form.xml',
+        'views/sale_list_order_form.xml',
+        'views/sale_product_spec.xml',
+        'views/sale_delivery.xml',
+        'views/sale_invoice.xml',
 
+        # picking
+        'views/picking_delivery_order.xml',      #form
+        'views/picking_ship_order.xml',          #form 
+        #picking
+        'views/picking_scheduled_supply_list.xml',  #支給予定リスト list
+        'views/picking_scheduled_arrival_list.xml', #入荷予定リスト list
+        'views/picking_scheduled_shipment_list.xml',#出荷予定リスト list
+        
+        'views/picking_supplied_parts_details.xml',#支給部材明細       form
+        'views/picking_inspection_check_sheet.xml', #検品チェックシート  form
+        'views/picking_shipping_form_seal.xml',         #送り状シール       form
+
+        # invoice
+        'views/account_invoice.xml',
+
+        # purchase order
+        'views/purchase_order_component.xml',     #list,form
+
+        # mrp
+        'views/mrp_purchase_order.xml',           #form
+        'views/mrp_purchase_order_inspection.xml',#form
+        
+        'views/mrp_product_label_seal.xml',       #list,form
+        'views/mrp_wip_product_list.xml',         #list,form
+        
+        #stock quant 
+        'views/stock_quant_inventory_entry_list.xml',
+        
+        #product template
+        'views/prod_tmpl_inventory_status_list.xml',
+        
+        'views/stock_move_pallet.xml',
+        
         # 'report_stock_move_pallet/actions.xml',
         # 'report_stock_move_pallet/templates.xml',
     ],
