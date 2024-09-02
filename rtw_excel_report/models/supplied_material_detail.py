@@ -135,7 +135,7 @@ class productSpec(models.AbstractModel):
                 for line in stock_moves:
                     
                     if line.product_id.two_legs_scale and line.product_uom_qty:
-                        package = math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
+                        package = math.ceil(line.product_uom_qty * line.product_id.two_legs_scale)
                     elif line.product_uom_qty :
                             package = line.product_uom_qty   
                     if line.product_id.product_tmpl_id.name:
@@ -167,7 +167,7 @@ class productSpec(models.AbstractModel):
             elif stock_move_lines :
                 for line in stock_move_lines:
                         if line.product_id.two_legs_scale and line.product_uom_qty:
-                            package= math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
+                            package= math.ceil(line.product_uom_qty * line.product_id.two_legs_scale)
                         else:
                             if line.product_uom_qty :
                                 package = line.product_uom_qty 

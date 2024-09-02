@@ -177,7 +177,7 @@ class SaleOrderLine(models.Model):
     def _compute_calculate_packages(self):
         for line in self:
             if line.product_id.two_legs_scale:
-                line.calculate_packages = math.ceil(line.product_uom_qty / line.product_id.two_legs_scale)
+                line.calculate_packages = math.ceil(line.product_uom_qty * line.product_id.two_legs_scale)
             else:
                 line.calculate_packages = line.product_uom_qty
                 
