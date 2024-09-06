@@ -17,7 +17,49 @@ class MrpProductionCus(models.Model):
     storehouse_id = fields.Many2one(comodel_name='stock.warehouse', string="倉庫")
     duration = fields.Float('Duration', help="Track duration in hours.")
     color = fields.Integer(string='Event Color', default=1)
+    sales_order = fields.Char(string='販売オーダー', compute="_compute_sales_order")
 
+    def _compute_sales_order(self):
+        for line in self:
+            order_no= ''
+            if line.origin:
+                if '/MO/' not in line.origin:
+                    order_no = line.origin
+                else:
+                    source_mo = self.env['mrp.production'].search([('name', '=', line.origin)], limit=1)
+                    while source_mo and '/MO/' in source_mo.origin:
+                        source_mo = self.env['mrp.production'].search([('name', '=', source_mo.origin)], limit=1)
+                        
+                    if source_mo:
+                        order_no = source_mo.origin
+                    else:
+                        order_no = line.origin
+                    
+            line.sales_order = order_no
+    
+    @api.model
+    def create(self, vals):
+        record = super(MrpProductionCus, self).create(vals)
+        if '/MO/' in record.origin:
+            child_mo = self.env["mrp.production"].search([('origin', '=', record.origin)])
+            child_mo.address_ship = '倉庫'
+            child_mo._onchange_address_ship()
+        return record
+
+    @api.onchange('address_ship')
+    def _onchange_address_ship(self):
+        for record in self:
+            if record.is_child_mo and record.address_ship == '倉庫':
+                source_mo = self.env["mrp.production"].search([('name', '=', record.origin)], limit=1)
+                if source_mo and source_mo.move_raw_ids:
+                    for move in source_mo.move_raw_ids:
+                        if move.product_id == record.product_id:
+                            location = self.env["stock.location"].search([('id', '=', move.location_id.id)], limit=1)
+                            if location:
+                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', location.id)], limit=1)
+                                if warehouse:
+                                    record.storehouse_id = warehouse
+            
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',

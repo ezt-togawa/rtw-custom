@@ -79,6 +79,9 @@
                 <xpath expr="//field[@name='reservation_state']" position="before">
                     <field name="address_ship" optional="show" />
                 </xpath>
+                <xpath expr="//field[@name='origin']" position="before">
+                    <field name="sales_order" optional="show" />
+                </xpath>
             </field>
         </record>
     </data>
