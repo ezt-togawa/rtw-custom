@@ -17,7 +17,30 @@ class MrpProductionCus(models.Model):
     storehouse_id = fields.Many2one(comodel_name='stock.warehouse', string="倉庫")
     duration = fields.Float('Duration', help="Track duration in hours.")
     color = fields.Integer(string='Event Color', default=1)
-
+        
+    @api.model
+    def create(self, vals):
+        record = super(MrpProductionCus, self).create(vals)
+        if '/MO/' in record.origin:
+            child_mo = self.env["mrp.production"].search([('origin', '=', record.origin)], limit=1)
+            child_mo.address_ship = '倉庫'
+            child_mo._onchange_address_ship()
+        return record
+    
+    @api.onchange('address_ship')
+    def _onchange_address_ship(self):
+        for record in self:
+            if record.is_child_mo and record.address_ship == '倉庫':
+                source_mo = self.env["mrp.production"].search([('name', '=', record.origin)], limit=1)
+                if source_mo:
+                    for move in source_mo.move_raw_ids:
+                        if move.product_id == record.product_id:
+                            location = self.env["stock.location"].search([('id', '=', move.location_id.id)], limit=1)
+                            if location:
+                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', location.id)], limit=1)
+                                if warehouse:
+                                    record.storehouse_id = warehouse
+        
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',
