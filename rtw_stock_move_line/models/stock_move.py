@@ -37,15 +37,15 @@ class rtw_stock_move(models.Model):
         compute="_get_warehouse_arrive_date" , store=True)
     mrp_production_id = fields.Char(
         string="製造オーダー", compute="_get_mrp_production_id", store=True)
-    product_package_quantity = fields.Integer(string="個口数")
+    product_package_quantity = fields.Float(string="個口数")
     invoice_number = fields.Char(string="送り状番号")
 
     @api.model_create_multi
     def create(self, vals_list):
         mls = super().create(vals_list)
         for move in mls:
-            if move.product_id.product_tmpl_id.two_legs_scale > 0:
-                move.product_package_quantity = math.ceil(move.product_qty /move.product_id.product_tmpl_id.two_legs_scale)
+            if move.product_id and move.product_id.two_legs_scale:
+                move.product_package_quantity = math.ceil(move.product_qty * move.product_id.two_legs_scale)
             else:
                 move.product_package_quantity = 0
         return mls

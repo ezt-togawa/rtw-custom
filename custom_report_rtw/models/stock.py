@@ -54,7 +54,7 @@ class StockMove(models.Model):
   def _compute_calculate_packages(self):
     for move in self:
         if move.product_id.two_legs_scale:
-            move.calculate_packages = math.ceil(move.product_uom_qty / move.product_id.two_legs_scale)
+            move.calculate_packages = math.ceil(move.product_uom_qty * move.product_id.two_legs_scale)
         else:
             move.calculate_packages = move.product_uom_qty
             

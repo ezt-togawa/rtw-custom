@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api, _
+from odoo import models, fields, _, api
 from dateutil.parser import parse
-from datetime import datetime
-import pytz
 
 class MrpProductionCus(models.Model):
     _inherit = 'mrp.production'
@@ -13,14 +11,55 @@ class MrpProductionCus(models.Model):
         string="revised edition")
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定")
     is_drag_drop_calendar = fields.Boolean()
-    new_mrp_production = fields.Integer()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
     ship_to_address = fields.Selection([('1', '糸島'), ('2', '白谷'), ('3', 'デポ/直送') ], string="送付先", required=True, default='3')
     address_ship = fields.Selection([('倉庫', '倉庫'),('デポ/直送', 'デポ/直送') ], string="送付先", required=True, default='デポ/直送')
     storehouse_id = fields.Many2one(comodel_name='stock.warehouse', string="倉庫")
     duration = fields.Float('Duration', help="Track duration in hours.")
     color = fields.Integer(string='Event Color', default=1)
+    sales_order = fields.Char(string='販売オーダー', compute="_compute_sales_order")
 
+    def _compute_sales_order(self):
+        for line in self:
+            order_no= ''
+            if line.origin:
+                if '/MO/' not in line.origin:
+                    order_no = line.origin
+                else:
+                    source_mo = self.env['mrp.production'].search([('name', '=', line.origin)], limit=1)
+                    while source_mo and '/MO/' in source_mo.origin:
+                        source_mo = self.env['mrp.production'].search([('name', '=', source_mo.origin)], limit=1)
+                        
+                    if source_mo:
+                        order_no = source_mo.origin
+                    else:
+                        order_no = line.origin
+                    
+            line.sales_order = order_no
+    
+    @api.model
+    def create(self, vals):
+        record = super(MrpProductionCus, self).create(vals)
+        if '/MO/' in record.origin:
+            child_mo = self.env["mrp.production"].search([('origin', '=', record.origin)])
+            child_mo.address_ship = '倉庫'
+            child_mo._onchange_address_ship()
+        return record
+
+    @api.onchange('address_ship')
+    def _onchange_address_ship(self):
+        for record in self:
+            if record.is_child_mo and record.address_ship == '倉庫':
+                source_mo = self.env["mrp.production"].search([('name', '=', record.origin)], limit=1)
+                if source_mo and source_mo.move_raw_ids:
+                    for move in source_mo.move_raw_ids:
+                        if move.product_id == record.product_id:
+                            location = self.env["stock.location"].search([('id', '=', move.location_id.id)], limit=1)
+                            if location:
+                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', location.id)], limit=1)
+                                if warehouse:
+                                    record.storehouse_id = warehouse
+            
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',
@@ -34,9 +73,9 @@ class MrpProductionCus(models.Model):
             }
         }
 
-    def _compute_display_name(self):
+    @api.depends(lambda self: (self._rec_name,) if self._rec_name else ())
+    def _compute_display_name(self): 
         for record in self:
-            
             order_no = ''
             product_no = ''
             date_planned = ''
@@ -78,7 +117,8 @@ class MrpProductionCus(models.Model):
                     display_name += product_no
             elif date_planned:
                 display_name += date_planned
-            record.display_name = display_name
+                
+            record.display_name =  display_name
                 
     def write(self, vals):
         old_date_planned_start = {record.id: record.date_planned_start for record in self}
@@ -86,7 +126,6 @@ class MrpProductionCus(models.Model):
         res = super(MrpProductionCus, self).write(vals)
         for record in self:
             if 'date_planned_start' in vals:
-                record.new_mrp_production += 1
                 old_date = old_date_planned_start.get(record.id)
                 new_date = vals['date_planned_start']
 
@@ -94,9 +133,7 @@ class MrpProductionCus(models.Model):
                     new_date = parse(new_date)
 
                 if new_date and old_date:
-                    if  record.new_mrp_production == 1:
-                        record.is_drag_drop_calendar = False
-                    else:
+                    if  record.create_date != record.write_date:
                         record.is_drag_drop_calendar = True
                     
                     if new_date < old_date:
@@ -113,22 +150,6 @@ class MrpProductionCus(models.Model):
                                     for po in po_child:
                                         po.check_schedule_boolean = True
         return res
-    
-    @api.model
-    def update_date_planned_start(self, record):
-        id = int(record.get('id'))
-        time_str = str(record.get('time'))
-        if id and time_str:
-            manu_oder = self.env["mrp.production"].search([('id', '=', id)])
-            if manu_oder:
-                for mo in manu_oder:
-                    mo.is_drag_drop_calendar = True
-                    convert_date = datetime.fromisoformat(time_str.replace('Z', '+00:00'))
-                    # Convert to UTC timezone
-                    utc_datetime = convert_date.astimezone(pytz.utc)
-                    naive_datetime = utc_datetime.replace(tzinfo=None)
-                    mo.date_planned_start = naive_datetime
-        return True
             
 class SaleOrder(models.Model):
     _inherit = "sale.order"
