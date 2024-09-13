@@ -52,11 +52,10 @@ class MrpProductionCus(models.Model):
             warehouse = False
             if record.is_child_mo and record.address_ship == '倉庫':
                 source_mo = self.env["mrp.production"].search([('name', '=', record.origin)], limit=1)
-                if source_mo and source_mo.move_raw_ids:
-                    for move in source_mo.move_raw_ids:
-                        if move.product_id == record.product_id:
-                            if move.move_orig_ids and move.move_orig_ids.location_dest_id:
-                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', move.move_orig_ids.location_dest_id.id)], limit=1)
+                if source_mo:
+                    picking_first = self.env['stock.picking'].search([('group_id', '=', source_mo.procurement_group_id.id)], order ='id asc', limit=1)
+                    if picking_first:
+                        warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', picking_first.location_dest_id.id)], limit=1)
                             
             record.storehouse_id = warehouse
             
