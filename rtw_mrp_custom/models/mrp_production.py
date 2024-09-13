@@ -49,16 +49,16 @@ class MrpProductionCus(models.Model):
     @api.onchange('address_ship')
     def _onchange_address_ship(self):
         for record in self:
+            warehouse = False
             if record.is_child_mo and record.address_ship == '倉庫':
                 source_mo = self.env["mrp.production"].search([('name', '=', record.origin)], limit=1)
                 if source_mo and source_mo.move_raw_ids:
                     for move in source_mo.move_raw_ids:
                         if move.product_id == record.product_id:
-                            location = self.env["stock.location"].search([('id', '=', move.location_id.id)], limit=1)
-                            if location:
-                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', location.id)], limit=1)
-                                if warehouse:
-                                    record.storehouse_id = warehouse
+                            if move.move_orig_ids and move.move_orig_ids.location_dest_id:
+                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', move.move_orig_ids.location_dest_id.id)], limit=1)
+                            
+            record.storehouse_id = warehouse
             
     def create_revised_edition(self):
         return {
