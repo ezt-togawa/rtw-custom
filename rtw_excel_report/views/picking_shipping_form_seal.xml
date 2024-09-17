@@ -1,0 +1,13 @@
+<odoo>
+    <record id="picking_shipping_form_seal" model="ir.actions.report">
+        <field name="model">stock.picking</field>
+        <field name="name">送り状シール</field>
+        <field name="report_name">rtw_excel_report.invoice_sticker_xls</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="attachment_use">False</field>
+        <field name="binding_view_types">form</field>
+        <field name="print_report_name">'送り状シール-' + object.current_print</field>
+    </record>
+</odoo>

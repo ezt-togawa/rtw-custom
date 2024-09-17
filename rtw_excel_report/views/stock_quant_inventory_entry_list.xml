@@ -1,0 +1,12 @@
+<odoo>
+    <record id="stock_quant_inventory_entry_list" model="ir.actions.report">
+        <field name="model">stock.quant</field>
+        <field name="name">棚卸記入リスト</field>
+        <field name="report_name">rtw_excel_report.inventory_import_list_xls</field>
+        <field name="binding_model_id" ref="stock.model_stock_quant" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="binding_view_types">list</field>
+        <field name="print_report_name">'棚卸記入リスト-' + object.current_print</field>
+    </record>
+</odoo>

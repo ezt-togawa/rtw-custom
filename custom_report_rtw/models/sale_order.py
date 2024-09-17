@@ -3,6 +3,7 @@
 
 from odoo import fields, models
 import math
+from datetime import datetime
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -24,7 +25,13 @@ class SaleOrder(models.Model):
     dear_to = fields.Char(string="send to people" , compute="_compute_send_to")
     sale_order_discount = fields.Char(string="sale order discount" , compute="_compute_sale_order_discount")
     registration_number = fields.Char(string="registration number" , compute="_compute_registration_number")
+    current_print = fields.Char(compute="_compute_current_print")
+    
 
+    def _compute_current_print(self):
+        for so in self:
+            so.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
+            
     def _compute_send_to(self):
         for so in self:
             partner_name = ''

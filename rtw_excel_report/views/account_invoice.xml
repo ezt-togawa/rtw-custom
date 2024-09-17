@@ -1,0 +1,14 @@
+<odoo>
+    <record id="account_invoice" model="ir.actions.report">
+        <field name="model">account.move</field>
+        <field name="name">請求書</field>
+        <field name="report_name">rtw_excel_report.invoice_account_move_xls</field>
+        <field name="report_file">請求書</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="attachment_use">False</field>
+        <field name="binding_view_types">form</field>
+        <field name="print_report_name">'請求書-' + object.current_print</field>
+    </record>
+</odoo>

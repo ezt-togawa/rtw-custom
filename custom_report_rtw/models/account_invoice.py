@@ -2,6 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields, models
+from datetime import datetime
+
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.move.line'
 
@@ -35,7 +37,12 @@ class AccountMoveCus(models.Model):
     send_to_company = fields.Char(string="send to company", compute="_compute_send_to")
     send_to_people = fields.Char(string="send to people", compute="_compute_send_to")
     registration_number = fields.Char(string="registration number", compute="_compute_registration_number")
-
+    current_print = fields.Char(compute="_compute_current_print")
+    
+    def _compute_current_print(self):
+        for so in self:
+            so.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
+            
     def _compute_send_to(self):
         for so in self:
             partner_name = ''

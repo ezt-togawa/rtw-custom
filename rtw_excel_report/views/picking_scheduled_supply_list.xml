@@ -1,0 +1,13 @@
+<odoo>
+    <record id="picking_scheduled_supply_list" model="ir.actions.report">
+        <field name="model">stock.picking</field>
+        <field name="name">支給予定リスト</field>
+        <field name="report_name">rtw_excel_report.scheduled_payment_list_xls</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="attachment_use">False</field>
+        <field name="binding_view_types">list</field>
+        <field name="print_report_name">'支給予定リスト-' + object.current_print</field>
+    </record>
+</odoo>

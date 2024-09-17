@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE odoo [
+  <!ENTITY nbsp "entity-value">
+]>
+<odoo>
+  <template id="report_unit_price">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="custom_report_rtw.so_ex_layout">
+          <t t-set="total_subprice" t-value="0" />
+          <t t-set="total_listprice" t-value="0" />
+          <t t-if="not o" t-set="o" t-value="doc" />
+          <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+              <t t-set="company" t-value="company_id" />
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+              <t t-set="company" t-value="o.company_id.sudo()" />
+            </t>
+            <t t-else="else">
+              <t t-set="company" t-value="res_company" />
+            </t>
+          </t>
+          <t t-call="custom_report_rtw.SO_unit_price_header_layout"></t>
+          <div class="page">
+            <t
+              t-set="type">quotation</t>
+            <t t-set="address">
+              <div t-field="docs.partner_id"
+                t-options='{"widget": "contact", "fields": ["address", "name"],
+                        "no_marker": True}' />
+              <p t-if="docs.partner_id.vat"><t
+                  t-esc="docs.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                  t-field="docs.partner_id.vat" />
+              </p>
+            </t>
+            <div t-if="docs.company_id.logo or docs.company_id.report_header"
+              class="row zero_min_height">
+            </div>
+            <div class="d-flex size13">
+              <div class="col-8">
+                <div class="col-12 d-flex">
+                  <div class="col-6">
+                    <div class="so_price"
+                      style="max-height:25px">
+                      <span t-field="docs.send_to_company"
+                        t-att-class="not docs.send_to_people and 'border-bottom2'  or ''" />
+                    </div>
+                    <span t-field="docs.send_to_people"
+                      class="so_price border-bottom2" />
+                    <br />
+                    <div class="size12">
+                      <div>平素より格別のお引き立てを賜り暑く御礼申し上げます。</div>
+                      <div>御依頼の件、下記の通りお見積り致しました。</div>
+                      <div>ご査収の程宜しくお願い致します。</div>
+                    </div>
+                  </div>
+                  <div class="col-6 d-flex">
+                    <div class="col-4"></div>
+                    <div class="col-8">
+                      <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
+                      <div> 製作日数： <span t-if="docs.workday_id"
+                          t-esc="docs.workday_id.name" /></div>
+                      <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
+                      <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
+                      <div> 支払条件：<span
+                          t-esc="docs.sale_order_transactions_term" /></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 d-flex">
+                  <div class="col-8 so_price">
+                    <span class="border-bottom2">件名 <span t-field="docs.title" />
+                    </span>
+                  </div>
+                  <div class="col-4">
+                    <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
+                    <div
+                      style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow:hidden;max-height:60px;">
+                      備考: <span t-field="docs.special_note" /></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4 size11" name="company_address">
+                <div class="float-right">
+                  <div>
+                    <img style="width:180px;height:40px;"
+                      src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                      alt="Logo" />
+                  </div>
+                  <div>
+                    <div class="size12">
+                      <span t-esc="docs.hr_employee_company" />
+                    </div>
+                    <div>
+                      <span t-esc="docs.hr_employee_department" />
+                    </div>
+                    <div>
+                      <span t-esc="docs.hr_employee_zip" />
+                    </div>
+                    <div>
+                      <span t-esc="docs.hr_employee_address1" />
+                    </div>
+                    <div>
+                      <span t-esc="docs.hr_employee_address2" />
+                    </div>
+                    <div>
+                      <span t-esc="docs.hr_employee_tel" />
+                    </div>
+                    <div>
+                      <span t-esc="docs.hr_employee_fax" />
+                    </div>
+                    <div class="size12">
+                      <span t-esc="docs.hr_employee_printer" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 text-right size16">消費税は含まれておりません</div>
+            <table
+              class="table">
+              <t t-set="number" t-value="0" />
+              <t t-foreach="docs.order_line.filtered(lambda x: not x.is_pack_outside)" t-as="l"
+                t-groupby="10"
+                t-att-last="last">
+                <t t-set="total_subprice"
+                  t-value="total_subprice + l.price_subtotal" />
+                <t t-set="total_listprice"
+                  t-value="total_listprice + l.price_unit * l.product_uom_qty" />
+                <t t-if="l_index == 0">
+                  <thead>
+                    <tr class="table-title bold" style="font-size:13px;background-color:#999999">
+                      <th class="text-center" style="width:1%">№</th>
+                      <th class="text-left" style="width:10%">品名</th>
+                      <th class="text-left" style="width:10%">品番・サイズ</th>
+                      <th class="text-left" style="width:20%">仕様・詳細１</th>
+                      <th class="text-left" style="width:20%">仕様・詳細２</th>
+                      <th class="text-center" style="width:6%">数量</th>
+                      <th class="text-center" style="width:6%">定価</th>
+                      <th class="text-center" style="width:6%">掛率</th>
+                      <th class="text-center" style="width:10%">販売単価</th>
+                      <th class="text-center" style="width:10%">販売金額</th>
+                    </tr>
+                  </thead>
+                </t>
+                <tbody class="invoice_tbody">
+                  <t t-if="l.display_type =='line_note' or l.display_type =='line_section'">
+                    <tr class="size15 table-border-bottom-auto">
+                      <t t-if="l.display_type =='line_note'">
+                        <td />
+                        <td class="size11" colspan="9">
+                          <span t-field="l.name" />
+                        </td>
+                      </t>
+                      <t t-elif="l.display_type =='line_section'">
+                        <td class="bg-section"></td>
+                        <td class="size11 bg-section" colspan="9">
+                          <span t-field="l.name" />
+                        </td>
+                      </t>
+                    </tr>
+                  </t>
+                  <t t-else="">
+                    <tr class="size15 table-border-bottom">
+                      <t>
+                        <td class="text-center size12">
+                          <t t-set="number" t-value="number + 1" />
+                          <t t-esc="number" />
+                        </td>
+                        <td class="size11">
+                          <div class="six-lines">
+                            <div t-if="l.sale_order_line_name_pdf"
+                              t-field="l.sale_order_line_name_pdf" />
+                            <div t-if="l.product_id.summary"
+                              t-field="l.product_id.summary" />
+                            <div t-if="l.p_type == 'special'">別注</div>
+                            <div t-if="l.p_type == 'custom'">特注</div>
+                          </div>
+                        </td>
+                        <td class="size13">
+                          <div class="six-lines">
+                            <div t-if="l.product_id.product_no"
+                              t-field="l.product_id.product_no" />
+                            <t t-if="l.product_size">
+                              <span
+                                t-esc="l.product_size" />
+                            </t>
+                          </div>
+                        </td>
+                        <td class="size12">
+                          <div class="six-lines">
+                            <t t-if="l.sale_order_product_detail">
+                              <t t-set="attr_arr"
+                                t-value="l.sale_order_product_detail.split('\n')" />
+                              <t t-foreach="attr_arr" t-as="att">
+                                <div>
+                                  <span t-esc="att.strip()" />
+                                </div>
+                              </t>
+                            </t>
+                          </div>
+                        </td>
+                        <td class="size12">
+                          <div class="six-lines">
+                            <t t-if="l.sale_order_product_detail_2">
+                              <t t-set="attr_arr"
+                                t-value="l.sale_order_product_detail_2.split('\n')" />
+                              <t t-foreach="attr_arr" t-as="att">
+                                <div>
+                                  <span t-esc="att.strip()" />
+                                </div>
+                              </t>
+                            </t>
+                          </div>
+                        </td>
+                        <td>
+                          <div id="quote_qty" class="six-lines">
+                            <span t-esc="l.sale_order_line_product_uom_qty" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="six-lines">
+                            <span
+                              style="font-size:16px"
+                              t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                          </div>
+                        </td>
+                        <td class="text-center size11">
+                          <div class="six-lines">
+                            <span
+                              style="font-size:16px"
+                              t-esc="'{0:,.0f}'.format(l.sale_order_line_discount)" />
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <div class="six-lines">
+                            <span
+                              t-esc="'{0:,.0f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else '{0:,.0f}'.format(l.price_unit)" />
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <div class="six-lines">
+                            <span
+                              style="font-size:16px"
+                              t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
+                          </div>
+                        </td>
+                      </t>
+                    </tr>
+                  </t>
+                </tbody>
+              </t>
+            </table>
+            <!-- <div class="d-flex justify-content-end size12">
+              <span t-field="docs.name" />
+            </div> -->
+          </div>
+          <t t-call="custom_report_rtw.page_footer_layout"></t>
+        </t>
+      </t>
+    </t>
+  </template>
+  <record id="paperformat_report_unit_price" model="report.paperformat">
+    <field name="name">Unit Price</field>
+    <field name="default" eval="False" />
+    <field name="format">custom</field>
+    <field name="page_width">210</field>
+    <field name="page_height">297</field>
+    <field name="orientation">Landscape</field>
+    <field name="margin_top">20</field>
+    <field name="margin_bottom">10</field>
+    <field name="margin_left">5</field>
+    <field name="margin_right">5</field>
+    <field name="header_line" eval="False" />
+    <field name="header_spacing">12</field>
+    <field name="dpi">90</field>
+  </record>
+  <record id="report_unit_price_rtw" model="ir.actions.report">
+    <field name="name">単価見積り書</field>
+    <field name="model">sale.order</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">custom_report_rtw.report_unit_price</field>
+    <field name="report_file">custom_report_rtw.report_unit_price</field>
+    <field name="binding_model_id" ref="model_sale_order" />
+    <field name="binding_type">report</field>
+    <field name="paperformat_id" ref="paperformat_report_unit_price" />
+    <field name="binding_view_types">form</field>
+    <field name="print_report_name">'単価見積り書-' + object.current_print</field>
+  </record>
+</odoo>

@@ -1,0 +1,13 @@
+<odoo>
+    <record id="mrp_wip_product_list" model="ir.actions.report">
+        <field name="model">mrp.production</field>
+        <field name="name">仕掛品伝票一覧</field>
+        <field name="report_name">rtw_excel_report.work_progress_slip_list_xls</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="attachment_use">False</field>
+        <field name="binding_view_types">list,form</field>
+        <field name="print_report_name">'仕掛品伝票一覧-' + object.current_print</field>
+    </record>
+</odoo>

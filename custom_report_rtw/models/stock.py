@@ -1,6 +1,6 @@
 from odoo import fields, models
 import math
-
+from datetime import datetime
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
     calculate_shiratani_date = fields.Char('Shiratani Date' , compute="_compute_get_sale_order")
@@ -17,8 +17,12 @@ class StockPicking(models.Model):
         string="Sale order",
         compute="_compute_get_sale_order",
     )
-    
+    current_print = fields.Char(compute="_compute_current_print")
 
+    def _compute_current_print(self):
+        for so in self:
+            so.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
+            
     def _compute_get_sale_order(self):
         sale_order = self.env['sale.order'].search([('id','=',self.sale_id.id)])
         if not sale_order:
@@ -107,3 +111,12 @@ class StockMove(models.Model):
             move.stock_move_product_size = product_size
         else:
             move.stock_move_product_size = ''
+            
+class StockPicking(models.Model):
+    _inherit = 'stock.quant'
+
+    current_print = fields.Char(compute="_compute_current_print")
+    
+    def _compute_current_print(self):
+        for so in self:
+            so.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
