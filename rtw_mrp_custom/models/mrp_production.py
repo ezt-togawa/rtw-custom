@@ -42,25 +42,25 @@ class MrpProductionCus(models.Model):
     @api.model
     def create(self, vals):
         record = super(MrpProductionCus, self).create(vals)
-        if '/MO/' in record.origin:
-            child_mo = self.env["mrp.production"].search([('origin', '=', record.origin)])
-            child_mo.address_ship = '倉庫'
-            child_mo._onchange_address_ship()
+        if record.origin and '/MO/' in record.origin:
+            record.address_ship = '倉庫'
+            record._onchange_address_ship()
         return record
 
     @api.onchange('address_ship')
     def _onchange_address_ship(self):
-        for record in self:
+        for child in self:
             warehouse = False
-            if record.is_child_mo and record.address_ship == '倉庫':
-                source_mo = self.env["mrp.production"].search([('name', '=', record.origin)], limit=1)
+            if child.is_child_mo and child.address_ship == '倉庫':
+                source_mo = self.env["mrp.production"].search([('name', '=', child.origin)], limit=1)
                 if source_mo and source_mo.move_raw_ids:
                     for move in source_mo.move_raw_ids:
-                        if move.product_id == record.product_id:
-                            if move.move_orig_ids and move.move_orig_ids.location_dest_id:
-                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', move.move_orig_ids.location_dest_id.id)], limit=1)
-                            
-            record.storehouse_id = warehouse
+                        if move.product_id.id == child.product_id.id:
+                            biggest_move_id = self.env['stock.move'].search([('origin', '=', source_mo.name), ('product_id', '=', move.product_id.id)], order='id desc', limit=1)
+                            if biggest_move_id:
+                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', biggest_move_id.location_dest_id.id)], limit=1)
+                                    
+            child.storehouse_id = warehouse
     
     @api.depends('move_raw_ids.forecast_expected_date')
     def _compute_prod_parts_arrival_schedule(self):
