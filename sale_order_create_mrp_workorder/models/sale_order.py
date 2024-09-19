@@ -7,10 +7,8 @@ class sale_order(models.Model):
 
     def action_confirm(self):
         result = super(sale_order, self).action_confirm()
-        self.refresh()
         
-        mrp_ids = self.env['mrp.production'].search(
-            [('sale_reference', '=', self.name)])
+        mrp_ids = self.env['mrp.production'].search([('sale_reference', '=', self.name)])
         overseas = self.overseas
         for mrp in mrp_ids:
             workorder_code = False

@@ -37,7 +37,8 @@ class ResPartner(models.Model):
     
     def write(self, vals):
         result = super(ResPartner, self).write(vals)
-        self.refresh()
+        
+        # self.refresh()
         sync_fields = ['street','street2','zip','city']
         langs = ['ja_JP','en_US']
         parent_address = {}

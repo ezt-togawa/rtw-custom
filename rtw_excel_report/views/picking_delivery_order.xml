@@ -1,0 +1,14 @@
+<odoo>
+    <record id="stock_picking_delivery_excel" model="ir.actions.report">
+        <field name="model">stock.picking</field>
+        <field name="name">配送依頼書</field>
+        <field name="report_name">rtw_excel_report.stock_picking_delivery_xls</field>
+        <field name="report_file">配送依頼書</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="attachment_use">False</field>
+        <field name="binding_view_types">form</field>
+        <field name="print_report_name">'配送依頼書-' + object.current_print</field>
+    </record>
+</odoo>

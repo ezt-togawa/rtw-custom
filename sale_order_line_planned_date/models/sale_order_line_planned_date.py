@@ -35,7 +35,7 @@ class sale_order(models.Model):
                                     self.env.context, is_show_planned_date_notice=True)
                             else:
                                 self.env.context = dict(
-                                    self.env.context, is_show_planned_date_notice=False)
+                                    self.env.context, is_show_planned_date_ntoice=False)
 
     @api.depends('order_line')
     def _compute_error_context(self):
@@ -46,26 +46,23 @@ class sale_order(models.Model):
         else:
             self.error_context = False
         # print('_compute_error_context 2', self.error_context)
+    
+    def _get_delay_by_rule(self, move, moves):
+        delay = 0
+        next_move = next((m for m in moves if m.location_id == move.location_dest_id), None)
+        if next_move:
+            delay += self._get_delay_by_rule(next_move,moves)
+        delay += move.rule_id.delay
+        return delay
 
     def action_confirm(self):
         result = super(sale_order, self).action_confirm()
-        self.refresh()
-        stock_picking = self.env['stock.picking'].search(
-            [('sale_id', '=', self.id),('state','not in',('cancel','draft'))])
-        
-        def get_delay_by_rule(move,moves):
-            delay = 0
-            next_move = next((m for m in moves if m.location_id == move.location_dest_id), None)
-            if next_move:
-                delay += get_delay_by_rule(next_move,moves)
-            delay += move.rule_id.delay
-            return delay
-
+        stock_picking = self.env['stock.picking'].search([('sale_id', '=', self.id), ('state', 'not in', ('cancel', 'draft'))])
         for delivery in stock_picking:
             moves = [move for move in delivery.group_id.stock_move_ids if move.state != 'cancel']
             for move in moves:
                 if move.sale_id and move.sale_id.estimated_shipping_date:
-                    delay = get_delay_by_rule(move,moves)
+                    delay = self._get_delay_by_rule(move, moves)
                     new_date = move.sale_id.estimated_shipping_date - relativedelta(days=delay)
                     move.date = new_date
                     move.picking_id.scheduled_date = new_date

@@ -1463,6 +1463,11 @@ msgid "仕掛品伝票一覧(EXCEL)"
 msgstr "WIP Product List(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.mrp_wip_product_list
+msgid "仕掛品伝票一覧"
+msgstr "WIP Product List"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
@@ -1663,6 +1668,11 @@ msgid "入荷予定リスト(EXCEL)"
 msgstr "Scheduled Arrival List(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.picking_scheduled_arrival_list
+msgid "入荷予定リスト"
+msgstr "Scheduled Arrival List"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "入荷予定数"
@@ -1696,6 +1706,11 @@ msgstr "Scheduled shipping list"
 #: model:ir.actions.report,name:rtw_excel_report.shipping_list
 msgid "出荷予定リスト(EXCEL)"
 msgstr "Scheduled Shipment List(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.picking_scheduled_shipment_list
+msgid "出荷予定リスト"
+msgstr "Scheduled Shipment List"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
@@ -1872,6 +1887,11 @@ msgid "商品ラベルシール(EXCEL)"
 msgstr "Product Label Seal(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.mrp_product_label_seal
+msgid "商品ラベルシール"
+msgstr "Product Label Seal"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/product_spec.py:0
 #: code:addons/rtw_excel_report/models/product_spec.py:0
 #: model:ir.actions.report,name:rtw_excel_report.product_spec
@@ -1889,6 +1909,11 @@ msgstr "Product name"
 #: model:ir.actions.report,name:rtw_excel_report.stock_status_list
 msgid "在庫状況一覧(EXCEL)"
 msgstr "Inventory Status List(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.prod_tmpl_inventory_status_list
+msgid "在庫状況一覧"
+msgstr "Inventory Status List"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
@@ -2175,6 +2200,11 @@ msgid "支給予定リスト(EXCEL)"
 msgstr "Scheduled Supply List(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.picking_scheduled_supply_list
+msgid "支給予定リスト"
+msgstr "Scheduled Supply List"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #, python-format
 msgid "支給日"
@@ -2184,6 +2214,11 @@ msgstr "Supply date"
 #: model:ir.actions.report,name:rtw_excel_report.supplied_material_detail
 msgid "支給部材明細(EXCEL)"
 msgstr "Supplied Parts Details(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.picking_supplied_parts_details
+msgid "支給部材明細"
+msgstr "Supplied Parts Details"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
@@ -2297,6 +2332,11 @@ msgid "棚卸記入リスト(EXCEL)"
 msgstr "Inventory Entry List(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.stock_quant_inventory_entry_list
+msgid "棚卸記入リスト"
+msgstr "Inventory Entry List"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "検印シール"
@@ -2306,6 +2346,11 @@ msgstr "Inspection seal"
 #: model:ir.actions.report,name:rtw_excel_report.inspection_check_sheet
 msgid "検品チェックシート(EXCEL)"
 msgstr "Inspection Check Sheet(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.picking_inspection_check_sheet
+msgid "検品チェックシート"
+msgstr "Inspection Check Sheet"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
@@ -2326,6 +2371,11 @@ msgstr "Purchase Order Inspection"
 #: model:ir.actions.report,name:rtw_excel_report.inspection_order_form
 msgid "検品発注書(EXCEL)"
 msgstr "Purchase Order Inspection(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.mrp_purchase_order_inspection
+msgid "検品発注書"
+msgstr "Purchase Order Inspection"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
@@ -2455,6 +2505,11 @@ msgid "発注書(EXCEL)"
 msgstr "Purchase Order(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.mrp_purchase_order
+msgid "発注書"
+msgstr "Purchase Order"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
 #, python-format
@@ -2465,6 +2520,11 @@ msgstr "Purchase Order(Components)"
 #: model:ir.actions.report,name:rtw_excel_report.purchase_order_for_part
 msgid "発注書(部材用）-(EXCEL)"
 msgstr "Purchase Order(Components) -(EXCEL)"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.purchase_order_component
+msgid "発注書(部材用）"
+msgstr "Purchase Order(Components)"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
@@ -2756,6 +2816,11 @@ msgid "請求書(EXCEL)2"
 msgstr "Invoice(EXCEL)2"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.account_invoice
+msgid "請求書"
+msgstr "Invoice"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
@@ -2859,6 +2924,11 @@ msgid "送り状シール(EXCEL)"
 msgstr "Shipping Form Seal(EXCEL)"
 
 #. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.picking_shipping_form_seal
+msgid "送り状シール"
+msgstr "Shipping Form Seal"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
 #, python-format
 msgid "送り状注記"
@@ -2913,6 +2983,11 @@ msgstr "Delivery label"
 #: model:ir.actions.act_window,name:rtw_excel_report.action_delivery_request_form_export_xlsx
 #: model:ir.actions.report,name:rtw_excel_report.delivery_sale_order
 #: model:ir.ui.menu,name:rtw_excel_report.menu_report_delivery_request_form
+msgid "配送作業依頼書"
+msgstr "Delivery Work Request"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.sale_delivery_order
 msgid "配送作業依頼書"
 msgstr "Delivery Work Request"
 

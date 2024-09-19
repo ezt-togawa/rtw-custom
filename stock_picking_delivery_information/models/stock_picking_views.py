@@ -8,20 +8,19 @@ class SaleOrder(models.Model):
     
     def action_confirm(self):
         result = super(SaleOrder, self).action_confirm()
-        self.refresh()
         
-        stock_picking = self.env['stock.picking'].search(
-            [('sale_id', '=', self.id)])
+        stock_picking = self.env['stock.picking'].search([('sale_id', '=', self.id)])
         for stock in stock_picking:
-            stock.write({"waypoint":self.waypoint.id})
-            stock.write({"sipping_to":self.sipping_to})
-            stock.write({"shipping_to_text":self.shipping_to_text})
-            stock.write({"forwarding_address_zip":self.forwarding_address_zip})
-            stock.write({"forwarding_address":self.forwarding_address})
-            stock.write({"shipping_destination_text":self.shipping_destination_text})
+            stock.write({
+                "waypoint": self.waypoint.id,
+                "sipping_to": self.sipping_to,
+                "shipping_to_text": self.shipping_to_text,
+                "forwarding_address_zip": self.forwarding_address_zip,
+                "forwarding_address": self.forwarding_address,
+                "shipping_destination_text": self.shipping_destination_text
+            })
         return result
     
-
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 

@@ -1,5 +1,5 @@
 from odoo import fields, models
-
+from datetime import datetime 
 class PurchaseOrderEmployee(models.Model):
     _inherit = 'purchase.order'
   
@@ -11,7 +11,12 @@ class PurchaseOrderEmployee(models.Model):
     hr_employee_tel = fields.Char(string="hr employee tel" , compute="_compute_hr_employee")
     hr_employee_fax = fields.Char(string="hr employee fax" , compute="_compute_hr_employee")
     hr_employee_printer = fields.Char(string="hr employee printer" , compute="_compute_hr_employee")
-    
+    current_print = fields.Char(compute="_compute_current_print")
+
+    def _compute_current_print(self):
+        for so in self:
+            so.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
+            
     def _compute_hr_employee(self):
         for po in self:
             hr_defaults = {

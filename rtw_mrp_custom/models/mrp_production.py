@@ -4,12 +4,13 @@ from dateutil.parser import parse
 
 class MrpProductionCus(models.Model):
     _inherit = 'mrp.production'
+    _cache = {}
 
     revised_edition_ids = fields.One2many(
         comodel_name="mrp.revised_edition",
         inverse_name="mrp_id",
         string="revised edition")
-    prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定")
+    prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", compute="_compute_prod_parts_arrival_schedule", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
     ship_to_address = fields.Selection([('1', '糸島'), ('2', '白谷'), ('3', 'デポ/直送') ], string="送付先", required=True, default='3')
@@ -18,7 +19,8 @@ class MrpProductionCus(models.Model):
     duration = fields.Float('Duration', help="Track duration in hours.")
     color = fields.Integer(string='Event Color', default=1)
     sales_order = fields.Char(string='販売オーダー', compute="_compute_sales_order")
-
+    calendar_display_name = fields.Text(compute="_compute_display_name_calendar", store=True)
+    
     def _compute_sales_order(self):
         for line in self:
             order_no= ''
@@ -40,25 +42,36 @@ class MrpProductionCus(models.Model):
     @api.model
     def create(self, vals):
         record = super(MrpProductionCus, self).create(vals)
-        if '/MO/' in record.origin:
-            child_mo = self.env["mrp.production"].search([('origin', '=', record.origin)])
-            child_mo.address_ship = '倉庫'
-            child_mo._onchange_address_ship()
+        if record.origin and '/MO/' in record.origin:
+            record.address_ship = '倉庫'
+            record._onchange_address_ship()
         return record
 
     @api.onchange('address_ship')
     def _onchange_address_ship(self):
-        for record in self:
-            if record.is_child_mo and record.address_ship == '倉庫':
-                source_mo = self.env["mrp.production"].search([('name', '=', record.origin)], limit=1)
+        for child in self:
+            warehouse = False
+            if child.is_child_mo and child.address_ship == '倉庫':
+                source_mo = self.env["mrp.production"].search([('name', '=', child.origin)], limit=1)
                 if source_mo and source_mo.move_raw_ids:
                     for move in source_mo.move_raw_ids:
-                        if move.product_id == record.product_id:
-                            location = self.env["stock.location"].search([('id', '=', move.location_id.id)], limit=1)
-                            if location:
-                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', location.id)], limit=1)
-                                if warehouse:
-                                    record.storehouse_id = warehouse
+                        if move.product_id.id == child.product_id.id:
+                            biggest_move_id = self.env['stock.move'].search([('origin', '=', source_mo.name), ('product_id', '=', move.product_id.id)], order='id desc', limit=1)
+                            if biggest_move_id:
+                                warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', biggest_move_id.location_dest_id.id)], limit=1)
+                                    
+            child.storehouse_id = warehouse
+    
+    @api.depends('move_raw_ids.forecast_expected_date')
+    def _compute_prod_parts_arrival_schedule(self):
+        for record in self:
+            arrival_schedule = ''
+            if record.move_raw_ids:
+                for move in record.move_raw_ids:
+                    if move.forecast_expected_date:
+                        arrival_schedule += str(record._convert_timezone(move.forecast_expected_date)) + "\n"
+                            
+            record.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
             
     def create_revised_edition(self):
         return {
@@ -72,34 +85,22 @@ class MrpProductionCus(models.Model):
                 'default_owner_id': self.env.user.id,
             }
         }
-
-    @api.depends(lambda self: (self._rec_name,) if self._rec_name else ())
-    def _compute_display_name(self): 
+        
+    @api.depends('is_drag_drop_calendar', 'itoshima_shipping_date', 'sale_reference')
+    def _compute_display_name_calendar(self): 
         for record in self:
-            order_no = ''
+            display_name = ''
+            if record.is_drag_drop_calendar:
+                display_name = '[✔] '
+            
+            order_no =  record.sale_reference or ''
             product_no = ''
             date_planned = ''
             
-            if record.sale_reference:
-                order_no = record.sale_reference
-                child_MO = self.env["mrp.production"].search([('sale_reference', '=', order_no), ('origin', '=', record.name)])
-                if child_MO and record.move_raw_ids:
-                    arrival_schedule = ''
-                    for move in record.move_raw_ids:
-                        if move.forecast_expected_date:
-                            arrival_schedule += str(move.forecast_expected_date) + "\n"
-                            
-                    record.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n')
-                
             if record.product_id and record.product_id.product_no:
                 product_no = record.product_id.product_no
             if record.itoshima_shipping_date:
                 date_planned = str(record.itoshima_shipping_date)
-            
-            display_name = ''
-            if record.is_drag_drop_calendar:
-                display_name = '[✔] '
-                record.color = 4
                 
             if order_no:
                 if product_no and date_planned:
@@ -118,7 +119,19 @@ class MrpProductionCus(models.Model):
             elif date_planned:
                 display_name += date_planned
                 
-            record.display_name =  display_name
+            record.calendar_display_name = display_name
+            
+    @api.depends(lambda self: (self._rec_name,) if self._rec_name else ())
+    def _compute_display_name(self):
+        cache_map = {key: value for key, value in self._cache.items()}
+        mrp_id_dragging = cache_map.get('mrp_id_dragging')
+        for record in self:
+            if record.id == mrp_id_dragging and record.color != 4:
+                # just add color + tick mark for mrp_id_dragging and that mrp has a color other than blue
+                record.color = 4
+                record.is_drag_drop_calendar = True
+                    
+            record.display_name = record.calendar_display_name
                 
     def write(self, vals):
         old_date_planned_start = {record.id: record.date_planned_start for record in self}
@@ -126,17 +139,22 @@ class MrpProductionCus(models.Model):
         res = super(MrpProductionCus, self).write(vals)
         for record in self:
             if 'date_planned_start' in vals:
-                old_date = old_date_planned_start.get(record.id)
-                new_date = vals['date_planned_start']
+                old_date_planned = old_date_planned_start.get(record.id)
+                new_date_planned = vals['date_planned_start']
 
-                if isinstance(new_date, str):
-                    new_date = parse(new_date)
-
-                if new_date and old_date:
-                    if  record.create_date != record.write_date:
-                        record.is_drag_drop_calendar = True
+                if isinstance(new_date_planned, str):
+                    new_date_planned = parse(new_date_planned)
                     
-                    if new_date < old_date:
+                # dragging date_planned_start ( mrp_calendar or mrp_form)
+                if new_date_planned and old_date_planned:
+                    #just update (not create)
+                    if record.create_date != record.write_date: 
+                        cache_key = 'mrp_id_dragging'
+                        if cache_key in record._cache:
+                            del record._cache[cache_key]
+                        record._cache[cache_key] = record.id
+                    
+                    if new_date_planned < old_date_planned:
                         po = self.env["purchase.order"].search([('origin', 'ilike', record.name)])
                         if po:
                             for p in po:
