@@ -69,23 +69,23 @@ class MrpProductionCus(models.Model):
 
             child.storehouse_id = warehouse
 
-    @api.depends('move_raw_ids.forecast_expected_date')
-    def _compute_prod_parts_arrival_schedule(self):
-        print('_compute_prod_parts_arrival_schedule', self.name)
-        for record in self:
-
-            if record.origin:
-                order_no = record.origin
-                parent_mo = self.env["mrp.production"].search([('name', '=', order_no)])
-                child_mo = self.env["mrp.production"].search(
-                    [('sale_reference', '=', parent_mo.sale_reference), ('origin', '=', parent_mo.name)])
-                if child_mo and parent_mo.move_raw_ids:
-                    arrival_schedule = ''
-                    for move in parent_mo.move_raw_ids:
-                        if move.forecast_expected_date:
-                            arrival_schedule += str(parent_mo._convert_timezone(move.forecast_expected_date)) + "\n"
-
-                    parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
+    # mrp_stock_picking.py へ移設
+    # @api.depends('move_raw_ids.forecast_expected_date')
+    # def _compute_prod_parts_arrival_schedule(self):
+    #     for record in self:
+    #
+    #         if record.origin:
+    #             order_no = record.origin
+    #             parent_mo = self.env["mrp.production"].search([('name', '=', order_no)])
+    #             child_mo = self.env["mrp.production"].search(
+    #                 [('sale_reference', '=', parent_mo.sale_reference), ('origin', '=', parent_mo.name)])
+    #             if child_mo and parent_mo.move_raw_ids:
+    #                 arrival_schedule = ''
+    #                 for move in parent_mo.move_raw_ids:
+    #                     if move.forecast_expected_date:
+    #                         arrival_schedule += str(parent_mo._convert_timezone(move.forecast_expected_date)) + "\n"
+    #
+    #                 parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
 
     def create_revised_edition(self):
         return {
