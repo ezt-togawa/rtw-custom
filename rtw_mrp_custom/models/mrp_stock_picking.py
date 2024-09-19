@@ -8,7 +8,6 @@ class MrpPickingCustom(models.Model):
 
     def write(self, vals):
         res = super(MrpPickingCustom, self).write(vals)
-        print('_mrp_arrival_schedule', self.name)
         for record in self:
 
             # 配送の出荷予定日に合わせて、製造オーダー側の製造部材入荷予定の日付を更新しておく（カレンダー用）
