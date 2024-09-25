@@ -77,7 +77,7 @@
             <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='reservation_state']" position="before">
-                    <field name="address_ship" optional="show" />
+                    <field name="shipping" optional="show" />
                 </xpath>
                 <xpath expr="//field[@name='origin']" position="before">
                     <field name="sales_order" optional="show" />
