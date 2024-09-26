@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_export_pdf_excel_change_file_name_export_pdf_excel_change_file_name,export_pdf_excel_change_file_name.export_pdf_excel_change_file_name,model_export_pdf_excel_change_file_name_export_pdf_excel_change_file_name,base.group_user,1,1,1,1
