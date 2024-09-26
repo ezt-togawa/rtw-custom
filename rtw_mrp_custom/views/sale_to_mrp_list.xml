@@ -32,7 +32,7 @@
                         string="Responsible" />
                     <field name="write_uid" optional="hide" string="Last Updated by" />
                     <field name="write_date" optional="hide" string="Last Updated on" />
-                    <field name="address_ship" optional="show" string="Address Ship" />
+                    <field name="shipping" optional="show" />
                     <field name="reservation_state" optional="show" string="Material Availability" />
                     <field name="product_qty" sum="Total Qty" string="Quantity" readonly="1"
                         optional="show" />
