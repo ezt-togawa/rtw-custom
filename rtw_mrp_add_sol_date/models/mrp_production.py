@@ -51,18 +51,29 @@ class rtw_mrp_production_add_sol_date(models.Model):
             scheduled_date = ''
             if mo.itoshima_shipping_date_edit:
                 scheduled_date = mo.itoshima_shipping_date_edit 
-            elif mo.sale_reference:
+            elif mo.sale_reference and not mo.is_child_mo:
                 so = self.env["sale.order"].search([('name', '=', mo.sale_reference)], limit=1)
-                if so:
+                warehouse = mo.picking_type_id.warehouse_id
+                if warehouse and warehouse.name == "糸島工場":
+                    if so:
+                        if so.sipping_to == "direct":
+                            scheduled_date = so.estimated_shipping_date or ''
+                        else:
+                            scheduled_date = so.shiratani_entry_date or ''
+                else:
                     pickings = self.env["stock.picking"].search([('sale_id', '=', so.id), ('state', '!=', 'cancel')])
                     for sp in pickings:
                         if sp.scheduled_date:                            
                             if not scheduled_date or scheduled_date > sp.scheduled_date:
                                 scheduled_date = sp.scheduled_date
                                 
+                child_list = self.env["mrp.production"].search([('origin', '=', mo.name)]) 
+                if child_list:
+                    for child in child_list:
+                        child.itoshima_shipping_date = scheduled_date
+                                
             mo.itoshima_shipping_date = scheduled_date  
             
-    @api.depends('itoshima_shipping_date')               
     def _inverse_itoshima_shipping_date(self):
         for mo in self:
             mo.itoshima_shipping_date_edit = mo.itoshima_shipping_date          
