@@ -33,3 +33,8 @@ msgstr "Store House"
 #: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__sales_order
 msgid "販売オーダー"
 msgstr "Sales Order"
+
+#. module: rtw_mrp_custom
+#: model:ir.model.fields,field_description:rtw_mrp_custom.field_mrp_production__shipping
+msgid "送付先"
+msgstr "Shipping"

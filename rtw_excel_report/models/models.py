@@ -2566,7 +2566,6 @@ class MrpProductionExcelReport(models.Model):
     mrp_child_mo_desired_delivery_date = fields.Char(compute="_compute_mrp_child_mo_desired_delivery_date")
     is_child_mo= fields.Boolean(compute="_compute_is_child_mo")
     
-
     def _compute_is_child_mo(self):
         for line in self:
             is_child_mo = False
@@ -2579,11 +2578,25 @@ class MrpProductionExcelReport(models.Model):
             desired_delivery_date = None
             if line.origin and '/MO/' in line.origin:
                 source_mo = self.env["mrp.production"].search([('name', '=', line.origin)], limit=1)
-                if source_mo:
+                if source_mo and source_mo.move_raw_ids:
                     for move in source_mo.move_raw_ids:
-                        if move.product_id == line.product_id and move.forecast_expected_date:
-                            desired_delivery_date = line._convert_timezone(move.forecast_expected_date)
-            
+                        if move.product_id.id == line.product_id.id:
+                            biggest_move_id = self.env['stock.move'].search([('origin', '=', source_mo.name), ('product_id', '=', move.product_id.id)], order='id desc', limit=1)
+                            if biggest_move_id:
+                                if biggest_move_id.picking_id:
+                                    desired_delivery_date = line._convert_timezone(biggest_move_id.picking_id.scheduled_date)
+                                elif biggest_move_id.group_id and biggest_move_id.location_id:
+                                    picking_main = False
+                                    pickings = self.env['stock.picking'].search([('group_id', '=', biggest_move_id.group_id.id),('location_id', '=', biggest_move_id.location_id.id)])
+                                    if pickings:
+                                        for pick in pickings:
+                                            if pick.move_ids_without_package:
+                                                for l in pick.move_ids_without_package:
+                                                    if l.product_id == biggest_move_id.product_id:
+                                                        picking_main = pick
+                                    if picking_main:
+                                        desired_delivery_date = line._convert_timezone(picking_main.scheduled_date)
+                
             line.mrp_child_mo_desired_delivery_date = line._format_date(desired_delivery_date, self.env.user.lang or 'en_US')
             
     def _format_date(self, date, lang_code):

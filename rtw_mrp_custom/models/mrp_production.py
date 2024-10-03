@@ -15,16 +15,21 @@ class MrpProductionCus(models.Model):
                                               store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
-    ship_to_address = fields.Selection([('1', '糸島'), ('2', '白谷'), ('3', 'デポ/直送')], string="送付先", required=True,
-                                       default='3')
-    address_ship = fields.Selection([('倉庫', '倉庫'), ('デポ/直送', 'デポ/直送')], string="送付先", required=True,
-                                    default='デポ/直送')
+    address_ship = fields.Selection([('倉庫', '倉庫'),('デポ/直送', 'デポ/直送') ], string="送付先", required=True, default='デポ/直送')
     storehouse_id = fields.Many2one(comodel_name='stock.warehouse', string="倉庫")
     duration = fields.Float('Duration', help="Track duration in hours.")
     color = fields.Integer(string='Event Color', default=1)
     sales_order = fields.Char(string='販売オーダー', compute="_compute_sales_order")
     calendar_display_name = fields.Text(compute="_compute_display_name_calendar", store=True)
-
+    shipping = fields.Char(compute="_compute_shipping", string="送付先")
+    
+    def _compute_shipping(self):
+        for line in self:
+            if line.address_ship == "デポ/直送":
+                line.shipping = "デポ/直送"
+            elif line.address_ship == "倉庫":
+                line.shipping = line.storehouse_id.name or ''
+            
     def _compute_sales_order(self):
         for line in self:
             order_no = ''
@@ -53,21 +58,25 @@ class MrpProductionCus(models.Model):
 
     @api.onchange('address_ship')
     def _onchange_address_ship(self):
-        for child in self:
+        for record in self:
             warehouse = False
-            if child.is_child_mo and child.address_ship == '倉庫':
-                source_mo = self.env["mrp.production"].search([('name', '=', child.origin)], limit=1)
+            if record.is_child_mo and record.address_ship == '倉庫':
+                source_mo = self.env["mrp.production"].search([('name', '=', record.origin)], limit=1)
                 if source_mo and source_mo.move_raw_ids:
                     for move in source_mo.move_raw_ids:
-                        if move.product_id.id == child.product_id.id:
+                        if move.product_id.id == record.product_id.id:
                             biggest_move_id = self.env['stock.move'].search(
                                 [('origin', '=', source_mo.name), ('product_id', '=', move.product_id.id)],
                                 order='id desc', limit=1)
                             if biggest_move_id:
                                 warehouse = self.env["stock.warehouse"].search(
                                     [('lot_stock_id', '=', biggest_move_id.location_dest_id.id)], limit=1)
-
-            child.storehouse_id = warehouse
+            # source mo
+            elif record.address_ship == '倉庫':
+                move = self.env['stock.move'].search([('origin', '=', record.name), ('product_id', '=', record.product_id.id)], limit=1)
+                if move:
+                    warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', move.location_dest_id.id)], limit=1)
+            record.storehouse_id = warehouse
 
     # mrp_stock_picking.py へ移設
     # @api.depends('move_raw_ids.forecast_expected_date')
