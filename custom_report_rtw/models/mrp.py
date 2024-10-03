@@ -62,7 +62,7 @@ class MrpProduction(models.Model):
 
             for search in search_criteria: #find sale_order_line
                 if self.env['sale.order.line'].search([search]):
-                    sale_order_line = self.env['sale.order.line'].search([search])
+                    sale_order_line = self.env['sale.order.line'].search([search], limit=1)
                     break
                 
             record.mrp_production_order_line = sale_order_line
