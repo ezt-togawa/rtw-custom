@@ -54,12 +54,14 @@ class MrpProductionCus(models.Model):
         if record.origin and '/MO/' in record.origin:
             record.address_ship = '倉庫'
             record._onchange_address_ship()
-        else:
-            so = self.env["sale.order"].search([('name', '=', record.sale_reference)], limit=1)
-            if so and so.sipping_to != "direct":
-                record.address_ship = '倉庫'
-                record._onchange_address_ship()
-        return record
+        else:#source mo
+            warehouse = record.picking_type_id.warehouse_id
+            if warehouse and warehouse.name == "糸島工場":
+                so = self.env["sale.order"].search([('name', '=', record.sale_reference)], limit=1)
+                if so and so.sipping_to != "direct":
+                    record.address_ship = '倉庫'
+                    record._onchange_address_ship()
+            return record
 
     @api.onchange('address_ship')
     def _onchange_address_ship(self):
