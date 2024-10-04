@@ -61,7 +61,7 @@ class MrpProductionCus(models.Model):
                 if so and so.sipping_to != "direct":
                     record.address_ship = '倉庫'
                     record._onchange_address_ship()
-            return record
+        return record
 
     @api.onchange('address_ship')
     def _onchange_address_ship(self):
