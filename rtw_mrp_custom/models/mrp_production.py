@@ -54,6 +54,13 @@ class MrpProductionCus(models.Model):
         if record.origin and '/MO/' in record.origin:
             record.address_ship = '倉庫'
             record._onchange_address_ship()
+        else:#source mo
+            warehouse = record.picking_type_id.warehouse_id
+            if warehouse and warehouse.name == "糸島工場":
+                so = self.env["sale.order"].search([('name', '=', record.sale_reference)], limit=1)
+                if so and so.sipping_to != "direct":
+                    record.address_ship = '倉庫'
+                    record._onchange_address_ship()
         return record
 
     @api.onchange('address_ship')
@@ -73,9 +80,8 @@ class MrpProductionCus(models.Model):
                                     [('lot_stock_id', '=', biggest_move_id.location_dest_id.id)], limit=1)
             # source mo
             elif record.address_ship == '倉庫':
-                move = self.env['stock.move'].search([('origin', '=', record.name), ('product_id', '=', record.product_id.id)], limit=1)
-                if move:
-                    warehouse = self.env["stock.warehouse"].search([('lot_stock_id', '=', move.location_dest_id.id)], limit=1)
+                shiratani = self.env["stock.warehouse"].search([('name', '=', '白谷運輸')], limit=1)
+                warehouse= shiratani.id or False
             record.storehouse_id = warehouse
 
     # mrp_stock_picking.py へ移設
