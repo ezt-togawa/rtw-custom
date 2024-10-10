@@ -8,7 +8,7 @@
                     <field name="picking_id" />
                     <field name="overseas" />
                     <field name="sale_id" string="注番" optional="show" />
-                    <field name="production_id" invisible="1" />
+                    <!-- <field name="production_id" invisible="1" /> -->
                     <field name="mrp_production_id" optional="show" />
                     <field name="product_id" />
 
@@ -19,11 +19,10 @@
                     <field name="product_package_quantity" optional="show" />
                     <field name="factory" sum="工場" />
                     <field name="state" />
-
                     <field name="customer_id" optional="hide" />
                     <field name="shiratani_date" string="白谷到着日" optional="show" />
                     <field name="area" string="デポ先" optional="show" />
-                    <field name="warehouse_arrive_date" string="デポ到着日" optional="show" />
+                    <field name="warehouse_arrive_date" string="デポ到着日" optional="show" />            
                     <field name="forwarding_address" string="納品設置先" optional="show" />
                     <field name="invoice_number" optional="show" />
                     <field name="memo" string="備考" />
