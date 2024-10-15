@@ -5,7 +5,7 @@ class rtw_stock_move(models.Model):
     _inherit = "stock.move"
     sai = fields.Float(compute="_get_sai", group_operator="sum", store=True)
     depo_date = fields.Date(compute="_get_sale",  store=True)
-    shiratani_date = fields.Date(compute="_get_shiratani_date",group_operator="sum", store=True)
+    shiratani_date = fields.Date(compute="_get_shiratani_date", store=True)
     date_planned = fields.Datetime(
         related='sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
@@ -66,6 +66,12 @@ class rtw_stock_move(models.Model):
             elif rec.picking_id:
                 if rec.picking_id.sale_id:
                     rec.sale_id = rec.picking_id.sale_id
+                elif rec.picking_id.origin and '/MO/' in rec.picking_id.origin:
+                    mrp = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)])
+                    if mrp:
+                        rec.sale_id = self.env['sale.order'].search([('name','=',mrp.origin)]).id
+                    else:
+                        rec.sale_id = False
                 elif rec.created_production_id:
                     rec.sale_id = self.env['sale.order'].search([('name','=',rec.created_production_id.sale_reference)]).id
                 else:
@@ -81,6 +87,8 @@ class rtw_stock_move(models.Model):
             rec.mrp_production_id = rec.production_id.name
         elif rec.created_production_id:
             rec.mrp_production_id = rec.created_production_id.origin
+        elif rec.picking_id.origin and '/MO/' in rec.picking_id.origin:
+            rec.mrp_production_id = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)]).name    
         else:
             mrp = self.env['mrp.production'].search(
                 [('origin', '=', rec.picking_id.sale_id.name), ('product_id', '=', rec.product_id.id)], limit=1)
@@ -142,8 +150,6 @@ class rtw_stock_move(models.Model):
             elif rec.picking_id.sipping_to == 'bring_in':
                 sipping_to = '持込'
             rec.shipping_to = sipping_to
-
-        
         elif rec.sale_id and rec.sale_id.sipping_to:
             if rec.sale_id.sipping_to == "depo":
                 sipping_to = "デポ入れまで"

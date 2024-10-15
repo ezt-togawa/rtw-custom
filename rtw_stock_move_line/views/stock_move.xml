@@ -11,7 +11,6 @@
                     <!-- <field name="production_id" invisible="1" /> -->
                     <field name="mrp_production_id" optional="show" />
                     <field name="product_id" />
-
                     <field name="spec" widget="many2many_tags" optional="hide" />
                     <field name="custom" widget="many2many_tags" optional="hide" />
                     <field name="product_qty" string="実際の予約数量" />
@@ -22,11 +21,13 @@
                     <field name="customer_id" optional="hide" />
                     <field name="shiratani_date" string="白谷到着日" optional="show" />
                     <field name="area" string="デポ先" optional="show" />
-                    <field name="warehouse_arrive_date" string="デポ到着日" optional="show" />            
+                    <field name="warehouse_arrive_date" string="デポ到着日" optional="show" />
                     <field name="forwarding_address" string="納品設置先" optional="show" />
                     <field name="invoice_number" optional="show" />
                     <field name="memo" string="備考" />
                     <field name="shipping_to" />
+                 
+
                     <field name="location_id" string="移動元" />
                     <field name="location_dest_id" string="移動先" />
                 </tree>
@@ -61,10 +62,15 @@
                     <filter string="製品" name="product_type"
                         domain="[('product_id.config_ok', '=', 'True')]" />
                 </xpath>
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field string=" 注番" name="sale_id" />
+                </xpath>
                 <xpath expr="//filter[@name='by_product']" position="before">
-                    <filter string="sale_id" name="注番" domain="[]" context="{'group_by': 'sale_id'}" />
+                    <filter name="sale_id" domain="[]" context="{'group_by': 'sale_id'}" />
+
                     <separator />
                 </xpath>
+               
             </field>
         </record>
 
