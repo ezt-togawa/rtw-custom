@@ -6,7 +6,8 @@ class SaleOrderLineExtend(models.Model):
     call_rate = fields.Float('Call Rate')
     updating_discount  = fields.Boolean()
     updating_call_rate  = fields.Boolean()
-    
+    warehouse_count = fields.Integer(compute='_compute_warehouse_count')
+
     @api.onchange('discount')
     def _onchange_discount(self):
         for line in self:
@@ -52,3 +53,8 @@ class SaleOrderLineExtend(models.Model):
                 for record in product:
                     if not record.config_ok:
                         self.product_id = product
+
+    # 製品毎の選択可能倉庫数
+    def _compute_warehouse_count(self):
+        for record in self:
+            record.warehouse_count = len(record.allowed_warehouse_ids)
