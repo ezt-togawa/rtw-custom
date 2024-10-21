@@ -3,7 +3,7 @@
 from odoo import models, fields, api
 
 class rtw_mrp_production_revised_edition(models.Model):
-    _inherit = 'mrp.production'
+    _inherit = 'stock.move'
 
     location_item_excel_prod_label_ids = fields.One2many(
         comodel_name="mrp.location_item_excel_prod_label",

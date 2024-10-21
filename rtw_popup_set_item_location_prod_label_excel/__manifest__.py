@@ -20,13 +20,13 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp'],
+    'depends': ['base', 'mrp','rtw_stock_move_line'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'views/location_item_excel_prod_label.xml',
-        'views/mrp_production.xml',
+        'views/stock_move.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
