@@ -2599,17 +2599,20 @@ class MrpProductionExcelReport(models.Model):
                 
             line.mrp_child_mo_desired_delivery_date = line._format_date(desired_delivery_date, self.env.user.lang or 'en_US')
             
-    def _format_date(self, date, lang_code):
+    def _format_date(self, date, lang_code, has_day = True):
         if not date:
             return ''
         format = 'yyyy-MM-dd'
         if lang_code == "ja_JP":
             format = 'y年M月d日'
-            
-        formatted_date = babel.dates.format_date(date, format=format, locale = lang_code)
-        day_of_week = babel.dates.format_date(date, format='EEE', locale = lang_code)
-        return f"{formatted_date} [{day_of_week}]"    
-            
+
+        formatted_date = babel.dates.format_date(date, format=format, locale=lang_code)
+        if has_day:
+            day_of_week = babel.dates.format_date(date, format='EEE', locale = lang_code)
+            return f"{formatted_date} [{day_of_week}]"
+
+        return f"{formatted_date}"
+
     def _convert_timezone(self, date):            
         timezone = pytz.timezone(self.env.user.tz or 'UTC')
         utc_dt = fields.Datetime.from_string(date)

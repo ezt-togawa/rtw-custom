@@ -2,18 +2,18 @@
 <odoo>
   <template id="report_inspection_order_list_form">
     <t t-call="web.html_container">
-      <t t-foreach="docs[0]" t-as="o">
+      <t t-foreach="docs[0]" t-as="mrp">
         <t t-call="custom_report_rtw.so_ex_layout">
           <t t-set="total_subprice" t-value="0" />
           <t t-set="total_listprice" t-value="0" />
-          <t t-if="not o" t-set="o" t-value="doc" />
+          <t t-if="not mrp" t-set="mrp" t-value="doc" />
           <t t-if="not company">
             <!-- Multicompany -->
             <t t-if="company_id">
               <t t-set="company" t-value="company_id" />
             </t>
-            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
-              <t t-set="company" t-value="o.company_id.sudo()" />
+            <t t-elif="mrp and 'company_id' in mrp and mrp.company_id.sudo()">
+              <t t-set="company" t-value="mrp.company_id.sudo()" />
             </t>
             <t t-else="else">
               <t t-set="company" t-value="res_company" />
@@ -21,65 +21,72 @@
           </t>
           <t t-call="custom_report_rtw.SO_inspection_order_form_header_layout"></t>
           <div class="page">
-            <t t-foreach="o.mrp_production_so_id" t-as="so">
               <t
                 t-set="type">quotation</t>
               <t t-set="address">
-                <div t-field="so.partner_id"
+                <div t-field="mrp.mrp_production_so_id.partner_id"
                   t-options='{"widget": "contact", "fields": ["address", "name"],
                         "no_marker": True}' />
-                <p t-if="so.partner_id.vat"><t
-                    t-esc="so.company_id.country_id.vat_label or 'Tax ID'" />: <span
-                    t-field="so.partner_id.vat" />
+                <p t-if="mrp.mrp_production_so_id.partner_id.vat"><t
+                    t-esc="mrp.mrp_production_so_id.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                    t-field="mrp.mrp_production_so_id.partner_id.vat" />
                 </p>
               </t>
-              <div t-if="so.company_id.logo or so.company_id.report_header"
+              <div t-if="mrp.mrp_production_so_id.company_id.logo or mrp.mrp_production_so_id.company_id.report_header"
                 class="row zero_min_height">
               </div>
               <div class="row size13" style="margin-top:-30px;">
                 <div class="col-4">
-                  <t t-if="o.lang_code == 'en_US'">
-                    <t t-if="o.mrp_workorder_state">
-                      <t t-if="o.mrp_workorder_state == 'wk_001'">
+                  <t t-if="mrp.lang_code == 'en_US'">
+                    <t t-if="mrp.mrp_workorder_state">
+                      <t t-if="mrp.mrp_workorder_state == 'wk_001'">
                         <div class="size16">Dear Itoshima Factory</div>
                       </t>
-                      <t t-if="o.mrp_workorder_state == 'wk_002'">
+                      <t t-if="mrp.mrp_workorder_state == 'wk_002'">
                         <div class="size16">Dear Quality Control</div>
                       </t>
                     </t>
                     <t t-else="">
                       <div class="size16">御中 <span
-                          t-field="o.picking_type_id.warehouse_id.partner_id.name" /></div>
+                          t-field="mrp.picking_type_id.warehouse_id.partner_id.name" /></div>
                     </t>
                   </t>
                   <t t-else="">
-                    <t t-if="o.mrp_workorder_state">
-                      <t t-if="o.mrp_workorder_state == 'wk_001'">
+                    <t t-if="mrp.mrp_workorder_state">
+                      <t t-if="mrp.mrp_workorder_state == 'wk_001'">
                         <div class="size16">糸島工場 御中</div>
                       </t>
-                      <t t-if="o.mrp_workorder_state == 'wk_002'">
+                      <t t-if="mrp.mrp_workorder_state == 'wk_002'">
                         <div class="size16">品質管理部 御中</div>
                       </t>
                     </t>
                     <t t-else="">
                       <div class="size16"><span
-                          t-field="o.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
+                          t-field="mrp.picking_type_id.warehouse_id.partner_id.name" /> 御中</div>
                     </t>
                   </t>
-                  <div> 発注番号 <span class="size16"
-                      t-field="so.name" />
+                  <div> 発注番号
+                    <t t-if="mrp.mrp_production_so_id.name">
+                       <span class="size16" t-field="mrp.mrp_production_so_id.name" />
+                    </t>
+                    <t t-else="">
+                       <span class="size16" t-field="mrp.name" />
+                    </t>
                   </div>
                   <br />
                   <div> 配達希望日 <t>
-                      <t t-if="o.is_child_mo">
-                        <span class="size14" t-field="o.mrp_child_mo_desired_delivery_date" />
+                      <t t-if="mrp.is_child_mo">
+                        <span class="size14" t-field="mrp.mrp_child_mo_desired_delivery_date" />
                       </t>
                       <t t-else="">
-                        <t t-if="so.sipping_to == 'direct'">
-                          <span class="size14" t-field="so.sale_order_preferred_delivery_date" />
+                        <t t-if="mrp.mrp_production_so_id.sipping_to == 'direct'">
+                          <span class="size14" t-field="mrp.mrp_production_so_id.sale_order_preferred_delivery_date" />
+                        </t>
+                        <t t-elif="mrp.mrp_production_so_id">
+                          <span class="size14" t-field="mrp.mrp_production_so_id.so_warehouse_arrive_date_has_day" />
                         </t>
                         <t t-else="">
-                          <span class="size14" t-field="so.so_warehouse_arrive_date_has_day" />
+                          <span class="size14" t-field="mrp.estimated_shipping_date" />
                         </t>
                       </t>
                     </t>
@@ -91,15 +98,15 @@
                     </div>
                     <div>
                       <div class="size16">
-                        <p style="line-height:16px; margin:0;" t-field="so.title" />
+                        <p style="line-height:16px; margin:0;" t-field="mrp.mrp_production_so_id.title" />
                       </div>
                       <div class="size13">
-                        <span t-field="so.partner_id.name" />
+                        <span t-field="mrp.mrp_production_so_id.partner_id.name" />
                       <span
-                          t-field="so.partner_id.site" />
-                      <span t-field="so.partner_id.department" />
+                          t-field="mrp.mrp_production_so_id.partner_id.site" />
+                      <span t-field="mrp.mrp_production_so_id.partner_id.department" />
                       <span
-                          t-field="so.partner_id.user_id.name" /> ご依頼分 </div>
+                          t-field="mrp.mrp_production_so_id.partner_id.user_id.name" /> ご依頼分 </div>
                     </div>
                   </div>
                 </div>
@@ -110,7 +117,7 @@
                   <div class="float-right">
                     <div class="d-flex">
                       <div>
-                        <span t-if="so.overseas" class="size18 pt-2 pr-1">(海外)</span>
+                        <span t-if="mrp.mrp_production_so_id.overseas" class="size18 pt-2 pr-1">(海外)</span>
                       </div>
                       <div>
                         <div>
@@ -120,25 +127,25 @@
                         </div>
                         <div>
                           <div class="size12">
-                            <span t-esc="o.hr_employee_company" />
+                            <span t-esc="mrp.hr_employee_company" />
                           </div>
                           <div>
-                            <span t-esc="o.hr_employee_department" />
+                            <span t-esc="mrp.hr_employee_department" />
                           </div>
                           <div>
-                            <span t-esc="o.hr_employee_zip" />
+                            <span t-esc="mrp.hr_employee_zip" />
                           </div>
                           <div>
-                            <span t-esc="o.hr_employee_info" />
+                            <span t-esc="mrp.hr_employee_info" />
                           </div>
                           <div>
-                            <span t-esc="o.hr_employee_tel" />
+                            <span t-esc="mrp.hr_employee_tel" />
                           </div>
                           <div>
-                            <span t-esc="o.hr_employee_fax" />
+                            <span t-esc="mrp.hr_employee_fax" />
                           </div>
                           <div class="size12">
-                            <span t-esc="o.hr_employee_printer" />
+                            <span t-esc="mrp.hr_employee_printer" />
                           </div>
                         </div>
                       </div>
@@ -148,30 +155,30 @@
               </div>
               <div class="row py-2">
                 <div class="col-4 size14">
-                  <t t-if="so.sipping_to =='direct'">
-                    <t t-if="o.address_ship == '倉庫'">
-                      <div> 送り先: <span t-field="o.mrp_choose_option_find_warehouse_company_name" /></div>
-                      <div> 住所: <span t-field="o.mrp_choose_option_find_warehouse_address" /></div>
-                      <div> TEL: <span t-field="o.mrp_choose_option_find_warehouse_phone" /></div>
+                  <t t-if="mrp.mrp_production_so_id.sipping_to =='direct'">
+                    <t t-if="mrp.address_ship == '倉庫'">
+                      <div> 送り先: <span t-field="mrp.mrp_choose_option_find_warehouse_company_name" /></div>
+                      <div> 住所: <span t-field="mrp.mrp_choose_option_find_warehouse_address" /></div>
+                      <div> TEL: <span t-field="mrp.mrp_choose_option_find_warehouse_phone" /></div>
                     </t>
                     <t t-else="">
-                      <div> 送り先: <span t-field="so.shipping_destination_text" /></div>
+                      <div> 送り先: <span t-field="mrp.mrp_production_so_id.shipping_destination_text" /></div>
                     </t>
                   </t>
-                  <t t-elif="o.address_ship and o.address_ship == 'デポ/直送'">
-                    <div> 送り先: <span t-field="so.sale_order_waypoint_name" /></div>
-                    <div> 住所: <span t-field="so.sale_order_waypoint_address" /></div>
-                    <div> TEL: <span t-if="so.waypoint.phone" t-field="so.waypoint.phone" /></div>
+                  <t t-elif="mrp.address_ship and mrp.address_ship == 'デポ/直送'">
+                    <div> 送り先: <span t-field="mrp.mrp_production_so_id.sale_order_waypoint_name" /></div>
+                    <div> 住所: <span t-field="mrp.mrp_production_so_id.sale_order_waypoint_address" /></div>
+                    <div> TEL: <span t-if="mrp.mrp_production_so_id.waypoint.phone" t-field="mrp.mrp_production_so_id.waypoint.phone" /></div>
                   </t>
                   <t t-else="">
-                    <div> 送り先: <span t-field="o.mrp_choose_option_find_warehouse_company_name" /></div>
-                    <div> 住所: <span t-field="o.mrp_choose_option_find_warehouse_address" /></div>
-                    <div> TEL: <span t-field="o.mrp_choose_option_find_warehouse_phone" /></div>
+                    <div> 送り先: <span t-field="mrp.mrp_choose_option_find_warehouse_company_name" /></div>
+                    <div> 住所: <span t-field="mrp.mrp_choose_option_find_warehouse_address" /></div>
+                    <div> TEL: <span t-field="mrp.mrp_choose_option_find_warehouse_phone" /></div>
                   </t>
                 </div>
                 <div class="col-4 size13">
                   <div style="padding-left:60px;">
-                    <div> 送り先注記: <span t-field="so.remark" />
+                    <div> 送り先注記: <span t-field="mrp.mrp_production_so_id.remark" />
                       <br />
                       <!-- <span t-field="docs.production_memo" /> -->
                     </div>
@@ -288,7 +295,6 @@
                   </tbody>
                 </t>
               </table>
-            </t>
           </div>
           <t t-call="custom_report_rtw.page_footer_layout"></t>
         </t>
