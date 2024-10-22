@@ -1,4 +1,4 @@
-<odoo>
+<!-- <odoo>
     <record id="mrp_product_label_seal" model="ir.actions.report">
         <field name="model">mrp.production</field>
         <field name="name">商品ラベルシール</field>
@@ -9,5 +9,19 @@
         <field name="attachment_use">False</field>
         <field name="binding_view_types">list,form</field>
         <field name="print_report_name">'商品ラベルシール-' + object.current_print</field>
+    </record>
+</odoo> -->
+
+<odoo>
+    <record id="mrp_product_label_seal" model="ir.actions.report">
+        <field name="model">stock.move</field>
+        <field name="name">商品ラベルシール</field>
+        <field name="report_name">rtw_excel_report.product_label_sticker_xls</field>
+        <field name="binding_model_id" ref="stock.model_stock_move" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="attachment_use">False</field>
+        <field name="binding_view_types">list,form</field>
+        <field name="print_report_name">'商品ラベルシール-' </field>
     </record>
 </odoo>

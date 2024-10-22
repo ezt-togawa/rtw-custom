@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <record id="view_mrp_production_list_rtw" model="ir.ui.view">
+        <!-- <record id="view_mrp_production_list_rtw" model="ir.ui.view">
             <field name="name">rtw mrp production list</field>
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
@@ -11,19 +11,23 @@
                         class="oe_highlight" />
                 </xpath>
             </field>
-        </record>
+        </record> -->
 
         <record id="view_mrp_production_form_rtw" model="ir.ui.view">
-            <field name="name">rtw mrp production</field>
-            <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="name">rtw stock move</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="rtw_stock_move_line.stock_move_list" />
             <field name="arch" type="xml">
-                <xpath expr="//header" position="inside">
-                    <button string="Set Location Prod Label" name="create_location_item_excel_prod_label"
-                        type="object"
-                        class="oe_highlight" />
+                <xpath expr="//tree" position="inside">
+                    <header>
+                        <button string="Set Location Prod Label"
+                            name="create_location_item_excel_prod_label"
+                            type="object"
+                            class="oe_highlight" />
+                    </header>
                 </xpath>
             </field>
         </record>
+
     </data>
 </odoo>
