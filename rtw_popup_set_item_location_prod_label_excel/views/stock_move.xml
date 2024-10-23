@@ -20,7 +20,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="inside">
                     <header>
-                        <button string="Set Location Prod Label"
+                        <button string="ラベル位置設定"
                             name="create_location_item_excel_prod_label"
                             type="object"
                             class="oe_highlight" />

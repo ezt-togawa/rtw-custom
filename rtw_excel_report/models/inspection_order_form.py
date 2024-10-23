@@ -115,10 +115,17 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(1, 1, _("検品発注書"), format_sheet_title) 
                 sheet.write(5, 0, _("発注番号"), format_text) 
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else mrp.name, format_text)
-                sheet.write(6, 0, _("配達希望日"), format_text) 
+                sheet.write(6, 0, _("配達希望日"), format_text)
                 if mrp.is_child_mo:
                     sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date) 
-                elif isLinkeSale and mrp.sale_order.sipping_to == 'direct':
+                elif mrp.picking_type_id.warehouse_id and mrp.picking_type_id.warehouse_id.name == "糸島工場" :
+                    if mrp.itoshima_shipping_date_edit:
+                        sheet.write(6, 1, mrp.itoshima_shipping_date_edit if mrp.itoshima_shipping_date_edit else '', format_text_date) 
+                    else:
+                        so = self.env["sale.order"].search([('name', '=', mrp.sale_reference)], limit=1)
+                        if so:
+                            sheet.write(6, 1, so.shiratani_entry_date if so.shiratani_entry_date else '', format_text_date)                               
+                elif mrp.sale_order.sipping_to == 'direct':
                     sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_date) 
                 elif isLinkeSale:
                     sheet.write(6, 1, mrp.sale_order.so_warehouse_arrive_date_has_day if mrp.sale_order.so_warehouse_arrive_date_has_day else '', format_text_14) 

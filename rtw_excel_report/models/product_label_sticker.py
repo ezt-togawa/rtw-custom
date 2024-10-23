@@ -72,13 +72,13 @@ class productLabelSticker(models.AbstractModel):
                 if location_item_row % 2 != 0:  # location odd
                     sheet_main.merge_range(row_start + 0, 1, row_start + 2, 5, prod_name, format_title)
                     sheet_main.merge_range(row_start + 3, 1, row_start + 4, 2, mrp_name, format_detail_prod)
-                    sheet_main.merge_range(row_start + 5, 1, row_start + 6, 2, mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日1") + ") ", format_detail_prod)
+                    sheet_main.merge_range(row_start + 5, 1, row_start + 6, 2, mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日") + ") ", format_detail_prod)
                     sheet_main.merge_range(row_start + 3, 4, row_start + 4, 5, attributes[0] if len(attributes) == 1 or len(attributes) == 2 else " ", format_detail_prod)
                     sheet_main.merge_range(row_start + 5, 4, row_start + 6, 5, attributes[1] if len(attributes) == 2 else " ", format_detail_prod)
                 else:  # location even
                     sheet_main.merge_range(row_start + 0, 7, row_start + 2, 11, prod_name, format_title)
                     sheet_main.merge_range(row_start + 3, 7, row_start + 4, 8, mrp_name, format_detail_prod)
-                    sheet_main.merge_range(row_start + 5, 7, row_start + 6, 8, mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日2") + ") ", format_detail_prod)
+                    sheet_main.merge_range(row_start + 5, 7, row_start + 6, 8, mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日") + ") ", format_detail_prod)
                     sheet_main.merge_range(row_start + 3, 10, row_start + 4, 11, attributes[0] if len(attributes) == 1 or len(attributes) == 2 else " ", format_detail_prod)
                     sheet_main.merge_range(row_start + 5, 10, row_start + 6, 11, attributes[1] if len(attributes) == 2 else " ", format_detail_prod)               
                     count += 1
