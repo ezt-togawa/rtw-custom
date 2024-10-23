@@ -78,6 +78,17 @@
                       <t t-if="mrp.is_child_mo">
                         <span class="size14" t-field="mrp.mrp_child_mo_desired_delivery_date" />
                       </t>
+                      <t t-elif="o.picking_type_id.warehouse_id and o.picking_type_id.warehouse_id.name == '糸島工場'">
+                        <t t-if="o.itoshima_shipping_date_edit">
+                            <span class="size14" t-field="o.itoshima_shipping_date_edit" />
+                        </t>
+                        <t t-else="">
+                            <t t-set="so" t-value="env['sale.order'].search([('name', '=', o.sale_reference)], limit=1)"/>
+                            <t t-if="so">
+                                <span class="size14" t-field="so.shiratani_entry_date" />
+                            </t>
+                        </t>
+                      </t>
                       <t t-else="">
                         <t t-if="mrp.mrp_production_so_id.sipping_to == 'direct'">
                           <span class="size14" t-field="mrp.mrp_production_so_id.sale_order_preferred_delivery_date" />
