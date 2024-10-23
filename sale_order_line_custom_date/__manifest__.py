@@ -26,7 +26,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/sale_order_line_custom_date.xml',
-        'views/stock_move.xml',
+        # 'views/stock_move.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode
