@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_mail_thread" name="custom_mail_thread" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/custom_mail_thread/static/src/js/custom_mail_thread.js"></script>
+        </xpath>
+    </template>
+    
+</odoo>
