@@ -67,11 +67,21 @@ class rtw_stock_move(models.Model):
                 if rec.picking_id.sale_id:
                     rec.sale_id = rec.picking_id.sale_id
                 elif rec.picking_id.origin and '/MO/' in rec.picking_id.origin:
-                    mrp = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)])
-                    if mrp:
-                        rec.sale_id = self.env['sale.order'].search([('name','=',mrp.origin)]).id
-                    else:
-                        rec.sale_id = False
+                        mrp = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)])
+                        if mrp:
+                            rec.sale_id = self.env['sale.order'].search([('name','=',mrp.origin)]).id
+                        else:
+                            rec.sale_id = False
+                elif rec.picking_id.origin and rec.picking_id.origin.startswith('P'):
+                        purchase_order_origin = self.env['purchase.order'].search([('name','=',rec.picking_id.origin)]).origin  
+                        if purchase_order_origin  and '/MO/' in purchase_order_origin :          
+                            mrp_origin=self.env['mrp.production'].search([('name','=',purchase_order_origin)]).origin     
+                            if mrp_origin:
+                                rec.sale_id = self.env['sale.order'].search([('name','=',mrp_origin)]).id
+                            else:
+                                rec.sale_id = False   
+                        else:
+                            rec.sale_id = False        
                 elif rec.created_production_id:
                     rec.sale_id = self.env['sale.order'].search([('name','=',rec.created_production_id.sale_reference)]).id
                 else:
@@ -86,9 +96,11 @@ class rtw_stock_move(models.Model):
         if rec.production_id:
             rec.mrp_production_id = rec.production_id.name
         elif rec.created_production_id:
-            rec.mrp_production_id = rec.created_production_id.origin
+            rec.mrp_production_id = rec.created_production_id.name
         elif rec.picking_id.origin and '/MO/' in rec.picking_id.origin:
             rec.mrp_production_id = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)]).name    
+        elif rec.picking_id.origin and rec.picking_id.origin.startswith('P'):
+            rec.mrp_production_id = self.env['purchase.order'].search([('name','=',rec.picking_id.origin)]).origin  
         else:
             mrp = self.env['mrp.production'].search(
                 [('origin', '=', rec.picking_id.sale_id.name), ('product_id', '=', rec.product_id.id)], limit=1)
