@@ -7,21 +7,18 @@ class sale_order_approve(models.Model):
     _inherit = "sale.order"
 
     approve_status = fields.Boolean('Approve', default=0)
+    approve_status_check = fields.Text('承認状況 ',compute='_compute_approve_status_check', tracking=True)
     is_over_price = fields.Boolean('Is Over Price' , compute='_compute_is_over_price', store=True)
     is_hide_button = fields.Boolean('Is Hide Button' , compute='_compute_is_hide_button' , store=True)
     approve_button = fields.Char('Approve Button' , compute='_compute_approve_button' , store=True)
-
     def toggle_approve_btn(self):
-        old_approve_status = self.approve_status
         admin_sale_id = self.env.ref('sales_team.group_sale_manager')
         for record in self:
             user_group_id = record.user_id.groups_id
             if  admin_sale_id in user_group_id:
                 record.approve_status = not record.approve_status
-                self._track_subtype_status(old_approve_status)
             else:
                 raise UserError('販売の管理者のみ承認の実行ができます。')
-
     @api.onchange('amount_total')
     def _onchange_amount_total(self):
         for record in self:
@@ -29,7 +26,7 @@ class sale_order_approve(models.Model):
             min_price = 0
             _max_price = int(self.env['ir.config_parameter'].sudo().get_param('sale_order.sale_order_max_price', 1000000))
             for line in sale_order_lines:
-                min_price += line.product_id.standard_price
+                min_price += line.product_id.standard_price  
             if  record.amount_total > _max_price or record.amount_total < min_price :
                 record.is_over_price = True
                 record.approve_status = False
@@ -92,27 +89,21 @@ class sale_order_approve(models.Model):
                 else:
                     record.approve_button = '未承認'
             else:
-                record.approve_button = ''
-                
-    def _track_subtype_status(self, old_approve_status):
+                record.approve_button = ''   
+    def _compute_approve_status_check(self):
         for rec in self:
-            old_status = "承認済" if old_approve_status else "未承認"
-            new_status = "承認済" if rec.approve_status else "未承認"
-            rec.message_post(
-                body=f"<ul><li>承認状況: {old_status} <b style='font-size:14px;'>➞</b> {new_status}</li></ul>",  
-                message_type="notification", 
-                subtype_id=self.env.ref('mail.mt_note').id
-            )
-            
-class sale_report_approve(models.Model):
-    _inherit = 'ir.actions.report'
-    def _get_rendering_context(self, docids, data):
-        res = super(sale_report_approve, self)._get_rendering_context(docids, data)
-        if self.model == 'sale.order':
-            sale_order = self.env[self.model].sudo(False).browse(docids)
-            if not sale_order.approve_status and sale_order.is_over_price and sale_order.status != 'draft':
-                raise UserError('未承認のため印刷できません。')
-        return res
+            rec.approve_status_check = "承認済" if rec.approve_status else "未承認"
+
+        
+# class sale_report_approve(models.Model):
+#     _inherit = 'ir.actions.report'
+#     def _get_rendering_context(self, docids, data):
+#         res = super(sale_report_approve, self)._get_rendering_context(docids, data)
+#         if self.model == 'sale.order':
+#             sale_order = self.env[self.model].sudo(False).browse(docids)
+#             if not sale_order.approve_status and sale_order.is_over_price and sale_order.status != 'draft':
+#                 raise UserError('未承認のため印刷できません。')
+#         return res
 class sale_report_excel(models.AbstractModel):
     _inherit = 'xlsx.export'
     def export_xlsx(self, template, res_model, res_ids):
@@ -122,4 +113,3 @@ class sale_report_excel(models.AbstractModel):
             if not sale_order.approve_status and sale_order.is_over_price:
                 raise UserError('未承認のため印刷できません。')
         return res
-    
