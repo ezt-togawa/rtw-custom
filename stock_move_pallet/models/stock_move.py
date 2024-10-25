@@ -19,9 +19,14 @@ class StockMove(models.Model):
     def _manu_date_planned_start(self):
         for rec in self:
             mrp = self.env['mrp.production'].search(
-                [('origin', '=', rec.picking_id.sale_id.name), ('product_id', '=', rec.product_id.id)], limit=1)
+                [('origin', '=', rec.sale_id.name)], limit=1)
             if mrp:
-                rec.manu_date_planned_start = mrp.date_planned_start or None
+                rec.manu_date_planned_start = mrp.date_planned_start 
+            elif rec.picking_id.origin and '/MO/' in rec.picking_id.origin:
+                if self.env['mrp.production'].search([('name','=',rec.picking_id.origin)]):
+                    rec.manu_date_planned_start = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)]).date_planned_start
+                else:
+                    rec.manu_date_planned_start = None
             else:
                 rec.manu_date_planned_start = None
                 

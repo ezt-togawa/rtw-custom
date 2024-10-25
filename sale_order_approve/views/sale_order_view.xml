@@ -38,13 +38,20 @@
                         未承認
                     </button>
                 </xpath>
-                <xpath expr="//button[@name='action_quotation_send' and @states='sent,sale']"
+                <!-- <xpath expr="//button[@name='action_quotation_send' and @states='sent,sale']"
                     position="attributes">
                     <attribute name="attrs">{'invisible': ['|', ('is_hide_button', '=', True)]}</attribute>
                 </xpath>
                 <xpath expr="//button[@name='action_quotation_send' and @states='draft']"
                     position="attributes">
                     <attribute name="attrs">{'invisible': ['|', ('is_hide_button', '=', True)]}</attribute>
+                </xpath> -->
+                <xpath expr="//button[@name='action_confirm' and not(@id)]" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible': ['|', '|',('state', 'not in', ['draft']), ('status', '=',
+                        'draft'),'&amp;', ('approve_status', '=', False), ('amount_total', '&gt;',
+                        1000000)]}
+                    </attribute>
                 </xpath>
             </field>
         </record>

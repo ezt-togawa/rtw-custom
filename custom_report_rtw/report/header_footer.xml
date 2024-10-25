@@ -315,7 +315,12 @@
                         <span class="ml-2 size20"> 発注書 </span>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
-                        <div t-esc="doc.mrp_production_so_id.name" />
+                        <t t-if="mrp.mrp_production_so_id.name">
+                            <div t-esc="doc.mrp_production_so_id.name" />
+                        </t>
+                        <t t-else="">
+                            <div t-esc="doc.name" />
+                        </t>
                         <t>
                             <t t-if="doc.lang_code == 'en_US'">
                                 <t t-esc="time.strftime('%Y')" /> - <t t-esc="time.strftime('%m')" />
@@ -344,7 +349,12 @@
                         <span class="ml-2 size20">検品発注書</span>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
-                        <div t-esc="doc.mrp_production_so_id.name" />
+                        <t t-if="mrp.mrp_production_so_id.name">
+                            <div t-esc="doc.mrp_production_so_id.name" />
+                        </t>
+                        <t t-else="">
+                            <div t-esc="doc.name" />
+                        </t>
                         <t>
                             <t t-if="doc.lang_code == 'en_US'">
                                 <t t-esc="time.strftime('%Y')" /> - <t t-esc="time.strftime('%m')" />

@@ -30,6 +30,9 @@ class MrpProduction(models.Model):
                 for ele in mrp_ids:
                     value.mrp_reference = ele.name
 
+            # 販売のタイトルを初期に取得して保持しておく
+            value._compute_reference_value_title()
+
     def _compute_production_type(self):
         for record in self:
             list_custom_config = ''
@@ -127,16 +130,18 @@ class MrpProduction(models.Model):
                     line.write({'memo': record.production_memo})
 
     def _compute_reference_value_title(self):
+        # モデル利用時に毎回更新するため一次的にsotr以外のtmp項目を作って対応する
         sale_ids = self.env['sale.order'].search([('name', '=', self.origin)])
         if sale_ids: # 手動新規の場合 value.origin はFalseになるので考慮
-            self.sale_reference_title = sale_ids.title
+            self.sale_title_tmp = sale_ids.title
         else:
             mo_ids = self.env['mrp.production'].search([('name', '=', self.origin)])
             if mo_ids:
                 sale_ids = self.env['sale.order'].search([('name', '=', mo_ids.origin)])
-                self.sale_reference_title = sale_ids.title
+                self.sale_title_tmp = sale_ids.title
             else:
-                self.sale_reference_title = ''
+                self.sale_title_tmp = ''
+        self.sale_reference_title = self.sale_title_tmp
 
     def _compute_overseas(self):
         sale_ids = self.env['sale.order'].search([('name', '=', self.origin)])
@@ -154,7 +159,8 @@ class MrpProduction(models.Model):
     mrp_reference = fields.Char('MO Reference', compute='_compute_reference_mo', store=True)
     production_type = fields.Char('製品タイプ', compute='_compute_production_type')
     production_memo = fields.Char('memo', compute='_compute_production_type', inverse='_inverse_production_memo')
-    sale_reference_title = fields.Char('SO Title', compute='_compute_reference_value_title')
+    sale_reference_title = fields.Char('SO Title', store=True)
+    sale_title_tmp = fields.Char('SO Title', compute='_compute_reference_value_title')
     overseas = fields.Boolean('海外', compute='_compute_overseas')
 
 
@@ -163,3 +169,4 @@ class Workorder(models.Model):
 
     sale_reference = fields.Char('SO Reference', related='production_id.sale_reference')
     mrp_reference = fields.Char('MO Reference', related='production_id.mrp_reference')
+

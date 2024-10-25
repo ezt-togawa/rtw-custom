@@ -90,6 +90,9 @@
             <xpath
                 expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']"
                 position="after">
+                <field name="warehouse_count" invisible="1" />
+                <field name="warehouse_id" optional="hide" string="倉庫"
+                      decoration-warning="warehouse_count &gt; 1" decoration-bf="warehouse_count &gt; 1"/>
                 <field name="tax_id" widget="many2many_tags" options="{'no_create': True}"
                     context="{'search_view_ref': 'account.account_tax_view_search'}"
                     domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
@@ -110,7 +113,6 @@
                 <field name="product_size" optional="hide" />
                 <field name="p_type" optional="hide" />
                 <field name="is_pack_outside" optional="hide" />
-                <field name="warehouse_id" optional="hide" string="倉庫" />
                 <field name="route_id" optional="hide" />
                 <field name="delivery_confirmation" optional="hide" />
                 <field name="item_sale_attach_ids" optional="hide" />

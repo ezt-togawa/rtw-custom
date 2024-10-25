@@ -10,7 +10,7 @@
 				<label for="sale_reference"/>
 				<div class="o_row no-gutters d-flex">
 					<field name="sale_reference"/>
-					<field name="sale_reference_title"/>
+					<field name="sale_title_tmp"/>
 				</div>
 				<field name="overseas"/>
 				<field name="mrp_reference"/>

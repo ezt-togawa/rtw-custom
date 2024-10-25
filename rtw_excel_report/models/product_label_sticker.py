@@ -41,9 +41,7 @@ class productLabelSticker(models.AbstractModel):
         else: 
             location_item_row = 1
         row_start_begin = (location_item_row - 1) // 2 * 9
-
         count = 0
-    
         for obj in lines:
             prod_name = ""
             mrp_name =""
@@ -51,38 +49,37 @@ class productLabelSticker(models.AbstractModel):
             scheduled_date_month = ""
             scheduled_date_day = ""
             attributes = []
-
+            prod_base_name=""
             if obj.product_id.product_tmpl_id.product_no:
-                prod_name = obj.product_id.product_tmpl_id.product_no
+                prod_base_name = obj.product_id.product_tmpl_id.product_no
 
-            if obj.name:
-                mrp_name = obj.name
+            if obj.mrp_production_id:
+                mrp_name = obj.mrp_production_id
 
-            if obj.product_uom_qty:
-                mrp_qty = str(obj.product_uom_qty).split(".")[0]
-
-            if obj.date_planned_start:
-                scheduled_date_month = obj.date_planned_start.strftime("%m")
-                scheduled_date_day = obj.date_planned_start.strftime("%d")
-
+            if obj.product_id.two_legs_scale:
+                mrp_qty = str(round(obj.product_id.two_legs_scale))
+            if obj.sale_id.estimated_shipping_date:
+                    scheduled_date_month = obj.sale_id.estimated_shipping_date.strftime("%m")
+                    scheduled_date_day = obj.sale_id.estimated_shipping_date.strftime("%d")
             attrs = obj.product_id.product_template_attribute_value_ids
             if attrs:
                 for attri in attrs[:2]:
                     attributes.append(attri.attribute_id.name + ":" + attri.product_attribute_value_id.name )
-
-            row_start = row_start_begin +  count * 9
-            if location_item_row % 2 != 0 :  # location odd 
-                sheet_main.merge_range(row_start + 0,1,row_start + 2,5,prod_name ,format_title)
-                sheet_main.merge_range(row_start + 3,1,row_start + 4,2,mrp_name ,format_detail_prod)
-                sheet_main.merge_range(row_start + 5,1,row_start + 6,2,mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日1") + ") " ,format_detail_prod)
-                sheet_main.merge_range(row_start + 3,4,row_start + 4,5,attributes[0] if len(attributes)== 1 or len(attributes)== 2  else " " ,format_detail_prod)
-                sheet_main.merge_range(row_start + 5,4,row_start + 6,5,attributes[1]  if len(attributes)== 2 else " ",format_detail_prod)
-            else :  # location even
-                sheet_main.merge_range(row_start + 0,7,row_start + 2,11,prod_name,format_title)
-                sheet_main.merge_range(row_start + 3,7,row_start + 4,8,mrp_name ,format_detail_prod)
-                sheet_main.merge_range(row_start + 5,7,row_start + 6,8,mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日2") + ") " ,format_detail_prod)
-                sheet_main.merge_range(row_start + 3,10,row_start + 4,11,attributes[0] if len(attributes)== 1 or len(attributes)== 2  else " " ,format_detail_prod)
-                sheet_main.merge_range(row_start + 5,10,row_start + 6,11,attributes[1]  if len(attributes)== 2 else " " ,format_detail_prod)
-                count += 1
-            
-            location_item_row += 1
+            label_count = obj.product_package_quantity 
+            for serial in range(1, int(label_count) + 1): 
+                prod_name = f"{prod_base_name} {serial}/{int(label_count)}"          
+                row_start = row_start_begin + count  * 9
+                if location_item_row % 2 != 0:  # location odd
+                    sheet_main.merge_range(row_start + 0, 1, row_start + 2, 5, prod_name, format_title)
+                    sheet_main.merge_range(row_start + 3, 1, row_start + 4, 2, mrp_name, format_detail_prod)
+                    sheet_main.merge_range(row_start + 5, 1, row_start + 6, 2, mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日") + ") ", format_detail_prod)
+                    sheet_main.merge_range(row_start + 3, 4, row_start + 4, 5, attributes[0] if len(attributes) == 1 or len(attributes) == 2 else " ", format_detail_prod)
+                    sheet_main.merge_range(row_start + 5, 4, row_start + 6, 5, attributes[1] if len(attributes) == 2 else " ", format_detail_prod)
+                else:  # location even
+                    sheet_main.merge_range(row_start + 0, 7, row_start + 2, 11, prod_name, format_title)
+                    sheet_main.merge_range(row_start + 3, 7, row_start + 4, 8, mrp_name, format_detail_prod)
+                    sheet_main.merge_range(row_start + 5, 7, row_start + 6, 8, mrp_qty + "(Ｒ " + scheduled_date_month + _("月") + scheduled_date_day + _("日") + ") ", format_detail_prod)
+                    sheet_main.merge_range(row_start + 3, 10, row_start + 4, 11, attributes[0] if len(attributes) == 1 or len(attributes) == 2 else " ", format_detail_prod)
+                    sheet_main.merge_range(row_start + 5, 10, row_start + 6, 11, attributes[1] if len(attributes) == 2 else " ", format_detail_prod)               
+                    count += 1
+                location_item_row += 1

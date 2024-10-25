@@ -51,11 +51,11 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_custom= workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
         
         allow_print = False
-        if len(mrp_data) == 1 and mrp_data[0].origin:
+        if len(mrp_data) == 1:
             allow_print = True
         else:   
             for mrp_check in mrp_data[1:]:
-                if mrp_check.origin and mrp_check.origin == mrp_data[0].origin:
+                if mrp_check.origin == mrp_data[0].origin:
                     allow_print = True
                 else:
                     allow_print = False
@@ -69,7 +69,8 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.set_paper(9)  #A4
                 sheet.set_landscape()
                 # sheet.set_print_scale(66)
-                
+                isLinkeSale = mrp.sale_order_count >= 1
+
                 margin_header = 0.3
                 margin_footer = 0.3
                 left_margin = 0.8
@@ -77,8 +78,12 @@ class ReportMrpExcel(models.AbstractModel):
                 top_margin = 0.5
                 bottom_margin = 0.5
                 sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
-                sheet.set_header( f'{"&"}R {mrp.sale_order.name  if mrp.sale_order.name else ""} \n {mrp.sale_order.sale_order_current_date  if mrp.sale_order.sale_order_current_date else ""}', margin=margin_header) 
-                sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)   
+                if isLinkeSale:
+                    sheet.set_header( f'{"&"}R {mrp.sale_order.name  if mrp.sale_order.name else ""} \n {mrp.sale_order.sale_order_current_date  if mrp.sale_order.sale_order_current_date else ""}', margin=margin_header)
+                else:
+                    current_date = mrp._format_date(datetime.now(), mrp.lang_code, False)
+                    sheet.set_header( f'{"&"}R {mrp.name  if mrp.name else ""} \n {current_date if current_date else ""}', margin=margin_header)
+                sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)
                 
                 sheet.set_column("A:A", width=11,cell_format=font_family)  
                 sheet.set_column("B:B", width=20,cell_format=font_family)  
@@ -106,17 +111,26 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.insert_image(1, 9, "logo2", {'image_data': img_io_ritzwell})
                 
                 # y,x
-                sheet.write(1, 8, _('海外')if mrp.sale_order.check_oversea else '', format_text_13_right) 
+                sheet.write(1, 8, _('海外')if isLinkeSale and mrp.sale_order.check_oversea else '', format_text_13_right)
                 sheet.write(1, 1, _("検品発注書"), format_sheet_title) 
                 sheet.write(5, 0, _("発注番号"), format_text) 
-                sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else '', format_text) 
-                sheet.write(6, 0, _("配達希望日"), format_text) 
+                sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else mrp.name, format_text)
+                sheet.write(6, 0, _("配達希望日"), format_text)
                 if mrp.is_child_mo:
                     sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date) 
+                elif mrp.picking_type_id.warehouse_id and mrp.picking_type_id.warehouse_id.name == "糸島工場" :
+                    if mrp.itoshima_shipping_date_edit:
+                        sheet.write(6, 1, mrp.itoshima_shipping_date_edit if mrp.itoshima_shipping_date_edit else '', format_text_date) 
+                    else:
+                        so = self.env["sale.order"].search([('name', '=', mrp.sale_reference)], limit=1)
+                        if so:
+                            sheet.write(6, 1, so.shiratani_entry_date if so.shiratani_entry_date else '', format_text_date)                               
                 elif mrp.sale_order.sipping_to == 'direct':
                     sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_date) 
-                else:
+                elif isLinkeSale:
                     sheet.write(6, 1, mrp.sale_order.so_warehouse_arrive_date_has_day if mrp.sale_order.so_warehouse_arrive_date_has_day else '', format_text_14) 
+                elif not isLinkeSale:
+                    sheet.write(6, 1, mrp._format_date(mrp.estimated_shipping_date, mrp.lang_code) if mrp.estimated_shipping_date else '', format_text_date)
 
                 sheet.write(8, 0, _("物件名"), format_text) 
                 sheet.write(8, 3, _("送り先注記"), format_text_right)
@@ -154,9 +168,9 @@ class ReportMrpExcel(models.AbstractModel):
                     sheet.write(12, 0, _("住所"), format_text) 
                     sheet.write(13, 0, _("TEL"), format_text)
                     if mrp.address_ship and mrp.address_ship == "デポ/直送":
-                        sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if mrp.sale_order.sale_order_waypoint_name else '', format_text_12) 
-                        sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if mrp.sale_order.sale_order_waypoint_address else '', format_text_12) 
-                        sheet.write(13, 1, mrp.sale_order.waypoint.phone if mrp.sale_order.waypoint.phone else '', format_text_12) 
+                        sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if isLinkeSale and mrp.sale_order.sale_order_waypoint_name else '', format_text_12)
+                        sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if isLinkeSale and mrp.sale_order.sale_order_waypoint_address else '', format_text_12)
+                        sheet.write(13, 1, mrp.sale_order.waypoint.phone if isLinkeSale and mrp.sale_order.waypoint.phone else '', format_text_12)
                     else:
                         sheet.write(11, 1, mrp.mrp_choose_option_find_warehouse_company_name if mrp.mrp_choose_option_find_warehouse_company_name else '', format_text_12) 
                         sheet.write(12, 1, mrp.mrp_choose_option_find_warehouse_address if mrp.mrp_choose_option_find_warehouse_address else '', format_text_12) 
@@ -164,8 +178,8 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.set_row(14, 0)
                 sheet.set_row(15, 0)
                 
-                sheet.write(8, 1, mrp.sale_order.title if mrp.sale_order.title else '', format_text_14) 
-                sheet.write(9, 1, mrp.sale_order.sale_order_info_cus if mrp.sale_order.sale_order_info_cus else '', format_text_12) 
+                sheet.write(8, 1, mrp.sale_order.title if isLinkeSale and mrp.sale_order.title else '', format_text_14)
+                sheet.write(9, 1, mrp.sale_order.sale_order_info_cus if isLinkeSale and mrp.sale_order.sale_order_info_cus else '', format_text_12)
                 
                 # y,x,y,x
                 sheet.merge_range(8, 4, 11, 7, mrp.mrp_note[:244] if mrp.mrp_note else '', format_remark_note)
@@ -211,6 +225,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.set_paper(9)  #A4
                 sheet.set_landscape()
                 # sheet.set_print_scale(66)
+                isLinkeSale = mrp.sale_order_count >= 1
                 
                 margin_header = 0.3
                 margin_footer = 0.3
@@ -219,8 +234,11 @@ class ReportMrpExcel(models.AbstractModel):
                 top_margin = 0.5
                 bottom_margin = 0.5
                 sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
-                sheet.set_header( f'{"&"}R {mrp.sale_order.name  if mrp.sale_order.name else ""} \n {mrp.sale_order.sale_order_current_date  if mrp.sale_order.sale_order_current_date else ""}', margin=margin_header) 
-                sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)   
+                if isLinkeSale:
+                    sheet.set_header( f'{"&"}R {mrp.sale_order.name  if mrp.sale_order.name else ""} \n {mrp.sale_order.sale_order_current_date  if mrp.sale_order.sale_order_current_date else ""}', margin=margin_header)
+                else:
+                    current_date = mrp._format_date(datetime.now(), mrp.lang_code, False)
+                sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)
                 
                 sheet.set_column("A:A", width=11,cell_format=font_family)  
                 sheet.set_column("B:B", width=20,cell_format=font_family)  
@@ -248,17 +266,19 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.insert_image(1, 9, "logo2", {'image_data': img_io_ritzwell})
                 
                 # y,x
-                sheet.write(1, 8, _("海外") if mrp.sale_order.check_oversea else '', format_text_13_right) 
+                sheet.write(1, 8, _("海外") if isLinkeSale and mrp.sale_order.check_oversea else '', format_text_13_right)
                 sheet.write(1, 1, _("検品発注書"), format_sheet_title) 
                 sheet.write(5, 0, _("発注番号"), format_text) 
-                sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else '', format_text) 
+                sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else mrp.name, format_text)
                 sheet.write(6, 0, _("配達希望日"), format_text)
-                if mrp.is_child_mo:
+                if isLinkeSale and mrp.is_child_mo:
                     sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date) 
-                elif mrp.sale_order.sipping_to == 'direct':
+                elif isLinkeSale and mrp.sale_order.sipping_to == 'direct':
                     sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_date) 
-                else:
+                elif isLinkeSale:
                     sheet.write(6, 1, mrp.sale_order.so_warehouse_arrive_date_has_day if mrp.sale_order.so_warehouse_arrive_date_has_day else '', format_text_14) 
+                elif not isLinkeSale:
+                    sheet.write(6, 1, mrp._format_date(mrp.estimated_shipping_date, mrp.lang_code) if mrp.estimated_shipping_date else '', format_text_date)
 
                 sheet.write(8, 0, _("物件名"), format_text) 
                 sheet.write(8, 3, _("送り先注記"), format_text_right)
@@ -296,9 +316,9 @@ class ReportMrpExcel(models.AbstractModel):
                     sheet.write(12, 0, _("住所"), format_text) 
                     sheet.write(13, 0, _("TEL"), format_text)
                     if mrp.address_ship and mrp.address_ship == "デポ/直送":
-                        sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if mrp.sale_order.sale_order_waypoint_name else '', format_text_12) 
-                        sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if mrp.sale_order.sale_order_waypoint_address else '', format_text_12) 
-                        sheet.write(13, 1, mrp.sale_order.waypoint.phone if mrp.sale_order.waypoint.phone else '', format_text_12) 
+                        sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if isLinkeSale and mrp.sale_order.sale_order_waypoint_name else '', format_text_12)
+                        sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if isLinkeSale and mrp.sale_order.sale_order_waypoint_address else '', format_text_12)
+                        sheet.write(13, 1, mrp.sale_order.waypoint.phone if isLinkeSale and mrp.sale_order.waypoint.phone else '', format_text_12)
                     else:                            
                         sheet.write(11, 1, mrp.mrp_choose_option_find_warehouse_company_name if mrp.mrp_choose_option_find_warehouse_company_name else '', format_text_12) 
                         sheet.write(12, 1, mrp.mrp_choose_option_find_warehouse_address if mrp.mrp_choose_option_find_warehouse_address else '', format_text_12) 
@@ -306,8 +326,8 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.set_row(14, 0)
                 sheet.set_row(15, 0)
                 
-                sheet.write(8, 1, mrp.sale_order.title if mrp.sale_order.title else '', format_text_14) 
-                sheet.write(9, 1, mrp.sale_order.sale_order_info_cus if mrp.sale_order.sale_order_info_cus else '', format_text_12) 
+                sheet.write(8, 1, mrp.sale_order.title if isLinkeSale and mrp.sale_order.title else '', format_text_14)
+                sheet.write(9, 1, mrp.sale_order.sale_order_info_cus if isLinkeSale and mrp.sale_order.sale_order_info_cus else '', format_text_12)
                 
                 # y,x,y,x
                 sheet.merge_range(8, 4, 11, 7, mrp.mrp_note[:244] if mrp.mrp_note else '', format_remark_note)
