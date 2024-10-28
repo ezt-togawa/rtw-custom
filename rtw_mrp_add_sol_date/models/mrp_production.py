@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-
+from odoo.tools import format_date
+from babel.dates import format_date as babel_format_date
 
 class rtw_mrp_production_add_sol_date(models.Model):
     _inherit = 'mrp.production'
@@ -12,6 +13,8 @@ class rtw_mrp_production_add_sol_date(models.Model):
     estimated_shipping_date = fields.Date(string='発送予定日')
     itoshima_shipping_date = fields.Date(string="糸島出荷日", compute='_compute_itoshima_shipping_date', inverse="_inverse_itoshima_shipping_date")
     itoshima_shipping_date_edit = fields.Date()
+    mrp_mo_date = fields.Char(compute="_compute_mrp_mo_date")
+
     
     def _get_so_from_mrp(self , mrp_production , count = 0):
           if count >= 10:
@@ -45,7 +48,6 @@ class rtw_mrp_production_add_sol_date(models.Model):
                 record.shiratani_date = ''
                 record.depo_date = ''
                 record.preferred_delivery_date = ''
-                
     def _compute_itoshima_shipping_date(self):
         for mo in self:
             scheduled_date = ''
@@ -77,4 +79,14 @@ class rtw_mrp_production_add_sol_date(models.Model):
     def _inverse_itoshima_shipping_date(self):
         for mo in self:
             mo.itoshima_shipping_date_edit = mo.itoshima_shipping_date          
-                
+    def _compute_mrp_mo_date(self):
+        for record in self:
+            if record.itoshima_shipping_date:
+                date_to_format = fields.Date.from_string(record.itoshima_shipping_date)
+                user_lang = self.env.user.lang
+                formatted_date = format_date(self.env, date_to_format, lang_code=user_lang)
+                day_of_week = babel_format_date(date_to_format, "EEE", locale=user_lang)
+                record.mrp_mo_date = f"{formatted_date} [{day_of_week}]"
+            else:
+                record.mrp_mo_date = ''
+            
