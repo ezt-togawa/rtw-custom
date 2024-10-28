@@ -78,14 +78,14 @@
                       <t t-if="mrp.is_child_mo">
                         <span class="size14" t-field="mrp.mrp_child_mo_desired_delivery_date" />
                       </t>
-                      <t t-elif="o.picking_type_id.warehouse_id and o.picking_type_id.warehouse_id.name == '糸島工場'">
-                        <t t-if="o.itoshima_shipping_date_edit">
-                            <span class="size14" t-field="o.itoshima_shipping_date_edit" />
+                      <t t-elif="mrp and mrp.picking_type_id and mrp.picking_type_id.warehouse_id and mrp.picking_type_id.warehouse_id.name == '糸島工場'">
+                        <t t-if="mrp.mrp_mo_date">
+                            <span class="size14" t-field="mrp.mrp_mo_date" />
                         </t>
                         <t t-else="">
-                            <t t-set="so" t-value="env['sale.order'].search([('name', '=', o.sale_reference)], limit=1)"/>
+                            <t t-set="so" t-value="env['sale.order'].search([('name', '=', mrp.sale_reference)], limit=1)"/>
                             <t t-if="so">
-                                <span class="size14" t-field="so.shiratani_entry_date" />
+                                <span class="size14" t-field="so.mo_shiratani_entry_date" />
                             </t>
                         </t>
                       </t>
