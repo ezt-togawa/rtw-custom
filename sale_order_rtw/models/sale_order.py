@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from babel.dates import format_date as babel_format_date
+from odoo.tools import format_date
 
 
 class sale_order_rtw(models.Model):
@@ -29,6 +31,7 @@ class sale_order_rtw(models.Model):
         required=False,
     )
     shiratani_entry_date = fields.Date(string="Shiratani entry Date", tracking=True)
+    mo_shiratani_entry_date = fields.Char(string="Mo Shiratani Entry Date ", compute='_compute_mo_shiratani_entry_date')
     depo_date = fields.Date(string="Depo Date")
     customer_order_number = fields.Char('Customer Order Number')
     items_under_consideration = fields.Boolean('Items under consideration', default=0)
@@ -69,6 +72,18 @@ class sale_order_rtw(models.Model):
     #     def _value_pc(self):
     #         for record in self:
     #             record.value2 = float(record.value) / 100
+    
+    def _compute_mo_shiratani_entry_date(self):
+        for record in self:
+            if record.shiratani_entry_date:
+                date_to_format = fields.Date.from_string(record.shiratani_entry_date)
+                user_lang = self.env.user.lang
+                formatted_date = format_date(self.env, date_to_format, lang_code=user_lang)
+                day_of_week = babel_format_date(date_to_format, "EEE", locale=user_lang)
+                record.mo_shiratani_entry_date = f"{formatted_date} [{day_of_week}]"
+            else:
+                record.mo_shiratani_entry_date = ''
+    
 
     def toggle_under_consideration(self):
         for record in self:
@@ -131,14 +146,12 @@ class sale_order_rtw(models.Model):
                             if not item == additional_text:
                                 filtered_list.append(item)
                         line.memo = ','.join(filtered_list)
-                        
     def action_confirm(self):
         res = super(sale_order_rtw, self).action_confirm()
         self.state = 'sale'
         return res
 class rtw_sale_order_line(models.Model):
     _inherit = "sale.order.line"
-    
     def _prepare_add_missing_fields(self, values):
         res = super(rtw_sale_order_line,
                     self)._prepare_add_missing_fields(values)
