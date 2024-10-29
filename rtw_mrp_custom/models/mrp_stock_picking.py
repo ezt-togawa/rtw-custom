@@ -11,6 +11,7 @@ class MrpPickingCustom(models.Model):
         for record in self:
 
             # 配送の出荷予定日に合わせて、製造オーダー側の製造部材入荷予定の日付を更新しておく（カレンダー用）
+            # 新規作成時はchildeMoが取れないので、Mrp側の更新処理にまかせる
             if record.origin:
                 order_no = record.origin
                 parent_mo = self.env["mrp.production"].search([('name', '=', order_no)])
