@@ -30,24 +30,24 @@ class StockPicking(models.Model):
                 fields.Datetime.context_timestamp(pick, pick.shipping_due_date)
             )
 
-    @api.model
-    def fields_view_get(
-        self, view_id=None, view_type="form", toolbar=False, submenu=False
-    ):
-        if view_type == "tree":
-            pick_type_id = self._context.get("default_picking_type_id")
-            if (
-                not pick_type_id
-                or pick_type_id
-                and self.env["stock.picking.type"].browse([pick_type_id]).code
-                in "outgoing"
-            ):
-                view_id = self.env.ref(
-                    "confirmed_shipping_date.vpicktree_outgoing"
-                ).id
-        return super(StockPicking, self).fields_view_get(
-            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
-        )
+    # @api.model
+    # def fields_view_get(
+    #     self, view_id=None, view_type="form", toolbar=False, submenu=False
+    # ):
+    #     if view_type == "tree":
+    #         pick_type_id = self._context.get("default_picking_type_id")
+    #         if (
+    #             not pick_type_id
+    #             or pick_type_id
+    #             and self.env["stock.picking.type"].browse([pick_type_id]).code
+    #             in "outgoing"
+    #         ):
+    #             view_id = self.env.ref(
+    #                 "confirmed_shipping_date.vpicktree_outgoing"
+    #             ).id
+    #     return super(StockPicking, self).fields_view_get(
+    #         view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
+    #     )
 
     def action_picking_form(self):
         self.ensure_one()

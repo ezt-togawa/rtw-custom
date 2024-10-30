@@ -56,6 +56,7 @@ class StockPicking(models.Model):
     shiratani_entry_date = fields.Date("Shiratani entry date", related="sale_order_id.shiratani_entry_date")
     warehouse_arrive_date = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date")
     estimated_shipping_date = fields.Date('Estimated shipping date', related="sale_order_id.estimated_shipping_date")
+    sales_order_name = fields.Char(string='Sales Order Name', compute="_compute_sale_order_name", store=True)
 
     def _compute_sale_order(self):
         for picking in self:
@@ -67,7 +68,29 @@ class StockPicking(models.Model):
                     picking.sale_order_id = sale_order
                 else:
                     picking.sale_order_id = False
-                    
+
+    @api.depends('name')
+    def _compute_sale_order_name(self):
+        for picking in self:
+            if picking.sale_id:
+                picking.sales_order_name = picking.sale_id.name
+            else:
+                if picking.origin and picking.origin.startswith("S"):
+                    sale_order = self.env['sale.order'].search([('name', '=', picking.origin)], limit=1)
+                    picking.sales_order_name = sale_order.name
+                elif picking.origin:
+                    origin_name = picking.origin
+                    if origin_name.startswith("P"):
+                        origin_name = self.env['purchase.order'].search([('name', '=', origin_name)]).origin
+
+                    mrp = self.env['mrp.production'].search([('name', '=', origin_name)], limit=1)
+                    if mrp:
+                        picking.sales_order_name = mrp.sale_reference
+                    else:
+                        picking.sales_order_name = ''
+                else:
+                    picking.sales_order_name = ''
+
     @api.onchange('sipping_to')
     def sipping_to_text(self):
         if self.sipping_to == "depo":
@@ -93,3 +116,9 @@ class StockPicking(models.Model):
                 record.sipping_to_value = '持込'
             else:
                 record.sipping_to_value = ''
+
+    @api.model
+    def set_default_sales_order_name(self):
+        records = self.search([('sales_order_name', '=', False)])
+        for record in records:
+            record.sales_order_name = record._generate_default_name(record)
