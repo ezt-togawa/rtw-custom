@@ -116,9 +116,3 @@ class StockPicking(models.Model):
                 record.sipping_to_value = '持込'
             else:
                 record.sipping_to_value = ''
-
-    @api.model
-    def set_default_sales_order_name(self):
-        records = self.search([('sales_order_name', '=', False)])
-        for record in records:
-            record.sales_order_name = record._generate_default_name(record)

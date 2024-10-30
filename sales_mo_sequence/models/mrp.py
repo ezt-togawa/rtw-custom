@@ -130,7 +130,7 @@ class MrpProduction(models.Model):
                     line.write({'memo': record.production_memo})
 
     def _compute_reference_value_title(self):
-        # モデル利用時に毎回更新するため一次的にsotr以外のtmp項目を作って対応する
+        # モデル利用時に毎回更新するため一次的にstore以外のtmp項目を作って対応する（storeだとtitleが取れなかった！）
         sale_ids = self.env['sale.order'].search([('name', '=', self.origin)])
         if sale_ids: # 手動新規の場合 value.origin はFalseになるので考慮
             self.sale_title_tmp = sale_ids.title
