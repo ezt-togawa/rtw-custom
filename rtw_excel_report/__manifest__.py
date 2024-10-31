@@ -54,7 +54,6 @@
         # 'report_delivery_request_form/templates.xml',
         # 'report_ship_order/actions.xml',
         # 'report_ship_order/templates.xml',
-
         'views/views.xml',
         # sale form
         'views/sale_quotation.xml',
