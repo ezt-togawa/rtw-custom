@@ -5,8 +5,7 @@
     'author': "Enzantrades",
     'category': 'mail',
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        OCAモジュール mail_restrict_send_button の不備対応：chater.js の更新""",
     'website': 'http://www.yourcompany.com',
     'description': """
 """,
