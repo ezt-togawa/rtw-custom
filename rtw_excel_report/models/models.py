@@ -964,7 +964,7 @@ class SaleOrderLineExcelReport(models.Model):
         string="All attributes",
     )
 
-    sale_order_sell_unit_price = fields.Char(
+    sale_order_sell_unit_price = fields.Monetary(
         compute="_compute_sale_order_sell_unit_price",
         string="販売単価",
     )
@@ -1241,7 +1241,7 @@ class SaleOrderLineExcelReport(models.Model):
                     
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            line.sale_order_sell_unit_price = '{0:,.0f}'.format(line.price_unit - line.price_unit * line.discount / 100 )
+            line.sale_order_sell_unit_price = (line.price_unit - line.price_unit * line.discount / 100 )
             
     def _compute_sale_order_price_subtotal(self):
         for line in self:
@@ -2286,7 +2286,7 @@ class AccountMoveExcelReport(models.Model):
             line.account_move_line = line.invoice_line_ids
 class AccountMoveLineExcelReport(models.Model):
     _inherit = "account.move.line"
-
+    price_unit = fields.Monetary('Unit Price', required=True, digits='Product Price')
     acc_line_index = fields.Integer(
         compute="_compute_acc_line_index",
         string="Account line index",

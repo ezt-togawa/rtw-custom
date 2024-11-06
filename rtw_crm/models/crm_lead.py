@@ -111,7 +111,9 @@ class rtw_crm(models.Model):
     progress_check_date = fields.Datetime('Field1__c', tracking=True)  # 進捗確認日 AN列
     quote_number_by_hukusuke = fields.Char('Field2__c', tracking=True)  # 福助で採番される見積番号 AO列
     quote_number = fields.Char('Field3_del__c')  # 見積番号 AP列
-    previous_amount = fields.Float('previousamount__c', tracking=True)  # 直前の金額 AQ列
+    previous_amount = fields.Monetary(
+    'previousamount__c',
+    currency_field='company_currency',tracking=True)
     opportunity_number = fields.Char('Field4__c')  # 商談番号 AR列　
     last_amount_changed_datetime = fields.Datetime('lastamountchangedatetime__c')  # 最終金額変更日時 AS列
     presentation = fields.Boolean('presentation__c')  # 通常プレゼン AT列 ★0，1，空白あり
@@ -129,7 +131,7 @@ class rtw_crm(models.Model):
         ('8', 'その他'),
     ], default='',
         string='Field6__c', tracking=True)  # 納入先種別 AX列
-    order_amount = fields.Float('Field7__c')  # 受注額 AY列　注意
+    order_amount = fields.Monetary('Field7__c',currency_field='company_currency')  # 受注額 AY列　注意
     omotesando_visit = fields.Boolean('Field87__c', default=0, tracking=True)  # 表参道来店 AZ列 ★0，1，空白あり
     fair = fields.Char('Field22__c')  # Fair BA列
     million_amount = fields.Float('X100_amount__c')  # 100万金額 BB列
