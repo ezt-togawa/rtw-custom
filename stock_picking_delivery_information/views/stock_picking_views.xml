@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="view_picking_form" model="ir.ui.view">
+        <record id="view_picking_form" model="ir.ui.view">
         <field name="name">view.picking.form</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='location_dest_id']" position="after">
                 <field name="sale_id" attrs="{'invisible': 1}" />
+                <field name="sales_order_name" string="SO Reference" />
                 <field name="sipping_to" string="配送"
                     options="{'horizontal': true}" />
                 <field name="shipping_to_text" />
@@ -39,6 +40,31 @@
                 <field name="shiratani_entry_date"/>
                 <field name="estimated_shipping_date"/>
                 <field name="warehouse_arrive_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_picking_delivery" model="ir.ui.view">
+        <field name="name">view.stock.picking.delivery</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">運送</attribute>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="before">
+                <field name="sales_order_name" string="販売オーダー"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_picking_delivery_search" model="ir.ui.view">
+        <field name="name">view.stock.picking.delivery.search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//search//field[@name='name']" position="after">
+                <field name="sales_order_name" string="注番" />
             </xpath>
         </field>
     </record>

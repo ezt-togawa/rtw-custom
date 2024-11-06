@@ -1,0 +1,16 @@
+<odoo>
+    
+    <record id="purchase_order_line_view_tree_custom" model="ir.ui.view">
+        <field name="name">purchase.order.line.view.tree.custom</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="priority" >999</field>
+        <field name="arch" type="xml">
+            <xpath  expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="attributes">
+                <attribute name="widget">monetary</attribute>
+                <attribute name="options">{'currency_field': 'currency_id'}</attribute>
+            </xpath>
+        </field>
+    </record>
+   
+</odoo>

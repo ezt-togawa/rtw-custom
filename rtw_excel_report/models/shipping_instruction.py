@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, fields, api
 from odoo.modules.module import get_module_resource
 from odoo.exceptions import UserError, ValidationError
 
@@ -13,7 +13,13 @@ import shutil
 from io import BytesIO
 from PIL import Image as PILImage
 import math
-
+class stock_move_container(models.Model):
+    _inherit = 'stock.move.container'
+    current_print = fields.Char(compute="_compute_current_print")
+    
+    def _compute_current_print(self):
+        for so in self:
+            so.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
 
 class shipping_instruction(models.AbstractModel):
     _name = 'report.rtw_excel_report.shipping_instruction_xls'
@@ -239,7 +245,7 @@ class shipping_instruction(models.AbstractModel):
 
         sheet.merge_range(24, 0, 32, 0, 'NOTE', workbook.add_format(
             {'font_size': 13, 'valign': 'top', 'left': 2, 'right': 2, 'bottom': 2, 'bold': True, 'font_name': font_name_hgp}))
-        sheet.merge_range(24, 1, 32, 8, stock_move_container.note_eng, workbook.add_format(
+        sheet.merge_range(24, 1, 32, 8, stock_move_container.note_eng if stock_move_container.note_eng else '', workbook.add_format(
             {'font_size': 13, 'valign': 'top', 'align': 'left', 'left': 2, 'right': 2, 'bottom': 2, 'bold': True, 'font_name': font_name_hgp}))
 
         sheet.write(33, 0, 'TOTAL AMOUNT', workbook.add_format(
@@ -277,8 +283,7 @@ class shipping_instruction(models.AbstractModel):
         start = 39
         if stock_move_container.pallet_ids:
             for index, pallet in enumerate(stock_move_container.pallet_ids):
-                stock_move_lines = self.env['stock.move.line'].with_context(lang='en_US').search(
-                    [('pallet_id', '=', pallet.id)])
+                stock_move_lines = pallet.move_ids
                 if stock_move_lines:
                     sheet.write(start, 1, f'[{pallet.name}]', workbook.add_format(
                         {'font_size': 13, 'valign': 'top', 'text_wrap': True, }))
