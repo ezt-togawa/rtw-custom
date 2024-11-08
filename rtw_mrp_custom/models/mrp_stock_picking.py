@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, _, api
+from odoo import models, fields, api, _
 from dateutil.parser import parse
 
 
 class MrpPickingCustom(models.Model):
     _inherit = 'stock.picking'
+    temp_scheduled_date = fields.Char('temp_scheduled_date', compute='_compute_picking_arrival_schedule')
 
-    def write(self, vals):
-        res = super(MrpPickingCustom, self).write(vals)
+    @api.depends('scheduled_date')
+    def _compute_picking_arrival_schedule(self):
+        print('_compute_picking_arrival_schedule')
         for record in self:
 
             # 配送の出荷予定日に合わせて、製造オーダー側の製造部材入荷予定の日付を更新しておく（カレンダー用）
@@ -25,4 +27,4 @@ class MrpPickingCustom(models.Model):
 
                     parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
 
-        return res
+                record.temp_scheduled_date = parent_mo.prod_parts_arrival_schedule
