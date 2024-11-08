@@ -9,7 +9,6 @@ class MrpPickingCustom(models.Model):
 
     @api.depends('scheduled_date')
     def _compute_picking_arrival_schedule(self):
-        print('_compute_picking_arrival_schedule')
         for record in self:
 
             # 配送の出荷予定日に合わせて、製造オーダー側の製造部材入荷予定の日付を更新しておく（カレンダー用）
