@@ -38,9 +38,9 @@ class StockMove(models.Model):
                 for attr in line.product_id.product_template_attribute_value_ids:
                     name_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute'),('res_id', '=', attr.attribute_id.id)]).name
                     value_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute.value'),('res_id', '=', attr.product_attribute_value_id.id)]).name
-                    
-                    if name_att and name_att.isdigit() and int(name_att) == 951 and \
-                        value_att and value_att.isdigit() and int(value_att) == 951002:
+
+                    # パールトーンは選択されていればON扱い（なしの選択は削除された）
+                    if name_att and name_att.isdigit() and int(name_att) == 951:
                         attribute = '有'
                         line.is_pearl_tone_attr = True
                     
