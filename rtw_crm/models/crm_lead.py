@@ -113,7 +113,7 @@ class rtw_crm(models.Model):
     quote_number = fields.Char('Field3_del__c')  # 見積番号 AP列
     previous_amount = fields.Monetary(
     'previousamount__c',
-    currency_field='company_currency',tracking=True)
+    currency_field='company_currency',tracking=True)  # 直前の金額 AQ列
     opportunity_number = fields.Char('Field4__c')  # 商談番号 AR列　
     last_amount_changed_datetime = fields.Datetime('lastamountchangedatetime__c')  # 最終金額変更日時 AS列
     presentation = fields.Boolean('presentation__c')  # 通常プレゼン AT列 ★0，1，空白あり
@@ -132,6 +132,7 @@ class rtw_crm(models.Model):
     ], default='',
         string='Field6__c', tracking=True)  # 納入先種別 AX列
     order_amount = fields.Monetary('Field7__c',currency_field='company_currency')  # 受注額 AY列　注意
+  # 受注額 AY列　注意
     omotesando_visit = fields.Boolean('Field87__c', default=0, tracking=True)  # 表参道来店 AZ列 ★0，1，空白あり
     fair = fields.Char('Field22__c')  # Fair BA列
     million_amount = fields.Float('X100_amount__c')  # 100万金額 BB列
@@ -742,7 +743,7 @@ class rtw_crm(models.Model):
     delivery_route_required_confirmation = fields.Boolean('Field58__c', default=0, tracking=True)  # 搬入経路要確認 EP列
     elevator_having = fields.Boolean('EV__c', default=0, tracking=True)  # EV有 EQ列
     budget_data = fields.Boolean('SFDC_Budget__c', default=0)  # 予算データ ER列
-    lost = fields.Float('Field59__c')  # ロスト ES列
+    lost = fields.Monetary('Field59__c',currency_field='company_currency')  # ロスト ES列
     p_author = fields.Many2one('res.users', 'P__c')  # P作成者(代表） ET列
     product_list_sofa_bench1 = fields.Selection([
         ('1', 'MT BENCH(M)'),
