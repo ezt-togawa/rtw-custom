@@ -185,15 +185,15 @@
                   <thead>
                     <tr class="table-title bold" style="font-size:13px;background-color:#999999">
                       <th class="text-center" style="width:1%">№</th>
-                      <th class="text-center" style="width:10%">品名</th>
+                      <th class="text-center" style="width:20%">品名</th>
                       <th class="text-center" style="width:20%">仕様・詳細１</th>
                       <th class="text-center" style="width:20%">仕様・詳細２</th>
                       <th class="text-center" style="width:7%">数量</th>
-                      <th class="text-center" style="width:5%"></th>
-                      <th class="text-center" style="width:7%">取説</th>
+                      <th class="text-center" style="width:5%"/>
+                      <th class="text-center" style="width:3%">取説</th>
                       <th class="text-center" style="width:15%">Custom</th>
                       <th class="text-center" style="width:15%">メモ</th>
-                    </tr>
+                      </tr>
                   </thead>
 
                   <tbody class="invoice_tbody">
@@ -207,8 +207,7 @@
                         <td class="size12">
                           <div class="six-lines">
                             <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
-                            <div t-if="line.product_id.summary" t-field="line.product_id.summary" />
-                            <div t-if="line.mrp_product_type" t-field="line.mrp_product_type" />
+                            <div t-if="line.mrp_product_no" t-field="line.mrp_product_no" />
                             <t t-if="line.mrp_production_order_line">
                               <span
                                 t-field="line.mrp_production_order_line.product_size" />
