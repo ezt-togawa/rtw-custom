@@ -15,6 +15,7 @@ class MrpProduction(models.Model):
     mrp_production_order_line = fields.One2many('sale.order.line',compute="_compute_mrp_production_order_line")
     
     mrp_product_name=fields.Char("mrp product name",compute="_compute_mrp_product_name")
+    mrp_product_no=fields.Char("mrp product no",compute="_compute_mrp_product_no")
     mrp_product_name_excel=fields.Char("mrp product name",compute="_compute_mrp_product_name_excel")
     mrp_product_config_cus_excel = fields.Char("mrp product config cus excel",compute="_compute_mrp_product_config_cus_excel")
     mrp_product_type = fields.Char("mrp product type",compute="_compute_mrp_product_type")
@@ -87,17 +88,28 @@ class MrpProduction(models.Model):
 
             record.order_line = order_lines
         
-    def _compute_mrp_product_name(self):   
+    def _compute_mrp_product_no(self):   
         for line in self:
-            name = ""
+            product_no = ""
             if line.product_id and line.product_id.product_tmpl_id: 
                 prod_tmpl =line.product_id.product_tmpl_id
                 if prod_tmpl.config_ok and prod_tmpl.product_no:
-                    name = prod_tmpl.product_no
+                    product_no = prod_tmpl.product_no
                 else: 
-                    name = name = prod_tmpl.name or ""
-            line.mrp_product_name = name
+                    product_no  =  ""
+            line.mrp_product_no = product_no
             
+    def _compute_mrp_product_name(self):   
+        for line in self:
+            product_name = ""
+            if line.product_id and line.product_id.product_tmpl_id: 
+                prod_tmpl =line.product_id.product_tmpl_id
+                if prod_tmpl.name:
+                    product_name = prod_tmpl.name
+                else: 
+                    product_name =  ""
+            line.mrp_product_name = product_name      
+             
     def _compute_mrp_product_config_cus_excel(self):
         for line in self:
             mrp_prod_detail =  ''   
@@ -145,46 +157,37 @@ class MrpProduction(models.Model):
             prod = line.product_id
             
             detail = ""
-            name = ""
-            summary = ""
+            product_name = ""
+            product_no = ""
             size = ""
-            type = ""
             if prod: 
                 prod_tmpl = prod.product_tmpl_id
                 if prod_tmpl:
                     if prod_tmpl.config_ok :  
-                        if prod_tmpl.product_no :
-                            name = prod_tmpl.product_no
+                        if prod_tmpl.name :
+                            product_name = prod_tmpl.name
                         else: 
-                            name = prod_tmpl.name   
+                            product_name = ""   
                     else:
-                        name = prod_tmpl.name
-                if prod.summary:
-                    summary = prod.summary
-                    
+                        product_name = prod_tmpl.name
+                if prod_tmpl:
+                    if prod_tmpl.config_ok :  
+                        if prod_tmpl.product_no :
+                            product_no = prod_tmpl.product_no
+                        else: 
+                            product_no = ""  
+                    else:
+                        product_no = ""       
             if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
                 size += line.mrp_production_order_line.product_size
-                
-            type = line.mrp_product_type
-                
-            if name and summary and type :
-                detail += name +'\n' + summary +'\n' + type
-            elif name and summary:
-                detail += name +'\n' + summary
-            elif name and type:
-                detail += name +'\n' + type
-            elif summary and type:
-                detail += summary +'\n' + type
-            elif name :
-                detail += name 
-            elif name :
-                summary += summary
-            elif type :
-                detail += type 
-                    
+            if product_name and product_no :
+                detail += product_name +'\n'+ product_no 
+            elif product_name :
+                detail += product_name 
+            elif product_no :
+                product_no += product_no
             if size:
                 detail += "\n" + size
-                    
             line.mrp_product_name_excel = detail 
 
     def _compute_mrp_production_parent_id(self):
