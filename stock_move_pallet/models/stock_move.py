@@ -33,7 +33,7 @@ class StockMove(models.Model):
     def _compute_pearl_tone_attr(self):
         for line in self:
             attribute = ''
-            
+            is_pearl_tone_attr = False
             if line.product_id and line.product_id.product_template_attribute_value_ids:
                 for attr in line.product_id.product_template_attribute_value_ids:
                     name_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute'),('res_id', '=', attr.attribute_id.id)]).name
@@ -41,8 +41,9 @@ class StockMove(models.Model):
 
                     if name_att and name_att.isdigit() and int(name_att) == 951 and \
                         value_att and value_att.isdigit() and int(value_att) != 951006:
-                        attribute = '有'
-                        line.is_pearl_tone_attr = True
-                    
+                        attribute = attr.name
+                        is_pearl_tone_attr = True
+
+            line.is_pearl_tone_attr = is_pearl_tone_attr
             line.pearl_tone_attr = attribute
     
