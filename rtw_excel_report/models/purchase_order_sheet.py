@@ -90,7 +90,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.set_column("D:D", width=30,cell_format=font_family) 
                 sheet.set_column("E:E", width=7,cell_format=font_family)  
                 sheet.set_column("F:F", width=5,cell_format=font_family)  
-                sheet.set_column("G:G", width=3,cell_format=font_family)
+                sheet.set_column("G:G", width=5,cell_format=font_family)
                 sheet.set_column("H:H", width=0,cell_format=font_family)  
                 sheet.set_column("I:I", width=23,cell_format=font_family)  
                 sheet.set_column("J:J", width=26,cell_format=font_family)  
