@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'product', 'product_spec_rtw', 'sale', 'sale_order_line_custom_date', 'sale_order_rtw','stock_picking_delivery_information'],
+    'depends': ['base', 'stock', 'product', 'product_spec_rtw', 'sale', 'sale_order_line_custom_date', 'sale_order_rtw','stock_picking_delivery_information','stock_picking_batch'],
 
     # always loaded
     'data': [
@@ -28,6 +28,7 @@
         'views/stock_move.xml',
         'views/sale_order.xml',
         'views/templates.xml',
+        'views/stock_picking.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
