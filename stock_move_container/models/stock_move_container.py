@@ -16,9 +16,10 @@ class StockMoveContainer(models.Model):
         comodel_name="stock.move.pallet",
         inverse_name="container_id",
         string="PalletId", )
-    status = fields.Char('ステータス', compute="_compute_status")
+    status = fields.Char('ステータス', compute="_compute_status",store=True,default="未完了")
     note = fields.Text('備考', translate=True)
-
+ 
+    @api.depends('pallet_ids.move_ids.state')
     def _compute_status(self):
         for record in self:
             status = "未完了"
