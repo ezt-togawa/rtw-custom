@@ -1,4 +1,3 @@
-
 from odoo import models, fields, api
 import math
 class rtw_stock_move(models.Model):
@@ -31,7 +30,10 @@ class rtw_stock_move(models.Model):
         string="製造オーダー", compute="_get_mrp_production_id",store=True)
     product_package_quantity = fields.Float(string="個口数")
     invoice_number = fields.Char(string="送り状番号")
-   
+    primary_shipment_stock_move = fields.Boolean('一次出荷',
+        compute="_get_primary_shipment_stock_move",
+    )
+
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -42,6 +44,7 @@ class rtw_stock_move(models.Model):
             else:
                 move.product_package_quantity = 0
         return mls
+
     @api.depends('product_id')
     def _get_sai(self):
         for rec in self:
@@ -89,7 +92,6 @@ class rtw_stock_move(models.Model):
             else:
                 rec.sale_id = False
 
-
     @api.depends('production_id', 'picking_id')
     def _get_mrp_production_id(self):
       for rec in self:
@@ -120,7 +122,7 @@ class rtw_stock_move(models.Model):
                 rec.forwarding_address = rec.sale_id.forwarding_address
             else:
                 rec.forwarding_address = False
-                            
+
     @api.depends('sale_line_id', 'sale_line_id.shiratani_date', 'sale_id', 'sale_id.shiratani_entry_date')
     def _get_shiratani_date(self):
         for rec in self:
@@ -130,14 +132,13 @@ class rtw_stock_move(models.Model):
                 rec.shiratani_date = rec.sale_id.shiratani_entry_date
             else:
                 rec.shiratani_date = False
-         
+
     @api.depends('sale_line_id.depo_date','sale_line_id.depo_date','sale_line_id','sale_id','sale_id.warehouse_arrive_date')
     def _get_warehouse_arrive_date(self):
         for rec in self:
             if rec.sale_line_id.depo_date:
                 rec.warehouse_arrive_date = rec.sale_line_id.depo_date
             elif rec.sale_id:
-              
                 rec.warehouse_arrive_date = rec.sale_id.warehouse_arrive_date
             else:
                 rec.warehouse_arrive_date = False
@@ -145,7 +146,7 @@ class rtw_stock_move(models.Model):
     @api.depends('picking_id', 'picking_id.sipping_to', 'sale_id', 'sale_id.sipping_to')
     def _get_shipping_to(self):
      for rec in self:
-        sipping_to = ""  
+        sipping_to = ""
         if rec.picking_id and rec.picking_id.sipping_to:
             if rec.picking_id.sipping_to == "depo":
                 sipping_to = "デポ入れまで"
@@ -178,10 +179,8 @@ class rtw_stock_move(models.Model):
             elif rec.sale_id.sipping_to == 'bring_in':
                 sipping_to = '持込'
             rec.shipping_to = sipping_to
-
         else:
             rec.shipping_to = False
-
 
     @api.depends('sale_id','sale_id','picking_id.waypoint', 'sale_id.waypoint', 'picking_id.waypoint.state_id', 'sale_id.waypoint.state_id')
     def _get_area(self):
@@ -193,5 +192,11 @@ class rtw_stock_move(models.Model):
             elif rec.sale_id and rec.sale_id.waypoint:
                 rec.area = rec.sale_id.waypoint.state_id
             else:
-                rec.area = False     
-   
+                rec.area = False
+                
+    def _get_primary_shipment_stock_move(self):
+        for move in self:
+            if move.picking_id:
+               move.primary_shipment_stock_move = move.picking_id.primary_shipment 
+            else:
+                move.primary_shipment_stock_move = False

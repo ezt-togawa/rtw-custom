@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'purchase','sale','product'],
+    'depends': ['base', 'purchase','sale','product','stock'],
 
     # always loaded
     'data': [
@@ -27,8 +27,8 @@
         'views/purchase_order.xml',
         'views/sale_order_line.xml',
         'views/account_move_line.xml',
-        'views/product_template.xml',
-       
+        'views/stock_picking.xml',
+
     ],
     # only loaded in demonstration mode
     # 'demo': [
