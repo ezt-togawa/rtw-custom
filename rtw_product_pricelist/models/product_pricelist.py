@@ -268,7 +268,6 @@ class rtw_product_configurator(models.TransientModel):
                     }
                 ),
             )
-
             field_type = dynamic_fields[field_name].get("type")
             if field_type == "many2many":
                 node.attrib["widget"] = "many2many_tags"

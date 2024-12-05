@@ -30,13 +30,15 @@ class StockMove(models.Model):
                     rec.manu_date_planned_start = None
             else:
                 rec.manu_date_planned_start = None
+
     @api.depends('product_id', 'product_id.product_template_attribute_value_ids', 'sale_id')
     def _compute_pearl_tone_attr(self):
         pearl_tone_attr_values = {}
         for line in self:
             attribute = ''
             is_pearl_tone_attr = False
-            check_sale_id = ''
+            check_sale_id = line.sale_id
+            # 製品をもつ配送（stock.move）の場合
             if line.product_id and line.product_id.product_template_attribute_value_ids:
                 for attr in line.product_id.product_template_attribute_value_ids:
                     name_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute'),('res_id', '=', attr.attribute_id.id)]).name
@@ -45,27 +47,46 @@ class StockMove(models.Model):
                         value_att and value_att.isdigit() and int(value_att) != 951006:
                         attribute = attr.name
                         is_pearl_tone_attr = True
-                        check_sale_id = line.sale_id
-                        pearl_tone_attr_values[check_sale_id] = (is_pearl_tone_attr, attribute)
-            if check_sale_id:
-                records = self.env['stock.move'].search([('sale_id', '=', int(check_sale_id))])
-                records.write({
-                'is_pearl_tone_attr': is_pearl_tone_attr,
-                'pearl_tone_attr': attribute
-                 })
-            if line.id:
-                reference = self.env['stock.move'].search([('id', '=', line.id)]).reference
-                if '/IN/' in reference:
-                    pearl_tone_attr_stock_move = self.env['stock.move'].search([('sale_id', '=', int(line.sale_id))]).mapped('pearl_tone_attr')
-                    line.is_pearl_tone_attr = True
-                    if any(pearl_tone_attr_stock_move):
-                        line.pearl_tone_attr = next((x for x in pearl_tone_attr_stock_move if x), False)
+                        pearl_tone_attr_values[line.mrp_production_id] = (is_pearl_tone_attr, attribute) # 製造単位でパールトーン情報保持
+
+                if check_sale_id:
+                    if line.mrp_production_id:
+                        # 同じ製造オーダーを持つ配送をまとめて更新
+                        records = self.env['stock.move'].search([('mrp_production_id', '=', line.mrp_production_id), ('state', '!=', 'cancel')])
+                        records.write({
+                            'is_pearl_tone_attr': is_pearl_tone_attr,
+                            'pearl_tone_attr': attribute
+                         })
                     else:
-                        line.pearl_tone_attr = False
+                        line.write({
+                            'is_pearl_tone_attr': is_pearl_tone_attr,
+                            'pearl_tone_attr': attribute
+                         })
+
+            # 製品をもたない配送（stock.move）の場合（購買のIN関連やChildMo関連）
+            elif line.id:
+                # stock.move が製造と紐づいていた場合すでに同じ製造に紐づいている配送から情報を得る（親の製造から作成されるため理論的にはあるはず）
+                if line.mrp_production_id:
+                    ref_attr_stock_move = self.env['stock.move'].search(
+                        [('mrp_production_id', '=', line.mrp_production_id), ('is_pearl_tone_attr', '=', True)], limit=1)
+                    if ref_attr_stock_move:  # ref_attr_stock_move は複数あってもどれも同じパールトーン情報
+                        line.is_pearl_tone_attr = ref_attr_stock_move.is_pearl_tone_attr
+                        line.pearl_tone_attr = ref_attr_stock_move.pearl_tone_attr
+                    else:
+                        # ChildMo関連のstock.moveだと仮定して親の製造までたどって処理。INもOUTも同様なので区別しない。なければブランク設定。
+                        mrp = self.env['mrp.production'].search([('name', '=', line.mrp_production_id)])
+                        parent_mrp = self.env['mrp.production'].search([('name', '=', mrp.origin)], limit=1).name
+                        if parent_mrp:
+                            ref_attr_stock_move = self.env['stock.move'].search(
+                                [('mrp_production_id', '=', parent_mrp), ('is_pearl_tone_attr', '=', True)], limit=1)
+                            line.is_pearl_tone_attr = ref_attr_stock_move.is_pearl_tone_attr
+                            line.pearl_tone_attr = ref_attr_stock_move.pearl_tone_attr
+                        else:
+                            line.is_pearl_tone_attr = False
+                            line.pearl_tone_attr = ''
                 else:
-                    line.is_pearl_tone_attr = pearl_tone_attr_values.get(line.sale_id, (False, ''))[0]
-                    line.pearl_tone_attr = pearl_tone_attr_values.get(line.sale_id, (False, ''))[1]
-                    line.check_sale_id = line.sale_id
+                    line.is_pearl_tone_attr = False
+                    line.pearl_tone_attr = ''
             else:
                 line.is_pearl_tone_attr = False
                 line.pearl_tone_attr = ''
