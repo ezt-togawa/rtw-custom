@@ -10,6 +10,7 @@
                 </xpath>
             </field>
         </record>
+        
         <record id="move_pallet_container" model="ir.ui.view">
             <field name="name">move_pallet_container</field>
             <field name="model">stock.move.pallet</field>
@@ -17,7 +18,41 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='picking_ids']" position="after">
                     <field name="container_id"/>
+                    <field name="status"/>
                 </xpath>
+            </field>
+        </record>
+
+        <record id="stock_move_line_list_pallet_container" model="ir.ui.view">
+            <field name="name">move_line_list_pallet_container</field>
+            <field name="model">stock.move.pallet</field>
+            <field name="inherit_id" ref="stock_move_pallet.stock_move_pallet_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_ids']" position="after">
+                    <field name="status"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="move_pallet_list_search" model="ir.ui.view">
+            <field name="name">move.pallet.list.search</field>
+            <field name="model">stock.move.pallet</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="配送待" name="pallet_status_waiting_filter" domain="[('status', '=', '配送待')]"/>
+                    <filter string="配送完了" name="pallet_status_done_filter" domain="[('status', '=', '配送完了')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="move_container_list_search" model="ir.ui.view">
+            <field name="name">move.container.list.search</field>
+            <field name="model">stock.move.container</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="未完了" name="container_status_waiting_filter" domain="[('status', '=', '未完了')]"/>
+                    <filter string="完了" name="container_status_done_filter" domain="[('status', '=', '完了')]"/>
+                </search>
             </field>
         </record>
     </data>

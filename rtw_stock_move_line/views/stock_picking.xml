@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_primary_shipment_picking" model="ir.ui.view">
+        <field name="name">stock.picking.custom.button</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <field name="primary_shipment" invisible="1" />
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button string="一次出荷"
+                    type="object"
+                    name="toggle_primary_shipment"
+                    class="oe_stat_button text-danger"
+                    icon="fa-check-square"
+                    attrs="{'invisible': [('primary_shipment' , '=', True)]}"
+                >
+                </button>
+                <button string="一次出荷"
+                    type="object"
+                    name="toggle_primary_shipment"
+                    class="oe_stat_button text-success"
+                    icon="fa-check-square"
+                    attrs="{'invisible': [('primary_shipment' , '=', False)]}"
+                >
+
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_picking_table_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_picking_batch.vpicktree_inherit_stock_picking_batch" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='batch_id']" position="before">
+                <field name="primary_shipment" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+	
+
+
+ 

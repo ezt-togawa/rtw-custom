@@ -31,7 +31,7 @@ msgstr "表示名"
 #. module: stock_forecasted_all_warehouses
 #: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
 msgid "Expected Delivery"
-msgstr "配送予定"
+msgstr "配送/消費予定"
 
 #. module: stock_forecasted_all_warehouses
 #: model_terms:ir.ui.view,arch_db:stock_forecasted_all_warehouses.report_product_product_replenishment_custom
