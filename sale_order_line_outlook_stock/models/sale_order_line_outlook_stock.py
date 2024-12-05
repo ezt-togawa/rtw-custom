@@ -58,7 +58,7 @@ class sale_order_line_outlook_stock(models.Model):
                     for child_bom in list_child_bom:
                         child_bom_lines = self.env['mrp.bom.line'].search(
                             [('bom_id', '=', child_bom.id)])
-                        print('child', child_bom.product_id.product_tmpl_id.config_ok)
+
                         list_bom_id.append(child_bom.id)
                         for child_bom_line in child_bom_lines:
                             if (not child_bom_line.bom_product_template_attribute_value_ids.ids or all(item in template_attribute_value_ids.ids for item in child_bom_lines.bom_product_template_attribute_value_ids.ids)) and child_bom_line.product_id.product_tmpl_id.type == 'product' and child_bom_line.id not in list_satisfy_id:
