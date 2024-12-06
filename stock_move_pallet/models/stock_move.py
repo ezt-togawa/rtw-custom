@@ -33,22 +33,11 @@ class StockMove(models.Model):
 
     @api.depends('product_id', 'product_id.product_template_attribute_value_ids', 'sale_id')
     def _compute_pearl_tone_attr(self):
-        pearl_tone_attr_values = {}
         for line in self:
-            attribute = ''
-            is_pearl_tone_attr = False
             check_sale_id = line.sale_id
             # 製品をもつ配送（stock.move）の場合
-            if line.product_id and line.product_id.product_template_attribute_value_ids:
-                for attr in line.product_id.product_template_attribute_value_ids:
-                    name_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute'),('res_id', '=', attr.attribute_id.id)]).name
-                    value_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute.value'),('res_id', '=', attr.product_attribute_value_id.id)]).name
-                    if name_att and name_att.isdigit() and int(name_att) == 951 and \
-                        value_att and value_att.isdigit() and int(value_att) != 951006:
-                        attribute = attr.name
-                        is_pearl_tone_attr = True
-                        pearl_tone_attr_values[line.mrp_production_id] = (is_pearl_tone_attr, attribute) # 製造単位でパールトーン情報保持
-
+            if line.product_id and line.product_id.config_ok:
+                is_pearl_tone_attr, attribute = self.get_attribute(line.product_id)
                 if check_sale_id:
                     if line.mrp_production_id:
                         # 同じ製造オーダーを持つ配送をまとめて更新
@@ -56,37 +45,48 @@ class StockMove(models.Model):
                         records.write({
                             'is_pearl_tone_attr': is_pearl_tone_attr,
                             'pearl_tone_attr': attribute
-                         })
+
+                        })
                     else:
                         line.write({
                             'is_pearl_tone_attr': is_pearl_tone_attr,
                             'pearl_tone_attr': attribute
-                         })
+                        })
 
             # 製品をもたない配送（stock.move）の場合（購買のIN関連やChildMo関連）
             elif line.id:
-                # stock.move が製造と紐づいていた場合すでに同じ製造に紐づいている配送から情報を得る（親の製造から作成されるため理論的にはあるはず）
+                # stock.move が製造と紐づいていた場合は親製造or子製造を判断して処理
                 if line.mrp_production_id:
-                    ref_attr_stock_move = self.env['stock.move'].search(
-                        [('mrp_production_id', '=', line.mrp_production_id), ('is_pearl_tone_attr', '=', True)], limit=1)
-                    if ref_attr_stock_move:  # ref_attr_stock_move は複数あってもどれも同じパールトーン情報
-                        line.is_pearl_tone_attr = ref_attr_stock_move.is_pearl_tone_attr
-                        line.pearl_tone_attr = ref_attr_stock_move.pearl_tone_attr
-                    else:
-                        # ChildMo関連のstock.moveだと仮定して親の製造までたどって処理。INもOUTも同様なので区別しない。なければブランク設定。
-                        mrp = self.env['mrp.production'].search([('name', '=', line.mrp_production_id)])
-                        parent_mrp = self.env['mrp.production'].search([('name', '=', mrp.origin)], limit=1).name
-                        if parent_mrp:
-                            ref_attr_stock_move = self.env['stock.move'].search(
-                                [('mrp_production_id', '=', parent_mrp), ('is_pearl_tone_attr', '=', True)], limit=1)
-                            line.is_pearl_tone_attr = ref_attr_stock_move.is_pearl_tone_attr
-                            line.pearl_tone_attr = ref_attr_stock_move.pearl_tone_attr
-                        else:
-                            line.is_pearl_tone_attr = False
-                            line.pearl_tone_attr = ''
+
+                    # 製造の親が製造かどうかで、製品を取得する製造オーダーを取り分ける
+                    parent_mrp = self.env['mrp.production'].search([('name', '=', line.mrp_production_id)])
+                    if parent_mrp.origin and '/MO/' in parent_mrp.origin:
+                        parent_mrp = self.env['mrp.production'].search([('name', '=', parent_mrp.origin)], limit=1)
+
+                    is_pearl_tone_attr, attribute = self.get_attribute(parent_mrp.product_id)
+                    line.is_pearl_tone_attr = is_pearl_tone_attr
+                    line.pearl_tone_attr = attribute
+
                 else:
                     line.is_pearl_tone_attr = False
                     line.pearl_tone_attr = ''
             else:
                 line.is_pearl_tone_attr = False
                 line.pearl_tone_attr = ''
+
+    # プロダクト（製品）からパールトーン属性情報を取得
+    def get_attribute(self, product):
+        attribute = ''
+        is_pearl_tone_attr = False
+        if product and product.product_template_attribute_value_ids:
+            for attr in product.product_template_attribute_value_ids:
+                name_att = self.env['ir.model.data'].search(
+                    [('model', '=', 'product.attribute'), ('res_id', '=', attr.attribute_id.id)]).name
+                value_att = self.env['ir.model.data'].search([('model', '=', 'product.attribute.value'),
+                                                              ('res_id', '=',
+                                                               attr.product_attribute_value_id.id)]).name
+                if name_att and name_att.isdigit() and int(name_att) == 951 and \
+                        value_att and value_att.isdigit() and int(value_att) != 951006:
+                    is_pearl_tone_attr = True
+                    attribute = attr.name
+        return is_pearl_tone_attr, attribute
