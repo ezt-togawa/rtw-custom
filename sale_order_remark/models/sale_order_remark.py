@@ -12,6 +12,7 @@ class mrp_remark(models.Model):
     _inherit = "mrp.production"
 
     remark = fields.Text('共通備考' , default=None , compute='_compute_remark', inverse='_inverse_remark')
+    attached = fields.Integer('添付' , default=0, compute='_compute_attached')
     special_note = fields.Text('伝票用特記事項' , default=None , compute='_compute_special_note', inverse='_inverse_special_note')
 
     def _compute_remark(self):
@@ -37,3 +38,14 @@ class mrp_remark(models.Model):
             sale_order = self.env['sale.order'].search([('name', '=', record.origin)])
             if sale_order:
                 sale_order.write({'special_note': record.special_note})
+    
+    def _compute_attached(self):
+        for record in self:
+            if record.origin and record.origin.startswith("S"):
+                sale_order = self.env['sale.order'].search([('name', '=', record.origin)])
+                if sale_order:
+                    record.attached = sale_order.message_attachment_count
+                else:
+                    record.attached = 0
+            else:
+                record.attached = 0        
