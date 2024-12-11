@@ -5,7 +5,7 @@ from dateutil.parser import parse
 
 class MrpPickingCustom(models.Model):
     _inherit = 'stock.picking'
-    temp_scheduled_date = fields.Char('temp_scheduled_date', compute='_compute_picking_arrival_schedule')
+    temp_scheduled_date = fields.Char('temp_scheduled_date', compute='_compute_picking_arrival_schedule', default='')
 
     @api.depends('scheduled_date')
     def _compute_picking_arrival_schedule(self):
