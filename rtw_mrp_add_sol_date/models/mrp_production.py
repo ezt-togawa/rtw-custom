@@ -7,7 +7,7 @@ from babel.dates import format_date as babel_format_date
 class rtw_mrp_production_add_sol_date(models.Model):
     _inherit = 'mrp.production'
     
-    shiratani_date = fields.Date(string='白谷到着日', compute='_compute_sol_date')
+    shiratani_date = fields.Date(string='白谷到着日', readonly=True)
     depo_date = fields.Date(string='デポ到着日', compute='_compute_sol_date')
     preferred_delivery_date = fields.Date(string='配達希望日', compute='_compute_sol_date')
     estimated_shipping_date = fields.Date(string='発送予定日')
@@ -32,20 +32,33 @@ class rtw_mrp_production_add_sol_date(models.Model):
               sale_order_id = self.env['sale.order'].search([('name','=',mrp_production.origin)])
           return sale_order_id
     
+    @api.model
+    def create(self, vals):
+        record = super(rtw_mrp_production_add_sol_date, self).create(vals)
+        sale_id = record._get_so_from_mrp(record)
+        if sale_id:
+            sol = self.env['sale.order.line'].search(
+                [('order_id', '=', sale_id.id), ('product_id', '=', record.product_id.id)],
+                limit=1
+            )
+            if sol:
+                record.shiratani_date = sol.shiratani_date    
+        return record
+
     def _compute_sol_date(self):
         for record in self:
             sale_id = self._get_so_from_mrp(record)
             if sale_id:
                 sol = self.env['sale.order.line'].search([('order_id', '=', sale_id.id),('product_id', '=', record.product_id.id)],limit=1)
                 if sol:
-                    record.shiratani_date = sol.shiratani_date
+                    # record.shiratani_date = sol.shiratani_date
                     record.depo_date = sol.depo_date
                 else:
-                    record.shiratani_date = ''
+                    # record.shiratani_date = ''
                     record.depo_date = ''
                 record.preferred_delivery_date = sale_id.preferred_delivery_date
             else:
-                record.shiratani_date = ''
+                # record.shiratani_date = ''
                 record.depo_date = ''
                 record.preferred_delivery_date = ''
     def _compute_itoshima_shipping_date(self):
@@ -88,5 +101,4 @@ class rtw_mrp_production_add_sol_date(models.Model):
                 day_of_week = babel_format_date(date_to_format, "EEE", locale=user_lang)
                 record.mrp_mo_date = f"{formatted_date} [{day_of_week}]"
             else:
-                record.mrp_mo_date = ''
-            
+                record.mrp_mo_date = ''    

@@ -4,7 +4,9 @@ class rtw_stock_move(models.Model):
     _inherit = "stock.move"
     sai = fields.Float(compute="_get_sai", group_operator="sum", store=True)
     depo_date = fields.Date(compute="_get_sale",  store=True)
-    shiratani_date = fields.Date(compute="_get_shiratani_date", store=True)
+    shiratani_date = fields.Date(compute="_get_shiratani_date",store=True)
+    shiratani_date_delivery = fields.Date(string="白谷到着日", compute="_get_shiratani_date_delivery", inverse="_set_shiratani_date_delivery",store=True)
+
     date_planned = fields.Datetime(
         related='sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
@@ -33,6 +35,7 @@ class rtw_stock_move(models.Model):
     primary_shipment_stock_move = fields.Boolean('一次出荷',
         compute="_get_primary_shipment_stock_move",
     )
+    operational_Notes = fields.Char(string='運用メモ')
 
 
     @api.model_create_multi
@@ -70,6 +73,7 @@ class rtw_stock_move(models.Model):
                 if rec.picking_id.sale_id:
                     rec.sale_id = rec.picking_id.sale_id
                 elif rec.picking_id.origin and '/MO/' in rec.picking_id.origin:
+                         
                         mrp = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)])
                         if mrp:
                             rec.sale_id = self.env['sale.order'].search([('name','=',mrp.origin)]).id
@@ -79,12 +83,19 @@ class rtw_stock_move(models.Model):
                         purchase_order_origin = self.env['purchase.order'].search([('name','=',rec.picking_id.origin)]).origin  
                         if purchase_order_origin  and '/MO/' in purchase_order_origin :          
                             mrp_origin=self.env['mrp.production'].search([('name','=',purchase_order_origin)]).origin     
-                            if mrp_origin:
+                            if mrp_origin and mrp_origin.startswith('S'):
                                 rec.sale_id = self.env['sale.order'].search([('name','=',mrp_origin)]).id
+                            elif mrp_origin and '/MO/' in mrp_origin:
+                                mrp_sale_reference = self.env['mrp.production'].search([('name','=',purchase_order_origin)]).sale_reference
+                                if mrp_sale_reference:   
+                                    rec.sale_id = self.env['sale.order'].search([('name','=',mrp_sale_reference)]).id
+                                else:
+                                    rec.sale_id = False    
                             else:
                                 rec.sale_id = False   
                         else:
-                            rec.sale_id = False        
+                            rec.sale_id = False
+
                 elif rec.created_production_id:
                     rec.sale_id = self.env['sale.order'].search([('name','=',rec.created_production_id.sale_reference)]).id
                 else:
@@ -123,15 +134,28 @@ class rtw_stock_move(models.Model):
             else:
                 rec.forwarding_address = False
 
-    @api.depends('sale_line_id', 'sale_line_id.shiratani_date', 'sale_id', 'sale_id.shiratani_entry_date')
+    # @api.depends('sale_line_id', 'sale_line_id.shiratani_date', 'sale_id', 'sale_id.shiratani_entry_date')
+    @api.depends('mrp_production_id','sale_id')
     def _get_shiratani_date(self):
         for rec in self:
-            if rec.sale_line_id.shiratani_date:
-                rec.shiratani_date = rec.sale_line_id.shiratani_date
-            elif rec.sale_id:
-                rec.shiratani_date = rec.sale_id.shiratani_entry_date
+            if rec.mrp_production_id:
+                mrp_shiratani_date = self.env['mrp.production'].search([('name', '=', rec.mrp_production_id)])
+                if mrp_shiratani_date and mrp_shiratani_date.shiratani_date:
+                    rec.shiratani_date = mrp_shiratani_date.shiratani_date
+                else:
+                    related_shiratani_date = self.env['stock.move'].search([('sale_id', '=', rec.sale_id.id)])
+                    for move in related_shiratani_date:
+                        if move.shiratani_date:
+                            rec.shiratani_date = move.shiratani_date
+                            break  
             else:
-                rec.shiratani_date = False
+                    rec.shiratani_date = False        
+            # if rec.sale_line_id.shiratani_date:
+            #     rec.shiratani_date = rec.sale_line_id.shiratani_date
+            # elif rec.sale_id:
+            #     rec.shiratani_date = rec.sale_id.shiratani_entry_date
+            # else:
+            #     rec.shiratani_date = False
 
     @api.depends('sale_line_id.depo_date','sale_line_id.depo_date','sale_line_id','sale_id','sale_id.warehouse_arrive_date')
     def _get_warehouse_arrive_date(self):
@@ -200,3 +224,49 @@ class rtw_stock_move(models.Model):
                move.primary_shipment_stock_move = move.picking_id.primary_shipment 
             else:
                 move.primary_shipment_stock_move = False
+    @api.depends('shiratani_date')
+    def _get_shiratani_date_delivery(self):
+        for rec in self:
+            rec.shiratani_date_delivery = rec.shiratani_date
+            
+    @api.depends('shiratani_date_delivery')
+    def _set_shiratani_date_delivery(self):
+        for rec in self:
+            rec.shiratani_date = rec.shiratani_date_delivery
+            related_deliveries = self.env['stock.move'].search([('sale_id', '=', int(rec.sale_id))])
+            for delivery in related_deliveries:
+                delivery.shiratani_date = rec.shiratani_date_delivery            
+            if rec.origin and '/MO/' in rec.origin:
+                shiratani_date_production = self.env['mrp.production'].search([('name', '=', rec.origin)])
+                if shiratani_date_production:
+                    shiratani_date_production.write({'shiratani_date': rec.shiratani_date_delivery})
+                else:
+                    return
+            elif rec.mrp_production_id and '/MO/' in rec.mrp_production_id:
+                    mrp_production = self.env['mrp.production'].search([('name', '=', rec.mrp_production_id)])
+                    if mrp_production:
+                        mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
+                    else:
+                        return            
+            elif rec.origin and rec.origin.startswith('S'):
+                shiratani_date_sale = self.env['mrp.production'].search([('origin', '=', rec.origin)])
+                if shiratani_date_sale:
+                    shiratani_date_sale.write({'shiratani_date': rec.shiratani_date_delivery})
+                else:
+                    return  
+            elif rec.origin and rec.origin.startswith('P'):
+                    purchase_order = self.env['purchase.order'].search([('name', '=', rec.origin)])
+                    if purchase_order:
+                        purchase_order_origin = purchase_order.origin
+                        if purchase_order_origin and '/MO/' in purchase_order_origin:
+                            mrp_production = self.env['mrp.production'].search([('name', '=', purchase_order_origin)])
+                            if mrp_production:
+                                mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
+                            else:
+                                return    
+                        else:
+                            return        
+                    else:
+                        return
+            else:
+                return     
