@@ -27,3 +27,5 @@ class MrpPickingCustom(models.Model):
                     parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
 
                 record.temp_scheduled_date = parent_mo.prod_parts_arrival_schedule
+            else:
+                record.temp_scheduled_date = ''
