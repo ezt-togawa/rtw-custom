@@ -80,6 +80,9 @@
                     <field name="shipping" optional="show" />
                 </xpath>
                 <xpath expr="//field[@name='origin']" position="before">
+                    <field name="attached" optional="show" />
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="before">
                     <field name="sales_order" optional="show" />
                 </xpath>
             </field>
