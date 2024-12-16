@@ -35,7 +35,7 @@ class sale_order_line_rtw(models.Model):
     def write(self, vals):
         res = super(sale_order_line_rtw, self).write(vals)
         for record in self:
-            # visible_sequence はOCAの項目、表示表の順番の番号、初期値9999
-            # 複数行追加御に並び順を変えると、Odoo側でsequenceの+1をして、10000以上の数値なるので順番が狂うのを調整する
+            # visible_sequence はOCAの項目、表示上の順番の番号、初期値9999
+            # 複数行追加後に並び順を変えると、Odoo側でsequenceの+1をして、10000以上の数値なり以降の追加行が間に入るので順番が狂うのを調整する
             vals['sequence'] = record.visible_sequence
         return res
