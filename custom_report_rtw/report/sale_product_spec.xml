@@ -144,10 +144,11 @@
                             </t>
                           </t>
                         </div>
-                        <br />
+                         <br />
                         <div style="overflow:hidden;">
-                          <div> 定価: <span
-                              t-field="docs.currency_id.symbol" />
+                          <div> 定価: 
+                            <span
+                            t-field="docs.currency_id.symbol" />
                             <span
                               t-esc="'{0:,.0f}'.format(l.price_unit * l.product_uom_qty)" />
                           </div>

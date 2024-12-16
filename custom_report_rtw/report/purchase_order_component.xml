@@ -52,11 +52,20 @@
                         <div>
                           <t t-set="filtered_docs"
                             t-value="docs.filtered(lambda doc: doc.purchase_order_origin)" />
+                          <t t-set="seen_SO" t-value="{}" />
+                          <t t-set="order_origin" t-value="''" />
+
                           <t t-foreach="filtered_docs" t-as="po_name">
-                            <span style="width: 300px;" t-field="po_name.purchase_order_origin" />
-                            <t t-set="is_last_item" t-value="po_name == filtered_docs[-1]" />
-                            <t t-if="not is_last_item">, </t>
+                            <t t-if="order_origin">
+                              <t t-set="order_origin"
+                                t-value="order_origin + ' , ' + po_name.purchase_order_origin" />
+                            </t>
+                            <t t-if="not order_origin">
+                              <t t-set="order_origin"
+                                t-value="order_origin + po_name.purchase_order_origin" />
+                            </t>
                           </t>
+                          <span style="width: 300px;" t-esc="docs.check_duplicate(order_origin)" />
                         </div>
                       </div>
                     </div>
@@ -142,26 +151,27 @@
                     <th class="text-center" style="width:17%">Custom</th>
                   </tr>
                 </thead>
-                <t t-foreach="docs" t-as="po2">
-                  <t t-foreach="po2.purchase_order_line" t-as="l" t-groupby="10"
-                    t-att-last="last">
-                    <t t-set="total_subprice"
-                      t-value="total_subprice + l.price_subtotal" />
+                <t>
+                  <t t-set="generate_pdf_result" t-value="docs.generate_pdf()" />
+                  <t t-foreach="generate_pdf_result" t-as="line" t-groupby="10" t-att-last="last">
                     <t t-set="total_listprice"
-                      t-value="total_listprice + l.price_unit * l.product_uom_qty" />
+                      t-value="total_listprice + float(line['purchase_order_sell_unit_price']) * float(line['purchase_order_line_product_uom_qty'])" />
+                    <t t-set="total_subprice"
+                      t-value="total_subprice + float(line['price_subtotal'].replace(',', ''))" />
                     <tbody class="invoice_tbody">
-                      <t t-if="l.display_type =='line_section' or l.display_type =='line_note'">
+                      <t
+                        t-if="line['display_type'] =='line_section' or line['display_type'] =='line_note'">
                         <tr class="size15 table-border-bottom-auto">
-                          <t t-if="l.display_type =='line_section'">
+                          <t t-if="line['display_type'] =='line_section'">
                             <td class="bg-section" />
                             <td class="size11 bg-section" colspan="9">
-                              <span t-field="l.name" />
+                              <span t-esc="line['name']" />
                             </td>
                           </t>
-                          <t t-elif="l.display_type =='line_note'">
+                          <t t-elif="line['display_type'] =='line_note'">
                             <td />
                             <td class="size11" colspan="9">
-                              <span t-field="l.name" />
+                              <span t-esc="line['name']" />
                             </td>
                           </t>
                         </tr>
@@ -173,40 +183,28 @@
                             <t t-esc="number" />
                           </td>
                           <td class="size12">
-                            <t t-if="l.product_id.product_tmpl_id.config_ok">
-                              <t t-if="l.product_id.product_tmpl_id.categ_id.name">
-                                <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                              </t>
-                              <t t-elif="l.product_id.product_tmpl_id.product_no">
-                                <span t-field="l.product_id.product_tmpl_id.product_no" />
-                              </t>
-                              <t t-else="">
-                                <span t-field="l.name" />
-                              </t>
-                            </t>
-                            <t t-else="">
-                              <span t-field="l.name" />
-                            </t>
+                            <span t-esc="line['purchase_order_prod_name']" />
                             <br />
                           </td>
                           <td class="text-center">
                             <div id="quote_qty">
-                              <span
-                                t-field="l.purchase_order_line_product_uom_qty" />
+                              <span t-esc="line['purchase_order_line_product_uom_qty']" />
                             </div>
                           </td>
                           <td class="text-center size12">
-                            <span t-if="l.product_uom.name" t-esc="l.product_uom.name" />
+                            <span t-esc="line['product_uom_name']" />
                           </td>
                           <td class="text-center size14">
-                            <span t-if="l.purchase_order_sell_unit_price"
-                              t-esc="'{0:,.0f}'.format(l.purchase_order_sell_unit_price)" />
+                            <span t-if="line['purchase_order_sell_unit_price']"
+                              t-esc="'{0:,.0f}'.format(line['purchase_order_sell_unit_price'])" />
                           </td>
                           <td class="text-center size14">
-                            <span t-if="l.price_subtotal"
-                              t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
+                            <span t-if="line['price_subtotal']"
+                              t-esc="'{0:,.0f}'.format(float(line['price_subtotal'].replace(',', '')) if isinstance(line['price_subtotal'], str) else line['price_subtotal']) if line['price_subtotal'] else 0" />
                           </td>
-                          <td class="size13"></td>
+                          <td class="size13">
+
+                          </td>
                         </tr>
                       </t>
                     </tbody>
