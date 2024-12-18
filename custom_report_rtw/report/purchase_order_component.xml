@@ -200,7 +200,7 @@
                           </td>
                           <td class="text-center size14">
                             <span t-if="line['price_subtotal']"
-                              t-esc="'{0:,.0f}'.format(float(line['price_subtotal'].replace(',', '')) if isinstance(line['price_subtotal'], str) else line['price_subtotal']) if line['price_subtotal'] else 0" />
+                              t-esc="(line['price_subtotal']) if line['price_subtotal'] else 0" />
                           </td>
                           <td class="size13">
 
