@@ -88,7 +88,7 @@ class PurchaseOrderEmployee(models.Model):
                 })
                     for item in data:
                         key = item["ir_model_id"]
-                        qty = int(item["purchase_order_line_product_uom_qty"].replace(",", ""))
+                        qty = float(item["purchase_order_line_product_uom_qty"].replace(",", ""))
                         subtotal = float(str(item["price_subtotal"]).replace(",", ""))
                         aggregated_data[key]["purchase_order_prod_name"] = item["purchase_order_prod_name"]
                         aggregated_data[key]["product_uom_name"] = item["product_uom_name"]

@@ -260,14 +260,14 @@ class ReportMrpExcel(models.AbstractModel):
                         aggregated_data = defaultdict(lambda: {
                             "purchase_order_index":0,
                             "purchase_order_prod_name": "",
-                            "purchase_order_line_product_uom_qty": 0,
+                            "purchase_order_line_product_uom_qty": 0.0,
                             "product_uom_name": "",
                             "purchase_order_sell_unit_price": "",
                             "price_subtotal": 0
                             })
                         for item in data:
                             key = item["ir_model_id"]
-                            qty = int(item["purchase_order_line_product_uom_qty"].replace(",", ""))
+                            qty = float(item["purchase_order_line_product_uom_qty"].replace(",", ""))
                             subtotal = float(str(item["price_subtotal"]).replace(",", ""))
                             aggregated_data[key]["purchase_order_prod_name"] = item["purchase_order_prod_name"]
                             aggregated_data[key]["product_uom_name"] = item["product_uom_name"]
@@ -293,17 +293,17 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet_data.write(ind, 0, line['name'] if line['name']  else '', format_lines_note) 
                             row += 1
                         elif line['display_type'] == 'line_section':
-                            sheet.merge_range(row, 0, row, 12, "=data!B" + str(ind * 1 + 1) , format_lines_section) 
-                            sheet_data.write(ind, 1, line['name']  if line['name']  else '' , format_lines_section) 
+                            sheet.merge_range(row, 0, row, 12, "=data!B" + str(ind * 1 + 1) , format_lines_section)
+                            sheet_data.write(ind, 1, line['name']  if line['name']  else '' , format_lines_section)
                             row += 1
                         else:
-                            sheet.merge_range(row, 0, row + merge_line, 0, ind+1  , format_lines_10) 
+                            sheet.merge_range(row, 0, row + merge_line, 0, ind + 1  , format_lines_10) 
                             sheet.merge_range(row, 1, row + merge_line, 3, line['purchase_order_prod_name'] if line['purchase_order_prod_name'] else '' , format_lines_11_left) 
                             sheet.merge_range(row, 7, row + merge_line, 8, line['purchase_order_line_product_uom_qty'] if line['purchase_order_line_product_uom_qty'] else 0 , format_lines_13) 
                             sheet.merge_range(row, 9, row + merge_line, 9, line['product_uom_name'] if line['product_uom_name'] else "", format_lines_10) 
                             sheet.merge_range(row, 10, row + merge_line, 10, "{:,.0f}".format(line['purchase_order_sell_unit_price']) if line['purchase_order_sell_unit_price'] else 0 , format_lines_13) 
-                            sheet.merge_range(row, 11, row + merge_line, 11,"{:,.0f}".format(float(line['price_subtotal'].replace(",", "")) if isinstance(line['price_subtotal'], str) else line['price_subtotal']) if line['price_subtotal'] else 0,format_lines_13)
-                            sheet.merge_range(row, 12, row + merge_line, 13, '' , format_lines_13) 
+                            sheet.merge_range(row, 11, row + merge_line, 11,line['price_subtotal']  if line['price_subtotal'] else 0 , format_lines_13)
+                            sheet.merge_range(row, 12, row + merge_line, 13, '' , format_lines_13)
                             row += merge_line + 1
                 
             
