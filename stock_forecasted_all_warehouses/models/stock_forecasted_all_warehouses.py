@@ -118,6 +118,28 @@ class stock_forecasted_all_warehouses(models.AbstractModel):
             res['virtual_available'] = sum(product_variants.mapped('virtual_available'))
         res.update(self._compute_draft_quantity_count(product_template_ids, product_variant_ids, wh_location_ids))
         res['lines'] = self._get_report_lines(product_template_ids, product_variant_ids, wh_location_ids)
+
+        quantity_on_hand  = res['quantity_on_hand']
+        IN_quantity = {}
+        for line  in res['lines']:
+            #calculate  IN-quantity
+            if line['document_in']:
+                document_name = line['document_in'].name
+                if document_name not in IN_quantity:
+                    IN_quantity[document_name] = sum(l['quantity'] for l in res['lines'] if l.get('document_in') and l['document_in'].name == document_name)
+            if line.get('document_in'):
+                document_name = line['document_in'].name
+                line['IN_quantity'] = IN_quantity.get(document_name, 0.00)
+            #calculate Remaining
+            quantity = line['quantity']
+            if not line.get('receipt_date'):
+                if quantity_on_hand > 0:
+                    quantity_on_hand = max(0, quantity_on_hand - quantity)
+                    line['quantity_on_hand'] = quantity_on_hand
+                else:
+                    line['quantity_on_hand'] = 0.00    
+            else:    
+                line['quantity_on_hand'] = quantity_on_hand        
         return res
 
     @api.model
