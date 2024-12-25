@@ -53,7 +53,7 @@ class StockPicking(models.Model):
     )
     
     sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order")
-    shiratani_entry_date = fields.Date(string="Shiratani entry date", compute="_compute_shiratani_entry_date") 
+    shiratani_entry_date = fields.Date("Shiratani entry date", compute='compute_shiretani_entry_date')
     warehouse_arrive_date = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date")
     estimated_shipping_date = fields.Date('Estimated shipping date', related="sale_order_id.estimated_shipping_date")
     sales_order_name = fields.Char(string='Sales Order Name', compute="_compute_sale_order_name", store=True)
@@ -116,39 +116,14 @@ class StockPicking(models.Model):
                 record.sipping_to_value = '持込'
             else:
                 record.sipping_to_value = ''
-    
-    def _compute_shiratani_entry_date(self):
+
+    def compute_shiretani_entry_date(self):
         for rec in self:
-            if rec.origin and '/MO/' in rec.origin:
-                mrp_production = self.env['mrp.production'].search([('name', '=', rec.origin)],limit=1)
-                if mrp_production:
-                    rec.shiratani_entry_date = mrp_production.shiratani_date
-                else:
-                    rec.shiratani_entry_date = False    
-            elif rec.origin and rec.origin.startswith('S'):
-                mrp_production = self.env['mrp.production'].search([('origin', '=', rec.origin)],limit=1)
-                if mrp_production:
-                    rec.shiratani_entry_date = mrp_production.shiratani_date
+            if rec.id :
+                stock_move = self.env['stock.move'].search([('picking_id', '=', rec.id)], limit=1)
+                if stock_move:
+                    rec.shiratani_entry_date = stock_move.shiratani_date
                 else:
                     rec.shiratani_entry_date = False
-            elif rec.origin and rec.origin.startswith('P'):
-                purchase_order = self.env['purchase.order'].search([('name', '=', rec.origin)],limit=1)
-                if purchase_order:
-                    purchase_order_origin = purchase_order.origin
-                    if purchase_order_origin and '/MO/' in purchase_order_origin:
-                        mrp_production = self.env['mrp.production'].search([('name', '=', purchase_order_origin)],limit=1)
-                        if mrp_production:
-                            if mrp_production.shiratani_date:
-                                rec.shiratani_entry_date = mrp_production.shiratani_date
-                            elif mrp_production.itoshima_shipping_date_edit:
-                                rec.shiratani_entry_date = mrp_production.itoshima_shipping_date_edit
-                            else:
-                                rec.shiratani_entry_date = False
-                        else:
-                            rec.shiratani_entry_date = False    
-                    else:
-                        rec.shiratani_entry_date = False
-                else:
-                    rec.shiratani_entry_date = False            
-            else:
-                rec.shiratani_entry_date = False        
+
+                
