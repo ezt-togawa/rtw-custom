@@ -49,7 +49,9 @@
                             <td>
                                 <t t-esc="line['receipt_date'] or ''"
                                     t-attf-class="#{line['is_late'] and 'o_grid_warning'}"></t>
-                                <t t-if="'IN_quantity' in line"> / <t t-esc="line['IN_quantity']"
+                                <t t-if="'IN_quantity' in line">
+                                     / 
+                                    <t t-esc="line['IN_quantity']"
                                         t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}' />
                                 </t>
                                 <t t-else=''></t>
@@ -61,7 +63,8 @@
                                     t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}' />
                             </t>
                             <t
-                                t-else=''>0.00</t></td>
+                                t-else=''>/ 0.00</t>
+                            </td>
                             <td t-esc="line['uom_id'].name" groups="uom.group_uom"/>
                             <td t-attf-class="#{not line['replenishment_filled'] and 'o_grid_warning'}">
                                 <a t-if="line['document_out']"
@@ -77,13 +80,10 @@
                                         t-att-res-model="line['document_out'].mrp_sale_order._name"
                                         t-att-res-id="line['document_out'].mrp_sale_order.id"/>
                                         <t
-                                        t-if="line['document_out'].mrp_sale_order.user_id.name"> / <a
-                                            t-if="line['document_out'] and line['document_out'].mrp_sale_order"
-                                            t-attf-href="#"
-                                            t-esc="line['document_out'].mrp_sale_order.user_id.name"
-                                            class="font-weight-bold" view-type="form"
+                                        t-if="line['document_out'].mrp_sale_order and line['document_out'].mrp_sale_order.user_id and line['document_out'].mrp_sale_order.user_id.name"> / 
+                                            <a t-esc="line['document_out'].mrp_sale_order.user_id.name"
                                             t-att-res-model="line['document_out'].mrp_sale_order._name"
-                                            t-att-res-id="line['document_out'].mrp_sale_order.id" />
+                                            ></a>
                                     </t>
                                 </t>
                             </td>
