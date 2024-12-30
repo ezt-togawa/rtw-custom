@@ -104,6 +104,7 @@
                   </div>
                 </div>
                 <div class="col-4">
+                <div class="size18" t-if="mrp.resend_so" t-field="mrp.resend_so" />
                 </div>
                 <div class="col-4 size11" name="company_address">
                   <div class="float-right">
@@ -145,6 +146,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="row py-2">
                 <div class="col-4 size14">
                   <t t-if="mrp.mrp_production_so_id.sipping_to =='direct'">

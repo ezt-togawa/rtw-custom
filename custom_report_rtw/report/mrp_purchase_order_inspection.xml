@@ -122,7 +122,7 @@
                   </div>
                 </div>
                 <div class="col-4">
-
+                <div class=" size18" t-if="mrp.resend_so" t-field="mrp.resend_so" />
                 </div>
                 <div class="col-4 size11" name="company_address">
                   <div class="float-right">
