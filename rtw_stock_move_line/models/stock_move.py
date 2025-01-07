@@ -66,60 +66,53 @@ class rtw_stock_move(models.Model):
     @api.depends('sale_line_id', 'picking_id')
     def _get_sale_id(self):
         for rec in self:
-            if rec.sale_line_id.order_id:
-                rec.sale_id = rec.sale_line_id.order_id
-            elif rec.picking_id:
-                if rec.picking_id.sale_id:
-                    rec.sale_id = rec.picking_id.sale_id
-                elif rec.picking_id.origin and '/MO/' in rec.picking_id.origin:
-                         
-                        mrp = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)])
-                        if mrp:
-                            rec.sale_id = self.env['sale.order'].search([('name','=',mrp.origin)]).id
-                        else:
-                            rec.sale_id = False
-                elif rec.picking_id.origin and rec.picking_id.origin.startswith('P'):
-                        purchase_order_origin = self.env['purchase.order'].search([('name','=',rec.picking_id.origin)]).origin  
-                        if purchase_order_origin  and '/MO/' in purchase_order_origin :          
-                            mrp_origin=self.env['mrp.production'].search([('name','=',purchase_order_origin)]).origin     
-                            if mrp_origin and mrp_origin.startswith('S'):
-                                rec.sale_id = self.env['sale.order'].search([('name','=',mrp_origin)]).id
-                            elif mrp_origin and '/MO/' in mrp_origin:
-                                mrp_sale_reference = self.env['mrp.production'].search([('name','=',purchase_order_origin)]).sale_reference
-                                if mrp_sale_reference:   
-                                    rec.sale_id = self.env['sale.order'].search([('name','=',mrp_sale_reference)]).id
-                                else:
-                                    rec.sale_id = False    
-                            else:
-                                rec.sale_id = False   
-                        else:
-                            rec.sale_id = False
+            if not rec.group_id:
+                continue
 
-                elif rec.created_production_id:
-                    rec.sale_id = self.env['sale.order'].search([('name','=',rec.created_production_id.sale_reference)]).id
+            # 調達グループから取得（運用や設定的に複数はないはずだが、あった場合は先頭から）
+            group = rec.group_id[0]
+            # 調達グループは販売or製造or購買、購買の場合は単独購買なのでスルーされる
+            if group:
+                sale = self.env['sale.order'].search([('name', '=', group.name)])
+                if sale:
+                    rec.sale_id = sale
                 else:
-                    rec.sale_id = False
+                    # 製造の親も子sole_referenceに注番が設定されているので、そこから取得
+                    mrp = self.env['mrp.production'].search([('name', '=', group.name)])
+                    if mrp:
+                        rec.sale_id = self.env['sale.order'].search([('name', '=', mrp.sale_reference)])
+                    else:
+                        rec.sale_id = False
             else:
                 rec.sale_id = False
 
     @api.depends('production_id', 'picking_id')
     def _get_mrp_production_id(self):
-      for rec in self:
-        if rec.production_id:
-            rec.mrp_production_id = rec.production_id.name
-        elif rec.created_production_id:
-            rec.mrp_production_id = rec.created_production_id.name
-        elif rec.picking_id.origin and '/MO/' in rec.picking_id.origin:
-            rec.mrp_production_id = self.env['mrp.production'].search([('name','=',rec.picking_id.origin)]).name    
-        elif rec.picking_id.origin and rec.picking_id.origin.startswith('P'):
-            rec.mrp_production_id = self.env['purchase.order'].search([('name','=',rec.picking_id.origin)]).origin  
-        else:
-            mrp = self.env['mrp.production'].search(
-                [('origin', '=', rec.picking_id.sale_id.name), ('product_id', '=', rec.product_id.id)], limit=1)
-            if mrp:
-                rec.mrp_production_id = mrp.name
+
+        for rec in self:
+            if not rec.group_id:
+                continue
+
+            # 調達グループから取得（運用や設定的に複数はないはずだが、あった場合は先頭から）
+            group = rec.group_id[0]
+            # 調達グループは販売or製造or購買、製造ではない場合はスルーされる
+            if group:
+                mrp = self.env['mrp.production'].search([('name', '=', group.name)])
+                if mrp:
+                    rec.mrp_production_id = mrp.name
+                else:
+                    rec.mrp_production_id = None
             else:
                 rec.mrp_production_id = None
+
+            # 調達グループに製造が紐づいていない場合、販売直下の配送＝製品の配送が考えられるため対象の製造オーダーをstock.picking経由で取得する
+            if not rec.mrp_production_id and rec.product_id:
+                mrp = self.env['mrp.production'].search(
+                    [('origin', '=', rec.picking_id.sale_id.name), ('product_id', '=', rec.product_id.id)], limit=1)
+                if mrp:
+                    rec.mrp_production_id = mrp.name
+                else:
+                    rec.mrp_production_id = None
 
     @api.depends('picking_id','picking_id.forwarding_address','sale_id','sale_id.forwarding_address')
     def _get_forwarding_address(self):
