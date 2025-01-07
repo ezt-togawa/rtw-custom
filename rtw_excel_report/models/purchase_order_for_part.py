@@ -2,6 +2,10 @@ from odoo import models , _
 from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
 from io import BytesIO
+
+from itertools import groupby
+from collections import defaultdict
+from operator import itemgetter
 class ReportMrpExcel(models.AbstractModel):
     _name = 'report.rtw_excel_report.report_purchase_order_for_part_xls'
     _inherit = 'report.report_xlsx.abstract'
@@ -184,39 +188,125 @@ class ReportMrpExcel(models.AbstractModel):
         po_origin = ""
         po_amount_untaxed = 0
         row = 14
+        list_order_line = []
         if allow_print :
             for po in list_purchase:
+                list_order_line += po.order_line
                 po_name += po.name + ', '
                 po_origin += po.purchase_order_origin + ', '
                 po_amount_untaxed += int(po.amount_untaxed)
-                
-                if po.order_line:
-                    # merge_line = 3 
-                    for ind,line in enumerate(po.order_line):
-                        merge_line = 2 + len(line.product_id.product_template_attribute_value_ids) if len(line.product_id.product_template_attribute_value_ids) > 1 else 2
-                        if line.display_type == 'line_note':
-                            sheet.merge_range(row, 0, row, 12, "=data!A" + str(ind * 1 + 1) , format_lines_note) 
-                            sheet_data.write(ind, 0, line.name if line.name else '', format_lines_note) 
-                            row += 1
-                        elif line.display_type == 'line_section':
-                            sheet.merge_range(row, 0, row, 12, "=data!B" + str(ind * 1 + 1) , format_lines_section) 
-                            sheet_data.write(ind, 1, line.name if line.name else '' , format_lines_section) 
-                            row += 1
-                        else:
-                            sheet.merge_range(row, 0, row + merge_line, 0, line.purchase_order_index if line.purchase_order_index else '' , format_lines_10) 
-                            sheet.merge_range(row, 1, row + merge_line, 3, line.purchase_order_prod_name if line.purchase_order_prod_name else '' , format_lines_11_left) 
-                            sheet.merge_range(row, 7, row + merge_line, 8, line.purchase_order_line_product_uom_qty if line.purchase_order_line_product_uom_qty else 0 , format_lines_13) 
-                            sheet.merge_range(row, 9, row + merge_line, 9, line.product_uom.name if line.product_uom.name else "", format_lines_10) 
-                            sheet.merge_range(row, 10, row + merge_line, 10, "{:,.0f}".format(line.purchase_order_sell_unit_price) if line.purchase_order_sell_unit_price else 0 , format_lines_13) 
-                            sheet.merge_range(row, 11, row + merge_line, 11, "{:,.0f}".format(line.price_subtotal) if line.price_subtotal else 0 , format_lines_13) 
-                            sheet.merge_range(row, 12, row + merge_line, 13, '' , format_lines_13) 
-
-                            row += merge_line + 1
-                            
+            arr = po_origin.split(', ')
+            arr2 = []
+            for item in arr:
+                if item not in arr2:
+                    arr2.append(item)
+            po_origin = ' , '.join(arr2)
+                   
             if "," in po_name:
                 po_name = po_name.rstrip(', ')
             if "," in po_origin:   
                 po_origin = po_origin.rstrip(', ')
+            if list_order_line:
+                    # merge_line = 3 
+                    data = []
+                    for ind,line in enumerate(list_order_line):
+                        purchase_order_line = line.product_id
+                        if purchase_order_line:
+                            name_ir_data = self.env['ir.model.data'].search([  ('res_id', '=', purchase_order_line.id)], limit=1)
+                            if name_ir_data:
+                                data.append({
+                                "purchase_order_index":line.purchase_order_index,
+                                "ir_model_id":name_ir_data.id,
+                                "purchase_order_prod_name":line.purchase_order_prod_name,
+                                "purchase_order_line_product_uom_qty":line.purchase_order_line_product_uom_qty,
+                                "product_uom_name":line.product_uom.name,
+                                "display_type":line.display_type,
+                                "purchase_order_sell_unit_price":line.purchase_order_sell_unit_price,
+                                "price_subtotal":line.price_subtotal,
+                                "product_template_attribute_value_ids":line.product_id.product_template_attribute_value_ids,
+                                "name":line.name                                 
+                                })
+                            else:
+                                data.append({
+                                "purchase_order_index":line.purchase_order_index,
+                                "ir_model_id":None,
+                                "purchase_order_prod_name":line.purchase_order_prod_name,
+                                "purchase_order_line_product_uom_qty":line.purchase_order_line_product_uom_qty,
+                                "product_uom_name":line.product_uom.name,
+                                "display_type":line.display_type,
+                                "purchase_order_sell_unit_price":line.purchase_order_sell_unit_price,
+                                "price_subtotal":line.price_subtotal,
+                                "product_template_attribute_value_ids":line.product_id.product_template_attribute_value_ids,
+                                "name":line.name       
+                                    })
+                        else:
+                            data.append({
+                                "purchase_order_index":line.purchase_order_index,
+                                "ir_model_id":None,
+                                "purchase_order_prod_name":line.purchase_order_prod_name,
+                                "purchase_order_line_product_uom_qty":line.purchase_order_line_product_uom_qty,
+                                "product_uom_name":line.product_uom.name,
+                                "display_type":line.display_type,
+                                "purchase_order_sell_unit_price":line.purchase_order_sell_unit_price,
+                                "price_subtotal":line.price_subtotal,
+                                "product_template_attribute_value_ids":line.product_id.product_template_attribute_value_ids,
+                                "name":line.name
+                            })
+
+                    data_with_model_id = [item for item in data if item['ir_model_id'] is not None]
+                    data_without_model_id = [item for item in data if item['ir_model_id'] is None]
+
+                    def aggregate_purchase_data(data):
+                        aggregated_data = defaultdict(lambda: {
+                            "purchase_order_index":0,
+                            "purchase_order_prod_name": "",
+                            "purchase_order_line_product_uom_qty": 0.0,
+                            "product_uom_name": "",
+                            "purchase_order_sell_unit_price": "",
+                            "price_subtotal": 0
+                            })
+                        for item in data:
+                            key = item["ir_model_id"]
+                            qty = float(item["purchase_order_line_product_uom_qty"].replace(",", ""))
+                            subtotal = float(str(item["price_subtotal"]).replace(",", ""))
+                            aggregated_data[key]["purchase_order_prod_name"] = item["purchase_order_prod_name"]
+                            aggregated_data[key]["product_uom_name"] = item["product_uom_name"]
+                            aggregated_data[key]["purchase_order_sell_unit_price"] = item["purchase_order_sell_unit_price"]
+                            aggregated_data[key]["product_template_attribute_value_ids"] = item["product_template_attribute_value_ids"]
+                            aggregated_data[key]["display_type"] = item["display_type"]
+                            aggregated_data[key]["name"] = item["name"]
+                            aggregated_data[key]["purchase_order_line_product_uom_qty"] += qty
+                            aggregated_data[key]["price_subtotal"] += subtotal
+                        result = []
+                        for key, value in aggregated_data.items():
+                            value["purchase_order_line_product_uom_qty"] = str(value["purchase_order_line_product_uom_qty"])
+                            value["price_subtotal"] = f"{value['price_subtotal']:,}"
+                            value["ir_model_id"] = key
+                            result.append(value)
+
+                        return result
+                    result = aggregate_purchase_data(data_with_model_id) + data_without_model_id
+                    for ind,line in enumerate(result):
+                        merge_line = 2 + len(line['product_template_attribute_value_ids']) if len(line['product_template_attribute_value_ids']) > 1 else 2
+                        if line['display_type'] == 'line_note':
+                            sheet.merge_range(row, 0, row, 12, "=data!A" + str(ind * 1 + 1) , format_lines_note) 
+                            sheet_data.write(ind, 0, line['name'] if line['name']  else '', format_lines_note) 
+                            row += 1
+                        elif line['display_type'] == 'line_section':
+                            sheet.merge_range(row, 0, row, 12, "=data!B" + str(ind * 1 + 1) , format_lines_section)
+                            sheet_data.write(ind, 1, line['name']  if line['name']  else '' , format_lines_section)
+                            row += 1
+                        else:
+                            sheet.merge_range(row, 0, row + merge_line, 0, ind + 1  , format_lines_10) 
+                            sheet.merge_range(row, 1, row + merge_line, 3, line['purchase_order_prod_name'] if line['purchase_order_prod_name'] else '' , format_lines_11_left) 
+                            sheet.merge_range(row, 7, row + merge_line, 8, line['purchase_order_line_product_uom_qty'] if line['purchase_order_line_product_uom_qty'] else 0 , format_lines_13) 
+                            sheet.merge_range(row, 9, row + merge_line, 9, line['product_uom_name'] if line['product_uom_name'] else "", format_lines_10) 
+                            sheet.merge_range(row, 10, row + merge_line, 10, "{:,.0f}".format(line['purchase_order_sell_unit_price']) if line['purchase_order_sell_unit_price'] else 0 , format_lines_13) 
+                            sheet.merge_range(row, 11, row + merge_line, 11,line['price_subtotal']  if line['price_subtotal'] else 0 , format_lines_13)
+                            sheet.merge_range(row, 12, row + merge_line, 13, '' , format_lines_13)
+                            row += merge_line + 1
+                
+            
                 
         else:
             for po in list_purchase[0]:
@@ -251,4 +341,3 @@ class ReportMrpExcel(models.AbstractModel):
         sheet.write(3, 1, po_name if po_name else "", format_text)
         sheet.write(4, 1, po_origin if po_name else "", format_text)
         sheet.write(11, 13, "{:,.0f}".format(po_amount_untaxed), format_text_right)
-        

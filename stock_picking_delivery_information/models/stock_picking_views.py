@@ -53,7 +53,7 @@ class StockPicking(models.Model):
     )
     
     sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order")
-    shiratani_entry_date = fields.Date("Shiratani entry date", related="sale_order_id.shiratani_entry_date")
+    shiratani_entry_date = fields.Date("Shiratani entry date", compute='compute_shiretani_entry_date')
     warehouse_arrive_date = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date")
     estimated_shipping_date = fields.Date('Estimated shipping date', related="sale_order_id.estimated_shipping_date")
     sales_order_name = fields.Char(string='Sales Order Name', compute="_compute_sale_order_name", store=True)
@@ -116,3 +116,14 @@ class StockPicking(models.Model):
                 record.sipping_to_value = '持込'
             else:
                 record.sipping_to_value = ''
+
+    def compute_shiretani_entry_date(self):
+        for rec in self:
+            if rec.id :
+                stock_move = self.env['stock.move'].search([('picking_id', '=', rec.id)], limit=1)
+                if stock_move:
+                    rec.shiratani_entry_date = stock_move.shiratani_date
+                else:
+                    rec.shiratani_entry_date = False
+
+                

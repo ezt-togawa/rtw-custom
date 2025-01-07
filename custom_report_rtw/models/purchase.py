@@ -1,5 +1,7 @@
 from odoo import fields, models
 from datetime import datetime 
+from collections import defaultdict
+
 class PurchaseOrderEmployee(models.Model):
     _inherit = 'purchase.order'
   
@@ -12,6 +14,102 @@ class PurchaseOrderEmployee(models.Model):
     hr_employee_fax = fields.Char(string="hr employee fax" , compute="_compute_hr_employee")
     hr_employee_printer = fields.Char(string="hr employee printer" , compute="_compute_hr_employee")
     current_print = fields.Char(compute="_compute_current_print")
+    
+    def check_duplicate(self , data):
+        if data:
+            arr = data.split(' , ')
+            arr2 = []
+            for item in arr:
+                items_to_add = item.split(',') if ',' in item else [item]
+                for sub_item in items_to_add:
+                   if sub_item not in arr2:
+                        arr2.append(sub_item)
+            return ' , '.join(arr2)
+    def generate_pdf(self):
+        data = []
+        list_order_line = []
+        if self:
+            for po in self:
+                list_order_line += po.order_line
+            if list_order_line:
+                for ind, line in enumerate(list_order_line):
+                    purchase_order_line = line.product_id
+                    if purchase_order_line:
+                        name_ir_data = self.env['ir.model.data'].search([('res_id', '=', purchase_order_line.id)], limit=1)
+                        if name_ir_data:
+                            data.append({
+                               "purchase_order_index": line.purchase_order_index,
+                               "ir_model_id": name_ir_data.name,
+                               "purchase_order_prod_name": line.purchase_order_prod_name,
+                               "purchase_order_line_product_uom_qty": line.purchase_order_line_product_uom_qty,
+                               "product_uom_name": line.product_uom.name,
+                               "display_type": line.display_type,
+                               "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
+                               "price_subtotal": line.price_subtotal,
+                               "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids,
+                               "name": line.name
+                                })
+                        else:
+                            data.append({
+                                "purchase_order_index": line.purchase_order_index,
+                                "ir_model_id": None,
+                                "purchase_order_prod_name": line.purchase_order_prod_name,
+                                "purchase_order_line_product_uom_qty": line.purchase_order_line_product_uom_qty,
+                                "product_uom_name": line.product_uom.name,
+                                "display_type": line.display_type,
+                                "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
+                                "price_subtotal": line.price_subtotal,
+                                "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids,
+                                "name": line.name
+                            })
+                    else:
+                        data.append({
+                            "purchase_order_index": line.purchase_order_index,
+                            "ir_model_id": None,
+                            "purchase_order_prod_name": line.purchase_order_prod_name,
+                            "purchase_order_line_product_uom_qty": line.purchase_order_line_product_uom_qty,
+                            "product_uom_name": line.product_uom.name,
+                            "display_type": line.display_type,
+                            "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
+                            "price_subtotal": line.price_subtotal,
+                            "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids,
+                            "name": line.name
+                            })
+                data_with_model_id = [item for item in data if item['ir_model_id'] is not None]
+                data_without_model_id = [item for item in data if item['ir_model_id'] is None]
+                def aggregate_purchase_data(data):
+                    aggregated_data = defaultdict(lambda: {
+                    "purchase_order_index": 0,
+                    "purchase_order_prod_name": "",
+                    "purchase_order_line_product_uom_qty": 0,
+                    "product_uom_name": "",
+                    "purchase_order_sell_unit_price": "",
+                    "price_subtotal": 0
+                })
+                    for item in data:
+                        key = item["ir_model_id"]
+                        qty = float(item["purchase_order_line_product_uom_qty"].replace(",", ""))
+                        subtotal = float(str(item["price_subtotal"]).replace(",", ""))
+                        aggregated_data[key]["purchase_order_prod_name"] = item["purchase_order_prod_name"]
+                        aggregated_data[key]["product_uom_name"] = item["product_uom_name"]
+                        aggregated_data[key]["purchase_order_sell_unit_price"] = item["purchase_order_sell_unit_price"]
+                        aggregated_data[key]["product_template_attribute_value_ids"] = item["product_template_attribute_value_ids"]
+                        aggregated_data[key]["display_type"] = item["display_type"]
+                        aggregated_data[key]["name"] = item["name"]
+                        aggregated_data[key]["purchase_order_line_product_uom_qty"] += qty
+                        aggregated_data[key]["price_subtotal"] += subtotal
+                    result = []
+                    for key, value in aggregated_data.items():
+                        value["purchase_order_line_product_uom_qty"] = str(value["purchase_order_line_product_uom_qty"])
+                        value["price_subtotal"] = f"{value['price_subtotal']:,}"
+                        value["ir_model_id"] = key
+                        result.append(value)
+                        
+                    return result
+                result = aggregate_purchase_data(data_with_model_id) + data_without_model_id
+            return result
+
+
 
     def _compute_current_print(self):
         for so in self:
@@ -95,4 +193,3 @@ class PurchaseOrderEmployee(models.Model):
                 address += purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name 
             
         po.purchase_order_address = address
-        

@@ -3206,8 +3206,8 @@ class PurChaseOrderLineExcelReport(models.Model):
                 else:
                     while decimal_part_after_dot % 10 == 0:
                         decimal_part_after_dot = decimal_part_after_dot / 10
-                    line.purchase_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
-    
+                    line.purchase_order_line_product_uom_qty = float(f"{integer_part}.{str(decimal_part).split('.')[1]}")
+
     def _compute_purchase_order_prod_detail(self):
         for line in self:
             product_number_and_size = ""
