@@ -231,63 +231,22 @@ class rtw_stock_move(models.Model):
     @api.depends('shiratani_date_delivery')
     def _set_shiratani_date_delivery(self):
         for rec in self:
-            mrp_production = False
             rec.shiratani_date = rec.shiratani_date_delivery
-            related_deliveries = self.env['stock.move'].search([('sale_id', '=', int(rec.sale_id))])
-            for delivery in related_deliveries:
-                delivery.shiratani_date = rec.shiratani_date_delivery   
-            if rec.mrp_production_id and '/MO/' in rec.mrp_production_id:
-                mrp_production = self.env['mrp.production'].search([('name', '=', rec.mrp_production_id)])
+            if rec.product_id:
+                mrp_production = self.env['mrp.production'].search([('product_id', '=', rec.product_id.id)])
                 if mrp_production:
                     mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
-                else:
-                    return
-            if rec.origin and '/MO/' in rec.origin:
-                mrp_production = self.env['mrp.production'].search([('name', '=', rec.origin)])
-                if mrp_production:
-                    mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
-                else:
-                    return
-            elif rec.origin and rec.origin.startswith('S'):
-                mrp_production = self.env['mrp.production'].search([('origin', '=', rec.origin)])
-                if mrp_production:
-                    mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
-                else:
-                    return  
-            elif rec.origin and rec.origin.startswith('P'):
-                purchase_order = self.env['purchase.order'].search([('name', '=', rec.origin)])
-                if purchase_order:
-                    purchase_order_origin = purchase_order.origin
-                    if purchase_order_origin and '/MO/' in purchase_order_origin:
-                        mrp_production = self.env['mrp.production'].search([('name', '=', purchase_order_origin)])
-                        
-                        if mrp_production:
-                            mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
-                        else:
-                            return    
+                    if rec.picking_id:
+                        picking_ids = self.env['stock.move'].search([
+                            ('product_id', '=', rec.product_id.id),
+                            ('origin', '=', rec.origin),
+                            ('description_picking' ,'=', rec.description_picking)
+                        ])
+                        for move in picking_ids:
+                            move.shiratani_date = rec.shiratani_date_delivery 
                     else:
-                        return        
+                        return
                 else:
                     return
-            else:
-                return     
-            
-            if mrp_production:
-                #parent case
-                if mrp_production.name:
-                    mrp_production_related = self.env['mrp.production'].search([('origin', '=', mrp_production.name)])
-                    if mrp_production_related:
-                        for mrp in mrp_production_related:
-                            mrp.write({'shiratani_date': rec.shiratani_date_delivery})
-
-                #child case
-                if mrp_production.origin:
-                    mrp_production_related_parent = self.env['mrp.production'].search([('name', '=', mrp_production.origin)])
-                    mrp_production_related_child = self.env['mrp.production'].search([('origin', '=', mrp_production.origin)])
-                    if mrp_production_related_parent:
-                        for mrp in mrp_production_related_parent:
-                            mrp.write({'shiratani_date': rec.shiratani_date_delivery})
-                            
-                    if mrp_production_related_child:
-                        for mrp in mrp_production_related_child:
-                            mrp.write({'shiratani_date': rec.shiratani_date_delivery})
+        else:
+            return               
