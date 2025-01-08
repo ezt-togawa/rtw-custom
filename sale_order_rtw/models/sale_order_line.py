@@ -35,10 +35,6 @@ class sale_order_line_rtw(models.Model):
     def write(self, vals):
         print('vals：', vals)
         print('sale_order_rtw->write', self.name, self.sequence, self.visible_sequence)
-        before_seq = self.sequence
-
-        print('1 更新前後SEQ:', self.name, before_seq, self.sequence)
-        print('2 更新結果SEQ/VIS:', self.name, self.sequence, self.visible_sequence)
         # for record in self:
         #     print('1:', record, record.sequence, record.visible_sequence)
             # visible_sequence はOCAの項目、表示上の順番の番号、初期値9999
@@ -47,8 +43,8 @@ class sale_order_line_rtw(models.Model):
             # record.sequence = record.visible_sequence
             # print('2:', record.sequence, record.visible_sequence)
         # return res
-        if 'visible_sequence' in vals:
-            vals['sequence'] = vals['visible_sequence']
+        if self.sequence >= 9999:
+            vals['sequence'] = self.visible_sequence
             # self.sequence = self.visible_sequence
-            print('3 SEQ変更:', self.name, before_seq, self.visible_sequence)
+            print('3 SEQ変更:', self.name, self.sequence, self.visible_sequence)
         return super(sale_order_line_rtw, self).write(vals)
