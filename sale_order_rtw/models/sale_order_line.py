@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import logging
 from odoo import models, fields, api
 
 
@@ -33,7 +33,6 @@ class sale_order_line_rtw(models.Model):
 
     # 明細行の並び順担保処理（OCAのモジュール前提：sale_order_line_sequence）
     def write(self, vals):
-        res = super(sale_order_line_rtw, self).write(vals)
         print('sale_order_rtw->write')
         for record in self:
             print('1:', record, record.sequence, record.visible_sequence)
@@ -41,4 +40,5 @@ class sale_order_line_rtw(models.Model):
             # 複数行追加後に並び順を変えると、Odoo側でsequenceの+1をして、10000以上の数値なり以降の追加行が間に入るので順番が狂うのを調整する
             vals['sequence'] = record.visible_sequence
             print('2:', record.sequence, record.visible_sequence)
+        res = super(sale_order_line_rtw, self).write(vals)
         return res
