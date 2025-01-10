@@ -14,7 +14,7 @@ class mrp_remark(models.Model):
     remark = fields.Text('共通備考' , default=None , compute='_compute_remark', inverse='_inverse_remark')
     attached = fields.Integer('添付' , default=0, compute='_compute_attached')
     special_note = fields.Text('伝票用特記事項' , default=None , compute='_compute_special_note', inverse='_inverse_special_note')
-
+    resend_so = fields.Char(string='再送')
     def _compute_remark(self):
         for record in self:
             sale_order = self.env['sale.order'].search([('name', '=', record.origin)])
