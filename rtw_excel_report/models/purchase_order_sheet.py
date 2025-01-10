@@ -34,6 +34,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_text = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':11})
         format_text_right = workbook.add_format({'align': 'right', 'valign': 'top', 'font_name': font_name, 'font_size':11})
         format_text_13 = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':13})
+        format_resend_so = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13,'text_wrap':True})
         format_text_13_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':13})
         format_text_14 = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14})
         format_date = 'yyyy-MM-dd'
@@ -113,6 +114,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(1, 1, _("発注書"), format_sheet_title) 
                 sheet.write(5, 0, _("発注番号"), format_text) 
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else mrp.name, format_text)
+                sheet.merge_range(3, 3, 3, 6, mrp.resend_so if mrp.resend_so else "", format_resend_so)
                 sheet.write(6, 0, _("配達希望日"), format_text)
                 if mrp.is_child_mo:
                     sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date)
