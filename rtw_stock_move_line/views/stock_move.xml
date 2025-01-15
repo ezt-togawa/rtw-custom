@@ -76,7 +76,7 @@
                     />
                     <separator />
                 </xpath>
-               
+
                 <xpath expr="//filter[@name='outgoing']" position="after">
                     <filter string="Internal" name="internal"
                         domain="[('picking_id.picking_type_id.code', '=', 'internal')]" />
