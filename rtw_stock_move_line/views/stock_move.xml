@@ -39,20 +39,44 @@
             <field name="inherit_id" ref="stock.view_move_search" />
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='incoming']" position="before">
-                    <filter string="移動先が糸島" name="to_itoshima"
-                        domain="[('location_dest_id', 'like', '糸島')]"
+                    <filter string="移動先が糸島保管" name="to_itoshima_storage"
+                        domain="[('location_dest_id', 'like', '製品保管/糸島')]"
                     />
-                    <filter string="移動元が糸島" name="from_itoshima"
-                        domain="[('location_id', 'like', '糸島')]"
-                    />
-                    <filter string="移動先が白谷" name="to_shiratani"
-                        domain="[('location_dest_id', 'like', '白谷')]"
-                    />
-                    <filter string="移動元が白谷" name="from_shiratani"
-                        domain="[('location_id', 'like', '白谷')]"
+                    <filter string="移動先が白谷保管" name="to_shiratani_storage"
+                        domain="[('location_dest_id', 'like', '製品保管/白谷')]"
                     />
                     <separator />
                 </xpath>
+                <xpath expr="//filter[@name='incoming']" position="before">
+                    <filter string="移動元が糸島保管" name="from_itoshima_storage"
+                        domain="[('location_id', 'like', '製品保管/糸島')]"
+                    />
+                    <filter string="移動元が白谷保管" name="from_shiratani_storage"
+                        domain="[('location_id', 'like', '製品保管/白谷')]"
+                    />
+                    <separator />
+                </xpath>
+                <xpath expr="//filter[@name='incoming']" position="before">
+                    <filter string="移動先が糸島" name="to_itoshima"
+                        domain="[('location_dest_id','in',['糸島/在庫','糸島/Stock'])]"
+                    />
+                    <filter string="移動先が白谷" name="to_shiratani"
+                        domain="[('location_dest_id','in',['白谷/在庫','白谷/Stock'])]"
+
+                    />
+                    <separator />
+                </xpath>
+                <xpath expr="//filter[@name='incoming']" position="before">
+                    <filter string="移動元が糸島" name="from_itoshima"
+                        domain="[('location_id','in',['糸島/在庫','糸島/Stock'])]"
+                    />
+                    <filter string="移動元が白谷" name="from_shiratani"
+                        domain="[('location_id','in',['白谷/在庫','白谷/Stock'])]"
+
+                    />
+                    <separator />
+                </xpath>
+
                 <xpath expr="//filter[@name='outgoing']" position="after">
                     <filter string="Internal" name="internal"
                         domain="[('picking_id.picking_type_id.code', '=', 'internal')]" />
