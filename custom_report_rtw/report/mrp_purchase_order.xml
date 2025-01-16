@@ -186,27 +186,27 @@
                 <t t-groupby="10" t-att-last="last">
                   <thead>
                     <tr class="table-title bold" style="font-size:13px;background-color:#999999">
-                      <th class="text-center" style="width:1%">№</th>
-                      <th class="text-center" style="width:20%">品名</th>
-                      <th class="text-center" style="width:20%">仕様・詳細１</th>
-                      <th class="text-center" style="width:20%">仕様・詳細２</th>
-                      <th class="text-center" style="width:7%">数量</th>
-                      <th class="text-center" style="width:5%"/>
-                      <th class="text-center" style="width:5%">取説</th>
-                      <th class="text-center" style="width:15%">Custom</th>
-                      <th class="text-center" style="width:15%">メモ</th>
+                      <th class="text-center" style="width:1%;padding:12px 2px;">№</th>
+                      <th class="text-center" style="width:20%;padding:12px 0px;">品名</th>
+                      <th class="text-center" style="width:24%;padding:12px 0px;">仕様・詳細１</th>
+                      <th class="text-center" style="width:24%;padding:12px 0px;">仕様・詳細２</th>
+                      <th class="text-center" style="width:3%;padding:12px 0px;">数量</th>
+                      <th class="text-center" style="width:1%;padding:12px 0px;"/>
+                      <th class="text-center" style="width:3%;padding:12px 0px;">取説</th>
+                      <th class="text-center" style="width:15%;padding:12px 0px;">Custom</th>
+                      <th class="text-center" style="width:15%;padding:12px 0px;">メモ</th>
                       </tr>
                   </thead>
 
                   <tbody class="invoice_tbody">
                     <t t-set="index" t-value="0" />
-                    <t t-foreach="docs" t-as="line">
+                    <t t-foreach="docs" t-as="line"> 
                       <t t-set="index" t-value="index+1" />
                       <tr class="size15 table-border-bottom">
-                        <td class="text-center size12">
+                        <td class="text-center size12" style="padding:12px 0px;">
                           <span t-esc="index" />
                         </td>
-                        <td class="size12">
+                        <td class="size11" style="padding:12px 0px;">
                           <div class="six-lines">
                             <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
                             <div t-if="line.mrp_product_no" t-field="line.mrp_product_no" />
@@ -216,7 +216,7 @@
                             </t>
                           </div>
                         </td>
-                        <td class="size12">
+                        <td class="size12" style="padding:12px 0px;">
                           <div class="six-lines">
                             <t t-if="line.mrp_product_attribute">
                               <t t-set="attr_arr"
@@ -229,7 +229,7 @@
                             </t>
                           </div>
                         </td>
-                        <td class="size12">
+                        <td class="size12" style="padding:12px 0px;">
                           <div class="six-lines">
                             <t t-if="line.mrp_product_attribute2">
                               <t t-set="attr_arr"
@@ -242,12 +242,12 @@
                             </t>
                           </div>
                         </td>
-                        <td class="text-center">
-                          <div id="quote_qty" class="six-lines">
+                        <td class="text-center" style="padding:12px 0px;">
+                          <div id="quote_qty" class="six-lines" >
                             <span t-esc="line.mrp_product_product_qty" />
                           </div>
                         </td>
-                        <td class="text-center size14">
+                        <td class="text-center size14" style="padding:12px 0px;">
                           <div class="six-lines">
                             <t t-if="line.product_id.product_tmpl_id.uom_id.name">
                               <span
@@ -255,12 +255,12 @@
                             </t>
                           </div>
                         </td>
-                        <td class="text-center size14">
+                        <td class="text-center size14" style="padding:12px 0px;">
                           <t t-if="line.mrp_production_order_line.instruction_status">
                             有
                           </t>
                         </td>
-                        <td class="size13">
+                        <td class="size13" style="padding:12px 0px;">
                           <div class="six-lines">
                             <t t-if="line.mrp_product_type">
                               <span
@@ -276,7 +276,7 @@
                             </t>
                           </div>
                         </td>
-                        <td>
+                        <td style="padding:12px 0px;">
                           <t t-if="line.production_memo">
                             <div class="six-lines">
                               <span t-field="line.production_memo" />
