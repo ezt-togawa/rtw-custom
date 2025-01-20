@@ -37,10 +37,13 @@ class SaleOrderLineExtend(models.Model):
     def write(self, vals):
         res = super(SaleOrderLineExtend, self).write(vals)
         for line in self:
+            if line.call_rate == 100 and line.discount == 0:
+                break
             if line.call_rate and line.discount:
                 break
-            elif line.discount:
+            elif line.discount or line.discount == 0:
                 line.call_rate = 100 - line.discount
+                break
         return res
 
     @api.onchange('product_template_id')
