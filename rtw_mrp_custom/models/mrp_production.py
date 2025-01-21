@@ -131,7 +131,6 @@ class MrpProductionCus(models.Model):
     #                         arrival_schedule += str(parent_mo._convert_timezone(move.forecast_expected_date)) + "\n"
     #                         print('move.forecast_expected_date', move.forecast_expected_date)
     #                 parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
- 
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',
