@@ -11,8 +11,7 @@ class MrpProductionCus(models.Model):
         comodel_name="mrp.revised_edition",
         inverse_name="mrp_id",
         string="revised edition")
-    prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", compute="_compute_prod_parts_arrival_schedule",
-                                              store=True)
+    prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
     address_ship = fields.Selection([('倉庫', '倉庫'),('デポ/直送', 'デポ/直送') ], string="送付先", required=True, default='デポ/直送')
@@ -85,21 +84,22 @@ class MrpProductionCus(models.Model):
             record.storehouse_id = warehouse
 
     # 新規作成時に製造部材入荷予定を設定
-    @api.depends('name')
-    def _compute_prod_parts_arrival_schedule(self):
-        for record in self:
-            if record.origin:
-                order_no = record.origin
-                parent_mo = self.env["mrp.production"].search([('name', '=', order_no)])
-                child_mo = self.env["mrp.production"].search(
-                    [('sale_reference', '=', parent_mo.sale_reference), ('origin', '=', parent_mo.name)])
-                if child_mo and parent_mo.move_raw_ids:
-                    arrival_schedule = ''
-                    for move in parent_mo.move_raw_ids:
-                        if move.forecast_expected_date:
-                            arrival_schedule += str(parent_mo._convert_timezone(move.forecast_expected_date)) + "\n"
-
-                    parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
+    # @api.depends('name')
+    # def _compute_prod_parts_arrival_schedule(self):
+    #     for record in self:
+    #         print('_compute_prod_parts_arrival_schedule', record.name)
+    #         if record.origin:
+    #             order_no = record.origin
+    #             parent_mo = self.env["mrp.production"].search([('name', '=', order_no)])
+    #             child_mo = self.env["mrp.production"].search(
+    #                 [('sale_reference', '=', parent_mo.sale_reference), ('origin', '=', parent_mo.name)])
+    #             if child_mo and parent_mo.move_raw_ids:
+    #                 arrival_schedule = ''
+    #                 for move in parent_mo.move_raw_ids:
+    #                     if move.forecast_expected_date:
+    #                         arrival_schedule += str(parent_mo._convert_timezone(move.forecast_expected_date)) + "\n"
+    #                         print('move.forecast_expected_date', move.forecast_expected_date)
+    #                 parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
 
     def create_revised_edition(self):
         return {
