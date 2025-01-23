@@ -31,7 +31,6 @@
         'views/revised_edition.xml',
         'views/mrp_production.xml',
         'views/mrp_workorder.xml',
-        'views/mrp_stock_picking.xml',
         'views/mrp_ship_address.xml',
         'views/sale_to_mrp_list.xml',
         'views/templates.xml',
