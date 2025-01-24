@@ -1100,8 +1100,10 @@ class SaleOrderLineExcelReport(models.Model):
                 
     def _compute_sale_order_line_discount(self):
         for line in self:
-            if line.discount != 0.00 or line.discount != 0.0 or line.discount != 0 :
-                line.sale_order_line_discount = 100 - line.discount
+            if line.discount != 0.00 or line.discount != 0.0 or line.discount != 0:
+                discount_value = 100 - line.discount
+                discount_value = round(discount_value, 2)
+                line.sale_order_line_discount = discount_value
             else:
                 line.sale_order_line_discount = 0.0
                 
