@@ -271,7 +271,7 @@
                                                             style="font-size:16px"
                                                             t-esc="l.sale_order_line_discount if l.sale_order_line_discount % 1 != 0 else int(l.sale_order_line_discount)" />
                                                     </div>
-                                                </td>
+                                                </td> 
                                                 <td class="text-center" style="padding:12px 0px;">
                                                     <div class="six-lines">
                                                         <span
