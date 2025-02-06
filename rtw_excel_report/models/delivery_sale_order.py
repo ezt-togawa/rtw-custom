@@ -39,7 +39,8 @@ class ReportMrpExcel(models.AbstractModel):
         format_text_12 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12})
         format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13})
         format_text_14 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
-
+        format_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
+        
         format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':11})
         format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#808080', 'font_name': font_name,'font_size':14,'color':'white','bold':True})
     
@@ -137,6 +138,9 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.write(11, 0, _("郵便番号："), format_text_14) 
             sheet.write(11, 1, ("〒 " + so.forwarding_address_zip )if so.forwarding_address_zip else "", format_text_14) 
+
+            sheet.write(11, 4, _("備考："), format_text) 
+            sheet.merge_range(11, 5,13, 8,so.sale_order_shipping_notes[:120] if so.sale_order_shipping_notes else "", format_note) 
             
             sheet.write(12, 0, _("住    所："), format_text_14) 
             sheet.write(12, 1, ("〒 " + so.forwarding_address )if so.forwarding_address else "", format_text_14) 
