@@ -139,7 +139,7 @@ class ReportMrpExcel(models.AbstractModel):
 
             sheet.write(7, 6, so.sale_order_preferred_delivery_date if so.sale_order_preferred_delivery_date else '', format_text) 
             sheet.write(8, 6, so.forwarding_address if so.forwarding_address else '', format_text) 
-            sheet.merge_range(9, 6, 11, 8, so.sale_order_special_note[:120] if so.sale_order_special_note else '', format_note) 
+            sheet.merge_range(9, 6, 11, 8, so.sale_order_billing_notes[:120] if so.sale_order_billing_notes else '', format_note) 
 
             sheet.merge_range(0, 11, 0, 12, so.sale_order_current_date if so.sale_order_current_date else '', format_date) 
             sheet.merge_range(2, 11, 8, 12, so.sale_order_hr_employee_invoice if so.sale_order_hr_employee_invoice else '', format_address) 

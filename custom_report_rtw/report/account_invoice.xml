@@ -110,8 +110,8 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <div> 備考: <span
-                                                t-field="docs.sale_order.sale_order_special_note" /></div>
+                                        <div style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow:hidden;max-height:60px;"> 備考: <span
+                                                t-field="docs.sale_order.sale_order_billing_notes" /></div>
                                     </div>
                                 </div>
                             </div>

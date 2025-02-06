@@ -6,7 +6,9 @@ class sale_order_remark(models.Model):
     _inherit = "sale.order"
 
     remark = fields.Text('共通備考', default=None)
-    special_note = fields.Text('伝票用特記事項' , default=None)
+    special_note = fields.Text('見積特記事項' , default=None)
+    billing_notes = fields.Text('請求特記事項' , default=None)
+    shipping_notes = fields.Text('配送特記事項' , default=None)
 
 class mrp_remark(models.Model):
     _inherit = "mrp.production"

@@ -97,7 +97,7 @@
               </div>
             </div>
             <div class="row py-2 size14 d-flex">
-              <div class="col-9">
+              <div class="col-4">
                 <div class="d-flex">
                   <div style="width:70px"> 郵便番号：</div>
                   <t t-if="docs.forwarding_address_zip"> 〒 <div
@@ -117,6 +117,10 @@
                   <div style="width:70px">立 会 人：</div>
                   <div t-if="docs.sale_witness_name_phone" t-field="docs.sale_witness_name_phone" />
                 </div>
+              </div>
+              <div class="col-5">
+                <div style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow:hidden;max-height:60px;"> 
+                備考: <span t-field="docs.sale_order_shipping_notes" /></div>
               </div>
               <div class="col-3 size14">
                 <div class="pt-4 ml-5">搬入費用：</div>

@@ -9,6 +9,8 @@
                 <xpath expr="//field[@name='forwarding_address']" position="after">
                     <field name="remark" />
                     <field name="special_note" />
+                    <field name="billing_notes" />
+                    <field name="shipping_notes" />
                 </xpath>
             </field>
         </record>
