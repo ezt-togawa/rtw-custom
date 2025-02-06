@@ -104,7 +104,7 @@
                     icon="fa-external-link"
                     class="oe_stat_button"
                 />
-                <field name="date_planned" string="製造完予定日" optional="show" />
+                <field name="date_planned" string="製造完予定日" optional="show"  widget="date" />
                 <field name="depo_date" optional="hide" />
                 <field name="shiratani_date" optional="hide" />
                 <field name="instruction_status" optional="show" />
