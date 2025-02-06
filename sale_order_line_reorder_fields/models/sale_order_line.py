@@ -46,16 +46,16 @@ class SaleOrderLineExtend(models.Model):
                 break
         return res
 
-    @api.onchange('product_template_id')
-    #オーダー明細のプロダクトの追加でプロダクトバリアントへのOnchangeを実行させる（本番で発火しない場合の対処ロジック）
-    def _fields_onchange_product_id(self):
-        if self.product_template_id:
-            for line in self:
-                prod_id = line.product_template_id.id
-                product = self.env["product.product"].search([('product_tmpl_id', '=', prod_id)])
-                for record in product:
-                    if not record.config_ok:
-                        self.product_id = product
+    # @api.onchange('product_template_id')
+    # #オーダー明細のプロダクトの追加でプロダクトバリアントへのOnchangeを実行させる（本番で発火しない場合の対処ロジック）
+    # def _fields_onchange_product_id(self):
+    #     if self.product_template_id:
+    #         for line in self:
+    #             prod_id = line.product_template_id.id
+    #             product = self.env["product.product"].search([('product_tmpl_id', '=', prod_id)])
+    #             for record in product:
+    #                 if not record.config_ok:
+    #                     self.product_id = product
 
     # 製品毎の選択可能倉庫数
     def _compute_warehouse_count(self):
