@@ -51,6 +51,14 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_sale_order_special_note",
         string="Special note",
     )
+    sale_order_billing_notes = fields.Text(
+        compute="_compute_sale_order_billing_notes",
+        string="Billing notes",
+    )
+    sale_order_shipping_notes = fields.Text(
+        compute="_compute_sale_order_shipping_notes",
+        string="Shipping notes",
+    )
     sale_order_special_note_list_price = fields.Char(
         compute="_compute_sale_order_special_note",
         string="Special note",
@@ -408,7 +416,21 @@ class SaleOrderExcelReport(models.Model):
                 l.sale_order_special_note_list_price = l.special_note[:100] 
             else:
                 l.sale_order_special_note =""            
-                l.sale_order_special_note_list_price =""            
+                l.sale_order_special_note_list_price =""       
+
+    def _compute_sale_order_billing_notes(self):
+        for l in self:
+            if l.billing_notes :
+                l.sale_order_billing_notes = l.billing_notes[:167] 
+            else:
+                l.sale_order_billing_notes ="" 
+
+    def _compute_sale_order_shipping_notes(self):
+        for l in self:
+            if l.shipping_notes :
+                l.sale_order_shipping_notes = l.shipping_notes[:167] 
+            else:
+                l.sale_order_shipping_notes =""           
 
     def _compute_lang_code(self):
         for order in self:

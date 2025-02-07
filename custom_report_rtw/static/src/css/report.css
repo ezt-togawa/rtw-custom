@@ -70,24 +70,24 @@ body {
   /* height:100%; */
 }
 
-.child-img{
-  width:auto;
+.product-img img {
+  width: 100%;
   height:100%;
 }
 
+.child-img{
+  width:100%;
+  height:80px;
+}
+
 .child-img img {
-  width:auto;
+  width: 100%;
   height:100%;
 }
 
 .product-img {
-  width:auto;
-  height:100%;
-}
-
-.product-img img {
-  width:auto;
-  height:100%;
+  width:100%;
+  height:110px;
 }
 
 .product-quantity {

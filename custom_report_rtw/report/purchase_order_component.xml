@@ -41,15 +41,7 @@
                   <div class="d-flex">
                     <div class="col-6">
                       <div>
-                        発注番号
-                      </div>
-                      <div>
-                        <t t-foreach="docs" t-as="po_name">
-                          <span t-field="po_name.name" />
-                          <t t-set="is_last_item" t-value="po_name == docs[-1]" />
-                          <t t-if="not is_last_item">, </t>
-                        </t>
-                        <div>
+                        発注番号  <span class="size16">
                           <t t-set="filtered_docs"
                             t-value="docs.filtered(lambda doc: doc.purchase_order_origin)" />
                           <t t-set="seen_SO" t-value="{}" />
@@ -66,7 +58,14 @@
                             </t>
                           </t>
                           <span style="width: 300px;" t-esc="docs.check_duplicate(order_origin)" />
-                        </div>
+                        </span>
+                      </div>
+                      <div>
+                        <t t-foreach="docs" t-as="po_name">
+                          <span t-field="po_name.name" />
+                          <t t-set="is_last_item" t-value="po_name == docs[-1]" />
+                          <t t-if="not is_last_item">, </t>
+                        </t>
                       </div>
                     </div>
                     <div class=" col-6 size18" t-if="po.resend" t-field="po.resend" />
