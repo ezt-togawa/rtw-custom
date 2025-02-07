@@ -35,7 +35,7 @@ class ReportMrpExcel(models.AbstractModel):
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':18,'font_name': font_name})
         format_sheet_partner = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':16,'font_name': font_name})
-        format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
+        format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12})
         format_text_wrap = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11,'text_wrap':True})
         format_resend = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13,'text_wrap':True})
         format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
@@ -338,6 +338,6 @@ class ReportMrpExcel(models.AbstractModel):
                             row += merge_line + 1
                             
         sheet.set_header( f'{"&"}R {po_name if po_name else ""}', margin=margin_header)
-        sheet.write(3, 1, po_name if po_name else "", format_text)
-        sheet.write(4, 1, po_origin if po_name else "", format_text)
+        sheet.write(4, 1, po_name if po_name else "", format_text)
+        sheet.write(3, 1, po_origin if po_name else "", format_text)
         sheet.write(11, 13, "{:,.0f}".format(po_amount_untaxed), format_text_right)
