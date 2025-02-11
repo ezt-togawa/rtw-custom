@@ -17,6 +17,11 @@
 				<field name="production_type" widget="html"/>
 				<field name="production_memo"/>
 		</xpath>
+		<xpath expr="//notebook " position="before">
+                <group >
+                   <field name="specifications" widget="many2many_tags"/>
+                </group>
+        </xpath>
 		</field>
 	</record>
 
