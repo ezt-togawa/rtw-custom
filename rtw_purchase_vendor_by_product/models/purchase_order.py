@@ -17,7 +17,7 @@ class rtw_purchase(models.Model):
         for order in self:
             order.order_line_exists = bool(order.order_line)
 
-    @api.onchange('order_line')
+    @api.onchange('order_line','currency_id')
     def onchange_order_line(self):
         supplier_id = False
         for line in self:
@@ -31,6 +31,13 @@ class rtw_purchase(models.Model):
                 return {'domain': {'partner_id': ['|', ('company_id', '=', False), ('company_id', '=', line.company_id.id)]}}
             if not self.partner_id:
                 self.partner_id = supplier_id
+                self.currency_id = self.partner_id.property_purchase_currency_id.id
+                if self.partner_id and self.currency_id:
+                    for line in self.order_line:
+                        line.onchange_product_id()
+            else:
+                for line in self.order_line:
+                    line.onchange_product_id()
             return {'domain': {'partner_id': [('id', '=', supplier_id), '|', ('company_id', '=', False), ('company_id', '=', line.company_id.id)]}}
         else:
-            return {'domain': {'partner_id': ['|', ('company_id', '=', False), ('company_id', '=', line.company_id.id)]}}
+            return {'domain': {'partner_id': ['|', ('company_id', '=', False), ('company_id', '=', line.company_id.id)]}} 
