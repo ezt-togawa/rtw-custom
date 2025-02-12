@@ -90,11 +90,18 @@ class rtw_stock_move(models.Model):
     def _get_mrp_production_id(self):
 
         for rec in self:
-            if not rec.group_id:
+            if not rec.group_id and not rec.move_orig_ids:
                 continue
 
             # 調達グループから取得（運用や設定的に複数はないはずだが、あった場合は先頭から）
-            group = rec.group_id[0]
+            group = False
+            if rec.group_id:
+                group = rec.group_id[0]
+            if not group and rec.move_orig_ids:
+                # 調達グループがない場合を考慮して、紐づく運送から取得する（オーダー再規則や手動などで製造オーダー作成された場合など）
+                if rec.move_orig_ids.group_id:
+                    group = rec.move_orig_ids.group_id[0]
+
             # 調達グループは販売or製造or購買、製造ではない場合はスルーされる
             if group:
                 mrp = self.env['mrp.production'].search([('name', '=', group.name)])
