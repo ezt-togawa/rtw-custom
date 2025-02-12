@@ -159,11 +159,15 @@ class MrpProduction(models.Model):
     mrp_reference = fields.Char('MO Reference', compute='_compute_reference_mo', store=True)
     production_type = fields.Char('製品タイプ', compute='_compute_production_type')
     production_memo = fields.Char('memo', compute='_compute_production_type', inverse='_inverse_production_memo')
+    specifications = fields.Many2many('product.template.attribute.value',string='仕様（属性)', compute='_compute_specifications')
     sale_reference_title = fields.Char('SO Title', store=True)
     sale_title_tmp = fields.Char('SO Title', compute='_compute_reference_value_title')
     overseas = fields.Boolean('海外', compute='_compute_overseas')
 
-
+    def _compute_specifications(self):
+        for rec in self:
+            rec.specifications = rec.product_id.product_template_attribute_value_ids
+     
 class Workorder(models.Model):
     _inherit = 'mrp.workorder'
 
