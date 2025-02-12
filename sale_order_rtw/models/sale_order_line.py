@@ -32,9 +32,17 @@ class sale_order_line_rtw(models.Model):
         return res
 
     # 明細行の並び順担保処理（OCAのモジュール前提：sale_order_line_sequence）
-    def write(self, vals):
+    def create(self, vals):
+        res = super(sale_order_line_rtw, self).create(vals)
         # visible_sequence はOCAの項目、表示上の順番の番号。sequenceの初期値はOdoo側で9999が設定される
         # 複数行追加後に並び順を変えると、Odoo側でsequenceの+1をして、10000以上の数値なり以降の追加行が間に入るので順番が狂うのを調整する
-        if self.sequence >= 9999 or self.sequence != self.visible_sequence:
-            vals['sequence'] = self.visible_sequence
-        return super(sale_order_line_rtw, self).write(vals)
+        # メモやセクションは visible_sequence の対象外のようなので、display_type で判断して除外する
+        order_lines_count = 0
+        order = res.mapped("order_id")
+        if order:
+            # メモ/セクション数
+            order_lines_count = len(order.order_line.filtered(lambda l: l.display_type))
+        if not res.display_type and (res.sequence >= 9999):
+            # 新規追加時はvisible_sequenceは明細のプロダクトの最後となる番号になっているので、プラスでメモやセクション数を加算すること順番を担保
+            res.sequence = res.visible_sequence + order_lines_count
+        return res
