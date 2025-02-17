@@ -26,7 +26,13 @@ class StockPicking(models.Model):
 
     waypoint = fields.Many2one(
         comodel_name="res.partner",
-        string="デポ",
+        string="デポ１",
+        required=False,
+        ondelete="set null",
+    )
+    waypoint_2 = fields.Many2one(
+        comodel_name="res.partner",
+        string="デポ２",
         required=False,
         ondelete="set null",
     )
@@ -55,6 +61,7 @@ class StockPicking(models.Model):
     sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order")
     shiratani_entry_date = fields.Date("Shiratani entry date", compute='compute_shiretani_entry_date')
     warehouse_arrive_date = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date")
+    warehouse_arrive_date_2 = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date_2")
     estimated_shipping_date = fields.Date('Estimated shipping date', related="sale_order_id.estimated_shipping_date")
     sales_order_name = fields.Char(string='Sales Order Name', compute="_compute_sale_order_name", store=True)
 

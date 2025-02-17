@@ -10,6 +10,7 @@
                     <field name="shiratani_date" />
                     <field name="estimated_shipping_date" />
                     <field name="depo_date" />
+                    <field name="depo_date_2" readonly="1" />
                 </xpath>
             </field>
         </record>

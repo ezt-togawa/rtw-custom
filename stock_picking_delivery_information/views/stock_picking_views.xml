@@ -14,7 +14,14 @@
                 <field name="shipping_to_text" />
                 <field
                     name="waypoint"
-                    string="デポ"
+                    string="デポ１"
+                    context="{'default_type':'delivery'}"
+                    domain="[('type', '=', 'delivery')]"
+                    attrs="{'invisible': [('sipping_to', '=', 'direct')]}"
+                />
+                <field
+                    name="waypoint_2"
+                    string="デポ２"
                     context="{'default_type':'delivery'}"
                     domain="[('type', '=', 'delivery')]"
                     attrs="{'invisible': [('sipping_to', '=', 'direct')]}"
@@ -39,7 +46,8 @@
             <xpath expr="//field[@name='origin']" position="after">
                 <field name="shiratani_entry_date"/>
                 <field name="estimated_shipping_date"/>
-                <field name="warehouse_arrive_date"/>
+                <field name="warehouse_arrive_date" string="デポ１到着日"/>
+                <field name="warehouse_arrive_date_2" string="デポ２到着日"  readonly="1" />
             </xpath>
         </field>
     </record>

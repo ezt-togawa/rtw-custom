@@ -14,7 +14,11 @@ class MrpProductionCus(models.Model):
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
-    address_ship = fields.Selection([('倉庫', '倉庫'),('デポ/直送', 'デポ/直送') ], string="送付先", required=True, default='デポ/直送')
+    address_ship = fields.Selection([ ('倉庫', '倉庫'),
+    ('直送', '直送'),
+    ('デポ１', 'デポ１'),
+    ('デポ２', 'デポ２')], string="送付先")
+    waypoint_option = fields.Text(compute="_compute_waypoint_option")
     storehouse_id = fields.Many2one(comodel_name='stock.warehouse', string="倉庫")
     duration = fields.Float('Duration', help="Track duration in hours.")
     color = fields.Integer(string='Event Color', default=1)
@@ -22,12 +26,22 @@ class MrpProductionCus(models.Model):
     calendar_display_name = fields.Text(compute="_compute_display_name_calendar", store=True)
     shipping = fields.Char(compute="_compute_shipping", string="送付先")
     
+    @api.depends('address_ship')
+    def _compute_waypoint_option(self):
+        sale_order = self.env['sale.order'].search([('name', '=', self.sale_reference)], limit=1)
+        if self.address_ship == "デポ１":
+            self.waypoint_option = sale_order.waypoint.name
+        elif self.address_ship == "デポ２":
+            self.waypoint_option = sale_order.waypoint_2.name
+        else:
+            self.waypoint_option = ""        
+
     def _compute_shipping(self):
         for line in self:
-            if line.address_ship == "デポ/直送":
-                line.shipping = "デポ/直送"
-            elif line.address_ship == "倉庫":
-                line.shipping = line.storehouse_id.name or ''
+            if line.address_ship == "倉庫":
+                line.shipping = "白谷運輸"
+            else:
+                line.shipping = ""
             
     def _compute_sales_order(self):
         for line in self:
@@ -50,16 +64,29 @@ class MrpProductionCus(models.Model):
     @api.model
     def create(self, vals):
         record = super(MrpProductionCus, self).create(vals)
-        if record.origin and '/MO/' in record.origin:
-            record.address_ship = '倉庫'
-            record._onchange_address_ship()
-        else:#source mo
-            warehouse = record.picking_type_id.warehouse_id
-            if warehouse and warehouse.name == "糸島工場":
-                so = self.env["sale.order"].search([('name', '=', record.sale_reference)], limit=1)
-                if so and so.sipping_to != "direct":
-                    record.address_ship = '倉庫'
+        if 'address_ship' not in vals:
+            sale_order = self.env['sale.order'].search([('name', '=', record.sale_reference)], limit=1)
+            warehouse_name = record.picking_type_id.warehouse_id.name
+            if warehouse_name == "糸島工場":
+                if sale_order.sipping_to:
+                    if sale_order.sipping_to == 'direct':
+                        record.address_ship = '直送' 
+                    else:
+                        record.address_ship = '倉庫'
                     record._onchange_address_ship()
+                else:
+                    record.address_ship = '倉庫'
+                record._onchange_address_ship()
+            else:
+                if sale_order.sipping_to:
+                    if sale_order.sipping_to == 'direct':
+                            record.address_ship = '直送' 
+                    else:
+                            record.address_ship = 'デポ１'
+                    record._onchange_address_ship()
+                else:
+                    record.address_ship = 'デポ１'
+                record._onchange_address_ship()
         return record
 
     @api.onchange('address_ship')
@@ -100,7 +127,7 @@ class MrpProductionCus(models.Model):
     #                         arrival_schedule += str(parent_mo._convert_timezone(move.forecast_expected_date)) + "\n"
     #                         print('move.forecast_expected_date', move.forecast_expected_date)
     #                 parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
-
+ 
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',
