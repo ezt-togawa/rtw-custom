@@ -37,12 +37,12 @@ class sale_order_line_rtw(models.Model):
         # visible_sequence はOCAの項目、表示上の順番の番号。sequenceの初期値はOdoo側で9999が設定される
         # 複数行追加後に並び順を変えると、Odoo側でsequenceの+1をして、10000以上の数値なり以降の追加行が間に入るので順番が狂うのを調整する
         # メモやセクションは visible_sequence の対象外のようなので、display_type で判断して除外する
-        order_lines_count = 0
-        order = res.mapped("order_id")
-        if order:
-            # メモ/セクション数
-            order_lines_count = len(order.order_line.filtered(lambda l: l.display_type))
-        if not res.display_type and (res.sequence >= 9999):
-            # 新規追加時はvisible_sequenceは明細のプロダクトの最後となる番号になっているので、プラスでメモやセクション数を加算すること順番を担保
-            res.sequence = res.visible_sequence + order_lines_count
+        for line in res:
+            order = line.mapped("order_id")
+            if order:
+                # メモ/セクション数
+                order_lines_max = max(order.order_line.filtered(lambda l: l.sequence < 9999), key=lambda l: l.sequence)
+                if not line.display_type and line.sequence >= 9999:
+                    # 新規追加時は明細の9999を除く最大Sequenceにプラス1した値をセットする
+                    line.sequence = order_lines_max.sequence + 1
         return res
