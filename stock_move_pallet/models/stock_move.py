@@ -55,7 +55,7 @@ class StockMove(models.Model):
                         elif line.move_dest_ids:
                             tmp_bom_line_id = line.move_dest_ids[0].bom_line_id
 
-                        if tmp_bom_line_id:
+                        if tmp_bom_line_id and tmp_bom_line_id.bom_product_template_attribute_value_ids:
                             # バリアントに適用情報の属性名
                             attribute_name = tmp_bom_line_id.bom_product_template_attribute_value_ids[0].attribute_id.name
 
