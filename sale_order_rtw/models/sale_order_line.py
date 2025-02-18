@@ -41,8 +41,12 @@ class sale_order_line_rtw(models.Model):
             order = line.mapped("order_id")
             if order:
                 # メモ/セクション数
-                order_lines_max = max(order.order_line.filtered(lambda l: l.sequence < 9999), key=lambda l: l.sequence)
+                filtered_lines = order.order_line.filtered(lambda l: l.sequence < 9999)
+                if filtered_lines:
+                    order_lines_seq_max = max(filtered_lines, key=lambda l: l.sequence).sequence
+                else:
+                    order_lines_seq_max = 0
                 if not line.display_type and line.sequence >= 9999:
                     # 新規追加時は明細の9999を除く最大Sequenceにプラス1した値をセットする
-                    line.sequence = order_lines_max.sequence + 1
+                    line.sequence = order_lines_seq_max + 1
         return res
