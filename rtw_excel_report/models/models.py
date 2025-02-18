@@ -653,11 +653,14 @@ class SaleOrderExcelReport(models.Model):
             
     def _compute_sale_order_waypoint(self):
         for line in self:
-            waypoint = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", line.waypoint.id)], limit=1)
-
+            waypoint = False
+            mrp_production_address_ship = self.env["mrp.production"].search([('origin', '=', line.name)], limit=1).address_ship
+            if mrp_production_address_ship == "デポ１":
+                waypoint = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", line.waypoint.id)], limit=1)
+            elif mrp_production_address_ship == "デポ２":
+                waypoint = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", line.waypoint_2.id)], limit=1)
             company_name = ""
             address = ""
-
             if waypoint:
                 if waypoint.company_type == "company":
                     company_name = waypoint.name
