@@ -13,6 +13,7 @@ class SaleOrder(models.Model):
         for stock in stock_picking:
             stock.write({
                 "waypoint": self.waypoint.id,
+                "waypoint_2": self.waypoint_2.id,
                 "sipping_to": self.sipping_to,
                 "shipping_to_text": self.shipping_to_text,
                 "forwarding_address_zip": self.forwarding_address_zip,

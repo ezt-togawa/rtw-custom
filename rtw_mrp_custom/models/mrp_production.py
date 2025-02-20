@@ -65,28 +65,32 @@ class MrpProductionCus(models.Model):
     def create(self, vals):
         record = super(MrpProductionCus, self).create(vals)
         if 'address_ship' not in vals:
-            sale_order = self.env['sale.order'].search([('name', '=', record.sale_reference)], limit=1)
-            warehouse_name = record.picking_type_id.warehouse_id.name
-            if warehouse_name == "糸島工場":
-                if sale_order.sipping_to:
-                    if sale_order.sipping_to == 'direct':
-                        record.address_ship = '直送' 
+            if record.is_child_mo:
+                record.address_ship = '倉庫'
+                record._onchange_address_ship()
+            else:
+                sale_order = self.env['sale.order'].search([('name', '=', record.sale_reference)], limit=1)
+                warehouse_name = record.picking_type_id.warehouse_id.name
+                if warehouse_name == "糸島工場":
+                    if sale_order.sipping_to:
+                        if sale_order.sipping_to == 'direct':
+                            record.address_ship = '直送' 
+                        else:
+                            record.address_ship = '倉庫'
+                        record._onchange_address_ship()
                     else:
                         record.address_ship = '倉庫'
                     record._onchange_address_ship()
                 else:
-                    record.address_ship = '倉庫'
-                record._onchange_address_ship()
-            else:
-                if sale_order.sipping_to:
-                    if sale_order.sipping_to == 'direct':
+                    if sale_order.sipping_to:
+                        if sale_order.sipping_to == 'direct':
                             record.address_ship = '直送' 
-                    else:
+                        else:
                             record.address_ship = 'デポ１'
+                        record._onchange_address_ship()
+                    else:
+                        record.address_ship = 'デポ１'
                     record._onchange_address_ship()
-                else:
-                    record.address_ship = 'デポ１'
-                record._onchange_address_ship()
         return record
 
     @api.onchange('address_ship')

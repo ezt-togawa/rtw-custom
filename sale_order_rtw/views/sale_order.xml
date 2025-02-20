@@ -66,7 +66,7 @@
                     <field name="time_text" />
                     <field name="preferred_delivery_period" string="Preferred delivery period" />
                     <field name="warehouse_arrive_date" string="デポ１到着日" />
-                    <field name="warehouse_arrive_date_2" string="デポ２到着日"   />
+                    <field name="warehouse_arrive_date_2" string="デポ２到着日" />
                     <field name="estimated_shipping_date" string="Estimated shipping date"
                         attrs="{'required': [('status', '=', 'done')]}" />
                     <field name="shiratani_entry_date" string="Shiratani entry Date" />
