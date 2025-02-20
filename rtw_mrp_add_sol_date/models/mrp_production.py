@@ -8,13 +8,18 @@ class rtw_mrp_production_add_sol_date(models.Model):
     _inherit = 'mrp.production'
     
     shiratani_date = fields.Date(string='白谷到着日', readonly=True)
-    depo_date = fields.Date(string='デポ到着日', compute='_compute_sol_date')
+    depo_date = fields.Date(string='デポ１到着日', compute='_compute_sol_date')
+    depo_date_2 = fields.Date(string='デポ２到着日', compute='_compute_depo_date_2')
     preferred_delivery_date = fields.Date(string='配達希望日', compute='_compute_sol_date')
     estimated_shipping_date = fields.Date(string='発送予定日')
     itoshima_shipping_date = fields.Date(string="糸島出荷日", compute='_compute_itoshima_shipping_date', inverse="_inverse_itoshima_shipping_date")
     itoshima_shipping_date_edit = fields.Date()
     mrp_mo_date = fields.Char(compute="_compute_mrp_mo_date")
 
+    def _compute_depo_date_2(self):
+        sale_order = self.env["sale.order"].search([("name", "=", self.sale_reference)],limit=1)
+        if sale_order:
+            self.depo_date_2 = sale_order.warehouse_arrive_date_2
     
     def _get_so_from_mrp(self , mrp_production , count = 0):
           if count >= 10:
@@ -42,7 +47,7 @@ class rtw_mrp_production_add_sol_date(models.Model):
                 limit=1
             )
             if sol:
-                record.shiratani_date = sol.shiratani_date    
+                record.shiratani_date = sol.shiratani_date
         return record
 
     def _compute_sol_date(self):
@@ -102,3 +107,4 @@ class rtw_mrp_production_add_sol_date(models.Model):
                 record.mrp_mo_date = f"{formatted_date} [{day_of_week}]"
             else:
                 record.mrp_mo_date = ''    
+ 

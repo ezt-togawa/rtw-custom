@@ -13,9 +13,10 @@
                     (True,'=',True)), '|', ('company_id', '=', False), ('company_id', '=',
                     parent.company_id)]</attribute>
             </xpath>
-            <xpath expr="//field[@name='partner_id']" position="attributes">
+            <!-- <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="attrs">{'readonly': [('order_line_exists','=',True)]}</attribute>
-            </xpath>
+            </xpath> -->
+            
         </field>
     </record>
 </odoo>

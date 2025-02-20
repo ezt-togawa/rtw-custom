@@ -65,7 +65,8 @@
                     <field name="preferred_delivery_date" string="Preferred delivery date" />
                     <field name="time_text" />
                     <field name="preferred_delivery_period" string="Preferred delivery period" />
-                    <field name="warehouse_arrive_date" string="Warehouse arrive date" />
+                    <field name="warehouse_arrive_date" string="デポ１到着日" />
+                    <field name="warehouse_arrive_date_2" string="デポ２到着日" />
                     <field name="estimated_shipping_date" string="Estimated shipping date"
                         attrs="{'required': [('status', '=', 'done')]}" />
                     <field name="shiratani_entry_date" string="Shiratani entry Date" />
@@ -77,7 +78,14 @@
                     <field name="shipping_to_text" />
                     <field
                         name="waypoint"
-                        string="デポ"
+                        string="デポ１"
+                        context="{'default_type':'delivery'}"
+                        domain="[('type', '=', 'delivery')]"
+                        attrs="{'invisible': [('sipping_to', '=', 'direct')]}"
+                    />
+                    <field
+                        name="waypoint_2"
+                        string="デポ２"
                         context="{'default_type':'delivery'}"
                         domain="[('type', '=', 'delivery')]"
                         attrs="{'invisible': [('sipping_to', '=', 'direct')]}"

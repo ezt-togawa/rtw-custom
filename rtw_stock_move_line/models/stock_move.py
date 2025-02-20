@@ -20,13 +20,16 @@ class rtw_stock_move(models.Model):
         related="sale_id.overseas", string="海外")
     factory = fields.Many2one(related="production_id.picking_type_id")
     memo = fields.Char(related='sale_line_id.memo')
-    area = fields.Many2one('res.country.state', compute="_get_area", string='エリア', store=True)
+    area = fields.Text( compute="_get_area", string='エリア', store=True)
+    area_2 = fields.Text( compute="_get_area_2", store=True)
     forwarding_address = fields.Text(
         compute="_get_forwarding_address", string='到着地',store=True)
     shipping_to = fields.Text(
         string="配送", compute="_get_shipping_to",store=True)
     warehouse_arrive_date = fields.Date(
         compute="_get_warehouse_arrive_date",store=True )
+    warehouse_arrive_date_2 = fields.Date(
+        compute="_get_warehouse_arrive_date_2",store=True )
     mrp_production_id = fields.Char(
         string="製造オーダー", compute="_get_mrp_production_id",store=True)
     product_package_quantity = fields.Float(string="個口数")
@@ -90,11 +93,18 @@ class rtw_stock_move(models.Model):
     def _get_mrp_production_id(self):
 
         for rec in self:
-            if not rec.group_id:
+            if not rec.group_id and not rec.move_orig_ids:
                 continue
 
             # 調達グループから取得（運用や設定的に複数はないはずだが、あった場合は先頭から）
-            group = rec.group_id[0]
+            group = False
+            if rec.group_id:
+                group = rec.group_id[0]
+            if not group and rec.move_orig_ids:
+                # 調達グループがない場合を考慮して、紐づく運送から取得する（オーダー再規則や手動などで製造オーダー作成された場合など）
+                if rec.move_orig_ids.group_id:
+                    group = rec.move_orig_ids.group_id[0]
+
             # 調達グループは販売or製造or購買、製造ではない場合はスルーされる
             if group:
                 mrp = self.env['mrp.production'].search([('name', '=', group.name)])
@@ -159,6 +169,14 @@ class rtw_stock_move(models.Model):
             else:
                 rec.warehouse_arrive_date = False
 
+    @api.depends('sale_id','sale_id.warehouse_arrive_date_2')
+    def _get_warehouse_arrive_date_2(self):
+        for rec in self:
+            if rec.sale_id:
+                rec.warehouse_arrive_date_2 = rec.sale_id.warehouse_arrive_date_2
+            else:
+                rec.warehouse_arrive_date_2= False
+
     @api.depends('picking_id', 'picking_id.sipping_to', 'sale_id', 'sale_id.sipping_to')
     def _get_shipping_to(self):
      for rec in self:
@@ -198,17 +216,30 @@ class rtw_stock_move(models.Model):
         else:
             rec.shipping_to = False
 
-    @api.depends('sale_id','sale_id','picking_id.waypoint', 'sale_id.waypoint', 'picking_id.waypoint.state_id', 'sale_id.waypoint.state_id')
+    @api.depends('sale_id','sale_id','picking_id.waypoint', 'sale_id.waypoint', 'picking_id.waypoint.display_name', 'sale_id.waypoint.display_name')
     def _get_area(self):
         for rec in self:
             if rec.picking_id and rec.picking_id.waypoint:
-                rec.area = rec.picking_id.waypoint.state_id
-                if rec.sale_id and not rec.picking_id.waypoint.state_id:
-                    rec.area = rec.sale_id.waypoint.state_id
+                rec.area = rec.picking_id.waypoint.display_name
+                if rec.sale_id and not rec.picking_id.waypoint:
+                    rec.area = rec.sale_id.waypoint.display_name
             elif rec.sale_id and rec.sale_id.waypoint:
-                rec.area = rec.sale_id.waypoint.state_id
+                rec.area = rec.sale_id.waypoint.display_name
             else:
                 rec.area = False
+
+    @api.depends('sale_id','sale_id','picking_id.waypoint_2', 'sale_id.waypoint_2', 'picking_id.waypoint_2.display_name', 'sale_id.waypoint_2.display_name')
+    def _get_area_2(self):
+        for rec in self:
+            if rec.picking_id and rec.picking_id.waypoint_2:
+                rec.area_2 = rec.picking_id.waypoint_2.display_name
+                if rec.sale_id and not rec.picking_id.waypoint_2:
+                    rec.area_2 = rec.sale_id.waypoint_2.display_name
+            elif rec.sale_id and rec.sale_id.waypoint_2:
+                rec.area_2 = rec.sale_id.waypoint_2.display_name
+            else:
+                rec.area_2 = False
+            
                 
     def _get_primary_shipment_stock_move(self):
         for move in self:
