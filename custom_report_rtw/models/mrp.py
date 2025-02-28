@@ -146,7 +146,10 @@ class MrpProduction(models.Model):
             if line.origin and line.origin.startswith('S'):
                 so = self.env['sale.order'].search([("name",'=',line.sale_reference)])
                 if so:
-                    sol = self.env['sale.order.line'].search([("order_id",'=',so[0].id)])
+                    sol = self.env['sale.order.line'].search([
+                    ("order_id", "=", so.id),
+                    ("product_id", "=", line.product_id.id)
+                ], limit=1)
                     if sol:
                         for l in sol:
                             if l.p_type:
