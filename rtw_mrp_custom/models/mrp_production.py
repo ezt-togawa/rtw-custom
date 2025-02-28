@@ -158,6 +158,8 @@ class MrpProductionCus(models.Model):
 
             if record.product_id and record.product_id.product_no:
                 product_no = record.product_id.product_no
+            elif record.product_id and not record.product_id.product_no and record.product_id.name:
+                product_no = record.product_id.name
             if record.itoshima_shipping_date:
                 date_planned = str(record.itoshima_shipping_date)
 

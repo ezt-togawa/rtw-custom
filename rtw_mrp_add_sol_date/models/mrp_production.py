@@ -20,6 +20,8 @@ class rtw_mrp_production_add_sol_date(models.Model):
         sale_order = self.env["sale.order"].search([("name", "=", self.sale_reference)],limit=1)
         if sale_order:
             self.depo_date_2 = sale_order.warehouse_arrive_date_2
+        else:
+            self.depo_date_2 = ""
     
     def _get_so_from_mrp(self , mrp_production , count = 0):
           if count >= 10:
