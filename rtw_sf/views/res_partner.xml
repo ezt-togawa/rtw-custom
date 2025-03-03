@@ -54,14 +54,14 @@
                         </group>
                     </span>
 
-
                 </xpath>
                 <xpath expr="//field[@name='vat']" position="after">
                     <field name="dummy" string="dummy"/>
                     <field name="situation" string="situation"/>
-                    <field name="transactions" string="transactions"/>
-                    <field name="payment_terms_1" string="payment_terms_1"/>
-                    <field name="payment_terms_2" string="payment_terms_2"/>
+                    <field name="transactions" string="支払方法"/>
+                    <field name="payment_terms_1" string="支払サイト"/>
+                    <field name="payment_terms_2" string="経理補足１"/>
+                    <field name="accounting_upplement_2" string="経理補足２"/>
                     <field name="multiplier_black" string="multiplier_black"/>
                     <field name="multiplier_green" string="multiplier_green"/>
                     <field name="fare_payment_terms" string="fare_payment_terms"/>
@@ -200,7 +200,7 @@
                             </group>
                             <group>
                                 <field name="transaction_category" string="transaction_category"/>
-                                <field name="transactions" string="transactions"/>
+                                <field name="transactions" string="支払方法"/>
                                 <field name="payment_terms_1" string="payment_terms_1"/>
                                 <field name="payment_terms_2" string="payment_terms_2"/>
                                 <field name="fare_payment_terms" string="fare_payment_terms"/>
@@ -257,6 +257,26 @@
                 </xpath>
             </field>
         </record>
+        <record id="view_partner_form_sf_inherit" model="ir.ui.view">
+            <field name="name">partner sf</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_payment_term_id']" position="attributes">
+                 <attribute name="attrs">{'invisible': True}</attribute>
+            </xpath>
+            </field>
+        </record>
+        <record id="view_partner_property_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.property.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='property_payment_method_id']" position="attributes">
+            <attribute name="string">支払方法（購買）</attribute>
+        </xpath>
+        </field>
+    </record>
         <record id="view_partner_list_sf" model="ir.ui.view">
             <field name="name">partner sf list</field>
             <field name="model">res.partner</field>

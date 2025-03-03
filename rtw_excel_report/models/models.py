@@ -460,13 +460,13 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_transactions_term(self):
         for record in self:
             term = ''
-            if record.partner_id.transactions:
-                for transaction in record.partner_id.transactions:
-                    term += str(transaction.name) + " "
-            if record.partner_id.payment_terms_1:
-                term += record.partner_id.payment_terms_1
+            if record.transactions:
+                for transaction in record.transactions:
+                    term += str(transaction.name) 
+            if record.transaction_condition_1:
+                term += " / " + record.transaction_condition_1
             record.sale_order_transactions_term = term
-            
+    
         
     prescription_note = fields.Char(string="prescription note", compute="_compute_prescription_excel")
     prescription_note_detail = fields.Char(string="prescription note detail", compute="_compute_prescription_excel")
