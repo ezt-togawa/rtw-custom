@@ -55,7 +55,6 @@ class rtw_purchase(models.Model):
         for purchase in self:
             purchase.sale_order_ids = False
             move_dest_ids = purchase.order_line.move_dest_ids.group_id.mrp_production_ids | purchase.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
-            move_ids = purchase.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
             if move_dest_ids:
                 order = []
                 name = []
@@ -74,11 +73,11 @@ class rtw_purchase(models.Model):
                     purchase.filter_so_ids = ','.join(order)
                     purchase.sale_order_names = ','.join(name)
             else:
-                purchase.sale_order_ids = ''
-                purchase.filter_so_ids = ''
-                purchase.sale_order_names = ''
+                if purchase.purchase_order_line:
+                    purchase.sale_order_ids = purchase.purchase_order_line[0].sale_order_ids
+                    purchase.filter_so_ids = purchase.purchase_order_line[0].sale_order_ids
+                    purchase.sale_order_names = purchase.purchase_order_line[0].sale_order_names
                 # sale_order = self.env['sale.order'].search([('name', '=', move_dest_ids)])
-                # print(sale_order)
             # move_dest_ids.write({
             #     'name': self.invoice_id.name,
             #     'warranty_request_ids': [(4, self.id, {
