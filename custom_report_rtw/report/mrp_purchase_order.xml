@@ -279,13 +279,13 @@
                                 t-field="line.mrp_product_type" />
                               <br />
                             </t>
-                            <t t-foreach="line.order_line" t-as="l">
-                              <t t-foreach="l.config_session_id.custom_value_ids"
-                                t-as="string_line"> ● <span
-                                  t-esc="string_line.display_name" />
-                                  <br />
-                              </t>
-                            </t>
+                          <t t-set="sol" t-value="line.order_line.filtered(lambda l: l.product_id.id == line.product_id.id) and line.order_line.filtered(lambda l: l.product_id.id == line.product_id.id)[0]" />
+                           <t t-if="sol and sol.config_session_id.custom_value_ids">
+                               <t t-foreach="sol.config_session_id.custom_value_ids" t-as="cfg">
+                                   ● <span t-esc="cfg.display_name"/>
+                                   <br/>
+                               </t>
+                           </t>
                           </div>
                         </td>
                         <td style="padding:12px 0px;">
