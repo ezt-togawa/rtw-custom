@@ -9,7 +9,7 @@ class rtw_stock_move(models.Model):
     date_planned = fields.Datetime(
         related='sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
-        'sale.order', compute="_get_sale_id", group_operator="sum",store=True)
+        'sale.order', compute="_get_sale_id", store=True)
     customer_id = fields.Many2one(related='sale_id.partner_id', string='顧客')
     title = fields.Char(related='sale_id.title', string='案件名')
     spec = fields.Many2many(
