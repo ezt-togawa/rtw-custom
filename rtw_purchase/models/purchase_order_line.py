@@ -102,5 +102,6 @@ class rtw_purchase(models.Model):
                 purchase.sale_order_ids = ','.join(order)
                 purchase.sale_order_names = ','.join(name)
             else:
-                purchase.sale_order_ids = purchase.sale_order_id.name
-                purchase.sale_order_names = purchase.sale_order_id.title
+                if purchase.sale_order_id:
+                    purchase.sale_order_ids = purchase.sale_order_id.name
+                    purchase.sale_order_names = purchase.sale_order_id.title
