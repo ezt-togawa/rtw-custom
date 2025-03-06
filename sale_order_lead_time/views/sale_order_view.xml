@@ -17,6 +17,9 @@
                         />
                     </div>
                 </xpath>
+                <xpath expr="//field[@name='delivery_confirmation']" position="after">
+                    <field name="itoshima_shiratani_shipping_notes" />
+                </xpath>
             </field>
         </record>
     </data>
