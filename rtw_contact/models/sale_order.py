@@ -12,40 +12,48 @@ class rtw_sale_order(models.Model):
     
     def _compute_transactions(self):
         for so in self:           
-            if so.partner_id:
-                partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
+            if so.partner_invoice_id:
+                partner= self.env['res.partner'].search([('id','=',so.partner_invoice_id.id)])
                 for p in partner:
                     if p.transactions:
                         so.transactions = p.transactions
                     else:
                         so.transactions = None
+            else:
+                so.transactions = None
 
     def _compute_transaction_condition_1(self):
         for so in self:           
-            if so.partner_id:
-                partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
+            if so.partner_invoice_id:
+                partner= self.env['res.partner'].search([('id','=',so.partner_invoice_id.id)])
                 for p in partner:
                     if p.payment_terms_1:
                         so.transaction_condition_1 = p.payment_terms_1
                     else:
                         so.transaction_condition_1 = None
+            else:
+                so.transaction_condition_1 = None
 
     def _compute_transaction_condition_2(self):
         for so in self:           
-            if so.partner_id:
-                partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
+            if so.partner_invoice_id:
+                partner= self.env['res.partner'].search([('id','=',so.partner_invoice_id.id)])
                 for p in partner:
                     if p.payment_terms_2:
                         so.transaction_condition_2 = p.payment_terms_2
                     else:
                         so.transaction_condition_2 = None
-
+            else:
+                so.transaction_condition_2 = None
+    @api.depends('partner_invoice_id')
     def _compute_payment_terms(self):
         for so in self:           
-            if so.partner_id:
-                partner= self.env['res.partner'].search([('id','=',so.partner_id.id)])
+            if so.partner_invoice_id:
+                partner= self.env['res.partner'].search([('id','=',so.partner_invoice_id.id)])
                 for p in partner:
-                    if p.accounting_upplement_2:
-                        so.payment_terms = p.accounting_upplement_2
+                    if p.accounting_supplement_2:
+                        so.payment_terms = p.accounting_supplement_2
                     else:
                         so.payment_terms = None
+            else:
+                so.payment_terms = None

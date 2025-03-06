@@ -121,8 +121,8 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(11, 1, so.acc_move_amount_tax if so.acc_move_amount_tax else '', format_text_12_right) 
             sheet.write(12, 1, so.acc_move_amount_total if so.acc_move_amount_total else '', format_money_bgRed_right) 
 
-            sheet.write(2, 5, _("納品希望⽇"), format_text_right) 
-            sheet.write(3, 5, _("製作⽇数"), format_text_right) 
+            sheet.write(2, 5, _("お支払期限"), format_text_right) 
+            sheet.write(3, 5, _("お支払内容"), format_text_right) 
             sheet.write(4, 5, _("お振込先"), format_text_right) 
             sheet.write(4, 6, so.sale_order.sale_order_bank_name if so.sale_order.sale_order_bank_name else '', format_text) 
             sheet.write(5, 6, so.sale_order.sale_order_bank_branch if so.sale_order.sale_order_bank_branch else '', format_text) 
@@ -133,7 +133,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(9, 5, _("備考"), format_text_right) 
             
             sheet.write(2, 6, '', format_text) 
-            sheet.write(3, 6, (so.sale_order.payment_term_id.name or '') if so.sale_order.payment_term_id else '', format_text) 
+            sheet.write(3, 6, (so.sale_order.payment_terms or '') if so.sale_order.payment_terms else '', format_text) 
 
             sheet.write(7, 6, so.sale_order.sale_order_preferred_delivery_date if so.sale_order.sale_order_preferred_delivery_date else '', format_text) 
             sheet.write(8, 6, so.sale_order.forwarding_address if so.sale_order.forwarding_address else '', format_text) 
