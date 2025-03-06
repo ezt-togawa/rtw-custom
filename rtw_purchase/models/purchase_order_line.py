@@ -105,3 +105,7 @@ class rtw_purchase(models.Model):
                 if purchase.sale_order_id:
                     purchase.sale_order_ids = purchase.sale_order_id.name
                     purchase.sale_order_names = purchase.sale_order_id.title
+                else:
+                    purchase.sale_order_ids = ''
+                    purchase.sale_order_names = ''
+

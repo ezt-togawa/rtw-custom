@@ -73,10 +73,15 @@ class rtw_purchase(models.Model):
                     purchase.filter_so_ids = ','.join(order)
                     purchase.sale_order_names = ','.join(name)
             else:
-                if purchase.purchase_order_line:
+                if purchase.purchase_order_line and purchase.purchase_order_line[0].sale_order_ids:
                     purchase.sale_order_ids = purchase.purchase_order_line[0].sale_order_ids
                     purchase.filter_so_ids = purchase.purchase_order_line[0].sale_order_ids
                     purchase.sale_order_names = purchase.purchase_order_line[0].sale_order_names
+                else:
+                    purchase.sale_order_ids = ''
+                    purchase.filter_so_ids = ''
+                    purchase.sale_order_names = ''
+
                 # sale_order = self.env['sale.order'].search([('name', '=', move_dest_ids)])
             # move_dest_ids.write({
             #     'name': self.invoice_id.name,
