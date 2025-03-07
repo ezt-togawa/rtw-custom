@@ -14,7 +14,10 @@ class rtw_mrp_production_add_sol_date(models.Model):
     estimated_shipping_date = fields.Date(string='発送予定日')
     itoshima_shipping_date = fields.Date(string="糸島出荷日", compute='_compute_itoshima_shipping_date', inverse="_inverse_itoshima_shipping_date")
     itoshima_shipping_date_edit = fields.Date()
+    arrival_date_itoshima_stock_move = fields.Date()
     mrp_mo_date = fields.Char(compute="_compute_mrp_mo_date")
+    is_active = fields.Boolean(string='Active',default=False)
+
 
     def _compute_depo_date_2(self):
         sale_order = self.env["sale.order"].search([("name", "=", self.sale_reference)],limit=1)
@@ -68,8 +71,15 @@ class rtw_mrp_production_add_sol_date(models.Model):
                 # record.shiratani_date = ''
                 record.depo_date = ''
                 record.preferred_delivery_date = ''
+
     def _compute_itoshima_shipping_date(self):
         for mo in self:
+            if mo.arrival_date_itoshima_stock_move != mo.itoshima_shipping_date_edit and mo.itoshima_shipping_date_edit != False and mo.is_active == True:
+                mo.itoshima_shipping_date = mo.itoshima_shipping_date_edit
+                break
+            if mo.arrival_date_itoshima_stock_move:
+                mo.itoshima_shipping_date = mo.arrival_date_itoshima_stock_move
+                break
             scheduled_date = ''
             if mo.itoshima_shipping_date_edit:
                 scheduled_date = mo.itoshima_shipping_date_edit 
@@ -98,7 +108,8 @@ class rtw_mrp_production_add_sol_date(models.Model):
             
     def _inverse_itoshima_shipping_date(self):
         for mo in self:
-            mo.itoshima_shipping_date_edit = mo.itoshima_shipping_date          
+            mo.itoshima_shipping_date_edit = mo.itoshima_shipping_date 
+            mo.is_active = True
     def _compute_mrp_mo_date(self):
         for record in self:
             if record.itoshima_shipping_date:
