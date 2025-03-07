@@ -11,6 +11,7 @@
                     <field name="estimated_shipping_date" />
                     <field name="depo_date" />
                     <field name="depo_date_2" readonly="1" />
+                    <field name="arrival_date_itoshima_stock_move"  invisible="1"  />
                 </xpath>
             </field>
         </record>
