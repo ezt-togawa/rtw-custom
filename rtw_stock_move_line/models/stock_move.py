@@ -9,7 +9,7 @@ class rtw_stock_move(models.Model):
     date_planned = fields.Datetime(
         related='sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
-        'sale.order', compute="_get_sale_id", group_operator="sum",store=True)
+        'sale.order', compute="_get_sale_id", store=True)
     customer_id = fields.Many2one(related='sale_id.partner_id', string='顧客')
     title = fields.Char(related='sale_id.title', string='案件名')
     spec = fields.Many2many(
@@ -38,7 +38,24 @@ class rtw_stock_move(models.Model):
         compute="_get_primary_shipment_stock_move",
     )
     operational_Notes = fields.Char(string='運用メモ')
+    itoshima_shiratani_shipping_notes=fields.Text(string="糸島/白谷配送注記",compute="_compute_itoshima_shiratani_shipping_notes")
+    itoshima_shiratani_shipping_notes_first_line = fields.Char(
+        string="糸島/白谷配送注記", compute="_compute_first_line"
+    )
 
+    def _compute_first_line(self):
+        for move in self:
+            if move.itoshima_shiratani_shipping_notes:
+                move.itoshima_shiratani_shipping_notes_first_line =  move.sale_id.itoshima_shiratani_shipping_notes.split("\n")[0]
+            else:
+                move.itoshima_shiratani_shipping_notes_first_line = ""
+    
+    def _compute_itoshima_shiratani_shipping_notes(self):
+        for move in self:
+            if move.sale_id.itoshima_shiratani_shipping_notes:
+                move.itoshima_shiratani_shipping_notes = move.sale_id.itoshima_shiratani_shipping_notes
+            else:
+                move.itoshima_shiratani_shipping_notes = ''
 
     @api.model_create_multi
     def create(self, vals_list):

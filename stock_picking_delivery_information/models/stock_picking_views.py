@@ -63,9 +63,18 @@ class StockPicking(models.Model):
     shiratani_entry_date = fields.Date("Shiratani entry date", compute='compute_shiretani_entry_date')
     warehouse_arrive_date = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date")
     warehouse_arrive_date_2 = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date_2")
+    itoshima_shiratani_shipping_notes = fields.Text(string="糸島/白谷配送注記",compute="_compute_itoshima_shiratani_shipping_notes")
     estimated_shipping_date = fields.Date('Estimated shipping date', related="sale_order_id.estimated_shipping_date")
     sales_order_name = fields.Char(string='Sales Order Name', compute="_compute_sale_order_name", store=True)
 
+
+    def _compute_itoshima_shiratani_shipping_notes(self):
+        for picking in self:
+            sale_order = self.env['sale.order'].search([('name', '=', picking.sales_order_name)], limit=1)
+            if sale_order:
+                picking.itoshima_shiratani_shipping_notes = sale_order.itoshima_shiratani_shipping_notes
+            else:
+                picking.itoshima_shiratani_shipping_notes = ''
     def _compute_sale_order(self):
         for picking in self:
             if picking.sale_id:

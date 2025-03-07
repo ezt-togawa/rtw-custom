@@ -86,7 +86,6 @@ class rtw_purchase(models.Model):
         for purchase in self:
             purchase.sale_order_ids = False
             move_dest_ids = purchase.move_dest_ids.group_id.mrp_production_ids | purchase.move_ids.move_dest_ids.group_id.mrp_production_ids
-            move_ids = purchase.move_ids.move_dest_ids.group_id.mrp_production_ids
             if move_dest_ids:
                 order = []
                 name = []
@@ -103,5 +102,10 @@ class rtw_purchase(models.Model):
                 purchase.sale_order_ids = ','.join(order)
                 purchase.sale_order_names = ','.join(name)
             else:
-                purchase.sale_order_ids = False
-                purchase.sale_order_names = False
+                if purchase.sale_order_id:
+                    purchase.sale_order_ids = purchase.sale_order_id.name
+                    purchase.sale_order_names = purchase.sale_order_id.title
+                else:
+                    purchase.sale_order_ids = ''
+                    purchase.sale_order_names = ''
+

@@ -6,6 +6,7 @@
             <field name="inherit_id" ref="sale.view_order_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='invoice_status']" position="after">
+                    <field name="payment_method" optional="show" string="支払方法"/>
                     <field name="payment_term_id" optional="hide" />
                     <field name="payment_status" optional="hide" />
                     <field name="has_not_paid_in_payment_status" invisible="1" />
