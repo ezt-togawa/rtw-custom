@@ -9,7 +9,7 @@ class rtw_stock_move(models.Model):
     date_planned = fields.Datetime(
         related='sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
-        'sale.order', compute="_get_sale_id", store=True)
+        'sale.order', compute="_get_sale_id",store=True)
     customer_id = fields.Many2one(related='sale_id.partner_id', string='顧客')
     title = fields.Char(related='sale_id.title', string='案件名')
     spec = fields.Many2many(
@@ -42,6 +42,60 @@ class rtw_stock_move(models.Model):
     itoshima_shiratani_shipping_notes_first_line = fields.Char(
         string="糸島/白谷配送注記", compute="_compute_first_line"
     )
+    arrival_date_itoshima = fields.Date(string="糸島到着日" , compute= "_compute_arrival_date_itoshima",inverse="_inverse_arrival_date_itoshima") 
+    arrival_date_itoshima_list = fields.Date(string="糸島出荷日" , compute= "_compute_arrival_date_itoshima_list")
+    arrival_date_itoshima_inherit_2 = fields.Date()
+    arrival_date_itoshima_inherit = fields.Date()
+
+    def _compute_arrival_date_itoshima(self):
+        for move in self:
+            mrp = self.env["mrp.production"].search([('sale_reference', '=', move.sale_id.name),('product_id', '=', move.product_id.id)], limit=1)
+            mrp_is_active = self.env["mrp.production"].search([('sale_reference', '=', move.sale_id.name),('product_id', '=', move.product_id.id)], limit=1).is_active
+            if mrp:
+                if move.arrival_date_itoshima_inherit_2:
+                    if mrp.itoshima_shipping_date != move.arrival_date_itoshima_inherit_2:
+                        move.arrival_date_itoshima =  mrp.itoshima_shipping_date
+                        move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
+                    else:
+                         move.arrival_date_itoshima = move.arrival_date_itoshima_inherit_2
+
+                elif move.arrival_date_itoshima_inherit and mrp_is_active == False: 
+                    move.arrival_date_itoshima = move.arrival_date_itoshima_inherit
+                else:
+                    move.arrival_date_itoshima =  mrp.itoshima_shipping_date
+                    move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
+            else:
+                move.arrival_date_itoshima_list = False
+        
+           
+    def _inverse_arrival_date_itoshima(self):
+        mrp = ""
+        for rec in self:
+            mrp_origin = self.env["mrp.production"].search([('sale_reference', '=', rec.sale_id.name)], limit=1).origin
+            if rec.product_id:
+                if '/MO/' in mrp_origin:
+                    mrp = self.env["mrp.production"].search([('sale_reference', '=', rec.sale_id.name),('product_id', '=', rec.product_id.id)], limit=1)
+                else:
+                    mrp = self.env["mrp.production"].search([('origin', '=', rec.sale_id.name),('product_id', '=', rec.product_id.id)], limit=1)
+                if mrp:
+                    mrp.write({'arrival_date_itoshima_stock_move': rec.arrival_date_itoshima})
+                    mrp.write({'is_active': False})
+                    stock_move = self.env['stock.move'].search([
+                            ('id', '=', rec.id),
+                        ])
+                    if stock_move:
+                        stock_move.arrival_date_itoshima = rec.arrival_date_itoshima 
+                        stock_move.arrival_date_itoshima_inherit_2 = stock_move.arrival_date_itoshima
+                    else:
+                        return
+                else:
+                    return
+        else:
+            return
+
+    def _compute_arrival_date_itoshima_list(self):
+        for move in self:
+            move.arrival_date_itoshima_list = move.arrival_date_itoshima
 
     def _compute_first_line(self):
         for move in self:
