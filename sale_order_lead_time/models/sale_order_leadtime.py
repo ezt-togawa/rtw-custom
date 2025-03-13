@@ -6,6 +6,7 @@ class sale_order_leadtime(models.Model):
     _inherit = "sale.order"
 
     leadtime = fields.Date(string="製造リードタイム")
+    itoshima_shiratani_shipping_notes = fields.Text(string="糸島/白谷配送注記", default=None)
 
     def update_leadtime(self):
         if self.leadtime:

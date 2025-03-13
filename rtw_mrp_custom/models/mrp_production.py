@@ -14,6 +14,7 @@ class MrpProductionCus(models.Model):
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
+    instruction_status = fields.Boolean(string='取説',compute = "_instruction_status_compute")
     address_ship = fields.Selection([ ('倉庫', '倉庫'),
     ('直送', '直送'),
     ('デポ１', 'デポ１'),
@@ -26,6 +27,29 @@ class MrpProductionCus(models.Model):
     calendar_display_name = fields.Text(compute="_compute_display_name_calendar", store=True)
     shipping = fields.Char(compute="_compute_shipping", string="送付先")
     
+
+    def _instruction_status_compute(self):
+        for line in self:
+            if line.sale_reference:
+                sale_order = self.env['sale.order'].search([('name', '=', line.sale_reference)], limit=1)
+                if sale_order:
+                    sale_order_line = self.env['sale.order.line'].search([
+                    ("order_id", "=", sale_order.id),
+                    ("product_id", "=", line.product_id.id)
+                ], limit=1)
+                    if sale_order_line:
+                        for order_line in sale_order_line:
+                            if order_line.instruction_status:
+                                line.instruction_status = order_line.instruction_status
+                            else:
+                                line.instruction_status = False
+                    else:
+                        line.instruction_status = False
+                else:
+                    line.instruction_status = False
+            else:
+                line.instruction_status = False
+
     @api.depends('address_ship')
     def _compute_waypoint_option(self):
         sale_order = self.env['sale.order'].search([('name', '=', self.sale_reference)], limit=1)

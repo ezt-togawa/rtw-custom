@@ -48,6 +48,7 @@
                 <field name="estimated_shipping_date"/>
                 <field name="warehouse_arrive_date" string="デポ１到着日"/>
                 <field name="warehouse_arrive_date_2" string="デポ２到着日"  readonly="1" />
+                <field name="itoshima_shiratani_shipping_notes"/>
             </xpath>
         </field>
     </record>

@@ -57,7 +57,7 @@
                                                 t-esc="docs.acc_move_invoice_date_due" />
                                         </div>
                                         <div> お支払内容 : <span
-                                                t-field="docs.sale_order.payment_term_id.name" />
+                                                t-field="docs.sale_order.payment_terms" />
                                         </div>
                                         <div class="d-flex">
                                             <div> お振込先: </div>
