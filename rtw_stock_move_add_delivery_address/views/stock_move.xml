@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_move_add_delivery_address_wizard_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.delivery.wizard.form</field>
+        <field name="model">stock.move.delivery.wizard</field>
+        <field name="arch" type="xml">
+            <form string="配送先追加">
+                <group>
+                    <field name="location_id" string="ロケーション"
+                        context="{'search_default_in_location': 1}" />
+                </group>
+                <footer>
+                    <button string="Apply" class="btn-primary"
+                        name="add_delivery_address_stock_move" type="object" />
+                    <button string="Close" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_add_delivery_address_stock_move" model="ir.actions.act_window">
+        <field name="name">配送先追加</field>
+        <field name="res_model">stock.move.delivery.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="stock_move_add_delivery_address_wizard_view_form" />
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock.model_stock_move" />
+        <field name="binding_view_types">list</field>
+        <field name="binding_type">action</field> 
+        
+    </record>
+</odoo>
