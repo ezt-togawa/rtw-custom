@@ -10,7 +10,7 @@ class stock_picking_delivery_wizard(models.TransientModel):
     'stock.location', "Destination Location",
     default=lambda self: self.env['stock.picking.type'].browse(self._context.get('default_picking_type_id')).default_location_dest_id,
 )
-    
+
     def add_delivery_address(self, picking=False):
         current_stock_picking = False
         if picking:
@@ -66,7 +66,6 @@ class stock_picking_delivery_wizard(models.TransientModel):
         #     'reference':new_stock_picking.name,
         #     'state':'assigned'
         # })
-        
         current_stock_picking.write({'location_dest_id': stock_location.id})
         
         if has_next_picking:

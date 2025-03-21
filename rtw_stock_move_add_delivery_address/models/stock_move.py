@@ -2,7 +2,9 @@
 
 from odoo import models, fields, api
 from odoo.exceptions import UserError
+
 from odoo.addons.rtw_stock_picking_add_delivery_address.models.stock_picking import stock_picking_delivery_wizard
+
 
 class stock_move_delivery_wizard(models.TransientModel):
     _name = "stock.move.delivery.wizard"
@@ -14,11 +16,12 @@ class stock_move_delivery_wizard(models.TransientModel):
     def add_delivery_address_stock_move(self):
         if not self.location_id:
             raise UserError('倉庫を選択してください。')
+        current_stock_picking = False
         stock_move_ids = self.env.context.get('active_ids', [])
         moves = self.env['stock.move'].search([('id', 'in', stock_move_ids)])
         picking_ids = moves.mapped('picking_id')
         if not picking_ids:
-            raise UserError("選択した配送に紐づいてる運送が存在しないため配送追加を実施することができません。2")
+            raise UserError("選択した配送に紐づいてる運送が存在しないため配送追加を実施することができません。")
         error_picking_names = []
         if picking_ids:
             picking_idss = [picking_id.id for picking_id in picking_ids]
@@ -44,5 +47,5 @@ class stock_move_delivery_wizard(models.TransientModel):
         if picking_ids:
             for picking in picking_ids:
                 stock_picking_delivery_wizard.add_delivery_address(self, picking)
-        
+   
         
