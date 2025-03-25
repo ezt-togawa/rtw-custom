@@ -10,26 +10,32 @@ class stock_picking_delivery_wizard(models.TransientModel):
     'stock.location', "Destination Location",
     default=lambda self: self.env['stock.picking.type'].browse(self._context.get('default_picking_type_id')).default_location_dest_id,
 )
-    
-    def add_delivery_address(self):
-        if not self.location_id:
-            raise UserError('倉庫を選択してください。')
-        current_stock_picking = self.env['stock.picking'].search([('id','=',self.env.context['active_id'])],limit=1)
-        if not current_stock_picking.picking_type_id.sequence_code == 'OUT':
-            raise UserError('配送オーダーしか配送先を追加できません。')
-        if current_stock_picking.state in ['done' ,'cancel']:
-            raise UserError('完了かキャンセル済みの配送オーダーは配送先追加することができません。')
+
+    def add_delivery_address(self, picking=False):
+        current_stock_picking = False
+        if picking:
+            current_stock_picking = picking
+        else:
+            if not self.location_id:
+                raise UserError('倉庫を選択してください。')
+            current_stock_picking = self.env['stock.picking'].search([('id','=',self.env.context['active_id'])],limit=1)
+            if not current_stock_picking.picking_type_id.sequence_code == 'OUT':
+                raise UserError('配送オーダーしか配送先を追加できません。')
+            if current_stock_picking.state in ['done' ,'cancel']:
+                raise UserError('完了かキャンセル済みの配送オーダーは配送先追加することができません。')
         has_next_picking = self.env['stock.picking'].search([
             ('location_id','=',current_stock_picking.location_dest_id.id),
             ('group_id','=',current_stock_picking.group_id.id),
             ('state', 'not in',['done','cancel'])],limit=1)
-        warehouse_id = self.env['stock.warehouse'].search([('lot_stock_id','=',self.location_id.id)])
+        stock_location = self.env['stock.location'].search([('id','=',self.location_id.id)])
+        warehouse_id = self.env['stock.warehouse'].search([('view_location_id','=',stock_location.location_id.id)])
         if not warehouse_id:
             raise UserError('選択したロケーションは倉庫に紐づいていないため指定できません')
         picking_type_new_wh = self.env['stock.picking.type'].search([('sequence_code','=',current_stock_picking.picking_type_id.sequence_code),('warehouse_id','=',warehouse_id.id)])
+        
         new_stock_picking = current_stock_picking.copy(
             {
-                'location_id': self.location_id.id,
+                'location_id': stock_location.id,
                 'location_dest_id':current_stock_picking.location_dest_id.id if not has_next_picking else has_next_picking.location_id.id,
                 'picking_type_id':picking_type_new_wh.id,
                 'state':'waiting',
@@ -60,8 +66,7 @@ class stock_picking_delivery_wizard(models.TransientModel):
         #     'reference':new_stock_picking.name,
         #     'state':'assigned'
         # })
-        
-        current_stock_picking.write({'location_dest_id': self.location_id.id})
+        current_stock_picking.write({'location_dest_id': stock_location.id})
         
         if has_next_picking:
             has_next_picking.write({'location_id': new_stock_picking.location_dest_id.id})
