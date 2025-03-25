@@ -83,6 +83,10 @@ class rtw_mrp_production_add_sol_date(models.Model):
             scheduled_date = ''
             if mo.itoshima_shipping_date_edit:
                 scheduled_date = mo.itoshima_shipping_date_edit 
+            elif mo.mrp_reference:
+                mrp_parent = self.env["mrp.production"].search([('name', '=', mo.mrp_reference)])
+                if mrp_parent:
+                    scheduled_date = mrp_parent.itoshima_shipping_date
             elif mo.sale_reference and not mo.is_child_mo:
                 so = self.env["sale.order"].search([('name', '=', mo.sale_reference)], limit=1)
                 warehouse = mo.picking_type_id.warehouse_id
@@ -103,7 +107,6 @@ class rtw_mrp_production_add_sol_date(models.Model):
                 if child_list:
                     for child in child_list:
                         child.itoshima_shipping_date = scheduled_date
-                                
             mo.itoshima_shipping_date = scheduled_date  
             
     def _inverse_itoshima_shipping_date(self):
