@@ -10,9 +10,9 @@ class stock_move_delivery_wizard(models.TransientModel):
     _name = "stock.move.delivery.wizard"
     _description = 'Stock Move Delivery Wizard'
     location_id = fields.Many2one(
-        'stock.location', "Destination Location",
-        default=lambda self: self.env['stock.picking.type'].browse(self._context.get('default_picking_type_id')).default_location_dest_id,
-    )
+    'stock.location', "Destination Location",
+    default=lambda self: self.env['stock.location'].search([('complete_name', '=', '製品保管/白谷')], limit=1).id or False,
+)
     def add_delivery_address_stock_move(self):
         if not self.location_id:
             raise UserError('倉庫を選択してください。')

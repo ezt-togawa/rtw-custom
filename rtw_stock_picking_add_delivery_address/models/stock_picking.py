@@ -8,7 +8,7 @@ class stock_picking_delivery_wizard(models.TransientModel):
 
     location_id = fields.Many2one(
     'stock.location', "Destination Location",
-    default=lambda self: self.env['stock.picking.type'].browse(self._context.get('default_picking_type_id')).default_location_dest_id,
+    default=lambda self: self.env['stock.location'].search([('complete_name', '=', '製品保管/白谷')], limit=1).id or False,
 )
 
     def add_delivery_address(self, picking=False):
