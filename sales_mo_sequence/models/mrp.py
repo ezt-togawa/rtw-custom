@@ -14,6 +14,9 @@ class MrpProduction(models.Model):
             sale_ids = self.env['sale.order'].search([('name', '=', value.origin)])
             if sale_ids:
                 value.sale_reference = sale_ids.name
+            elif value.mrp_reference:
+                mrp = self.env['mrp.production'].search([('name', '=', value.mrp_reference)])
+                value.sale_reference = mrp.sale_reference
             else:
                 mrp_ids = self.env['mrp.production'].search([('name', '=', value.origin)])
                 sale_ids = self.env['sale.order'].search([('name', '=', mrp_ids.origin)])
