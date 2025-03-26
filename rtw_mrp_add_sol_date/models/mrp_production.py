@@ -60,12 +60,16 @@ class rtw_mrp_production_add_sol_date(models.Model):
             sale_id = self._get_so_from_mrp(record)
             if sale_id:
                 sol = self.env['sale.order.line'].search([('order_id', '=', sale_id.id),('product_id', '=', record.product_id.id)],limit=1)
+                if not sol:
+                    # ChildMoの場合を想定、親製品オーダーより販売明細を特定
+                    sol = self.env['sale.order.line'].search(
+                        [('order_id', '=', sale_id.id), ('product_id', '=', record.mrp_production_parent_id.product_id.id)],
+                        limit=1)
                 if sol:
-                    # record.shiratani_date = sol.shiratani_date
                     record.depo_date = sol.depo_date
                 else:
-                    # record.shiratani_date = ''
                     record.depo_date = ''
+
                 record.preferred_delivery_date = sale_id.preferred_delivery_date
             else:
                 # record.shiratani_date = ''
@@ -91,7 +95,11 @@ class rtw_mrp_production_add_sol_date(models.Model):
                         if so.sipping_to == "direct":
                             scheduled_date = so.estimated_shipping_date or ''
                         else:
-                            scheduled_date = so.shiratani_entry_date or ''
+                            so_line = self.env['sale.order.line'].search(
+                                [('order_id', '=', so.id), ('product_id', '=', mo.product_id.id)],
+                                limit=1
+                            )
+                            scheduled_date = so_line.shiratani_date or ''
                 else:
                     pickings = self.env["stock.picking"].search([('sale_id', '=', so.id), ('state', '!=', 'cancel')])
                     for sp in pickings:
@@ -104,7 +112,7 @@ class rtw_mrp_production_add_sol_date(models.Model):
                     for child in child_list:
                         child.itoshima_shipping_date = scheduled_date
                                 
-            mo.itoshima_shipping_date = scheduled_date  
+            mo.itoshima_shipping_date = scheduled_date
             
     def _inverse_itoshima_shipping_date(self):
         for mo in self:

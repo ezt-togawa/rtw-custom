@@ -20,7 +20,7 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp','sales_mo_sequence'],
+    'depends': ['base', 'mrp','sales_mo_sequence', 'sale_order_rtw'],
 
     # always loaded
     'data': [
