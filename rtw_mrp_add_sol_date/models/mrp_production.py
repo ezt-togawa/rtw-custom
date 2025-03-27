@@ -84,11 +84,12 @@ class rtw_mrp_production_add_sol_date(models.Model):
             if mo.arrival_date_itoshima_stock_move:
                 mo.itoshima_shipping_date = mo.arrival_date_itoshima_stock_move
                 break
+
             scheduled_date = ''
+            so = self.env["sale.order"].search([('name', '=', mo.sale_reference)], limit=1)
             if mo.itoshima_shipping_date_edit:
                 scheduled_date = mo.itoshima_shipping_date_edit 
             elif mo.sale_reference and not mo.is_child_mo:
-                so = self.env["sale.order"].search([('name', '=', mo.sale_reference)], limit=1)
                 warehouse = mo.picking_type_id.warehouse_id
                 if warehouse and warehouse.name == "糸島工場":
                     if so:
@@ -101,19 +102,28 @@ class rtw_mrp_production_add_sol_date(models.Model):
                             )
                             scheduled_date = so_line.shiratani_date or ''
                 else:
-                    pickings = self.env["stock.picking"].search([('sale_id', '=', so.id), ('state', '!=', 'cancel')])
-                    for sp in pickings:
-                        if sp.scheduled_date:                            
-                            if not scheduled_date or scheduled_date > sp.scheduled_date:
-                                scheduled_date = sp.scheduled_date
+                    scheduled_date = so.estimated_shipping_date or ''
+                    # pickings = self.env["stock.picking"].search([('sale_id', '=', so.id), ('state', '!=', 'cancel')])
+                    # for sp in pickings:
+                    #     if sp.scheduled_date:
+                    #         if not scheduled_date or scheduled_date > sp.scheduled_date:
+                    #             scheduled_date = sp.scheduled_date
                                 
-                child_list = self.env["mrp.production"].search([('origin', '=', mo.name)]) 
-                if child_list:
-                    for child in child_list:
-                        child.itoshima_shipping_date = scheduled_date
-                                
+            child_list = self.env["mrp.production"].search([('origin', '=', mo.name)])
+            if child_list:
+                for child in child_list:
+                    child.itoshima_shipping_date = scheduled_date
+                    # 製造開始予定日の更新、開発進んでいたら更新しない
+                    if child.state == 'draft' or child.state == 'confirmed':
+                        child._cache["date_planned_reset_" + str(child.id)] = child.id
+                        so.calc_date_planned_start(child)
+
             mo.itoshima_shipping_date = scheduled_date
-            
+            # 製造開始予定日の更新、開発進んでいたら更新しない
+            if mo.state == 'draft' or mo.state == 'confirmed':
+                mo._cache["date_planned_reset_" + str(mo.id)] = mo.id
+                so.calc_date_planned_start(mo)
+
     def _inverse_itoshima_shipping_date(self):
         for mo in self:
             mo.itoshima_shipping_date_edit = mo.itoshima_shipping_date 
