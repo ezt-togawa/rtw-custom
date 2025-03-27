@@ -43,29 +43,14 @@ class rtw_stock_move(models.Model):
         string="糸島/白谷配送注記", compute="_compute_first_line"
     )
     arrival_date_itoshima = fields.Date(string="糸島出荷日" , compute= "_compute_arrival_date_itoshima",inverse="_inverse_arrival_date_itoshima") 
-    arrival_date_itoshima_list = fields.Date(string="糸島出荷日" , compute= "_compute_arrival_date_itoshima_list")
     arrival_date_itoshima_inherit_2 = fields.Date()
     arrival_date_itoshima_inherit = fields.Date()
 
     def _compute_arrival_date_itoshima(self):
         for move in self:
-            mrp = self.env["mrp.production"].search([('sale_reference', '=', move.sale_id.name),('product_id', '=', move.product_id.id)], limit=1)
-            mrp_is_active = self.env["mrp.production"].search([('sale_reference', '=', move.sale_id.name),('product_id', '=', move.product_id.id)], limit=1).is_active
-            if mrp:
-                if move.arrival_date_itoshima_inherit_2:
-                    if mrp.itoshima_shipping_date != move.arrival_date_itoshima_inherit_2:
-                        move.arrival_date_itoshima =  mrp.itoshima_shipping_date
-                        move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
-                    else:
-                         move.arrival_date_itoshima = move.arrival_date_itoshima_inherit_2
-                
-                elif move.arrival_date_itoshima_inherit and mrp_is_active == False: 
-                    move.arrival_date_itoshima = move.arrival_date_itoshima_inherit
-
-                else:
-                    move.arrival_date_itoshima =  mrp.itoshima_shipping_date
-                    move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
-            elif move.mrp_production_id:
+            if move.mrp_production_id:
+                mrp_is_active = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1).is_active
+                mrp = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1)
                 if move.arrival_date_itoshima_inherit_2:
                     if mrp.itoshima_shipping_date != move.arrival_date_itoshima_inherit_2:
                         move.arrival_date_itoshima =  mrp.itoshima_shipping_date
@@ -75,23 +60,18 @@ class rtw_stock_move(models.Model):
                 elif move.arrival_date_itoshima_inherit and mrp_is_active == False: 
                     move.arrival_date_itoshima = move.arrival_date_itoshima_inherit
                 else:
-                    mrp = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1)
                     if mrp:
                         move.arrival_date_itoshima =  mrp.itoshima_shipping_date
                         move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
             else: 
-                move.arrival_date_itoshima_list = False
+                move.arrival_date_itoshima = False
         
            
     def _inverse_arrival_date_itoshima(self):
         mrp = ""
         for rec in self:
-            mrp_origin = self.env["mrp.production"].search([('sale_reference', '=', rec.sale_id.name)], limit=1).origin
-            if rec.product_id:
-                if '/MO/' in mrp_origin:
-                    mrp = self.env["mrp.production"].search([('sale_reference', '=', rec.sale_id.name),('product_id', '=', rec.product_id.id)], limit=1)
-                else:
-                    mrp = self.env["mrp.production"].search([('origin', '=', rec.sale_id.name),('product_id', '=', rec.product_id.id)], limit=1)
+            if rec.mrp_production_id:
+                mrp = self.env["mrp.production"].search([('name', '=', rec.mrp_production_id)], limit=1)
                 if mrp:
                     mrp.write({'arrival_date_itoshima_stock_move': rec.arrival_date_itoshima})
                     mrp.write({'is_active': False})
@@ -108,9 +88,6 @@ class rtw_stock_move(models.Model):
         else:
             return
 
-    def _compute_arrival_date_itoshima_list(self):
-        for move in self:
-            move.arrival_date_itoshima_list = move.arrival_date_itoshima
 
     def _compute_first_line(self):
         for move in self:

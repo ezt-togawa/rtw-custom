@@ -42,7 +42,7 @@
             <field name="inherit_id" ref="rtw_stock_move_line.stock_move_list" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='shiratani_date']" position="before">
-                    <field name="arrival_date_itoshima_list" optional="show" />
+                    <field name="arrival_date_itoshima" optional="show" />
                    </xpath>
             </field>
         </record>
