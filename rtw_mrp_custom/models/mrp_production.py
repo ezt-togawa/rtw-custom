@@ -211,12 +211,24 @@ class MrpProductionCus(models.Model):
         cache_map = {key: value for key, value in self._cache.items()}
         mrp_id_dragging = cache_map.get('mrp_id_dragging')
         for record in self:
-            if record.id == mrp_id_dragging and record.color != 4:
+            mrp_date_planned_reset = cache_map.get("date_planned_reset_" + str(record.id))
+            if record.id == mrp_date_planned_reset:
+                # 製造開始予定日が自動再計算された場合は除外（編集扱いにしない）
+                record.color = 1
+                record.is_drag_drop_calendar = False
+
+            elif record.id == mrp_id_dragging and record.color != 4:
                 # just add color + tick mark for mrp_id_dragging and that mrp has a color other than blue
                 record.color = 4
                 record.is_drag_drop_calendar = True
 
             record.display_name = record.calendar_display_name
+
+            if mrp_date_planned_reset:
+                del record._cache['date_planned_reset_' + str(record.id)]
+
+        if mrp_id_dragging:
+            del self._cache['mrp_id_dragging']
 
     def write(self, vals):
         old_date_planned_start = {record.id: record.date_planned_start for record in self}
