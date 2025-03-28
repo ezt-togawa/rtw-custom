@@ -28,7 +28,7 @@
             </field>
         </record>
         <record id="stock_move_list_pallet" model="ir.ui.view">
-            <field name="name">move_list_pallet</field>
+            <field name="name">stock_move_list_pallet</field>
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="rtw_stock_move_line.stock_move_list" />
             <field name="arch" type="xml">
@@ -54,7 +54,7 @@
         </record>
 
         <record id="filter_pearl_tone" model="ir.ui.view">
-            <field name="name">stock_search_view_rtw</field>
+            <field name="name">filter_pearl_tone</field>
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="stock.view_move_search" />
             <field name="arch" type="xml">

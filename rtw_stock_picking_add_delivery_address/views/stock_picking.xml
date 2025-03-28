@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="追加配送先">
                 <group>
-                    <field name="warehouse_id" string="倉庫"/>
+                    <field name="location_id" string="ロケーション" context="{'search_default_in_location': 1}"/>
                 </group>
                 <footer>
                     <button string="Apply" class="btn-primary" name="add_delivery_address" type="object"/>
@@ -15,6 +15,7 @@
             </form>
         </field>
     </record>
+    
 
     <record id="action_add_delivery_address" model="ir.actions.act_window">
         <field name="name">配送先追加</field>
