@@ -49,7 +49,6 @@ class rtw_stock_move(models.Model):
     def _compute_arrival_date_itoshima(self):
         for move in self:
             if move.mrp_production_id:
-                mrp_is_active = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1).is_active
                 mrp = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1)
                 if move.arrival_date_itoshima_inherit_2:
                     if mrp.itoshima_shipping_date != move.arrival_date_itoshima_inherit_2:
@@ -57,7 +56,7 @@ class rtw_stock_move(models.Model):
                         move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
                     else:
                          move.arrival_date_itoshima = move.arrival_date_itoshima_inherit_2
-                elif move.arrival_date_itoshima_inherit and mrp_is_active == False: 
+                elif move.arrival_date_itoshima_inherit and mrp.is_active == False:  
                     move.arrival_date_itoshima = move.arrival_date_itoshima_inherit
                 else:
                     if mrp:
