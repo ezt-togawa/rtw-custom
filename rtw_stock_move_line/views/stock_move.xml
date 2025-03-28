@@ -36,8 +36,8 @@
                 </tree>
             </field>
         </record>
-        <record id="stock_move_list_pallet_inherit" model="ir.ui.view">
-            <field name="name">move_list_pallet</field>
+        <record id="stock_move_list_inherit" model="ir.ui.view">
+            <field name="name">stock_move_list_inherit</field>
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="rtw_stock_move_line.stock_move_list" />
             <field name="arch" type="xml">
