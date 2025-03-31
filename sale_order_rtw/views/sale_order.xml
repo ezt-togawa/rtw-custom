@@ -112,6 +112,7 @@
                 </xpath>
             </field>
         </record>
+
         <record id="order_tree" model="ir.ui.view">
             <field name="name">sale.order.tree</field>
             <field name="model">sale.order</field>
@@ -181,6 +182,23 @@
                         type="object"
                         icon="fa-paperclip"
                     />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_order_form_toggle_btn" model="ir.ui.view">
+            <field name="name">sale.order.form.toggle.btn</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath
+                    expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][@class='btn-primary']"
+                    position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+                <xpath
+                    expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][@context]"
+                    position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
                 </xpath>
             </field>
         </record>
