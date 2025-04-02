@@ -12,7 +12,7 @@ class ProductSpecRtw(models.Model):
     )
     product_no = fields.Char(
         name="product_no",
-        string="product no"
+        string="product no",
     )
     key_component = fields.Boolean(
         name="key_component",
@@ -81,6 +81,11 @@ class ProductSpecRtw(models.Model):
         if self.shipping_cost_unit_price > 0 and self.sai:
             cost = self.shipping_cost_unit_price * self.sai
         return round(cost)
+
+    def write(self, vals):
+        if 'product_no' in vals:
+            vals['default_code'] = vals['product_no']
+        return super(ProductSpecRtw, self).write(vals)
 
 class SaleOrderLine(models.Model): 
     _inherit = 'sale.order.line'
