@@ -22,7 +22,21 @@ class rtw_purchase(models.Model):
     allowed_custom_config = fields.Many2many( # THIS FIELD STORES THE APPROPRIATE CONFIG
         'product.config.session.custom.value', compute='_compute_allowed_custom_config'
     )
+    filter_so_ids = fields.Char("filter so ids")
+    destination_purchase_order_line = fields.Text(string='送り先',compute='_compute_destination_purchase_order_line')
     
+    def _compute_destination_purchase_order_line(self):
+        for line in self:
+            if line.order_id:
+                purchase_order = self.env["purchase.order"].search([("id", "=", line.order_id.id)])
+                if purchase_order:
+                    line.destination_purchase_order_line = purchase_order.picking_type_id.warehouse_id.name +": "+purchase_order.picking_type_id.name
+                else:
+                    line.destination_purchase_order_line = False
+            else:
+                line.destination_purchase_order_line = False
+
+
     @api.onchange('name_selection')
     def _onchange_name_selection(self):
         for record in self:
@@ -101,11 +115,14 @@ class rtw_purchase(models.Model):
                             order_ids.append(sale_order.id)
                 purchase.sale_order_ids = ','.join(order)
                 purchase.sale_order_names = ','.join(name)
+                purchase.filter_so_ids = ','.join(order)
             else:
                 if purchase.sale_order_id:
                     purchase.sale_order_ids = purchase.sale_order_id.name
                     purchase.sale_order_names = purchase.sale_order_id.title
+                    purchase.filter_so_ids = purchase.sale_order_ids
                 else:
                     purchase.sale_order_ids = ''
                     purchase.sale_order_names = ''
+                    purchase.filter_so_ids = ''
 
