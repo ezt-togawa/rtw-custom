@@ -193,7 +193,7 @@ class StockPickingShipOrder(models.AbstractModel):
                     merge_line = 4
 
                     sheet.merge_range(row, 0, row + merge_line, 0, line.stock_index if line.stock_index else '' , format_lines_10) 
-                    sheet.merge_range(row, 1, row + merge_line, 1, line.product_name if line.product_name else '', format_lines_9_left) 
+                    sheet.merge_range(row, 1, row + merge_line, 1, line.stock_move_line_name_excel if line.stock_move_line_name_excel else '', format_lines_9_left) 
                     
                     sheet.merge_range(row, 2, row + merge_line, 3, line.product_number_and_size if line.product_number_and_size else '', format_lines_11_left) 
                     
