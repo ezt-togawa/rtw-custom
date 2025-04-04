@@ -207,8 +207,12 @@
                                                 <td class="size11">
                                                     <div class="six-lines">
                                                         <div t-field="l.acc_line_name_pdf" />
-                                                        <div t-if="l.product_id.summary"
-                                                            t-field="l.product_id.summary" />
+                                                        <t t-if="l.product_id.summary">
+                                                            <t t-esc="l.product_id.summary"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span></span>
+                                                        </t>                                                         
                                                         <br />
                                                     </div>
                                                 </td>
