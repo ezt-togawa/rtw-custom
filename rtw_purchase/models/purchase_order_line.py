@@ -29,8 +29,10 @@ class rtw_purchase(models.Model):
         for line in self:
             if line.order_id:
                 purchase_order = self.env["purchase.order"].search([("id", "=", line.order_id.id)])
-                if purchase_order:
+                if purchase_order and purchase_order.picking_type_id.warehouse_id:
                     line.destination_purchase_order_line = purchase_order.picking_type_id.warehouse_id.name +": "+purchase_order.picking_type_id.name
+                elif purchase_order and purchase_order.picking_type_id:
+                    line.destination_purchase_order_line = purchase_order.picking_type_id.name
                 else:
                     line.destination_purchase_order_line = False
             else:

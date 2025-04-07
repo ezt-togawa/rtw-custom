@@ -31,7 +31,7 @@
                 <attribute name="optional">hidden</attribute>
             </field>
             <field name='date_planned' position="before">
-                <field name="destination_purchase_order_line" optional='show'/>
+                <field name="destination_purchase_order_line" optional='hide'/>
             </field>
         </field>
     </record>
