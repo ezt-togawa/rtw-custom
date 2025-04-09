@@ -54,7 +54,7 @@
                                     <div class="col-4">
                                         <div>お支払期限:
                                         </div>
-                                        <div> お支払内容 : <span t-field="docs.payment_terms" />
+                                        <div> お支払内容 : <span t-field="docs.payment_details" />
                                         </div>
                                         <div class="d-flex">
                                             <div> お振込先: </div>
