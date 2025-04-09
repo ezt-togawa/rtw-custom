@@ -460,11 +460,14 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_transactions_term(self):
         for record in self:
             term = ''
-            if record.transactions:
+            if record.transactions and record.transaction_condition_1:
+                for transaction in record.transactions:
+                    term += str(transaction.name) + " / " + record.transaction_condition_1
+            elif record.transactions:
                 for transaction in record.transactions:
                     term += str(transaction.name) 
-            if record.transaction_condition_1:
-                term += " / " + record.transaction_condition_1
+            elif record.transaction_condition_1:
+                term += record.transaction_condition_1
             record.sale_order_transactions_term = term
     
         

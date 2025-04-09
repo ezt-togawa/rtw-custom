@@ -26,7 +26,18 @@ class SaleOrder(models.Model):
     sale_order_discount = fields.Char(string="sale order discount" , compute="_compute_sale_order_discount")
     registration_number = fields.Char(string="registration number" , compute="_compute_registration_number")
     current_print = fields.Char(compute="_compute_current_print")
-    
+    payment_details = fields.Char(string="payment details" , compute="_compute_payment_details")
+
+    def _compute_payment_details(self):
+        for so in self:
+            if so.transactions and so.transaction_condition_1:
+                so.payment_details = so.transactions.name + ' / ' + so.transaction_condition_1
+            elif so.transactions:
+                so.payment_details = so.transactions.name
+            elif so.transaction_condition_1:
+                so.payment_details = so.transaction_condition_1
+            else:
+                so.payment_details = None
 
     def _compute_current_print(self):
         for so in self:

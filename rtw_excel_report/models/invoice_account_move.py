@@ -133,8 +133,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(9, 5, _("備考"), format_text_right) 
             
             sheet.write(2, 6, '', format_text) 
-            sheet.write(3, 6, (so.sale_order.payment_terms or '') if so.sale_order.payment_terms else '', format_text) 
-
+            sheet.write(3, 6, (so.sale_order.payment_details or '') if so.sale_order.payment_details else '', format_text) 
             sheet.write(7, 6, so.sale_order.sale_order_preferred_delivery_date if so.sale_order.sale_order_preferred_delivery_date else '', format_text) 
             sheet.write(8, 6, so.sale_order.forwarding_address if so.sale_order.forwarding_address else '', format_text) 
             sheet.merge_range(9, 6, 11, 8, so.sale_order.sale_order_billing_notes[:120] if so.sale_order.sale_order_billing_notes else '', format_note) 
