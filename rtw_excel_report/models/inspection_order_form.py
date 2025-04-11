@@ -55,8 +55,9 @@ class ReportMrpExcel(models.AbstractModel):
         if len(mrp_data) == 1:
             allow_print = True
         else:   
+            origins = mrp_data.mapped('origin')
             for mrp_check in mrp_data[1:]:
-                if mrp_check.origin == mrp_data[0].origin:
+                if mrp_check.origin == origins:
                     allow_print = True
                 else:
                     allow_print = False
@@ -373,3 +374,4 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.merge_range(row, 6, row + height, 6, _("有") if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
                 sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_10_left)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)
+
