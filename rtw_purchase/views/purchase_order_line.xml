@@ -27,6 +27,9 @@
         <field name="model">purchase.order.line</field>
         <field name="inherit_id" ref="purchase.purchase_order_line_tree" />
         <field name="arch" type="xml">
+            <field name="location_dest_id" position="attributes">
+                <attribute name="optional">hidden</attribute>
+            </field>
             <field name='date_planned' position="before">
                 <field name="destination_purchase_order_line" optional='hide'/>
             </field>
