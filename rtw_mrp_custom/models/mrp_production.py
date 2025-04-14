@@ -95,7 +95,7 @@ class MrpProductionCus(models.Model):
             else:
                 sale_order = self.env['sale.order'].search([('name', '=', record.sale_reference)], limit=1)
                 warehouse_name = record.picking_type_id.warehouse_id.name
-                if warehouse_name == "糸島工場":
+                if warehouse_name in ["糸島工場","日東木工","アサヒ", "酒見椅子"]:
                     if sale_order.sipping_to:
                         if sale_order.sipping_to == 'direct':
                             record.address_ship = '直送' 
