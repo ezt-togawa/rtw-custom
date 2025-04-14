@@ -460,11 +460,14 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_transactions_term(self):
         for record in self:
             term = ''
-            if record.transactions:
+            if record.transactions and record.transaction_condition_1:
+                for transaction in record.transactions:
+                    term += str(transaction.name) + " / " + record.transaction_condition_1
+            elif record.transactions:
                 for transaction in record.transactions:
                     term += str(transaction.name) 
-            if record.transaction_condition_1:
-                term += " / " + record.transaction_condition_1
+            elif record.transaction_condition_1:
+                term += record.transaction_condition_1
             record.sale_order_transactions_term = term
     
         
@@ -1378,17 +1381,14 @@ class SaleOrderLineExcelReport(models.Model):
             summary = ""
             if prod:
                 prod_tmpl = prod.product_tmpl_id
-                if prod_tmpl.config_ok:
-                    if prod_tmpl.categ_id.name != '汎用商品':
-                        if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
-                            categ_name = prod_tmpl.categ_id.name
-                        elif prod_tmpl.product_no:
-                            categ_name = prod_tmpl.product_no
-                        elif prod_tmpl.name: 
-                            categ_name = prod_tmpl.name
-                    else:
-                        categ_name = line.name
-                elif line.name:
+                if prod_tmpl.config_ok and prod_tmpl.categ_id.name != '汎用商品':
+                    if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                        categ_name = prod_tmpl.categ_id.name
+                    elif prod_tmpl.product_no:
+                        categ_name = prod_tmpl.product_no
+                    elif prod_tmpl.name: 
+                        categ_name = prod_tmpl.name
+                else:
                     categ_name = line.name
 
                 
@@ -2385,16 +2385,13 @@ class AccountMoveLineExcelReport(models.Model):
             if line.product_id: 
                 prod_tmpl = line.product_id.product_tmpl_id
                 if prod_tmpl:
-                    if prod_tmpl.config_ok:
-                        if prod_tmpl.categ_id.name != '汎用商品':
-                            if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
-                                name = prod_tmpl.categ_id.name
-                            elif prod_tmpl.product_no:
-                                name = prod_tmpl.product_no
-                            else: 
-                                name = prod_tmpl.name   
-                        else:
-                            name = line.name
+                    if prod_tmpl.config_ok and prod_tmpl.categ_id.name != '汎用商品':
+                        if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                            name = prod_tmpl.categ_id.name
+                        elif prod_tmpl.product_no:
+                            name = prod_tmpl.product_no
+                        elif prod_tmpl.name: 
+                            name = prod_tmpl.name
                     else:
                         # case product is standard Prod + download payment
                         if prod_tmpl.seller_ids and line.move_id and line.move_id.partner_id and line.move_id.partner_id.id:
@@ -2407,21 +2404,25 @@ class AccountMoveLineExcelReport(models.Model):
                                 product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
                                 product_name = matching_sup.product_name if matching_sup.product_name else ''
                                 name = product_code + product_name
-                            else:
-                                name =  line.name
-                        else:
-                            name =  line.name
+                                if name == "" and line.name:
+                                    name = line.name
+                            elif line.name:
+                                name = line.name
+                        elif line.name:
+                            name = line.name
                 if line.product_id.summary:
                     summary = line.product_id.summary
+                if name and summary:
+                    line.acc_line_name = name + "\n"+ summary
+                elif name:
+                    line.acc_line_name = name
+                elif summary:
+                    line.acc_line_name = summary
+                line.acc_line_name_pdf = name
+            else:
+                line.acc_line_name_pdf = line.name
+                line.acc_line_name = line.name
             
-            if name and summary:
-                line.acc_line_name = name + "\n"+ summary
-            elif name:
-                line.acc_line_name = name
-            elif summary:
-                line.acc_line_name = summary
-            
-            line.acc_line_name_pdf = name
             
     def _compute_acc_line_index(self):
         index = 0

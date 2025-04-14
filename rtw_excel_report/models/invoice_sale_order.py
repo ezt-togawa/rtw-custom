@@ -135,7 +135,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(9, 5, _("備考"), format_text_right) 
             
             sheet.write(2, 6, '', format_text) 
-            sheet.write(3, 6, (so.payment_terms or '') if so.payment_terms else '', format_text) 
+            sheet.write(3, 6, (so.payment_details or '') if so.payment_details else '', format_text) 
 
             sheet.write(7, 6, so.sale_order_preferred_delivery_date if so.sale_order_preferred_delivery_date else '', format_text) 
             sheet.write(8, 6, so.forwarding_address if so.forwarding_address else '', format_text) 

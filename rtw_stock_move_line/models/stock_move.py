@@ -49,7 +49,6 @@ class rtw_stock_move(models.Model):
     def _compute_arrival_date_itoshima(self):
         for move in self:
             if move.mrp_production_id:
-                mrp_is_active = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1).is_active
                 mrp = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1)
                 if move.arrival_date_itoshima_inherit_2:
                     if mrp.itoshima_shipping_date != move.arrival_date_itoshima_inherit_2:
@@ -57,7 +56,7 @@ class rtw_stock_move(models.Model):
                         move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
                     else:
                          move.arrival_date_itoshima = move.arrival_date_itoshima_inherit_2
-                elif move.arrival_date_itoshima_inherit and mrp_is_active == False: 
+                elif move.arrival_date_itoshima_inherit and mrp.is_active == False: 
                     move.arrival_date_itoshima = move.arrival_date_itoshima_inherit
                 else:
                     if mrp:
@@ -313,15 +312,20 @@ class rtw_stock_move(models.Model):
     @api.depends('shiratani_date')
     def _get_shiratani_date_delivery(self):
         for rec in self:
-            rec.shiratani_date_delivery = rec.shiratani_date
+                rec.shiratani_date_delivery = rec.shiratani_date
             
     @api.depends('shiratani_date_delivery')
     def _set_shiratani_date_delivery(self):
         for rec in self:
             rec.shiratani_date = rec.shiratani_date_delivery
             if rec.product_id:
-                mrp_production = self.env['mrp.production'].search([('product_id', '=', rec.product_id.id)])
+                mrp_production = self.env['mrp.production'].search([('name', '=', rec.mrp_production_id)])
                 if mrp_production:
+                    # 製造に紐づく運送/配送の白谷到着日を更新
+                    move_list = self.env["stock.move"].search([('mrp_production_id', '=', mrp_production.name)])
+                    if move_list:
+                        move_list.write({'shiratani_date': rec.shiratani_date_delivery})
+
                     mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
                     if rec.picking_id:
                         picking_ids = self.env['stock.move'].search([
