@@ -12,5 +12,23 @@
                 </xpath>
             </field>
         </record>
+        <record id="view_invoice_tree_inherit" model="ir.ui.view">
+            <field name="name">account.move.custom_date_tree</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_date_due']" position="after">
+                    <field name="days_remaining" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_date_due']" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </xpath>
+                <xpath expr="//field[@name='invoice_date_due']" position="attributes">
+                    <attribute name="decoration-danger">days_remaining &lt; 0</attribute>
+                    <attribute name="decoration-warning">days_remaining == 0</attribute>
+                    <attribute name="decoration-bf">days_remaining &lt;= 0</attribute>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>
