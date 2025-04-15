@@ -12,6 +12,7 @@ class rtw_purchase(models.Model):
     sale_order_ids = fields.Char("sale order", compute='_compute_sale_order')
     sale_order_names = fields.Char("sale order title")
     operation_type = fields.Many2one('stock.picking.type' , string="オペレーションタイプ", compute='_compute_operation_type')
+    working_notes = fields.Char(string='作業メモ')
     destination_note = fields.Text('送り先注記')
     resend = fields.Char('再送')
     filter_so_ids = fields.Char("filter so ids")

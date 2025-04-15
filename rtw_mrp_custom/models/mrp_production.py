@@ -15,6 +15,7 @@ class MrpProductionCus(models.Model):
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
     instruction_status = fields.Boolean(string='取説',compute = "_instruction_status_compute")
+    working_notes = fields.Char(string='作業メモ')
     address_ship = fields.Selection([ ('倉庫', '倉庫'),
     ('直送', '直送'),
     ('デポ１', 'デポ１'),
