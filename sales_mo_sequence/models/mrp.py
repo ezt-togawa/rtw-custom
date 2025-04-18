@@ -71,8 +71,9 @@ class MrpProduction(models.Model):
                     break
 
             if sale_order_line:
-                config_custom_values = self.env['product.config.session.custom.value'].search(
-                    [('cfg_session_id', '=', sale_order_line.config_session_id.id)])
+                for cf in sale_order_line.config_session_id:
+                     config_custom_values = self.env['product.config.session.custom.value'].search(
+                    [('cfg_session_id', '=', cf.id)])
 
                 for custom in config_custom_values:  # get list config custom of order line
                     list_custom_config = list_custom_config + '<div>' + custom.attribute_id.name + ' : ' + custom.value + '</div>'

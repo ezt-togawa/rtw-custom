@@ -70,11 +70,12 @@ class stock_picking_delivery_wizard(models.TransientModel):
         
         if has_next_picking:
             has_next_picking.write({'location_id': new_stock_picking.location_dest_id.id})
-            next_stock_move = self.env['stock.move'].search([('picking_id' ,'=',has_next_picking.id),('product_id','=',has_next_picking.product_id.id)])
+            next_stock_move = self.env['stock.move'].search([('picking_id', '=', has_next_picking.id)])
             for sm in next_stock_move:
-                new_stock_move.write({'move_dest_ids':[(4 ,sm.id)]})
-
-        current_stock_move = self.env['stock.move'].search([('picking_id' ,'=',current_stock_picking.id),('product_id','=',current_stock_picking.product_id.id)])
-        for sm in new_stock_move:
-            current_stock_move.write({'move_dest_ids':[(6,0,[sm.id])]})
-        
+                new_stock_move.write({'move_dest_ids':[(4, sm.id)]})
+        current_stock_move = self.env['stock.move'].search([('picking_id' ,'=' , current_stock_picking.id)])
+        new_stock_move_ids = new_stock_move.ids
+        if new_stock_move_ids:
+            current_stock_move.write({'move_dest_ids': [(6, 0, new_stock_move_ids)]})
+        else:
+            return
