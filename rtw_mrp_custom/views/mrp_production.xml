@@ -92,7 +92,19 @@
                 </xpath>
                 <xpath expr="//field[@name='product_qty']" position="after">
                     <field name="instruction_status" optional="hidden" />
+                    <field name="working_notes" optional="hidden" />
                 </xpath>
+            </field>
+        </record>
+
+        <record id="mrp_production_form_view_inherit_detail_mrp" model="ir.ui.view">
+            <field name="name">mrp.production.form.inherit</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='production_memo']" position="after">
+                    <field name="working_notes"/>
+            </xpath>
             </field>
         </record>
     </data>

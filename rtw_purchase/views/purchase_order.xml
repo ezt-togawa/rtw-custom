@@ -25,6 +25,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='id']" position="after">
                 <field name="operation_type" widget="many2one_link" />
+                <field name="working_notes" />
                 <field name="check_schedule_boolean" invisible="1" />
             </xpath>
             <xpath expr="//div[@class='oe_button_box']" position="inside">
@@ -58,6 +59,9 @@
             </xpath>
             <xpath expr="//field[@name='state']" position="before">
                 <field name="schedule_check" widget="check_schedule_activity" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='schedule_check']" position="after">
+                <field name="working_notes" optional="hidden" />
             </xpath>
         </field>
     </record>
