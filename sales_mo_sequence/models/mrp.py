@@ -38,6 +38,10 @@ class MrpProduction(models.Model):
 
     def _compute_production_type(self):
         for record in self:
+            if record.is_child_mo:
+                record.production_memo = record.production_memo_inherit or ''
+                record.production_type = ''
+                return
             list_custom_config = ''
             production_type = ''
             production_memo = ''
@@ -61,21 +65,21 @@ class MrpProduction(models.Model):
                 ('move_ids', 'in', [move_id.id for move_id in
                                     record.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids.move_dest_ids]),
             ]
-
             for search in search_criteria:  # find sale_order_line
                 if self.env['sale.order.line'].search([search]):
                     sale_order_line = self.env['sale.order.line'].search([search])
                     break
 
             if sale_order_line:
-                config_custom_values = self.env['product.config.session.custom.value'].search(
-                    [('cfg_session_id', '=', sale_order_line.config_session_id.id)])
+                for cf in sale_order_line.config_session_id:
+                     config_custom_values = self.env['product.config.session.custom.value'].search(
+                    [('cfg_session_id', '=', cf.id)])
 
                 for custom in config_custom_values:  # get list config custom of order line
                     list_custom_config = list_custom_config + '<div>' + custom.attribute_id.name + ' : ' + custom.value + '</div>'
 
                 for line in sale_order_line:  # get p_type and memo of order line
-                    if line.product_id == self.product_id:
+                    if line.product_id in self.product_id:
                         if line.p_type:
                             if line.p_type == 'special':
                                 p_type = '別注'
@@ -96,12 +100,14 @@ class MrpProduction(models.Model):
 
                 record.production_type = production_type + list_custom_config
                 record.production_memo = production_memo
+            
             else:
                 record.production_type = ''
                 record.production_memo = ''
 
     def _inverse_production_memo(self):
         for record in self:
+            record.production_memo_inherit = record.production_memo if record.is_child_mo else ''
             sale_order_line = []
             search_criteria = [  # limit 10 times
                 ('move_ids', 'in', [move_id.id for move_id in record.move_dest_ids]),
@@ -162,6 +168,7 @@ class MrpProduction(models.Model):
     mrp_reference = fields.Char('MO Reference', compute='_compute_reference_mo', store=True)
     production_type = fields.Char('製品タイプ', compute='_compute_production_type')
     production_memo = fields.Char('memo', compute='_compute_production_type', inverse='_inverse_production_memo')
+    production_memo_inherit = fields.Char()
     specifications = fields.Many2many('product.template.attribute.value',string='仕様（属性)', compute='_compute_specifications')
     sale_reference_title = fields.Char('SO Title', store=True)
     sale_title_tmp = fields.Char('SO Title', compute='_compute_reference_value_title')

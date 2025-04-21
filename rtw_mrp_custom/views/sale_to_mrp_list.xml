@@ -37,6 +37,7 @@
                     <field name="product_qty" sum="Total Qty" string="Quantity" readonly="1"
                         optional="show" />
                     <field name="instruction_status" optional="hidden" />
+                    <field name="working_notes"  optional="hidden" />
                     <field name="company_id" readonly="1" groups="base.group_multi_company"
                         optional="show" string="Company" />
                     <field name="state" optional="show" widget="badge"
