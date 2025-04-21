@@ -30,7 +30,7 @@ class stock_move_delivery_wizard(models.TransientModel):
             error_picking_names = list(set(different_moves.mapped('picking_id.name')))
             for picking in picking_ids:
                 if moves:
-                    if movess.ids != stock_move_ids:
+                    if sorted(movess.ids) != sorted(stock_move_ids):
                         if error_picking_names:
                             raise UserError("運送[{error_picking_names}]に、選択されていない別のプロダクトの配送が紐づいているため実施できません。運送を分割してから実施してください。".format(
                             error_picking_names=", ".join(error_picking_names)))
