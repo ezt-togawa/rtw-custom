@@ -15,6 +15,9 @@
                 <field name="sale_order_ids" />
                 <field name="sale_order_names" />
             </xpath>
+            <xpath expr="//field[@name='invoice_status']" position="before">
+                <field name="working_notes" optional="hidden" />
+            </xpath>
         </field>
 
     </record>
