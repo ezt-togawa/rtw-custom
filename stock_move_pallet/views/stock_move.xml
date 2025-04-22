@@ -35,6 +35,7 @@
                 <xpath expr="//field[@name='shiratani_date']" position="before">
                     <field name="pallet_id" optional="show" />
                     <field name="pearl_tone_attr" string="パールトーン" optional="show" />
+                    <field name="date" optional="show" />
                     <field name="manu_date_planned_start" string="製造開始予定日" optional="show" />
                 </xpath>
             </field>

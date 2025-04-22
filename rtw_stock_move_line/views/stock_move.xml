@@ -14,8 +14,8 @@
                     <field name="spec" widget="many2many_tags" optional="hide" />
                     <field name="custom" widget="many2many_tags" optional="hide" />
                     <field name="product_qty" string="実際の予約数量" />
-                    <field name="sai" sum="sai" string="才数" />
                     <field name="product_package_quantity" optional="show" />
+                    <field name="sai" sum="sai" string="才数" />
                     <field name="factory" sum="工場" />
                     <field name="state" />
                     <field name="customer_id" optional="hide" />
