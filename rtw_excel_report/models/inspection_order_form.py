@@ -12,7 +12,6 @@ class ReportMrpExcel(models.AbstractModel):
         # apply default font for workbook
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
-        
         image_logo_R = get_module_resource('rtw_excel_report', 'img', 'logo.png')
         logo_R = PILImage.open(image_logo_R)
         logo_R = logo_R.convert('RGB')
@@ -132,11 +131,15 @@ class ReportMrpExcel(models.AbstractModel):
                     so = self.env["sale.order"].search([('name', '=', mrp.sale_reference)], limit=1)
                     if so:
                         if mrp.address_ship == '直送':
-                            sheet.write(6, 1, so.preferred_delivery_date if so.preferred_delivery_date else '', format_text_date)
-                        elif mrp.address_ship == '倉庫' or mrp.address_ship == 'デポ１':
-                            sheet.write(6, 1, so.warehouse_arrive_date if so.warehouse_arrive_date else '', format_text_date)
+                            sheet.write(6, 1, mrp.mo_estimated_shipping_date if mrp.mo_estimated_shipping_date else '', format_text_date)
+                        elif mrp.address_ship == '倉庫' and mrp.storehouse_id.name == '白谷運輸':
+                            sheet.write(6, 1, mrp.mo_shiratani_date if mrp.mo_shiratani_date else '', format_text_date)
+                        elif mrp.address_ship == '倉庫' and mrp.storehouse_id.name != '白谷運輸':
+                            sheet.write(6, 1, mrp.mo_estimated_shipping_date if mrp.mo_estimated_shipping_date else '', format_text_date)
+                        elif mrp.address_ship == 'デポ１':
+                            sheet.write(6, 1, so.mo_warehouse_arrive_date if so.mo_warehouse_arrive_date else '', format_text_date)
                         elif mrp.address_ship == 'デポ２':
-                            sheet.write(6, 1, so.warehouse_arrive_date_2 if so.warehouse_arrive_date_2 else '', format_text_date)
+                            sheet.write(6, 1, so.mo_warehouse_arrive_date_2 if so.mo_warehouse_arrive_date_2 else '', format_text_date)
                 elif mrp.sale_order.sipping_to == 'direct':
 
                     sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_date) 
