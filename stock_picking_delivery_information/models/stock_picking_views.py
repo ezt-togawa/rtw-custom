@@ -22,6 +22,15 @@ class SaleOrder(models.Model):
             })
         return result
     
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        super(SaleOrder, self).onchange_partner_id()
+        if self.partner_invoice_id and self.partner_invoice_id.type != 'invoice':
+            if self.partner_id.parent_id: 
+                self.partner_invoice_id = self.partner_id.parent_id
+            else:
+                pass
+    
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
