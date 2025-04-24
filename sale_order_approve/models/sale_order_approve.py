@@ -11,6 +11,7 @@ class sale_order_approve(models.Model):
     is_over_price = fields.Boolean('Is Over Price' , compute='_compute_is_over_price', store=True)
     is_hide_button = fields.Boolean('Is Hide Button' , compute='_compute_is_hide_button' , store=True)
     approve_button = fields.Char('Approve Button' , compute='_compute_approve_button' , store=True)
+    total_price_sale = fields.Float('Total Price Sale')
     def toggle_approve_btn(self):
         admin_sale_id = self.env.ref('sales_team.group_sale_manager')
         for record in self:
@@ -44,22 +45,24 @@ class sale_order_approve(models.Model):
     @api.depends('amount_total')
     def _compute_is_over_price(self):
         for record in self:
-            sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
-            min_price = 0
-            max_price = 1000000
-            for line in sale_order_lines:
-                min_price += line.product_id.standard_price
-            if  record.amount_total > max_price or record.amount_total < min_price:
-                record.is_over_price = True
-                record.approve_status = False
-            else:
-                record.is_over_price = False
-                record.approve_status = False
+            if record.total_price_sale != record.amount_total:
+                sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
+                min_price = 0
+                max_price = 1000000
+                for line in sale_order_lines:
+                    min_price += line.product_id.standard_price
+                if  record.amount_total > max_price or record.amount_total < min_price:
+                    record.is_over_price = True
+                    record.approve_status = False
+                else:
+                    record.is_over_price = False
+                    record.approve_status = False
+                record.total_price_sale = record.amount_total
+            
 
     @api.onchange('amount_total')
     def _onchange_amount_total(self):
         for record in self:
-
             sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
             min_price = 0
             max_price = 1000000
