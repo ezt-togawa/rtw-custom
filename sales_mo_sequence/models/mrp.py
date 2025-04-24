@@ -72,34 +72,34 @@ class MrpProduction(models.Model):
 
             if sale_order_line:
                 for cf in sale_order_line.config_session_id:
-                     config_custom_values = self.env['product.config.session.custom.value'].search(
+                    config_custom_values = self.env['product.config.session.custom.value'].search(
                     [('cfg_session_id', '=', cf.id)])
 
-                for custom in config_custom_values:  # get list config custom of order line
-                    list_custom_config = list_custom_config + '<div>' + custom.attribute_id.name + ' : ' + custom.value + '</div>'
+                    for custom in config_custom_values:  # get list config custom of order line
+                        list_custom_config = list_custom_config + '<div>' + custom.attribute_id.name + ' : ' + custom.value + '</div>'
 
-                for line in sale_order_line:  # get p_type and memo of order line
-                    if line.product_id in self.product_id:
-                        if line.p_type:
-                            if line.p_type == 'special':
-                                p_type = '別注'
-                            elif line.p_type == 'custom':
-                                p_type = '特注'
-                        else:
-                            p_type = ''
+                    for line in sale_order_line:  # get p_type and memo of order line
+                        if line.product_id in self.product_id:
+                            if line.p_type:
+                                if line.p_type == 'special':
+                                    p_type = '別注'
+                                elif line.p_type == 'custom':
+                                    p_type = '特注'
+                            else:
+                                p_type = ''
 
-                        if line.memo:
-                            memo = line.memo
-                        else:
-                            memo = ''
+                            if line.memo:
+                                memo = line.memo
+                            else:
+                                memo = ''
 
-                        if memo:
-                            production_memo = memo
-                        if p_type:
-                            production_type = p_type
+                            if memo:
+                                production_memo = memo
+                            if p_type:
+                                production_type = p_type
 
-                record.production_type = production_type + list_custom_config
-                record.production_memo = production_memo
+                    record.production_type = production_type + list_custom_config
+                    record.production_memo = production_memo
             
             else:
                 record.production_type = ''

@@ -275,11 +275,11 @@ class ReportMrpExcel(models.AbstractModel):
                             aggregated_data[key]["product_template_attribute_value_ids"] = item["product_template_attribute_value_ids"]
                             aggregated_data[key]["display_type"] = item["display_type"]
                             aggregated_data[key]["name"] = item["name"]
-                            aggregated_data[key]["purchase_order_line_product_uom_qty"] += qty
+                            aggregated_data[key]["purchase_order_line_product_uom_qty"] += int(qty * 100)
                             aggregated_data[key]["price_subtotal"] += subtotal
                         result = []
                         for key, value in aggregated_data.items():
-                            value["purchase_order_line_product_uom_qty"] = str(value["purchase_order_line_product_uom_qty"])
+                            value["purchase_order_line_product_uom_qty"] = str(value["purchase_order_line_product_uom_qty"] / 100)
                             value["price_subtotal"] = f"{value['price_subtotal']:,}"
                             value["ir_model_id"] = key
                             result.append(value)
