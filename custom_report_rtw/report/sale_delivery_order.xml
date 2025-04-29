@@ -149,22 +149,11 @@
                 <tbody class="invoice_tbody size14">
                   <t
                     t-if="l.display_type =='line_section' or l.display_type =='line_note'">
-                    <tr class="table-border-bottom-auto">
-                      <t t-if="l.display_type =='line_section'">
-                        <td class="bg-section lines" colspan="11">
-                          <span t-field="l.name" />
-                        </td>
-                      </t>
-                      <t t-elif="l.display_type =='line_note'">
-                        <td class="lines" colspan="11">
-                          <span t-field="l.name" />
-                        </td>
-                      </t>
-                    </tr>
+                    <span></span>
                   </t>
                   <t t-else="">
                     <tr class="border-bottom2">
-                      <td t-esc="l_index+1" class="text-center lines" />
+                      <td t-esc="l.sale_order_index if l.sale_order_index else ''" class="text-center lines" />
                       <td>
                         <div t-if="l.sale_order_line_name_pdf"
                           t-field="l.sale_order_line_name_pdf" />

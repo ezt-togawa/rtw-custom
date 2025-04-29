@@ -171,13 +171,9 @@ class ReportMrpExcel(models.AbstractModel):
                 sol = so.order_line.filtered(lambda x: not x.is_pack_outside)
                 for ind,line in enumerate(sol):
                     if line.display_type == 'line_note':
-                        sheet.merge_range(row, 0, row + 5, 14, "=data!A" + str(ind * 1 + 1), format_lines_note)
-                        sheet_data.write(ind, 0, line.name if line.name else '', format_lines_note)
-                        row += 6
+                        continue
                     elif line.display_type == 'line_section':
-                        sheet.merge_range(row, 0, row + 5, 14, "=data!B" + str(ind * 1 + 1), format_lines_section)
-                        sheet_data.write(ind, 1, line.name if line.name else '', format_lines_section)
-                        row += 6
+                        continue
                     else:
                         merge_line = 5
                         sheet.merge_range(row, 0, row + merge_line, 0, line.sale_order_index if line.sale_order_index else '' , format_lines_14) 
