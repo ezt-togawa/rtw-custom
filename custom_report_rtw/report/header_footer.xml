@@ -381,25 +381,59 @@
                             style="max-height: 45px;"
                             alt="Logo" />
                         <span class="ml-2 size20">発注書(部材用)</span>
-                        <span
+                        <t t-if="po._name == 'purchase.order'">
+                            <span
                             class="ml-5 size15" t-if="po.purchase_order_company"
                             t-esc="po.purchase_order_company" />
-                    </div>
-                    <div class="col-4 text-right mt-2 size12">
-                        <t t-foreach="docs" t-as="po_name">
-                            <span t-field="po_name.name" />
-                            <t t-set="is_last_item" t-value="po_name == docs[-1]" />
-                            <t t-if="not is_last_item">,</t>
-                        </t>
-                        <t t-if="po.lang_code == 'en_US'">
-                            <div t-esc="time.strftime('%Y-%m-%d')" />
                         </t>
                         <t t-else="">
-                            <div>
-                                <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" />
-                                月 <t
-                                    t-esc="time.strftime('%d')" /> 日 </div>
+                            <span
+                            class="ml-5 size15" t-if="po.order_id.purchase_order_company"
+                            t-esc="po.order_id.purchase_order_company" />
                         </t>
+                    </div>
+                    <div class="col-4 text-right mt-2 size12">
+                     <t t-if="po._name == 'purchase.order'">
+                        <t t-foreach="docs" t-as="po_name">
+                          <span t-field="po_name.name" />
+                          <t t-set="is_last_item" t-value="po_name == docs[-1]" />
+                          <t t-if="not is_last_item">, </t>
+                        </t>
+                      </t>
+                      <t t-else="">
+                    <t t-set="seen_names" t-value="set()" />
+                      <t t-foreach="docs.order_id" t-as="po_name">
+                        <t t-if="po_name.name not in seen_names">
+                          <span t-field="po_name.name" />
+                          <t t-set="seen_names" t-value="seen_names | set([po_name.name])" />
+                          <t t-set="is_last_item" t-value="po_name == docs.order_id[-1]" />
+                          <t t-if="not is_last_item">, </t>
+                        </t>
+                        </t>
+                      </t>
+                        <t t-if="po._name == 'purchase.order'">
+                            <t t-if="po.lang_code == 'en_US'">
+                                <div t-esc="time.strftime('%Y-%m-%d')" />
+                            </t>
+                            <t t-else="">
+                                <div>
+                                    <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" />
+                                    月 <t
+                                        t-esc="time.strftime('%d')" /> 日 </div>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <t t-if="po.order_id.lang_code == 'en_US'">
+                                <div t-esc="time.strftime('%Y-%m-%d')" />
+                            </t>
+                            <t t-else="">
+                                <div>
+                                    <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" />
+                                    月 <t
+                                        t-esc="time.strftime('%d')" /> 日 </div>
+                            </t>
+                        </t>
+                       
                     </div>
                 </div>
             </div>

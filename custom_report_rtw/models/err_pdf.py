@@ -37,5 +37,26 @@ class error_export_many_pdf(models.Model):
                             break
             if allow_print == False:
                 raise UserError('仕入先が複数にまたがるため出力できません。')
+
+        elif self.model == 'purchase.order.line':
+            allow_print = False
+            if len(docids) == 1:
+                allow_print = True
+            else: 
+                list_partner_id =[]
+                for id_purchase in docids:
+                    po = self.env['purchase.order.line'].search([('id','=',id_purchase)])
+                    if po:
+                        list_partner_id.append(po.order_id.partner_id.id or '')
+
+                if list_partner_id:
+                    for id in list_partner_id[1:]:
+                        if id == list_partner_id[0]:
+                            allow_print = True
+                        else:
+                            allow_print = False
+                            break
+            if allow_print == False:
+                raise UserError('仕入先が複数にまたがるため出力できません。')
                 
         return res
