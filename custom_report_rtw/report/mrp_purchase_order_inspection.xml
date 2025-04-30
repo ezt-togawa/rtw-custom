@@ -93,13 +93,19 @@
                           <t t-set="so" t-value="env['sale.order'].search([('name', '=', mrp.sale_reference)], limit=1)"/>
                             <t t-if="so">
                               <t t-if="mrp.address_ship == '直送'">
-                                <span class="size14" t-field="so.preferred_delivery_date" />
+                                <span class="size14" t-field="mrp.mo_estimated_shipping_date" />
                               </t>
-                              <t t-elif="mrp.address_ship == '倉庫' or mrp.address_ship == 'デポ１'">
-                                <span class="size14" t-field="so.warehouse_arrive_date" />
+                              <t t-elif="mrp.address_ship == '倉庫' and mrp.storehouse_id.name == '白谷運輸'">
+                                <span class="size14" t-field="mrp.mo_shiratani_date" />
+                              </t>
+                              <t t-elif="mrp.address_ship == '倉庫' and mrp.storehouse_id.name != '白谷運輸'">
+                                <span class="size14" t-field="mrp.mo_estimated_shipping_date" />
+                              </t>
+                              <t t-elif="mrp.address_ship == 'デポ１'">
+                                <span class="size14" t-field="so.mo_warehouse_arrive_date" />
                               </t>
                               <t t-elif="mrp.address_ship == 'デポ２'">
-                                <span class="size14" t-field="so.warehouse_arrive_date_2" />
+                                <span class="size14" t-field="so.mo_warehouse_arrive_date_2" />
                              </t>
                             </t>
                        </t>
