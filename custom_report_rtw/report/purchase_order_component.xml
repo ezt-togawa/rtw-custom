@@ -223,7 +223,6 @@
                           </td>
                           <td class="size12">
                             <span t-esc="line['purchase_order_prod_name']" />
-                            <span t-esc="po._name"></span>
                             <br />
                           </td>
                           <td class="text-center">
@@ -374,7 +373,7 @@
   </record>
 
   <record id="report_purchase_order_sheet_for_part_rtw" model="ir.actions.report">
-    <field name="name">発注書(部材用）</field>
+    <field name="name">発注書(部材用) </field>
     <field name="model">purchase.order</field>
     <field name="binding_model_id" ref="model_purchase_order" />
     <field name="report_type">qweb-pdf</field>
@@ -383,11 +382,11 @@
     <field name="paperformat_id" ref="custom_report_rtw.paperformat_purchase_order_sheet_for_part" />
     <field name="attachment_use">True</field>
     <field name="binding_view_types">list,form</field>
-    <field name="print_report_name">'発注書(部材用）-' + object.current_print</field>
+    <field name="print_report_name">'発注書(部材用) -' + object.current_print</field>
   </record>
 
   <record id="report_purchase_order_line_sheet_for_part_rtw" model="ir.actions.report">
-    <field name="name">発注書（部材用/明細別）</field>
+    <field name="name">発注書(部材用/明細別) </field>
     <field name="model">purchase.order.line</field>
     <field name="binding_model_id" ref="model_purchase_order_line" />
     <field name="report_type">qweb-pdf</field>
@@ -395,6 +394,6 @@
     <field name="paperformat_id" ref="custom_report_rtw.paperformat_purchase_order_sheet_for_part" />
     <field name="attachment_use">True</field>
     <field name="binding_view_types">list,form</field>
-    <field name="print_report_name">'発注書（部材用/明細別）-' + object.current_print</field>
+    <field name="print_report_name">'発注書(部材用) -' + object.current_print</field>
   </record>
 </odoo>

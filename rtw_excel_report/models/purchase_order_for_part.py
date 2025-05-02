@@ -21,8 +21,8 @@ class ReportMrpExcel(models.AbstractModel):
             if len(objects) > 1:
                 today_str = datetime.now().strftime('%Y-%m-%dT%H%M%S')
                 report = request.env["ir.actions.report"]._get_report_from_name("rtw_excel_report.purchase_order_line_for_part_xls")
-                if not report.report_file:
-                    report.write({'report_file': "発注書（部材用/明細別）-" + today_str})
+                # if not report.report_file:
+                report.write({'report_file':"発注書(部材用) -" + today_str})
             purchase_order = objects.order_id
         self = self.with_context(lang=self.env.user.lang)             
         # apply default font for workbook
