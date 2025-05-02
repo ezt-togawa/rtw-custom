@@ -25,9 +25,14 @@ class SaleOrder(models.Model):
     @api.onchange('partner_id')
     def onchange_partner_id(self):
         super(SaleOrder, self).onchange_partner_id()
+        # Odooの連絡先=会社の場合、アドレスの種類がブランクの場合あり
+        # その場合、Odooは子連絡先で「連絡先」指定しているデータを請求先としてしまう
+        # 請求先のアドレスの種類が請求ではない場合は、親（関連会社）があれば親を。親がなければ、顧客（自分自身）を明示的に請求先に指定
         if self.partner_invoice_id and self.partner_invoice_id.type != 'invoice':
-            if self.partner_id.parent_id: 
+            if self.partner_id.parent_id:
                 self.partner_invoice_id = self.partner_id.parent_id
+            elif not self.partner_id.parent_id:
+                self.partner_invoice_id = self.partner_id
             else:
                 pass
     
