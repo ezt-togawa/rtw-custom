@@ -64,7 +64,7 @@
                           t-esc="docs.workday_id.name" /></div>
                       <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
                       <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
-                      <div> 支払条件：<span
+                      <div> 支払方法：<span
                           t-esc="docs.sale_order_transactions_term" /></div>
                     </div>
                   </div>

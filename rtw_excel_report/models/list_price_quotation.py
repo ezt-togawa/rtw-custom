@@ -136,7 +136,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(3,4, _("製作⽇数："), format_text_right) 
             sheet.write(4,4, _("発注期限："), format_text_right) 
             sheet.write(5,4, _("納品場所："), format_text_right) 
-            sheet.write(6,4, _("⽀払条件："), format_text_right) 
+            sheet.write(6,4, _("支払方法："), format_text_right) 
             sheet.write(8,4, _("⾒積有効期限："), format_text_right) 
             sheet.write(9,4, _("備考："), format_text_right) 
             

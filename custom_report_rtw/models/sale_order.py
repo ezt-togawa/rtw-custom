@@ -20,19 +20,75 @@ class SaleOrder(models.Model):
     hr_employee_tel = fields.Char(string="hr employee tel" , compute="_compute_hr_employee")
     hr_employee_fax = fields.Char(string="hr employee fax" , compute="_compute_hr_employee")
     hr_employee_printer = fields.Char(string="hr employee printer" , compute="_compute_hr_employee")
+    send_to_company_invoice_sale = fields.Char(string="send to company invoice sale" , compute="_send_to_company_invoice_sale")
+    send_to_people_invoice_sale = fields.Char(string="send to company invoice sale" , compute="_send_to_company_invoice_sale")
+    dear_to_invoice_sale = fields.Char(string="send to company invoice sale" , compute="_send_to_company_invoice_sale")
     send_to_company = fields.Char(string="send to company" , compute="_compute_send_to")
     send_to_people = fields.Char(string="send to people" , compute="_compute_send_to")
     dear_to = fields.Char(string="send to people" , compute="_compute_send_to")
     sale_order_discount = fields.Char(string="sale order discount" , compute="_compute_sale_order_discount")
     registration_number = fields.Char(string="registration number" , compute="_compute_registration_number")
     current_print = fields.Char(compute="_compute_current_print")
-    
+    payment_details = fields.Char(string="payment details" , compute="_compute_payment_details")
+
+    def _compute_payment_details(self):
+        for so in self:
+            if so.transactions and so.transaction_condition_1:
+                so.payment_details = so.transactions.name + ' / ' + so.transaction_condition_1
+            elif so.transactions:
+                so.payment_details = so.transactions.name
+            elif so.transaction_condition_1:
+                so.payment_details = so.transaction_condition_1
+            else:
+                so.payment_details = None
 
     def _compute_current_print(self):
         for so in self:
             so.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
             
     def _compute_send_to(self):
+        for so in self:
+            partner_name = ''
+            company_name = ''
+            if so.partner_id:
+                res_partner= self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id', '=', so.partner_id.id)])
+                if res_partner:
+                    for line in res_partner:
+                        if so.lang_code == 'en_US':
+                            if line.company_type == 'company':
+                                company_name =  "Dear " + line.name if line.name else ''
+                            elif line.parent_id :
+                                if line.dummy and line.last_name:
+                                    partner_name =  'Mr./Mrs. ' + line.last_name
+                                else:
+                                    company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
+                                    partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                            else:
+                                partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                        else:   
+                            if line.company_type == 'company':
+                                company_name =  line.name + ' 御中' if line.name else '' 
+                            elif line.parent_id :
+                                if line.dummy and line.last_name:
+                                    partner_name =  line.last_name+ ' 様'
+                                else:
+                                    company_name =  line.parent_id.name if line.parent_id.name else ''
+                                    partner_name =  line.last_name + ' 様' if line.last_name else ''
+                            else:
+                                partner_name =  line.last_name + ' 様' if line.last_name else ''
+            send = ""   
+            if company_name and partner_name:
+                send += company_name + '\n' + partner_name  
+            elif company_name :
+                send += company_name
+            elif partner_name :
+                send += partner_name
+                
+            so.send_to_company = company_name
+            so.send_to_people = partner_name
+            so.dear_to = send
+
+    def _send_to_company_invoice_sale(self):
         for so in self:
             partner_name = ''
             company_name = ''
@@ -70,10 +126,10 @@ class SaleOrder(models.Model):
             elif partner_name :
                 send += partner_name
                 
-            so.send_to_company = company_name
-            so.send_to_people = partner_name
-            so.dear_to = send
-                        
+            so.send_to_company_invoice_sale = company_name
+            so.send_to_people_invoice_sale = partner_name
+            so.dear_to_invoice_sale = send
+
     def _compute_calculate_planned_date(self):
         max_planned_date = ''
         for line in self.order_line:

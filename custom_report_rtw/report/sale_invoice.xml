@@ -41,10 +41,10 @@
                                     <div class="col-8">
                                         <div class="so_price"
                                             style="max-height:25px">
-                                            <span t-field="docs.send_to_company"
-                                                t-att-class="not docs.send_to_people and 'border-bottom2'  or ''" />
+                                            <span t-field="docs.send_to_company_invoice_sale"
+                                                t-att-class="not docs.send_to_people_invoice_sale and 'border-bottom2'  or ''" />
                                         </div>
-                                        <span t-field="docs.send_to_people"
+                                        <span t-field="docs.send_to_people_invoice_sale"
                                             class="so_price border-bottom2" />
                                         <br />
                                         <div class="mt-1">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
@@ -54,7 +54,7 @@
                                     <div class="col-4">
                                         <div>お支払期限:
                                         </div>
-                                        <div> お支払内容 : <span t-field="docs.payment_term_id.name" />
+                                        <div> お支払内容 : <span t-field="docs.payment_details" />
                                         </div>
                                         <div class="d-flex">
                                             <div> お振込先: </div>

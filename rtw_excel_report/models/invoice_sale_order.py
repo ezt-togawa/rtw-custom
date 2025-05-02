@@ -111,7 +111,7 @@ class ReportMrpExcel(models.AbstractModel):
             
             # y,x
             sheet.write(1, 1, _("御請求書"), format_sheet_title) 
-            sheet.merge_range(2, 0, 3, 2,  so.dear_to if so.dear_to else '', format_name_company)
+            sheet.merge_range(2, 0, 3, 2,  so.dear_to_invoice_sale if so.dear_to_invoice_sale else '', format_name_company)
             sheet.write(5, 0, _("平素より格別のお引き⽴てを賜り暑く御礼申し上げます。"), format_text) 
             sheet.write(6, 0, _("下記の通り、ご請求申し上げます。"), format_text) 
             sheet.write(8, 0, _("件名"), format_text_14_border) 
@@ -135,7 +135,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(9, 5, _("備考"), format_text_right) 
             
             sheet.write(2, 6, '', format_text) 
-            sheet.write(3, 6, (so.payment_term_id.name or '') if so.payment_term_id else '', format_text) 
+            sheet.write(3, 6, (so.payment_details or '') if so.payment_details else '', format_text) 
 
             sheet.write(7, 6, so.sale_order_preferred_delivery_date if so.sale_order_preferred_delivery_date else '', format_text) 
             sheet.write(8, 6, so.forwarding_address if so.forwarding_address else '', format_text) 

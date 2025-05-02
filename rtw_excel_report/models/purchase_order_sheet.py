@@ -55,8 +55,9 @@ class ReportMrpExcel(models.AbstractModel):
         if len(mrp_data) == 1:
             allow_print = True
         else:   
+            origins = mrp_data.mapped('origin')
             for mrp_check in mrp_data[1:]:
-                if mrp_check.origin == mrp_data[0].origin:
+                if mrp_check.origin == origins:
                     allow_print = True
                 else:
                     allow_print = False
@@ -125,6 +126,15 @@ class ReportMrpExcel(models.AbstractModel):
                         so = self.env["sale.order"].search([('name', '=', mrp.sale_reference)], limit=1)
                         if so:
                             sheet.write(6, 1, so.mo_shiratani_entry_date if so.mo_shiratani_entry_date else '', format_text_date)                               
+                elif mrp.picking_type_id.warehouse_id and mrp.picking_type_id.warehouse_id.name != "糸島工場" :
+                    so = self.env["sale.order"].search([('name', '=', mrp.sale_reference)], limit=1)
+                    if so:
+                        if mrp.address_ship == '直送':
+                            sheet.write(6, 1, so.preferred_delivery_date if so.preferred_delivery_date else '', format_text_date)
+                        elif mrp.address_ship == '倉庫' or mrp.address_ship == 'デポ１':
+                            sheet.write(6, 1, so.warehouse_arrive_date if so.warehouse_arrive_date else '', format_text_date)
+                        elif mrp.address_ship == 'デポ２':
+                            sheet.write(6, 1, so.warehouse_arrive_date_2 if so.warehouse_arrive_date_2 else '', format_text_date)
                 elif isLinkeSale and mrp.sale_order.sipping_to == 'direct':
                     sheet.write(6, 1, mrp.sale_order.sale_order_preferred_delivery_date if mrp.sale_order.sale_order_preferred_delivery_date else '', format_text_date) 
                 elif isLinkeSale:
@@ -144,28 +154,26 @@ class ReportMrpExcel(models.AbstractModel):
                 
                 sheet.write(11, 0, _("送り先"), format_text) 
                 
-                if mrp.mrp_production_so_id.sipping_to == 'direct':
-                    if mrp.address_ship == "倉庫":
+                if mrp.address_ship == "倉庫":
                         sheet.write(12, 0, _("住所"), format_text) 
                         sheet.write(13, 0, _("TEL"), format_text)
                         sheet.write(11, 1, mrp.mrp_choose_option_find_warehouse_company_name if mrp.mrp_choose_option_find_warehouse_company_name else '', format_text_12) 
                         sheet.write(12, 1, mrp.mrp_choose_option_find_warehouse_address if mrp.mrp_choose_option_find_warehouse_address else '', format_text_12) 
                         sheet.write(13, 1, mrp.mrp_choose_option_find_warehouse_phone if mrp.mrp_choose_option_find_warehouse_phone else '', format_text_12)
-                    else:
-                        sheet.write(11, 1, mrp.mrp_production_so_id.shipping_destination_text  if mrp.mrp_production_so_id.shipping_destination_text  else '', format_text_12) 
-                        sheet.set_row(12, 0)
-                        sheet.set_row(13, 0)
-                else:
-                    sheet.write(12, 0, _("住所"), format_text) 
-                    sheet.write(13, 0, _("TEL"), format_text)
-                    if mrp.address_ship and mrp.address_ship == "デポ/直送":
-                        sheet.write(11, 1, mrp.sale_order.sale_order_waypoint_name if isLinkeSale and mrp.sale_order.sale_order_waypoint_name else '', format_text_12)
-                        sheet.write(12, 1, mrp.sale_order.sale_order_waypoint_address if isLinkeSale and mrp.sale_order.sale_order_waypoint_address else '', format_text_12)
-                        sheet.write(13, 1, mrp.sale_order.waypoint.phone if isLinkeSale and mrp.sale_order.waypoint.phone else '', format_text_12)
-                    else:
-                        sheet.write(11, 1, mrp.mrp_choose_option_find_warehouse_company_name if mrp.mrp_choose_option_find_warehouse_company_name else '', format_text_12) 
-                        sheet.write(12, 1, mrp.mrp_choose_option_find_warehouse_address if mrp.mrp_choose_option_find_warehouse_address else '', format_text_12) 
-                        sheet.write(13, 1, mrp.mrp_choose_option_find_warehouse_phone if mrp.mrp_choose_option_find_warehouse_phone else '', format_text_12) 
+                sheet.write(12, 0, _("住所"), format_text) 
+                sheet.write(13, 0, _("TEL"), format_text)
+                if mrp.address_ship and mrp.address_ship == "直送":
+                    sheet.write(11, 1, mrp.mrp_production_so_id.shipping_destination_text  if mrp.mrp_production_so_id.shipping_destination_text  else '', format_text_12) 
+                    sheet.set_row(12, 0)
+                    sheet.set_row(13, 0)
+                elif mrp.address_ship and mrp.address_ship == "デポ１":
+                        sheet.write(11, 1, mrp.mrp_production_so_id.waypoint.last_name if mrp.mrp_production_so_id.waypoint.last_name else '', format_text_12) 
+                        sheet.write(12, 1, mrp.mrp_production_so_id.sale_order_waypoint_address if mrp.mrp_production_so_id.sale_order_waypoint_address else '', format_text_12) 
+                        sheet.write(13, 1, mrp.mrp_production_so_id.waypoint.phone if mrp.mrp_production_so_id.waypoint.phone else '', format_text_12)
+                elif mrp.address_ship and mrp.address_ship == "デポ２":
+                        sheet.write(11, 1, mrp.mrp_production_so_id.waypoint_2.last_name if mrp.mrp_production_so_id.waypoint.last_name else '', format_text_12) 
+                        sheet.write(12, 1, mrp.mrp_production_so_id.sale_order_waypoint_address if mrp.mrp_production_so_id.sale_order_waypoint_address else '', format_text_12) 
+                        sheet.write(13, 1, mrp.mrp_production_so_id.waypoint_2.phone if mrp.mrp_production_so_id.waypoint.phone else '', format_text_12) 
                 sheet.set_row(14, 0)
                 sheet.set_row(15, 0)
                 
@@ -343,3 +351,4 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.merge_range(row, 6, row + height, 6, _("有") if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
                 sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_custom)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)
+

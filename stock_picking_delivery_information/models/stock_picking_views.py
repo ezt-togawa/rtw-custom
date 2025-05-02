@@ -13,6 +13,7 @@ class SaleOrder(models.Model):
         for stock in stock_picking:
             stock.write({
                 "waypoint": self.waypoint.id,
+                "waypoint_2": self.waypoint_2.id,
                 "sipping_to": self.sipping_to,
                 "shipping_to_text": self.shipping_to_text,
                 "forwarding_address_zip": self.forwarding_address_zip,
@@ -21,12 +22,27 @@ class SaleOrder(models.Model):
             })
         return result
     
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        super(SaleOrder, self).onchange_partner_id()
+        if self.partner_invoice_id and self.partner_invoice_id.type != 'invoice':
+            if self.partner_id.parent_id: 
+                self.partner_invoice_id = self.partner_id.parent_id
+            else:
+                pass
+    
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     waypoint = fields.Many2one(
         comodel_name="res.partner",
-        string="デポ",
+        string="デポ１",
+        required=False,
+        ondelete="set null",
+    )
+    waypoint_2 = fields.Many2one(
+        comodel_name="res.partner",
+        string="デポ２",
         required=False,
         ondelete="set null",
     )
@@ -53,11 +69,32 @@ class StockPicking(models.Model):
     )
     
     sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order")
-    shiratani_entry_date = fields.Date("Shiratani entry date", compute='compute_shiretani_entry_date')
-    warehouse_arrive_date = fields.Date("Warehouse arrive date", related="sale_order_id.warehouse_arrive_date")
-    estimated_shipping_date = fields.Date('Estimated shipping date', related="sale_order_id.estimated_shipping_date")
     sales_order_name = fields.Char(string='Sales Order Name', compute="_compute_sale_order_name", store=True)
+    shiratani_entry_date = fields.Date("Shiratani entry date", compute='compute_shiretani_entry_date')
+    itoshima_shiratani_shipping_notes = fields.Text(string="糸島/白谷配送注記",compute="_compute_itoshima_shiratani_shipping_notes")
+    estimated_shipping_date = fields.Date('Estimated shipping date', compute='_compute_date_info')
+    warehouse_arrive_date = fields.Date("Warehouse arrive date", compute='_compute_date_info')
+    warehouse_arrive_date_2 = fields.Date("Warehouse arrive date", compute='_compute_date_info')
 
+    def _compute_date_info(self):
+        for picking in self:
+            sale_order = self.env['sale.order'].search([('name', '=', picking.sales_order_name)], limit=1)
+            if sale_order:
+                picking.estimated_shipping_date = sale_order.estimated_shipping_date
+                picking.warehouse_arrive_date = sale_order.warehouse_arrive_date
+                picking.warehouse_arrive_date_2 = sale_order.warehouse_arrive_date_2
+            else:
+                picking.estimated_shipping_date = ''
+                picking.warehouse_arrive_date = ''
+                picking.warehouse_arrive_date_2 = ''
+
+    def _compute_itoshima_shiratani_shipping_notes(self):
+        for picking in self:
+            sale_order = self.env['sale.order'].search([('name', '=', picking.sales_order_name)], limit=1)
+            if sale_order:
+                picking.itoshima_shiratani_shipping_notes = sale_order.itoshima_shiratani_shipping_notes
+            else:
+                picking.itoshima_shiratani_shipping_notes = ''
     def _compute_sale_order(self):
         for picking in self:
             if picking.sale_id:

@@ -14,7 +14,13 @@ class MrpProductionCus(models.Model):
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
-    address_ship = fields.Selection([('倉庫', '倉庫'),('デポ/直送', 'デポ/直送') ], string="送付先", required=True, default='デポ/直送')
+    instruction_status = fields.Boolean(string='取説',compute = "_instruction_status_compute")
+    working_notes = fields.Char(string='作業メモ')
+    address_ship = fields.Selection([ ('倉庫', '倉庫'),
+    ('直送', '直送'),
+    ('デポ１', 'デポ１'),
+    ('デポ２', 'デポ２')], string="送付先")
+    waypoint_option = fields.Text(compute="_compute_waypoint_option")
     storehouse_id = fields.Many2one(comodel_name='stock.warehouse', string="倉庫")
     duration = fields.Float('Duration', help="Track duration in hours.")
     color = fields.Integer(string='Event Color', default=1)
@@ -22,12 +28,45 @@ class MrpProductionCus(models.Model):
     calendar_display_name = fields.Text(compute="_compute_display_name_calendar", store=True)
     shipping = fields.Char(compute="_compute_shipping", string="送付先")
     
+
+    def _instruction_status_compute(self):
+        for line in self:
+            if line.sale_reference:
+                sale_order = self.env['sale.order'].search([('name', '=', line.sale_reference)], limit=1)
+                if sale_order:
+                    sale_order_line = self.env['sale.order.line'].search([
+                    ("order_id", "=", sale_order.id),
+                    ("product_id", "=", line.product_id.id)
+                ], limit=1)
+                    if sale_order_line:
+                        for order_line in sale_order_line:
+                            if order_line.instruction_status:
+                                line.instruction_status = order_line.instruction_status
+                            else:
+                                line.instruction_status = False
+                    else:
+                        line.instruction_status = False
+                else:
+                    line.instruction_status = False
+            else:
+                line.instruction_status = False
+
+    @api.depends('address_ship')
+    def _compute_waypoint_option(self):
+        sale_order = self.env['sale.order'].search([('name', '=', self.sale_reference)], limit=1)
+        if self.address_ship == "デポ１":
+            self.waypoint_option = sale_order.waypoint.name
+        elif self.address_ship == "デポ２":
+            self.waypoint_option = sale_order.waypoint_2.name
+        else:
+            self.waypoint_option = ""        
+
     def _compute_shipping(self):
         for line in self:
-            if line.address_ship == "デポ/直送":
-                line.shipping = "デポ/直送"
-            elif line.address_ship == "倉庫":
-                line.shipping = line.storehouse_id.name or ''
+            if line.address_ship == "倉庫":
+                line.shipping = "白谷運輸"
+            else:
+                line.shipping = ""
             
     def _compute_sales_order(self):
         for line in self:
@@ -50,15 +89,32 @@ class MrpProductionCus(models.Model):
     @api.model
     def create(self, vals):
         record = super(MrpProductionCus, self).create(vals)
-        if record.origin and '/MO/' in record.origin:
-            record.address_ship = '倉庫'
-            record._onchange_address_ship()
-        else:#source mo
-            warehouse = record.picking_type_id.warehouse_id
-            if warehouse and warehouse.name == "糸島工場":
-                so = self.env["sale.order"].search([('name', '=', record.sale_reference)], limit=1)
-                if so and so.sipping_to != "direct":
-                    record.address_ship = '倉庫'
+        if 'address_ship' not in vals:
+            if record.is_child_mo:
+                record.address_ship = '倉庫'
+                record._onchange_address_ship()
+            else:
+                sale_order = self.env['sale.order'].search([('name', '=', record.sale_reference)], limit=1)
+                warehouse_name = record.picking_type_id.warehouse_id.name
+                if warehouse_name in ["糸島工場","日東木工","アサヒ", "酒見椅子"]:
+                    if sale_order.sipping_to:
+                        if sale_order.sipping_to == 'direct':
+                            record.address_ship = '直送' 
+                        else:
+                            record.address_ship = '倉庫'
+                        record._onchange_address_ship()
+                    else:
+                        record.address_ship = '倉庫'
+                    record._onchange_address_ship()
+                else:
+                    if sale_order.sipping_to:
+                        if sale_order.sipping_to == 'direct':
+                            record.address_ship = '直送' 
+                        else:
+                            record.address_ship = 'デポ１'
+                        record._onchange_address_ship()
+                    else:
+                        record.address_ship = 'デポ１'
                     record._onchange_address_ship()
         return record
 
@@ -100,7 +156,7 @@ class MrpProductionCus(models.Model):
     #                         arrival_schedule += str(parent_mo._convert_timezone(move.forecast_expected_date)) + "\n"
     #                         print('move.forecast_expected_date', move.forecast_expected_date)
     #                 parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
-
+ 
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',
@@ -127,6 +183,8 @@ class MrpProductionCus(models.Model):
 
             if record.product_id and record.product_id.product_no:
                 product_no = record.product_id.product_no
+            elif record.product_id and not record.product_id.product_no and record.product_id.name:
+                product_no = record.product_id.name
             if record.itoshima_shipping_date:
                 date_planned = str(record.itoshima_shipping_date)
 
@@ -154,12 +212,24 @@ class MrpProductionCus(models.Model):
         cache_map = {key: value for key, value in self._cache.items()}
         mrp_id_dragging = cache_map.get('mrp_id_dragging')
         for record in self:
-            if record.id == mrp_id_dragging and record.color != 4:
+            mrp_date_planned_reset = cache_map.get("date_planned_reset_" + str(record.id))
+            if record.id == mrp_date_planned_reset:
+                # 製造開始予定日が自動再計算された場合は除外（編集扱いにしない）
+                record.color = 1
+                record.is_drag_drop_calendar = False
+
+            elif record.id == mrp_id_dragging and record.color != 4:
                 # just add color + tick mark for mrp_id_dragging and that mrp has a color other than blue
                 record.color = 4
                 record.is_drag_drop_calendar = True
 
             record.display_name = record.calendar_display_name
+
+            if mrp_date_planned_reset:
+                del record._cache['date_planned_reset_' + str(record.id)]
+
+        if mrp_id_dragging:
+            del self._cache['mrp_id_dragging']
 
     def write(self, vals):
         old_date_planned_start = {record.id: record.date_planned_start for record in self}

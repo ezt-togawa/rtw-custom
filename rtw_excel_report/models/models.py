@@ -460,13 +460,16 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_transactions_term(self):
         for record in self:
             term = ''
-            if record.partner_id.transactions:
-                for transaction in record.partner_id.transactions:
-                    term += str(transaction.name) + " "
-            if record.partner_id.payment_terms_1:
-                term += record.partner_id.payment_terms_1
+            if record.transactions and record.transaction_condition_1:
+                for transaction in record.transactions:
+                    term += str(transaction.name) + " / " + record.transaction_condition_1
+            elif record.transactions:
+                for transaction in record.transactions:
+                    term += str(transaction.name) 
+            elif record.transaction_condition_1:
+                term += record.transaction_condition_1
             record.sale_order_transactions_term = term
-            
+    
         
     prescription_note = fields.Char(string="prescription note", compute="_compute_prescription_excel")
     prescription_note_detail = fields.Char(string="prescription note detail", compute="_compute_prescription_excel")
@@ -653,11 +656,14 @@ class SaleOrderExcelReport(models.Model):
             
     def _compute_sale_order_waypoint(self):
         for line in self:
-            waypoint = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", line.waypoint.id)], limit=1)
-
+            waypoint = False
+            mrp_production_address_ship = self.env["mrp.production"].search([('origin', '=', line.name)], limit=1).address_ship
+            if mrp_production_address_ship == "デポ１":
+                waypoint = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", line.waypoint.id)], limit=1)
+            elif mrp_production_address_ship == "デポ２":
+                waypoint = self.env["res.partner"].with_context({'lang':self.lang_code}).search([("id", "=", line.waypoint_2.id)], limit=1)
             company_name = ""
             address = ""
-
             if waypoint:
                 if waypoint.company_type == "company":
                     company_name = waypoint.name
@@ -1197,8 +1203,8 @@ class SaleOrderLineExcelReport(models.Model):
             
             if line.product_size:
                 product_no_pack_and_size += line.product_size
-                
             line.sale_order_number_and_size = product_no_pack_and_size.rstrip("\n")
+
     sale_order_product_attr_all = fields.Text(compute="_compute_sale_order_product_detail")
     
     def _compute_sale_order_product_detail(self):
@@ -1375,15 +1381,16 @@ class SaleOrderLineExcelReport(models.Model):
             summary = ""
             if prod:
                 prod_tmpl = prod.product_tmpl_id
-                if prod_tmpl.config_ok:  
+                if prod_tmpl.config_ok and prod_tmpl.categ_id.name != '汎用商品':
                     if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
                         categ_name = prod_tmpl.categ_id.name
                     elif prod_tmpl.product_no:
                         categ_name = prod_tmpl.product_no
                     elif prod_tmpl.name: 
-                        categ_name = prod_tmpl.name   
-                elif line.name:
+                        categ_name = prod_tmpl.name
+                else:
                     categ_name = line.name
+
                 
                 if prod_tmpl.summary:
                     summary = prod_tmpl.summary
@@ -1901,7 +1908,7 @@ class StockMoveExcelReport(models.Model):
             
             if prod:
                 prod_tmpl = prod.product_tmpl_id
-                if prod_tmpl.config_ok :  
+                if prod_tmpl.config_ok :
                     categ_id = prod_tmpl.categ_id
                     prod_no = prod_tmpl.product_no
                     prod_name = prod_tmpl.name
@@ -1968,7 +1975,6 @@ class StockMoveExcelReport(models.Model):
                         size_detail = prod_pack
                 else:
                     size_detail += prod.product_no if prod and prod.product_no else ''
-
             if size_detail and other_size :
                 line.product_number_and_size = size_detail + '\n' + other_size
             elif size_detail:
@@ -1977,7 +1983,6 @@ class StockMoveExcelReport(models.Model):
                 line.product_number_and_size = other_size
             else:
                 line.product_number_and_size = ''
-            
             line.action_packages = "有"
             line.action_assemble = "無"
             line.stock_sai = prod_tmpl.sai if prod_tmpl.sai else ''
@@ -1996,19 +2001,24 @@ class StockMoveExcelReport(models.Model):
             summary = ""
             if prod:
                 prod_tmpl = prod.product_tmpl_id
-                if prod_tmpl.config_ok:  
+                if prod_tmpl.config_ok and prod_tmpl.categ_id.name != '汎用商品':
                     if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
                         categ_name = prod_tmpl.categ_id.name
                     elif prod_tmpl.product_no:
                         categ_name = prod_tmpl.product_no
                     elif prod_tmpl.name: 
-                        categ_name = prod_tmpl.name   
-                elif line.name:
-                    categ_name = line.name
-                
+                        categ_name = prod_tmpl.name  
+                else:
+                    if line.stock_move_sale_line_id:   
+                        categ_name = line.stock_move_sale_line_id.name
+                    else:
+                        order_line = self.env['sale.order.line'].search([('product_id','=',line.product_id.id),('order_id','=',line.sale_id.id)],limit=1)
+                        if order_line:
+                            categ_name = order_line.name
+                        else:
+                            categ_name = ""
                 if prod_tmpl.summary:
                     summary = prod_tmpl.summary
-                        
             p_type = ""
             if line.p_type == "special":
                 p_type = "別注"
@@ -2030,9 +2040,9 @@ class StockMoveExcelReport(models.Model):
                 detail = summary 
             elif p_type:
                 detail = p_type 
-
-            line.stock_move_line_name_excel = detail    
-            line.stock_move_line_name_pdf = categ_name   
+            
+            line.stock_move_line_name_excel = detail
+            line.stock_move_line_name_pdf = categ_name
             line.stock_move_line_p_type_pdf = p_type 
             line.stock_move_line_summary_pdf = summary
 class AccountMoveExcelReport(models.Model):
@@ -2375,13 +2385,13 @@ class AccountMoveLineExcelReport(models.Model):
             if line.product_id: 
                 prod_tmpl = line.product_id.product_tmpl_id
                 if prod_tmpl:
-                    if prod_tmpl.config_ok:  
+                    if prod_tmpl.config_ok and prod_tmpl.categ_id.name != '汎用商品':
                         if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
                             name = prod_tmpl.categ_id.name
                         elif prod_tmpl.product_no:
                             name = prod_tmpl.product_no
-                        else: 
-                            name = prod_tmpl.name   
+                        elif prod_tmpl.name: 
+                            name = prod_tmpl.name
                     else:
                         # case product is standard Prod + download payment
                         if prod_tmpl.seller_ids and line.move_id and line.move_id.partner_id and line.move_id.partner_id.id:
@@ -2394,21 +2404,25 @@ class AccountMoveLineExcelReport(models.Model):
                                 product_code = ("[" + str(matching_sup.product_code) + "]") if matching_sup.product_code else ''
                                 product_name = matching_sup.product_name if matching_sup.product_name else ''
                                 name = product_code + product_name
-                            else:
-                                name =  line.name
-                        else:
-                            name =  line.name
+                                if name == "" and line.name:
+                                    name = line.name
+                            elif line.name:
+                                name = line.name
+                        elif line.name:
+                            name = line.name
                 if line.product_id.summary:
                     summary = line.product_id.summary
+                if name and summary:
+                    line.acc_line_name = name + "\n"+ summary
+                elif name:
+                    line.acc_line_name = name
+                elif summary:
+                    line.acc_line_name = summary
+                line.acc_line_name_pdf = name
+            else:
+                line.acc_line_name_pdf = line.name
+                line.acc_line_name = line.name
             
-            if name and summary:
-                line.acc_line_name = name + "\n"+ summary
-            elif name:
-                line.acc_line_name = name
-            elif summary:
-                line.acc_line_name = summary
-            
-            line.acc_line_name_pdf = name
             
     def _compute_acc_line_index(self):
         index = 0
@@ -2431,7 +2445,6 @@ class AccountMoveLineExcelReport(models.Model):
                         
             if line.sale_line_ids and line.sale_line_ids.product_size:
                 product_number_and_size += line.sale_line_ids.product_size
-            
             line.acc_line_number_and_size = product_number_and_size.rstrip("\n")
                 
     def _compute_acc_line_product_detail(self):

@@ -10,7 +10,16 @@ class sale_order_payment(models.Model):
     has_not_paid_in_payment_status = fields.Boolean(string='has_not_paid_in_payment_status', compute='_compute_has_status_in_payment_status',store=True)
     has_paid_in_payment_status = fields.Boolean(string='has_paid_in_payment_status', compute='_compute_has_status_in_payment_status',store=True)
     has_partial_in_payment_status = fields.Boolean(string='has_partial_in_payment_status', compute='_compute_has_status_in_payment_status',store=True)
-    
+    payment_method = fields.Text(string="支払方法",compute="_compute_payment_method", store=True)
+
+    @api.depends('partner_invoice_id')
+    def _compute_payment_method(self):
+        for so in self:
+            if so.partner_invoice_id:
+                so.payment_method = so.partner_invoice_id.transactions.name
+            else:
+                so.payment_method = None
+
     @api.depends('payment_status')
     def _compute_has_status_in_payment_status(self):
         for record in self:

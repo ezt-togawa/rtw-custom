@@ -9,7 +9,7 @@ class rtw_stock_move(models.Model):
     date_planned = fields.Datetime(
         related='sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
-        'sale.order', compute="_get_sale_id", group_operator="sum",store=True)
+        'sale.order', compute="_get_sale_id",store=True)
     customer_id = fields.Many2one(related='sale_id.partner_id', string='顧客')
     title = fields.Char(related='sale_id.title', string='案件名')
     spec = fields.Many2many(
@@ -20,13 +20,16 @@ class rtw_stock_move(models.Model):
         related="sale_id.overseas", string="海外")
     factory = fields.Many2one(related="production_id.picking_type_id")
     memo = fields.Char(related='sale_line_id.memo')
-    area = fields.Many2one('res.country.state', compute="_get_area", string='エリア', store=True)
+    area = fields.Text( compute="_get_area", string='エリア', store=True)
+    area_2 = fields.Text( compute="_get_area_2", store=True)
     forwarding_address = fields.Text(
         compute="_get_forwarding_address", string='到着地',store=True)
     shipping_to = fields.Text(
         string="配送", compute="_get_shipping_to",store=True)
     warehouse_arrive_date = fields.Date(
         compute="_get_warehouse_arrive_date",store=True )
+    warehouse_arrive_date_2 = fields.Date(
+        compute="_get_warehouse_arrive_date_2",store=True )
     mrp_production_id = fields.Char(
         string="製造オーダー", compute="_get_mrp_production_id",store=True)
     product_package_quantity = fields.Float(string="個口数")
@@ -35,7 +38,69 @@ class rtw_stock_move(models.Model):
         compute="_get_primary_shipment_stock_move",
     )
     operational_Notes = fields.Char(string='運用メモ')
+    itoshima_shiratani_shipping_notes=fields.Text(string="糸島/白谷配送注記",compute="_compute_itoshima_shiratani_shipping_notes")
+    itoshima_shiratani_shipping_notes_first_line = fields.Char(
+        string="糸島/白谷配送注記", compute="_compute_first_line"
+    )
+    arrival_date_itoshima = fields.Date(string="糸島出荷日" , compute= "_compute_arrival_date_itoshima",inverse="_inverse_arrival_date_itoshima") 
+    arrival_date_itoshima_inherit_2 = fields.Date()
+    arrival_date_itoshima_inherit = fields.Date()
 
+    def _compute_arrival_date_itoshima(self):
+        for move in self:
+            if move.mrp_production_id:
+                mrp = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1)
+                if move.arrival_date_itoshima_inherit_2:
+                    if mrp.itoshima_shipping_date != move.arrival_date_itoshima_inherit_2:
+                        move.arrival_date_itoshima =  mrp.itoshima_shipping_date
+                        move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
+                    else:
+                         move.arrival_date_itoshima = move.arrival_date_itoshima_inherit_2
+                elif move.arrival_date_itoshima_inherit and mrp.is_active == False: 
+                    move.arrival_date_itoshima = move.arrival_date_itoshima_inherit
+                else:
+                    if mrp:
+                        move.arrival_date_itoshima =  mrp.itoshima_shipping_date
+                        move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
+            else: 
+                move.arrival_date_itoshima = False
+        
+           
+    def _inverse_arrival_date_itoshima(self):
+        mrp = ""
+        for rec in self:
+            if rec.mrp_production_id:
+                mrp = self.env["mrp.production"].search([('name', '=', rec.mrp_production_id)], limit=1)
+                if mrp:
+                    mrp.write({'arrival_date_itoshima_stock_move': rec.arrival_date_itoshima})
+                    mrp.write({'is_active': False})
+                    stock_move = self.env['stock.move'].search([
+                            ('id', '=', rec.id),
+                        ])
+                    if stock_move:
+                        stock_move.arrival_date_itoshima = rec.arrival_date_itoshima 
+                        stock_move.arrival_date_itoshima_inherit_2 = stock_move.arrival_date_itoshima
+                    else:
+                        return
+                else:
+                    return
+        else:
+            return
+
+
+    def _compute_first_line(self):
+        for move in self:
+            if move.itoshima_shiratani_shipping_notes:
+                move.itoshima_shiratani_shipping_notes_first_line =  move.sale_id.itoshima_shiratani_shipping_notes.split("\n")[0]
+            else:
+                move.itoshima_shiratani_shipping_notes_first_line = ""
+    
+    def _compute_itoshima_shiratani_shipping_notes(self):
+        for move in self:
+            if move.sale_id.itoshima_shiratani_shipping_notes:
+                move.itoshima_shiratani_shipping_notes = move.sale_id.itoshima_shiratani_shipping_notes
+            else:
+                move.itoshima_shiratani_shipping_notes = ''
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -90,11 +155,18 @@ class rtw_stock_move(models.Model):
     def _get_mrp_production_id(self):
 
         for rec in self:
-            if not rec.group_id:
+            if not rec.group_id and not rec.move_orig_ids:
                 continue
 
             # 調達グループから取得（運用や設定的に複数はないはずだが、あった場合は先頭から）
-            group = rec.group_id[0]
+            group = False
+            if rec.group_id:
+                group = rec.group_id[0]
+            if not group and rec.move_orig_ids:
+                # 調達グループがない場合を考慮して、紐づく運送から取得する（オーダー再規則や手動などで製造オーダー作成された場合など）
+                if rec.move_orig_ids.group_id:
+                    group = rec.move_orig_ids.group_id[0]
+
             # 調達グループは販売or製造or購買、製造ではない場合はスルーされる
             if group:
                 mrp = self.env['mrp.production'].search([('name', '=', group.name)])
@@ -159,6 +231,14 @@ class rtw_stock_move(models.Model):
             else:
                 rec.warehouse_arrive_date = False
 
+    @api.depends('sale_id','sale_id.warehouse_arrive_date_2')
+    def _get_warehouse_arrive_date_2(self):
+        for rec in self:
+            if rec.sale_id:
+                rec.warehouse_arrive_date_2 = rec.sale_id.warehouse_arrive_date_2
+            else:
+                rec.warehouse_arrive_date_2= False
+
     @api.depends('picking_id', 'picking_id.sipping_to', 'sale_id', 'sale_id.sipping_to')
     def _get_shipping_to(self):
      for rec in self:
@@ -198,17 +278,30 @@ class rtw_stock_move(models.Model):
         else:
             rec.shipping_to = False
 
-    @api.depends('sale_id','sale_id','picking_id.waypoint', 'sale_id.waypoint', 'picking_id.waypoint.state_id', 'sale_id.waypoint.state_id')
+    @api.depends('sale_id','sale_id','picking_id.waypoint', 'sale_id.waypoint', 'picking_id.waypoint.display_name', 'sale_id.waypoint.display_name')
     def _get_area(self):
         for rec in self:
             if rec.picking_id and rec.picking_id.waypoint:
-                rec.area = rec.picking_id.waypoint.state_id
-                if rec.sale_id and not rec.picking_id.waypoint.state_id:
-                    rec.area = rec.sale_id.waypoint.state_id
+                rec.area = rec.picking_id.waypoint.display_name
+                if rec.sale_id and not rec.picking_id.waypoint:
+                    rec.area = rec.sale_id.waypoint.display_name
             elif rec.sale_id and rec.sale_id.waypoint:
-                rec.area = rec.sale_id.waypoint.state_id
+                rec.area = rec.sale_id.waypoint.display_name
             else:
                 rec.area = False
+
+    @api.depends('sale_id','sale_id','picking_id.waypoint_2', 'sale_id.waypoint_2', 'picking_id.waypoint_2.display_name', 'sale_id.waypoint_2.display_name')
+    def _get_area_2(self):
+        for rec in self:
+            if rec.picking_id and rec.picking_id.waypoint_2:
+                rec.area_2 = rec.picking_id.waypoint_2.display_name
+                if rec.sale_id and not rec.picking_id.waypoint_2:
+                    rec.area_2 = rec.sale_id.waypoint_2.display_name
+            elif rec.sale_id and rec.sale_id.waypoint_2:
+                rec.area_2 = rec.sale_id.waypoint_2.display_name
+            else:
+                rec.area_2 = False
+            
                 
     def _get_primary_shipment_stock_move(self):
         for move in self:
@@ -219,15 +312,20 @@ class rtw_stock_move(models.Model):
     @api.depends('shiratani_date')
     def _get_shiratani_date_delivery(self):
         for rec in self:
-            rec.shiratani_date_delivery = rec.shiratani_date
+                rec.shiratani_date_delivery = rec.shiratani_date
             
     @api.depends('shiratani_date_delivery')
     def _set_shiratani_date_delivery(self):
         for rec in self:
             rec.shiratani_date = rec.shiratani_date_delivery
             if rec.product_id:
-                mrp_production = self.env['mrp.production'].search([('product_id', '=', rec.product_id.id)])
+                mrp_production = self.env['mrp.production'].search([('name', '=', rec.mrp_production_id)])
                 if mrp_production:
+                    # 製造に紐づく運送/配送の白谷到着日を更新
+                    move_list = self.env["stock.move"].search([('mrp_production_id', '=', mrp_production.name)])
+                    if move_list:
+                        move_list.write({'shiratani_date': rec.shiratani_date_delivery})
+
                     mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
                     if rec.picking_id:
                         picking_ids = self.env['stock.move'].search([

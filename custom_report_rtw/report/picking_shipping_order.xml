@@ -140,29 +140,12 @@
                     <td t-esc="l_index+1" class="text-center size12">
                     </td>
                     <td class="size11">
-                      <t>
-                        <t t-if="l.product_id.product_tmpl_id.config_ok">
-                          <t t-if="l.product_id.product_tmpl_id.categ_id.name">
-                            <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                          </t>
-                          <t t-elif="l.product_id.product_tmpl_id.product_no">
-                            <span t-field="l.product_id.product_tmpl_id.product_no" />
-                          </t>
-                          <t t-else="">
-                            <span t-field="l.product_id.product_tmpl_id.name" />
-                          </t>
-                        </t>
-                        <t t-else="">
-                          <span t-field="l.product_name" />
-                        </t>
-                      </t>
-                      <br />
-                      <t t-if="l.p_type == 'special'">
-                        <span>別注</span>
-                      </t>
-                      <t t-elif="l.p_type == 'custom'">
-                        <span>特注</span>
-                      </t>
+                       <div t-if="l.stock_move_line_name_pdf"
+                        t-field="l.stock_move_line_name_pdf" />
+                      <div t-if="l.stock_move_line_summary_pdf"
+                        t-field="l.stock_move_line_summary_pdf" />
+                      <div t-if="l.stock_move_line_p_type_pdf"
+                        t-field="l.stock_move_line_p_type_pdf" />
                     </td>
                     <td class="size13">
                       <div t-esc="l.product_pack_and_prod_no" />
