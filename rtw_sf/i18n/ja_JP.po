@@ -1946,14 +1946,14 @@ msgstr "親ケース"
 #: model:ir.model.fields,field_description:rtw_sf.field_res_users__payment_terms_1
 #: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
 msgid "payment_terms_1"
-msgstr "支払い条件１"
+msgstr "支払サイト"
 
 #. module: rtw_sf
 #: model:ir.model.fields,field_description:rtw_sf.field_res_partner__payment_terms_2
 #: model:ir.model.fields,field_description:rtw_sf.field_res_users__payment_terms_2
 #: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
 msgid "payment_terms_2"
-msgstr "支払い条件2"
+msgstr "経理補足１"
 
 #. module: rtw_sf
 #: model:ir.model.fields,field_description:rtw_sf.field_rtw_sf_case__percentage_of_fault
@@ -2177,7 +2177,7 @@ msgstr "取引区分"
 #: model:ir.model.fields,field_description:rtw_sf.field_res_users__transactions
 #: model_terms:ir.ui.view,arch_db:rtw_sf.view_partner_form_sf
 msgid "transactions"
-msgstr "支払条件"
+msgstr "支払方法"
 
 #. module: rtw_sf
 #: model:ir.model.fields,field_description:rtw_sf.field_res_partner__contact_type
