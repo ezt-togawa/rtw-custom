@@ -31,7 +31,7 @@
             </div>
         </field>
         <field name="report_template"
-            ref="custom_report_rtw.report_purchase_order_sheet_for_part_rtw111" />
+            ref="custom_report_rtw.report_purchase_order_sheet_for_part_rtw" />
         <field name="report_name">発注書(部材用）-${object.current_print}</field>
         <field name="lang">${object.user_id.lang}</field>
         <field name="auto_delete" eval="True" />
