@@ -33,6 +33,8 @@ class sale_order_rtw(models.Model):
     )
     shiratani_entry_date = fields.Date(string="Shiratani entry Date", tracking=True)
     mo_shiratani_entry_date = fields.Char(string="Mo Shiratani Entry Date ", compute='_compute_mo_shiratani_entry_date')
+    mo_warehouse_arrive_date = fields.Char(string="Mo Warehouse Arrive Date ", compute='_compute_mo_warehouse_arrive_date')
+    mo_warehouse_arrive_date_2 = fields.Char(string="Mo Warehouse Arrive Date 2", compute='_compute_mo_warehouse_arrive_date_2')
     depo_date = fields.Date(string="Depo Date")
     customer_order_number = fields.Char('Customer Order Number')
     items_under_consideration = fields.Boolean('Items under consideration', default=0)
@@ -90,6 +92,28 @@ class sale_order_rtw(models.Model):
                 record.mo_shiratani_entry_date = f"{formatted_date} [{day_of_week}]"
             else:
                 record.mo_shiratani_entry_date = ''
+                
+    def _compute_mo_warehouse_arrive_date(self):
+        for record in self:
+            if record.warehouse_arrive_date:
+                date_to_format = fields.Date.from_string(record.warehouse_arrive_date)
+                user_lang = self.env.user.lang
+                formatted_date = format_date(self.env, date_to_format, lang_code=user_lang)
+                day_of_week = babel_format_date(date_to_format, "EEE", locale=user_lang)
+                record.mo_warehouse_arrive_date = f"{formatted_date} [{day_of_week}]"
+            else:
+                record.mo_warehouse_arrive_date = ''
+            
+    def _compute_mo_warehouse_arrive_date_2(self):
+        for record in self:
+            if record.warehouse_arrive_date_2:
+                date_to_format = fields.Date.from_string(record.warehouse_arrive_date_2)
+                user_lang = self.env.user.lang
+                formatted_date = format_date(self.env, date_to_format, lang_code=user_lang)
+                day_of_week = babel_format_date(date_to_format, "EEE", locale=user_lang)
+                record.mo_warehouse_arrive_date_2 = f"{formatted_date} [{day_of_week}]"
+            else:
+                record.mo_warehouse_arrive_date_2 = ''
     
 
     def toggle_under_consideration(self):
@@ -175,3 +199,34 @@ class rtw_sale_order_line(models.Model):
             if line.order_id.overseas:
                 if not line.memo:
                     line.memo = '海外プレート'
+
+class mrp_order_rtw(models.Model):
+    _inherit = "mrp.production"
+    
+
+    mo_estimated_shipping_date = fields.Char(string="Estimated Shipping Date", compute='_compute_mo_estimated_shipping_date')
+    mo_shiratani_date = fields.Char(string="Shiratani Date", compute='_compute_mo_shiratani_date')
+    
+
+    def _compute_mo_estimated_shipping_date(self):
+        for record in self:
+            if record.estimated_shipping_date:
+                date_to_format = fields.Date.from_string(record.estimated_shipping_date)
+                user_lang = self.env.user.lang
+                formatted_date = format_date(self.env, date_to_format, lang_code=user_lang)
+                day_of_week = babel_format_date(date_to_format, "EEE", locale=user_lang)
+                record.mo_estimated_shipping_date = f"{formatted_date} [{day_of_week}]"
+            else:
+                record.mo_estimated_shipping_date = ''
+
+
+    def _compute_mo_shiratani_date(self):
+        for record in self:
+            if record.shiratani_date:
+                date_to_format = fields.Date.from_string(record.shiratani_date)
+                user_lang = self.env.user.lang
+                formatted_date = format_date(self.env, date_to_format, lang_code=user_lang)
+                day_of_week = babel_format_date(date_to_format, "EEE", locale=user_lang)
+                record.mo_shiratani_date = f"{formatted_date} [{day_of_week}]"
+            else:
+                record.mo_shiratani_date = ''

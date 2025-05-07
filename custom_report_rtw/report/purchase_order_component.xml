@@ -2,18 +2,19 @@
 <odoo>
   <template id="report_purchase_order_sheet_for_part">
     <t t-call="web.html_container">
-      <t t-foreach="docs[0]" t-as="o">
+      <t t-foreach="docs[0]" t-as="po">
+        <t t-set="real_po" t-value="po if po._name == 'purchase.order' else po.order_id"/>
         <t t-call="custom_report_rtw.so_ex_layout">
           <t t-set="total_subprice" t-value="0" />
           <t t-set="total_listprice" t-value="0" />
-          <t t-if="not o" t-set="o" t-value="doc" />
+          <t t-if="not real_po" t-set="real_po" t-value="doc" />
           <t t-if="not company">
             <!-- Multicompany -->
             <t t-if="company_id">
               <t t-set="company" t-value="company_id" />
             </t>
-            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
-              <t t-set="company" t-value="o.company_id.sudo()" />
+            <t t-elif="real_po and 'company_id' in real_po and real_po.company_id.sudo()">
+              <t t-set="company" t-value="real_po.company_id.sudo()" />
             </t>
             <t t-else="else">
               <t t-set="company" t-value="res_company" />
@@ -22,72 +23,109 @@
           <t t-call="custom_report_rtw.SO_purchase_order_sheet_for_part_header_layout"></t>
           <div class="page">
             <t t-foreach="docs[0]" t-as="po">
+              <t t-set="real_po" t-value="po if po._name == 'purchase.order' else po.order_id" />
               <t
                 t-set="type">quotation</t>
               <t t-set="address">
-                <div t-if="po.partner_id" t-field="po.partner_id"
+                <div t-if="real_po.partner_id" t-field="real_po.partner_id"
                   t-options='{"widget": "contact", "fields": ["address", "name"],
                         "no_marker": True}' />
-                <p t-if="po.partner_id.vat"><t
-                    t-esc="po.company_id.country_id.vat_label or 'Tax ID'" />: <span
-                    t-field="po.partner_id.vat" />
+                <p t-if="real_po.partner_id.vat"><t
+                    t-esc="real_po.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                    t-field="real_po.partner_id.vat" />
                 </p>
               </t>
-              <div t-if="po.company_id.logo or po.company_id.report_header"
+              <div t-if="real_po.company_id.logo or real_po.company_id.report_header"
                 class="row zero_min_height">
               </div>
               <div class="row size13" style="margin-top:-50px">
                 <div class="col-8 size13">
                   <div class="d-flex">
                     <div class="col-6">
-                      <div>
-                        発注番号  <span class="size16">
-                          <t t-set="filtered_docs"
-                            t-value="docs.filtered(lambda doc: doc.purchase_order_origin)" />
-                          <t t-set="seen_SO" t-value="{}" />
-                          <t t-set="order_origin" t-value="''" />
+                      <div> 発注番号 <t t-if="po._name == 'purchase.order'">
+                          <span class="size16">
+                            <t t-set="filtered_docs"
+                              t-value="docs.filtered(lambda doc: doc.purchase_order_origin)" />
+                            <t t-set="seen_SO" t-value="{}" />
+                            <t t-set="order_origin" t-value="''" />
 
-                          <t t-foreach="filtered_docs" t-as="po_name">
-                            <t t-if="order_origin">
-                              <t t-set="order_origin"
-                                t-value="order_origin + ' , ' + po_name.purchase_order_origin" />
+                            <t t-foreach="filtered_docs" t-as="po_name">
+                              <t t-if="order_origin">
+                                <t t-set="order_origin"
+                                  t-value="order_origin + ' , ' + po_name.purchase_order_origin" />
+                              </t>
+                              <t t-if="not order_origin">
+                                <t t-set="order_origin"
+                                  t-value="order_origin + po_name.purchase_order_origin" />
+                              </t>
                             </t>
-                            <t t-if="not order_origin">
-                              <t t-set="order_origin"
-                                t-value="order_origin + po_name.purchase_order_origin" />
+                            <span style="width: 300px;" t-esc="docs.check_duplicate(order_origin)" />
+                          </span>
+
+                        </t>
+                        <t
+                          t-else="">
+                          <span class="size16">
+                            <t t-set="filtered_docs"
+                              t-value="docs.order_id.filtered(lambda doc: doc.purchase_order_origin)" />
+                            <t t-set="seen_SO" t-value="{}" />
+                            <t t-set="order_origin" t-value="''" />
+
+                            <t t-foreach="filtered_docs" t-as="po_name">
+                              <t t-if="order_origin">
+                                <t t-set="order_origin"
+                                  t-value="order_origin + ' , ' + po_name.purchase_order_origin" />
+                              </t>
+                              <t t-if="not order_origin">
+                                <t t-set="order_origin"
+                                  t-value="order_origin + po_name.purchase_order_origin" />
+                              </t>
                             </t>
-                          </t>
-                          <span style="width: 300px;" t-esc="docs.check_duplicate(order_origin)" />
-                        </span>
+                            <span style="width: 300px;" t-esc="docs.check_duplicate(order_origin)" />
+                          </span>
+                        </t>
                       </div>
                       <div>
-                        <t t-foreach="docs" t-as="po_name">
-                          <span t-field="po_name.name" />
-                          <t t-set="is_last_item" t-value="po_name == docs[-1]" />
-                          <t t-if="not is_last_item">, </t>
+                        <t t-if="po._name == 'purchase.order'">
+                          <t t-foreach="docs" t-as="po_name">
+                            <span t-field="po_name.name" />
+                            <t t-set="is_last_item" t-value="po_name == docs[-1]" />
+                            <t t-if="not is_last_item">, </t>
+                          </t>
+                        </t>
+                        <t t-else="">
+                          <t t-set="seen_names" t-value="set()" />
+                        <t t-foreach="docs.order_id" t-as="po_name">
+                          <t t-if="po_name.name not in seen_names">
+                            <span t-field="po_name.name" />
+                            <t t-set="seen_names" t-value="seen_names | set([po_name.name])" />
+                            <t t-set="is_last_item" t-value="po_name == docs.order_id[-1]" />
+                            <t t-if="not is_last_item">, </t>
+                          </t>
+                          </t>
                         </t>
                       </div>
                     </div>
-                    <div class=" col-6 size18" t-if="po.resend" t-field="po.resend" />
+                    <div class=" col-6 size18" t-if="real_po.resend" t-field="real_po.resend" />
                   </div>
                   <br />
-                  <div>送り先着日 <span class="size16" t-esc="po.purchase_line_date_planned" /></div>
+                  <div>送り先着日 <span class="size16" t-esc="real_po.purchase_line_date_planned" /></div>
                   <br />
                   <div class="row py-2">
                     <div class="col-6 size13">
                       <div> 送り先: <t class="size14">
-                          <t t-if="po.picking_type_id.warehouse_id.name">
-                            <span t-field="po.picking_type_id.warehouse_id.name" />
+                          <t t-if="real_po.picking_type_id.warehouse_id.name">
+                            <span t-field="real_po.picking_type_id.warehouse_id.name" />
                           </t>
                         </t>
                       </div>
                       <div class="d-flex">
-                        <div> 住所: <span t-esc="po.purchase_order_address" /></div>
+                        <div> 住所: <span t-esc="real_po.purchase_order_address" /></div>
                       </div>
                       <div> TEL: <t class="size14">
                           <t
-                            t-if="po.picking_type_id.warehouse_id.partner_id.phone">
-                            <span t-field="po.picking_type_id.warehouse_id.partner_id.phone" />
+                            t-if="real_po.picking_type_id.warehouse_id.partner_id.phone">
+                            <span t-field="real_po.picking_type_id.warehouse_id.partner_id.phone" />
                           </t>
                         </t>
                       </div>
@@ -97,7 +135,7 @@
                         <div>送り先注記: </div>
                         <div
                           style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;"
-                          class="ml-1" t-if="po.destination_note" t-field="po.destination_note" />
+                          class="ml-1" t-if="real_po.destination_note" t-field="po.destination_note" />
                       </div>
                     </div>
                   </div>
@@ -111,25 +149,25 @@
                     </div>
                     <div>
                       <div class="size12">
-                        <span t-esc="po.hr_employee_company" />
+                        <span t-esc="real_po.hr_employee_company" />
                       </div>
                       <div>
-                        <span t-esc="po.hr_employee_department" />
+                        <span t-esc="real_po.hr_employee_department" />
                       </div>
                       <div>
-                        <span t-esc="po.hr_employee_zip" />
+                        <span t-esc="real_po.hr_employee_zip" />
                       </div>
                       <div>
-                        <span t-esc="po.hr_employee_info" />
+                        <span t-esc="real_po.hr_employee_info" />
                       </div>
                       <div>
-                        <span t-esc="po.hr_employee_tel" />
+                        <span t-esc="real_po.hr_employee_tel" />
                       </div>
                       <div>
-                        <span t-esc="po.hr_employee_fax" />
+                        <span t-esc="real_po.hr_employee_fax" />
                       </div>
                       <div class="size12">
-                        <t t-if="po.hr_employee_printer"> 発注者 <span t-esc="po.hr_employee_printer" /></t>
+                        <t t-if="real_po.hr_employee_printer"> 発注者 <span t-esc="real_po.hr_employee_printer" /></t>
                       </div>
                     </div>
                   </div>
@@ -150,7 +188,7 @@
                     <th class="text-center" style="width:17%">Custom</th>
                   </tr>
                 </thead>
-                <t>
+                <t t-if="po._name == 'purchase.order'">
                   <t t-set="generate_pdf_result" t-value="docs.generate_pdf()" />
                   <t t-foreach="generate_pdf_result" t-as="line" t-groupby="10" t-att-last="last">
                     <t t-set="total_listprice"
@@ -165,6 +203,8 @@
                             <td class="bg-section" />
                             <td class="size11 bg-section" colspan="9">
                               <span t-esc="line['name']" />
+                                <span t-esc='o._name' />
+
                             </td>
                           </t>
                           <t t-elif="line['display_type'] =='line_note'">
@@ -209,12 +249,96 @@
                     </tbody>
                   </t>
                 </t>
+                <t t-else="">
+                  <t t-foreach="docs" t-as="po2">
+                  <t t-foreach="po2" t-as="l" t-groupby="10"
+                    t-att-last="last">
+                    <t t-set="total_subprice"
+                      t-value="total_subprice + l.price_subtotal" />
+                    <t t-set="total_listprice"
+                      t-value="total_listprice + l.price_unit * l.product_uom_qty" />
+                    <tbody class="invoice_tbody">
+                      <t t-if="l.display_type =='line_section' or l.display_type =='line_note'">
+                        <tr class="size15 table-border-bottom-auto">
+                          <t t-if="l.display_type =='line_section'">
+                            <td class="bg-section" />
+                            <td class="size11 bg-section" colspan="9">
+                              <span t-field="l.name" />
+                            </td>
+                          </t>
+                          <t t-elif="l.display_type =='line_note'">
+                            <td />
+                            <td class="size11" colspan="9">
+                              <span t-field="l.name" />
+                            </td>
+                          </t>
+                        </tr>
+                      </t>
+                      <t t-else="">
+                        <tr class="table-border-bottom-auto size15">
+                          <td class="text-center size12">
+                            <t t-set="number" t-value="number + 1" />
+                            <t t-esc="number" />
+                          </td>
+                          <td class="size12">
+                            <t t-if="l.product_id.product_tmpl_id.config_ok">
+                              <t t-if="l.product_id.product_tmpl_id.categ_id.name">
+                                <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
+                              </t>
+                              <t t-elif="l.product_id.product_tmpl_id.product_no">
+                                <span t-field="l.product_id.product_tmpl_id.product_no" />
+                              </t>
+                              <t t-else="">
+                                <span t-field="l.name" />
+                              </t>
+                            </t>
+                            <t t-else="">
+                              <span t-field="l.name" />
+                            </t>
+                            <br />
+                          </td>
+                          <td class="text-center">
+                            <div id="quote_qty">
+                              <span
+                                t-field="l.purchase_order_line_product_uom_qty" />
+                            </div>
+                          </td>
+                          <td class="text-center size12">
+                            <span t-if="l.product_uom.name" t-esc="l.product_uom.name" />
+                          </td>
+                          <td class="text-center size14">
+                            <span t-if="l.purchase_order_sell_unit_price"
+                              t-esc="l.purchase_order_sell_unit_price" />
+                          </td>
+                          <td class="text-center size14">
+                            <span t-if="l.price_subtotal"
+                              t-esc="l.price_subtotal" />
+                          </td>
+                          <td class="size13"></td>
+                        </tr>
+                      </t>
+                    </tbody>
+                  </t>
+                </t>
+                </t>
               </table>
               <div class="d-flex justify-content-end size13">
                 <div>販売価格合計 : <t t-set="total_amount" t-value="0" />
-                  <t t-foreach="docs"
-                    t-as="po_name2">
-                    <t t-set="total_amount" t-value="total_amount + int(po_name2.amount_untaxed)" />
+                  <t
+                    t-if="po._name == 'purchase.order'">
+                    <t t-foreach="docs"
+                      t-as="po_name2">
+                      <t t-set="total_amount" t-value="total_amount + int(po_name2.amount_untaxed)" />
+                    </t>
+                  </t>
+                  <t
+                    t-else="">
+                    <t t-set="total_amount" t-value="0" />
+                    <t t-foreach="docs"
+                      t-as="po_name2">
+                      <t t-set="total_amount"
+                        t-value="total_amount + int(po_name2.price_subtotal)" />
+                    </t>
                   </t>
                     <span
                     class="size15" t-esc="'{0:,.0f}'.format(total_amount)" />
@@ -226,6 +350,10 @@
         </t>
       </t>
     </t>
+  </template>
+
+  <template id="report_purchase_order_line_sheet_for_part">
+    <t t-call="custom_report_rtw.report_purchase_order_sheet_for_part" />
   </template>
 
   <record id="paperformat_purchase_order_sheet_for_part" model="report.paperformat">
@@ -244,8 +372,8 @@
     <field name="dpi">90</field>
   </record>
 
-  <record id="report_purchase_order_sheet_for_part_rtw111" model="ir.actions.report">
-    <field name="name">発注書(部材用）</field>
+  <record id="report_purchase_order_sheet_for_part_rtw" model="ir.actions.report">
+    <field name="name">発注書(部材用) </field>
     <field name="model">purchase.order</field>
     <field name="binding_model_id" ref="model_purchase_order" />
     <field name="report_type">qweb-pdf</field>
@@ -254,7 +382,18 @@
     <field name="paperformat_id" ref="custom_report_rtw.paperformat_purchase_order_sheet_for_part" />
     <field name="attachment_use">True</field>
     <field name="binding_view_types">list,form</field>
-    <field name="print_report_name">'発注書(部材用）-' + object.current_print</field>
+    <field name="print_report_name">'発注書(部材用) -' + object.current_print</field>
   </record>
 
+  <record id="report_purchase_order_line_sheet_for_part_rtw" model="ir.actions.report">
+    <field name="name">発注書(部材用/明細別) </field>
+    <field name="model">purchase.order.line</field>
+    <field name="binding_model_id" ref="model_purchase_order_line" />
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">custom_report_rtw.report_purchase_order_line_sheet_for_part</field>
+    <field name="paperformat_id" ref="custom_report_rtw.paperformat_purchase_order_sheet_for_part" />
+    <field name="attachment_use">True</field>
+    <field name="binding_view_types">list,form</field>
+    <field name="print_report_name">'発注書(部材用) -' + object.current_print</field>
+  </record>
 </odoo>

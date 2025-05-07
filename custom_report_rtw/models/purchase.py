@@ -193,3 +193,25 @@ class PurchaseOrderEmployee(models.Model):
                 address += purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name 
             
         po.purchase_order_address = address
+
+
+class PurchaseOrderLineEmployee(models.Model):
+    _inherit = 'purchase.order.line'
+    
+    current_print = fields.Char(compute="_compute_current_print")
+
+    def _compute_current_print(self):
+        for po in self:
+            po.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
+
+    def check_duplicate(self , data):
+        if data:
+            arr = data.split(' , ')
+            arr2 = []
+            for item in arr:
+                items_to_add = item.split(',') if ',' in item else [item]
+                for sub_item in items_to_add:
+                   if sub_item not in arr2:
+                        arr2.append(sub_item)
+            return ' , '.join(arr2)
+    

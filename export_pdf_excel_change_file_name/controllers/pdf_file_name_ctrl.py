@@ -65,7 +65,9 @@ class PdfFileNameCus(ReportController):
                     # custom export pdf list 
                     if len(obj) > 1:
                         if obj._name == 'purchase.order' or obj._name == 'mrp.production':
-                            filename = "%s.%s" % (report.name + "_" + datetime.datetime.now().strftime('%Y-%m-%dT%H%M%S'), extension)
+                            filename = "%s.%s" % (report.name + "-" + datetime.datetime.now().strftime('%Y-%m-%dT%H%M%S'), extension)
+                        elif obj._name == 'purchase.order.line':
+                            filename = "%s.%s" % ('発注書(部材用) ' + "-" + datetime.datetime.now().strftime('%Y-%m-%dT%H%M%S'), extension)
                     # custom export pdf list   
                 
                 response.headers.add('Content-Disposition', content_disposition(filename))
