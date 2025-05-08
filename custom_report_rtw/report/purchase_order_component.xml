@@ -135,7 +135,7 @@
                         <div>送り先注記: </div>
                         <div
                           style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:60px;"
-                          class="ml-1" t-if="real_po.destination_note" t-field="po.destination_note" />
+                          class="ml-1" t-if="real_po.destination_note" t-field="real_po.destination_note" />
                       </div>
                     </div>
                   </div>
