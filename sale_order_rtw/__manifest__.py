@@ -29,6 +29,7 @@
         'views/item_attach_views.xml',
         'views/sale_order_work_day.xml',
         'views/templates.xml',
+        'views/sale_order_instruction_status.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

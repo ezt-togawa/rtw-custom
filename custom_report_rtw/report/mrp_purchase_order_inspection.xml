@@ -227,7 +227,7 @@
                       <th class="text-center" style="width:24%;padding:12px 0px;">仕様・詳細２</th>
                       <th class="text-center" style="width:3%;padding:12px 0px;">数量</th>
                       <th class="text-center" style="width:1%;padding:12px 0px;"/>
-                      <th class="text-center" style="width:3%;padding:12px 0px;">取説</th>
+                      <th class="text-center" style="width:3%;padding:12px 0px;">同梱</th>
                       <th class="text-center" style="width:15%;padding:12px 0px;">Custom</th>
                       <th class="text-center" style="width:15%;padding:12px 0px;">メモ</th>
                       </tr>
@@ -291,8 +291,10 @@
                           </div>
                         </td>
                         <td class="text-center size14" style="padding:12px 0px;">
-                          <t t-if="line.mrp_production_order_line.instruction_status">
-                            有
+                          <t t-if="line.mrp_production_order_line.combined_shipment">
+                            <!-- 有 -->
+                            <span
+                                t-field="line.mrp_production_order_line.combined_shipment.abbreviation" />
                           </t>
                         </td>
                         <td class="size13" style="padding:12px 0px;">

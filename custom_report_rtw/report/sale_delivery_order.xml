@@ -135,11 +135,11 @@
                     <tr class="table-title2 bold">
                       <th class="text-center" style="width:3%">№</th>
                       <th class="text-center" style="width:25%">品名</th>
-                      <th class="text-center" style="width:27%">品番・サイズ</th>
+                      <th class="text-center" style="width:32%">品番・サイズ</th>
                       <th class="text-center" style="width:5%">数量</th>
                       <th class="text-center" style="width:7%">個口数</th>
                       <th class="text-center" style="width:5%">才数</th>
-                      <th class="text-center" style="width:5%">取説</th>
+                      <!-- <th class="text-center" style="width:5%">取説</th> -->
                       <th class="text-center" style="width:5%">開梱</th>
                       <th class="text-center" style="width:5%">組立</th>
                       <th class="text-center" style="width:13%">備考</th>
@@ -189,11 +189,11 @@
                           <span t-esc="'{0:,.0f}'.format(l.product_id.sai)" />
                         </div>
                       </td>
-                      <td class="text-center">
-                        <t t-if="l.instruction_status">
+                      <!-- <td class="text-center">
+                        <t t-if="l.combined_shipment">
                           有
                         </t>
-                      </td>
+                      </td> -->
                       <td class="text-center">
                         <span>有</span>
                       </td>

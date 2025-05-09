@@ -1766,14 +1766,14 @@ class StockMoveExcelReport(models.Model):
         compute="_compute_calculate_product_pack_pdf",
     )
     
-    sale_line_instruction_status = fields.Char( compute="_compute_sale_line" )
+    sale_line_combined_shipment = fields.Char( compute="_compute_sale_line" )
 
     def _compute_sale_line(self):
         for line in self:
             status = ''
-            if line.stock_move_sale_line_id and line.stock_move_sale_line_id.instruction_status:
+            if line.stock_move_sale_line_id and line.stock_move_sale_line_id.combined_shipment:
                 status = '有'
-            line.sale_line_instruction_status = status
+            line.sale_line_combined_shipment = status
             
     def _compute_calculate_product_pack(self):
         for line in self:
