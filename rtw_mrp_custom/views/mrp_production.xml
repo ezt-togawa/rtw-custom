@@ -71,7 +71,7 @@
                     <field name="storehouse_id" widget="many2one"
                         attrs="{'invisible': [('address_ship', '!=', '倉庫')]}" />
                     <field name="mrp_ship_address_id" widget="selection" />
-                    <field name="instruction_status"  />
+                    <field name="combined_shipment"  />
                 </xpath>
             </field>
         </record>
@@ -91,7 +91,7 @@
                     <field name="sales_order" optional="show" />
                 </xpath>
                 <xpath expr="//field[@name='product_qty']" position="after">
-                    <field name="instruction_status" optional="hidden" />
+                    <field name="combined_shipment" optional="hidden" />
                     <field name="working_notes" optional="hidden" />
                 </xpath>
             </field>
