@@ -41,7 +41,7 @@
                             'D23':'product_attribute#{style=text;fill=grey}',
                             'E23': 'stock_product_uom_qty${value or ""}#{style=text;fill=grey}',
                             'F23': 'product_package_quantity${value or 0}#{style=text;fill=grey}',
-                            'G23': 'sale_line_instruction_status#{style=text;fill=grey}',
+                            'G23': 'sale_line_combined_shipment#{style=text;fill=grey}',
                             'H23': 'action_packages#{style=text;fill=grey}',
                             'I23': 'action_assemble#{style=text;fill=grey}',
                             'J23': '${value or ""}#{style=text;fill=grey}',

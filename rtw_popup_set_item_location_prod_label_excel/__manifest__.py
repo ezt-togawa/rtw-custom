@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rtw_mrp_custom",
+    'name': "rtw_popup_set_item_location_prod_label_excel",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as

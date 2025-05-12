@@ -13,7 +13,7 @@
             </field>
         </record> -->
 
-        <record id="view_mrp_production_form_rtw" model="ir.ui.view">
+        <record id="view_stock_move_list_rtw" model="ir.ui.view">
             <field name="name">rtw stock move</field>
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="rtw_stock_move_line.stock_move_list" />

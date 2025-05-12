@@ -7,7 +7,7 @@
         subtitle on modules listing or apps.openerp.com""",
 
     'description': """
-        Long description of module's purpose
+        廃止：OCAのmrp_production_back_to_draft を適用したため
     """,
 
     'author': "Enzantrades",

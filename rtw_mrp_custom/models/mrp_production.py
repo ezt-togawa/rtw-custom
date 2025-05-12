@@ -14,7 +14,7 @@ class MrpProductionCus(models.Model):
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
-    instruction_status = fields.Boolean(string='取説',compute = "_instruction_status_compute")
+    combined_shipment = fields.Char(string='同梱',compute = "_combined_shipment_compute")
     working_notes = fields.Char(string='作業メモ')
     address_ship = fields.Selection([ ('倉庫', '倉庫'),
     ('直送', '直送'),
@@ -29,7 +29,7 @@ class MrpProductionCus(models.Model):
     shipping = fields.Char(compute="_compute_shipping", string="送付先")
     
 
-    def _instruction_status_compute(self):
+    def _combined_shipment_compute(self):
         for line in self:
             if line.sale_reference:
                 sale_order = self.env['sale.order'].search([('name', '=', line.sale_reference)], limit=1)
@@ -40,16 +40,16 @@ class MrpProductionCus(models.Model):
                 ], limit=1)
                     if sale_order_line:
                         for order_line in sale_order_line:
-                            if order_line.instruction_status:
-                                line.instruction_status = order_line.instruction_status
+                            if order_line.combined_shipment:
+                                line.combined_shipment = order_line.combined_shipment.name
                             else:
-                                line.instruction_status = False
+                                line.combined_shipment = False
                     else:
-                        line.instruction_status = False
+                        line.combined_shipment = False
                 else:
-                    line.instruction_status = False
+                    line.combined_shipment = False
             else:
-                line.instruction_status = False
+                line.combined_shipment = False
 
     @api.depends('address_ship')
     def _compute_waypoint_option(self):

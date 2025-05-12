@@ -51,7 +51,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_custom= workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
 
         allow_print = False
-        if len(mrp_data) == 1:
+        if len(mrp_data) != 1:
             allow_print = True
         else:   
             origins = mrp_data.mapped('origin')
@@ -194,7 +194,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(17, 3, _("仕様・詳細２"), format_table)
                 sheet.write(17, 4, _("数量"), format_table)
                 sheet.write(17, 5, "", format_table)
-                sheet.write(17, 6, _("取説"), format_table)
+                sheet.write(17, 6, _("同梱"), format_table)
                 sheet.write(17, 8, _("Custom"), format_table)
                 sheet.write(17, 9, _("メモ"), format_table)
 
@@ -214,7 +214,7 @@ class ReportMrpExcel(models.AbstractModel):
                 else:
                     sheet.merge_range(row, 5, row + height, 5, "", format_lines_12)
                     
-                sheet.merge_range(row, 6, row + height, 6, _("有") if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
+                sheet.merge_range(row, 6, row + height, 6, mrp.mrp_production_order_line.combined_shipment if mrp.mrp_production_order_line.combined_shipment else '', format_lines_13)
                 sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_custom)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)
                 
@@ -331,7 +331,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(17, 3, _("仕様・詳細２"), format_table)
                 sheet.write(17, 4, _("数量"), format_table)
                 sheet.write(17, 5, "", format_table)
-                sheet.write(17, 6, _("取説"), format_table)
+                sheet.write(17, 6, _("同梱"), format_table)
                 sheet.write(17, 8, "Custom", format_table)
                 sheet.write(17, 9, _("メモ"), format_table)
 
@@ -351,7 +351,7 @@ class ReportMrpExcel(models.AbstractModel):
                 else:
                     sheet.merge_range(row, 5, row + height, 5, "", format_lines_12)
 
-                sheet.merge_range(row, 6, row + height, 6, _("有") if mrp.mrp_production_order_line.instruction_status else '', format_lines_13)
+                sheet.merge_range(row, 6, row + height, 6, mrp.mrp_production_order_line.combined_shipment if mrp.mrp_production_order_line.combined_shipment else '', format_lines_13)
                 sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_config_cus_excel, format_lines_custom)
                 sheet.merge_range(row, 9, row + height, 9, mrp.production_memo, format_lines_13)
 
