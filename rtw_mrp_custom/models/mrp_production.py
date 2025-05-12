@@ -14,6 +14,8 @@ class MrpProductionCus(models.Model):
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
+    # リリース後削除（combined_shipmentに変更したいが、消すとあちこちのアップグレードでエラー。継承の問題かと思うが複雑で因果関係解明できず暫定）
+    instruction_status = fields.Boolean(string='取説', compute="_instruction_status_compute")
     combined_shipment = fields.Char(string='同梱',compute = "_combined_shipment_compute")
     working_notes = fields.Char(string='作業メモ')
     address_ship = fields.Selection([ ('倉庫', '倉庫'),
