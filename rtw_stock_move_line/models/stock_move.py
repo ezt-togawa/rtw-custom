@@ -120,7 +120,7 @@ class rtw_stock_move(models.Model):
             else:
                 rec.sai = 0
 
-    @api.depends('product_id')
+    @api.depends('product_id', 'sale_line_id.depo_date','sale_line_id.depo_date','sale_line_id','sale_id','sale_id.warehouse_arrive_date')
     def _get_sale(self):
         for rec in self:
             if rec.sale_line_id.depo_date:
@@ -213,7 +213,7 @@ class rtw_stock_move(models.Model):
                             rec.shiratani_date = move.shiratani_date
                             break  
             else:
-                    rec.shiratani_date = False        
+                rec.shiratani_date = False
             # if rec.sale_line_id.shiratani_date:
             #     rec.shiratani_date = rec.sale_line_id.shiratani_date
             # elif rec.sale_id:
