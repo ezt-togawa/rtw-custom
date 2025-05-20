@@ -151,7 +151,7 @@ class sale_order_rtw(models.Model):
     def update_commitment_date(self):
         for record in self:
             record.commitment_date = self.estimated_shipping_date
-            
+
     @api.onchange('overseas')
     def onchange_overseas(self):
         for record in self:
@@ -181,6 +181,15 @@ class sale_order_rtw(models.Model):
         res = super(sale_order_rtw, self).action_confirm()
         self.state = 'sale'
         return res
+
+    def create(self, vals):
+        # 複製した場合に配送日がブランクになるのを回避する、発想予定日と連動させる
+        if vals.get('estimated_shipping_date', False) and not vals.get('commitment_date', False):
+            vals['commitment_date'] = vals.get('estimated_shipping_date')
+
+        res = super(sale_order_rtw, self).create(vals)
+        return res
+
 class rtw_sale_order_line(models.Model):
     _inherit = "sale.order.line"
     def _prepare_add_missing_fields(self, values):
