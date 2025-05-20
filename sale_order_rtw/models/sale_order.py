@@ -183,7 +183,7 @@ class sale_order_rtw(models.Model):
         return res
 
     def create(self, vals):
-        # 複製した場合に配送日がブランクになるのを回避する、発想予定日と連動させる
+        # 複製した場合に配送日がブランクになるのを回避する、発送予定日と連動させる
         if vals.get('estimated_shipping_date', False) and not vals.get('commitment_date', False):
             vals['commitment_date'] = vals.get('estimated_shipping_date')
 
