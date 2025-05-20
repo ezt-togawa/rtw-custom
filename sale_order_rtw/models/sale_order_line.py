@@ -12,8 +12,6 @@ class sale_order_line_rtw(models.Model):
         "attach Count", compute="_compute_item_attach_count"
     )
 
-    # リリース後削除（combined_shipmentに変更したいが、消すとあちこちのアップグレードでエラー。継承の問題かと思うが複雑で因果関係解明できず暫定）
-    instruction_status = fields.Boolean(string='Instruction Status')
     combined_shipment = fields.Many2one(string='同梱',comodel_name='sale.order.instruction.status')
 
     def _compute_item_attach_count(self):

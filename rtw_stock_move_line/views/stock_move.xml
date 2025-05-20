@@ -150,7 +150,11 @@
                        position="after">
                     <field name="depo_date"/>
                     <field name="shiratani_date"/>
-                    <field name="p_type"/>
+                    <field name="p_type" optional="hide" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='lot_ids']"
+                       position="after">
+                    <field name="invoice_number" optional="hide" readonly="1" />
                 </xpath>
             </field>
         </record>

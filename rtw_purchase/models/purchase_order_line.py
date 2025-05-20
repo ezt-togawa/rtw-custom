@@ -119,7 +119,17 @@ class rtw_purchase(models.Model):
                 purchase.sale_order_names = ','.join(name)
                 purchase.filter_so_ids = ','.join(order)
             else:
-                if purchase.sale_order_id:
+                if purchase.order_id:
+                    check_sale_order = self.env['sale.order'].search([('name', '=', purchase.order_id.origin)], limit=1)
+                    if check_sale_order:
+                        purchase.sale_order_ids = purchase.order_id.origin
+                        purchase.sale_order_names = check_sale_order.title
+                        purchase.filter_so_ids = purchase.order_id.origin
+                    else:
+                        purchase.sale_order_ids = ''
+                        purchase.sale_order_names = ''
+                        purchase.filter_so_ids = ''
+                elif purchase.sale_order_id:
                     purchase.sale_order_ids = purchase.sale_order_id.name
                     purchase.sale_order_names = purchase.sale_order_id.title
                     purchase.filter_so_ids = purchase.sale_order_ids
