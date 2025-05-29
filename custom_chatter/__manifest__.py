@@ -5,7 +5,9 @@
     'author': "Enzantrades",
     'category': 'mail',
     'summary': """
-        OCAモジュール mail_restrict_send_button の不備対応：chater.js の更新""",
+        OCAモジュール mail_restrict_send_button の不備対応：chater.js の更新
+        →不要として未使用とする。OCA側の「mail_restrict_send_button」からchater.js自体を使わなくするように変更。
+        """,
     'website': 'http://www.yourcompany.com',
     'description': """
 """,
