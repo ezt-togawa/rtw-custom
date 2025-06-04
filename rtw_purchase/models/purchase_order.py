@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 class rtw_purchase(models.Model):
     _inherit = "purchase.order"
     
@@ -112,3 +112,33 @@ class rtw_purchase(models.Model):
         if not po.user_id:
             po.user_id = res_user
         return res
+
+    def action_view_mrp_productions(self):
+        self.ensure_one()
+        mrp_production_ids = (
+            self.order_line.move_dest_ids.group_id.mrp_production_ids | 
+            self.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
+        ).ids
+        if not mrp_production_ids:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('No Manufacturing Orders'),
+                    'message': _('No manufacturing orders found for this purchase order.'),
+                    'type': 'warning',
+                }
+            }
+        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        action = self.env["ir.actions.actions"]._for_xml_id('mrp.mrp_production_action')
+        try:
+            menu_id = self.env.ref('mrp.menu_mrp_root').id
+        except ValueError:
+            menu_id = ''
+        hash_part = f'#action={action["id"]}&id={mrp_production_ids[0]}&model=mrp.production&view_type=form&menu_id={menu_id}'
+        return {
+            'type': 'ir.actions.act_url',
+            'name': _("Manufacturing Orders"),
+            'target': 'new',
+            'url': f'{base_url}/web{hash_part}',
+        }
