@@ -35,4 +35,24 @@
             </field>
         </field>
     </record>
+        <record id="view_purchase_order_line_tree_inherit_open_button" model="ir.ui.view">
+            <field name="name">purchase.order.line.tree.inherit.open.button</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="attributes">
+                    <attribute name="options">{'no_open': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='confirmed_shipping_date']" position="before">
+                    <button
+                        name="action_open_parent_purchase"
+                        string="Open"
+                        type="object"
+                        icon="fa-external-link"
+                        class="oe_stat_button"
+                        context="{'model_check': 'purchase.order.line'}"
+                    />
+                </xpath>
+            </field>
+        </record>
 </odoo>

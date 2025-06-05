@@ -6,6 +6,17 @@ odoo.define('rtw_purchase.check_schedule_activity', function (require) {
     var ListRenderer = require('web.ListRenderer');
     var core = require('web.core');
     const _lt = core._lt;
+    var ActionManager = require('web.ActionManager');
+
+    ActionManager.include({
+        _handleAction: function (action, options) {
+            if (action.type === 'ir.actions.act_url' && action.target && action.target !== 'self') {
+                window.open(action.url, action.target);
+                return Promise.resolve();
+            }
+            return this._super.apply(this, arguments);
+        },
+    });
 
     // Override ListRenderer to disable sorting on specific columns
     ListRenderer.include({
