@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-
+from odoo.exceptions import UserError
 
 class ProductConfigSessionCustomValue(models.Model):
     _inherit = "product.config.session.custom.value"
@@ -137,4 +137,15 @@ class rtw_purchase(models.Model):
                     purchase.sale_order_ids = ''
                     purchase.sale_order_names = ''
                     purchase.filter_so_ids = ''
+
+    def action_open_parent_purchase(self):
+        self.ensure_one()
+        if not self.order_id:
+            raise UserError("連携する購買オーダーが存在しません。")
+        action = self.env.ref("purchase.purchase_form_action").read()[0]
+        form = self.env.ref("purchase.purchase_order_form")
+        action["views"] = [(form.id, "form")]
+        action["target"] = "new"
+        action["res_id"] = self.order_id.id 
+        return action
 
