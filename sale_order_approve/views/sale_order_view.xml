@@ -61,7 +61,8 @@
             <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='state']" position="before">
-                    <field name="approve_button" string="承認状態" />
+                    <field name="approve_button" string="承認状態" optional="show"/>
+                    <field name="approve_user" optional="hide"/>
                 </xpath>
             </field>
         </record>
