@@ -40,7 +40,7 @@ class rtw_sf_partner(models.Model):
     corporate_mail = fields.Boolean("corporate_mail", default=0, tracking=True)  # 法人宛郵便 OK  Field6__c
     transactions = fields.Many2one('res.partner.transactions', string="支払方法",
                                    tracking=True)  # 取引方法 OK Field4__c
-    payment_terms_1 = fields.Char("payment_terms_1", tracking=True)  # 支払い条件１ OK X1__c
+    payment_terms_1 = fields.Char("payment_terms_1", tracking=True, translate=True)  # 支払い条件１ OK X1__c
     payment_terms_2 = fields.Char("payment_terms_2", tracking=True)  # 支払い条件2 OK X2__c
     accounting_supplement_2 = fields.Char("Accounting_Supplement_2", tracking=True)  # new fields task 178
     multiplier_black = fields.Float("multiplier_black", tracking=True)  # 掛率(黒) OK Field7__c

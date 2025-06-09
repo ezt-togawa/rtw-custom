@@ -8,7 +8,8 @@ class ProductSpecRtw(models.Model):
     _description = 'product_spec_rtw.product_spec_rtw'
     summary = fields.Char(
         name="summary",
-        string="summary"
+        string="summary",
+        translate=True
     )
     product_no = fields.Char(
         name="product_no",
