@@ -130,4 +130,12 @@
             </xpath>
         </field>
     </record>
+    <record id="purchase_order_view_inherit_rtw" model="ir.ui.view">
+        <field name="name">purchase.order.view.inherit.rtw</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='date_planned_div']/button" position="replace"/>
+        </field>
+    </record>
 </odoo>
