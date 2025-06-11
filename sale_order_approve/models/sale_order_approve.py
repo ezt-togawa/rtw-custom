@@ -12,27 +12,21 @@ class sale_order_approve(models.Model):
     is_hide_button = fields.Boolean('Is Hide Button' , compute='_compute_is_hide_button' , store=True)
     approve_button = fields.Char('Approve Button' , compute='_compute_approve_button' , store=True)
     total_price_sale = fields.Float('Total Price Sale')
+    approve_user = fields.Char('承認者', store=True)
+
     def toggle_approve_btn(self):
         admin_sale_id = self.env.ref('sales_team.group_sale_manager')
         for record in self:
             user_group_id = record.user_id.groups_id
-            if  admin_sale_id in user_group_id:
+            if admin_sale_id in user_group_id:
                 record.approve_status = not record.approve_status
+                if record.approve_status:
+                    self.approve_user = self.env.user.name
+                else:
+                    self.approve_user = ''
             else:
                 raise UserError('販売の管理者のみ承認の実行ができます。')
-    @api.onchange('amount_total')
-    def _onchange_amount_total(self):
-        for record in self:
-            sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
-            min_price = 0
-            _max_price = int(self.env['ir.config_parameter'].sudo().get_param('sale_order.sale_order_max_price', 1000000))
-            for line in sale_order_lines:
-                min_price += line.product_id.standard_price  
-            if  record.amount_total > _max_price or record.amount_total < min_price :
-                record.is_over_price = True
-                record.approve_status = False
-            else:
-                record.is_over_price = False
+
     @api.onchange('approve_status')
     def _onchange_approve_status(self):
         admin_sale_id = self.env.ref('sales_team.group_sale_manager')
@@ -54,9 +48,11 @@ class sale_order_approve(models.Model):
                 if  record.amount_total > max_price or record.amount_total < min_price:
                     record.is_over_price = True
                     record.approve_status = False
+                    record.approve_user = ''
                 else:
                     record.is_over_price = False
                     record.approve_status = False
+                    record.approve_user = ''
                 record.total_price_sale = record.amount_total
             
 
@@ -70,9 +66,10 @@ class sale_order_approve(models.Model):
             for line in sale_order_lines:
                 min_price += line.product_id.standard_price
 
-            if  record.amount_total > max_price or record.amount_total < min_price:
+            if record.amount_total > max_price or record.amount_total < min_price:
                 record.is_over_price = True
                 record.approve_status = False
+                record.approve_user = ''
             else:
                 record.is_over_price = False
 

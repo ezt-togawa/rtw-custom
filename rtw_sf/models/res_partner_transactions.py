@@ -8,4 +8,4 @@ class rtw_sf_partner_transactions(models.Model):
     _description = 'rtw_sf.transactions'
     _rec_name = "name"
 
-    name = fields.Char('Transactions')
+    name = fields.Char('Transactions', translate=True)
