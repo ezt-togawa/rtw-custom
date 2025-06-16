@@ -90,9 +90,9 @@ msgid "AccountNumber"
 msgstr "取引先No"
 
 #. module: rtw_sf
-#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__accounting_supplement_2
-#: model:ir.model.fields,field_description:rtw_sf.field_res_users__accounting_supplement_2
-msgid "Accounting_Supplement_2"
+#: model:ir.model.fields,field_description:rtw_sf.field_res_partner__accounting_supplement_3
+#: model:ir.model.fields,field_description:rtw_sf.field_res_users__accounting_supplement_3
+msgid "Accounting_Supplement_3"
 msgstr "経理補足２"
 
 #. module: rtw_sf
