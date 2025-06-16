@@ -3,6 +3,12 @@ from datetime import date
 from odoo import models, fields, api
 
 
+AVAILABLE_PRIORITIES = [
+    ('0', 'Low'),
+    ('1', 'Normal'),
+    ('2', 'High'),
+    ('3', 'Very High')
+]
 class rtw_sf_partner(models.Model):
     _inherit = "res.partner"
     _description = 'Account.csv'
@@ -42,7 +48,12 @@ class rtw_sf_partner(models.Model):
                                    tracking=True)  # 取引方法 OK Field4__c
     payment_terms_1 = fields.Char("payment_terms_1", tracking=True, translate=True)  # 支払い条件１ OK X1__c
     payment_terms_2 = fields.Char("payment_terms_2", tracking=True)  # 支払い条件2 OK X2__c
-    accounting_supplement_2 = fields.Char("Accounting_Supplement_2", tracking=True)  # new fields task 178
+    accounting_supplement_3 = fields.Selection(
+        AVAILABLE_PRIORITIES,
+        string="取引レベル",
+        tracking=True,
+        default=AVAILABLE_PRIORITIES[0][0]
+    )  # new fields task 178
     multiplier_black = fields.Float("multiplier_black", tracking=True)  # 掛率(黒) OK Field7__c
     multiplier_green = fields.Float("multiplier_green", tracking=True)  # 掛率(黒) OK Field8__c
     fare_payment_terms = fields.Selection([

@@ -61,7 +61,7 @@
                     <field name="transactions" string="支払方法"/>
                     <field name="payment_terms_1" string="支払サイト"/>
                     <field name="payment_terms_2" string="経理補足１"/>
-                    <field name="accounting_supplement_2" string="経理補足２"/>
+                    <field name="accounting_supplement_3" string="取引レベル" widget="priority"/>
                     <field name="multiplier_black" string="multiplier_black"/>
                     <field name="multiplier_green" string="multiplier_green"/>
                     <field name="fare_payment_terms" string="fare_payment_terms"/>
