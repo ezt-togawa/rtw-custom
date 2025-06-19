@@ -22,19 +22,16 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.view_production_calendar" />
             <field name="arch" type="xml">
-                <xpath expr="//calendar" position="attributes">
-                    <attribute name="mode">month</attribute>
-                    <attribute name="date_start">date_planned_start</attribute>
-                    <attribute name="date_stop"></attribute>
-                    <attribute name="date_delay">duration</attribute>
-                    <attribute name="color">color</attribute>
-                </xpath>
-                <xpath expr="//field[@name='user_id']" position="before">
-                    <field name="itoshima_shipping_date" />
-                    <field name="shiratani_date" />
-                </xpath>
-                <xpath expr="//field[@name='product_qty']" position="after">
-                    <field name="prod_parts_arrival_schedule" widget="text" />
+                <xpath expr="/calendar" position="replace">
+                    <calendar date_start="date_planned_start"
+                              string="Manufacturing Orders" event_limit="5" quick_add="False" mode="month" color="color">
+                        <field name="itoshima_shipping_date"/>
+                        <field name="shiratani_date"/>
+                        <field name="user_id" avatar_field="image_128"/>
+                        <field name="product_id"/>
+                        <field name="product_qty"/>
+                        <field name="prod_parts_arrival_schedule"/>
+                    </calendar>
                 </xpath>
             </field>
         </record>
