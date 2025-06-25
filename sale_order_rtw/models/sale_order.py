@@ -23,8 +23,8 @@ class sale_order_rtw(models.Model):
     date_deadline = fields.Date(string="Date deadline", tracking=True)
     preferred_delivery_date = fields.Date(string="Preferred delivery date", tracking=True)
     time_text = fields.Char(string="Time")
-    warehouse_arrive_date = fields.Date(string="Warehouse arrive date", tracking=True)
-    warehouse_arrive_date_2 = fields.Date(string="Warehouse arrive date_2", tracking=True)
+    warehouse_arrive_date = fields.Date(string="デポ１到着日", tracking=True)
+    warehouse_arrive_date_2 = fields.Date(string="デポ２到着日", tracking=True)
     preferred_delivery_period = fields.Char(string="Preferred delivery period")
     forwarding_address_zip = fields.Char("forwarding address zip")
     forwarding_address = fields.Text(
@@ -40,7 +40,7 @@ class sale_order_rtw(models.Model):
     items_under_consideration = fields.Boolean('Items under consideration', default=0)
     waypoint = fields.Many2one(
         comodel_name="res.partner",
-        string="waypoint",
+        string="デポ１",
         required=False,
         ondelete="set null",
     )
