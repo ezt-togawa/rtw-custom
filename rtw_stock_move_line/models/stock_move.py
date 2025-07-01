@@ -10,6 +10,7 @@ class rtw_stock_move(models.Model):
         related='sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
         'sale.order', compute="_get_sale_id",store=True)
+    sale_id_title = fields.Char('sale.order.title', store=True)
     customer_id = fields.Many2one(related='sale_id.partner_id', string='顧客')
     title = fields.Char(related='sale_id.title', string='案件名')
     spec = fields.Many2many(
@@ -141,11 +142,14 @@ class rtw_stock_move(models.Model):
                 sale = self.env['sale.order'].search([('name', '=', group.name)])
                 if sale:
                     rec.sale_id = sale
+                    rec.sale_id_title = sale.title
                 else:
                     # 製造の親も子sole_referenceに注番が設定されているので、そこから取得
                     mrp = self.env['mrp.production'].search([('name', '=', group.name)])
                     if mrp:
-                        rec.sale_id = self.env['sale.order'].search([('name', '=', mrp.sale_reference)])
+                        sale = self.env['sale.order'].search([('name', '=', mrp.sale_reference)])
+                        rec.sale_id = sale
+                        rec.sale_id_title = sale.title
                     else:
                         rec.sale_id = False
             else:

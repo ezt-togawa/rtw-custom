@@ -8,6 +8,7 @@
                     <field name="picking_id" />
                     <field name="overseas" />
                     <field name="sale_id" string="注番" optional="show" />
+                    <field name="sale_id_title" string="Title" optional="show" />
                     <!-- <field name="production_id" invisible="1" /> -->
                     <field name="mrp_production_id" optional="show" />
                     <field name="product_id" />

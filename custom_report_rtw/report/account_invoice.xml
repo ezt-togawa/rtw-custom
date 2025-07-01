@@ -47,7 +47,7 @@
                                         <span t-field="docs.sale_order.send_to_people"
                                             class="so_price border-bottom2" />
                                         <br />
-                                        <div class="mt-1">平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br />
+                                        <div class="mt-1">平素より格別のお引き立てを賜り厚く御礼申し上げます。 <br />
                                             下記の通り、ご請求申し上げます。<br />
                                         </div>
                                     </div>
