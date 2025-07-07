@@ -2320,7 +2320,7 @@ class AccountMoveExcelReport(models.Model):
             line.account_move_line = line.invoice_line_ids
 class AccountMoveLineExcelReport(models.Model):
     _inherit = "account.move.line"
-    price_unit = fields.Monetary('Unit Price', required=True, digits='Product Price')
+    price_unit = fields.Monetary('Unit Price', digits='Product Price')
     acc_line_index = fields.Integer(
         compute="_compute_acc_line_index",
         string="Account line index",
