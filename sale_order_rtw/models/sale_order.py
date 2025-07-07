@@ -152,31 +152,6 @@ class sale_order_rtw(models.Model):
         for record in self:
             record.commitment_date = self.estimated_shipping_date
 
-    @api.onchange('overseas')
-    def onchange_overseas(self):
-        for record in self:
-            additional_text = '海外プレート'
-            if record.overseas:
-                for line in record.order_line:
-                    if line.memo:
-                        memo_string = line.memo.split(',')
-                        filtered_list = []
-                        for item in memo_string:
-                            if not item == additional_text:
-                                filtered_list.append(item)
-                        if additional_text not in filtered_list:
-                            line.memo += f',{additional_text}'
-                    else:
-                        line.memo = additional_text
-            else:
-                for line in record.order_line:
-                    if line.memo and additional_text in line.memo:
-                        memo_string = line.memo.split(',')
-                        filtered_list = []
-                        for item in memo_string:
-                            if not item == additional_text:
-                                filtered_list.append(item)
-                        line.memo = ','.join(filtered_list)
     def action_confirm(self):
         res = super(sale_order_rtw, self).action_confirm()
         self.state = 'sale'
@@ -189,25 +164,6 @@ class sale_order_rtw(models.Model):
 
         res = super(sale_order_rtw, self).create(vals)
         return res
-
-class rtw_sale_order_line(models.Model):
-    _inherit = "sale.order.line"
-    def _prepare_add_missing_fields(self, values):
-        res = super(rtw_sale_order_line,
-                    self)._prepare_add_missing_fields(values)
-        print('res',res)
-        sale_order = self.env['sale.order'].search(
-            [('id', '=', values['order_id'])])
-        if sale_order.overseas:
-            res['memo'] = '海外プレート'
-        return res
-    
-    @api.onchange('product_id')
-    def onchange_product_id(self):
-        for line in self:
-            if line.order_id.overseas:
-                if not line.memo:
-                    line.memo = '海外プレート'
 
 class mrp_order_rtw(models.Model):
     _inherit = "mrp.production"
