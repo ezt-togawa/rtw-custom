@@ -18,13 +18,16 @@
                 <xpath expr="//tree//field[@name='date_planned_start']" position="before">
                     <field name="implementation_plan_date" optional="show" />
                 </xpath>
+                <xpath expr="//tree//field[@name='implementation_plan_date']" position="before">
+                    <field name="mrp_workorder_order_status" optional="show" string="発注状況" />
+                </xpath>
             </field>
         </record>
 
         <record id="rtw_mrp_workorder_view_calendar" model="ir.ui.view">
             <field name="name">mrp.production.work.order.calendar2</field>
             <field name="model">mrp.workorder</field>
-            <field name="inherit_id" ref="mrp.workcenter_line_calendar" />
+            <field name="inherit_id" ref="rtw_mrp_custom.view_rtw_mrp_workorder_line" />
             <field name="arch" type="xml">
                 <xpath expr="//calendar" position="attributes">
                     <attribute name="date_stop">implementation_plan_date</attribute>
