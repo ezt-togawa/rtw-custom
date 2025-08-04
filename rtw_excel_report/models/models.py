@@ -1390,35 +1390,31 @@ class SaleOrderLineExcelReport(models.Model):
                         categ_name = prod_tmpl.name
                 else:
                     categ_name = line.name
-
-                
                 if prod_tmpl.summary:
                     summary = prod_tmpl.summary
                         
             p_type = ""
             if line.p_type == "special":
-                p_type = "別注"
+                p_type = "[別注]"
             elif line.p_type == "custom":
-                p_type = "特注"
-                    
+                p_type = "[特注]"
             detail = ""
             if categ_name and summary and p_type:
-                detail = categ_name + "\n" + summary + "\n" + p_type
+                detail = categ_name + " " + p_type + "\n" + summary
+            elif categ_name and p_type:
+                detail = categ_name + " " + p_type
             elif categ_name and summary:
                 detail = categ_name + "\n" + summary
-            elif categ_name and p_type:
-                detail = categ_name + "\n" + p_type
             elif summary and p_type:
-                detail = summary + "\n" + p_type 
+                detail = p_type + "\n" + summary
             elif categ_name:
                 detail = categ_name 
-            elif summary:
-                detail = summary 
             elif p_type:
                 detail = p_type 
-
+            elif summary:
+                detail = summary 
             line.sale_order_line_name_excel = detail       
-            line.sale_order_line_name_pdf = categ_name       
+            line.sale_order_line_name_pdf = categ_name + " " + p_type      
             line.sale_order_line_p_type_pdf = p_type       
             line.sale_order_line_summary_pdf = summary       
 class StockPickingExcelReport(models.Model):
@@ -2019,30 +2015,31 @@ class StockMoveExcelReport(models.Model):
                             categ_name = ""
                 if prod_tmpl.summary:
                     summary = prod_tmpl.summary
+                    
             p_type = ""
             if line.p_type == "special":
-                p_type = "別注"
+                p_type = "[別注]"
             elif line.p_type == "custom":
-                p_type = "特注"
-                    
+                p_type = "[特注]"
+
             detail = ""
             if categ_name and summary and p_type:
-                detail = categ_name + "\n" + summary + "\n" + p_type
+                detail = categ_name + " " + p_type + "\n" + summary
+            elif categ_name and p_type:
+                detail = categ_name + " " + p_type
             elif categ_name and summary:
                 detail = categ_name + "\n" + summary
-            elif categ_name and p_type:
-                detail = categ_name + "\n" + p_type
             elif summary and p_type:
-                detail = summary + "\n" + p_type 
+                detail = p_type + "\n" + summary
             elif categ_name:
                 detail = categ_name 
-            elif summary:
-                detail = summary 
             elif p_type:
                 detail = p_type 
+            elif summary:
+                detail = summary 
             
             line.stock_move_line_name_excel = detail
-            line.stock_move_line_name_pdf = categ_name
+            line.stock_move_line_name_pdf = categ_name + " " + p_type  
             line.stock_move_line_p_type_pdf = p_type 
             line.stock_move_line_summary_pdf = summary
 class AccountMoveExcelReport(models.Model):

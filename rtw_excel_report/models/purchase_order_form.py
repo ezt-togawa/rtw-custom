@@ -13,17 +13,32 @@ class ReportMrpExcel(models.AbstractModel):
         font_name = 'HGPｺﾞｼｯｸM'
         font_family = workbook.add_format({'font_name': font_name})
         
-        image_logo_R = get_module_resource('rtw_excel_report', 'img', 'logo.png')
-        logo_R = PILImage.open(image_logo_R)
-        logo_R = logo_R.convert('RGB')
-        logo_R = logo_R.resize((86, 62))
+        def resize_keep_aspect(image_path, target_width):
+            img = PILImage.open(image_path).convert('RGB')
+            w, h = img.size
+            aspect_ratio = h / w
+            target_height = int(target_width * aspect_ratio)
+            img = img.resize((target_width, target_height), PILImage.LANCZOS)
+            return img
+
+        image_logo_R = get_module_resource('rtw_excel_report', 'img', 'R_log.jpg')
+        logo_R = resize_keep_aspect(image_logo_R, 86)
         img_io_R = BytesIO()
         logo_R.save(img_io_R, 'PNG')
         img_io_R.seek(0)
+        # 海外 img
+        image_logo_overseas = get_module_resource('custom_report_rtw', 'static/src/images', 'Overseas.jpg')
+        img_overseas = PILImage.open(image_logo_overseas)
+        img_overseas = img_overseas.convert('RGB')
+        img_overseas = img_overseas.resize((160, 85), PILImage.LANCZOS)
+        img_io_overseas = BytesIO()
+        img_overseas.save(img_io_overseas, 'PNG')
+        img_io_overseas.seek(0)
         
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':18,'font_name': font_name})
         format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
+        format_text_2 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11.25})
         format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
         format_text_12_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':12})
         format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13})
@@ -42,11 +57,11 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_note = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bottom':1})
         format_lines_section= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1})
         
-        format_lines_9_left= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':9,'bottom':1})
-        format_lines_10 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
+        format_lines_9_left= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11.25,'bottom':1})
+        format_lines_10 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12,'bottom':1})
         format_lines_10_left = workbook.add_format({'align': 'left','valign': 'top', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_11_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
-        format_lines_13 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':13,'bottom':1})
+        format_lines_11_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1})
+        format_lines_13 = workbook.add_format({'align': 'right','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1})
 
         #create sheet
         for index,so in enumerate(so_data):
@@ -66,8 +81,11 @@ class ReportMrpExcel(models.AbstractModel):
             top_margin = 0.5
             bottom_margin = 0.5
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
-            sheet.set_header( f'{"&"}R {so.name  if so.name else ""}', margin=margin_header) 
-            sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)   
+            sheet.set_header(f'{"&"}R No．{so.name if so.name else ""}', margin=margin_header) 
+            sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)
+            note = '※商品の詳細につきましては仕様書と相違がないか必ずご確認ください'
+            footer_text = f'&L&P/&N&R&"MS UI Gothic,Regular"&12 {note}'
+            sheet.set_footer(footer_text, margin=0.3)
                      
             sheet.set_column("A:A", width=13,cell_format=font_family)  
             sheet.set_column("B:B", width=20,cell_format=font_family)  
@@ -103,9 +121,9 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_row(12, 24)
             sheet.set_row(13, 22)
             sheet.set_row(14, 26)
-            sheet.set_row(15, 24)
-            sheet.set_row(16,32)
-            
+            sheet.set_row(15, 15)
+            sheet.set_row(16, 15)
+
             sheet.insert_image(1, 0, "logo", {'image_data': img_io_R, 'x_offset': 5, 'y_offset': 1})
             
             # y,x
@@ -113,11 +131,17 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.write(2, 0, _("株式 会社リッツウェル"), format_text_14)
             sheet.write(3, 0, so.sale_order_ritzwell_staff if so.sale_order_ritzwell_staff else "", format_text_14)
-            sheet.write(1, 10, _("海外")if so.overseas  else "", format_text_14_right) 
-            
+            if  so.overseas:
+                    sheet.insert_image(1, 2, "overseas", {
+                        'image_data': img_io_overseas,
+                        'x_offset': 0,
+                        'y_offset': 2,
+                        'x_scale': 0.6,
+                        'y_scale': 0.6,
+                    })
             sheet.write(5,0, _("下記の通り注文いたします。"), format_text) 
             
-            sheet.write(7, 0, _("件名"), format_text_14_border) 
+            sheet.write(7, 0, _("件名 : "), format_text_14_border) 
             sheet.write(10, 0, _("税抜合計"), format_text) 
             sheet.write(11, 0, _("消費税"), format_text) 
             sheet.write(12, 0, _("税込合計"), format_money_bgRed) 
@@ -126,47 +150,42 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(11, 1, so.sale_order_amount_tax if so.sale_order_amount_tax else '', format_text_12_right) 
             sheet.write(12, 1, so.sale_order_amount_total if so.sale_order_amount_total else '', format_money_bgRed_right) 
 
-            sheet.write(5,4, _("納品希望日"), format_text_right) 
-            sheet.write(6,4, _("納品場所"), format_text_right) 
-            sheet.write(7,4, _("備考"), format_text_right) 
+            sheet.write(3,4, _("納品希望日"), format_text_right) 
+            sheet.write(4,4, _("納品場所"), format_text_right) 
+            sheet.write(5,4, _("備考"), format_text_right) 
             
-            sheet.write(5,6,so.sale_order_preferred_delivery_period if so.sale_order_preferred_delivery_period else '', format_text) 
-            sheet.write(6,6, so.forwarding_address if so.forwarding_address else '', format_text) 
-            sheet.merge_range(7,5,10,8,so.special_note[:157] if so.special_note else '', format_note) 
+            sheet.write(3,5,so.sale_order_preferred_delivery_period if so.sale_order_preferred_delivery_period else '', format_text) 
+            sheet.write(4,5, so.forwarding_address if so.forwarding_address else '', format_text) 
+            sheet.merge_range(5,5,8,8,so.special_note[:157] if so.special_note else '', format_note) 
 
             sheet.write(0,13,so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
             
             sheet.write(1,12, _("西暦        年   月   日") , format_text_right) 
             
             if so.partner_id and so.partner_id.company_type == "company":
-                sheet.write(3, 10, _("社名"), format_text) 
-                sheet.write(5, 10, _("担当者名"), format_text) 
-                sheet.write(6, 13, _("印"), format_text) 
+                sheet.write(3, 10, _("社名"), format_text_2) 
+                sheet.write(5, 10, _("担当者名"), format_text_2) 
+                sheet.write(6, 13, _("印"), format_text_2) 
             else:
-                sheet.write(3, 10, _("氏名") , format_text) 
+                sheet.write(3, 10, _("会社名・氏名") , format_text_2) 
                 
-            sheet.write(4, 13, _("印"), format_text) 
-            sheet.write(7, 10, _("納品先住所"), format_text) 
-            sheet.write(9, 10, _("立会者"), format_text) 
-            sheet.write(10, 10, _("立会者連絡先"), format_text) 
-        
-            sheet.write(12, 9, _("定価合計: ") + str( so.sale_order_total_list_price ) if so.sale_order_total_list_price else "", format_text_right) 
-            sheet.write(12, 13, _("販売価格合計: ") + str(so.sale_order_amount_untaxed2) if so.sale_order_amount_untaxed2 else "" , format_text_right) 
+            sheet.write(4, 13, _("印"), format_text_2) 
+            sheet.write(7, 10, _("納品先住所"), format_text_2) 
+            sheet.write(9, 10, _("立会者"), format_text_2) 
+            sheet.write(10, 10, _("立会者連絡先"), format_text_2) 
 
             #table title
             sheet.write(14, 0, _("№"), format_table)
-            sheet.write(14, 1, _("品名"), format_table)
-            sheet.merge_range(14, 2,14,3, _("品番・サイズ"), format_table)
-            sheet.merge_range(14, 4,14,6, _("仕様・詳細"), format_table)
-            sheet.merge_range(14, 7,14, 8, _("仕様・詳細"), format_table)
-            sheet.write(14,9, _("数量"), format_table)
+            sheet.merge_range(14, 1, 14, 3, _("品名"), format_table)
+            sheet.merge_range(14, 4, 14, 8, _("品番・サイズ"), format_table)
+            sheet.write(14, 9, _("数量"), format_table)
             sheet.write(14, 10, _("定価"), format_table)
             sheet.write(14, 11, _("掛率 "), format_table)
             sheet.merge_range(14, 12,14, 13, _("販売⾦額"), format_table)
             
             if so.order_line:
                 row = 15
-                merge_line = 6 
+                merge_line = 1
                 for ind,line in enumerate(so.order_line.filtered(lambda x: not x.is_pack_outside)):
                     
                     if line.display_type == 'line_note':
@@ -179,12 +198,9 @@ class ReportMrpExcel(models.AbstractModel):
                         row += 1 
                     else:
                         sheet.merge_range(row,0,row + merge_line,0, line.sale_order_index if line.sale_order_index else '' , format_lines_10) 
-                        sheet.merge_range(row,1,row + merge_line,1, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '' , format_lines_9_left) 
+                        sheet.merge_range(row,1,row + merge_line,3, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '' , format_lines_9_left) 
                         
-                        sheet.merge_range(row,2,row + merge_line,3, line.sale_order_number_and_size if line.sale_order_number_and_size else '' , format_lines_11_left) 
-                        
-                        sheet.merge_range(row,4,row + merge_line,6, line.sale_order_product_detail if line.sale_order_product_detail else '' , format_lines_10_left) 
-                        sheet.merge_range(row,7,row + merge_line,8, line.sale_order_product_detail_2 if line.sale_order_product_detail_2 else '' , format_lines_10_left) 
+                        sheet.merge_range(row,4,row + merge_line,8, line.sale_order_number_and_size if line.sale_order_number_and_size else '' , format_lines_11_left) 
                         
                         sheet.merge_range(row,9,row + merge_line,9, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '' , format_lines_13) 
                         sheet.merge_range(row,10,row + merge_line,10, line.sale_order_price_unit if line.sale_order_price_unit else '' , format_lines_13) 
@@ -192,4 +208,3 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.merge_range(row,12,row + merge_line,13, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '' , format_lines_13) 
                         
                         row += merge_line + 1
-                        

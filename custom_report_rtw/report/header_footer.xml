@@ -118,14 +118,14 @@
             <div class="row">
                 <div class="col-6 mb4">
                     <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
                         alt="Logo" />
                     <span class="ml-2 size20">御見積書</span>
                 </div>
 
                 <div class="col-6 text-right mt-2 size14">
-                    <div t-esc="docs.name" />
+                    <div>No. <t t-esc="docs.name" /></div>
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y-%m-%d')" />
@@ -141,15 +141,21 @@
     <template id="SO_header_layout_oversea">
         <div t-attf-class="header" t-att-style="report_header_style">
             <div class="row">
-                <div class="col-6 mb4">
+                <div class="col-6 mb4" style="margin-bottom: 15px;">
                     <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
                         alt="Logo" />
-                    <span class="ml-2 size20">御見積書（海外）</span>
+                    <span class="ml-2 size20">御見積書</span>
+                    <t t-if="docs.check_oversea">
+                            <img
+                            src="/custom_report_rtw/static/src/images/Overseas.jpg"
+                            style="max-width: 100px; margin-left: 40px; height: auto; object-fit: contain;"
+                            alt="Overseas" />
+                        </t>
                 </div>
                 <div class="col-6 text-right mt-2 size14">
-                    <div t-esc="docs.name" />
+                    <div>No. <t t-esc="docs.name" /></div>
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y-%m-%d')" />
@@ -167,13 +173,13 @@
             <div class="row">
                 <div class="col-6 mb4">
                     <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
                         alt="Logo" />
                     <span class="ml-2 size20">定価御見積書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size14">
-                    <div t-esc="docs.name" />
+                    <div>No. <t t-esc="docs.name" /></div>
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y-%m-%d')" />
@@ -191,13 +197,13 @@
             <div class="row">
                 <div class="col-6 mb4">
                     <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
                         alt="Logo" />
                     <span class="ml-2 size20">単価御見積書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size14">
-                    <div t-esc="docs.name" />
+                    <div>No. <t t-esc="docs.name" /></div>
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y-%m-%d')" />
@@ -215,13 +221,13 @@
             <div class="row">
                 <div class="col-6 mb4">
                     <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
                         alt="Logo" />
                     <span class="ml-2 size20">御請求書</span>
                 </div>
-                <div class="col-6 text-right mt-2 size12">
-                    <div t-esc="docs.sale_order.name" />
+                <div class="col-6 text-right mt-2 size14">
+                    <div>No. <t t-esc="docs.sale_order.name" /></div>
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y-%m-%d')" />
@@ -239,13 +245,13 @@
             <div class="row">
                 <div class="col-6 mb4">
                     <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
                         alt="Logo" />
                     <span class="ml-2 size20">御請求書</span>
                 </div>
-                <div class="col-6 text-right mt-2 size12">
-                    <div t-esc="docs.name" />
+                <div class="col-6 text-right mt-2 size14">
+                    <div>No. <t t-esc="docs.name" /></div>
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y-%m-%d')" />
@@ -284,13 +290,49 @@
             <div class="row">
                 <div class="col-6 mb4">
                     <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
                         alt="Logo" />
                     <span class="ml-2 size20">注文書</span>
+                     <t t-if="docs.check_oversea">
+                            <img
+                            src="/custom_report_rtw/static/src/images/Overseas.jpg"
+                            style="max-width: 100px; margin-left: 40px; height: auto; object-fit: contain;"
+                            alt="Overseas" />
+                        </t>
                 </div>
-                <div class="col-6 text-right mt-2 size12">
-                    <div t-esc="docs.name" />
+                <div class="col-6 text-right mt-2 size14">
+                    <div>No. <t t-esc="docs.name" /></div>
+                    <t>
+                        <t t-if="docs.lang_code == 'en_US'">
+                            <t t-esc="time.strftime('%Y-%m-%d')" />
+                        </t>
+                        <t t-else="">
+                            <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" /> 月 <t
+                                t-esc="time.strftime('%d')" /> 日 </t>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="SO_purchase_list_order_header_layout">
+        <div t-attf-class="header" t-att-style="report_header_style">
+            <div class="row">
+                <div class="col-6 mb4">
+                    <img
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
+                        alt="Logo" />
+                    <span class="ml-2 size20">定価注文書</span>
+                     <t t-if="docs.check_oversea">
+                            <img
+                            src="/custom_report_rtw/static/src/images/Overseas.jpg"
+                            style="max-width: 100px; margin-left: 40px; height: auto; object-fit: contain;"
+                            alt="Overseas" />
+                        </t>
+                </div>
+                <div class="col-6 text-right mt-2 size14">
+                    <div>No. <t t-esc="docs.name" /></div>
                     <t>
                         <t t-if="docs.lang_code == 'en_US'">
                             <t t-esc="time.strftime('%Y-%m-%d')" />
@@ -307,19 +349,26 @@
         <t t-foreach="docs" t-as="doc">
             <div t-attf-class="header" t-att-style="report_header_style">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-8" style="margin-bottom: 15px;">
                         <img
-                            src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                            style="max-height: 45px;"
+                            src="/custom_report_rtw/static/src/images/R_log.jpg"
+                            style="width: 76px; height: auto; object-fit: contain;"
                             alt="Logo" />
                         <span class="ml-2 size20"> 発注書 </span>
+                         
+                        <t t-if="mrp.mrp_production_so_id.overseas">
+                            <img
+                            src="/custom_report_rtw/static/src/images/Overseas.jpg"
+                            style="max-width: 100px; margin-left: 40px; height: auto; object-fit: contain;"
+                            alt="Overseas" />
+                        </t>
                     </div>
-                    <div class="col-4 text-right mt-2 size12">
+                    <div class="col-4 text-right mt-2 size14">
                         <t t-if="mrp.mrp_production_so_id.name">
-                            <div t-esc="doc.mrp_production_so_id.name" />
+                         <div>No. <t t-esc="doc.mrp_production_so_id.name" /></div>
                         </t>
                         <t t-else="">
-                            <div t-esc="doc.name" />
+                            <div>No. <t t-esc="docs.name" /></div>
                         </t>
                         <t>
                             <t t-if="doc.lang_code == 'en_US'">
@@ -341,19 +390,26 @@
         <t t-foreach="docs" t-as="doc">
             <div t-attf-class="header" t-att-style="report_header_style">
                 <div class="row">
-                    <div class="col-8 mb4">
+                    <div class="col-8" style="margin-bottom: 15px;">
                         <img
-                            src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                            style="max-height: 45px;"
+                            src="/custom_report_rtw/static/src/images/R_log.jpg"
+                            style="width: 76px; height: auto; object-fit: contain;"
                             alt="Logo" />
-                        <span class="ml-2 size20">検品発注書</span>
+                        <span class="ml-2 size20"> 検品発注書 </span>
+                         
+                        <t t-if="mrp.mrp_production_so_id.overseas">
+                            <img
+                            src="/custom_report_rtw/static/src/images/Overseas.jpg"
+                            style="max-width: 100px; margin-left: 40px; height: auto; object-fit: contain;"
+                            alt="Overseas" />
+                        </t>
                     </div>
-                    <div class="col-4 text-right mt-2 size12">
+                    <div class="col-4 text-right mt-2 size14">
                         <t t-if="mrp.mrp_production_so_id.name">
-                            <div t-esc="doc.mrp_production_so_id.name" />
+                         <div>No. <t t-esc="doc.mrp_production_so_id.name" /></div>
                         </t>
                         <t t-else="">
-                            <div t-esc="doc.name" />
+                            <div>No. <t t-esc="docs.name" /></div>
                         </t>
                         <t>
                             <t t-if="doc.lang_code == 'en_US'">
@@ -383,42 +439,42 @@
                         <span class="ml-2 size20">発注書(部材用)</span>
                         <t t-if="po._name == 'purchase.order'">
                             <span
-                            class="ml-5 size15" t-if="po.purchase_order_company"
-                            t-esc="po.purchase_order_company" />
+                                class="ml-5 size15" t-if="po.purchase_order_company"
+                                t-esc="po.purchase_order_company" />
                         </t>
                         <t t-else="">
                             <span
-                            class="ml-5 size15" t-if="po.order_id.purchase_order_company"
-                            t-esc="po.order_id.purchase_order_company" />
+                                class="ml-5 size15" t-if="po.order_id.purchase_order_company"
+                                t-esc="po.order_id.purchase_order_company" />
                         </t>
                     </div>
                     <div class="col-4 text-right mt-2 size12">
-                     <t t-if="po._name == 'purchase.order'">
-                        <t t-foreach="docs" t-as="po_name">
-                          <span t-field="po_name.name" />
-                          <t t-set="is_last_item" t-value="po_name == docs[-1]" />
-                          <t t-if="not is_last_item">, </t>
+                        <t t-if="po._name == 'purchase.order'">
+                            <t t-foreach="docs" t-as="po_name">
+                                <span t-field="po_name.name" />
+                                <t t-set="is_last_item" t-value="po_name == docs[-1]" />
+                                <t t-if="not is_last_item">, </t>
+                            </t>
                         </t>
-                      </t>
-                      <t t-else="">
-                    <t t-set="seen_names" t-value="set()" />
-                      <t t-foreach="docs.order_id" t-as="po_name">
-                        <t t-if="po_name.name not in seen_names">
-                          <span t-field="po_name.name" />
-                          <t t-set="seen_names" t-value="seen_names | set([po_name.name])" />
-                          <t t-set="is_last_item" t-value="po_name == docs.order_id[-1]" />
-                          <t t-if="not is_last_item">, </t>
+                        <t t-else="">
+                            <t t-set="seen_names" t-value="set()" />
+                            <t t-foreach="docs.order_id" t-as="po_name">
+                                <t t-if="po_name.name not in seen_names">
+                                    <span t-field="po_name.name" />
+                                    <t t-set="seen_names" t-value="seen_names | set([po_name.name])" />
+                                    <t t-set="is_last_item" t-value="po_name == docs.order_id[-1]" />
+                                    <t t-if="not is_last_item">, </t>
+                                </t>
+                            </t>
                         </t>
-                        </t>
-                      </t>
                         <t t-if="po._name == 'purchase.order'">
                             <t t-if="po.lang_code == 'en_US'">
                                 <div t-esc="time.strftime('%Y-%m-%d')" />
                             </t>
                             <t t-else="">
                                 <div>
-                                    <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" />
-                                    月 <t
+                                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                                        t-esc="time.strftime('%m')" /> 月 <t
                                         t-esc="time.strftime('%d')" /> 日 </div>
                             </t>
                         </t>
@@ -428,12 +484,12 @@
                             </t>
                             <t t-else="">
                                 <div>
-                                    <t t-esc="time.strftime('%Y')" /> 年 <t t-esc="time.strftime('%m')" />
-                                    月 <t
+                                    <t t-esc="time.strftime('%Y')" /> 年 <t
+                                        t-esc="time.strftime('%m')" /> 月 <t
                                         t-esc="time.strftime('%d')" /> 日 </div>
                             </t>
                         </t>
-                       
+
                     </div>
                 </div>
             </div>
@@ -445,8 +501,8 @@
                 <div class="col-10 mb4 d-flex">
                     <div>
                         <img
-                            src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                            style="max-height: 45px;"
+                            src="/custom_report_rtw/static/src/images/R_log.jpg"
+                            style="width: 76px; height: auto; object-fit: contain;"
                             alt="Logo" />
                     </div>
                     <div class="ml-2 size22">配送依頼書</div>
@@ -474,8 +530,8 @@
                         </t>
                     </div>
                 </div>
-                <div class="col-2 text-right mt-2 size12">
-                    <div t-field="docs.name" />
+                <div class="col-2 text-right mt-2 size14">
+                    <div>No. <t t-esc="docs.name" /></div>
                     <t t-if="docs.lang_code == 'en_US'">
                         <t t-esc="time.strftime('%Y-%m-%d')" />
                     </t>
@@ -492,8 +548,8 @@
                 <div class="col-10 mb4 d-flex">
                     <div>
                         <img
-                            src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                            style="max-height: 45px;"
+                            src="/custom_report_rtw/static/src/images/R_log.jpg"
+                            style="width: 76px; height: auto; object-fit: contain;"
                             alt="Logo" />
                     </div>
                     <div class="ml-2 size22">配送依頼書</div>
@@ -522,8 +578,8 @@
                         </t>
                     </div>
                 </div>
-                <div class="col-2 text-right mt-2 size12">
-                    <div t-field="docs.sale_orders.name" />
+                <div class="col-2 text-right mt-2 size14">
+                    <div>No. <t t-esc="docs.sale_orders.name" /></div>
                     <t t-if="docs.sale_orders.lang_code == 'en_US'">
                         <t t-esc="time.strftime('%Y-%m-%d')" />
                     </t>
@@ -574,13 +630,13 @@
             <div class="row">
                 <div class="col-6 mb4">
                     <img
-                        src="/custom_report_rtw/static/src/images/company_logo.jpeg"
-                        style="max-height: 45px;"
+                        src="/custom_report_rtw/static/src/images/R_log.jpg"
+                        style="width: 76px; height: auto; object-fit: contain;"
                         alt="Logo" />
                     <span class="ml-2 size20">商品仕様書</span>
                 </div>
                 <div class="col-6 text-right mt-2 size12">
-                    <div t-esc="docs.name" />
+                    <div>No. <t t-esc="docs.name" /></div>
                     <t t-if="docs.lang_code == 'en_US'">
                         <t t-esc="time.strftime('%Y-%m-%d')" />
                     </t>
@@ -762,9 +818,29 @@
             </div>
         </div>
     </template>
-    <template id="page_footer_layout">
+     <template id="page_footer_layout">
+        <div t-attf-class="footer" style="width:100%;">
+            <div style="display:inline-block; width:50%;">
+                Page: <span class="page"/> / <span class="topage"/>
+            </div>
+            <div style="display:inline-block; width:49%; text-align:right; font-size:16px; !important;">
+                ※商品の詳細は仕様書を参照ください
+            </div>
+        </div>
+    </template>
+    <template id="page_footer_layout_">
+        <div t-attf-class="footer" style="width:100%;">
+            <div style="display:inline-block; width:50%;">
+                Page: <span class="page"/> / <span class="topage"/>
+            </div>
+            <div style="display:inline-block; width:49%; text-align:right; font-size:16px !important;">
+                ※商品の詳細につきましては仕様書と相違がないか必ずご確認ください
+            </div>
+        </div>
+    </template>
+    <template id="page_footer_layout__">
         <div t-attf-class="footer">
-            <div class="text-muted"> Page: <span class="page" /> / <span
+            <div> Page: <span class="page" /> / <span
                     class="topage" />
             </div>
         </div>
