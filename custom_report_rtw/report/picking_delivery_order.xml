@@ -170,7 +170,7 @@
                     </td>
                     <td class="text-right">
                       <div>
-                        <span t-esc="l.prod_package_qty" />
+                        <span t-esc="l.product_package_quantity" />
                       </div>
                     </td>
                     <td class="text-right">
