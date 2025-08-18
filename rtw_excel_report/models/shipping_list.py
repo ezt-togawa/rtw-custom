@@ -37,14 +37,15 @@ class productSpec(models.AbstractModel):
         sheet.set_column("G:G", width=15, cell_format=font_family)  
         sheet.set_column("H:H", width=4, cell_format=font_family)  
         sheet.set_column("I:I", width=4, cell_format=font_family)
-        sheet.set_column("J:J", width=12, cell_format=font_family) 
+        sheet.set_column("J:J", width=4, cell_format=font_family) 
         sheet.set_column("K:K", width=12, cell_format=font_family)  
-        sheet.set_column("L:L", width=8, cell_format=font_family )
+        sheet.set_column("L:L", width=12, cell_format=font_family )
         sheet.set_column("M:M", width=8, cell_format=font_family ) 
-        sheet.set_column("N:N", width=12, cell_format=font_family ) 
+        sheet.set_column("N:N", width=8, cell_format=font_family ) 
         sheet.set_column("O:O", width=12, cell_format=font_family )  
-        sheet.set_column("P:P", width=14, cell_format=font_family )  
-        sheet.set_column("Q:Z", None, cell_format=font_family )  
+        sheet.set_column("P:P", width=12, cell_format=font_family )  
+        sheet.set_column("Q:Q", width=14, cell_format=font_family) 
+        sheet.set_column("R:Z", None, cell_format=font_family) 
         
         sheet.merge_range(1, 6, 1, 9, _("≪出荷予定リスト≫ "), format_sheet_title)
         sheet.write(0, 15, current_date, format_current_date)
@@ -58,13 +59,14 @@ class productSpec(models.AbstractModel):
         sheet.merge_range(5, 5, 6, 6, _("仕様"), format_table)
         sheet.merge_range(5, 7, 6, 7, _("数量"), format_table)
         sheet.merge_range(5, 8, 6, 8, _("個口"), format_table)
-        sheet.merge_range(5, 9, 6, 9, _("備考１"), format_table)
-        sheet.merge_range(5, 10, 6, 10, _("備考２"), format_table)
-        sheet.merge_range(5, 11, 5, 12, _("着日"), format_table)
-        sheet.write(6, 11, _("白谷"), format_table)
-        sheet.write(6, 12, _("デポ"), format_table)
-        sheet.merge_range(5, 13, 6, 14, _("送り先"), format_table)
-        sheet.merge_range(5, 15, 6, 15, _("手段"), format_table)
+        sheet.merge_range(5, 9, 6, 9, _("才数"), format_table)
+        sheet.merge_range(5, 10, 6, 10, _("備考１"), format_table)
+        sheet.merge_range(5, 11, 6, 11, _("備考２"), format_table)
+        sheet.merge_range(5, 12, 5, 13, _("着日"), format_table)
+        sheet.write(6, 12, _("白谷"), format_table)
+        sheet.write(6, 13, _("デポ"), format_table)
+        sheet.merge_range(5, 14, 6, 15, _("送り先"), format_table)
+        sheet.merge_range(5, 16, 6, 16, _("手段"), format_table)
 
         row_start=7
         merge_to = 7
@@ -81,10 +83,9 @@ class productSpec(models.AbstractModel):
             if stock_picking.confirmed_shipping_date:
                 confirmed_shipping_date =  stock_picking.confirmed_shipping_date.strftime("%m/%d")
 
-            if stock_picking.name:
-                order_number= stock_picking.name
+            if stock_picking.sales_order_name:
+                order_number= stock_picking.sales_order_name
 
-            # if stock_picking.state and (stock_picking.state=='done' or stock_picking.state == 'assigned'):
             if stock_picking.state and (stock_picking.state=='done'):
                 status = _("済") 
             else:
@@ -107,15 +108,24 @@ class productSpec(models.AbstractModel):
             note = ""
             shiratani_date = ""
             depo_date = ""
-            
+            prod_package_qty = 0
+            sai = 0
             stock_moves = self.env["stock.move"].search([("picking_id", "=",stock_picking.id)])
             if stock_moves :
                 for line in stock_moves:
-                    if line.product_id.product_tmpl_id.categ_id.name:
-                        prod_name = line.product_id.product_tmpl_id.categ_id.name
+                    if line.product_id.name:
+                        base_name = line.product_id.name
 
                     prod = self.env["product.product"].search([("id", "=", line.product_id.id)])
                     attribute = prod.product_template_attribute_value_ids
+                    attr_str = ", ".join(
+                        f"{attr.product_attribute_value_id.name}"
+                        for attr in attribute[:3]
+                    )
+                    if attr_str:
+                        prod_name = f"{base_name} ({attr_str})"
+                    else:
+                        prod_name = base_name
 
                     if attribute:
                         len_attr = len(attribute)
@@ -145,10 +155,17 @@ class productSpec(models.AbstractModel):
                                     depo_date_split = str(l.depo_date).split("-")
                                     depo_date = f"{depo_date_split[1]}/{depo_date_split[2]}"
 
+                    if line.prod_package_qty:
+                        prod_package_qty = line.prod_package_qty
+
+                    if line.sai:
+                        sai = line.sai
+
                     sheet.write(row_inside, 4 , prod_name, format_left)
                     sheet.merge_range(row_inside, 5, row_inside, 6, attrs, format_attr)
                     sheet.write(row_inside, 7, prod_qty, format_wrap)
-                    sheet.write(row_inside, 8, line.prod_package_qty if line.prod_package_qty else 0, format_wrap)
+                    sheet.write(row_inside, 8, prod_package_qty, format_wrap)
+                    sheet.write(row_inside, 9, sai, format_wrap)
 
                     row_inside += 1
             else:
@@ -156,6 +173,7 @@ class productSpec(models.AbstractModel):
                 sheet.merge_range(row_inside, 5, row_inside, 6, attrs, format_attr)
                 sheet.write(row_inside, 7, prod_qty, format_wrap)
                 sheet.write(row_inside, 8, 0, format_wrap)
+                sheet.write(row_inside, 9, 0, format_wrap)
 
                 row_inside += 1
                     
@@ -166,24 +184,24 @@ class productSpec(models.AbstractModel):
                 sheet.write(row_start, 1, confirmed_shipping_date, format_wrap)
                 sheet.write(row_start, 2, order_number, format_wrap)
                 sheet.write(row_start, 3, status, format_wrap)
-                sheet.write(row_start, 9, note, format_wrap)
-                sheet.write(row_start, 10, "", format_wrap)
-                sheet.write(row_start, 11, shiratani_date, format_wrap)
-                sheet.write(row_start, 12, depo_date ,format_wrap)
-                sheet.write(row_start, 13, company_name ,format_wrap)
-                sheet.write(row_start, 14, city + "\n" + state, format_wrap)
-                sheet.write(row_start, 15, "", format_wrap)
+                sheet.write(row_start, 10, note, format_wrap)
+                sheet.write(row_start, 11, "", format_wrap)
+                sheet.write(row_start, 12, shiratani_date, format_wrap)
+                sheet.write(row_start, 13, depo_date ,format_wrap)
+                sheet.write(row_start, 14, company_name ,format_wrap)
+                sheet.write(row_start, 15, city + "\n" + state, format_wrap)
+                sheet.write(row_start, 16, "", format_wrap)
             else:
                 sheet.merge_range(row_start, 0, merge_to, 0, index+1, format_wrap)
                 sheet.merge_range(row_start, 1, merge_to, 1, confirmed_shipping_date, format_wrap)
                 sheet.merge_range(row_start, 2, merge_to, 2, order_number, format_wrap)
                 sheet.merge_range(row_start, 3, merge_to, 3, status, format_wrap)
-                sheet.merge_range(row_start, 9, merge_to, 9, note, format_wrap)
-                sheet.merge_range(row_start, 10, merge_to, 10,"", format_wrap)
-                sheet.merge_range(row_start, 11, merge_to, 11, shiratani_date, format_wrap)
-                sheet.merge_range(row_start, 12, merge_to, 12, depo_date ,format_wrap)
-                sheet.merge_range(row_start, 13, merge_to, 13, company_name, format_wrap)
-                sheet.merge_range(row_start, 14, merge_to, 14, city + "\n" + state, format_wrap)
-                sheet.merge_range(row_start, 15, merge_to, 15, "", format_wrap)
+                sheet.merge_range(row_start, 10, merge_to, 10, note, format_wrap)
+                sheet.merge_range(row_start, 11, merge_to, 11,"", format_wrap)
+                sheet.merge_range(row_start, 12, merge_to, 12, shiratani_date, format_wrap)
+                sheet.merge_range(row_start, 13, merge_to, 13, depo_date ,format_wrap)
+                sheet.merge_range(row_start, 14, merge_to, 14, company_name, format_wrap)
+                sheet.merge_range(row_start, 15, merge_to, 15, city + "\n" + state, format_wrap)
+                sheet.merge_range(row_start, 16, merge_to, 16, "", format_wrap)
 
             row_start = merge_to + 1
