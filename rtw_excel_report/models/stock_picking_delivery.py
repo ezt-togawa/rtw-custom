@@ -172,7 +172,7 @@ class StockPickingDelivery(models.AbstractModel):
                     sheet.merge_range(row, 1, row + merge_line, 3, line.stock_move_line_name_excel if line.stock_move_line_name_excel else '', format_lines_14_left) 
                     sheet.merge_range(row, 4, row + merge_line, 8, line.product_number_and_size if line.product_number_and_size else '', format_lines_14_left) 
                     sheet.merge_range(row, 9, row + merge_line, 9, line.stock_product_uom_qty if line.stock_product_uom_qty else '', format_lines_14) 
-                    sheet.merge_range(row, 10, row + merge_line, 10, line.prod_package_qty if line.prod_package_qty else '', format_lines_14) 
+                    sheet.merge_range(row, 10, row + merge_line, 10, line.product_package_quantity if line.product_package_quantity else '', format_lines_14) 
                     sheet.merge_range(row, 11, row + merge_line, 11, '{0:,.0f}'.format(line.product_id.sai) if line.product_id.sai else '', format_lines_14) 
                     sheet.merge_range(row, 12, row + merge_line, 12, _('有'), format_lines_14) 
                     sheet.merge_range(row, 13, row + merge_line, 13, _('無'), format_lines_14) 
