@@ -58,6 +58,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_remark_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
         format_address = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10.5})
         format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11, 'color':'white','bold':True})
+        format_table_left = workbook.add_format({'align': 'left','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11, 'color':'white','bold':True})
         format_lines_13 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':13, 'bottom':1})
         format_lines_12 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
         format_lines_10 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12})
@@ -245,7 +246,7 @@ class ReportMrpExcel(models.AbstractModel):
 
                 #table title
                 sheet.write(17, 0, _("№"), format_table)
-                sheet.write(17, 1, _("品名"), format_table)
+                sheet.write(17, 1, _("品名"), format_table_left)
                 sheet.merge_range(17, 2, 17, 4, _("仕様・詳細１"), format_table)
                 sheet.merge_range(17, 5, 17, 7, _("仕様・詳細２"), format_table)
                 sheet.write(17, 8, _("数量"), format_table)
@@ -400,7 +401,7 @@ class ReportMrpExcel(models.AbstractModel):
 
                 #table title
                 sheet.write(17, 0, _("№"), format_table)
-                sheet.write(17, 1, _("品名"), format_table)
+                sheet.write(17, 1, _("品名"), format_table_left)
                 sheet.merge_range(17, 2, 17, 4, _("仕様・詳細１"), format_table)
                 sheet.merge_range(17, 5, 17, 7, _("仕様・詳細２"), format_table)
                 sheet.write(17, 8, _("数量"), format_table)

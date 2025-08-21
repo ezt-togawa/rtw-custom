@@ -2337,7 +2337,7 @@ class AccountMoveLineExcelReport(models.Model):
         string="仕様・詳細",
     )
 
-    acc_line_discount = fields.Char(
+    acc_line_discount = fields.Float(
         compute="_compute_acc_line_discount",
         string="discount",
     )   
@@ -2477,9 +2477,11 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_discount(self):
         for line in self:
             if  line.discount != 0.00 or line.discount != 0.0 or line.discount != 0 :
-                line.acc_line_discount = '{0:,.1f}'.format(100-line.discount)
+                discount_value = 100-line.discount
+                discount_value = round(discount_value, 2)
+                line.acc_line_discount = discount_value
             else:
-                line.acc_line_discount = ""
+                line.acc_line_discount = 0.0
     
     acc_line_price_subtotal = fields.Char(
         compute="_compute_acc_line_price_subtotal",

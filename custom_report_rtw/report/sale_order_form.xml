@@ -108,7 +108,7 @@
                   </div>
                 </div>
                 <div style="position: relative; top: -23px;">
-                  <t t-if="docs.partner_id.company_type == 'company'">
+                  <!-- <t t-if="docs.partner_id.company_type == 'company'">
                     <div class="title_pdf">
                       社名
                     </div>
@@ -128,8 +128,8 @@
                     <t t-else="">
                       <div class="d-flex justify-content-end title_pdf">印</div>
                     </t>
-                  </t>
-                  <t t-if="docs.partner_id.company_type == 'person'">
+                  </t> -->
+                  <!-- <t t-if="docs.partner_id.company_type == 'person'"> -->
                     <div class="title_pdf">
                       会社名・氏名
                     </div>
@@ -139,7 +139,7 @@
                     <t t-else="">
                       <div class="d-flex justify-content-end title_pdf">印</div>
                     </t>
-                  </t>
+                  <!-- </t> -->
                   <br />
                   <br />
                   <div class="title_pdf">
@@ -166,8 +166,8 @@
                   <thead>
                     <tr class="table-title bold" style="font-size:13px;background-color:#999999">
                       <th class="text-center" style="width:1%">№</th>
-                      <th class="text-center" style="width:34%">品名</th>
-                      <th class="text-center" style="width:33%">品番・サイズ</th>
+                      <th class="text-left" style="width:34%">品名</th>
+                      <th class="text-left" style="width:33%">品番・サイズ</th>
                       <th class="text-center" style="width:7%">数量</th>
                       <th class="text-center" style="width:8%">定価</th>
                       <th class="text-center" style="width:7%">掛率</th>
@@ -235,7 +235,7 @@
                           <div class="two-lines">
                             <span
                               style="font-size:16px"
-                              t-esc="'{0:,.0f}'.format(l.sale_order_line_discount)" />
+                              t-esc="l.sale_order_line_discount" />
                           </div>
                         </td>
                         <td class="text-right" style="font-size:16px;">
