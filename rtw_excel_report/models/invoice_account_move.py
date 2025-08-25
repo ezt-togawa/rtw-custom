@@ -47,6 +47,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_date = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'num_format': 'yyyy-mm-dd', 'font_name': font_name, 'font_size':10})
         format_address = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10.5})
         format_table = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'bg_color': '#999999', 'font_name': font_name, 'font_size':11, 'color':'white', 'bold':True})
+        format_table_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'bg_color': '#999999', 'font_name': font_name, 'font_size':11, 'color':'white', 'bold':True})
         format_lines_9_left= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':11.25, 'bottom':1})
         format_lines_10 = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
         format_lines_10_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
@@ -153,8 +154,8 @@ class ReportMrpExcel(models.AbstractModel):
 
             #table title
             sheet.write(16, 0, _("№"), format_table)
-            sheet.merge_range(16, 1, 16, 3, _("品名"), format_table)
-            sheet.merge_range(16, 4, 16, 7, _("品番・サイズ"), format_table)
+            sheet.merge_range(16, 1, 16, 3, _("品名"), format_table_left)
+            sheet.merge_range(16, 4, 16, 7, _("品番・サイズ"), format_table_left)
             sheet.write(16, 8, _("数量"), format_table)
             sheet.write(16, 9, _("定価"), format_table)
             sheet.write(16, 10, _("掛率 "), format_table)
@@ -170,7 +171,7 @@ class ReportMrpExcel(models.AbstractModel):
                     sheet.merge_range(row, 4, row + merge_line, 7, line.acc_line_number_and_size if line.acc_line_number_and_size else '' , format_lines_11_left) 
                     sheet.merge_range(row, 8, row + merge_line, 8, line.acc_move_line_qty if line.acc_move_line_qty else '' , format_lines_13) 
                     sheet.merge_range(row, 9, row + merge_line, 9, line.acc_line_price_unit if line.acc_line_price_unit else '' , format_lines_13) 
-                    sheet.merge_range(row, 10, row + merge_line, 10, line.acc_line_discount if line.acc_line_discount else '' , format_lines_13) 
+                    sheet.merge_range(row, 10, row + merge_line, 10, "{:.1f}".format(line.acc_line_discount) if line.acc_line_discount else '' , format_lines_13) 
                     sheet.merge_range(row, 11, row + merge_line, 11, line.acc_line_sell_unit_price if line.acc_line_sell_unit_price else '' , format_lines_13) 
                     sheet.merge_range(row, 12, row + merge_line, 12, line.acc_line_price_subtotal if line.acc_line_price_subtotal else '' , format_lines_13) 
                     

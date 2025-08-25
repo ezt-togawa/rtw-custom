@@ -46,7 +46,8 @@ class StockPickingDelivery(models.AbstractModel):
 
         format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':10.5})
         format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#808080', 'font_name': font_name,'font_size':14,'color':'white','bold':True})
-        
+        format_table_left = workbook.add_format({'align': 'left','valign': 'vcenter','bg_color': '#808080', 'font_name': font_name,'font_size':14,'color':'white','bold':True})
+
         format_lines_14_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':14,'bottom':1})
         format_lines_14 = workbook.add_format({'align': 'right','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':14,'bottom':1})
         format_lines_no = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':14,'bottom':1})
@@ -154,8 +155,8 @@ class StockPickingDelivery(models.AbstractModel):
             
             #table title
             sheet.write(20, 0, _("№"), format_table)
-            sheet.merge_range(20, 1, 20, 3,  _("品名"), format_table)
-            sheet.merge_range(20, 4, 20, 8, _("品番・サイズ"), format_table)
+            sheet.merge_range(20, 1, 20, 3,  _("品名"), format_table_left)
+            sheet.merge_range(20, 4, 20, 8, _("品番・サイズ"), format_table_left)
             sheet.write(20, 9, _("数量"), format_table)
             sheet.write(20, 10, _("個口数"), format_table)
             sheet.write(20, 11, _("才数"), format_table)
