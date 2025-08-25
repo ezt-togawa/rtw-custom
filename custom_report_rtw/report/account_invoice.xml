@@ -252,7 +252,7 @@
                                                     <div class="two-lines">
                                                         <span
                                                             style="font-size:16px"
-                                                            t-esc="'{0:,.1f}'.format(l.acc_line_discount)" />
+                                                            t-esc="l.acc_line_discount" />
                                                     </div>
                                                 </td>
                                                 <td class="text-right" style="font-size:16px;">
