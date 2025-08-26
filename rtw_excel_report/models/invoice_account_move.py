@@ -171,7 +171,7 @@ class ReportMrpExcel(models.AbstractModel):
                     sheet.merge_range(row, 4, row + merge_line, 7, line.acc_line_number_and_size if line.acc_line_number_and_size else '' , format_lines_11_left) 
                     sheet.merge_range(row, 8, row + merge_line, 8, line.acc_move_line_qty if line.acc_move_line_qty else '' , format_lines_13) 
                     sheet.merge_range(row, 9, row + merge_line, 9, line.acc_line_price_unit if line.acc_line_price_unit else '' , format_lines_13) 
-                    sheet.merge_range(row, 10, row + merge_line, 10, "{:.1f}".format(line.acc_line_discount) if line.acc_line_discount else '' , format_lines_13) 
+                    sheet.merge_range(row, 10, row + merge_line, 10, line.acc_line_discount if line.acc_line_discount else '' , format_lines_13) 
                     sheet.merge_range(row, 11, row + merge_line, 11, line.acc_line_sell_unit_price if line.acc_line_sell_unit_price else '' , format_lines_13) 
                     sheet.merge_range(row, 12, row + merge_line, 12, line.acc_line_price_subtotal if line.acc_line_price_subtotal else '' , format_lines_13) 
                     
