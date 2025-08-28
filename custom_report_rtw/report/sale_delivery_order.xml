@@ -183,7 +183,7 @@
                       </td>
                       <td class="text-right" style="padding: 10px 0px;">
                         <div class="two-lines">
-                          <span t-esc="'{0:,.0f}'.format(l.sale_line_calculate_packages)" />
+                          <span t-esc="l.sale_line_calculate_packages" />
                         </div>
                       </td>
                       <td class="text-right" style="padding: 10px 0px;">
