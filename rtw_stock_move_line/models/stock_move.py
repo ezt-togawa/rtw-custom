@@ -108,9 +108,9 @@ class rtw_stock_move(models.Model):
         mls = super().create(vals_list)
         for move in mls:
             if move.product_id and move.product_id.two_legs_scale:
-                move.product_package_quantity = math.ceil(move.product_qty * move.product_id.two_legs_scale)
+                move.product_package_quantity = round(move.product_qty * move.product_id.two_legs_scale, 2)
             else:
-                move.product_package_quantity = 0
+                move.product_package_quantity = 0.00
         return mls
 
     @api.depends('product_id')
