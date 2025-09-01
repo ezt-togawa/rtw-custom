@@ -6,11 +6,12 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="picking_id" />
-                    <field name="overseas" />
+                    <field name="overseas" optional="show" />
                     <field name="sale_id" string="注番" optional="show" />
                     <field name="sale_id_title" string="Title" optional="show" />
                     <!-- <field name="production_id" invisible="1" /> -->
                     <field name="mrp_production_id" optional="show" />
+                    <field name="origin" optional="hide" />
                     <field name="product_id" />
                     <field name="spec" widget="many2many_tags" optional="hide" />
                     <field name="custom" widget="many2many_tags" optional="hide" />

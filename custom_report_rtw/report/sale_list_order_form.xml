@@ -19,7 +19,7 @@
               <t t-set="company" t-value="res_company" />
             </t>
           </t>
-          <t t-call="custom_report_rtw.SO_purchase_order_header_layout"></t>
+          <t t-call="custom_report_rtw.SO_purchase_list_order_header_layout"></t>
           <div class="page">
             <t
               t-set="type">quotation</t>
@@ -67,16 +67,16 @@
                   </div>
                 </div>
                 <div class="so_price">
-                  <span class="border-bottom2">件名 <span t-field="docs.title" /></span>
+                  <span class="border-bottom2">件名 : <span t-field="docs.title" /></span>
                 </div>
                 <div class="col-5">
                   <div class="width-money">
-                    <div>税抜合計: <div style="float:right">
+                    <div>税抜合計 <div style="float:right">
                         <span t-field="docs.currency_id.symbol" />
                         <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
                       </div>
                     </div>
-                    <div>消費税: <div style="float:right">
+                    <div>消費税 <div style="float:right">
                         <span t-field="docs.currency_id.symbol" />
                         <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
                       </div>
@@ -94,16 +94,6 @@
               <div class="col-4" name="company_address">
                 <div>
                   <div class="d-flex justify-content-end position-relative">
-                    <t t-if="docs.check_oversea">
-                      <t t-if="docs.lang_code == 'en_US'">
-                        <div class="size18 position-absolute" style="top:-4px;left:215px;">
-                          海外</div>
-                      </t>
-                      <t t-else="">
-                        <div class="size18 position-absolute" style="top:-4px;left:270px;">
-                          海外</div>
-                      </t>
-                    </t>
                     <div class="ml-3 mr-5">西暦</div>
                     <t t-if="docs.lang_code == 'en_US'">
                       <div class="mr-4">/</div>
@@ -117,46 +107,48 @@
                     </t>
                   </div>
                 </div>
-                <div>
-                  <t t-if="docs.partner_id.company_type == 'company'">
-                    <div>
+                <div style="position: relative; top: -23px;">
+                  <!-- <t t-if="docs.partner_id.company_type == 'company'">
+                    <div class="title_pdf">
                       社名
                     </div>
                     <t t-if="docs.lang_code == 'en_US'">
-                      <div class="d-flex justify-content-end">Seal</div>
+                      <div class="d-flex justify-content-end title_pdf">Seal</div>
                     </t>
                     <t t-else="">
-                      <div class="d-flex justify-content-end">印</div>
+                      <div class="d-flex justify-content-end title_pdf">印</div>
                     </t>
                     <br />
-                    <div>
+                    <div class="title_pdf">
                       担当者名
                     </div>
                     <t t-if="docs.lang_code == 'en_US'">
-                      <div class="d-flex justify-content-end">Seal</div>
+                      <div class="d-flex justify-content-end title_pdf">Seal</div>
                     </t>
                     <t t-else="">
-                      <div class="d-flex justify-content-end">印</div>
+                      <div class="d-flex justify-content-end title_pdf">印</div>
                     </t>
-                  </t>
-                  <t t-if="docs.partner_id.company_type == 'person'">
-                    <div>
-                      氏名
+                  </t> -->
+                  <!-- <t t-if="docs.partner_id.company_type == 'person'"> -->
+                    <div class="title_pdf">
+                      会社名・氏名
                     </div>
                     <t t-if="docs.lang_code == 'en_US'">
-                      <div class="d-flex justify-content-end">Seal</div>
+                      <div class="d-flex justify-content-end title_pdf">Seal</div>
                     </t>
                     <t t-else="">
-                      <div class="d-flex justify-content-end">印</div>
+                      <div class="d-flex justify-content-end title_pdf">印</div>
                     </t>
-                  </t>
-                  <div>
+                  <!-- </t> -->
+                  <br />
+                  <br />
+                  <div class="title_pdf">
                     納品先住所
                   </div>
                   <br />
-                  <div> 立会者
+                  <div class="title_pdf"> 立会者
                   </div>
-                  <div> 立会者連絡先
+                  <div class="title_pdf"> 立会者連絡先
                   </div>
                 </div>
               </div>
@@ -174,10 +166,8 @@
                   <thead>
                     <tr class="table-title bold" style="font-size:13px;background-color:#999999">
                       <th class="text-center" style="width:2%">№</th>
-                      <th class="text-center" style="width:16%">品名</th>
-                      <th class="text-center" style="width:16%">品番・サイズ</th>
-                      <th class="text-center" style="width:20%">仕様・詳細</th>
-                      <th class="text-center" style="width:20%">仕様・詳細</th>
+                      <th class="text-left" style="width:36%">品名</th>
+                      <th class="text-left" style="width:36%">品番・サイズ</th>
                       <th class="text-center" style="width:8%">数量</th>
                       <th class="text-center" style="width:8%">定価</th>
                       <th class="text-center" style="width:10%">販売金額</th>
@@ -189,85 +179,59 @@
                     <tr class="size11 table-border-bottom-auto">
                       <t t-if="l.display_type =='line_note'">
                         <td />
-                        <td class="size11" colspan="9">
+                        <td class="size11" colspan="9" style="padding: 6px 0px;">
                           <span t-field="l.name" />
                         </td>
                       </t>
                       <t t-elif="l.display_type =='line_section'">
                         <td class="bg-section"></td>
-                        <td class="size11 bg-section" colspan="9">
+                        <td class="size11 bg-section" colspan="9" style="padding: 6px 0px;">
                           <span t-field="l.name" />
                         </td>
                       </t>
                     </tr>
                   </t>
                   <t t-else="">
-                    <tr class="size11 table-border-bottom">
+                    <tr class="table-border-bottom">
                       <t>
-                        <td class="text-center size12">
+                        <td class="text-center" style="font-size:16px;">
                           <t t-set="number" t-value="number + 1" />
                           <t t-esc="number" />
                         </td>
-                        <td>
-                          <div class="six-lines">
+                        <td class="text-left" style="font-size:15px;">
+                          <div class="two-lines">
                             <div t-if="l.sale_order_line_name_pdf"
                               t-field="l.sale_order_line_name_pdf" />
                             <div t-if="l.product_id.summary"
                               t-field="l.product_id.summary" />
-                            <div t-if="l.p_type == 'special'">別注</div>
-                            <div t-if="l.p_type == 'custom'">特注</div>
+                            <!-- <div t-if="l.p_type == 'special'">別注</div>
+                            <div t-if="l.p_type == 'custom'">特注</div> -->
                           </div>
                         </td>
-                        <td class="size13">
-                          <div class="six-lines">
-                            <div t-if="l.product_id.product_no"
+                        <td class="text-left">
+                          <div class="two-lines">
+                            <div style="font-size:16px;" t-if="l.product_id.product_no"
                               t-field="l.product_id.product_no" />
                             <t t-if="l.product_size">
-                              <span
+                              <span style="font-size:15px;"
                                 t-esc="l.product_size" />
                             </t>
                           </div>
                         </td>
-                        <td class="size12">
-                          <div class="six-lines">
-                            <t t-if="l.sale_order_product_detail">
-                              <t t-set="attr_arr"
-                                t-value="l.sale_order_product_detail.split('\n')" />
-                              <t t-foreach="attr_arr" t-as="att">
-                                <div>
-                                  <span t-esc="att.strip()" />
-                                </div>
-                              </t>
-                            </t>
-                          </div>
-                        </td>
-                        <td class="size12">
-                          <div class="six-lines">
-                            <t t-if="l.sale_order_product_detail_2">
-                              <t t-set="attr_arr"
-                                t-value="l.sale_order_product_detail_2.split('\n')" />
-                              <t t-foreach="attr_arr" t-as="att">
-                                <div>
-                                  <span t-esc="att.strip()" />
-                                </div>
-                              </t>
-                            </t>
-                          </div>
-                        </td>
-                        <td class="text-center size13">
-                          <div id="quote_qty" class="six-lines">
+                        <td class="text-right" style="font-size:16px;">
+                          <div id="quote_qty" class="two-lines">
                             <span t-esc="l.sale_order_line_product_uom_qty" />
                           </div>
                         </td>
-                        <td class="text-center size15">
-                          <div class="six-lines">
+                        <td class="text-right" style="font-size:16px;">
+                          <div class="two-lines">
                             <span
                               style="font-size:16px"
                               t-esc="'{0:,.0f}'.format(l.price_unit)" />
                           </div>
                         </td>
-                        <td class="text-center size15">
-                          <div class="six-lines">
+                        <td class="text-right" style="font-size:16px;">
+                          <div class="two-lines">
                             <span
                               style="font-size:16px"
                               t-esc="'{0:,.0f}'.format(l.price_unit * l.product_uom_qty)" />
@@ -279,19 +243,8 @@
                 </tbody>
               </t>
             </table>
-            <div
-              class="d-flex justify-content-end size13">
-              <div
-                class="pr-4">定価合計 : <span
-                  t-esc="'{0:,.0f}'.format(total_listprice)" /></div>
-              <div>販売価格合計 : <span
-                  t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" /></div>
-            </div>
-            <div class="d-flex justify-content-end size11">
-              <span t-field="docs.name" />
-            </div>
           </div>
-          <t t-call="custom_report_rtw.page_footer_layout"></t>
+          <t t-call="custom_report_rtw.page_footer_layout_"></t>
         </t>
       </t>
     </t>

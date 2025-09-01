@@ -55,36 +55,58 @@
                                     <div class="col-6 d-flex">
                                         <div class="col-4"></div>
                                         <div class="col-8">
-                                            <div>納品希望日： <span t-esc="docs.preferred_delivery_period" /></div>
-                                            <div> 製作日数： <span t-if="docs.workday_id"
-                                                    t-esc="docs.workday_id.name" /></div>
-                                            <div> 発注期限： <span t-esc="docs.sale_order_date_deadline" /></div>
-                                            <div> 納品場所：<span t-esc="docs.forwarding_address" /></div>
-                                            <div> 支払方法：<span
-                                                    t-esc="docs.sale_order_transactions_term" /></div>
+                                            <div>
+                                                <span class="title_pdf">納品希望日：</span>
+                                                <span t-esc="docs.preferred_delivery_period" />
+                                            </div>
+                                            <div>
+                                                <span class="title_pdf">製作日数：</span>
+                                                <span t-if="docs.workday_id"
+                                                    t-esc="docs.workday_id.name" />
+                                            </div>
+                                            <div>
+                                                <span class="title_pdf">発注期限：</span>
+                                                <span t-esc="docs.sale_order_date_deadline" />
+                                            </div>
+                                            <div>
+                                                <span class="title_pdf">納品場所：</span>
+                                                <span t-esc="docs.forwarding_address" />
+                                            </div>
+                                            <div>
+                                                <span class="title_pdf">支払方法：</span>
+                                                <span
+                                                    t-esc="docs.sale_order_transactions_term" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex">
                                     <div class="col-8 so_price">
-                                        <span class="border-bottom2">件名 <span t-field="docs.title" />
+                                        <span class="border-bottom2">
+                                            <span>件名：</span>
+                                            <span t-field="docs.title" />
                                         </span>
                                     </div>
                                     <div class="col-4">
-                                        <div>見積有効期限： <span t-field="docs.sale_order_validity_date" /></div>
+                                        <div>
+                                            <span class="title_pdf">見積有効期限：</span>
+                                            <span t-field="docs.sale_order_validity_date" />
+                                        </div>
                                         <div
                                             style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow:hidden;max-height:60px;">
-                                            備考: <span t-field="docs.special_note" /></div>
+                                            <span class="title_pdf">備考：</span>
+                                            <span t-field="docs.special_note" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6 size16">
                                     <div class="width-money">
-                                        <div>税抜合計: <div class="float-right">
+                                        <div>税抜合計 <div class="float-right">
                                                 <span t-field="docs.currency_id.symbol" />
                                                 <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
                                             </div>
                                         </div>
-                                        <div>消費税: <div class="float-right">
+                                        <div>消費税 <div class="float-right">
                                                 <span t-field="docs.currency_id.symbol" />
                                                 <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
                                             </div>
@@ -103,12 +125,12 @@
                             <div class="col-4 size11" name="company_address">
                                 <div class="float-right">
                                     <div>
-                                        <img style="width:180px;height:40px;"
-                                            src="/custom_report_rtw/static/src/images/company_logo2.jpeg"
+                                        <img style="width:250px;height:auto; object-fit:contain;"
+                                            src="/custom_report_rtw/static/src/images/Ritzwell_log.jpg"
                                             alt="Logo" />
                                     </div>
-                                    <div>
-                                        <div class="size12">
+                                    <div style="font-size:14px;">
+                                        <div>
                                             <span t-esc="docs.hr_employee_company" />
                                         </div>
                                         <div>
@@ -129,7 +151,7 @@
                                         <div>
                                             <span t-esc="docs.hr_employee_fax" />
                                         </div>
-                                        <div class="size12">
+                                        <div>
                                             <span t-esc="docs.hr_employee_printer" />
                                         </div>
                                     </div>
@@ -139,7 +161,7 @@
                         <div class="d-flex justify-content-center size16">
                             <div class="col-4">
                                 <div class="size16 width-money">
-                                    <span>税抜定価合計: </span>
+                                    <span>税抜定価合計 </span>
                                     <div class="float-right">
                                         <span t-field="docs.currency_id.symbol" />
                                         <span t-esc="docs.sale_order_total_list_price" />
@@ -162,16 +184,22 @@
                                     <thead>
                                         <tr class="table-title bold"
                                             style="font-size:13px;background-color:#999999">
-                                            <th class="text-center" style="width:1%;padding:12px 2px;">№</th>
-                                            <th class="text-center" style="width:10%;padding:12px 0px;">品名</th>
-                                            <th class="text-left" style="width:10%;padding:12px 0px;">品番・サイズ</th>
-                                            <th class="text-left" style="width:24%;padding:12px 0px;">仕様・詳細１</th>
-                                            <th class="text-left" style="width:24%;padding:12px 0px;">仕様・詳細２</th>
-                                            <th class="text-center" style="width:3%;padding:12px 0px;">数量</th>
-                                            <th class="text-center" style="width:6%;padding:12px 0px;">定価</th>
-                                            <th class="text-center" style="width:4%;padding:12px 0px;">掛率</th>
-                                            <th class="text-center" style="width:10%;padding:12px 0px;">販売単価</th>
-                                            <th class="text-center" style="width:10%;padding:12px 0px;">販売金額</th>
+                                            <th class="text-center"
+                                                style="width:1%; padding:12px 2px;">№</th>
+                                            <th class="text-left"
+                                                style="width:30%; padding:12px 0px;">品名</th>
+                                            <th class="text-left"
+                                                style="width:30%; padding:12px 0px;">品番・サイズ</th>
+                                            <th class="text-center"
+                                                style="width:5%; padding:12px 0px;">数量</th>
+                                            <th class="text-center"
+                                                style="width:8%; padding:12px 0px;">定価</th>
+                                            <th class="text-center"
+                                                style="width:6%; padding:12px 0px;">掛率</th>
+                                            <th class="text-center"
+                                                style="width:10%; padding:12px 0px;">販売単価</th>
+                                            <th class="text-center"
+                                                style="width:10%; padding:12px 0px;">販売金額</th>
                                         </tr>
                                     </thead>
                                 </t>
@@ -181,14 +209,16 @@
                                             t-if="l.display_type =='line_section' or l.display_type =='line_note'">
                                             <tr class="size15 table-border-bottom-auto">
                                                 <t t-if="l.display_type =='line_section'">
-                                                    <td class="bg-section" style="padding:12px 0px;"/>
-                                                    <td class="size11 bg-section" colspan="9" style="padding:12px 0px;">
+                                                    <td class="bg-section" />
+                                                    <td class="size11 bg-section" colspan="9"
+                                                        style="padding: 6px 0px;">
                                                         <span t-field="l.name" />
                                                     </td>
                                                 </t>
                                                 <t t-elif="l.display_type =='line_note'">
-                                                    <td style="padding:12px 0px;"/>
-                                                    <td class="size11" colspan="9" style="padding:12px 0px;">
+                                                    <td />
+                                                    <td class="size11" colspan="9"
+                                                        style="padding: 6px 0px;">
                                                         <span t-field="l.name" />
                                                     </td>
                                                 </t>
@@ -196,85 +226,63 @@
                                         </t>
                                         <t t-else="">
                                             <tr class="size15 table-border-bottom">
-                                                <td class="text-center size12" style="padding:12px 0px;">
+                                                <td class="text-center "
+                                                    style="font-size:16px; padding: 10px 0px;">
                                                     <t t-set="number" t-value="number + 1" />
                                                     <t t-esc="number" />
                                                 </td>
-                                                <td class="size12" style="padding:12px 0px;">
-                                                    <div class="six-lines">
+                                                <td class="text-left"
+                                                    style="font-size:15px; padding: 10px 0px;">
+                                                    <div class="two-lines">
                                                         <div t-if="l.sale_order_line_name_pdf"
                                                             t-field="l.sale_order_line_name_pdf" />
                                                         <div t-if="l.product_id.summary"
                                                             t-field="l.product_id.summary" />
-                                                        <div t-if="l.p_type == 'special'">別注</div>
-                                                        <div t-if="l.p_type == 'custom'">特注</div>
                                                     </div>
                                                 </td>
-                                                <td class="size12" style="padding:12px 0px;">
-                                                    <div class="six-lines">
-                                                        <div t-if="l.product_id.product_no"
+                                                <td class="text-left" style="padding: 10px 0px;">
+                                                    <div class="two-lines">
+                                                        <div style="font-size:16px;"
+                                                            t-if="l.product_id.product_no"
                                                             t-field="l.product_id.product_no" />
                                                         <t t-if="l.product_size">
-                                                            <span
+                                                            <span style="font-size:15px;"
                                                                 t-esc="l.product_size" />
                                                         </t>
                                                     </div>
                                                 </td>
-                                                <td class="size12" style="padding:12px 0px;">
-                                                    <div class="six-lines">
-                                                        <t t-if="l.sale_order_product_detail">
-                                                            <t t-set="attr_arr"
-                                                                t-value="l.sale_order_product_detail.split('\n')" />
-                                                            <t t-foreach="attr_arr" t-as="att">
-                                                                <div>
-                                                                    <span t-esc="att.strip()" />
-                                                                </div>
-                                                            </t>
-                                                        </t>
-                                                    </div>
-                                                </td>
-                                                <td class="size12" style="padding:12px 0px;">
-                                                    <div class="six-lines">
-                                                        <t t-if="l.sale_order_product_detail_2">
-                                                            <t t-set="attr_arr"
-                                                                t-value="l.sale_order_product_detail_2.split('\n')" />
-                                                            <t t-foreach="attr_arr" t-as="att">
-                                                                <div>
-                                                                    <span t-esc="att.strip()" />
-                                                                </div>
-                                                            </t>
-                                                        </t>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center" style="padding:12px 0px;">
-                                                    <div id="quote_qty" class="six-lines">
+                                                <td class="text-right"
+                                                    style="font-size:16px; padding: 10px 0px;">
+                                                    <div id="quote_qty" class="two-lines">
                                                         <span
                                                             t-esc="l.sale_order_line_product_uom_qty" />
                                                     </div>
                                                 </td>
-                                                <td class="text-center size12" style="padding:12px 0px;">
-                                                    <div class="six-lines">
+                                                <td class="text-right"
+                                                    style="font-size:16px; padding: 10px 0px;">
+                                                    <div class="two-lines">
                                                         <span
                                                             style="font-size:16px"
                                                             t-esc="'{0:,.0f}'.format(l.price_unit)" />
                                                     </div>
                                                 </td>
-                                                <td class="text-center size11" style="padding:12px 0px;">
-                                                    <div class="six-lines">
+                                                <td class="text-right" style="padding: 10px 0px;">
+                                                    <div class="two-lines">
                                                         <span
                                                             style="font-size:16px"
                                                             t-esc="l.sale_order_line_discount if l.sale_order_line_discount % 1 != 0 else int(l.sale_order_line_discount)" />
                                                     </div>
                                                 </td>
-                                                <td class="text-center" style="padding:12px 0px;">
-                                                    <div class="six-lines">
+                                                <td class="text-right"
+                                                    style="font-size:16px; padding: 10px 0px;">
+                                                    <div class="two-lines">
                                                         <span
                                                             t-esc="'{0:,.0f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else
                                                 '{0:,.0f}'.format(l.price_unit)" />
                                                     </div>
                                                 </td>
-                                                <td class="text-center" style="padding:12px 0px;">
-                                                    <div class="six-lines">
+                                                <td class="text-right" style="padding: 10px 0px;">
+                                                    <div class="two-lines">
                                                         <span
                                                             style="font-size:16px"
                                                             t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
@@ -286,18 +294,8 @@
                                 </tbody>
                             </t>
                         </table>
-                        <!-- <div
-                            class="d-flex justify-content-end">
-                            <div
-                                class="pr-4">定価合計 : <span
-                                    t-esc="'{0:,.0f}'.format(total_listprice)" /></div>
-                            <div>販売価格合計 : <span
-                                    t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" /></div>
-                        </div>
-                        <div class="d-flex justify-content-end size12">
-                            <span t-field="docs.name" />
-                        </div> -->
                     </div>
+
                     <t t-call="custom_report_rtw.page_footer_layout"></t>
                 </t>
             </t>

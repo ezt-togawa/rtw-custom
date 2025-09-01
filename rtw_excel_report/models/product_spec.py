@@ -36,10 +36,16 @@ class productSpec(models.AbstractModel):
         else:
             os.makedirs(image_attribute_product)
 
-        image_logo_R = get_module_resource('rtw_excel_report', 'img', 'logo.png')
-        logo_R = PILImage.open(image_logo_R)
-        logo_R = logo_R.convert('RGB')
-        logo_R = logo_R.resize((70, 45))
+        def resize_keep_aspect(image_path, target_width):
+            img = PILImage.open(image_path).convert('RGB')
+            w, h = img.size
+            aspect_ratio = h / w
+            target_height = int(target_width * aspect_ratio)
+            img = img.resize((target_width, target_height), PILImage.LANCZOS)
+            return img
+
+        image_logo_R = get_module_resource('rtw_excel_report', 'img', 'R_log.jpg')
+        logo_R = resize_keep_aspect(image_logo_R, 86)
         img_io_R = BytesIO()
         logo_R.save(img_io_R, 'PNG')
         img_io_R.seek(0)
@@ -54,8 +60,11 @@ class productSpec(models.AbstractModel):
         format_date = workbook.add_format({'align': 'right','font_name': font_name,'font_size':9})
         format_text_14 = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':14})
         format_text_12 = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':12})
+        format_text_with_bottom_border = workbook.add_format({ 'align': 'left', 'valign': 'top', 'font_name': font_name, 'font_size': 11, 'text_wrap': False, 'bottom': 5, 'bottom_color': '#d9d9d9'})
+        
         
         format_border = workbook.add_format({'bg_color': '#d9d9d9'})
+    
         #create sheet
         for index,so in enumerate(so_data):
             sheet_name = f"{so.name}" 
@@ -71,7 +80,7 @@ class productSpec(models.AbstractModel):
             top_margin = 0.5
             bottom_margin = 0.5
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
-            sheet.set_header( f'{"&"}R {so.name  if so.name else ""}', margin=margin_header) 
+            sheet.set_header( f'{"&"}R No．{so.name  if so.name else ""}', margin=margin_header) 
             sheet.set_footer(f'{"&"}L page{" "}{"&"}P/{"&"}N',margin=margin_footer)    
                     
             sheet.set_column("A:A", width=0.81, cell_format=font_family)  
@@ -166,11 +175,56 @@ class productSpec(models.AbstractModel):
             pagebreaks = 0    
 
             if so.order_line:
-                length = len(so.order_line.filtered(lambda x: not x.is_pack_outside))
-                
+                lines = so.order_line.filtered(lambda x: x.display_type not in ['line_note', 'line_section'] and not x.is_pack_outside and x.config_ok)
+                length = len(lines)
                 if length > 0:
                     more_height = 0 
-                    for i,sol in enumerate(so.order_line.filtered(lambda x: not x.is_pack_outside)):
+                    for i,sol in enumerate(lines):
+                        try:
+                            line_index = so.order_line.ids.index(sol.id)
+                        except ValueError:
+                            line_index = -1
+
+                        line_note_content = ""
+                        if 0 <= line_index < len(so.order_line) - 1:
+                            next_line = so.order_line[line_index + 1]
+                            if next_line.display_type == 'line_note':
+                                line_note_content = next_line.name or ""
+
+                        # if line_note_content:
+                            product_pos = (i + 1) % 4
+                            height_ln = 0
+                            width_ln = 0
+
+                            if product_pos == 1:
+                                height_ln = 0
+                                width_ln = 0
+                            elif product_pos == 2:
+                                width_ln = 24
+                            elif product_pos == 3:
+                                height_ln = 23
+                                width_ln = 0
+                            elif product_pos == 0:
+                                height_ln = 23
+                                width_ln = 24
+
+                            row_ln = 28 + height_ln + more_height
+                            sheet.set_row(row_ln, 13.8)
+                            sheet.merge_range(
+                                row_ln, 2 + width_ln,
+                                row_ln, 22 + width_ln,
+                                line_note_content,
+                                format_text_with_bottom_border 
+                            )
+                            format_border_with_bottom = workbook.add_format({
+                                'bg_color': '#d9d9d9',
+                                'bottom': 5,
+                                'bottom_color': '#d9d9d9'
+                            })
+                            sheet.write(row_ln, 1 + width_ln, "", format_border_with_bottom)
+                            sheet.write(row_ln, 23 + width_ln, "", format_border_with_bottom)
+
+                        pagebreaks += 1
                         height = 0
                         width = 0
                         i = i+1
@@ -337,8 +391,9 @@ class productSpec(models.AbstractModel):
                                 elif attr_child_count == 4:
                                     att_height = 5
                                     att_width = 7
-                                # attributes picture write excel             
-                                sheet.insert_image(18 + att_height + height + more_height, 2 + att_width + width , "attribute_img", {'image_data': img_attr,'x_offset': 11, 'y_offset': 7})    
+                                # attributes picture write excel   
+                                if img_attr:          
+                                   sheet.insert_image(18 + att_height + height + more_height, 2 + att_width + width , "attribute_img", {'image_data': img_attr,'x_offset': 11, 'y_offset': 7})    
                                 # attributes value write excel 
                                 sheet.write(18 + att_height + height + more_height, 5 + att_width + width, attr, format_text_center_size9)
                                             

@@ -3,8 +3,8 @@
   src: url("../font/HGRGM_0.TTC") format("TTC");
 }
 
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -29,7 +29,8 @@ div.stamp {
   padding: 0em 0.5em 0em 0.5em;
 }
 
-div,span{
+div,
+span {
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -42,6 +43,10 @@ div,span{
   font-size: 22px;
 }
 
+.title_pdf {
+  font-size: 15px;
+}
+
 body {
   background: transparent !important;
 }
@@ -51,13 +56,15 @@ body {
   color: #fff;
   font-weight: 600;
   padding: 2px 0px;
+  display: flex;
+  align-items: center;
 }
 
 .text-center {
   text-align: center;
 }
 
-.product-name{
+.product-name {
   padding: 5px;
 }
 
@@ -72,22 +79,23 @@ body {
 
 .product-img img {
   width: 100%;
-  height:100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.child-img{
-  width:100%;
-  height:80px;
+.child-img {
+  width: 100%;
+  height: 100%;
 }
 
 .child-img img {
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 
 .product-img {
-  width:100%;
-  height:110px;
+  width: 100%;
+  height: 100%;
 }
 
 .product-quantity {
@@ -101,10 +109,6 @@ body {
   top: 20%;
 }
 
-.name {
-  /* display: inline-block; */
-  /* width:80%; */
-}
 
 .custom-row {
   width: 10in;
@@ -121,17 +125,16 @@ body {
 
 .product-container {
   width: 100%;
-  /* margin: 5px 2px; */
   border: 1px gray solid !important;
   padding: 5px;
-  height:360px;
-  max-height:360px;
-  overflow:hidden;
-  background: #D9D9D9;
+  height: 360px;
+  max-height: 360px;
+  overflow: hidden;
+  background: #d9d9d9;
   box-sizing: border-box;
 }
 
-.bg-white{
+.bg-white {
   background-color: #fff;
 }
 
@@ -139,7 +142,7 @@ body {
   display: inline-block;
   vertical-align: top;
   width: 50%;
-  padding:5px;
+  padding: 5px;
   box-sizing: border-box;
 }
 
@@ -148,8 +151,8 @@ body {
   vertical-align: top;
   width: 49%;
   box-sizing: border-box;
-  overflow:hidden;
-  height:90px;
+  overflow: hidden;
+  height: 90px;
 }
 
 .product-config:not(:has(img[src])) {
@@ -177,12 +180,15 @@ body {
 .size19 {
   font-size: 19px;
 }
+
 .size18 {
   font-size: 18px;
 }
+
 .size17 {
   font-size: 17px;
 }
+
 .size12 {
   font-size: 12px;
 }
@@ -190,33 +196,49 @@ body {
 .size15 {
   font-size: 15px;
 }
+
 .size13 {
   font-size: 13px;
 }
+
 .size20 {
   font-size: 20px;
 }
+
 .size22 {
   font-size: 22px;
 }
+
 .size16 {
   font-size: 16px;
 }
+
 .size14 {
   font-size: 14px;
 }
+
 .size11 {
   font-size: 11px;
 }
+
 .size28 {
   font-size: 28px;
 }
+
 .border-bottom2 {
-  border-bottom:1px solid black ;
-} 
+  border-bottom: 1px solid black;
+}
 
 .letter-spacing {
   letter-spacing: 45px;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .table-title {
@@ -225,6 +247,7 @@ body {
   font-size: 11px;
   padding: 5px 0px 10px 0px;
 }
+
 .table-title2 {
   color: #fff;
   background-color: #808080;
@@ -232,55 +255,80 @@ body {
   padding: 4px 0px 8px 0px;
 }
 
-.table-border-bottom{
-  border-bottom:1px solid black;
-  height:130px;
-  max-height:130px;
-  overflow:hidden;
-}
-
-.table-border-bottom-auto{
-  border-bottom:1px solid black;
-  overflow:hidden;
-}
-
-.product-attribute{
+.tr-border-bottom {
+  border-bottom: 1px solid black;
   overflow: hidden;
-  height:225px;
 }
 
-.table-border-bottom .six-lines{
+.table-border-bottom-auto {
+  border-bottom: 1px solid #000;
+}
+
+.product-attribute {
+  overflow: hidden;
+  height: 225px;
+}
+
+.tr-border-bottom .six-lines {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 6;
   overflow: hidden;
-  max-height:110px;
+  max-height: 100px;
 }
 
-.table-border-bottom .one-lines{
+.two-lines {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  line-height: 1.2em;
+  max-height: 2.4em;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.five-lines {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+  line-height: 14px;
+  height: 85px;
+}
+
+.tr-border-bottom .six-lines {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+  max-height: 110px;
+}
+
+.tr-border-bottom .one-lines {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
-  max-height:18px;
+  max-height: 18px;
 }
 
-.bg-section{
+.bg-section {
   background: #e9ecef;
 }
 
-.width-money{
+.width-money {
   max-width: 325px;
 }
 
-.six-lines{
-  height:110px;
+.six-lines {
+  height: 110px;
 }
 
-.four-lines{
-  height:78px;
+.four-lines {
+  height: 78px;
 }
 
-.lines{
-  height:70px;
+.lines {
+  height: 70px;
 }

@@ -1066,7 +1066,7 @@ class SaleOrderLineExcelReport(models.Model):
     )
     
     sale_line_product_uom_qty = fields.Char(string="sale_line_product_uom_qty" , compute="_compute_sale_line_product_uom_qty")
-    sale_line_calculate_packages = fields.Integer('Packages' , compute="_compute_sale_line_calculate_packages")
+    sale_line_calculate_packages = fields.Float('Packages' , compute="_compute_sale_line_calculate_packages")
     sale_line_product_no_delivery = fields.Char(string="Calculate product no delivery", compute="_compute_sale_line_product_no_pack")
     sale_line_product_pack_delivery = fields.Char(string="Calculate product pack delivery", compute="_compute_sale_line_product_no_pack")
     product_spec_detail = fields.Char(compute="_compute_sale_order_product_detail")
@@ -1109,7 +1109,7 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_line_calculate_packages(self):
         for line in self:
             if line.product_id.two_legs_scale:
-                line.sale_line_calculate_packages =  math.ceil(line.product_uom_qty * line.product_id.two_legs_scale)
+                line.sale_line_calculate_packages = round(line.product_uom_qty * line.product_id.two_legs_scale, 2)
             else:
                 line.sale_line_calculate_packages = 0      
                 
@@ -1125,7 +1125,7 @@ class SaleOrderLineExcelReport(models.Model):
                 while decimal_part_after_dot % 10 == 0:
                     decimal_part_after_dot = decimal_part_after_dot / 10
                 line.sale_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
-                
+
     def _compute_sale_order_line_discount(self):
         for line in self:
             if line.discount != 0.00 or line.discount != 0.0 or line.discount != 0:
@@ -1390,35 +1390,31 @@ class SaleOrderLineExcelReport(models.Model):
                         categ_name = prod_tmpl.name
                 else:
                     categ_name = line.name
-
-                
                 if prod_tmpl.summary:
                     summary = prod_tmpl.summary
                         
             p_type = ""
             if line.p_type == "special":
-                p_type = "別注"
+                p_type = "[別注]"
             elif line.p_type == "custom":
-                p_type = "特注"
-                    
+                p_type = "[特注]"
             detail = ""
             if categ_name and summary and p_type:
-                detail = categ_name + "\n" + summary + "\n" + p_type
+                detail = categ_name + " " + p_type + "\n" + summary
+            elif categ_name and p_type:
+                detail = categ_name + " " + p_type
             elif categ_name and summary:
                 detail = categ_name + "\n" + summary
-            elif categ_name and p_type:
-                detail = categ_name + "\n" + p_type
             elif summary and p_type:
-                detail = summary + "\n" + p_type 
+                detail = p_type + "\n" + summary
             elif categ_name:
                 detail = categ_name 
-            elif summary:
-                detail = summary 
             elif p_type:
                 detail = p_type 
-
+            elif summary:
+                detail = summary 
             line.sale_order_line_name_excel = detail       
-            line.sale_order_line_name_pdf = categ_name       
+            line.sale_order_line_name_pdf = categ_name + " " + p_type      
             line.sale_order_line_p_type_pdf = p_type       
             line.sale_order_line_summary_pdf = summary       
 class StockPickingExcelReport(models.Model):
@@ -2019,30 +2015,31 @@ class StockMoveExcelReport(models.Model):
                             categ_name = ""
                 if prod_tmpl.summary:
                     summary = prod_tmpl.summary
+                    
             p_type = ""
             if line.p_type == "special":
-                p_type = "別注"
+                p_type = "[別注]"
             elif line.p_type == "custom":
-                p_type = "特注"
-                    
+                p_type = "[特注]"
+
             detail = ""
             if categ_name and summary and p_type:
-                detail = categ_name + "\n" + summary + "\n" + p_type
+                detail = categ_name + " " + p_type + "\n" + summary
+            elif categ_name and p_type:
+                detail = categ_name + " " + p_type
             elif categ_name and summary:
                 detail = categ_name + "\n" + summary
-            elif categ_name and p_type:
-                detail = categ_name + "\n" + p_type
             elif summary and p_type:
-                detail = summary + "\n" + p_type 
+                detail = p_type + "\n" + summary
             elif categ_name:
                 detail = categ_name 
-            elif summary:
-                detail = summary 
             elif p_type:
                 detail = p_type 
+            elif summary:
+                detail = summary 
             
             line.stock_move_line_name_excel = detail
-            line.stock_move_line_name_pdf = categ_name
+            line.stock_move_line_name_pdf = categ_name + " " + p_type  
             line.stock_move_line_p_type_pdf = p_type 
             line.stock_move_line_summary_pdf = summary
 class AccountMoveExcelReport(models.Model):
@@ -2320,7 +2317,7 @@ class AccountMoveExcelReport(models.Model):
             line.account_move_line = line.invoice_line_ids
 class AccountMoveLineExcelReport(models.Model):
     _inherit = "account.move.line"
-    price_unit = fields.Monetary('Unit Price', required=True, digits='Product Price')
+    price_unit = fields.Monetary('Unit Price', digits='Product Price')
     acc_line_index = fields.Integer(
         compute="_compute_acc_line_index",
         string="Account line index",
@@ -2340,7 +2337,7 @@ class AccountMoveLineExcelReport(models.Model):
         string="仕様・詳細",
     )
 
-    acc_line_discount = fields.Char(
+    acc_line_discount = fields.Float(
         compute="_compute_acc_line_discount",
         string="discount",
     )   
@@ -2480,9 +2477,11 @@ class AccountMoveLineExcelReport(models.Model):
     def _compute_acc_line_discount(self):
         for line in self:
             if  line.discount != 0.00 or line.discount != 0.0 or line.discount != 0 :
-                line.acc_line_discount = '{0:,.1f}'.format(100-line.discount)
+                discount_value = 100-line.discount
+                discount_value = round(discount_value, 2)
+                line.acc_line_discount = discount_value
             else:
-                line.acc_line_discount = ""
+                line.acc_line_discount = 0.0
     
     acc_line_price_subtotal = fields.Char(
         compute="_compute_acc_line_price_subtotal",

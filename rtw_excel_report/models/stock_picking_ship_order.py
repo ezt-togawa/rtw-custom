@@ -43,7 +43,8 @@ class StockPickingShipOrder(models.AbstractModel):
         format_money = workbook.add_format({'align': 'left','valign': 'center', 'font_name': font_name,'font_size':13})
     
         format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
-    
+        format_table_left = workbook.add_format({'align': 'left','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
+
         format_lines_note = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bottom':1})
         format_lines_section= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1})
         
@@ -178,8 +179,8 @@ class StockPickingShipOrder(models.AbstractModel):
 
             #table title
             sheet.write(20, 0, _("№"), format_table)
-            sheet.write(20, 1, _("品名"), format_table)
-            sheet.merge_range(20, 2,20,3, _("品番・サイズ"), format_table)
+            sheet.write(20, 1, _("品名"), format_table_left)
+            sheet.merge_range(20, 2,20,3, _("品番・サイズ"), format_table_left)
             sheet.merge_range(20, 4,20,6, _("仕様・詳細"), format_table)
             sheet.write(20,8, _("数量"), format_table)
             sheet.write(20, 9, _("個口数"), format_table)

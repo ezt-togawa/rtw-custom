@@ -78,32 +78,33 @@ class MrpProduction(models.Model):
                     for custom in config_custom_values:  # get list config custom of order line
                         list_custom_config = list_custom_config + '<div>' + custom.attribute_id.name + ' : ' + custom.value + '</div>'
 
-                    for line in sale_order_line:  # get p_type and memo of order line
-                        if line.product_id in self.product_id:
-                            if line.p_type:
-                                if line.p_type == 'special':
-                                    p_type = '別注'
-                                elif line.p_type == 'custom':
-                                    p_type = '特注'
-                            else:
-                                p_type = ''
+                for line in sale_order_line:  # get p_type and memo of order line
+                    if line.product_id in self.product_id:
+                        if line.p_type:
+                            if line.p_type == 'special':
+                                p_type = '別注'
+                            elif line.p_type == 'custom':
+                                p_type = '特注'
+                        else:
+                            p_type = ''
 
-                            if line.memo:
-                                memo = line.memo
-                            else:
-                                memo = ''
+                        if line.memo:
+                            memo = line.memo
+                        else:
+                            memo = ''
 
-                            if memo:
-                                production_memo = memo
-                            if p_type:
-                                production_type = p_type
+                        if memo:
+                            production_memo = memo
+                        if p_type:
+                            production_type = p_type
 
-                    record.production_type = production_type + list_custom_config
-                    record.production_memo = production_memo
+                record.production_type = production_type + list_custom_config
+                record.production_memo = production_memo
             
             else:
                 record.production_type = ''
                 record.production_memo = ''
+            
 
     def _inverse_production_memo(self):
         for record in self:

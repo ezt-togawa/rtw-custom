@@ -38,135 +38,158 @@
             </div>
             <table class="table table-condensed">
               <div>
-                <div
-                  t-foreach="o.order_line.filtered(lambda x: not(x.display_type == 'line_note' or x.display_type == 'line_section' or x.is_pack_outside))"
-                  t-as="l"
-                  class="product-wrap"
-                >
-                  <!-- <t t-if="not(l.product_id.product_tmpl_id.type == 'service' or l.display_type
-                  == 'line_note' or l.display_type == 'line_section')"> -->
-                  <div
-                    class="product-container">
-                    <div class="product-name bg-white mb-1">
-                      <span
-                        t-field="l.product_id.name" />
-                    </div>
-                    <div class="row" style="margin:0;">
-                      <div class="col-9" style="margin:0;padding:0;" id="layout-left">
-                        <div class="row" style="margin:0;">
-                          <div class="col-6 bg-white" style="padding:5px;width:49%;height:120px;">
-                            <div class="product-img" t-if="l.product_id.image_256"
-                              t-field="l.product_id.image_256" t-options='{"widget": "image"}' />
+                <t t-set="lines" t-value="o.order_line" />
+                <t t-set="line_count" t-value="len(lines)" />
+                <t t-set="processed_indices" t-value="set()" />
+                <div>
+                  <div class="product-wrap"
+                    t-foreach="o.order_line.filtered(lambda x: not(x.display_type == 'line_note' or x.display_type == 'line_section' or x.is_pack_outside or x.config_ok == False))"
+                    t-as="l">
+                    <div class="product-container">
+                      <div class="product-name bg-white mb-1">
+                        <span t-field="l.product_id.name" />
+                      </div>
+                      <div class="row" style="margin:0;">
+                        <div class="col-9" style="margin:0;padding:0;" id="layout-left">
+                          <div class="row" style="margin:0;">
+                            <div class="col-6 bg-white"
+                              style="padding:5px;width:49%;height:120px;">
+                              <div class="product-img" t-if="l.product_id.image_256"
+                                t-field="l.product_id.image_256" t-options='{"widget": "image"}' />
+                            </div>
+                            <div class="col-6 bg-white ml-1"
+                              style="padding:5px;width:49%;height:120px;">
+                              <div class="product-img" t-if="l.item_sale_attach_ids"
+                                t-field="l.item_sale_attach_ids[0].attach_file"
+                                t-options='{"widget": "image"}' />
+                            </div>
                           </div>
-                          <div class="col-6 bg-white ml-1"
-                            style="padding:5px;width:49%;height:120px;">
-                            <div class="product-img" t-if="l.item_sale_attach_ids"
-                              t-field="l.item_sale_attach_ids[0].attach_file"
-                              t-options='{"widget": "image"}' />
-                          </div>
-                        </div>
-                        <div>
-                          <t t-set="attr_child_count" t-value="0" />
-                          <t t-set="attr_child_ids" t-value="[]" />
-                          <t
-                            t-foreach="l.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id')"
-                            t-as="parent_attr">
-                            <t t-if="attr_child_count &lt; 4">
-                              <t
-                                t-if="parent_attr.id not in attr_child_ids and parent_attr.image and all(attr not in l.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id') for attr in parent_attr.child_attribute_ids.mapped('child_attribute_id'))">
-                                <t t-set="attr_child_count" t-value="attr_child_count + 1" />
-                                <div class="product-child-attr bg-white mt-1">
-                                  <div class="row" style="margin:0;">
-                                    <div class="col-6" style="padding:5px;">
-                                      <div t-if="parent_attr.image"
-                                        class="child-img"
-                                        t-field="parent_attr.image" t-options='{"widget": "image"}' />
-                                    </div>
-                                    <div class="col-6 size11" style="padding:1px;">
-                                      <div
-                                        style="margin-top:20px;display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:45px;">
-                                        <span t-esc="parent_attr.attribute_id.name" /> : <span
-                                          t-esc="parent_attr.name" />
+                          <div>
+                            <t t-set="attr_child_count" t-value="0" />
+                            <t t-set="attr_child_ids" t-value="[]" />
+                            <t
+                              t-foreach="l.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id')"
+                              t-as="parent_attr">
+                              <t t-if="attr_child_count &lt; 4">
+                                <t
+                                  t-if="parent_attr.id not in attr_child_ids and parent_attr.image and all(attr not in l.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id') for attr in parent_attr.child_attribute_ids.mapped('child_attribute_id'))">
+                                  <t t-set="attr_child_count" t-value="attr_child_count + 1" />
+                                  <div class="product-child-attr bg-white mt-1">
+                                    <div class="row" style="margin:0;">
+                                      <div class="col-6" style="padding:5px;">
+                                        <div t-if="parent_attr.image"
+                                          class="child-img"
+                                          t-field="parent_attr.image"
+                                          t-options='{"widget": "image"}' />
+                                      </div>
+                                      <div class="col-6 size11" style="padding:1px;">
+                                        <div
+                                          style="margin-top:20px;display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:45px;">
+                                          <span t-esc="parent_attr.attribute_id.name" /> : <span
+                                            t-esc="parent_attr.name" />
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </t>
-                              <t t-else="">
-                                <t t-foreach="parent_attr.child_attribute_ids" t-as="child_attr">
-                                  <t
-                                    t-if="child_attr.image and child_attr.mapped('child_attribute_id') in l.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id')">
-                                    <t t-set="attr_child_count" t-value="attr_child_count + 1" />
-                                    <t t-set="attr_child_ids"
-                                      t-value="attr_child_ids + [child_attr.child_attribute_id.id]" />
-                                    <div class="product-child-attr mt-1">
-                                      <div class="row bg-white" style="margin:0;">
-                                        <div class="col-6" style="padding:5px;">
-                                          <div t-if="child_attr.image"
-                                            class="child-img"
-                                            t-field="child_attr.image"
-                                            t-options='{"widget": "image"}' />
-                                        </div>
-                                        <div class="col-6 size11" style="padding:1px;">
-                                          <div
-                                            style="margin-top:20px;display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:45px;">
-                                            <span
-                                              t-esc="child_attr.child_attribute_id.attribute_id.name" />
-                                            : <span t-esc="child_attr.child_attribute_id.name" />
+                                </t>
+                                <t t-else="">
+                                  <t t-foreach="parent_attr.child_attribute_ids" t-as="child_attr">
+                                    <t
+                                      t-if="child_attr.image and child_attr.mapped('child_attribute_id') in l.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id')">
+                                      <t t-set="attr_child_count" t-value="attr_child_count + 1" />
+                                      <t t-set="attr_child_ids"
+                                        t-value="attr_child_ids + [child_attr.child_attribute_id.id]" />
+                                      <div class="product-child-attr mt-1">
+                                        <div class="row bg-white" style="margin:0;">
+                                          <div class="col-6" style="padding:5px;">
+                                            <div t-if="child_attr.image"
+                                              class="child-img"
+                                              t-field="child_attr.image"
+                                              t-options='{"widget": "image"}' />
+                                          </div>
+                                          <div class="col-6 size11" style="padding:1px;">
+                                            <div
+                                              style="margin-top:20px;display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:45px;">
+                                              <span
+                                                t-esc="child_attr.child_attribute_id.attribute_id.name" />
+                                              : <span t-esc="child_attr.child_attribute_id.name" />
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
+                                    </t>
                                   </t>
                                 </t>
                               </t>
                             </t>
-                          </t>
-                          <t t-foreach="range(0,5)" t-as="r">
-                            <t t-if="attr_child_count &lt; 4">
-                              <t t-set="attr_child_count" t-value="attr_child_count + 1" />
-                              <div class="product-child-attr bg-white mt-1">
-                              </div>
+                            <t t-foreach="range(0,5)" t-as="r">
+                              <t t-if="attr_child_count &lt; 4">
+                                <t t-set="attr_child_count" t-value="attr_child_count + 1" />
+                                <div class="product-child-attr bg-white mt-1">
+                                </div>
+                              </t>
                             </t>
-                          </t>
-                        </div>
-                      </div>
-                      <div class="col-3 size11 bg-white" style="margin:0;padding:0;height:308px;"
-                        id="layout-right">
-                        <div>【仕様】</div>
-                        <div class="product-attribute">
-                          <t t-if="l.sale_order_product_attr_all">
-                            <t t-set="attr_arr" t-value="l.sale_order_product_attr_all.split(',')" />
-                            <t t-foreach="attr_arr" t-as="att">
-                              <div>
-                                <span t-esc="att.strip()" />
-                              </div>
-                            </t>
-                          </t>
-                        </div>
-                         <br />
-                        <div style="overflow:hidden;">
-                          <div> 定価: 
-                            <span
-                            t-field="docs.currency_id.symbol" />
-                            <span
-                              t-esc="'{0:,.0f}'.format(l.price_unit * l.product_uom_qty)" />
                           </div>
-                          <div> サイズ: <t t-if="l.product_size">
-                              <span
-                                t-esc="l.product_size" />
+                          <div
+                            style="background-color:#fff; height: 21px; border-right:6px solid #d9d9d9;  border-top: 1px solid #d9d9d9;">
+                            <t t-set="current_line_index" t-value="None" />
+                            <t t-foreach="range(0, line_count)" t-as="i">
+                              <t t-if="lines[i] == l">
+                                <t t-set="current_line_index" t-value="i" />
+                              </t>
                             </t>
+                            <t
+                              t-if="current_line_index is not None and current_line_index + 1 &lt; line_count">
+                              <t t-set="next_line" t-value="lines[current_line_index + 1]" />
+                              <t
+                                t-if="next_line.display_type == 'line_note' and (current_line_index + 1) not in processed_indices">
+                                <t t-set="processed_indices"
+                                  t-value="processed_indices | {current_line_index + 1}" />
+                                <div class="product-line-note"
+                                >
+                                  <span t-field="next_line.name" />
+                                </div>
+                              </t>
+                            </t>
+                          </div>
+                        </div>
+                        <div class="col-3 size11 bg-white"
+                          style="margin:0;padding:0;height:328px;"
+                          id="layout-right">
+                          <div>【仕様】</div>
+                          <div class="product-attribute">
+                            <t t-if="l.sale_order_product_attr_all">
+                              <t t-set="attr_arr"
+                                t-value="l.sale_order_product_attr_all.split(',')" />
+                              <t t-foreach="attr_arr" t-as="att">
+                                <div>
+                                  <span t-esc="att.strip()" />
+                                </div>
+                              </t>
+                            </t>
+                          </div>
+                          <br />
+                          <div style="overflow:hidden;">
+                            <div> 定価: <span
+                                t-field="docs.currency_id.symbol" />
+                                            <span
+                                t-esc="'{0:,.0f}'.format(l.price_unit * l.product_uom_qty)" />
+                            </div>
+                            <div> サイズ: <t t-if="l.product_size">
+                                <span
+                                  t-esc="l.product_size" />
+                              </t>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- </t> -->
                 </div>
               </div>
             </table>
           </div>
-          <t t-call="custom_report_rtw.page_footer_layout"></t>
+          <t t-call="custom_report_rtw.page_footer_layout__"></t>
         </t>
       </t>
     </t>

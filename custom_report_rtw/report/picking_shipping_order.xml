@@ -124,8 +124,8 @@
                   <thead>
                     <tr class="table-title bold">
                       <th class="text-center">№</th>
-                      <th class="text-center" style="width:15%">品名</th>
-                      <th class="text-center" style="width:19%">品番・サイズ</th>
+                      <th class="text-left" style="width:15%">品名</th>
+                      <th class="text-left" style="width:19%">品番・サイズ</th>
                       <th class="text-center" style="width:19%">仕様・詳細</th>
                       <th class="text-center" style="width:7%">数量</th>
                       <th class="text-center" style="width:8%">個口数</th>
