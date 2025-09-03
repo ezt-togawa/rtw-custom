@@ -223,7 +223,7 @@
                           <div class="two-lines">
                             <span
                               style="font-size:16px"
-                              t-esc="l.sale_order_line_discount" />
+                              t-esc="l.sale_order_line_discount if l.sale_order_line_discount % 1 != 0 else int(l.sale_order_line_discount)" />
                           </div>
                         </td>
                         <td class="text-right" style=" font-size:16px;">
