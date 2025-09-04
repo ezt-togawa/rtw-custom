@@ -130,15 +130,15 @@
                     </t>
                   </t> -->
                   <!-- <t t-if="docs.partner_id.company_type == 'person'"> -->
-                    <div class="title_pdf">
-                      会社名・氏名
-                    </div>
-                    <t t-if="docs.lang_code == 'en_US'">
-                      <div class="d-flex justify-content-end title_pdf">Seal</div>
-                    </t>
-                    <t t-else="">
-                      <div class="d-flex justify-content-end title_pdf">印</div>
-                    </t>
+                  <div class="title_pdf">
+                    会社名・氏名
+                  </div>
+                  <t t-if="docs.lang_code == 'en_US'">
+                    <div class="d-flex justify-content-end title_pdf">Seal</div>
+                  </t>
+                  <t t-else="">
+                    <div class="d-flex justify-content-end title_pdf">印</div>
+                  </t>
                   <!-- </t> -->
                   <br />
                   <br />
@@ -235,7 +235,7 @@
                           <div class="two-lines">
                             <span
                               style="font-size:16px"
-                              t-esc="l.sale_order_line_discount" />
+                              t-esc="l.sale_order_line_discount if l.sale_order_line_discount % 1 != 0 else int(l.sale_order_line_discount)" />
                           </div>
                         </td>
                         <td class="text-right" style="font-size:16px;">
