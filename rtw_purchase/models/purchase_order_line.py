@@ -148,4 +148,38 @@ class rtw_purchase(models.Model):
         action["target"] = "new"
         action["res_id"] = self.order_id.id 
         return action
+        
+    @api.model
+    def _prepare_purchase_order_line_from_procurement(self, product_id, product_qty, product_uom, company_id, values, po):
+        line_description = ''
+        if values.get('product_description_variants'):
+            line_description = values['product_description_variants']
+
+        supplier = values.get('supplier')
+        res = self._prepare_purchase_order_line(
+            product_id, product_qty, product_uom, company_id, supplier, po
+        )
+        if product_id.categ_id.name == "汎用商品" and po.origin:
+            sale_order = self.env['sale.order'].search([('name', '=', po.origin)], limit=1)
+            if sale_order:
+                sale_order_line = self.env["sale.order.line"].search([('order_id', '=', sale_order.id)])
+                matched_line = sale_order_line.filtered(lambda l: l.product_id == product_id)
+                if matched_line:
+                    res['name'] = matched_line[0].name
+                else:
+                    pass
+            else:
+                pass
+        else:
+            if line_description and product_id.name != line_description:
+                res['name'] += '\n' + line_description
+            else:
+                pass
+
+        res['move_dest_ids'] = [(4, x.id) for x in values.get('move_dest_ids', [])]
+        res['orderpoint_id'] = values.get('orderpoint_id', False) and values.get('orderpoint_id').id
+        res['propagate_cancel'] = values.get('propagate_cancel')
+        res['product_description_variants'] = values.get('product_description_variants')
+
+        return res
 
