@@ -287,14 +287,12 @@ class SaleOrderLine(models.Model):
         new_w = max(1, int(w * ratio))
         new_h = max(1, int(h * ratio))
         img = img.resize((new_w, new_h), PILImage.LANCZOS)
-        background = PILImage.new('RGB', (frame_w, frame_h), (255, 255, 255))
-        background.paste(img, (0, 0))
         output = io.BytesIO()
-        background.save(output, format='PNG')
+        img.save(output, format='PNG')
         return base64.b64encode(output.getvalue()).decode('utf-8')
 
     def _compute_image_pdf(self):
-            frame_w, frame_h = 300, 160
+            frame_w, frame_h = 250, 120
             for line in self:
                 line.product_img_pdf = self.resize_image_for_pdf(line.product_id.image_256, frame_w, frame_h)
                 attach_file = line.item_sale_attach_ids[0].attach_file if line.item_sale_attach_ids else False
