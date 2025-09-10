@@ -77,27 +77,17 @@ body {
   /* height:100%; */
 }
 
-.product-img img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
 .child-img {
   width: 100%;
   height: 100%;
 }
 
-.child-img img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
 
 .product-img {
   width: 100%;
   height: 100%;
 }
+
 
 .product-quantity {
   font-size: 18px;
@@ -109,7 +99,6 @@ body {
   left: 65%;
   top: 20%;
 }
-
 
 .custom-row {
   width: 10in;

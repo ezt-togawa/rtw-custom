@@ -44,6 +44,19 @@ class productSpec(models.AbstractModel):
             img = img.resize((target_width, target_height), PILImage.LANCZOS)
             return img
 
+        def resize_contain(image_bytes, frame_w, frame_h):
+            img = PILImage.open(io.BytesIO(image_bytes)).convert('RGB')
+            w, h = img.size
+            ratio = min(frame_w / w, frame_h / h)
+            new_w = int(w * ratio)
+            new_h = int(h * ratio)
+            img = img.resize((new_w, new_h), PILImage.LANCZOS)
+            background = PILImage.new('RGB', (frame_w, frame_h), (255, 255, 255))
+            left = (frame_w - new_w) // 2
+            top = (frame_h - new_h) // 2
+            background.paste(img, (left, top))
+            return background
+
         image_logo_R = get_module_resource('rtw_excel_report', 'img', 'R_log.jpg')
         logo_R = resize_keep_aspect(image_logo_R, 86)
         img_io_R = BytesIO()
@@ -312,43 +325,43 @@ class productSpec(models.AbstractModel):
                         if sol.product_id.image_256:
                             image_product_db = base64.b64decode(sol.product_id.image_256)
                             if image_product_db:
-                                image = Image.open(io.BytesIO(image_product_db))
-                                image_path = os.path.join(image_product, f"sol_{sol.id}_big_img2.png")
-                                image.save(image_path, 'PNG')
-                                img = PILImage.open(image_path)
-                                img = img.convert('RGB')
-                                max_w, max_h = 185, 110
-                                orig_w, orig_h = img.size
-                                ratio = min(max_w / orig_w, max_h / orig_h)
-                                new_w = int(orig_w * ratio)
-                                new_h = int(orig_h * ratio)
-                                img = img.resize((new_w, new_h), PILImage.LANCZOS)
+                                frame_w, frame_h = 185, 110
+                                background = resize_contain(image_product_db, frame_w, frame_h)
                                 big_img_2 = BytesIO()
-                                img.save(big_img_2, 'JPEG')
+                                background.save(big_img_2, 'JPEG')
                                 big_img_2.seek(0)
 
-                                sheet.insert_image( 10 + height + more_height, 2 + width, "test", {'image_data': big_img_2, 'x_offset': 0.5, 'y_offset': 0}) 
+                                sheet.insert_image(
+                                    10 + height + more_height,
+                                    2 + width,
+                                    "test",
+                                    {
+                                        'image_data': big_img_2,
+                                        'x_offset': 0.5,
+                                        'y_offset': 0
+                                    }
+                                ) 
                                 
                         # big image 2
                         if sol.item_sale_attach_ids and sol.item_sale_attach_ids[0] and sol.item_sale_attach_ids[0].attach_file:
                             image_product_db = base64.b64decode(sol.item_sale_attach_ids[0].attach_file)
                             if image_product_db:
-                                image = Image.open(io.BytesIO(image_product_db))
-                                image_path = os.path.join(image_product, f"sol_{sol.id}_big_img1.png")
-                                image.save(image_path, 'PNG')
-                                img = PILImage.open(image_path)
-                                img = img.convert('RGB')
-                                max_w, max_h = 164, 110
-                                orig_w, orig_h = img.size
-                                ratio = min(max_w / orig_w, max_h / orig_h)
-                                new_w = int(orig_w * ratio)
-                                new_h = int(orig_h * ratio)
-                                img = img.resize((new_w, new_h), PILImage.LANCZOS)
+                                frame_w, frame_h = 175, 110
+                                background = resize_contain(image_product_db, frame_w, frame_h)
                                 big_img_1 = BytesIO()
-                                img.save(big_img_1, 'JPEG')
+                                background.save(big_img_1, 'JPEG')
                                 big_img_1.seek(0)
 
-                                sheet.insert_image( 10 + height + more_height, 9 + width, "test", {'image_data': big_img_1, 'x_offset': 10, 'y_offset': 0})
+                                sheet.insert_image(
+                                    10 + height + more_height,
+                                    9 + width,
+                                    "test",
+                                    {
+                                        'image_data': big_img_1,
+                                        'x_offset': 10,
+                                        'y_offset': 0
+                                    }
+                                )
    
                         ## 4 picture + 4 attributes
                         if sol.product_id:
@@ -365,41 +378,21 @@ class productSpec(models.AbstractModel):
                                         if child_attr.image and child_attr.mapped('child_attribute_id') in sol.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id'):
                                             attr_child_count += 1
                                             attr_child_ids.append(child_attr.child_attribute_id.id)
-                                            # attributes picture            
                                             image_attr_db = base64.b64decode(child_attr.image)
-                                            image = Image.open(io.BytesIO(image_attr_db))
-                                            path = os.path.join(image_attribute_product, f"sol_{sol.id}_attr_{attr_child_count}.png")
-                                            image.save(path, 'PNG')
-                                            img = PILImage.open(path)
-                                            img = img.convert('RGB')
-                                            max_w, max_h = 70, 60
-                                            orig_w, orig_h = img.size
-                                            ratio = min(max_w / orig_w, max_h / orig_h)
-                                            new_w = int(orig_w * ratio)
-                                            new_h = int(orig_h * ratio)
-                                            img = img.resize((new_w, new_h), PILImage.LANCZOS)
+                                            frame_w, frame_h = 75, 63
+                                            background = resize_contain(image_attr_db, frame_w, frame_h)
                                             img_attr = BytesIO()
-                                            img.save(img_attr, 'JPEG')
+                                            background.save(img_attr, 'JPEG')
                                             img_attr.seek(0)
 
                                             attr = (child_attr.child_attribute_id.attribute_id.name + ":" + "\n" + child_attr.child_attribute_id.name)
                                 else:
                                     attr_child_count += 1
-                                    # attributes picture            
                                     image_attr_db = base64.b64decode(parent_attr.image)
-                                    image = Image.open(io.BytesIO(image_attr_db))
-                                    path = os.path.join(image_attribute_product, f"sol_{sol.id}_attr_{attr_child_count}.png")
-                                    image.save(path, 'PNG')
-                                    img = PILImage.open(path)
-                                    img = img.convert('RGB')
-                                    max_w, max_h = 70, 60
-                                    orig_w, orig_h = img.size
-                                    ratio = min(max_w / orig_w, max_h / orig_h)
-                                    new_w = int(orig_w * ratio)
-                                    new_h = int(orig_h * ratio)
-                                    img = img.resize((new_w, new_h), PILImage.LANCZOS)
+                                    frame_w, frame_h = 75, 63
+                                    background = resize_contain(image_attr_db, frame_w, frame_h)
                                     img_attr = BytesIO()
-                                    img.save(img_attr, 'JPEG')
+                                    background.save(img_attr, 'JPEG')
                                     img_attr.seek(0)
 
                                     attr = parent_attr.attribute_id.name + ":" + "\n" + parent_attr.name

@@ -4,7 +4,12 @@
 from odoo import fields, models
 import math
 from datetime import datetime
-
+import base64
+from PIL import Image as PILImage
+from io import BytesIO
+import io
+import json
+from PIL import Image
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
     so_title = fields.Char(string="title")
@@ -234,7 +239,14 @@ class SaleOrderLine(models.Model):
         string="Calculate packages",
         compute="_compute_calculate_packages"
     )
-    
+
+    product_img_pdf = fields.Binary(compute="_compute_image_pdf")
+    attach_img_pdf = fields.Binary(compute="_compute_image_pdf")
+
+    child_attr_imgs_pdf = fields.Text(compute='_compute_child_attr_imgs_pdf')
+    child_attr_names = fields.Text(compute='_compute_child_attr_imgs_pdf')
+
+        
     sale_order_line_product_uom_qty = fields.Char(string="sale order product uom qty" , compute="_compute_sale_order_product_uom_qty")
     
     def _compute_calculate_packages(self):
@@ -259,3 +271,67 @@ class SaleOrderLine(models.Model):
                 while decimal_part_after_dot % 10 == 0:
                     decimal_part_after_dot = decimal_part_after_dot / 10
                 line.sale_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
+
+
+    def resize_image_for_pdf(self, image_base64, frame_w, frame_h):
+        if not image_base64:
+            return False
+        if isinstance(image_base64, bytes):
+            image_base64 = image_base64.decode('utf-8')
+        img_bytes = base64.b64decode(image_base64)
+        img = PILImage.open(io.BytesIO(img_bytes)).convert('RGB')
+        w, h = img.size
+        if w == 0 or h == 0:
+            return False
+        ratio = min(frame_w / w, frame_h / h)
+        new_w = max(1, int(w * ratio))
+        new_h = max(1, int(h * ratio))
+        img = img.resize((new_w, new_h), PILImage.LANCZOS)
+        background = PILImage.new('RGB', (frame_w, frame_h), (255, 255, 255))
+        background.paste(img, (0, 0))
+        output = io.BytesIO()
+        background.save(output, format='PNG')
+        return base64.b64encode(output.getvalue()).decode('utf-8')
+
+    def _compute_image_pdf(self):
+            frame_w, frame_h = 300, 160
+            for line in self:
+                line.product_img_pdf = self.resize_image_for_pdf(line.product_id.image_256, frame_w, frame_h)
+                attach_file = line.item_sale_attach_ids[0].attach_file if line.item_sale_attach_ids else False
+                line.attach_img_pdf = self.resize_image_for_pdf(attach_file, frame_w, frame_h)
+                
+
+    def _compute_child_attr_imgs_pdf(self):
+        frame_w, frame_h = 110, 120
+        for line in self:
+            imgs = []
+            names = []
+            attrs = line.product_id.product_template_attribute_value_ids.mapped('product_attribute_value_id')
+            attr_child_ids = set()
+            count = 0
+            for parent_attr in attrs:
+                if count >= 4:
+                    break
+                if (parent_attr.id not in attr_child_ids and parent_attr.image and
+                    all(attr not in attrs for attr in parent_attr.child_attribute_ids.mapped('child_attribute_id'))):
+                    imgs.append(self.resize_image_for_pdf(parent_attr.image, frame_w, frame_h))
+                    names.append(f"{parent_attr.attribute_id.name}: {parent_attr.name}")
+                    count += 1
+                else:
+                    for child_attr in parent_attr.child_attribute_ids:
+                        if count >= 4:
+                            break
+                        if (child_attr.image and child_attr.child_attribute_id.id in attrs.ids and
+                            child_attr.child_attribute_id.id not in attr_child_ids):
+                            imgs.append(self.resize_image_for_pdf(child_attr.image, frame_w, frame_h))
+                            names.append(f"{child_attr.child_attribute_id.attribute_id.name}: {child_attr.child_attribute_id.name}")
+                            attr_child_ids.add(child_attr.child_attribute_id.id)
+                            count += 1
+            while count < 4:
+                imgs.append(False)
+                names.append("")
+                count += 1
+            line.child_attr_imgs_pdf = json.dumps(imgs)
+            line.child_attr_names = json.dumps(names)
+
+        
