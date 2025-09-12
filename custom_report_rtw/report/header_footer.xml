@@ -513,18 +513,9 @@
                         <t t-else="">
                             <div class="d-flex">
                                 <div>
-                                    <div t-if="docs.send_to_company_delivery"
-                                        t-field="docs.send_to_company_delivery" />
-                                    <div t-if="docs.send_to_people_delivery"
-                                        t-field="docs.send_to_people_delivery" />
-                                </div>
-                                <div class="pl-2">
-                                    <t
-                                        t-if="docs.send_to_company_delivery and docs.send_to_people_delivery">
-                                        <br />
-                                    </t>
-                                    <div t-if="docs.send_to_tel_fax"
-                                        t-field="docs.send_to_tel_fax" />
+                                    <div t-if="docs.send_to_company_delivery" t-field="docs.send_to_company_delivery" />
+                                    <div t-if="docs.send_to_people_delivery" t-field="docs.send_to_people_delivery" />
+                                    <div t-if="docs.send_to_tel_fax" t-field="docs.send_to_tel_fax" />
                                 </div>
                             </div>
                         </t>

@@ -37,7 +37,7 @@ class ReportMrpExcel(models.AbstractModel):
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'bottom','font_size':18,'font_name': font_name})
         format_name_company = workbook.add_format({'align': 'right','font_name': font_name,'font_size':14, 'text_wrap':True})
-        format_tel_fax = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
+        format_tel_fax = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12})
         format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
         format_text_12 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12})
         format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13})
@@ -125,7 +125,7 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.merge_range(1, 2, 1, 3, so.dear_to_delivery if so.dear_to_delivery else '', format_name_company)
             
-            sheet.write(1, 4,  "  " + so.send_to_tel_fax if so.send_to_tel_fax else '', format_tel_fax)
+            sheet.write(2, 2,  "  " + so.send_to_tel_fax if so.send_to_tel_fax else '', format_tel_fax)
             
             sheet.write(2, 0,  _("発注番号"), format_text)
             sheet.write(2, 1, so.name if so.name else "", format_text_13)

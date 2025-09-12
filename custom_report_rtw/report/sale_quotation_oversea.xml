@@ -57,24 +57,24 @@
                                         <div class="col-4"></div>
                                         <div class="col-8">
                                             <div>
-                                                <span class="title_pdf">納品希望日：</span>
+                                                <span class="title_pdf">納品希望日 : </span>
                                                 <span t-esc="docs.preferred_delivery_period" />
                                             </div>
                                             <div>
-                                                <span class="title_pdf">製作日数：</span>
+                                                <span class="title_pdf">製作日数 : </span>
                                                 <span t-if="docs.workday_id"
                                                     t-esc="docs.workday_id.name" />
                                             </div>
                                             <div>
-                                                <span class="title_pdf">発注期限：</span>
+                                                <span class="title_pdf">発注期限 : </span>
                                                 <span t-esc="docs.sale_order_date_deadline" />
                                             </div>
                                             <div>
-                                                <span class="title_pdf">納品場所：</span>
+                                                <span class="title_pdf">納品場所 : </span>
                                                 <span t-esc="docs.forwarding_address" />
                                             </div>
                                             <div>
-                                                <span class="title_pdf">支払方法：</span>
+                                                <span class="title_pdf">支払方法 : </span>
                                                 <span
                                                     t-esc="docs.sale_order_transactions_term" />
                                             </div>
@@ -90,12 +90,12 @@
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            <span class="title_pdf">見積有効期限：</span>
+                                            <span class="title_pdf">見積有効期限 : </span>
                                             <span t-field="docs.sale_order_validity_date" />
                                         </div>
                                         <div
                                             style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow:hidden;max-height:60px;">
-                                            <span class="title_pdf">備考：</span>
+                                            <span class="title_pdf">備考 : </span>
                                             <span t-field="docs.special_note" />
                                         </div>
                                     </div>
@@ -193,9 +193,9 @@
                                         <tr class="table-title bold"
                                             style="font-size:13px;background-color:#999999">
                                             <th class="text-center"
-                                                style="width:1%;padding:12px 2px;">№</th>
+                                                style="width:3%;">№</th>
                                             <th class="text-left"
-                                                style="width:30%;padding:12px 0px;">品名</th>
+                                                style="width:28%;padding:12px 6px;">品名</th>
                                             <th class="text-left"
                                                 style="width:30%;padding:12px 0px;">品番・サイズ</th>
                                             <th class="text-center"
@@ -235,7 +235,7 @@
                                         <t t-else="">
                                             <tr class="size15 table-border-bottom">
                                                 <td class="text-center"
-                                                    style="font-size:16px; padding: 10px 0px;">
+                                                    style="font-size:16px; padding: 10px 6px;">
                                                     <t t-set="number" t-value="number + 1" />
                                                     <t t-esc="number" />
                                                 </td>
