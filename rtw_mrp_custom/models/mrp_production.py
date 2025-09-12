@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, _, api
 from dateutil.parser import parse
-
+from datetime import datetime
 
 class MrpProductionCus(models.Model):
     _inherit = 'mrp.production'
@@ -28,6 +28,17 @@ class MrpProductionCus(models.Model):
     calendar_display_name = fields.Text(compute="_compute_display_name_calendar", store=True)
     shipping = fields.Char(compute="_compute_shipping", string="送付先")
     
+    days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
+
+    @api.depends('date_planned_start')
+    def _compute_days_remaining(self):
+        today = datetime.today().date()
+        for record in self:
+            if record.date_planned_start:
+                days_remaining = (record.date_planned_start.date() - today).days
+                record.days_remaining = days_remaining
+            else:
+                record.days_remaining = 999
 
     def _combined_shipment_compute(self):
         for line in self:
