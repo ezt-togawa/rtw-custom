@@ -30,20 +30,31 @@
             </field>
         </record>
 
-        <record id="vpicktree" model="ir.ui.view">
-            <field name="name">stock.picking.tree</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.vpicktree"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='state']" position="after">
-                    <field name="payment_term_id" optional="hide" />
-                    <field name="payment_status" optional="hide" />
-                    <field name="has_not_paid_in_payment_status" invisible="1"  />
-                    <field name="has_paid_in_payment_status" invisible="1"   />
-                    <field name="has_partial_in_payment_status" invisible="1"   />
-                </xpath>
-            </field>
-        </record>
+    <record id="vpicktree" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="payment_term_id" optional="hide" />
+                <field name="payment_status" optional="hide" />
+                <field name="has_not_paid_in_payment_status" invisible="1" />
+                <field name="has_paid_in_payment_status" invisible="1" />
+                <field name="has_partial_in_payment_status" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='scheduled_date']" position="after">
+                <field name="days_remaining" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='scheduled_date']" position="attributes">
+                <attribute name="widget">date</attribute>
+            </xpath>
+            <xpath expr="//field[@name='scheduled_date']" position="attributes">
+                <attribute name="decoration-danger">scheduled_date and days_remaining &lt; 0</attribute>
+                <attribute name="decoration-warning">scheduled_date and days_remaining == 0</attribute>
+                <attribute name="decoration-bf">scheduled_date and days_remaining &lt;= 0</attribute>
+            </xpath>
+        </field>
+    </record>
 
         <record id="view_picking_internal_search_2" model="ir.ui.view">
             <field name="name">stock.picking.internal.search.2</field>

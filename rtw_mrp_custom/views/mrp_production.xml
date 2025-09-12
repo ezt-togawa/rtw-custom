@@ -91,6 +91,17 @@
                     <field name="combined_shipment" optional="hidden" />
                     <field name="working_notes" optional="hidden" />
                 </xpath>
+                <xpath expr="//field[@name='date_planned_start']" position="after">
+                    <field name="days_remaining" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='date_planned_start']" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_planned_start']" position="attributes">
+                    <attribute name="decoration-danger">date_planned_start and days_remaining &lt; 0</attribute>
+                    <attribute name="decoration-warning">date_planned_start and days_remaining == 0</attribute>
+                    <attribute name="decoration-bf">date_planned_start and days_remaining &lt;= 0</attribute>
+                </xpath>
             </field>
         </record>
 
@@ -102,6 +113,25 @@
             <xpath expr="//field[@name='production_memo']" position="after">
                     <field name="working_notes"/>
             </xpath>
+            </field>
+        </record>
+
+        <record id="sale_to_mrp_list_form_view_inherit" model="ir.ui.view">
+            <field name="name">sale.to.mrp.list.form.inherit</field>
+            <field name="model">sale.to.mrp.list</field>
+            <field name="inherit_id" ref="rtw_mrp_custom.sale_to_mrp_list_view_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_planned_start']" position="after">
+                    <field name="days_remaining" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='date_planned_start']" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_planned_start']" position="attributes">
+                    <attribute name="decoration-danger">date_planned_start and days_remaining &lt; 0</attribute>
+                    <attribute name="decoration-warning">date_planned_start and days_remaining == 0</attribute>
+                    <attribute name="decoration-bf">date_planned_start and days_remaining &lt;= 0</attribute>
+                </xpath>
             </field>
         </record>
     </data>

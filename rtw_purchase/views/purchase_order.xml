@@ -66,6 +66,17 @@
             <xpath expr="//field[@name='schedule_check']" position="after">
                 <field name="working_notes" optional="hidden" />
             </xpath>
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="days_remaining" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="widget">date</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="decoration-danger">date_order and days_remaining &lt; 0</attribute>
+                <attribute name="decoration-warning">date_order and days_remaining == 0</attribute>
+                <attribute name="decoration-bf">date_order and days_remaining &lt;= 0</attribute>
+            </xpath>
         </field>
     </record>
     <record id="purchase_order_personal_list_rtw" model="ir.ui.view">
@@ -133,9 +144,9 @@
     <record id="purchase_order_view_inherit_rtw" model="ir.ui.view">
         <field name="name">purchase.order.view.inherit.rtw</field>
         <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit"/>
+        <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit" />
         <field name="arch" type="xml">
-            <xpath expr="//div[@name='date_planned_div']/button" position="replace"/>
+            <xpath expr="//div[@name='date_planned_div']/button" position="replace" />
         </field>
     </record>
 </odoo>

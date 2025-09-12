@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from datetime import datetime
 class rtw_purchase(models.Model):
     _inherit = "purchase.order"
     
@@ -16,6 +17,18 @@ class rtw_purchase(models.Model):
     destination_note = fields.Text('送り先注記')
     resend = fields.Char('再送')
     filter_so_ids = fields.Char("filter so ids")
+
+    days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
+
+    @api.depends('date_order')
+    def _compute_days_remaining(self):
+        today = datetime.today().date()
+        for record in self:
+            if record.date_order:
+                days_remaining = (record.date_order.date() - today).days
+                record.days_remaining = days_remaining
+            else:
+                record.days_remaining = 999
 
     def _compute_operation_type(self):
             operation_type_value = self.order_line.move_dest_ids.group_id.mrp_production_ids | self.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
