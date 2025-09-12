@@ -6,10 +6,10 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="before">
+                <xpath expr="//field[@name='time_text']" position="after">
                     <field name="write_date" optional="hide" string="更新日" />
                 </xpath>
-                <xpath expr="//field[@name='user_id']" position="after">
+                <xpath expr="//field[@name='write_date']" position="after">
                     <field name="write_uid" optional="hide" string="更新者" />
                 </xpath>
             </field>
