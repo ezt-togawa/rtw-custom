@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        <record id="view_order_tree" model="ir.ui.view">
-            <field name="name">sale.order.tree.inherit.sale.order.payment</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_tree"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='invoice_status']" position="after">
-                    <field name="payment_method" optional="show" string="支払方法"/>
-                    <field name="payment_term_id" optional="hide" />
-                    <field name="payment_status" optional="hide" />
-                    <field name="has_not_paid_in_payment_status" invisible="1" />
-                    <field name="has_paid_in_payment_status" invisible="1"  />
-                    <field name="has_partial_in_payment_status" invisible="1"  />
-                </xpath>
-            </field>
-        </record>
-        <record id="sale_order_view_search_inherit_sale_2" model="ir.ui.view">
-            <field name="name">sale.order.search.inherit.sale.2</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
-            <field name="arch" type="xml">
-                <xpath expr="//filter[@name='order_date']" position="after">
-                    <separator/>
-                    <filter string="未払" name="not_paid" domain="[('has_not_paid_in_payment_status','=',True)]" />
-                    <filter string="一部支払済" name="partial" domain="[('has_partial_in_payment_status','=',True)]" />
-                    <filter string="支払済" name="paid" domain="[('has_paid_in_payment_status','=',True)]" />
-                    <separator/>
-                </xpath>
-            </field>
-        </record>
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.sale.order.payment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="payment_method" optional="show" string="取引条件" />
+                <field name="payment_term_id" optional="hide" />
+                <field name="payment_status" optional="hide" />
+                <field name="has_not_paid_in_payment_status" invisible="1" />
+                <field name="has_paid_in_payment_status" invisible="1" />
+                <field name="has_partial_in_payment_status" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+    <record id="sale_order_view_search_inherit_sale_2" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.sale.2</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='order_date']" position="after">
+                <separator />
+                <filter string="未払" name="not_paid"
+                    domain="[('has_not_paid_in_payment_status','=',True)]" />
+                <filter string="一部支払済" name="partial"
+                    domain="[('has_partial_in_payment_status','=',True)]" />
+                <filter string="支払済" name="paid" domain="[('has_paid_in_payment_status','=',True)]" />
+                <separator />
+            </xpath>
+        </field>
+    </record>
 
-        <record id="vpicktree" model="ir.ui.view">
-            <field name="name">stock.picking.tree</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.vpicktree"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='state']" position="after">
-                    <field name="payment_term_id" optional="hide" />
-                    <field name="payment_status" optional="hide" />
-                    <field name="has_not_paid_in_payment_status" invisible="1"  />
-                    <field name="has_paid_in_payment_status" invisible="1"   />
-                    <field name="has_partial_in_payment_status" invisible="1"   />
-                </xpath>
-            </field>
-        </record>
+    <record id="vpicktree" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="payment_term_id" optional="hide" />
+                <field name="payment_status" optional="hide" />
+                <field name="has_not_paid_in_payment_status" invisible="1" />
+                <field name="has_paid_in_payment_status" invisible="1" />
+                <field name="has_partial_in_payment_status" invisible="1" />
+            </xpath>
+        </field>
+    </record>
 
-        <record id="view_picking_internal_search_2" model="ir.ui.view">
-            <field name="name">stock.picking.internal.search.2</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
-            <field name="arch" type="xml">
-                <xpath expr="//filter[@name='planning_issues']" position="after">
-                    <separator/>
-                    <filter string="未払" name="not_paid" domain="[('has_not_paid_in_payment_status','=',True)]" />
-                    <filter string="一部支払済" name="partial" domain="[('has_partial_in_payment_status','=',True)]" />
-                    <filter string="支払済" name="paid" domain="[('has_paid_in_payment_status','=',True)]" />
-                    <separator/>
-                </xpath>
-            </field>
-        </record>
+    <record id="view_picking_internal_search_2" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search.2</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='planning_issues']" position="after">
+                <separator />
+                <filter string="未払" name="not_paid"
+                    domain="[('has_not_paid_in_payment_status','=',True)]" />
+                <filter string="一部支払済" name="partial"
+                    domain="[('has_partial_in_payment_status','=',True)]" />
+                <filter string="支払済" name="paid" domain="[('has_paid_in_payment_status','=',True)]" />
+                <separator />
+            </xpath>
+        </field>
+    </record>
 </odoo>
