@@ -3,7 +3,13 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from babel.dates import format_date as babel_format_date
 from odoo.tools import format_date
-
+from datetime import datetime
+AVAILABLE_PRIORITIES = [
+    ('0', 'Low'),
+    ('1', 'Normal'),
+    ('2', 'High'),
+    ('3', 'Very High')
+]
 
 class sale_order_rtw(models.Model):
     _inherit = "sale.order"
@@ -81,6 +87,23 @@ class sale_order_rtw(models.Model):
     #     def _value_pc(self):
     #         for record in self:
     #             record.value2 = float(record.value) / 100
+    transactions = fields.Many2one('res.partner.transactions',string="Transactions" , compute="_compute_transactions")
+    transaction_condition_1 = fields.Text(string="Transaction Terms 1" , compute="_compute_transaction_condition_1")
+    transaction_condition_2 = fields.Text(string="Transaction Terms 2" , compute="_compute_transaction_condition_2")
+    payment_terms = fields.Selection(AVAILABLE_PRIORITIES, string="取引レベル", compute="_compute_payment_terms")
+
+
+    days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
+
+    @api.depends('estimated_shipping_date')
+    def _compute_days_remaining(self):
+        today = datetime.today().date()
+        for record in self:
+            if record.estimated_shipping_date:
+                days_remaining = (record.estimated_shipping_date - today).days
+                record.days_remaining = days_remaining
+            else:
+                record.days_remaining = 999
     
     def _compute_mo_shiratani_entry_date(self):
         for record in self:
@@ -165,6 +188,54 @@ class sale_order_rtw(models.Model):
         res = super(sale_order_rtw, self).create(vals)
         return res
 
+    def _compute_transactions(self):
+        for so in self:           
+            if so.partner_invoice_id:
+                partner= self.env['res.partner'].search([('id','=',so.partner_invoice_id.id)])
+                for p in partner:
+                    if p.transactions:
+                        so.transactions = p.transactions
+                    else:
+                        so.transactions = None
+            else:
+                so.transactions = None
+
+    def _compute_transaction_condition_1(self):
+        for so in self:           
+            if so.partner_invoice_id:
+                partner= self.env['res.partner'].search([('id','=',so.partner_invoice_id.id)])
+                for p in partner:
+                    if p.payment_terms_1:
+                        so.transaction_condition_1 = p.payment_terms_1
+                    else:
+                        so.transaction_condition_1 = None
+            else:
+                so.transaction_condition_1 = None
+
+    def _compute_transaction_condition_2(self):
+        for so in self:           
+            if so.partner_invoice_id:
+                partner= self.env['res.partner'].search([('id','=',so.partner_invoice_id.id)])
+                for p in partner:
+                    if p.payment_terms_2:
+                        so.transaction_condition_2 = p.payment_terms_2
+                    else:
+                        so.transaction_condition_2 = None
+            else:
+                so.transaction_condition_2 = None
+    @api.depends('partner_invoice_id')
+    def _compute_payment_terms(self):
+        for so in self:           
+            if so.partner_invoice_id:
+                partner= self.env['res.partner'].search([('id','=',so.partner_invoice_id.id)])
+                for p in partner:
+                    if p.accounting_supplement_3:
+                        so.payment_terms = p.accounting_supplement_3
+                    else:
+                        so.payment_terms = None
+            else:
+                so.payment_terms = None
+
 class mrp_order_rtw(models.Model):
     _inherit = "mrp.production"
     
@@ -195,3 +266,5 @@ class mrp_order_rtw(models.Model):
                 record.mo_shiratani_date = f"{formatted_date} [{day_of_week}]"
             else:
                 record.mo_shiratani_date = ''
+    
+    
