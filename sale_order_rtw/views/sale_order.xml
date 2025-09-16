@@ -123,14 +123,50 @@
             <field name="inherit_id" ref="sale.view_order_tree" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="title" />
-                    <field name="customer_order_number" string="customer_order_number" />
-                    <field name="process" />
-                    <field name="items_under_consideration" string="Items under consideration" />
-                    <field name="estimated_shipping_date" widget="remaining_days" />
+                    <field name="customer_order_number" string="customer_order_number"
+                        optional="hide" />
+                    <field name="title" optional="show" />
+                    <field name="process" optional="show" />
+                    <field name="items_under_consideration" string="Items under consideration" optional="hide" />
+                    <field name="estimated_shipping_date" optional="show" />
+                </xpath>
+                <xpath expr="//field[@name='estimated_shipping_date']" position="after">
+                    <field name="days_remaining" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='estimated_shipping_date']" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </xpath>
+                <xpath expr="//field[@name='estimated_shipping_date']" position="attributes">
+                    <attribute name="decoration-danger">estimated_shipping_date and days_remaining &lt; 0</attribute>
+                    <attribute name="decoration-warning">estimated_shipping_date and days_remaining == 0</attribute>
+                    <attribute name="decoration-bf">estimated_shipping_date and days_remaining &lt;= 0</attribute>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="attributes">
                     <attribute name="readonly">1</attribute>
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="replace" />
+                <xpath expr="//field[@name='title']" position="after">
+                    <field name="partner_id" readonly="1" />
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace" />
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="user_id" optional="show" widget="many2one_avatar_user" />
+                </xpath>
+                <xpath expr="//field[@name='expected_date']" position="replace" />
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace" />
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="state"/>
+                </xpath>
+                 <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="decoration-success">state == 'sale' or state == 'done'</attribute>
+                    <attribute name="decoration-info">state == 'draft' or state == 'sent'</attribute>
+                    <attribute name="widget">badge</attribute>
+                    <attribute name="optional">show</attribute>
                 </xpath>
             </field>
         </record>
@@ -140,15 +176,52 @@
             <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="title" />
-                    <field name="customer_order_number" string="customer_order_number" />
-                    <field name="process" />
-                    <field name="status" />
-                    <field name="items_under_consideration" string="Items under consideration" />
-                    <field name="estimated_shipping_date" widget="remaining_days" />
+                    <field name="customer_order_number" string="customer_order_number"
+                        optional="hide" />
+                    <field name="title" optional="show" />
+                    <field name="process" optional="show" />
+                    <field name="status" optional="hide" />
+                    <field name="items_under_consideration" string="Items under consideration" optional="hide" />
+                    <field name="estimated_shipping_date" optional="show" />
+                </xpath>
+                <xpath expr="//field[@name='estimated_shipping_date']" position="after">
+                    <field name="days_remaining" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='estimated_shipping_date']" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </xpath>
+                <xpath expr="//field[@name='estimated_shipping_date']" position="attributes">
+                    <attribute name="decoration-danger">estimated_shipping_date and days_remaining &lt; 0</attribute>
+                    <attribute name="decoration-warning">estimated_shipping_date and days_remaining == 0</attribute>
+                    <attribute name="decoration-bf">estimated_shipping_date and days_remaining &lt;= 0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="replace" />
+                <xpath expr="//field[@name='title']" position="after">
+                    <field name="partner_id" readonly="1" />
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace" />
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="user_id" optional="show" widget="many2one_avatar_user" />
                 </xpath>
                 <xpath expr="//field[@name='name']" position="attributes">
                     <attribute name="readonly">1</attribute>
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='expected_date']" position="replace" />
+                <xpath expr="//field[@name='commitment_date']" position="after">
+                    <field name="warehouse_arrive_date" optional="show" string="デポ1到着日"/>
+                    <field name="waypoint" optional="show" />
+                    <field name="warehouse_arrive_date_2" optional="show" string="デポ２到着日" />
+                    <field name="waypoint_2" optional="show" string="デポ2" />
+                    <field name="preferred_delivery_date" optional="show" string="配達希望日" />
+                    <field name="time_text" optional="show" string="時間" />
+                </xpath>
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="transactions" string="取引条件" optional="show" />
+                    <field name="transaction_condition_1" string="取引条件1" optional="show" />
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
                 </xpath>
             </field>
         </record>
@@ -156,7 +229,6 @@
         <record id="rtw_sale_search_view" model="ir.ui.view">
             <field name="name">sale.order.search.inherit.sale.rtw</field>
             <field name="model">sale.order</field>
-            <!--            <field name="mode">primary</field>-->
             <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation" />
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='my_quotation']" position="after">
