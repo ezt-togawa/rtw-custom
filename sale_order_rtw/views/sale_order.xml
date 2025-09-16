@@ -147,7 +147,7 @@
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="replace" />
                 <xpath expr="//field[@name='title']" position="after">
-                    <field name="partner_id" readonly="1" />
+                    <field name="partner_id" optional="show" readonly="1" />
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="replace" />
                 <xpath expr="//field[@name='partner_id']" position="after">
@@ -197,7 +197,7 @@
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="replace" />
                 <xpath expr="//field[@name='title']" position="after">
-                    <field name="partner_id" readonly="1" />
+                    <field name="partner_id" optional="show" readonly="1" />
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="replace" />
                 <xpath expr="//field[@name='partner_id']" position="after">
