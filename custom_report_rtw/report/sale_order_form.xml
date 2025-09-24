@@ -57,19 +57,19 @@
                     </div>
                   </div>
                   <div class="col-7">
-                    <div>納品希望日： <span t-if="docs.preferred_delivery_period"
+                    <div>納品希望日 : <span t-if="docs.preferred_delivery_period"
                         t-esc="docs.preferred_delivery_period" />
                     </div>
-                    <div> 納品場所: <span t-field="docs.forwarding_address" />
+                    <div> 納品場所 : <span t-field="docs.forwarding_address" />
                     </div>
-                    <div> 備考: <span t-field="docs.special_note" />
+                    <div> 備考 : <span t-field="docs.special_note" />
                     </div>
                   </div>
                 </div>
                 <div class="so_price">
                   <span class="border-bottom2">件名 : <span t-field="docs.title" /></span>
                 </div>
-                <div class="col-5">
+                <div class="col-5 size16">
                   <div class="width-money">
                     <div>税抜合計 <div style="float:right">
                         <span t-field="docs.currency_id.symbol" />

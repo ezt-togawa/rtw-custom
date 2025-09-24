@@ -112,6 +112,12 @@ class rtw_product_attribute_value(models.Model):
 class rtw_product_config_session(models.Model):
     _inherit = 'product.config.session'
 
+    specifications = fields.Many2many('product.template.attribute.value',string='仕様（属性)', compute='_compute_specifications')
+
+    def _compute_specifications(self):
+        for rec in self:
+            rec.specifications = rec.product_id.product_template_attribute_value_ids
+
     @api.model
     def get_cfg_price(self, value_ids=None, custom_vals=None):
         """Computes the price of the configured product based on the

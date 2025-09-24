@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-
+from datetime import datetime
 
 class sale_order_payment(models.Model):
     _inherit = "sale.order"
@@ -10,7 +10,7 @@ class sale_order_payment(models.Model):
     has_not_paid_in_payment_status = fields.Boolean(string='has_not_paid_in_payment_status', compute='_compute_has_status_in_payment_status',store=True)
     has_paid_in_payment_status = fields.Boolean(string='has_paid_in_payment_status', compute='_compute_has_status_in_payment_status',store=True)
     has_partial_in_payment_status = fields.Boolean(string='has_partial_in_payment_status', compute='_compute_has_status_in_payment_status',store=True)
-    payment_method = fields.Text(string="支払方法",compute="_compute_payment_method", store=True)
+    payment_method = fields.Text(string="取引条件",compute="_compute_payment_method", store=True)
 
     @api.depends('partner_invoice_id')
     def _compute_payment_method(self):
@@ -103,4 +103,16 @@ class stock_picking_payment(models.Model):
     has_not_paid_in_payment_status = fields.Boolean(related='sale_id.has_not_paid_in_payment_status')
     has_paid_in_payment_status = fields.Boolean(related='sale_id.has_paid_in_payment_status')
     has_partial_in_payment_status = fields.Boolean(related='sale_id.has_partial_in_payment_status')
+
+    days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
+
+    @api.depends('scheduled_date')
+    def _compute_days_remaining(self):
+        today = datetime.today().date()
+        for record in self:
+            if record.scheduled_date:
+                days_remaining = (record.scheduled_date.date() - today).days
+                record.days_remaining = days_remaining
+            else:
+                record.days_remaining = 999
     
