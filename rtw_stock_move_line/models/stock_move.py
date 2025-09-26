@@ -137,7 +137,8 @@ class rtw_stock_move(models.Model):
 
             # 調達グループから取得（運用や設定的に複数はないはずだが、あった場合は先頭から）
             group = rec.group_id[0]
-            # 調達グループは販売or製造or購買、購買の場合は単独購買なのでスルーされる
+            # 調達グループは販売or製造or購買、購買の場合は購買本体の情報からたどる
+            # 購買の場合に、販売がなければ単独購買なのでスルーされる
             if group:
                 sale = self.env['sale.order'].search([('name', '=', group.name)])
                 if sale:
@@ -151,7 +152,14 @@ class rtw_stock_move(models.Model):
                         rec.sale_id = sale
                         rec.sale_id_title = sale.title
                     else:
-                        rec.sale_id = False
+                        # 購買
+                        purchase = self.env['purchase.order'].search([('name', '=', group.name)])
+                        if purchase:
+                            sale = self.env['sale.order'].search([('name', '=', purchase.purchase_order_origin)])
+                            rec.sale_id = sale
+                            rec.sale_id_title = sale.title
+                        else:
+                            rec.sale_id = False
             else:
                 rec.sale_id = False
 
@@ -171,13 +179,19 @@ class rtw_stock_move(models.Model):
                 if rec.move_orig_ids.group_id:
                     group = rec.move_orig_ids.group_id[0]
 
-            # 調達グループは販売or製造or購買、製造ではない場合はスルーされる
+            # 調達グループは販売or製造or購買、製造ではない場合は購買を確認、それでもなければスルーされる
             if group:
                 mrp = self.env['mrp.production'].search([('name', '=', group.name)])
                 if mrp:
                     rec.mrp_production_id = mrp.name
                 else:
-                    rec.mrp_production_id = None
+                    # 購買
+                    purchase = self.env['purchase.order'].search([('name', '=', group.name)])
+                    if purchase:
+                        mrp = self.env['mrp.production'].search([('name', '=', purchase.origin)])
+                        rec.mrp_production_id = mrp.name
+                    else:
+                        rec.mrp_production_id = None
             else:
                 rec.mrp_production_id = None
 
