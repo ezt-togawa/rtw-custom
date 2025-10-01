@@ -27,10 +27,10 @@
     'data': [
         'security/ir.model.access.csv',
         'views/revised_edition.xml',
+        'views/sale_to_mrp_list.xml',
         'views/mrp_production.xml',
         'views/mrp_workorder.xml',
         'views/mrp_ship_address.xml',
-        'views/sale_to_mrp_list.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode
