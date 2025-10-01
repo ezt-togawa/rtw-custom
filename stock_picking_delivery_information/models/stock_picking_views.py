@@ -5,23 +5,7 @@ from datetime import datetime
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
-    
-    def action_confirm(self):
-        result = super(SaleOrder, self).action_confirm()
-        
-        stock_picking = self.env['stock.picking'].search([('sale_id', '=', self.id)])
-        for stock in stock_picking:
-            stock.write({
-                "waypoint": self.waypoint.id,
-                "waypoint_2": self.waypoint_2.id,
-                "sipping_to": self.sipping_to,
-                "shipping_to_text": self.shipping_to_text,
-                "forwarding_address_zip": self.forwarding_address_zip,
-                "forwarding_address": self.forwarding_address,
-                "shipping_destination_text": self.shipping_destination_text
-            })
-        return result
-    
+
     @api.onchange('partner_id')
     def onchange_partner_id(self):
         super(SaleOrder, self).onchange_partner_id()
@@ -35,7 +19,32 @@ class SaleOrder(models.Model):
                 self.partner_invoice_id = self.partner_id
             else:
                 pass
-    
+
+    def write(self, vals):
+        res = super(SaleOrder, self).write(vals)
+        if {'waypoint', 'waypoint_2', 'sipping_to', 'shipping_to_text', 'forwarding_address_zip', 'forwarding_address', 'shipping_destination_text'}.intersection(vals):
+            # 上記のいずれかのフィールドが更新された場合
+            for record in self:
+                record.update_stock_picking_info()
+        return res
+
+    def update_stock_picking_info(self):
+        self.ensure_one()
+        stock_picking = self.env['stock.picking'].search([
+            ('sale_order_id', '=', self.id),
+            ('state', 'not in', ['done', 'cancel'])
+        ])
+        if stock_picking:
+            stock_picking.write({
+                "waypoint": self.waypoint,
+                "waypoint_2": self.waypoint_2,
+                "sipping_to": self.sipping_to,
+                "shipping_to_text": self.shipping_to_text,
+                "forwarding_address_zip": self.forwarding_address_zip,
+                "forwarding_address": self.forwarding_address,
+                "shipping_destination_text": self.shipping_destination_text
+            })
+
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
