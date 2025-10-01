@@ -21,8 +21,8 @@ class rtw_stock_move(models.Model):
         related="sale_id.overseas", string="海外")
     factory = fields.Many2one(related="production_id.picking_type_id")
     memo = fields.Char(related='sale_line_id.memo')
-    area = fields.Text( compute="_get_area", string='エリア', store=True)
-    area_2 = fields.Text( compute="_get_area_2", store=True)
+    area = fields.Text(compute="_get_area", string='デポ１', store=True)
+    area_2 = fields.Text(compute="_get_area_2", string='デポ２', store=True)
     forwarding_address = fields.Text(
         compute="_get_forwarding_address", string='到着地',store=True)
     shipping_to = fields.Text(
@@ -296,9 +296,12 @@ class rtw_stock_move(models.Model):
         else:
             rec.shipping_to = False
 
-    @api.depends('sale_id','sale_id','picking_id.waypoint', 'sale_id.waypoint', 'picking_id.waypoint.display_name', 'sale_id.waypoint.display_name')
+    @api.depends('sale_id', 'picking_id.waypoint', 'sale_id.waypoint', 'picking_id.waypoint.display_name', 'sale_id.waypoint.display_name')
     def _get_area(self):
         for rec in self:
+            if rec.state == 'done' or rec.state == 'cancel':
+                continue
+
             if rec.picking_id and rec.picking_id.waypoint:
                 rec.area = rec.picking_id.waypoint.display_name
                 if rec.sale_id and not rec.picking_id.waypoint:
@@ -308,9 +311,12 @@ class rtw_stock_move(models.Model):
             else:
                 rec.area = False
 
-    @api.depends('sale_id','sale_id','picking_id.waypoint_2', 'sale_id.waypoint_2', 'picking_id.waypoint_2.display_name', 'sale_id.waypoint_2.display_name')
+    @api.depends('sale_id', 'picking_id.waypoint_2', 'sale_id.waypoint_2', 'picking_id.waypoint_2.display_name', 'sale_id.waypoint_2.display_name')
     def _get_area_2(self):
         for rec in self:
+            if rec.state == 'done' or rec.state == 'cancel':
+                continue
+
             if rec.picking_id and rec.picking_id.waypoint_2:
                 rec.area_2 = rec.picking_id.waypoint_2.display_name
                 if rec.sale_id and not rec.picking_id.waypoint_2:
