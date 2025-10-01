@@ -112,25 +112,35 @@ class rtw_mrp_production_add_sol_date(models.Model):
                     #     if sp.scheduled_date:
                     #         if not scheduled_date or scheduled_date > sp.scheduled_date:
                     #             scheduled_date = sp.scheduled_date
-                                
-            child_list = self.env["mrp.production"].search([('origin', '=', mo.name)])
-            if child_list:
-                for child in child_list:
-                    child.itoshima_shipping_date = scheduled_date
-                    # 製造開始予定日の更新、開発進んでいたら更新しない
-                    if child.state == 'draft' or child.state == 'confirmed':
-                        child._cache["date_planned_reset_" + str(child.id)] = child.id
-                        so.calc_date_planned_start(child)
 
             mo.itoshima_shipping_date = scheduled_date
-            # 製造開始予定日の更新、開発進んでいたら更新しない
-            if mo.state == 'draft' or mo.state == 'confirmed':
-                mo._cache["date_planned_reset_" + str(mo.id)] = mo.id
-                so.calc_date_planned_start(mo)
+            # 製造開始予定日の更新、開発進んでいたら更新しない&ドラッグ（手動更新）の場合はは更新しない
+            cache_map = {key: value for key, value in self._cache.items()}
+            mrp_id_dragging = cache_map.get('mrp_id_dragging')
+            if mo.id != mrp_id_dragging:
+                if mo.state == 'draft' or mo.state == 'confirmed':
+                    old_date = mo.date_planned_start
+                    so.calc_date_planned_start(mo)
+                    if old_date != mo.date_planned_start:
+                        mo._cache["date_planned_reset_" + str(mo.id)] = mo.id
 
+                child_list = self.env["mrp.production"].search([('origin', '=', mo.name)])
+                if child_list:
+                    for child in child_list:
+                        child.itoshima_shipping_date = scheduled_date
+                        # 製造開始予定日の更新、開発進んでいたら更新しない
+                        if child.state == 'draft' or child.state == 'confirmed':
+                            old_date = child.date_planned_start
+                            so.calc_date_planned_start(child)
+                            if old_date != child.date_planned_start:
+                                child._cache["date_planned_reset_" + str(child.id)] = child.id
+
+
+
+    # 糸島出荷日を画面で変更した時に変更値を保持する
     def _inverse_itoshima_shipping_date(self):
         for mo in self:
-            mo.itoshima_shipping_date_edit = mo.itoshima_shipping_date 
+            mo.itoshima_shipping_date_edit = mo.itoshima_shipping_date
             mo.is_active = True
     def _compute_mrp_mo_date(self):
         for record in self:
