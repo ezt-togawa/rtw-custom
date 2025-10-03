@@ -296,5 +296,21 @@
                 </xpath>
             </field>
         </record>
+         <record id="view_sale_order_form_add_transactions" model="ir.ui.view">
+            <field name="name">add transactions</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_type.sot_view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type_id']" position="before">
+                    <field name="transactions" string="取引条件(支払方法)" />
+                    <field name="transaction_condition_1" string="取引条件1(支払サイト)"  />
+                    <field name="transaction_condition_2" string="取引条件2(経理補足1)" />
+                    <field name="payment_terms" string="取引レベル" widget="priority" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>
