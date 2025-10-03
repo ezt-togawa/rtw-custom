@@ -351,17 +351,12 @@ class rtw_stock_move(models.Model):
                         move_list.write({'shiratani_date': rec.shiratani_date_delivery})
 
                     mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
+
                     if rec.picking_id:
                         picking_ids = self.env['stock.move'].search([
                             ('product_id', '=', rec.product_id.id),
                             ('origin', '=', rec.origin),
                             ('description_picking' ,'=', rec.description_picking)
                         ])
-                        for move in picking_ids:
-                            move.shiratani_date = rec.shiratani_date_delivery 
-                    else:
-                        return
-                else:
-                    return
-        else:
-            return               
+                        if picking_ids:
+                            picking_ids.write({'shiratani_date': rec.shiratani_date_delivery})

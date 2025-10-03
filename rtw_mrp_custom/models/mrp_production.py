@@ -29,6 +29,7 @@ class MrpProductionCus(models.Model):
     shipping = fields.Char(compute="_compute_shipping", string="送付先")
     
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
+    is_calc_planned_start = fields.Boolean(default=False, store=True) #製造開始予定日再計算フラグ、製造以外から更新指示したいとき
 
     @api.depends('date_planned_start')
     def _compute_days_remaining(self):
@@ -150,24 +151,6 @@ class MrpProductionCus(models.Model):
                 warehouse= shiratani.id or False
             record.storehouse_id = warehouse
 
-    # 新規作成時に製造部材入荷予定を設定
-    # @api.depends('name')
-    # def _compute_prod_parts_arrival_schedule(self):
-    #     for record in self:
-    #         print('_compute_prod_parts_arrival_schedule', record.name)
-    #         if record.origin:
-    #             order_no = record.origin
-    #             parent_mo = self.env["mrp.production"].search([('name', '=', order_no)])
-    #             child_mo = self.env["mrp.production"].search(
-    #                 [('sale_reference', '=', parent_mo.sale_reference), ('origin', '=', parent_mo.name)])
-    #             if child_mo and parent_mo.move_raw_ids:
-    #                 arrival_schedule = ''
-    #                 for move in parent_mo.move_raw_ids:
-    #                     if move.forecast_expected_date:
-    #                         arrival_schedule += str(parent_mo._convert_timezone(move.forecast_expected_date)) + "\n"
-    #                         print('move.forecast_expected_date', move.forecast_expected_date)
-    #                 parent_mo.prod_parts_arrival_schedule = arrival_schedule.rstrip('\n') if arrival_schedule else ''
- 
     def create_revised_edition(self):
         return {
             'type': 'ir.actions.act_window',
@@ -278,6 +261,38 @@ class MrpProductionCus(models.Model):
                                         po.check_schedule_boolean = True
         return res
 
+    def is_calc_date(self, sale_order_line=None):
+        """
+        製造オーダーの製造開始日の再計算判定
+        　↓再計算実施:True
+            1.新規作成時：無条件で確認ボタン押下時に計算実施（sale.order.calc_date_planned_start）、この関数通らない
+            2.販売の発送予定日or白谷到着日 どちらかの更新、都合2回Callされる（2回目がis_calc_planned_start=True、表示名のマークはクリア）
+        　↓再計算しない:False
+            1.製造オーダーで製造開始予定日を直修正（mrp_id_dragging情報がある、表示名にマークが付く）
+            2.製造カレンダーでドラッグして製造開始予定日を修正（mrp_id_dragging情報がある、表示名にマークが付く）
+            3.配送で白谷到着日を修正（mrp_id_dragging情報がなし＆is_calc_planned_start=False）
+            　→製造/運送/配送 は更新されるが販売は更新されない、白谷到着日は販売とはズレたまま保持
+        """
+        calc = False
+        if sale_order_line: # 販売明細がある場合は販売側更新契機
+            if self.shiratani_date != sale_order_line.shiratani_date:
+                self.shiratani_date = sale_order_line.shiratani_date
+                calc = True
+            if self.estimated_shipping_date != sale_order_line.order_id.estimated_shipping_date:
+                self.estimated_shipping_date = sale_order_line.order_id.estimated_shipping_date
+                calc = True
+            return calc
+
+        cache_map = {key: value for key, value in self._cache.items()}
+        mrp_id_dragging = cache_map.get('mrp:_id_dragging')
+        if mrp_id_dragging:
+            # ドラッグorMRP更新情報があった時点で製造の更新起因が確定
+            if self.id == mrp_id_dragging:  # ドラック（更新）の製造と同じ場合は計算しない
+                calc = False
+        elif self.is_calc_planned_start: # 販売更新契機の時にTrueになる
+            calc = True
+
+            return calc
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"

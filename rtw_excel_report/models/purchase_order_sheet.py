@@ -408,7 +408,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.merge_range(row_below, 2, row_below, 9, mrp.mrp_product_config_cus_excel or '', format_content_12pt)
                 sheet.write(row_below + 1, 0, "", format_lines_15) 
                 sheet.write(row_below + 1, 1, _('同梱'), format_subheader_10pt)
-                sheet.merge_range(row_below + 1, 2, row_below + 1, 3, mrp.mrp_production_order_line.combined_shipment or '', format_content_12pt)
+                sheet.merge_range(row_below + 1, 2, row_below + 1, 3, mrp.mrp_production_order_line.combined_shipment.abbreviation or '', format_content_12pt)
 
                 sheet.write(row_below + 1, 4, _('メモ'), format_subheader_10pt)
                 sheet.merge_range(row_below + 1, 5, row_below + 1, 9, mrp.production_memo or '', format_content_12pt)
