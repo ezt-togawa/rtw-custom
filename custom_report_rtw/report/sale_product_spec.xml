@@ -47,7 +47,10 @@
                     t-as="l">
                     <div class="product-container">
                       <div class="product-name bg-white mb-1">
-                        <span t-field="l.product_id.name" />
+                        <span>
+                              No<t t-esc="l_index + 1"/> 
+                              <span t-field="l.product_id.name"/>
+                          </span>
                       </div>
                       <div class="row" style="margin:0;">
                         <div class="col-9" style="margin:0;padding:0;" id="layout-left">
@@ -71,35 +74,28 @@
                             <t t-set="names"
                               t-value="l.child_attr_names and json.loads(l.child_attr_names) or ['']*4" />
                             <t t-foreach="range(4)" t-as="i">
-                              <div class="product-child-attr bg-white mt-1">
-                                <div class="row" style="margin:0;">
-                                  <div class="col-6" style="padding:5px;">
+                              <div class="product-child-attr bg-white mt-1" >
+                                <div class="row">
+                                  <div class="col-6" >
                                     <t t-if="imgs[i]">
-                                      <img t-att-src="'data:image/png;base64,%s' % imgs[i]" />
+                                      <img t-att-src="'data:image/png;base64,%s' % imgs[i]" style="width:80px;height:80px;object-fit:cover; margin:5px" />
                                     </t>
                                   </div>
                                   <div class="col-6 size11" style="padding:1px;">
                                     <div
-                                      style="margin-top:20px;display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:45px;">
+                                      style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;max-height:45px;">
                                       <span t-esc="names[i]" />
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </t>
-                            <t t-foreach="range(0,5)" t-as="r">
-                              <t t-if="attr_child_count &lt; 4">
-                                <t t-set="attr_child_count" t-value="attr_child_count + 1" />
-                                <div class="product-child-attr bg-white mt-1">
-                                </div>
-                              </t>
-                            </t>
                           </div>
                           <div
                             style="background-color:#fff; height: 21px; border-right:6px solid #d9d9d9;  border-top: 1px solid #d9d9d9;">
                             <t t-set="current_line_index" t-value="None" />
                             <t t-foreach="range(0, line_count)" t-as="i">
-                              <t t-if="lines[i] == l">
+                              <t t-if="lines[i].id == l.id">
                                 <t t-set="current_line_index" t-value="i" />
                               </t>
                             </t>
