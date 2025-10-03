@@ -97,6 +97,11 @@ class product_pack(models.Model):
 class ProductTemplateProductPack(models.Model):
     _inherit = 'product.template'
 
+    on_hand_quantity = fields.Float(string='手持数量', compute='_compute_quantities_product_template')
+    available_quantity = fields.Float(string='利用可能な数量', compute='_compute_quantities_product_template')
+    reserved_quantity  = fields.Float(string="予約数量", compute="_compute_quantities_product_template")
+
+
     def write(self, vals):
         _vals = vals.copy()
         for template in self:
@@ -132,3 +137,28 @@ class ProductTemplateProductPack(models.Model):
             if 'pack_line_ids' in vals:
                 _vals.pop("pack_line_ids")
         return super(ProductTemplateProductPack, self).write(_vals)
+    
+    def _compute_quantities_product_template(self):
+        for template in self:
+            bom_lines = self.env['mrp.bom.line'].search([
+                ('product_id.product_tmpl_id', '=', template.id)
+            ], limit=1)
+            template.on_hand_quantity = template.qty_available or 0.0
+            template.available_quantity = bom_lines.available_quantity if bom_lines else 0.0
+            template.reserved_quantity = template.reservation_count or 0.0
+
+    def product_lines_link(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            'stock.stock_replenishment_product_product_action'
+        )
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        menu_id = self.env['ir.ui.menu'].search(
+            [('name', '=', 'Configurator'), ('parent_id', '=', False)], limit=1
+        ).id
+        return {
+            'type': 'ir.actions.act_url',
+            'name': "Product Forecasted",
+            'target': 'new',
+            'url': f"{base_url}/web#action={action['id']}&active_id={self.id}&cids=1&menu_id={menu_id}&active_model=product.template",
+        }
