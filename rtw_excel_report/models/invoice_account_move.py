@@ -19,6 +19,14 @@ class ReportMrpExcel(models.AbstractModel):
             target_height = int(target_width * aspect_ratio)
             img = img.resize((target_width, target_height), PILImage.LANCZOS)
             return img
+        
+        def resize_with_fixed_height(img, height, new_width):
+            w, h = img.size
+            ratio = height / float(h)
+            scaled_width = int(w * ratio)
+            scaled_img = img.resize((scaled_width, height), PILImage.LANCZOS)
+            final_img = scaled_img.resize((new_width, height), PILImage.LANCZOS)
+            return final_img
 
         image_logo_R = get_module_resource('rtw_excel_report', 'img', 'R_log.jpg')
         logo_R = resize_keep_aspect(image_logo_R, 86)
@@ -31,6 +39,22 @@ class ReportMrpExcel(models.AbstractModel):
         img_io_ritzwell = BytesIO()
         img_ritzwell.save(img_io_ritzwell, 'PNG')
         img_io_ritzwell.seek(0)
+
+        image_signature_photo = get_module_resource('rtw_excel_report', 'img', 'signature_photo.png')
+        img_signature = resize_keep_aspect(image_signature_photo, 215)
+        img_io_signature = BytesIO()
+        img_signature.save(img_io_signature, 'PNG')
+        img_io_signature.seek(0)
+
+        img_stamp_signature = PILImage.open(image_signature_photo)
+        stamp_signature = resize_with_fixed_height(img_stamp_signature, 115, 105)
+        stamp_signature_rgba = stamp_signature.convert('RGBA')
+        alpha_signature = stamp_signature_rgba.split()[-1]
+        alpha_signature = alpha_signature.point(lambda p: p * 0.3)
+        stamp_signature_rgba.putalpha(alpha_signature)
+        img_io_stamp_signature = BytesIO()
+        stamp_signature_rgba.save(img_io_stamp_signature, 'PNG')
+        img_io_stamp_signature.seek(0)
 
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
@@ -112,6 +136,8 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.insert_image(1, 0, "logo", {'image_data': img_io_R, 'x_offset': 5, 'y_offset': 1})
             sheet.insert_image(1, 11, "logo2", {'image_data': img_io_ritzwell})
+            sheet.insert_image(2, 10, "stamp", {'image_data': img_io_stamp_signature, 'x_offset': 160, 'y_offset': 0})
+
             
             # y,x
             sheet.write(1, 1, _("御請求書"), format_sheet_title) 
@@ -122,7 +148,11 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(10, 0, _("税抜合計"), format_text) 
             sheet.write(11, 0, _("消費税"), format_text) 
             sheet.write(12, 0, _("税込合計"), format_money_bgRed) 
-            sheet.write(8, 1, so.sale_order.title if so.sale_order.title else '', format_text_14_border) 
+            if so.invoice_origin and ',' in so.invoice_origin:
+                title_text = so.invoice_date.strftime('%Y年%-m月') + ' 分' if so.invoice_date else ''
+            else:
+                title_text = so.sale_order.title if so.sale_order.title else ''
+            sheet.write(8, 1, title_text, format_text_14_border) 
             sheet.write(10, 1, so.acc_move_amount_untaxed if so.acc_move_amount_untaxed else '', format_text_13_right) 
             sheet.write(11, 1, so.acc_move_amount_tax if so.acc_move_amount_tax else '', format_text_12_right) 
             sheet.write(12, 1, so.acc_move_amount_total if so.acc_move_amount_total else '', format_money_bgRed_right) 
@@ -145,7 +175,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(9, 6, 11, 8, so.sale_order.sale_order_billing_notes[:120] if so.sale_order.sale_order_billing_notes else '', format_note) 
 
             sheet.merge_range(0, 11, 0, 12, so.acc_move_current_date if so.acc_move_current_date else '' , format_date) 
-            sheet.merge_range(2, 11, 9, 12, so.sale_order.sale_order_hr_employee_invoice if so.sale_order.sale_order_hr_employee_invoice else '' , format_address)
+            sheet.merge_range(2, 11, 9, 12, so.sale_order_hr_employee_invoice if so.sale_order_hr_employee_invoice else '' , format_address)
 
 
             sheet.write(13, 9, _("定価合計: ") + str(so.acc_move_total_list_price) if so.acc_move_total_list_price else '', format_text_right) 

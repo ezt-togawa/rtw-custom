@@ -20,6 +20,14 @@ class ReportMrpExcel(models.AbstractModel):
             img = img.resize((target_width, target_height), PILImage.LANCZOS)
             return img
 
+        def resize_with_fixed_height(img, height, new_width):
+            w, h = img.size
+            ratio = height / float(h)
+            scaled_width = int(w * ratio)
+            scaled_img = img.resize((scaled_width, height), PILImage.LANCZOS)
+            final_img = scaled_img.resize((new_width, height), PILImage.LANCZOS)
+            return final_img
+
         image_logo_R = get_module_resource('rtw_excel_report', 'img', 'R_log.jpg')
         logo_R = resize_keep_aspect(image_logo_R, 86)
         img_io_R = BytesIO()
@@ -31,6 +39,22 @@ class ReportMrpExcel(models.AbstractModel):
         img_io_ritzwell = BytesIO()
         img_ritzwell.save(img_io_ritzwell, 'PNG')
         img_io_ritzwell.seek(0)
+
+        image_signature_photo = get_module_resource('rtw_excel_report', 'img', 'signature_photo.png')
+        img_signature = resize_keep_aspect(image_signature_photo, 215)
+        img_io_signature = BytesIO()
+        img_signature.save(img_io_signature, 'PNG')
+        img_io_signature.seek(0)
+
+        img_stamp_signature = PILImage.open(image_signature_photo)
+        stamp_signature = resize_with_fixed_height(img_stamp_signature, 115, 105)
+        stamp_signature_rgba = stamp_signature.convert('RGBA')
+        alpha_signature = stamp_signature_rgba.split()[-1]
+        alpha_signature = alpha_signature.point(lambda p: p * 0.3)
+        stamp_signature_rgba.putalpha(alpha_signature)
+        img_io_stamp_signature = BytesIO()
+        stamp_signature_rgba.save(img_io_stamp_signature, 'PNG')
+        img_io_stamp_signature.seek(0)
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
         format_name_company = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'text_wrap':True, 'bottom':1})
@@ -114,6 +138,7 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.insert_image(1, 0, "logo", {'image_data': img_io_R, 'x_offset': 5, 'y_offset': 1})
             sheet.insert_image(1, 11, "logo2", {'image_data': img_io_ritzwell})
+            sheet.insert_image(2, 10, "stamp", {'image_data': img_io_stamp_signature, 'x_offset': 160, 'y_offset': 0})
             
             # y,x
             sheet.write(1, 1, _("御請求書"), format_sheet_title) 

@@ -61,7 +61,7 @@
                                         <div>
                                             <span class="title_pdf">お支払内容:</span>
                                             <span
-                                                t-field="docs.sale_order.payment_details" />
+                                                t-field="docs.payment_details_invoice" />
                                         </div>
                                         <div class="d-flex">
                                             <div>
@@ -77,10 +77,14 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="col-8">
-                                        <span
-                                            class="mt-1 so_price border-bottom2"> 件名 : <span
-                                                t-esc="docs.sale_order.title" />
-                                        </span>
+                                        <span class="mt-1 so_price border-bottom2">件名 :
+                                            <t t-if="docs.invoice_origin and ',' in docs.invoice_origin">
+                                                <span t-esc="docs.invoice_date and (docs.invoice_date.strftime('%Y年%-m月') + ' 分') or ''"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="docs.sale_order.title"/>
+                                            </t>
+                                        </span> 
                                     </div>
                                     <div class="col-4">
                                         <div>
@@ -130,8 +134,13 @@
                                 </div>
                             </div>
                             <div
-                                class="col-4 size11" name="company_address">
-                                <div class="float-right">
+                                class="col-4 size11" name="company_address" style="position: relative;">
+                                <div style="position: absolute; top: 45px; right: 0; z-index: 1; opacity: 0.3;">
+                                    <img style="width: 120px; height: 125px; object-fit: contain;"
+                                        src="/custom_report_rtw/static/src/images/signature_photo.png"
+                                        alt="Stamp" />
+                                </div>
+                                <div class="float-right" style="position: relative; z-index: 2;">
                                     <div>
                                         <img style="width:250px;height:auto; object-fit:contain;"
                                             src="/custom_report_rtw/static/src/images/Ritzwell_log.jpg"
@@ -139,28 +148,28 @@
                                     </div>
                                     <div style="font-size: 14px;">
                                         <div>
-                                            <span t-esc="docs.hr_employee_company" />
+                                            <span>Ritzwell &amp; Co.</span>
                                         </div>
                                         <div>
-                                            <span t-esc="docs.registration_number" />
+                                            <span>登録番号:T4290001017449</span>
                                         </div>
                                         <div>
-                                            <span t-esc="docs.hr_employee_department" />
+                                            <span>本社</span>
                                         </div>
                                         <div>
-                                            <span t-esc="docs.hr_employee_zip" />
+                                            <span>〒816-0088</span>
                                         </div>
                                         <div>
-                                            <span t-esc="docs.hr_employee_info" />
+                                            <span>福岡県 福岡市博多区</span>
                                         </div>
                                         <div>
-                                            <span t-esc="docs.hr_employee_tel" />
+                                            <span>板付5-2-9</span>
                                         </div>
                                         <div>
-                                            <span t-esc="docs.hr_employee_fax" />
+                                            <span>tel.092-584-2240</span>
                                         </div>
                                         <div>
-                                            <span t-esc="docs.hr_employee_printer" />
+                                            <span>fax.092-584-2241</span>
                                         </div>
                                     </div>
                                 </div>
@@ -168,6 +177,8 @@
                         </div>
                         <table class="table">
                             <t t-set="number" t-value="0" />
+                            <t t-set="current_sale_order" t-value="False" />
+                            <t t-set="sale_order_counter" t-value="0" />
                             <t t-foreach="docs.account_move_line" t-as="l" t-groupby="10"
                                 t-att-last="last">
                                 <t t-set="total_listprice"
@@ -211,8 +222,21 @@
                                         <tr class="size15 table-border-bottom">
                                             <t>
                                                 <td class="text-center" style="font-size:16px;">
-                                                    <t t-set="number" t-value="number + 1" />
-                                                    <t t-esc="number" />
+                                                    <t t-if="docs.invoice_origin and ',' in docs.invoice_origin and l.sale_line_ids and l.sale_line_ids[0].order_id">
+                                                        <t t-set="line_sale_order" t-value="l.sale_line_ids[0].order_id.name" />
+                                                        <t t-if="current_sale_order != line_sale_order">
+                                                            <t t-set="current_sale_order" t-value="line_sale_order" />
+                                                            <t t-set="sale_order_counter" t-value="1" />
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-set="sale_order_counter" t-value="sale_order_counter + 1" />
+                                                        </t>
+                                                        <t t-esc="line_sale_order + '/' + str(sale_order_counter)" />
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-set="number" t-value="number + 1" />
+                                                        <t t-esc="number" />
+                                                    </t>
                                                 </td>
                                                 <td class="text-left" style="font-size:15px;">
                                                     <div class="two-lines">

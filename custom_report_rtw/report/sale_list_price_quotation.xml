@@ -234,7 +234,7 @@
                                                 </td>
                                                 <td class="text-left">
                                                     <div class="two-lines">
-                                                        <div style="font-size:16px;"
+                                                        <div style="font-size:16px; padding-bottom: 5px;"
                                                             t-if="l.product_id.product_no"
                                                             t-field="l.product_id.product_no" />
                                                         <t t-if="l.product_size">
