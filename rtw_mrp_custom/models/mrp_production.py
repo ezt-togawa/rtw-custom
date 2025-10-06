@@ -233,14 +233,13 @@ class MrpProductionCus(models.Model):
             if 'date_planned_start' in vals:
                 old_date_planned = old_date_planned_start.get(record.id)
                 new_date_planned = vals['date_planned_start']
-
                 if isinstance(new_date_planned, str):
                     new_date_planned = parse(new_date_planned)
 
                 # dragging date_planned_start ( mrp_calendar or mrp_form)
                 if new_date_planned and old_date_planned:
-                    # just update (not create)
-                    if record.create_date != record.write_date:
+                    # 更新時と販売からの更新契機ではない場合のみドラッグor製造画面での製造開始予定の更新と判断する
+                    if (record.create_date != record.write_date) and not record.is_calc_planned_start:
                         cache_key = 'mrp_id_dragging'
                         if cache_key in record._cache:
                             del record._cache[cache_key]
