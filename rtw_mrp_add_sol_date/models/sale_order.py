@@ -38,6 +38,7 @@ class MrpAddSolDateSaleOrder(models.Model):
                 for cmo in child_list:
                     cmo.shiratani_date = mrp.shiratani_date
                     cmo.estimated_shipping_date = mrp.estimated_shipping_date
+                    cmo.is_calc_planned_start = True
 
                     # 紐づく配送の日付を更新する
                     c_move_list = self.env["stock.move"].search([('mrp_production_id', '=', cmo.name)])
