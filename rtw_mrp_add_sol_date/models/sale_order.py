@@ -28,23 +28,41 @@ class MrpAddSolDateSaleOrder(models.Model):
                 # 紐づく配送の日付を更新する
                 move_list = self.env["stock.move"].search([('mrp_production_id', '=', mrp.name)])
                 if move_list:
-                    move_list.write({'shiratani_date': mrp.shiratani_date})
-                    move_list.write({'shiratani_date_delivery': mrp.shiratani_date})
-                    move_list.write({'arrival_date_itoshima': mrp.itoshima_shipping_date})
+                    move_list.write({
+                        'shiratani_date': mrp.shiratani_date,
+                        'shiratani_date_delivery': mrp.shiratani_date,
+                        'arrival_date_itoshima': mrp.itoshima_shipping_date,
+                    })
 
             # ChildMo側の処理
+            child_list = self.env["mrp.production"].search([('origin', '=', mrp.name)])
             if edit:
-                child_list = self.env["mrp.production"].search([('origin', '=', mrp.name)])
+                child_list.write({
+                    'shiratani_date': mrp.shiratani_date,
+                    'estimated_shipping_date': mrp.estimated_shipping_date,
+                    'is_calc_planned_start': True
+                })
                 for cmo in child_list:
-                    cmo.shiratani_date = mrp.shiratani_date
-                    cmo.estimated_shipping_date = mrp.estimated_shipping_date
-                    cmo.is_calc_planned_start = True
-
                     # 紐づく配送の日付を更新する
                     c_move_list = self.env["stock.move"].search([('mrp_production_id', '=', cmo.name)])
                     if c_move_list:
-                        c_move_list.write({'shiratani_date': cmo.shiratani_date})
-                        c_move_list.write({'shiratani_date_delivery': cmo.shiratani_date})
-                        c_move_list.write({'arrival_date_itoshima': cmo.itoshima_shipping_date})
+                        c_move_list.write({
+                            'shiratani_date': cmo.shiratani_date,
+                            'shiratani_date_delivery': cmo.shiratani_date,
+                            'arrival_date_itoshima': cmo.itoshima_shipping_date,
+                        })
+
+            # デポ希望日を配送（Stock.move）へ伝播する
+            if {'depo_date'}.intersection(vals):
+                self.stock_move_depo1_modify(mrp)
+                for cmo in child_list:
+                    self.stock_move_depo1_modify(cmo)
 
         return record
+
+    def stock_move_depo1_modify(self, mrp):
+        move_list = self.env['stock.move'].search([('mrp_production_id', '=', mrp.name)])
+        if move_list:
+            move_list.write({
+                "warehouse_arrive_date": mrp.depo_date
+            })
