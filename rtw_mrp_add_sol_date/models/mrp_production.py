@@ -141,5 +141,4 @@ class rtw_mrp_production_add_sol_date(models.Model):
                 day_of_week = babel_format_date(date_to_format, "EEE", locale=user_lang)
                 record.mrp_mo_date = f"{formatted_date} [{day_of_week}]"
             else:
-                record.mrp_mo_date = ''    
- 
+                record.mrp_mo_date = ''

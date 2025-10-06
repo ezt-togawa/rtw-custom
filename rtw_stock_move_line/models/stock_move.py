@@ -244,6 +244,12 @@ class rtw_stock_move(models.Model):
         for rec in self:
             if rec.sale_line_id.depo_date:
                 rec.warehouse_arrive_date = rec.sale_line_id.depo_date
+            elif rec.mrp_production_id:
+                mrp = self.env['mrp.production'].search([('name', '=', rec.mrp_production_id)])
+                if mrp:
+                    rec.warehouse_arrive_date = mrp.depo_date
+                else:
+                    rec.warehouse_arrive_date = False
             elif rec.sale_id:
                 rec.warehouse_arrive_date = rec.sale_id.warehouse_arrive_date
             else:
