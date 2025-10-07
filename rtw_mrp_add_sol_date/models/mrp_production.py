@@ -109,11 +109,8 @@ class rtw_mrp_production_add_sol_date(models.Model):
             # 製造開始予定日の更新、開発進んでいたら更新しない&ドラッグ（手動更新）の場合はは更新しない
             if mo.is_calc_date():
                 if mo.state == 'draft' or mo.state == 'confirmed':
-                    old_date = mo.date_planned_start
+                    # old_date = mo.date_planned_start
                     so.calc_date_planned_start(mo)
-                    if old_date != mo.date_planned_start:
-                        # 再計算後に製造開始日が違っていた場合に画面表示マークを制御するための情報設定
-                        mo._cache["date_planned_reset_" + str(mo.id)] = mo.id
 
                 child_list = self.env["mrp.production"].search([('origin', '=', mo.name)])
                 if child_list:
@@ -121,11 +118,8 @@ class rtw_mrp_production_add_sol_date(models.Model):
                         child.itoshima_shipping_date = mo.itoshima_shipping_date
                         # 製造開始予定日の更新、開発進んでいたら更新しない
                         if child.state == 'draft' or child.state == 'confirmed':
-                            old_date = child.date_planned_start
+                            # old_date = child.date_planned_start
                             so.calc_date_planned_start(child)
-                            if old_date != child.date_planned_start:
-                                # 再計算後に製造開始日が違っていた場合に画面表示マークを制御するための情報設定
-                                child._cache["date_planned_reset_" + str(child.id)] = child.id
 
     # 糸島出荷日を画面で変更した時に変更値を保持する
     def _inverse_itoshima_shipping_date(self):

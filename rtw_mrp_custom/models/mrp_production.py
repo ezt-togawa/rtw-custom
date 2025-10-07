@@ -29,7 +29,8 @@ class MrpProductionCus(models.Model):
     shipping = fields.Char(compute="_compute_shipping", string="送付先")
     
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
-    is_calc_planned_start = fields.Boolean(default=False, store=True) #製造開始予定日再計算フラグ、製造以外から更新指示したいとき
+    # 製造開始予定日再計算フラグ＆製造画面変更マーククリアのトリガー
+    is_calc_planned_start = fields.Boolean(default=False, store=True)
 
     @api.depends('date_planned_start')
     def _compute_days_remaining(self):
@@ -201,29 +202,21 @@ class MrpProductionCus(models.Model):
 
             record.calendar_display_name = display_name
 
+
     @api.depends(lambda self: (self._rec_name,) if self._rec_name else ())
     def _compute_display_name(self):
-        cache_map = {key: value for key, value in self._cache.items()}
-        mrp_id_dragging = cache_map.get('mrp_id_dragging')
+        # カレンダー/製造オーダー画面表示にCallされてタイトルの変更マークの判定を行う
         for record in self:
-            mrp_date_planned_reset = cache_map.get("date_planned_reset_" + str(record.id))
-            if record.id == mrp_date_planned_reset:
+            if record.is_calc_planned_start:
                 # 製造開始予定日が自動再計算された場合は除外（編集扱いにしない）
                 record.color = 1
                 record.is_drag_drop_calendar = False
+                record.is_calc_planned_start = False
 
-            elif record.id == mrp_id_dragging and record.color != 4:
-                # just add color + tick mark for mrp_id_dragging and that mrp has a color other than blue
+            elif record.is_drag_drop_calendar and record.color != 4:
                 record.color = 4
-                record.is_drag_drop_calendar = True
 
             record.display_name = record.calendar_display_name
-
-            if mrp_date_planned_reset:
-                del record._cache['date_planned_reset_' + str(record.id)]
-
-        if mrp_id_dragging:
-            del self._cache['mrp_id_dragging']
 
     def write(self, vals):
         old_date_planned_start = {record.id: record.date_planned_start for record in self}
@@ -240,10 +233,7 @@ class MrpProductionCus(models.Model):
                 if new_date_planned and old_date_planned:
                     # 更新時と販売からの更新契機ではない場合のみドラッグor製造画面での製造開始予定の更新と判断する
                     if (record.create_date != record.write_date) and not record.is_calc_planned_start:
-                        cache_key = 'mrp_id_dragging'
-                        if cache_key in record._cache:
-                            del record._cache[cache_key]
-                        record._cache[cache_key] = record.id
+                        record.is_drag_drop_calendar = True
 
                     if new_date_planned < old_date_planned:
                         po = self.env["purchase.order"].search([('origin', 'ilike', record.name)])
@@ -267,9 +257,9 @@ class MrpProductionCus(models.Model):
             1.新規作成時：無条件で確認ボタン押下時に計算実施（sale.order.calc_date_planned_start）、この関数通らない
             2.販売の発送予定日or白谷到着日 どちらかの更新、都合2回Callされる（2回目がis_calc_planned_start=True、表示名のマークはクリア）
         　↓再計算しない:False
-            1.製造オーダーで製造開始予定日を直修正（mrp_id_dragging情報がある、表示名にマークが付く）
-            2.製造カレンダーでドラッグして製造開始予定日を修正（mrp_id_dragging情報がある、表示名にマークが付く）
-            3.配送で白谷到着日を修正（mrp_id_dragging情報がなし＆is_calc_planned_start=False）
+            1.製造オーダーで製造開始予定日を直修正（is_drag_drop_calendar情報がある、表示名にマークが付く）
+            2.製造カレンダーでドラッグして製造開始予定日を修正（is_drag_drop_calendar情報がある、表示名にマークが付く）
+            3.配送で白谷到着日を修正（is_drag_drop_calendar情報がなし＆is_calc_planned_start=False）
             　→製造/運送/配送 は更新されるが販売は更新されない、白谷到着日は販売とはズレたまま保持
         """
         calc = False
@@ -282,16 +272,12 @@ class MrpProductionCus(models.Model):
                 calc = True
             return calc
 
-        cache_map = {key: value for key, value in self._cache.items()}
-        mrp_id_dragging = cache_map.get('mrp:_id_dragging')
-        if mrp_id_dragging:
-            # ドラッグorMRP更新情報があった時点で製造の更新起因が確定
-            if self.id == mrp_id_dragging:  # ドラック（更新）の製造と同じ場合は計算しない
-                calc = False
-        elif self.is_calc_planned_start: # 販売更新契機の時にTrueになる
+        if self.is_calc_planned_start: # 販売更新契機の時にTrueになる
             calc = True
-
-            return calc
+        elif self.is_drag_drop_calendar:
+            # ドラッグorMRP更新情報があった時点で製造の更新起因が確定
+            calc = False
+        return calc
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"

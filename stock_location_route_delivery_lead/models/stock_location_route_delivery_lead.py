@@ -101,7 +101,6 @@ class sale_order(models.Model):
             itoshima_shipping_datetime = datetime.combine(mrp.itoshima_shipping_date, datetime.min.time())
             if mrp.origin == self.name:  # parent
                 mrp.date_planned_start = itoshima_shipping_datetime - timedelta(days=days, hours=hours)
-                mrp.is_calc_planned_start = False
             else:  # child
                 parent_mrp = self.env['mrp.production'].search([('name', '=', mrp.origin)])
                 parent_delivery_lead_time = 0
@@ -114,7 +113,6 @@ class sale_order(models.Model):
                 child_days = int(child_additional_time)
                 child_hours = (child_additional_time - int(child_additional_time)) * 24
                 mrp.date_planned_start = itoshima_shipping_datetime - timedelta(days=child_days, hours=child_hours)
-                mrp.is_calc_planned_start = False
 
         stock_picking = self.env['stock.picking'].search([('origin', '=', mrp.name)])
         if stock_picking:
