@@ -37,6 +37,7 @@ class MrpAddSolDateSaleOrder(models.Model):
             # ChildMo側の処理
             child_list = self.env["mrp.production"].search([('origin', '=', mrp.name)])
             if edit:
+                # is_calc_planned_start は再計算後に後づけでTrueにしている（上で親の_compute_itoshima_shipping_dateで子製造も計算済み）
                 child_list.write({
                     'shiratani_date': mrp.shiratani_date,
                     'estimated_shipping_date': mrp.estimated_shipping_date,
