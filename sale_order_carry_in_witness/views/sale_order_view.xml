@@ -4,7 +4,7 @@
         <record id="sale_view_order_witness_form" model="ir.ui.view">
             <field name="name">Sale Order Witness</field>
             <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="inherit_id" ref="sale_order_rtw.sale_view_order_rtw_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='forwarding_address']" position="after">
                     <field name="witness" />

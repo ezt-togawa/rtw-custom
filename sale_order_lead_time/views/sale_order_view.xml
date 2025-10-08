@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="sale_view_order_approve_form" model="ir.ui.view">
+        <record id="sale_view_order_lead_time_form" model="ir.ui.view">
             <field name="name">Sale Order RTW</field>
             <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="inherit_id" ref="sale_order_rtw.sale_view_order_rtw_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='workday_id']" position="after">
                     <label for="leadtime" />
@@ -16,9 +16,6 @@
                             string="予定日へ反映" type="object"
                         />
                     </div>
-                </xpath>
-                <xpath expr="//field[@name='shipping_notes']" position="after">
-                    <field name="itoshima_shiratani_shipping_notes" />
                 </xpath>
             </field>
         </record>

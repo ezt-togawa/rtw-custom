@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_order_form_modify_warehouse" model="ir.ui.view">
+        <record id="view_order_form_product_pack" model="ir.ui.view">
         <field name="name">sale.order.form</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_sourced_by_line.view_order_form" />
