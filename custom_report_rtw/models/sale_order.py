@@ -303,7 +303,7 @@ class SaleOrderLine(models.Model):
 
 
     def _compute_image_pdf(self):
-            frame_w, frame_h = 290, 155
+            frame_w, frame_h = 250, 120
             for line in self:
                 line.product_img_pdf = self.resize_image_for_pdf(line.product_id.image_256, frame_w, frame_h)
                 attach_file = line.item_sale_attach_ids[0].attach_file if line.item_sale_attach_ids else False
