@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_rtw_contact_rtw_partner,rtw_contact.partner,model_res_partner,base.group_user,1,1,1,1
-access_rtw_contact_sale_order,rtw_contact.rtw_contact_sale_order,model_sale_order,base.group_user,1,1,1,1
+access_rtw_contact_rtw_partner,rtw_contact.partner,base.model_res_partner,base.group_user,1,1,1,1
+access_rtw_contact_sale_order,rtw_contact.rtw_contact_sale_order,sale.model_sale_order,base.group_user,1,1,1,1
