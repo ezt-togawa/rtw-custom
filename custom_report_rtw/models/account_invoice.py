@@ -38,6 +38,22 @@ class AccountMoveCus(models.Model):
     send_to_people = fields.Char(string="send to people", compute="_compute_send_to")
     registration_number = fields.Char(string="registration number", compute="_compute_registration_number")
     current_print = fields.Char(compute="_compute_current_print")
+    payment_details_invoice = fields.Char(string="payment details invoice" , compute="_compute_payment_details")
+    sale_order_hr_employee_invoice = fields.Char(
+        compute="_compute_sale_order_hr_employee",
+        string="Sale order hr employee invoice",
+    )
+
+    def _compute_payment_details(self):
+        for invoice in self:
+            if invoice.partner_id.transactions.name and invoice.partner_id.payment_terms_1:
+                invoice.payment_details_invoice = invoice.partner_id.transactions.name + ' / ' + invoice.partner_id.payment_terms_1
+            elif invoice.partner_id.transactions.name:
+                invoice.payment_details_invoice = invoice.partner_id.transactions.name
+            elif invoice.partner_id.payment_terms_1:
+                invoice.payment_details_invoice = invoice.partner_id.payment_terms_1
+            else:
+                invoice.payment_details_invoice = None
     
     def _compute_current_print(self):
         for so in self:
@@ -177,3 +193,25 @@ class AccountMoveCus(models.Model):
             self.registration_number = 'Registration number: T4290001017449'
         else:
             self.registration_number = '登録番号:T4290001017449'
+
+    def _compute_sale_order_hr_employee(self):
+        for record in self:
+            hr_employee_detail_invoice = ""
+            if record.hr_employee_company:
+                hr_employee_detail_invoice += "Ritzwell & Co." + "\n"
+            if record.registration_number : 
+                hr_employee_detail_invoice += "登録番号:T4290001017449" + "\n"
+            if record.hr_employee_department:
+                hr_employee_detail_invoice += "本社" + "\n"
+            if record.hr_employee_zip:
+                hr_employee_detail_invoice += "〒816-0088" + "\n"
+            if record.hr_employee_info:
+                hr_employee_detail_invoice += "福岡県 福岡市博多区" + "\n"
+            if record.hr_employee_tel:
+                hr_employee_detail_invoice += "板付5-2-9" + "\n"
+            if record.hr_employee_fax:
+                hr_employee_detail_invoice += "tel.092-584-2240" + "\n"
+            if record.hr_employee_printer:
+                hr_employee_detail_invoice += "fax.092-584-2241"
+            
+            record.sale_order_hr_employee_invoice= hr_employee_detail_invoice.rstrip('\n')
