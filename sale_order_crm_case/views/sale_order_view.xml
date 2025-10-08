@@ -4,7 +4,7 @@
         <record id="sale_view_order_crm_case_form" model="ir.ui.view">
             <field name="name">Sale Order CRM Case</field>
             <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale_order_remark.sale_view_order_shipping_type_form" />
+            <field name="inherit_id" ref="sale_order_remark.sale_view_order_remark_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='remark']" position="after">
                     <field name="case_id" attrs="{'invisible': [('case_id', '=', False)]}" />

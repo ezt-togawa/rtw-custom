@@ -22,7 +22,7 @@
     # any module necessary for this one to work correctly
     'depends': [
         'base', 'sale_management', 'stock' , 'sale',
-        'sale_sourced_by_line','product_pack','sale_product_pack','product_spec_rtw'
+        'sale_sourced_by_line','product_pack','sale_product_pack','product_spec_rtw', 'rtw_product_configurator_ctm'
         ],
 
     # always loaded

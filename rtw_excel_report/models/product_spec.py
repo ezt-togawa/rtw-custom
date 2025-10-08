@@ -57,6 +57,20 @@ class productSpec(models.AbstractModel):
             background.paste(img, (left, top))
             return background
 
+        def resize_to_square(image_bytes, size):
+            img = PILImage.open(io.BytesIO(image_bytes)).convert('RGB')
+            w, h = img.size
+            if w == 0 or h == 0:
+                return PILImage.new('RGB', (size, size), (255, 255, 255))
+            min_dimension = min(w, h)
+            left = (w - min_dimension) // 2
+            top = (h - min_dimension) // 2
+            right = left + min_dimension
+            bottom = top + min_dimension
+            img = img.crop((left, top, right, bottom))
+            img = img.resize((size, size), PILImage.LANCZOS)
+            return img
+
         image_logo_R = get_module_resource('rtw_excel_report', 'img', 'R_log.jpg')
         logo_R = resize_keep_aspect(image_logo_R, 86)
         img_io_R = BytesIO()
@@ -269,8 +283,8 @@ class productSpec(models.AbstractModel):
                                         
                         sheet.merge_range(9 + height + more_height, 15 + width, 26 + height + more_height, 15 + width, "", format_border)
                         
-                        # name product
-                        sheet.merge_range(7 + height + more_height, 2 + width, 7 + height + more_height, 22 + width, sol.name if sol.name else "", format_text_12)
+                        product_name_with_no = f"No{i} {sol.product_id.name}" if sol.product_id and sol.product_id.name else f"No{i}"
+                        sheet.merge_range(7 + height + more_height, 2 + width, 7 + height + more_height, 22 + width, product_name_with_no, format_text_12)
                         
                         # all 12 attributes
                         attr_all = ''
@@ -379,8 +393,8 @@ class productSpec(models.AbstractModel):
                                             attr_child_count += 1
                                             attr_child_ids.append(child_attr.child_attribute_id.id)
                                             image_attr_db = base64.b64decode(child_attr.image)
-                                            frame_w, frame_h = 75, 63
-                                            background = resize_contain(image_attr_db, frame_w, frame_h)
+                                            square_size = 60
+                                            background = resize_to_square(image_attr_db, square_size)
                                             img_attr = BytesIO()
                                             background.save(img_attr, 'JPEG')
                                             img_attr.seek(0)
@@ -389,8 +403,8 @@ class productSpec(models.AbstractModel):
                                 else:
                                     attr_child_count += 1
                                     image_attr_db = base64.b64decode(parent_attr.image)
-                                    frame_w, frame_h = 75, 63
-                                    background = resize_contain(image_attr_db, frame_w, frame_h)
+                                    square_size = 60
+                                    background = resize_to_square(image_attr_db, square_size)
                                     img_attr = BytesIO()
                                     background.save(img_attr, 'JPEG')
                                     img_attr.seek(0)
@@ -408,7 +422,7 @@ class productSpec(models.AbstractModel):
                                     att_width = 7
                                 # attributes picture write excel   
                                 if img_attr:          
-                                   sheet.insert_image(18 + att_height + height + more_height, 2 + att_width + width , "attribute_img", {'image_data': img_attr,'x_offset': 11, 'y_offset': 7})    
+                                   sheet.insert_image(18 + att_height + height + more_height, 2 + att_width + width , "attribute_img", {'image_data': img_attr,'x_offset': 17, 'y_offset': 5})    
                                 # attributes value write excel 
                                 sheet.write(18 + att_height + height + more_height, 5 + att_width + width, attr, format_text_center_size9)
                                             

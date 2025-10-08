@@ -212,7 +212,7 @@
                                     </t>
                                     <t t-else="">
                                         <tr
-                                            class="size12 table-border-bottom">
+                                            class="size15 table-border-bottom">
                                             <t t-set="total_subprice"
                                                 t-value="total_subprice + l.price_subtotal" />
                                             <t t-set="total_listprice"

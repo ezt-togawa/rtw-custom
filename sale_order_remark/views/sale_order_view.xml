@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="sale_view_order_shipping_type_form" model="ir.ui.view">
+        <record id="sale_view_order_remark_form" model="ir.ui.view">
             <field name="name">Sale Order Remark</field>
             <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="inherit_id" ref="sale_order_rtw.sale_view_order_rtw_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='forwarding_address']" position="after">
                     <field name="remark" />
                     <field name="special_note" />
                     <field name="billing_notes" />
                     <field name="shipping_notes" />
+                    <field name="itoshima_shiratani_shipping_notes" />
                 </xpath>
             </field>
         </record>

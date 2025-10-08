@@ -273,7 +273,7 @@ class SaleOrderLine(models.Model):
                 line.sale_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
 
 
-    def resize_image_for_pdf(self, image_base64, frame_w, frame_h):
+    def resize_image_for_pdf(self, image_base64, frame_w, frame_h, margin=5):
         if not image_base64:
             return False
         if isinstance(image_base64, bytes):
@@ -283,13 +283,24 @@ class SaleOrderLine(models.Model):
         w, h = img.size
         if w == 0 or h == 0:
             return False
-        ratio = min(frame_w / w, frame_h / h)
+
+        inner_frame_w = frame_w - (margin * 2)
+        inner_frame_h = frame_h - (margin * 2)
+
+        ratio = min(inner_frame_w / w, inner_frame_h / h)
         new_w = max(1, int(w * ratio))
         new_h = max(1, int(h * ratio))
         img = img.resize((new_w, new_h), PILImage.LANCZOS)
+
+        background = PILImage.new('RGB', (frame_w, frame_h), (255, 255, 255))
+        paste_x = (frame_w - new_w) // 2
+        paste_y = (frame_h - new_h) // 2
+        background.paste(img, (paste_x, paste_y))
+
         output = io.BytesIO()
-        img.save(output, format='PNG')
+        background.save(output, format='PNG')
         return base64.b64encode(output.getvalue()).decode('utf-8')
+
 
     def _compute_image_pdf(self):
             frame_w, frame_h = 250, 120
@@ -299,8 +310,32 @@ class SaleOrderLine(models.Model):
                 line.attach_img_pdf = self.resize_image_for_pdf(attach_file, frame_w, frame_h)
                 
 
+    def resize_image_to_square(self, image_base64, size):
+        if not image_base64:
+            return False
+        if isinstance(image_base64, bytes):
+            image_base64 = image_base64.decode('utf-8')
+
+        img_bytes = base64.b64decode(image_base64)
+        img = PILImage.open(io.BytesIO(img_bytes)).convert('RGB')
+        w, h = img.size
+        if w == 0 or h == 0:
+            return False
+        min_dimension = min(w, h)
+        left = (w - min_dimension) // 2
+        top = (h - min_dimension) // 2
+        right = left + min_dimension
+        bottom = top + min_dimension
+        img = img.crop((left, top, right, bottom))
+        img = img.resize((size, size), PILImage.LANCZOS)
+        output = io.BytesIO()
+        img.save(output, format='PNG')
+        return base64.b64encode(output.getvalue()).decode('utf-8')
+
+
+
     def _compute_child_attr_imgs_pdf(self):
-        frame_w, frame_h = 110, 120
+        square_size = 80
         for line in self:
             imgs = []
             names = []
@@ -312,7 +347,7 @@ class SaleOrderLine(models.Model):
                     break
                 if (parent_attr.id not in attr_child_ids and parent_attr.image and
                     all(attr not in attrs for attr in parent_attr.child_attribute_ids.mapped('child_attribute_id'))):
-                    imgs.append(self.resize_image_for_pdf(parent_attr.image, frame_w, frame_h))
+                    imgs.append(self.resize_image_to_square(parent_attr.image, square_size))
                     names.append(f"{parent_attr.attribute_id.name}: {parent_attr.name}")
                     count += 1
                 else:
@@ -321,7 +356,7 @@ class SaleOrderLine(models.Model):
                             break
                         if (child_attr.image and child_attr.child_attribute_id.id in attrs.ids and
                             child_attr.child_attribute_id.id not in attr_child_ids):
-                            imgs.append(self.resize_image_for_pdf(child_attr.image, frame_w, frame_h))
+                            imgs.append(self.resize_image_to_square(child_attr.image, square_size))
                             names.append(f"{child_attr.child_attribute_id.attribute_id.name}: {child_attr.child_attribute_id.name}")
                             attr_child_ids.add(child_attr.child_attribute_id.id)
                             count += 1
@@ -331,5 +366,4 @@ class SaleOrderLine(models.Model):
                 count += 1
             line.child_attr_imgs_pdf = json.dumps(imgs)
             line.child_attr_names = json.dumps(names)
-
         
