@@ -79,7 +79,14 @@
                                     <div class="col-8">
                                         <span class="mt-1 so_price border-bottom2">件名 :
                                             <t t-if="docs.invoice_origin and ',' in docs.invoice_origin">
-                                                <span t-esc="docs.invoice_date and (docs.invoice_date.strftime('%Y年%-m月') + ' 分') or ''"/>
+                                                <t t-if="docs.invoice_date">
+                                                    <t t-set="year" t-value="docs.invoice_date.year"/>
+                                                    <t t-set="month" t-value="docs.invoice_date.month"/>
+                                                    <span t-esc="str(year) + '年' + str(month) + '月 分'"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span></span>
+                                                </t>
                                             </t>
                                             <t t-else="">
                                                 <span t-esc="docs.sale_order.title"/>

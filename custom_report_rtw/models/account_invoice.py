@@ -196,22 +196,13 @@ class AccountMoveCus(models.Model):
 
     def _compute_sale_order_hr_employee(self):
         for record in self:
-            hr_employee_detail_invoice = ""
-            if record.hr_employee_company:
-                hr_employee_detail_invoice += "Ritzwell & Co." + "\n"
-            if record.registration_number : 
-                hr_employee_detail_invoice += "登録番号:T4290001017449" + "\n"
-            if record.hr_employee_department:
-                hr_employee_detail_invoice += "本社" + "\n"
-            if record.hr_employee_zip:
-                hr_employee_detail_invoice += "〒816-0088" + "\n"
-            if record.hr_employee_info:
-                hr_employee_detail_invoice += "福岡県 福岡市博多区" + "\n"
-            if record.hr_employee_tel:
-                hr_employee_detail_invoice += "板付5-2-9" + "\n"
-            if record.hr_employee_fax:
-                hr_employee_detail_invoice += "tel.092-584-2240" + "\n"
-            if record.hr_employee_printer:
-                hr_employee_detail_invoice += "fax.092-584-2241"
-            
-            record.sale_order_hr_employee_invoice= hr_employee_detail_invoice.rstrip('\n')
+            record.sale_order_hr_employee_invoice = (
+                "Ritzwell & Co.\n"
+                "登録番号:T4290001017449\n"
+                "本社\n"
+                "〒816-0088\n"
+                "福岡県 福岡市博多区\n"
+                "板付5-2-9\n"
+                "tel.092-584-2240\n"
+                "fax.092-584-2241"
+            )

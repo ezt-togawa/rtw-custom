@@ -149,13 +149,13 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(11, 0, _("消費税"), format_text) 
             sheet.write(12, 0, _("税込合計"), format_money_bgRed) 
             if so.invoice_origin and ',' in so.invoice_origin:
-                title_text = so.invoice_date.strftime('%Y年%-m月') + ' 分' if so.invoice_date else ''
+                title_text = f"{so.invoice_date.year}年{so.invoice_date.month}月 分" if so.invoice_date else ''
             else:
                 title_text = so.sale_order.title if so.sale_order.title else ''
             sheet.write(8, 1, title_text, format_text_14_border) 
-            sheet.write(10, 1, so.acc_move_amount_untaxed if so.acc_move_amount_untaxed else '', format_text_13_right) 
-            sheet.write(11, 1, so.acc_move_amount_tax if so.acc_move_amount_tax else '', format_text_12_right) 
-            sheet.write(12, 1, so.acc_move_amount_total if so.acc_move_amount_total else '', format_money_bgRed_right) 
+            sheet.write(4, 6, '西日本シティ銀行 （0190）', format_text) 
+            sheet.write(5, 6, '筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）', format_text) 
+            sheet.write(6, 6, '（普）0272585', format_text)
 
             sheet.write(2, 5, _("お支払期限"), format_text_right_2) 
             sheet.write(3, 5, _("お支払内容"), format_text_right_2) 
@@ -168,8 +168,8 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(8, 5, _("納品場所"), format_text_right_2) 
             sheet.write(9, 5, _("備考"), format_text_right_2) 
             
-            sheet.write(2, 6, '', format_text) 
-            sheet.write(3, 6, (so.sale_order.payment_details or '') if so.sale_order.payment_details else '', format_text) 
+            sheet.write(2, 6, so.acc_move_invoice_date_due if so.invoice_date_due else '', format_text) 
+            sheet.write(3, 6, (so.payment_details_invoice or '') if so.payment_details_invoice else '', format_text)  
             sheet.write(7, 6, so.sale_order.sale_order_preferred_delivery_date if so.sale_order.sale_order_preferred_delivery_date else '', format_text) 
             sheet.write(8, 6, so.sale_order.forwarding_address if so.sale_order.forwarding_address else '', format_text) 
             sheet.merge_range(9, 6, 11, 8, so.sale_order.sale_order_billing_notes[:120] if so.sale_order.sale_order_billing_notes else '', format_note) 
