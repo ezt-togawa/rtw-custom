@@ -140,12 +140,17 @@ class ProductTemplateProductPack(models.Model):
     
     def _compute_quantities_product_template(self):
         for template in self:
-            bom_lines = self.env['mrp.bom.line'].search([
+            product_ids = template.product_variant_ids.ids
+            if not product_ids:
+                template.reserved_quantity = 0.0
+            else:
+                quants = self.env['stock.quant'].search([('product_id', 'in', product_ids)])
+                template.reserved_quantity = sum(quants.mapped('reserved_quantity')) or 0.0
+            template.on_hand_quantity = template.qty_available or 0.0
+            bom_line = self.env['mrp.bom.line'].search([
                 ('product_id.product_tmpl_id', '=', template.id)
             ], limit=1)
-            template.on_hand_quantity = template.qty_available or 0.0
-            template.available_quantity = bom_lines.available_quantity if bom_lines else 0.0
-            template.reserved_quantity = template.reservation_count or 0.0
+            template.available_quantity = bom_line.available_quantity if bom_line else 0.0
 
     def product_lines_link(self):
         self.ensure_one()
