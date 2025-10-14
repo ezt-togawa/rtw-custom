@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="sale_view_order_approve_form" model="ir.ui.view">
+        <record id="sale_view_order_lead_time_form" model="ir.ui.view">
             <field name="name">Sale Order RTW</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale_order_rtw.sale_view_order_rtw_form" />
@@ -12,7 +12,7 @@
                         <field name="leadtime" nolabel="1" />
                         <button name="update_leadtime"
                             class="btn-link" icon="fa-refresh"
-                            confirm="This will update all planned date based on the current leadtime."
+                            confirm="指定のリードタイムに基づいてすべての明細情報の予定日が更新されます"
                             string="予定日へ反映" type="object"
                         />
                     </div>
