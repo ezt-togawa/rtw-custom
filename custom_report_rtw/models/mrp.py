@@ -262,12 +262,12 @@ class MrpProduction(models.Model):
             
             if len(attr_all) < 7:
                 for a in attr_all:
-                    attr_column1 += ("● " + a["display_name"] + "\n" )
+                    attr_column1 += ("・ " + a["display_name"] + "\n" )
             else:
                 for a in attr_all[:6]:
-                    attr_column1 += ("● " + a["display_name"] + "\n" )
+                    attr_column1 += ("・ " + a["display_name"] + "\n" )
                 for a in attr_all[6:12]:
-                    attr_column2 += ("● " + a["display_name"] + "\n" )
+                    attr_column2 += ("・ " + a["display_name"] + "\n" )
             
             line.mrp_product_attribute = attr_column1.rstrip("\n") 
             line.mrp_product_attribute2 = attr_column2.rstrip("\n") 

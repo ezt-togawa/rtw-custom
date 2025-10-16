@@ -101,7 +101,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <span class="title_pdf">消費税 </span>
+                                                <span class="title_pdf">消費税(10%) </span>
                                                 <div style="float:right">
                                                     <span t-field="docs.currency_id.symbol" />
                                                     <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
