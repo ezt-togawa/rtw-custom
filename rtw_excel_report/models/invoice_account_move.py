@@ -146,14 +146,17 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(6, 0, _("下記の通り、ご請求申し上げます。"), format_text) 
             sheet.write(8, 0, _("件名 : "), format_text_14_border) 
             sheet.write(10, 0, _("税抜合計"), format_text) 
-            sheet.write(11, 0, _("消費税"), format_text) 
+            sheet.write(11, 0, _("消費税(10%)"), format_text)
             sheet.write(12, 0, _("税込合計"), format_money_bgRed) 
             if so.invoice_origin and ',' in so.invoice_origin:
                 title_text = f"{so.invoice_date.year}年{so.invoice_date.month}月 分" if so.invoice_date else ''
             else:
                 title_text = so.sale_order.title if so.sale_order.title else ''
             sheet.write(8, 1, title_text, format_text_14_border) 
-            sheet.write(4, 6, '西日本シティ銀行 （0190）', format_text) 
+            sheet.write(10, 1, so.acc_move_amount_untaxed if so.acc_move_amount_untaxed else '', format_text_13_right)
+            sheet.write(11, 1, so.acc_move_amount_tax if so.acc_move_amount_tax else '', format_text_12_right)
+            sheet.write(12, 1, so.acc_move_amount_total if so.acc_move_amount_total else '', format_money_bgRed_right)
+            sheet.write(4, 6, '西日本シティ銀行 （0190）', format_text)
             sheet.write(5, 6, '筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）', format_text) 
             sheet.write(6, 6, '（普）0272585', format_text)
 

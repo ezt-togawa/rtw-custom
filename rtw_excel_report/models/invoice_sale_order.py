@@ -147,7 +147,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(6, 0, _("下記の通り、ご請求申し上げます。"), format_text) 
             sheet.write(8, 0, _("件名 : "), format_text_14_border) 
             sheet.write(10, 0, _("税抜合計"), format_text) 
-            sheet.write(11, 0, _("消費税"), format_text) 
+            sheet.write(11, 0, _("消費税(10%)"), format_text)
             sheet.write(12, 0, _("税込合計"), format_money_bgRed) 
             sheet.write(8, 1, so.title if so.title else '', format_text_14_border) 
             sheet.write(10, 1, so.sale_order_amount_untaxed if so.sale_order_amount_untaxed else '', format_text_13_right) 
