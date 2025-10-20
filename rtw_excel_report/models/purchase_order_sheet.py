@@ -246,9 +246,12 @@ class ReportMrpExcel(models.AbstractModel):
             height = 6
             for index,mrp in enumerate(mrp_data):
                 sheet.merge_range(row, 0, row + height, 0, index+1, format_lines_10)
-                sheet.merge_range(row, 1, row + height, 1, mrp.mrp_product_name_excel, format_lines_9_left)
                 
-                sheet.merge_range(row, 2, row + height, 4, mrp.mrp_product_attribute, format_lines_10_left)
+                if mrp.mrp_product_attribute:
+                    sheet.merge_range(row, 1, row + height, 1, mrp.mrp_product_name_excel, format_lines_9_left)
+                    sheet.merge_range(row, 2, row + height, 4, mrp.mrp_product_attribute, format_lines_10_left)
+                else:
+                    sheet.merge_range(row, 1, row + height, 4, mrp.mrp_product_name_excel, format_lines_9_left)
                 sheet.merge_range(row, 5, row + height, 7, mrp.mrp_product_attribute2, format_lines_10_left )
                 
                 sheet.merge_range(row, 8, row + height, 8, mrp.mrp_product_product_qty, format_lines_13_)
@@ -391,9 +394,11 @@ class ReportMrpExcel(models.AbstractModel):
                 row = 18
                 height = 6
                 sheet.merge_range(row, 0, row + height, 0, 1, format_lines_10)
-                sheet.merge_range(row, 1, row + height, 1, mrp.mrp_product_name_excel, format_lines_9_left)
-
-                sheet.merge_range(row, 2, row + height, 4, mrp.mrp_product_attribute, format_lines_10_left)
+                if mrp.mrp_product_attribute:
+                    sheet.merge_range(row, 1, row + height, 1, mrp.mrp_product_name_excel, format_lines_9_left)
+                    sheet.merge_range(row, 2, row + height, 4, mrp.mrp_product_attribute, format_lines_10_left)
+                else:
+                    sheet.merge_range(row, 1, row + height, 4, mrp.mrp_product_name_excel, format_lines_9_left)
                 sheet.merge_range(row, 5, row + height, 7, mrp.mrp_product_attribute2, format_lines_10_left )
 
 

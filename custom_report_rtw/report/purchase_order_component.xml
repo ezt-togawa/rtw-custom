@@ -114,8 +114,14 @@
                   <div class="row py-2">
                     <div class="col-6 size13">
                       <div> 送り先: <t class="size14">
-                          <t t-if="real_po.picking_type_id.warehouse_id.name">
-                            <span t-field="real_po.picking_type_id.warehouse_id.name" />
+                          <t t-if="real_po.picking_type_id and real_po.picking_type_id.name == 'Dropship'">
+                              <span t-esc="real_po.dest_address_id.display_name or ''"/>
+                          </t>
+                          <t t-elif="real_po.picking_type_id">
+                              <span t-esc="real_po.picking_type_id.display_name or ''"/>
+                          </t>
+                          <t t-else="">
+                              <span></span>
                           </t>
                         </t>
                       </div>
@@ -123,11 +129,15 @@
                         <div> 住所: <span t-esc="real_po.purchase_order_address" /></div>
                       </div>
                       <div> TEL: <t class="size14">
-                          <t
-                            t-if="real_po.picking_type_id.warehouse_id.partner_id.phone">
-                            <span t-field="real_po.picking_type_id.warehouse_id.partner_id.phone" />
+                            <t t-if="real_po.picking_type_id">
+                              <t t-if="real_po.picking_type_id.name == 'Dropship' and real_po.dest_address_id and real_po.dest_address_id.phone">
+                                <span t-field="real_po.dest_address_id.phone"/>
+                              </t>
+                              <t t-elif="real_po.picking_type_id.warehouse_id.partner_id and real_po.picking_type_id.warehouse_id.partner_id.phone">
+                                <span t-field="real_po.picking_type_id.warehouse_id.partner_id.phone"/>
+                              </t>
+                            </t>
                           </t>
-                        </t>
                       </div>
                     </div>
                     <div class="col-6 size13">
@@ -192,9 +202,9 @@
                   <t t-set="generate_pdf_result" t-value="docs.generate_pdf()" />
                   <t t-foreach="generate_pdf_result" t-as="line" t-groupby="10" t-att-last="last">
                     <t t-set="total_listprice"
-                      t-value="total_listprice + float(line['purchase_order_sell_unit_price']) * float(line['purchase_order_line_product_uom_qty'])" />
+                      t-value="total_listprice + (float(line.get('purchase_order_sell_unit_price') or 0.0) * float(line.get('purchase_order_line_product_uom_qty') or 0.0))"/>
                     <t t-set="total_subprice"
-                      t-value="total_subprice + float(line['price_subtotal'].replace(',', ''))" />
+                          t-value="total_subprice + float(str(line['price_subtotal'] or 0.0).replace(',', ''))"/>
                     <tbody class="invoice_tbody">
                       <t
                         t-if="line['display_type'] =='line_section' or line['display_type'] =='line_note'">
@@ -203,8 +213,6 @@
                             <td class="bg-section" />
                             <td class="size11 bg-section" colspan="9">
                               <span t-esc="line['name']" />
-                                <span t-esc='o._name' />
-
                             </td>
                           </t>
                           <t t-elif="line['display_type'] =='line_note'">
@@ -281,20 +289,7 @@
                             <t t-esc="number" />
                           </td>
                           <td class="size12">
-                            <t t-if="l.product_id.product_tmpl_id.config_ok">
-                              <t t-if="l.product_id.product_tmpl_id.categ_id.name">
-                                <span t-field="l.product_id.product_tmpl_id.categ_id.name" />
-                              </t>
-                              <t t-elif="l.product_id.product_tmpl_id.product_no">
-                                <span t-field="l.product_id.product_tmpl_id.product_no" />
-                              </t>
-                              <t t-else="">
-                                <span t-field="l.name" />
-                              </t>
-                            </t>
-                            <t t-else="">
-                              <span t-field="l.name" />
-                            </t>
+                            <span t-field="l.purchase_order_prod_name" />
                             <br />
                           </td>
                           <td class="text-center">
