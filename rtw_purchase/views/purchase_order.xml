@@ -5,18 +5,63 @@
         <field name="inherit_id" ref="purchase.purchase_order_view_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <button
-                    name="action_purchase_form"
-                    string="Open"
-                    type="object"
-                    icon="fa-external-link"
-                    class="oe_stat_button"
-                />
-                <field name="sale_order_ids" />
-                <field name="sale_order_names" />
+               <field name="open_record_button" widget="html_button" optional="hide"/>
             </xpath>
-            <xpath expr="//field[@name='invoice_status']" position="before">
-                <field name="working_notes" optional="hidden" />
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="replace" />
+            <xpath expr="//field[@name='open_record_button']" position="after">
+                <field name="origin" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="sale_order_ids" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="replace" />
+            <xpath expr="//field[@name='sale_order_ids']" position="after">
+                <field name="partner_id" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="replace" />
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="user_id" optional="show" widget="many2one_avatar_user" />
+            </xpath>
+            <xpath expr="//field[@name='invoice_status']" position="replace" />
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="invoice_status" optional="show"  widget="badge" decoration-success="invoice_status == 'invoiced'" decoration-info="invoice_status == 'to invoice'" />
+            </xpath>
+            <xpath expr="//field[@name='date_approve']" position="replace" />
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="date_approve" optional="hide" widget="date" invisible="context.get('quotation_only', False)" />
+            </xpath>
+            <xpath expr="//field[@name='partner_ref']" position="replace" />
+            <xpath expr="//field[@name='date_approve']" position="after">
+                <field name="partner_ref" optional="hide" />
+            </xpath>
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="sale_order_names" optional="hide" />
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="replace" />
+            <xpath expr="//field[@name='sale_order_names']" position="after">
+                <field name="company_id" optional="hide" groups="base.group_multi_company" options="{'no_create': True}" />
+            </xpath>
+            <xpath expr="//field[@name='date_planned']" position="replace" />
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="date_planned" optional="hide" invisible="context.get('quotation_only', False)" />
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="replace" />
+            <xpath expr="//field[@name='date_planned']" position="after">
+                <field name="activity_ids" optional="hide" widget="list_activity" string="次の活動" />
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="replace" />
+            <xpath expr="//field[@name='activity_ids']" position="after">
+                <field name="amount_untaxed" optional="hide" sum="Total Untaxed amount" string="税抜金額" widget="monetary" />
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="replace" />
+            <xpath expr="//field[@name='amount_untaxed']" position="after">
+                <field name="amount_total" optional="hide" sum="Total amount" widget="monetary" decoration-bf="1" string="合計" />
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="working_notes" optional="hide" />
             </xpath>
         </field>
 
@@ -50,18 +95,64 @@
         <field name="inherit_id" ref="purchase.purchase_order_kpis_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <button
-                    name="action_purchase_form"
-                    string="Open"
-                    type="object"
-                    icon="fa-external-link"
-                    class="oe_stat_button"
-                />
-                <field name="sale_order_ids" />
-                <field name="sale_order_names" />
+                <field name="open_record_button" widget="html_button" optional="hide"/>
+                <field name="sale_order_ids" optional="show" />
             </xpath>
-            <xpath expr="//field[@name='state']" position="before">
-                <field name="schedule_check" widget="check_schedule_activity" optional="show" />
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="replace" />
+            <xpath expr="//field[@name='open_record_button']" position="after">
+                <field name="state" optional="show" widget="badge" decoration-success="state == 'purchase' or state == 'done'"
+                        decoration-warning="state == 'to approve'" decoration-info="state == 'draft' or state == 'sent'" />
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="replace" />
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="origin" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="replace" />
+            <xpath expr="//field[@name='sale_order_ids']" position="after">
+                <field name="partner_id" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="replace" />
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="user_id" optional="show" widget="many2one_avatar_user" />
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="replace" />
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="date_order" attrs="{'invisible': ['|', '|', ('state', '=', 'purchase'), ('state', '=', 'done'), ('state', '=', 'cancel')]}"
+                        invisible="not context.get('quotation_only', False)" widget="remaining_days" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='invoice_status']" position="replace" />
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="invoice_status" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='partner_ref']" position="replace" />
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="partner_ref" optional="hide" />
+            </xpath>
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="sale_order_names" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="replace" />
+            <xpath expr="//field[@name='sale_order_names']" position="after">
+                <field name="company_id" optional="hide" readonly="1" options="{'no_create': True}"
+                        groups="base.group_multi_company"/>
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="replace" />
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="activity_ids" optional="hide" widget="list_activity" string="次の活動" />
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="replace" />
+            <xpath expr="//field[@name='activity_ids']" position="after">
+                <field name="amount_untaxed" sum="Total Untaxed amount" string="税抜金額" widget="monetary" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="replace" />
+            <xpath expr="//field[@name='amount_untaxed']" position="after">
+                <field name="amount_total" sum="Total amount" widget="monetary" optional="hide" decoration-bf="1" string="合計"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="schedule_check" widget="check_schedule_activity" optional="hide" />
             </xpath>
             <xpath expr="//field[@name='schedule_check']" position="after">
                 <field name="working_notes" optional="hidden" />

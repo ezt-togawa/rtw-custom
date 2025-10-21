@@ -19,6 +19,19 @@ class rtw_purchase(models.Model):
     filter_so_ids = fields.Char("filter so ids")
 
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
+    open_record_button = fields.Html(
+        string="Openリンク",
+        compute="_compute_button_html",
+        sanitize=False,
+    )
+
+    def _compute_button_html(self):
+        for rec in self:
+            rec.open_record_button = f"""
+                <button name="action_purchase_form" type='button' class='btn btn-link o_open_form_btn oe_stat_button' data-id='{rec.id}' title='Open'>
+                    <i class='fa fa-external-link'></i>Open
+                </button>
+            """
 
     @api.depends('date_order')
     def _compute_days_remaining(self):
