@@ -45,31 +45,56 @@ class productSpec(models.AbstractModel):
             return img
 
         def resize_contain(image_bytes, frame_w, frame_h):
-            img = PILImage.open(io.BytesIO(image_bytes)).convert('RGB')
+            img = PILImage.open(io.BytesIO(image_bytes))
+            if img.mode in ('RGBA', 'LA'):
+                background_mode = 'RGBA'
+                background_color = (255, 255, 255, 0)
+            else:
+                img = img.convert('RGB')
+                background_mode = 'RGB'
+                background_color = (255, 255, 255)
+
             w, h = img.size
             ratio = min(frame_w / w, frame_h / h)
             new_w = int(w * ratio)
             new_h = int(h * ratio)
             img = img.resize((new_w, new_h), PILImage.LANCZOS)
-            background = PILImage.new('RGB', (frame_w, frame_h), (255, 255, 255))
+
+            background = PILImage.new(background_mode, (frame_w, frame_h), background_color)
             left = (frame_w - new_w) // 2
             top = (frame_h - new_h) // 2
-            background.paste(img, (left, top))
+
+            background.paste(img, (left, top), img if img.mode in ('RGBA', 'LA') else None)
             return background
 
+
         def resize_to_square(image_bytes, size):
-            img = PILImage.open(io.BytesIO(image_bytes)).convert('RGB')
-            w, h = img.size
-            if w == 0 or h == 0:
-                return PILImage.new('RGB', (size, size), (255, 255, 255))
-            min_dimension = min(w, h)
-            left = (w - min_dimension) // 2
-            top = (h - min_dimension) // 2
-            right = left + min_dimension
-            bottom = top + min_dimension
-            img = img.crop((left, top, right, bottom))
-            img = img.resize((size, size), PILImage.LANCZOS)
-            return img
+                img = PILImage.open(io.BytesIO(image_bytes))
+                if img.mode in ('RGBA', 'LA'):
+                    background = PILImage.new('RGB', img.size, (255, 255, 255))
+                    if img.mode == 'RGBA':
+                        background.paste(img, mask=img.split()[-1])
+                    else:
+                        background.paste(img)
+                    img = background
+                elif img.mode != 'RGB':
+                    img = img.convert('RGB')
+
+                w, h = img.size
+                if w == 0 or h == 0:
+                    return PILImage.new('RGB', (size, size), (255, 255, 255))
+
+                min_dimension = min(w, h)
+                left = (w - min_dimension) // 2
+                top = (h - min_dimension) // 2
+                right = left + min_dimension
+                bottom = top + min_dimension
+                img = img.crop((left, top, right, bottom))
+                img = img.resize((size, size), PILImage.LANCZOS)
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
+                    
+                return img
 
         image_logo_R = get_module_resource('rtw_excel_report', 'img', 'R_log.jpg')
         logo_R = resize_keep_aspect(image_logo_R, 86)
@@ -282,8 +307,14 @@ class productSpec(models.AbstractModel):
                         sheet.merge_range(23 + height + more_height, 8 + width, 26 + height + more_height, 8 + width, "", format_border)
                                         
                         sheet.merge_range(9 + height + more_height, 15 + width, 26 + height + more_height, 15 + width, "", format_border)
-                        
-                        product_name_with_no = f"No{i} {sol.product_id.name}" if sol.product_id and sol.product_id.name else f"No{i}"
+                        product_name_with_no = ""
+                        if sol.product_id and sol.product_id.product_tmpl_id:
+                            if sol.product_id.product_tmpl_id.name == '汎用商品':
+                                product_name_with_no = f"No{i} {sol.name or ''}"
+                            else:
+                                product_name_with_no = f"No{i} {sol.product_id.name or ''}"
+                        else:
+                            product_name_with_no = f"No{i}"
                         sheet.merge_range(7 + height + more_height, 2 + width, 7 + height + more_height, 22 + width, product_name_with_no, format_text_12)
                         
                         # all 12 attributes
@@ -363,6 +394,14 @@ class productSpec(models.AbstractModel):
                                 frame_w, frame_h = 175, 110
                                 background = resize_contain(image_product_db, frame_w, frame_h)
                                 big_img_1 = BytesIO()
+                                if background.mode in ('RGBA', 'LA'):
+                                    bg_white = PILImage.new('RGB', background.size, (255, 255, 255))
+                                    if 'A' in background.getbands():
+                                        bg_white.paste(background, mask=background.split()[-1])
+                                    else:
+                                        bg_white.paste(background)
+                                    background = bg_white
+
                                 background.save(big_img_1, 'JPEG')
                                 big_img_1.seek(0)
 

@@ -247,29 +247,42 @@
                       <td class="text-center size16" style="padding:20px 0px 0px 0px;">
                         <span t-esc="index" />
                       </td>
-                      <td class="size16" style="padding:5px 0px 0px 1px; text-align:left;">
-                        <div class="five-lines">
-                          <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
+                      <t t-if="line.mrp_product_attribute">
+                        <td class="size16" style="padding:5px 0px 0px 1px; text-align:left;">
+                          <div class="five-lines">
+                            <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
                           <br/>
-                          <t t-if="line.mrp_production_order_line">
+                            <t t-if="line.mrp_production_order_line">
                             <span
                               t-field="line.mrp_production_order_line.product_size" />
-                          </t>
-                        </div>
-                      </td>
+                            </t>
+                          </div>
+                        </td>
                       <td class="size16" style="padding:5px 0px; text-align:left;">
                         <div class="five-lines" style="height: 96px;">
-                          <t t-if="line.mrp_product_attribute">
+                            <t t-if="line.mrp_product_attribute">
                             <t t-set="attr_arr"
                               t-value="line.mrp_product_attribute.split('\n')" />
-                            <t t-foreach="attr_arr" t-as="att">
-                              <div>
-                                <span t-esc="att.strip()" />
-                              </div>
+                              <t t-foreach="attr_arr" t-as="att">
+                                <div>
+                                  <span t-esc="att.strip()" />
+                                </div>
+                              </t>
                             </t>
-                          </t>
-                        </div>
-                      </td>
+                          </div>
+                        </td>
+                    </t>
+                    <t t-else="">
+                        <td class="size16" colspan="2">
+                          <div style="white-space: nowrap; overflow: hidden;">
+                            <span t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
+                            <span t-if="line.mrp_product_no" style="margin-left: 10px;" t-field="line.mrp_product_no" />
+                            <t t-if="line.mrp_production_order_line">
+                              <span style="margin-left: 10px;" t-field="line.mrp_production_order_line.product_size" />
+                            </t>
+                          </div>
+                        </td>
+                    </t>
                       <td class="size16" style="padding:5px 0px; text-align:left;">
                         <div class="five-lines" style="height: 96px;">
                           <t t-if="line.mrp_product_attribute2">

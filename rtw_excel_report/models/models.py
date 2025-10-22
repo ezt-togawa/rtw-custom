@@ -1215,8 +1215,21 @@ class SaleOrderLineExcelReport(models.Model):
             attributes = line.product_id.product_template_attribute_value_ids  #attr default
             attributes_cfg = line.config_session_id.custom_value_ids           #attr custom 
             
-            attr_filter = [{"attribute_id": attr.attribute_id.id, "display_name": attr.display_name} for attr in attributes]
-            attr_cfg_filter = [{"attribute_id": attr.attribute_id.id, "display_name": attr.display_name} for attr in attributes_cfg]
+            def get_xml_id(record):
+                xml_ids = self.env['ir.model.data'].search([
+                    ('model', '=', record._name),
+                    ('res_id', '=', record.id)
+                ])
+                xml_import = xml_ids.filtered(lambda x: x.module == "__import__")
+                if xml_import:
+                    return f"{xml_import.module}.{xml_import.name}"
+                elif xml_ids:
+                    return f"{xml_ids[0].module}.{xml_ids[0].name}"
+                return ""
+
+            attr_filter = [{"attribute_id": attr.attribute_id.id, "display_name": attr.display_name, "xml_id": get_xml_id(attr.attribute_id)} for attr in attributes]
+
+            attr_cfg_filter = [{"attribute_id": attr.attribute_id.id, "display_name": attr.display_name, "xml_id": get_xml_id(attr.attribute_id)} for attr in attributes_cfg]
             
             # sort order by id 
             sort_order_id = []
@@ -1224,8 +1237,9 @@ class SaleOrderLineExcelReport(models.Model):
                 sort_order_id.append(sort.attribute_id.id)
                 
             attrs_all = sorted(attr_filter + attr_cfg_filter, key=lambda x: sort_order_id.index(x['attribute_id']) if x['attribute_id'] in sort_order_id else float('inf'))
-            
-            line.sale_order_product_attr_all  = ",".join(f"● {a['display_name']}" for a in attrs_all)
+            attrs_filtered = [a for a in attrs_all if a['xml_id'] != "__import__.500"]
+
+            line.sale_order_product_attr_all  = ",".join(f"● {a['display_name']}" for a in attrs_filtered)
             
             if len(attrs_all) < 7:
                 for a in attrs_all:
@@ -3211,6 +3225,7 @@ class PurChaseOrderLineExcelReport(models.Model):
     purchase_order_line_size = fields.Char(compute = '_compute_purchase_order_prod_name')
 
     def _compute_purchase_order_prod_name(self):
+        
         for line in self:
             categ_name = ""
             size = ""
@@ -3218,14 +3233,17 @@ class PurChaseOrderLineExcelReport(models.Model):
             if prod:
                 prod_tmpl = prod.product_tmpl_id
                 if prod_tmpl:
-                    if prod_tmpl.config_ok:  
-                        if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
-                            categ_name = prod_tmpl.categ_id.name
-                        elif prod_tmpl.product_no:
-                            categ_name = prod_tmpl.product_no
-                        elif prod_tmpl.name: 
-                            categ_name = prod_tmpl.name   
-                    elif line.name:
+                    if prod_tmpl.config_ok:
+                        if prod_tmpl.categ_id.name != '汎用商品':
+                            if prod_tmpl.categ_id and prod_tmpl.categ_id.name:
+                                categ_name = prod_tmpl.categ_id.name
+                            elif prod_tmpl.product_no:
+                                categ_name = prod_tmpl.product_no
+                            else: 
+                                categ_name = prod_tmpl.name   
+                        else:
+                            categ_name = line.name
+                    else:
                         categ_name = line.name
                         
                     if prod_tmpl.width:

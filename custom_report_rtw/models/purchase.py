@@ -36,34 +36,22 @@ class PurchaseOrderEmployee(models.Model):
                     purchase_order_line = line.product_id
                     if purchase_order_line:
                         name_ir_data = self.env['ir.model.data'].search([('res_id', '=', purchase_order_line.id)], limit=1)
-                        if name_ir_data:
-                            data.append({
-                               "purchase_order_index": line.purchase_order_index,
-                               "ir_model_id": name_ir_data.name,
-                               "purchase_order_prod_name": line.purchase_order_prod_name,
-                               "purchase_order_line_product_uom_qty": line.purchase_order_line_product_uom_qty,
-                               "product_uom_name": line.product_uom.name,
-                               "display_type": line.display_type,
-                               "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
-                               "price_subtotal": line.price_subtotal,
-                               "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids,
-                               "name": line.name
-                                })
-                        else:
-                            data.append({
-                                "purchase_order_index": line.purchase_order_index,
-                                "ir_model_id": None,
-                                "purchase_order_prod_name": line.purchase_order_prod_name,
-                                "purchase_order_line_product_uom_qty": line.purchase_order_line_product_uom_qty,
-                                "product_uom_name": line.product_uom.name,
-                                "display_type": line.display_type,
-                                "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
-                                "price_subtotal": line.price_subtotal,
-                                "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids,
-                                "name": line.name
+                        data.append({
+                           "sequence": line.sequence or ind,
+                           "purchase_order_index": line.purchase_order_index,
+                           "ir_model_id": name_ir_data.name if name_ir_data else None,
+                           "purchase_order_prod_name": line.purchase_order_prod_name,
+                           "purchase_order_line_product_uom_qty": line.purchase_order_line_product_uom_qty,
+                           "product_uom_name": line.product_uom.name,
+                           "display_type": line.display_type,
+                           "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
+                           "price_subtotal": line.price_subtotal,
+                           "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids,
+                           "name": line.name
                             })
                     else:
                         data.append({
+                            "sequence": line.sequence or ind,
                             "purchase_order_index": line.purchase_order_index,
                             "ir_model_id": None,
                             "purchase_order_prod_name": line.purchase_order_prod_name,
@@ -72,41 +60,74 @@ class PurchaseOrderEmployee(models.Model):
                             "display_type": line.display_type,
                             "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
                             "price_subtotal": line.price_subtotal,
-                            "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids,
+                            "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids if line.product_id else [],
                             "name": line.name
                             })
-                data_with_model_id = [item for item in data if item['ir_model_id'] is not None]
-                data_without_model_id = [item for item in data if item['ir_model_id'] is None]
-                def aggregate_purchase_data(data):
-                    aggregated_data = defaultdict(lambda: {
-                    "purchase_order_index": 0,
-                    "purchase_order_prod_name": "",
-                    "purchase_order_line_product_uom_qty": 0,
-                    "product_uom_name": "",
-                    "purchase_order_sell_unit_price": "",
-                    "price_subtotal": 0
-                })
-                    for item in data:
-                        key = item["ir_model_id"]
-                        qty = float(item["purchase_order_line_product_uom_qty"].replace(",", ""))
-                        subtotal = float(str(item["price_subtotal"]).replace(",", ""))
-                        aggregated_data[key]["purchase_order_prod_name"] = item["purchase_order_prod_name"]
-                        aggregated_data[key]["product_uom_name"] = item["product_uom_name"]
-                        aggregated_data[key]["purchase_order_sell_unit_price"] = item["purchase_order_sell_unit_price"]
-                        aggregated_data[key]["product_template_attribute_value_ids"] = item["product_template_attribute_value_ids"]
-                        aggregated_data[key]["display_type"] = item["display_type"]
-                        aggregated_data[key]["name"] = item["name"]
-                        aggregated_data[key]["purchase_order_line_product_uom_qty"] += int(qty * 100)
-                        aggregated_data[key]["price_subtotal"] += subtotal
+                
+                ir_model_ids = [item['ir_model_id'] for item in data if item['ir_model_id'] is not None]
+                has_duplicates = len(ir_model_ids) != len(set(ir_model_ids))
+                
+                if has_duplicates:
+                    data_with_model_id = [item for item in data if item['ir_model_id'] is not None]
+                    data_without_model_id = [item for item in data if item['ir_model_id'] is None]
+                    
+                    def aggregate_purchase_data(data):
+                        aggregated_data = defaultdict(lambda: {
+                            "sequence": float('inf'),
+                            "purchase_order_index": 0,
+                            "purchase_order_prod_name": "",
+                            "purchase_order_line_product_uom_qty": 0,
+                            "product_uom_name": "",
+                            "purchase_order_sell_unit_price": "",
+                            "price_subtotal": 0
+                        })
+                        for item in data:
+                            key = item["ir_model_id"]
+                            qty = float(item["purchase_order_line_product_uom_qty"].replace(",", ""))
+                            subtotal = float(str(item["price_subtotal"]).replace(",", ""))
+                            
+                            if item["sequence"] < aggregated_data[key]["sequence"]:
+                                aggregated_data[key]["sequence"] = item["sequence"]
+                                
+                            aggregated_data[key]["purchase_order_prod_name"] = item["purchase_order_prod_name"]
+                            aggregated_data[key]["product_uom_name"] = item["product_uom_name"]
+                            aggregated_data[key]["purchase_order_sell_unit_price"] = item["purchase_order_sell_unit_price"]
+                            aggregated_data[key]["product_template_attribute_value_ids"] = item["product_template_attribute_value_ids"]
+                            aggregated_data[key]["display_type"] = item["display_type"]
+                            aggregated_data[key]["name"] = item["name"]
+                            aggregated_data[key]["purchase_order_line_product_uom_qty"] += int(qty * 100)
+                            aggregated_data[key]["price_subtotal"] += subtotal
+                        result = []
+                        for key, value in aggregated_data.items():
+                            value["purchase_order_line_product_uom_qty"] = str(value["purchase_order_line_product_uom_qty"] / 100)
+                            value["price_subtotal"] = f"{value['price_subtotal']:,}"
+                            value["ir_model_id"] = key
+                            result.append(value)
+                        return sorted(result, key=lambda x: x['sequence'])
+                    
+                    aggregated_items = aggregate_purchase_data(data_with_model_id)
+                    
                     result = []
-                    for key, value in aggregated_data.items():
-                        value["purchase_order_line_product_uom_qty"] = str(value["purchase_order_line_product_uom_qty"] / 100)
-                        value["price_subtotal"] = f"{value['price_subtotal']:,}"
-                        value["ir_model_id"] = key
-                        result.append(value)
+                    aggregated_dict = {item['ir_model_id']: item for item in aggregated_items}
+                    processed_ids = set()
+                    
+                    for original_item in sorted(data, key=lambda x: x['sequence']):
+                        if original_item['ir_model_id'] is None:
+                            result.append(original_item)
+                        elif original_item['ir_model_id'] not in processed_ids:
+                            result.append(aggregated_dict[original_item['ir_model_id']])
+                            processed_ids.add(original_item['ir_model_id'])
+                else:
+                    result = sorted(data, key=lambda x: x['sequence'])
+                
+                product_index = 0
+                for item in result:
+                    if item.get('display_type') not in ['line_note', 'line_section']:
+                        product_index += 1
+                        item['purchase_order_index'] = str(product_index)
+                    else:
+                        item['purchase_order_index'] = ''
                         
-                    return result
-                result = aggregate_purchase_data(data_with_model_id) + data_without_model_id
             return result
 
 
@@ -168,31 +189,41 @@ class PurchaseOrderEmployee(models.Model):
 
     purchase_order_address = fields.Char(string="purchase order address" , compute="_compute_purchase_order_address")
     def _compute_purchase_order_address(self):
-      for po in self:
-        purchase_order = self.env['purchase.order'].with_context({'lang':self.env.user.lang}).search([('id','=',po.id)])
-        address = ""
-        if purchase_order.picking_type_id.warehouse_id.partner_id.zip:
-                address += "〒" + purchase_order.picking_type_id.warehouse_id.partner_id.zip +" "
-        if self.env.user.lang == 'ja_JP':
-            if purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name:
-                address += purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name +" "
-            if purchase_order.picking_type_id.warehouse_id.partner_id.city:
-                address += purchase_order.picking_type_id.warehouse_id.partner_id.city +" "
-            if purchase_order.picking_type_id.warehouse_id.partner_id.street:
-                address += purchase_order.picking_type_id.warehouse_id.partner_id.street +" "
-            if purchase_order.picking_type_id.warehouse_id.partner_id.street2:
-                address += purchase_order.picking_type_id.warehouse_id.partner_id.street2 
-        else:
-            if purchase_order.picking_type_id.warehouse_id.partner_id.street:
-                address += purchase_order.picking_type_id.warehouse_id.partner_id.street +" "
-            if purchase_order.picking_type_id.warehouse_id.partner_id.street2:
-                address += purchase_order.picking_type_id.warehouse_id.partner_id.street2 
-            if purchase_order.picking_type_id.warehouse_id.partner_id.city:
-                address += purchase_order.picking_type_id.warehouse_id.partner_id.city +" "
-            if purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name:
-                address += purchase_order.picking_type_id.warehouse_id.partner_id.state_id.name 
-            
-        po.purchase_order_address = address
+        for po in self:
+            purchase_order = self.env['purchase.order'].with_context({'lang': self.env.user.lang}).search([('id', '=', po.id)])
+            address = ""
+
+            if purchase_order.picking_type_id and purchase_order.picking_type_id.name == "Dropship" and purchase_order.dest_address_id:
+                partner = purchase_order.dest_address_id
+            else:
+                partner = purchase_order.picking_type_id.warehouse_id.partner_id if purchase_order.picking_type_id else False
+
+            if not partner:
+                po.purchase_order_address = ""
+                continue
+
+            if partner.zip:
+                address += "〒" + partner.zip + " "
+            if self.env.user.lang == 'ja_JP':
+                if partner.state_id.name:
+                    address += partner.state_id.name + " "
+                if partner.city:
+                    address += partner.city + " "
+                if partner.street:
+                    address += partner.street + " "
+                if partner.street2:
+                    address += partner.street2
+            else:
+                if partner.street:
+                    address += partner.street + " "
+                if partner.street2:
+                    address += partner.street2 + " "
+                if partner.city:
+                    address += partner.city + " "
+                if partner.state_id.name:
+                    address += partner.state_id.name
+
+            po.purchase_order_address = address
 
 
 class PurchaseOrderLineEmployee(models.Model):

@@ -47,9 +47,19 @@
                     t-as="l">
                     <div class="product-container">
                       <div class="product-name bg-white mb-1">
-                        <span>
-                              No<t t-esc="l_index + 1"/> 
-                              <span t-field="l.product_id.name"/>
+                          <span>
+                            No<t t-esc="l_index + 1"/> 
+                            <t t-if="is_hanyo">
+                              <span t-esc="l.name or ''"/>
+                            </t>
+                            <t t-else="">
+                              <t t-if="l.product_id and l.product_id.name">
+                                <span t-field="l.product_id.name"/>
+                              </t>
+                              <t t-else="">
+                                <span/>
+                              </t>
+                            </t>
                           </span>
                       </div>
                       <div class="row" style="margin:0;">
