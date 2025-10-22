@@ -307,9 +307,10 @@ class productSpec(models.AbstractModel):
                         sheet.merge_range(23 + height + more_height, 8 + width, 26 + height + more_height, 8 + width, "", format_border)
                                         
                         sheet.merge_range(9 + height + more_height, 15 + width, 26 + height + more_height, 15 + width, "", format_border)
+                        
                         product_name_with_no = ""
                         if sol.product_id and sol.product_id.product_tmpl_id:
-                            if sol.product_id.product_tmpl_id.name == '汎用商品':
+                            if sol.product_id.product_tmpl_id.categ_id and sol.product_id.product_tmpl_id.categ_id.name == '汎用商品':
                                 product_name_with_no = f"No{i} {sol.name or ''}"
                             else:
                                 product_name_with_no = f"No{i} {sol.product_id.name or ''}"
