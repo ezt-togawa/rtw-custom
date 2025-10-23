@@ -47,19 +47,20 @@
                     t-as="l">
                     <div class="product-container">
                       <div class="product-name bg-white mb-1">
-                          <span>
+                        <span>
                             No<t t-esc="l_index + 1"/> 
-                            <t t-if="is_hanyo">
-                              <span t-esc="l.name or ''"/>
-                            </t>
-                            <t t-else="">
-                              <t t-if="l.product_id and l.product_id.name">
+                            <t t-set="is_hanyo" t-value="l.product_id and l.product_id.product_tmpl_id and l.product_id.product_tmpl_id.categ_id and l.product_id.product_tmpl_id.categ_id.name == '汎用商品'"/>
+                            <span>
+                              <t t-if="is_hanyo">
+                                <span t-esc="l.name or ''"/>
+                              </t>
+                              <t t-elif="l.product_id and l.product_id.name">
                                 <span t-field="l.product_id.name"/>
                               </t>
                               <t t-else="">
                                 <span/>
                               </t>
-                            </t>
+                            </span>
                           </span>
                       </div>
                       <div class="row" style="margin:0;">
