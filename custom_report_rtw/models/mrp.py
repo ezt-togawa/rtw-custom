@@ -187,14 +187,27 @@ class MrpProduction(models.Model):
                         product_no = ""       
             if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
                 size += line.mrp_production_order_line.product_size
-            if product_name and product_no :
-                detail += product_name +'\n'+ product_no 
-            elif product_name :
-                detail += product_name 
-            elif product_no :
-                product_no += product_no
-            if size:
-                detail += "\n" + size
+            has_attribute = bool(line.mrp_product_attribute and line.mrp_product_attribute.strip())
+            
+            if has_attribute:
+                if product_name and product_no :
+                    detail += product_name +'\n'+ product_no 
+                elif product_name :
+                    detail += product_name 
+                elif product_no :
+                    product_no += product_no
+                if size:
+                    detail += "\n" + size
+            else:
+                if product_name and product_no :
+                    detail += product_name + product_no 
+                elif product_name :
+                    detail += product_name 
+                elif product_no :
+                    product_no += product_no
+                if size:
+                    detail += size
+            
             line.mrp_product_name_excel = detail 
 
     def _compute_mrp_production_parent_id(self):

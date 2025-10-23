@@ -278,8 +278,63 @@ class SaleOrderLine(models.Model):
             return False
         if isinstance(image_base64, bytes):
             image_base64 = image_base64.decode('utf-8')
-        img_bytes = base64.b64decode(image_base64)
-        img = PILImage.open(io.BytesIO(img_bytes)).convert('RGB')
+        try:
+            img_bytes = base64.b64decode(image_base64)
+        except Exception:
+            return False
+        try:
+            img = PILImage.open(io.BytesIO(img_bytes))
+        except Exception:
+            return False
+
+        if img.mode in ("RGBA", "LA"):
+            background = PILImage.new("RGBA", img.size, (255, 255, 255, 255))
+            background.paste(img, mask=img.split()[-1])
+            img = background.convert("RGB")
+        else:
+            img = img.convert("RGB")
+        w, h = img.size
+        if w == 0 or h == 0:
+            return False
+
+        inner_frame_w = frame_w - (margin * 2)
+        inner_frame_h = frame_h - (margin * 2)
+
+        ratio = min(inner_frame_w / w, inner_frame_h / h)
+        new_w = max(1, int(w * ratio))
+        new_h = max(1, int(h * ratio))
+        img = img.resize((new_w, new_h), PILImage.LANCZOS)
+
+        background = PILImage.new('RGB', (frame_w, frame_h), (255, 255, 255))
+        paste_x = (frame_w - new_w) // 2
+        paste_y = (frame_h - new_h) // 2
+        background.paste(img, (paste_x, paste_y))
+
+        output = io.BytesIO()
+        background.save(output, format='PNG')
+        return base64.b64encode(output.getvalue()).decode('utf-8')
+
+
+    def resize_image_for_pdf(self, image_base64, frame_w, frame_h, margin=5):
+        if not image_base64:
+            return False
+        if isinstance(image_base64, bytes):
+            image_base64 = image_base64.decode('utf-8')
+        try:
+            img_bytes = base64.b64decode(image_base64)
+        except Exception:
+            return False
+        try:
+            img = PILImage.open(io.BytesIO(img_bytes))
+        except Exception:
+            return False
+
+        if img.mode in ("RGBA", "LA"):
+            background = PILImage.new("RGBA", img.size, (255, 255, 255, 255))
+            background.paste(img, mask=img.split()[-1])
+            img = background.convert("RGB")
+        else:
+            img = img.convert("RGB")
         w, h = img.size
         if w == 0 or h == 0:
             return False
@@ -303,12 +358,47 @@ class SaleOrderLine(models.Model):
 
 
     def _compute_image_pdf(self):
-            frame_w, frame_h = 250, 120
-            for line in self:
-                line.product_img_pdf = self.resize_image_for_pdf(line.product_id.image_256, frame_w, frame_h)
-                attach_file = line.item_sale_attach_ids[0].attach_file if line.item_sale_attach_ids else False
+        frame_w, frame_h = 250, 120
+        for line in self:
+            product_image = line.product_id.image_256
+            if product_image:
+                product_image = self._fix_transparent_background(product_image)
+                line.product_img_pdf = self.resize_image_for_pdf(product_image, frame_w, frame_h)
+            else:
+                line.product_img_pdf = False
+
+            attach_file = line.item_sale_attach_ids[0].attach_file if line.item_sale_attach_ids else False
+            if attach_file:
+                attach_file = self._fix_transparent_background(attach_file)
                 line.attach_img_pdf = self.resize_image_for_pdf(attach_file, frame_w, frame_h)
-                
+            else:
+                line.attach_img_pdf = False
+
+
+    def _fix_transparent_background(self, base64_image):
+        if not base64_image:
+            return base64_image
+        if isinstance(base64_image, bytes):
+            base64_image = base64_image.decode('utf-8')
+        try:
+            image_data = base64.b64decode(base64_image)
+        except Exception:
+            return base64_image
+        try:
+            image = Image.open(BytesIO(image_data))
+        except Exception:
+            return base64_image
+
+        if image.mode in ('RGBA', 'LA'):
+            background = Image.new('RGBA', image.size, (255, 255, 255, 255))
+            background.paste(image, (0, 0), image)
+            image = background.convert('RGB')
+        else:
+            image = image.convert('RGB')
+        output = BytesIO()
+        image.save(output, format='PNG')
+        return base64.b64encode(output.getvalue()).decode('utf-8')
+                    
 
     def resize_image_to_square(self, image_base64, size):
         if not image_base64:
@@ -317,7 +407,15 @@ class SaleOrderLine(models.Model):
             image_base64 = image_base64.decode('utf-8')
 
         img_bytes = base64.b64decode(image_base64)
-        img = PILImage.open(io.BytesIO(img_bytes)).convert('RGB')
+        img = PILImage.open(io.BytesIO(img_bytes))
+
+        if img.mode in ('RGBA', 'LA'):
+            background = PILImage.new("RGBA", img.size, (255, 255, 255, 255))
+            background.paste(img, mask=img.split()[-1])
+            img = background.convert('RGB')
+        else:
+            img = img.convert('RGB')
+
         w, h = img.size
         if w == 0 or h == 0:
             return False

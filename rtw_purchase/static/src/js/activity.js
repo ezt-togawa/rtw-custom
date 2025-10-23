@@ -67,5 +67,56 @@ odoo.define('rtw_purchase.check_schedule_activity', function (require) {
     });
     field_registry.add('check_schedule_activity', CheckScheduleActivity);
 
+    var HtmlButtonWidget = AbstractField.extend({
+        supportedFieldTypes: ['html'],
+        
+        init: function () {
+            this._super.apply(this, arguments);
+        },
+        
+        _render: function () {
+            this.$el.html(this.value || '');
+            this._bindButtonEvents();
+        },
+        
+        _bindButtonEvents: function () {
+            var self = this;
+            
+            this.$el.off('click.html_button');
+            
+            this.$el.on('click.html_button', 'button', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                var $button = $(event.currentTarget);
+                var methodName = $button.attr('name');
+                var recordId = $button.data('id');
+                
+                if (methodName) {
+                    var targetId = recordId ? parseInt(recordId) : (self.record ? self.record.data.id : null);
+                    
+                    if (targetId) {
+                        self._rpc({
+                            model: self.model,
+                            method: methodName,
+                            args: [[targetId]],
+                            context: self.record ? self.record.getContext() : {},
+                        }).then(function (result) {
+                            if (result && result.type) {
+                                self.do_action(result);
+                            }
+                        }).catch(function (error) {
+                            console.error("Error calling method:", error);
+                        });
+                    } else {
+                        console.error("No record ID found");
+                    }
+                }
+            });
+        },
+    });
+
+    field_registry.add('html_button', HtmlButtonWidget);
+
     return CheckScheduleActivity;
 });

@@ -368,7 +368,9 @@
                          <div>No. <t t-esc="doc.mrp_production_so_id.name" /></div>
                         </t>
                         <t t-else="">
-                            <div>No. <t t-esc="docs.name" /></div>
+                                <div>No. <t t-foreach="docs" t-as="doc">
+                            <t t-esc="doc.name"/>
+                        </t></div>
                         </t>
                         <t>
                             <t t-if="doc.lang_code == 'en_US'">
@@ -409,7 +411,10 @@
                          <div>No. <t t-esc="doc.mrp_production_so_id.name" /></div>
                         </t>
                         <t t-else="">
-                            <div>No. <t t-esc="docs.name" /></div>
+                            <div>No. <t t-foreach="docs" t-as="doc">
+                                            <t t-esc="doc.name"/>
+                                </t>
+                            </div>
                         </t>
                         <t>
                             <t t-if="doc.lang_code == 'en_US'">
