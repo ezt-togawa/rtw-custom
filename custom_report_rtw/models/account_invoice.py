@@ -200,7 +200,7 @@ class AccountMoveCus(models.Model):
                 "Ritzwell & Co.\n"
                 "登録番号:T4290001017449\n"
                 "本社\n"
-                "〒816-0888\n"
+                "〒812-0888\n"
                 "福岡県 福岡市博多区\n"
                 "板付5-2-9\n"
                 "tel.092-584-2240\n"
