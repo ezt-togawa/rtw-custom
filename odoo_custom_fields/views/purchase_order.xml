@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
     <record id="purchase_order_line_view_tree_custom" model="ir.ui.view">
         <field name="name">purchase.order.line.view.tree.custom</field>
         <field name="model">purchase.order</field>
@@ -12,5 +12,21 @@
             </xpath>
         </field>
     </record>
-   
+
+    <!-- 購買のカレンダー初期画面を月へ変更（Odooのpurchase.purchase_order_calendarのカレンダー定義を上書き、modeだけ追加することができないので全体更新）   -->
+    <record id="custom_fields_purchase_order_calendar" model="ir.ui.view">
+        <field name="name">custom.fields.purchase.order.calendar</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="/calendar" position="replace">
+                <calendar string="Calendar View" date_start="date_calendar_start" color="partner_id" hide_time="true" event_limit="5" create="false" mode="month">
+                    <field name="currency_id" invisible="1"/>
+                    <field name="partner_ref"/>
+                    <field name="amount_total" widget="monetary"/>
+                    <field name="partner_id" filters="1"/>
+                </calendar>
+            </xpath>
+        </field>
+    </record>
 </odoo>

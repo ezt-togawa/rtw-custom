@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 販売のカレンダー初期画面を月へ変更（Odooのsale.view_sale_order_calendarのカレンダー定義を上書き、modeだけ追加することができないので全体更新）   -->
+    <record id="custom_fields_sale_order_calendar" model="ir.ui.view">
+        <field name="name">custom.fields.sale.order.calendar</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sale_order_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="/calendar" position="replace">
+                <calendar string="Sales Orders" date_start="date_order" color="state" hide_time="true" event_limit="5" quick_add="False" mode="month">
+                    <field name="currency_id" invisible="1"/>
+                    <field name="partner_id" avatar_field="image_128"/>
+                    <field name="amount_total" widget="monetary"/>
+                    <field name="payment_term_id"/>
+                    <field name="state" filters="1" invisible="1"/>
+                </calendar>
+            </xpath>
+        </field>
+    </record>
+</odoo>

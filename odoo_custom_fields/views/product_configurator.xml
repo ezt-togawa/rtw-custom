@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Configurator の初期画面をListへ変更（OCAのViewを上書き）   -->
+    <record id="product_configurator.product_configurable_template_action" model="ir.actions.act_window">
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+</odoo>

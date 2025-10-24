@@ -12,4 +12,21 @@
             </field>
         </record>
     </data>
+
+    <!-- 運送のカレンダー初期画面を月へ変更（Odooのstock.stock_picking_calendarのカレンダー定義を上書き、modeだけ追加することができないので全体更新）   -->
+    <record id="custom_fields_stock_picking_calendar" model="ir.ui.view">
+        <field name="name">custom.fields.stock.picking.calendar</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="/calendar" position="replace">
+                <calendar string="Calendar View" date_start="scheduled_date" color="partner_id" event_limit="5" quick_add="False" mode="month">
+                    <field name="partner_id" filters="1"/>
+                    <field name="origin"/>
+                    <field name="picking_type_id"/>
+                    <field name="state"/>
+                </calendar>
+            </xpath>
+        </field>
+    </record>
 </odoo>
