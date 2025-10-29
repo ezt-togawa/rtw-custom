@@ -41,18 +41,18 @@
                   <div class="col-5">
                     <div class="so_price">
                       <span class="border-bottom2">
-                        株式会社リッツウェル
+                        株式会社リッツウェル 宛
                       </span>
                     </div>
-                    <t t-if="docs.lang_code == 'en_US'">
-                      <span class="so_price border-bottom2"> Mr./Mrs. <t
-                          t-esc="' '" /> <span t-field="docs.user_id.name" />
-                      </span>
-                    </t>
-                    <t t-else="">
-                      <span class="so_price border-bottom2">
-                        <span t-field="docs.user_id.name" /> 宛 </span>
-                    </t>
+<!--                    <t t-if="docs.lang_code == 'en_US'">-->
+<!--                      <span class="so_price border-bottom2"> Mr./Mrs. <t-->
+<!--                          t-esc="' '" /> <span t-field="docs.user_id.name" />-->
+<!--                      </span>-->
+<!--                    </t>-->
+<!--                    <t t-else="">-->
+<!--                      <span class="so_price border-bottom2">-->
+<!--                        <span t-field="docs.user_id.name" /> 宛 </span>-->
+<!--                    </t>-->
                     <div style="font-size:12px;padding-top:6px;padding-bottom:10px;">下記の通り注文いたします。<br />
                     </div>
                   </div>

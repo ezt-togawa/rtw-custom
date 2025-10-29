@@ -130,8 +130,8 @@ class ReportMrpExcel(models.AbstractModel):
             # y,x
             sheet.write(1, 1, _("注文書"), format_sheet_title) 
             
-            sheet.write(2, 0, _("株式 会社リッツウェル"), format_text_14)
-            sheet.write(3, 0, so.sale_order_ritzwell_staff if so.sale_order_ritzwell_staff else "", format_text_14)
+            sheet.write(2, 0, _("株式会社リッツウェル 宛"), format_text_14)
+            # sheet.write(3, 0, so.sale_order_ritzwell_staff if so.sale_order_ritzwell_staff else "", format_text_14)
             if  so.overseas:
                     sheet.insert_image(1, 2, "overseas", {
                         'image_data': img_io_overseas,

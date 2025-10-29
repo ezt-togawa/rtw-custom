@@ -11,14 +11,14 @@ class SaleOrderLineExtend(models.Model):
     @api.onchange('discount')
     def _onchange_discount(self):
         for line in self:
-            if line.discount:
+            if line.discount or line.discount == 0:
                 line.call_rate = 100 - line.discount
                 line.updating_discount = True
 
     @api.onchange('call_rate')
     def _onchange_call_rate(self):
         for line in self:
-            if line.call_rate:
+            if line.call_rate or line.call_rate == 0:
                 line.discount = 100 - line.call_rate
                 line.updating_call_rate = True
     
@@ -37,7 +37,7 @@ class SaleOrderLineExtend(models.Model):
     def write(self, vals):
         res = super(SaleOrderLineExtend, self).write(vals)
         for line in self:
-            if line.call_rate == 100 and line.discount == 0:
+            if (line.call_rate == 100 and line.discount == 0) or (line.call_rate == 0 and line.discount == 100):
                 break
             if line.call_rate and line.discount:
                 break

@@ -1133,7 +1133,7 @@ class SaleOrderLineExcelReport(models.Model):
                 discount_value = round(discount_value, 2)
                 line.sale_order_line_discount = discount_value
             else:
-                line.sale_order_line_discount = 0.0
+                line.sale_order_line_discount = 100
                 
             
     def _compute_sale_order_config_session(self):
@@ -2511,7 +2511,7 @@ class AccountMoveLineExcelReport(models.Model):
                 discount_value = round(discount_value, 2)
                 line.acc_line_discount = discount_value
             else:
-                line.acc_line_discount = 0.0
+                line.acc_line_discount = 100
     
     acc_line_price_subtotal = fields.Char(
         compute="_compute_acc_line_price_subtotal",
