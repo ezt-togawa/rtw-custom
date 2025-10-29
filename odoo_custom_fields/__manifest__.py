@@ -32,6 +32,7 @@
         'views/product_configurator.xml',
         'views/contact.xml',
         'views/mrp.xml',
+        'views/calendar_event.xml',
     ],
     # only loaded in demonstration mode
     # 'demo': [
