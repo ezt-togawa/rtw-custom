@@ -73,14 +73,14 @@ class sale_order_approve(models.Model):
             else:
                 record.is_over_price = False
 
-    @api.depends('approve_status' , 'is_over_price')
+    @api.depends('approve_status', 'is_over_price')
     def _compute_is_hide_button(self):
         for record in self:
             if not record.approve_status and record.is_over_price:
                 record.is_hide_button = True
             else:
                 record.is_hide_button = False
-    @api.depends('approve_status' , 'is_over_price')
+    @api.depends('approve_status', 'is_over_price')
     def _compute_approve_button(self):
         for record in self:
             if record.is_over_price:
@@ -94,7 +94,19 @@ class sale_order_approve(models.Model):
         for rec in self:
             rec.approve_status_check = "承認済" if rec.approve_status else "未承認"
 
-        
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        if default is None:
+            default = {}
+
+        # 承認関連のコピー
+        default['approve_status'] = False
+        default['is_over_price'] = self.is_over_price
+        default['approve_user'] = None
+        default['status'] = "draft"
+
+        return super(sale_order_approve, self).copy(default)
+
 # class sale_report_approve(models.Model):
 #     _inherit = 'ir.actions.report'
 #     def _get_rendering_context(self, docids, data):

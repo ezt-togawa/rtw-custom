@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 作業オーダーのカレンダー初期画面を月へ変更（Odooのmrp.workcenter_line_calendarのカレンダー定義を上書き、modeだけ追加することができないので全体更新）   -->
+    <record id="custom_fields_workcenter_line_calendar" model="ir.ui.view">
+        <field name="name">custom.fields.workcenter.line.calendar</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.workcenter_line_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="/calendar" position="replace">
+                <calendar date_stop="date_planned_finished" date_start="date_planned_start" string="Operations" color="workcenter_id" event_limit="5" delete="0" create="0" mode="month">
+                    <field name="workcenter_id" filters="1"/>
+                    <field name="production_id"/>
+                    <field name="state"/>
+                </calendar>
+            </xpath>
+        </field>
+    </record>
+</odoo>
