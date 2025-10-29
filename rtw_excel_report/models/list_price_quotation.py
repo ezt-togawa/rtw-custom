@@ -118,7 +118,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.insert_image(1, 10, "logo2", {'image_data': img_io_ritzwell})
             
             # y,x
-            sheet.write(1, 1, _("定価御見積書"), format_sheet_title) 
+            sheet.write(1, 1, _("御見積書"), format_sheet_title)
 
             if so.send_to_company and so.send_to_people:
                 sheet.write(2, 0,  so.send_to_company if so.send_to_company else '', format_name_company_no_border)
