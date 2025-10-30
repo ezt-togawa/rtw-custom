@@ -141,7 +141,7 @@ class ReportMrpExcel(models.AbstractModel):
             
             # y,x
             sheet.write(1, 1, _("御請求書"), format_sheet_title) 
-            sheet.merge_range(2, 0, 3, 2, so.sale_order.dear_to if so.sale_order.dear_to else '', format_name_company)
+            sheet.merge_range(2, 0, 3, 2, so.dear_to_invoice if so.dear_to_invoice else '', format_name_company)
             sheet.write(5, 0, _("平素より格別のお引き⽴てを賜り暑く御礼申し上げます。"), format_text) 
             sheet.write(6, 0, _("下記の通り、ご請求申し上げます。"), format_text) 
             sheet.write(8, 0, _("件名 : "), format_text_14_border) 
@@ -156,16 +156,14 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(10, 1, so.acc_move_amount_untaxed if so.acc_move_amount_untaxed else '', format_text_13_right)
             sheet.write(11, 1, so.acc_move_amount_tax if so.acc_move_amount_tax else '', format_text_12_right)
             sheet.write(12, 1, so.acc_move_amount_total if so.acc_move_amount_total else '', format_money_bgRed_right)
-            sheet.write(4, 6, '西日本シティ銀行 （0190）', format_text)
-            sheet.write(5, 6, '筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）', format_text) 
-            sheet.write(6, 6, '（普）0272585', format_text)
+
 
             sheet.write(2, 5, _("お支払期限"), format_text_right_2) 
             sheet.write(3, 5, _("お支払内容"), format_text_right_2) 
             sheet.write(4, 5, _("お振込先"), format_text_right_2) 
-            sheet.write(4, 6, so.sale_order.sale_order_bank_name if so.sale_order.sale_order_bank_name else '', format_text) 
-            sheet.write(5, 6, so.sale_order.sale_order_bank_branch if so.sale_order.sale_order_bank_branch else '', format_text) 
-            sheet.write(6, 6, so.sale_order.sale_order_number_account if so.sale_order.sale_order_number_account else '', format_text) 
+            sheet.write(4, 6, '西日本シティ銀行 （0190）', format_text)
+            sheet.write(5, 6, '筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）', format_text) 
+            sheet.write(6, 6, '（普）0272585', format_text)
             
             sheet.write(7, 5, _("納品日"), format_text_right_2) 
             sheet.write(8, 5, _("納品場所"), format_text_right_2) 

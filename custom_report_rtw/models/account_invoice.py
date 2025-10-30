@@ -44,6 +44,51 @@ class AccountMoveCus(models.Model):
         string="Sale order hr employee invoice",
     )
 
+    dear_to_invoice = fields.Char(string="send to people" , compute="_compute_send_to_invoice")
+    send_to_people_invoice = fields.Char(string="send to people", compute="_compute_send_to_invoice")
+    send_to_company_invoice = fields.Char(string="send to company", compute="_compute_send_to_invoice")
+    
+    def _compute_send_to_invoice(self):
+        for so in self:
+            partner_name = ''
+            company_name = ''
+            if so.partner_id:
+                res_partner= self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id', '=', so.partner_id.id)])
+                if res_partner:
+                    for line in res_partner:
+                        if so.lang_code == 'en_US':
+                            if line.company_type == 'company':
+                                company_name =  "Dear " + line.name if line.name else ''
+                            elif line.parent_id :
+                                if line.dummy and line.last_name:
+                                    partner_name =  'Mr./Mrs. ' + line.last_name
+                                else:
+                                    company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
+                                    partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                            else:
+                                partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                        else:   
+                            if line.company_type == 'company':
+                                company_name =  line.name + ' 御中' if line.name else '' 
+                            elif line.parent_id :
+                                if line.dummy and line.last_name:
+                                    partner_name =  line.last_name+ ' 様'
+                                else:
+                                    company_name =  line.parent_id.name if line.parent_id.name else ''
+                                    partner_name =  line.last_name + ' 様' if line.last_name else ''
+                            else:
+                                partner_name =  line.last_name + ' 様' if line.last_name else ''
+            send = ""   
+            if company_name and partner_name:
+                send += company_name + '\n' + partner_name
+            elif company_name:
+                send += company_name
+            elif partner_name:
+                send += partner_name
+            so.send_to_company_invoice = company_name
+            so.send_to_people_invoice = partner_name
+            so.dear_to_invoice = send
+
     def _compute_payment_details(self):
         for invoice in self:
             if invoice.partner_id.transactions.name and invoice.partner_id.payment_terms_1:

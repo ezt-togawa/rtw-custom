@@ -39,13 +39,12 @@
                             <div class="col-8">
                                 <div class="d-flex">
                                     <div class="col-8">
-                                        <div class="so_price"
-                                            style="max-height:25px">
-                                            <span t-field="docs.sale_order.send_to_company"
-                                                t-att-class="not docs.sale_order.send_to_people and 'border-bottom2'  or ''" />
+                                        <div class="so_price" style="max-height:25px">
+                                            <span t-esc="docs.send_to_company_invoice"
+                                                t-att-class="not docs.send_to_people_invoice and 'border-bottom2' or ''"/>
                                         </div>
-                                        <span t-field="docs.sale_order.send_to_people"
-                                            class="so_price border-bottom2" />
+                                        <span t-esc="docs.send_to_people_invoice"
+                                            class="so_price border-bottom2"/>
                                         <br />
                                         <div class="mt-1">平素より格別のお引き立てを賜り厚く御礼申し上げます。 <br />
                                             下記の通り、ご請求申し上げます。<br />
@@ -91,7 +90,7 @@
                                             <t t-else="">
                                                 <span t-esc="docs.sale_order.title"/>
                                             </t>
-                                        </span> 
+                                        </span>
                                     </div>
                                     <div class="col-4">
                                         <div>
