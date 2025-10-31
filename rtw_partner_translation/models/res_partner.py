@@ -36,45 +36,52 @@ class ResPartner(models.Model):
         return res
     
     def write(self, vals):
-        result = super(ResPartner, self).write(vals)
+        sync_fields = ['street', 'street2', 'zip', 'city']
         
-        # self.refresh()
-        sync_fields = ['street','street2','zip','city']
-        langs = ['ja_JP','en_US']
-        parent_address = {}
-        child_address = {}
-        for rec in self:
-            if rec.parent_id:
-                for lang in langs:
+        should_sync = any(field in vals for field in sync_fields)
+        
+        result = super().write(vals)
+        
+        if should_sync:
+            IrTranslation = self.env['ir.translation']
+            current_lang = self.env.context.get('lang', 'en_US')
+
+            for rec in self:
+                if rec.child_ids:
                     for field in sync_fields:
-                        parent_key = f'{field}_{lang.lower()}'
-                        child_key = f'{field}_{lang.lower()}'
-                        parent_address[parent_key] = self.env['ir.translation'].search([('name','=',f'res.partner,{field}'),('res_id','=',rec.parent_id.id),('lang','=',lang)])
-                        child_address[child_key] = self.env['ir.translation'].search([('name','=',f'res.partner,{field}'),('res_id','=',rec.id),('lang','=',lang)])
-                
-            for key,value in child_address.items():
-                # CREATE MISSING TRANSLATE
-                parent_value = parent_address[key]
-                if not value:
-                    address_key = key.split('_')[0]
-                    if parent_value:
-                        for lang in langs:
-                            if lang.lower() in key:
-                                check_exist_translate = self.env['ir.translation'].search([('name','=',f'res.partner,{address_key}'),('res_id','=',rec.id),('lang','=',lang)])
-                                if not check_exist_translate:
-                                    value = self.env['ir.translation'].create({
-                                        'name':f'res.partner,{address_key}',
-                                        'res_id':rec.id,
-                                        'lang':lang,
-                                        'src': rec[address_key],
-                                        'type':'model',
-                                        'value':parent_value.value,
-                                        'state':'translated'
-                                    })        
-                # REUPDATE VALUE OF TRANSLATE OF CHILD BY PARENT
-                if parent_value and value:
-                    value.value = parent_address[key].value
-                
+                        if field in vals:
+                            name_field = f'res.partner,{field}'
+                            
+                            parent_trans = IrTranslation.search([
+                                ('name', '=', name_field),
+                                ('res_id', '=', rec.id),
+                                ('lang', '=', current_lang)
+                            ], limit=1)
+                            
+                            parent_value = parent_trans.value if parent_trans else (vals[field] or '')
+                            
+                            for child in rec.child_ids:
+                                child_trans = IrTranslation.search([
+                                    ('name', '=', name_field),
+                                    ('res_id', '=', child.id),
+                                    ('lang', '=', current_lang)
+                                ], limit=1)
+                                
+                                if not child_trans:
+                                    IrTranslation.create({
+                                        'name': name_field,
+                                        'res_id': child.id,
+                                        'lang': current_lang,
+                                        'src': vals[field] or '',
+                                        'type': 'model',
+                                        'value': parent_value,
+                                        'state': 'translated'
+                                    })
+                                else:
+                                    child_trans.write({'value': parent_value})
+
+            self.env['ir.translation'].clear_caches()
+        
         return result
     
 class IrTranslation(models.Model):
