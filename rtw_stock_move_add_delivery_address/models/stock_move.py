@@ -36,7 +36,7 @@ class stock_move_delivery_wizard(models.TransientModel):
                             error_picking_names=", ".join(error_picking_names)))
                         else:
                             raise UserError('選択した配送に紐づいてる運送が存在しないため配送追加を実施することができません。')
-                if not picking.picking_type_id.sequence_code == 'OUT':
+                if picking.picking_type_id.sequence_code not in ['OUT', 'DS']:
                     raise UserError('配送オーダーしか配送先を追加できません。')
                 if picking.state in ['done' ,'cancel']:
                     raise UserError('完了かキャンセル済みの配送オーダーは配送先追加することができません。')
