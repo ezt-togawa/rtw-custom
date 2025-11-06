@@ -10,8 +10,13 @@
                 <xpath expr="//field[@name='price_unit']" position="attributes">
                     <attribute name="widget">monetary</attribute>
                 </xpath>
+                <!-- プロダクトのコンボ上での新規作成制御 -->
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}</attribute>
+                </xpath>
             </field>
         </record>
+
         <record id="view_invoice_tree_inherit" model="ir.ui.view">
             <field name="name">account.move.custom_date_tree.inherit</field>
             <field name="model">account.move</field>
