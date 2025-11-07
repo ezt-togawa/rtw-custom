@@ -40,6 +40,21 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="rtw_product_configurator_ctm.inherit_view_product_configurator_tree" />
         <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="series" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="categ_id" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="key_component" optional="hide" string="重要部材"/>
+            </xpath>
+            <field name="attribute_line_ids" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
             <xpath expr="//field[@name='attribute_line_ids']" position="after">
                 <field name="on_hand_quantity" optional="show"/>
             </xpath>

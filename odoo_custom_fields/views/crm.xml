@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="custom_fields_crm_lead_view" model="ir.ui.view">
+        <field name="name">custom.fields.crm.lead.view</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="priority" >999</field>
+        <field name="arch" type="xml">
+            <!-- 顧客のコンボ上での新規作成制御 -->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'no_quick_create': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

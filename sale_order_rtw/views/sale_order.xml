@@ -66,11 +66,11 @@
                     <field name="time_text" />
                     <field name="preferred_delivery_period" string="Preferred delivery period" />
                     <field name="warehouse_arrive_date" string="デポ１到着日"
-                        attrs="{'required': ['&amp;', ('status', '=', 'done'), ('sipping_to', 'in', ['depo', 'inst', 'inst_depo','direct'])]}" />
+                        attrs="{'required': ['&amp;', ('status', '=', 'done'), ('sipping_to', 'in', ['depo', 'inst', 'direct'])]}" />
 
                     <field name="warehouse_arrive_date_2" string="デポ２到着日"
                         attrs="{'required': ['&amp;', ('status', '=', 'done'),
-                         ('sipping_to', 'in', ['depo', 'inst', 'inst_depo']),
+                         ('sipping_to', 'in', ['depo', 'inst']),
                          ('waypoint_2', '!=', False)]}" />
 
                     <field name="estimated_shipping_date" string="Estimated shipping date"
@@ -86,7 +86,7 @@
                         string="デポ１"
                         context="{'default_type':'delivery'}"
                         domain="[('type', '=', 'delivery')]"
-                        attrs="{'invisible': [('sipping_to', '=', 'direct')], 'required': ['&amp;', ('status', '=', 'done'), ('sipping_to', 'in', ['depo','inst','inst_depo'])]}" />
+                        attrs="{'invisible': [('sipping_to', '=', 'direct')], 'required': ['&amp;', ('status', '=', 'done'), ('sipping_to', 'in', ['depo','inst'])]}" />
                     <field
                         name="waypoint_2"
                         string="デポ２"

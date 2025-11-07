@@ -11,6 +11,10 @@
                     <attribute name="widget">monetary</attribute>
                     <attribute name="options">{'currency_field': 'currency_id'}</attribute>
                 </xpath>
+                <!-- プロダクトのコンボ上での新規作成制御 -->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}</attribute>
+                </xpath>
             </field>
         </record>
     </data>

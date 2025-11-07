@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_line_list_custom" model="ir.ui.view">
+        <field name="name">purchase.order.line.list.custom</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+        <field name="priority" >999</field>
+        <field name="arch" type="xml">
+            <!-- プロダクトのコンボ上での新規作成制御 -->
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

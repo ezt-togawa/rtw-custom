@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- 作業オーダーのカレンダー初期画面を月へ変更（Odooのmrp.workcenter_line_calendarのカレンダー定義を上書き、modeだけ追加することができないので全体更新）   -->
+    <record id="custom_fields_mrp_line" model="ir.ui.view">
+        <field name="name">custom.fields.mrp.line</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="priority" >999</field>
+        <field name="arch" type="xml">
+            <!-- プロダクトのコンボ上での新規作成制御 -->
+            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 作業オーダーのカレンダー初期画面を月へ変更（Odooのmrp.workcenter_line_calendarのカレンダー定義を上書き、modeだけ追加することができないので全体更新） -->
     <record id="custom_fields_workcenter_line_calendar" model="ir.ui.view">
         <field name="name">custom.fields.workcenter.line.calendar</field>
         <field name="model">mrp.workorder</field>

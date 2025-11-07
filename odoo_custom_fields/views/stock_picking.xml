@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="view_picking_form_inherit" model="ir.ui.view">
-            <field name="name">stock.picking.form.inherit</field>
+        <record id="custom_fields_stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">custom.fields.stock.picking.form.inherit</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="priority" >999</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='batch_id']" position="attributes">
                     <attribute name="optional">hide</attribute> 
                 </xpath>
             </field>
         </record>
-    </data>
 
-    <!-- 運送のカレンダー初期画面を月へ変更（Odooのstock.stock_picking_calendarのカレンダー定義を上書き、modeだけ追加することができないので全体更新）   -->
-    <record id="custom_fields_stock_picking_calendar" model="ir.ui.view">
-        <field name="name">custom.fields.stock.picking.calendar</field>
-        <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.stock_picking_calendar"/>
-        <field name="arch" type="xml">
-            <xpath expr="//calendar" position="attributes">
-                <attribute name="mode">month</attribute>
-            </xpath>
-        </field>
-    </record>
+        <record id="custom_fields_stock_picking_line" model="ir.ui.view">
+            <field name="name">custom.fields.stock.picking.line</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="priority" >999</field>
+            <field name="arch" type="xml">
+                <!-- プロダクトのコンボ上での新規作成制御 -->
+                <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- 運送のカレンダー初期画面を月へ変更（Odooのstock.stock_picking_calendarのカレンダー定義を上書き、modeだけ追加することができないので全体更新） -->
+        <record id="custom_fields_stock_picking_calendar" model="ir.ui.view">
+            <field name="name">custom.fields.stock.picking.calendar</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.stock_picking_calendar"/>
+            <field name="arch" type="xml">
+                <xpath expr="//calendar" position="attributes">
+                    <attribute name="mode">month</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
 </odoo>

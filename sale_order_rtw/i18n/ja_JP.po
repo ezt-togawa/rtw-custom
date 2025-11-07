@@ -295,18 +295,13 @@ msgid "搬入設置まで"
 msgstr ""
 
 #. module: sale_order_rtw
-#: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__sipping_to__inst_depo
-msgid "搬入設置（デポ入）"
-msgstr ""
-
-#. module: sale_order_rtw
 #: model:ir.model.fields,field_description:sale_order_rtw.field_sale_order__overseas
 msgid "海外"
 msgstr ""
 
 #. module: sale_order_rtw
 #: model:ir.model.fields.selection,name:sale_order_rtw.selection__sale_order__sipping_to__direct
-msgid "直送"
+msgid "直送（個人邸）"
 msgstr ""
 
 #. module: sale_order_rtw

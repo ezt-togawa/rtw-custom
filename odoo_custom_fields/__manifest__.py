@@ -25,6 +25,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/purchase_order.xml',
+        'views/purchase_order_line.xml',
         'views/sale_order.xml',
         'views/sale_order_line.xml',
         'views/account_move_line.xml',
@@ -33,6 +34,7 @@
         'views/contact.xml',
         'views/mrp.xml',
         'views/calendar_event.xml',
+        'views/crm.xml',
     ],
     # only loaded in demonstration mode
     # 'demo': [

@@ -59,11 +59,10 @@ class sale_order_rtw(models.Model):
     sipping_to = fields.Selection([
         ('depo', 'デポ入れまで'),
         ('inst', '搬入設置まで'),
-        ('inst_depo', '搬入設置（デポ入）'),
-        ('direct', '直送'),
-        ('container', 'オランダコンテナ出荷'),
-        ('pick_up', '引取'),
-        ('bring_in', '持込'),
+        ('direct', '直送（個人邸）'),
+        ('container', 'オランダコンテナ出荷（海外）'),
+        ('pick_up', '引取（海外）'),
+        ('bring_in', '持込（海外）'),
     ], string="配送")
     shipping_to_text = fields.Char(string="配送ラベル")
     estimated_shipping_date = fields.Date('Estimated shipping date')
