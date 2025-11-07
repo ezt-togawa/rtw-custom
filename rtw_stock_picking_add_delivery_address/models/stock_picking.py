@@ -19,7 +19,7 @@ class stock_picking_delivery_wizard(models.TransientModel):
             if not self.location_id:
                 raise UserError('倉庫を選択してください。')
             current_stock_picking = self.env['stock.picking'].search([('id','=',self.env.context['active_id'])],limit=1)
-            if not current_stock_picking.picking_type_id.sequence_code == 'OUT':
+            if current_stock_picking.picking_type_id.sequence_code not in ['OUT', 'DS']:
                 raise UserError('配送オーダーしか配送先を追加できません。')
             if current_stock_picking.state in ['done' ,'cancel']:
                 raise UserError('完了かキャンセル済みの配送オーダーは配送先追加することができません。')
@@ -31,7 +31,15 @@ class stock_picking_delivery_wizard(models.TransientModel):
         warehouse_id = self.env['stock.warehouse'].search([('view_location_id','=',stock_location.location_id.id)])
         if not warehouse_id:
             raise UserError('選択したロケーションは倉庫に紐づいていないため指定できません')
-        picking_type_new_wh = self.env['stock.picking.type'].search([('sequence_code','=',current_stock_picking.picking_type_id.sequence_code),('warehouse_id','=',warehouse_id.id)])
+        if current_stock_picking.picking_type_id.sequence_code == 'DS':
+            picking_type_new_wh = self.env['stock.picking.type'].search([
+                ('sequence_code', '=', 'DS')
+            ], limit=1)
+        else:
+            picking_type_new_wh = self.env['stock.picking.type'].search([
+                ('sequence_code', '=', current_stock_picking.picking_type_id.sequence_code),
+                ('warehouse_id', '=', warehouse_id.id)
+            ], limit=1)
         
         new_stock_picking = current_stock_picking.copy(
             {
@@ -79,3 +87,40 @@ class stock_picking_delivery_wizard(models.TransientModel):
             current_stock_move.write({'move_dest_ids': [(6, 0, new_stock_move_ids)]})
         else:
             return
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    def action_assign(self):
+        for picking in self:
+            if getattr(picking.picking_type_id, 'sequence_code', False) == 'DS':
+                previous_picking = self.env['stock.picking'].search([
+                    ('group_id', '=', picking.group_id.id),
+                    ('location_dest_id', '=', picking.location_id.id),
+                    ('picking_type_id.sequence_code', '=', 'DS'),
+                    ('id', '!=', picking.id),
+                    ('state', 'not in', ['done', 'cancel'])
+                ], limit=1)
+                if previous_picking:
+                    return True
+        return super(StockPicking, self).action_assign()
+
+    def button_validate(self):
+
+        for picking in self:
+            if picking.picking_type_id.sequence_code == 'DS':
+                previous_picking = self.env['stock.picking'].search([
+                    ('group_id', '=', picking.group_id.id),
+                    ('location_dest_id', '=', picking.location_id.id),
+                    ('picking_type_id.sequence_code', '=', 'DS'),
+                    ('id', '!=', picking.id),
+                    ('state', 'not in', ['done', 'cancel'])
+                ], limit=1)
+                
+                if previous_picking:
+                    raise UserError(
+                        f'数量が予約または完了されていない場合、転送を検証することはできません。転送を強制するには、編集モードに切り替えて、完了した数量をエンコードします。'
+                    )
+        
+        return super(StockPicking, self).button_validate()
