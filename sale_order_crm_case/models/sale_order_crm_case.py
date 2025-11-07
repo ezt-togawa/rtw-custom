@@ -10,13 +10,11 @@ class sale_order_case(models.Model):
 
     @api.model
     def create(self, vals):
-        print('active_id' in self._context)
-        if 'active_id' in self._context:
-            if self._context['active_id'] and self._context['active_model'] == 'rtw_sf_case':
-                vals['case_id'] = self._context.get('active_id')
-                rtw_sf_case = self.env['rtw_sf_case'].search([('id' , '=' , self._context.get('active_id'))])
-                vals['case_id'] = self._context.get('active_id')
-                vals['crm_id'] = rtw_sf_case.crm_id.id
+        if self._context.get('active_id') and self._context.get('active_model') == 'rtw_sf_case':
+            vals['case_id'] = self._context.get('active_id')
+            rtw_sf_case = self.env['rtw_sf_case'].search([('id' , '=' , self._context.get('active_id'))])
+            vals['case_id'] = self._context.get('active_id')
+            vals['crm_id'] = rtw_sf_case.crm_id.id
         return super(sale_order_case, self).create(vals)
 
     def open_form_view(self):
