@@ -320,16 +320,14 @@ class SaleOrderExcelReport(models.Model):
                     sipping_to = "デポ入れまで"
                 elif record.sipping_to == "inst":
                     sipping_to = "搬入設置まで"
-                elif record.sipping_to == "inst_depo":
-                    sipping_to = "搬入設置（デポ入）"
                 elif record.sipping_to == "direct":
-                    sipping_to = "直送"
+                    sipping_to = "直送（個人邸）"
                 elif record.sipping_to == 'container':
-                    sipping_to = 'オランダコンテナ出荷'
+                    sipping_to = 'オランダコンテナ出荷（海外）'
                 elif record.sipping_to == 'pick_up':
-                    sipping_to = '引取'
+                    sipping_to = '引取（海外）'
                 elif record.sipping_to == 'bring_in':
-                    sipping_to = '持込'
+                    sipping_to = '持込（海外）'
             record.sale_order_sipping_to = sipping_to
 
     def _compute_sale_order_partner_address(self):
@@ -1694,16 +1692,14 @@ class StockPickingExcelReport(models.Model):
                     sipping_to = "デポ入れまで"
                 elif record.sale_id.sipping_to == "inst":
                     sipping_to = "搬入設置まで"
-                elif record.sale_id.sipping_to == "inst_depo":
-                    sipping_to = "搬入設置（デポ入）"
                 elif record.sale_id.sipping_to == "direct":
-                    sipping_to = "直送"
+                    sipping_to = "直送（個人邸）"
                 elif record.sale_id.sipping_to == 'container':
-                    sipping_to = 'オランダコンテナ出荷'
+                    sipping_to = 'オランダコンテナ出荷（海外）'
                 elif record.sale_id.sipping_to == 'pick_up':
-                    sipping_to = '引取'
+                    sipping_to = '引取（海外）'
                 elif record.sale_id.sipping_to == 'bring_in':
-                    sipping_to = '持込'
+                    sipping_to = '持込（海外）'
             record.stock_picking_sipping_to = sipping_to
             
 

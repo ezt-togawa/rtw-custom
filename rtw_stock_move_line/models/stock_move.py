@@ -272,32 +272,28 @@ class rtw_stock_move(models.Model):
                 sipping_to = "デポ入れまで"
             elif rec.picking_id.sipping_to == "inst":
                 sipping_to = "搬入設置まで"
-            elif rec.picking_id.sipping_to == "inst_depo":
-                sipping_to = "搬入設置（デポ入）"
             elif rec.picking_id.sipping_to == "direct":
-                sipping_to = "直送"
+                sipping_to = "直送（個人邸）"
             elif rec.picking_id.sipping_to == 'container':
-                sipping_to = 'オランダコンテナ出荷'
+                sipping_to = 'オランダコンテナ出荷（海外）'
             elif rec.picking_id.sipping_to == 'pick_up':
-                sipping_to = '引取'
+                sipping_to = '引取（海外）'
             elif rec.picking_id.sipping_to == 'bring_in':
-                sipping_to = '持込'
+                sipping_to = '持込（海外）'
             rec.shipping_to = sipping_to
         elif rec.sale_id and rec.sale_id.sipping_to:
             if rec.sale_id.sipping_to == "depo":
                 sipping_to = "デポ入れまで"
             elif rec.sale_id.sipping_to == "inst":
                 sipping_to = "搬入設置まで"
-            elif rec.sale_id.sipping_to == "inst_depo":
-                sipping_to = "搬入設置（デポ入）"
             elif rec.sale_id.sipping_to == "direct":
-                sipping_to = "直送"
+                sipping_to = "直送（個人邸）"
             elif rec.sale_id.sipping_to == 'container':
-                sipping_to = 'オランダコンテナ出荷'
+                sipping_to = 'オランダコンテナ出荷（海外）'
             elif rec.sale_id.sipping_to == 'pick_up':
-                sipping_to = '引取'
+                sipping_to = '引取（海外）'
             elif rec.sale_id.sipping_to == 'bring_in':
-                sipping_to = '持込'
+                sipping_to = '持込（海外）'
             rec.shipping_to = sipping_to
         else:
             rec.shipping_to = False

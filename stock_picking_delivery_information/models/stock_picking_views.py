@@ -63,11 +63,10 @@ class StockPicking(models.Model):
     sipping_to = fields.Selection([
         ('depo', 'デポ入れまで'),
         ('inst', '搬入設置まで'),
-        ('inst_depo', '搬入設置（デポ入）'),
-        ('direct', '直送'),
-        ('container', 'オランダコンテナ出荷'),
-        ('pick_up', '引取'),
-        ('bring_in', '持込'),
+        ('direct', '直送（個人邸）'),
+        ('container', 'オランダコンテナ出荷（海外）'),
+        ('pick_up', '引取（海外）'),
+        ('bring_in', '持込（海外）'),
     ], string="配送")
     sipping_to_value = fields.Char(compute="_compute_sipping_to_value")
     shipping_to_text = fields.Char(string="配送ラベル")
@@ -155,16 +154,14 @@ class StockPicking(models.Model):
                 record.sipping_to_value = 'デポ入れまで'
             elif record.sipping_to == 'inst':
                 record.sipping_to_value = '搬入設置まで'
-            elif record.sipping_to == 'inst_depo':
-                record.sipping_to_value = '搬入設置（デポ入)'
             elif record.sipping_to == 'direct':
-                record.sipping_to_value = '直送'
+                record.sipping_to_value = '直送（個人邸）'
             elif record.sipping_to == 'container':
-                record.sipping_to_value = 'オランダコンテナ出荷'
+                record.sipping_to_value = 'オランダコンテナ出荷（海外）'
             elif record.sipping_to == 'pick_up':
-                record.sipping_to_value = '引取'
+                record.sipping_to_value = '引取（海外）'
             elif record.sipping_to == 'bring_in':
-                record.sipping_to_value = '持込'
+                record.sipping_to_value = '持込（海外）'
             else:
                 record.sipping_to_value = ''
 
