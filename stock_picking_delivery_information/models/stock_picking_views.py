@@ -20,6 +20,12 @@ class SaleOrder(models.Model):
             else:
                 pass
 
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        for record in self:
+            record.update_stock_picking_info()
+
+        return res
     def write(self, vals):
         res = super(SaleOrder, self).write(vals)
         if {'waypoint', 'waypoint_2', 'sipping_to', 'shipping_to_text', 'forwarding_address_zip', 'forwarding_address', 'shipping_destination_text'}.intersection(vals):
