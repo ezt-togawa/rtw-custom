@@ -39,13 +39,14 @@ class rtw_stock_move(models.Model):
         compute="_get_primary_shipment_stock_move",
     )
     operational_Notes = fields.Char(string='運用メモ')
-    itoshima_shiratani_shipping_notes=fields.Text(string="糸島/白谷配送注記",compute="_compute_itoshima_shiratani_shipping_notes")
+    itoshima_shiratani_shipping_notes = fields.Text(string="糸島/白谷配送注記", compute="_compute_itoshima_shiratani_shipping_notes")
     itoshima_shiratani_shipping_notes_first_line = fields.Char(
         string="糸島/白谷配送注記", compute="_compute_first_line"
     )
-    arrival_date_itoshima = fields.Date(string="糸島出荷日" , compute= "_compute_arrival_date_itoshima",inverse="_inverse_arrival_date_itoshima") 
+    arrival_date_itoshima = fields.Date(string="糸島出荷日", compute="_compute_arrival_date_itoshima", inverse="_inverse_arrival_date_itoshima")
     arrival_date_itoshima_inherit_2 = fields.Date()
     arrival_date_itoshima_inherit = fields.Date()
+    shipping_destination_text = fields.Text(string="送り先", compute="_compute_shipping_destination_text")
 
     def _compute_arrival_date_itoshima(self):
         for move in self:
@@ -103,6 +104,12 @@ class rtw_stock_move(models.Model):
             else:
                 move.itoshima_shiratani_shipping_notes = ''
 
+    def _compute_shipping_destination_text(self):
+        for move in self:
+            if move.sale_id.shipping_destination_text:
+                move.shipping_destination_text = move.sale_id.shipping_destination_text
+            else:
+                move.shipping_destination_text = ''
     @api.model_create_multi
     def create(self, vals_list):
         mls = super().create(vals_list)

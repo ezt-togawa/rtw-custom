@@ -124,6 +124,7 @@
                     <field name="invoice_number" />
                     <field name="product_package_quantity" optional="show" />
                     <field name="operational_Notes" string="運用メモ" widget="char"/>
+                    <field name="shipping_destination_text"/>
                     <field name="itoshima_shiratani_shipping_notes"/>
                 </xpath>
                 <xpath expr="//form" position="attributes">
