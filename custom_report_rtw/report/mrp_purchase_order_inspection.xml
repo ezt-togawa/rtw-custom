@@ -250,11 +250,15 @@
                       <t t-if="line.mrp_product_attribute">
                         <td class="size16" style="padding:5px 0px 0px 1px; text-align:left;">
                           <div class="five-lines">
-                            <div t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
-                          <br/>
+                            <div>
+                              <span t-field="line.mrp_product_type" />
+                              <t t-if="line.mrp_product_name">
+                                <span t-field="line.mrp_product_name" />
+                              </t>
+                            </div>
+                              <br/>
                             <t t-if="line.mrp_production_order_line">
-                            <span
-                              t-field="line.mrp_production_order_line.product_size" />
+                              <span t-field="line.mrp_production_order_line.product_size" />
                             </t>
                           </div>
                         </td>
@@ -318,7 +322,6 @@
                             style="background-color:#7f7f7f; display:inline-block; color:#fff; font-size:13px !important; width:80px; height:100%;padding:3px 0px; padding-left:5px; border-right:1px solid #000;">
                             カスタム
                           </strong>
-                          <span t-field="line.mrp_product_type" />
                           <t t-set="sol"
                             t-value="line.order_line.filtered(lambda l: l.product_id.id == line.product_id.id) and line.order_line.filtered(lambda l: l.product_id.id == line.product_id.id)[0]" />
                           <t t-foreach="sol.config_session_id.custom_value_ids" t-as="cfg">

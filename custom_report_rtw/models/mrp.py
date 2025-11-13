@@ -112,8 +112,6 @@ class MrpProduction(models.Model):
              
     def _compute_mrp_product_config_cus_excel(self):
         for line in self:
-            mrp_prod_detail =  ''   
-            type = line.mrp_product_type
             config = ""
 
             if line.origin and line.origin.startswith('S'):
@@ -130,15 +128,8 @@ class MrpProduction(models.Model):
                                     if cfg.display_name:
                                         config += "●" + cfg.display_name
                                 config = config.rstrip('\n')
-                
-            if type and config:
-                mrp_prod_detail = type + '\n' + config
-            elif type :
-                mrp_prod_detail = type 
-            elif config:
-                mrp_prod_detail = config
-                    
-            line.mrp_product_config_cus_excel = mrp_prod_detail.strip()
+
+            line.mrp_product_config_cus_excel = config.strip()
                 
     def _compute_mrp_product_type(self):
         for line in self:
@@ -154,9 +145,9 @@ class MrpProduction(models.Model):
                         for l in sol:
                             if l.p_type:
                                 if l.p_type == "special":
-                                    p_type = "別注"
+                                    p_type = "[別注]"
                                 elif l.p_type == "custom":
-                                    p_type = "特注"
+                                    p_type = "[特注]"
             line.mrp_product_type = p_type
         
     def _compute_mrp_product_name_excel(self):   
@@ -165,7 +156,7 @@ class MrpProduction(models.Model):
             
             detail = ""
             product_name = ""
-            product_no = ""
+            type = line.mrp_product_type
             size = ""
             if prod: 
                 prod_tmpl = prod.product_tmpl_id
@@ -177,34 +168,23 @@ class MrpProduction(models.Model):
                             product_name = ""   
                     else:
                         product_name = prod_tmpl.name
-                if prod_tmpl:
-                    if prod_tmpl.config_ok :  
-                        if prod_tmpl.product_no :
-                            product_no = prod_tmpl.product_no
-                        else: 
-                            product_no = ""  
-                    else:
-                        product_no = ""       
+
             if line.mrp_production_order_line and line.mrp_production_order_line.product_size:
                 size += line.mrp_production_order_line.product_size
             has_attribute = bool(line.mrp_product_attribute and line.mrp_product_attribute.strip())
             
             if has_attribute:
-                if product_name and product_no :
-                    detail += product_name +'\n'+ product_no 
-                elif product_name :
-                    detail += product_name 
-                elif product_no :
-                    product_no += product_no
+                if product_name and type:
+                    detail += type + ' ' + product_name
+                elif product_name:
+                    detail += product_name
                 if size:
-                    detail += "\n" + size
+                    detail += "\n\n" + size
             else:
-                if product_name and product_no :
-                    detail += product_name + product_no 
-                elif product_name :
-                    detail += product_name 
-                elif product_no :
-                    product_no += product_no
+                if product_name and type:
+                    detail += type + ' ' + product_name
+                elif product_name:
+                    detail += product_name
                 if size:
                     detail += size
             
