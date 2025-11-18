@@ -3026,9 +3026,9 @@ class PurchaseOrderExcelReport(models.Model):
                                     detail.append(l.origin) 
                                 else:
                                     detail.append(l.name) 
-                    else:
-                        detail.append(o.strip())  
-                    
+                    elif 'OP' not in o:
+                        detail.append(o.strip())
+
                 detail_unique = []
                 for item in detail:
                     if item not in detail_unique:
