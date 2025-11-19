@@ -3,10 +3,10 @@
         <field name="model">purchase.order</field>
         <field name="name">発注書(部材用) </field>
         <field name="report_name">rtw_excel_report.report_purchase_order_for_part_xls</field>
-        <field name="binding_model_id" ref="purchase.model_purchase_order" />
+        <!-- <field name="binding_model_id" ref="purchase.model_purchase_order" /> -->
         <field name="binding_type">action</field>
         <field name="report_type">xlsx</field>
-        <field name="binding_view_types">list,form</field>
+        <!-- <field name="binding_view_types">list,form</field> -->
         <field name="print_report_name">'発注書(部材用) -' + object.current_print</field>
     </record>
     
@@ -14,10 +14,10 @@
         <field name="model">purchase.order.line</field>
         <field name="name">発注書(部材用/明細別)</field>
         <field name="report_name">rtw_excel_report.purchase_order_line_for_part_xls</field>
-        <field name="binding_model_id" ref="purchase.model_purchase_order_line" />
+        <!-- <field name="binding_model_id" ref="purchase.model_purchase_order_line" /> -->
         <field name="binding_type">action</field>
         <field name="report_type">xlsx</field>
-        <field name="binding_view_types">list,form</field>
+        <!-- <field name="binding_view_types">list,form</field> -->
         <field name="print_report_name">'発注書(部材用) -' + object.current_print</field>
     </record>
 </odoo>
