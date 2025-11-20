@@ -39,7 +39,7 @@ class SaleOrderLineExtend(models.Model):
         for line in self:
             if (line.call_rate == 100 and line.discount == 0) or (line.call_rate == 0 and line.discount == 100):
                 break
-            if line.call_rate and line.discount:
+            if line.call_rate and line.discount and (line.call_rate + line.discount) == 100:
                 break
             elif line.discount or line.discount == 0:
                 line.call_rate = 100 - line.discount
