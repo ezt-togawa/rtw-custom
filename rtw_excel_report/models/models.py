@@ -260,11 +260,11 @@ class SaleOrderExcelReport(models.Model):
             if payment_deadline:
                 line.sale_payment_deadline = (
                     str(payment_deadline.year)
-                    + " " + line.yearUnit + " "
+                    + line.yearUnit
                     + str(payment_deadline.month)
-                    + " " + line.monthUnit + " "
+                    + line.monthUnit
                     + str(payment_deadline.day)
-                    + " " + line.dayUnit
+                    + line.dayUnit
                 )
             else:
                 line.sale_payment_deadline = ""
