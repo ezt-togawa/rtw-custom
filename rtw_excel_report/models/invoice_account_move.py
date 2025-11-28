@@ -169,7 +169,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(8, 5, _("納品場所"), format_text_right_2) 
             sheet.write(9, 5, _("備考"), format_text_right_2) 
             
-            sheet.write(2, 6, so.acc_move_invoice_date_due if so.invoice_date_due else '', format_text) 
+            sheet.write(2, 6, '', format_text) 
             sheet.write(3, 6, (so.payment_details_invoice or '') if so.payment_details_invoice else '', format_text)  
             sheet.write(7, 6, so.sale_order.sale_order_preferred_delivery_date if so.sale_order.sale_order_preferred_delivery_date else '', format_text) 
             sheet.write(8, 6, so.sale_order.forwarding_address if so.sale_order.forwarding_address else '', format_text) 

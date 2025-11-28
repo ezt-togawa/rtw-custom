@@ -50,7 +50,7 @@ class ReportMrpExcel(models.AbstractModel):
         stamp_signature = resize_with_fixed_height(img_stamp_signature, 115, 105)
         stamp_signature_rgba = stamp_signature.convert('RGBA')
         alpha_signature = stamp_signature_rgba.split()[-1]
-        alpha_signature = alpha_signature.point(lambda p: p * 0.3)
+        alpha_signature = alpha_signature.point(lambda p: int(p * 0.3))
         stamp_signature_rgba.putalpha(alpha_signature)
         img_io_stamp_signature = BytesIO()
         stamp_signature_rgba.save(img_io_stamp_signature, 'PNG')
@@ -164,8 +164,7 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(7, 5, _("納品日"), format_text_right_2) 
             sheet.write(8, 5, _("納品場所"), format_text_right_2) 
             sheet.write(9, 5, _("備考"), format_text_right_2) 
-
-            sheet.write(2, 6, '', format_text) 
+            sheet.write(2, 6, so.sale_payment_deadline if so.sale_payment_deadline else '', format_text) 
             sheet.write(3, 6, (so.payment_details or '') if so.payment_details else '', format_text) 
 
             sheet.write(7, 6, so.sale_order_preferred_delivery_date if so.sale_order_preferred_delivery_date else '', format_text) 

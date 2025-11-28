@@ -27,6 +27,7 @@ class sale_order_rtw(models.Model):
     ],
         string="process", default='draft')
     date_deadline = fields.Date(string="Date deadline", tracking=True)
+    payment_deadline = fields.Date(string="Payment deadline", tracking=True)
     preferred_delivery_date = fields.Date(string="Preferred delivery date", tracking=True)
     time_text = fields.Char(string="Time")
     warehouse_arrive_date = fields.Date(string="デポ１到着日", tracking=True)
