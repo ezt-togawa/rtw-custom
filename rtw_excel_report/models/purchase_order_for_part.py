@@ -391,7 +391,7 @@ class ReportMrpExcel(models.AbstractModel):
             for po in purchase_order[0]:
                 po_name += po.name if po.name else ""
                 po_origin += po.origin if po.origin else ""
-                po_amount_untaxed += int(po.price_subtotal)
+                po_amount_untaxed += int(sum(line.price_subtotal for line in po.order_line))
                 if po.order_line:
                     # merge_line = 3 
                     for ind,line in enumerate(po.order_line):

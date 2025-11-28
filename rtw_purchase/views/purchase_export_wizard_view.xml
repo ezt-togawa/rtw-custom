@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_purchase_export_excel_wizard" model="ir.actions.server">
+        <field name="name">発注書(部材用) </field>
+        <field name="model_id" ref="purchase.model_purchase_order" />
+        <field name="binding_model_id" ref="purchase.model_purchase_order" />
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = env['purchase.export.excel.wizard'].export_excel(records.ids, 'purchase.order')
+        </field>
+    </record>
+
+    <record id="action_purchase_order_line_export_excel_wizard" model="ir.actions.server">
+        <field name="name">発注書(部材用/明細別)</field>
+        <field name="model_id" ref="purchase.model_purchase_order_line" />
+        <field name="binding_model_id" ref="purchase.model_purchase_order_line" />
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = env['purchase.export.excel.wizard'].export_excel(records.ids,
+            'purchase.order.line')
+        </field>
+    </record>
+</odoo>
