@@ -2,7 +2,7 @@ from odoo import models, fields, api
 import math
 class rtw_stock_move(models.Model):
     _inherit = "stock.move"
-    sai = fields.Float(compute="_get_sai", group_operator="sum", store=True)
+    sai = fields.Float(group_operator="sum", store=True)
     depo_date = fields.Date(compute="_get_sale",  store=True)
     shiratani_date = fields.Date(compute="_get_shiratani_date",store=True)
     shiratani_date_delivery = fields.Date(string="白谷到着日", compute="_get_shiratani_date_delivery", inverse="_set_shiratani_date_delivery",store=True)
@@ -118,15 +118,11 @@ class rtw_stock_move(models.Model):
                 move.product_package_quantity = round(move.product_qty * move.product_id.two_legs_scale, 2)
             else:
                 move.product_package_quantity = 0.00
-        return mls
-
-    @api.depends('product_id')
-    def _get_sai(self):
-        for rec in self:
-            if rec.product_id.sai:
-                rec.sai = rec.product_id.sai
+            if move.product_id.sai:
+                move.sai = move.product_id.sai
             else:
-                rec.sai = 0
+                move.sai = 0
+        return mls
 
     @api.depends('product_id', 'sale_line_id.depo_date','sale_line_id.depo_date','sale_line_id','sale_id','sale_id.warehouse_arrive_date')
     def _get_sale(self):
