@@ -52,8 +52,10 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <div class="title_pdf">お支払期限 :
-                                        </div>
+                                        <span class="title_pdf">お支払期限: </span>
+                                            <span
+                                                t-if="docs.sale_payment_deadline"
+                                                t-esc="docs.sale_payment_deadline" />
                                         <div>
                                             <span class="title_pdf">お支払内容 : </span>
                                             <span t-field="docs.payment_details" />

@@ -242,13 +242,32 @@ class SaleOrderExcelReport(models.Model):
         "sipping to",
         compute="_compute_sale_order_sipping_to",
     )  
-    
+    sale_payment_deadline = fields.Char(
+        "payment deadline",
+        compute="_compute_sale_payment_deadline",
+    )    
     send_to_company_delivery = fields.Char(compute="_compute_send_to_company_delivery")  
     send_to_people_delivery = fields.Char(compute="_compute_send_to_company_delivery")  
     send_to_tel_fax = fields.Char(compute="_compute_send_to_company_delivery")  
     dear_to_delivery = fields.Char(compute="_compute_send_to_company_delivery")
     sale_witness_name_phone = fields.Char(compute="_compute_sale_witness_name_phone")
     so_warehouse_arrive_date_has_day = fields.Char(compute="_compute_sale_order_format_date")
+
+    def _compute_sale_payment_deadline(self):
+        for line in self:
+            payment_deadline = line.payment_deadline
+
+            if payment_deadline:
+                line.sale_payment_deadline = (
+                    str(payment_deadline.year)
+                    + line.yearUnit
+                    + str(payment_deadline.month)
+                    + line.monthUnit
+                    + str(payment_deadline.day)
+                    + line.dayUnit
+                )
+            else:
+                line.sale_payment_deadline = ""
 
     def _compute_sale_witness_name_phone(self):
         for record in self:
@@ -3026,9 +3045,9 @@ class PurchaseOrderExcelReport(models.Model):
                                     detail.append(l.origin) 
                                 else:
                                     detail.append(l.name) 
-                    else:
-                        detail.append(o.strip())  
-                    
+                    elif 'OP' not in o:
+                        detail.append(o.strip())
+
                 detail_unique = []
                 for item in detail:
                     if item not in detail_unique:

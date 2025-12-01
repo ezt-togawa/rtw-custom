@@ -331,11 +331,11 @@ class productSpec(models.AbstractModel):
                         price = ""
                         size = ""
                         
-                        price += _('定価：') + str('{0:,.0f}'.format(sol.price_subtotal))
-                        
+                        price += _('定価：')
                         if sol.currency_id.symbol:
                             price += sol.currency_id.symbol
-                            
+                        price += str('{0:,.0f}'.format(sol.price_subtotal))
+
                         if sol.product_size:
                             size = sol.product_size
                         

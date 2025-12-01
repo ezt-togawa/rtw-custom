@@ -28,6 +28,7 @@
         'views/views.xml',
         'views/purchase_order.xml',
         'views/purchase_order_line.xml',
+        'views/purchase_export_wizard_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

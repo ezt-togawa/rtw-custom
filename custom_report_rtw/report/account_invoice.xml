@@ -53,9 +53,6 @@
                                     <div class="col-4">
                                         <div>
                                             <span class="title_pdf">お支払期限: </span>
-                                            <span
-                                                t-if="docs.invoice_date_due"
-                                                t-esc="docs.acc_move_invoice_date_due" />
                                         </div>
                                         <div>
                                             <span class="title_pdf">お支払内容:</span>

@@ -18,45 +18,42 @@ class error_export_many_pdf(models.Model):
                     raise UserError('販売オーダーが複数にまたがるため出力できません。')
                 
         if self.model == 'purchase.order':
-            allow_print = False
             if len(docids) == 1:
-                allow_print = True
-            else: 
-                list_partner_id =[]
+                pass
+            else:
+                list_partner_id = []
+                list_destination = []
+
                 for id_purchase in docids:
-                    po = self.env['purchase.order'].search([('id','=',id_purchase)])
+                    po = self.env['purchase.order'].browse(id_purchase)
                     if po:
                         list_partner_id.append(po.partner_id.id or '')
+                        destinations = po.order_line.mapped('destination_purchase_order_line') or []
+                        list_destination.extend(destinations)
 
-                if list_partner_id:
-                    for id in list_partner_id[1:]:
-                        if id == list_partner_id[0]:
-                            allow_print = True
-                        else:
-                            allow_print = False
-                            break
-            if allow_print == False:
-                raise UserError('仕入先が複数にまたがるため出力できません。')
+                if len(set(list_partner_id)) > 1:
+                    raise UserError('仕入先が複数にまたがるため出力できません。')
+
+                if len(set(list_destination)) > 1:
+                    raise UserError('送り先（納入先）が複数にまたがるため出力できません。')
 
         elif self.model == 'purchase.order.line':
-            allow_print = False
             if len(docids) == 1:
-                allow_print = True
-            else: 
-                list_partner_id =[]
-                for id_purchase in docids:
-                    po = self.env['purchase.order.line'].search([('id','=',id_purchase)])
-                    if po:
-                        list_partner_id.append(po.order_id.partner_id.id or '')
+                pass
+            else:
+                partner_ids = []
+                destination_lines = []
 
-                if list_partner_id:
-                    for id in list_partner_id[1:]:
-                        if id == list_partner_id[0]:
-                            allow_print = True
-                        else:
-                            allow_print = False
-                            break
-            if allow_print == False:
-                raise UserError('仕入先が複数にまたがるため出力できません。')
+                for line_id in docids:
+                    pol = self.env['purchase.order.line'].browse(line_id)
+                    partner_ids.append(pol.order_id.partner_id.id)
+                    destination_lines.append(pol.destination_purchase_order_line or '')
+
+                if len(set(partner_ids)) > 1:
+                    raise UserError('仕入先が複数にまたがるため出力できません。')
+
+                if len(set(destination_lines)) > 1:
+                    raise UserError('送り先（納入先）が複数にまたがるため出力できません。')
+
                 
         return res
