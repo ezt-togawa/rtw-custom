@@ -231,20 +231,20 @@
                         <span t-esc="index" />
                       </td>
                     <t t-if="line.mrp_product_attribute">
-                        <td class="size16" style="padding:5px 0px 0px 1px; text-align:left;">
-                          <div class="five-lines">
-                            <div>
-                              <span t-field="line.mrp_product_type" />
-                              <t t-if="line.mrp_product_name">
-                                <span t-field="line.mrp_product_name" />
-                              </t>
-                            </div>
-                              <br/>
-                            <t t-if="line.mrp_production_order_line">
-                              <span t-field="line.mrp_production_order_line.product_size" />
+                      <td class="size16" style="padding:5px 0px 0px 1px; text-align:left;">
+                        <div class="five-lines" style="height: 96px;">
+                          <div>
+                            <span t-field="line.mrp_product_type" />
+                            <t t-if="line.mrp_product_name">
+                              <span t-field="line.mrp_product_name" />
                             </t>
                           </div>
-                        </td>
+                            <br/>
+                          <t t-if="line.mrp_production_order_line">
+                            <span t-field="line.mrp_production_order_line.product_size" />
+                          </t>
+                        </div>
+                      </td>
                       <td class="size16" style="padding:5px 0px; text-align:left;">
                         <div class="five-lines" style="height: 96px;">
                             <t t-if="line.mrp_product_attribute">
