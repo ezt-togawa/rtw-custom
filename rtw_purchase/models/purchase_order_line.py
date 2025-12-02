@@ -24,7 +24,8 @@ class rtw_purchase(models.Model):
     )
     filter_so_ids = fields.Char("filter so ids")
     destination_purchase_order_line = fields.Text(string='送り先',compute='_compute_destination_purchase_order_line')
-    
+    purchase_state = fields.Char("purchase state", compute='_compute_purchase_state')
+
     def _compute_destination_purchase_order_line(self):
         for line in self:
             if line.order_id:
@@ -183,3 +184,22 @@ class rtw_purchase(models.Model):
 
         return res
 
+    STATE_MAPPING = {
+        'draft': '見積依頼',
+        'sent': '見積依頼送付済',
+        'to approve': '未承認',
+        'purchase': '購買オーダ',
+        'done': 'ロック済み',
+        'cancel': '取消済み',
+    }
+
+    def _compute_purchase_state(self):
+        for line in self:
+            if line.order_id:
+                purchase_order = self.env["purchase.order"].search([("id", "=", line.order_id.id)])
+                if purchase_order:
+                    line.purchase_state = self.STATE_MAPPING.get(purchase_order.state, '')
+                else:
+                    line.purchase_state = ''
+            else:
+                line.purchase_state = 'purchase_order.state'
