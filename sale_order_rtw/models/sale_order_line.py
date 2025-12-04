@@ -50,3 +50,38 @@ class sale_order_line_rtw(models.Model):
                     # 新規追加時は明細の9999を除く最大Sequenceにプラス1した値をセットする
                     line.sequence = order_lines_seq_max + 1
         return res
+
+    def write(self, vals):
+        
+        update_from_configurator = any(f in vals for f in [
+            'product_template_attribute_value_ids',
+            'product_no_variant_attribute_value_ids',
+            'product_custom_attribute_value_ids'
+        ])
+        
+        if not update_from_configurator:
+            return super(sale_order_line_rtw, self).write(vals)
+        
+        result = True
+        for line in self:
+            vals_for_line = dict(vals)
+            
+            categ_name = line.product_id.categ_id.name if line.product_id and line.product_id.categ_id else False
+            
+            if categ_name == "汎用商品":
+                protected_fields = [
+                    'name',           # 説明
+                    'call_rate',      # 掛率
+                    'discount',       # 値引
+                    'price_unit',     # 単価
+                    'sale_order_sell_unit_price',  # 販売単価
+                    'product_size',   # 製品サイズ
+                ]
+                
+                for field in protected_fields:
+                    if field in vals_for_line:
+                        vals_for_line[field] = line[field]
+            
+            result = super(sale_order_line_rtw, line).write(vals_for_line)
+        
+        return result
