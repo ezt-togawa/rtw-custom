@@ -94,6 +94,10 @@ class ReportMrpExcel(models.AbstractModel):
             note = '※商品の詳細は仕様書を参照ください'
             footer_text = f'&L&P/&N&R&"MS UI Gothic,Regular"&12 {note}'
             sheet.set_footer(footer_text, margin=0.3)
+            
+            sheet.fit_to_pages(1, 0)
+            sheet.center_horizontally()
+            sheet.center_vertically()
                      
             sheet.set_column("A:A", width=14,cell_format=font_family)  
             sheet.set_column("B:B", width=20,cell_format=font_family)  
@@ -200,16 +204,19 @@ class ReportMrpExcel(models.AbstractModel):
             if so.order_line:
                 row = 17
                 merge_line = 1
+                total_lines = 0
                 for ind,line in enumerate(so.order_line.filtered(lambda x: not x.is_pack_outside)):
                     
                     if line.display_type == 'line_note':
                         sheet.merge_range(row,0,row ,12, "=data!A" + str(ind * 1 + 1) , format_lines_note) 
                         sheet_data.write(ind,0, line.name if line.name else '', format_lines_note) 
                         row += 1
+                        total_lines += 1
                     elif line.display_type == 'line_section':
                         sheet.merge_range(row,0,row ,12, "=data!B" + str(ind * 1 + 1) , format_lines_section) 
                         sheet_data.write(ind,1,line.name if line.name else '' , format_lines_section) 
                         row += 1
+                        total_lines += 1
                     else:
                         sheet.merge_range(row,0,row + merge_line,0, line.sale_order_index if line.sale_order_index else '' , format_lines_10) 
                         sheet.merge_range(row,1,row + merge_line,3, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '' , format_lines_9_left) 
@@ -222,6 +229,18 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.merge_range(row,11,row + merge_line,11, '{:,.0f}'.format(line.sale_order_sell_unit_price) if line.sale_order_sell_unit_price else '' , format_lines_13) 
                         sheet.merge_range(row,12,row + merge_line,12, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '' , format_lines_13) 
                         row += merge_line + 1
+                        total_lines += 1
+                
+                if total_lines > 0:
+                    last_content_row = row - 1
+                    num_pages = ((last_content_row - 1) // 45) + 1
+                    last_row = num_pages * 45
+                    sheet.print_area(f'A1:M{last_row}')
+                    
+                    pagebreak_positions = [45 * page_num for page_num in range(1, num_pages)]
+                    if pagebreak_positions:
+                        sheet.set_h_pagebreaks(pagebreak_positions)
+                        
             #  Prescription
             sheet_prescription= workbook.add_worksheet("Prescription")
             border_default = workbook.add_format({'top':1,'left':1,'right':1})
