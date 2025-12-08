@@ -39,6 +39,7 @@
             <field name="model">stock.move.pallet</field>
             <field name="arch" type="xml">
                 <search>
+                    <field name="name" string="名称"/>
                     <filter string="配送待" name="pallet_status_waiting_filter" domain="[('status', '=', '配送待')]"/>
                     <filter string="配送完了" name="pallet_status_done_filter" domain="[('status', '=', '配送完了')]"/>
                 </search>
@@ -50,6 +51,7 @@
             <field name="model">stock.move.container</field>
             <field name="arch" type="xml">
                 <search>
+                    <field name="name" string="名称"/>
                     <filter string="未完了" name="container_status_waiting_filter" domain="[('status', '=', '未完了')]"/>
                     <filter string="完了" name="container_status_done_filter" domain="[('status', '=', '完了')]"/>
                 </search>
