@@ -85,6 +85,10 @@ class ReportMrpExcel(models.AbstractModel):
             footer_text = f'&L&P/&N&R&"MS UI Gothic,Regular"&12 {note}'
             sheet.set_footer(footer_text, margin=0.3)
             
+            sheet.fit_to_pages(1, 0)
+            sheet.center_horizontally()
+            sheet.center_vertically()
+            
             sheet.set_column("A:A", width=14,cell_format=font_family)  
             sheet.set_column("B:B", width=20,cell_format=font_family)  
             sheet.set_column("C:C", width=18,cell_format=font_family)  
@@ -192,6 +196,17 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.merge_range(row,9,row + merge_line,11, line.sale_order_price_unit if line.sale_order_price_unit else '' , format_lines_13) 
                         
                         sheet.merge_range(row,12,row + merge_line,12, line.sale_order_amount_no_rate if line.sale_order_amount_no_rate else '' , format_lines_13) 
+                        row += merge_line + 1
+                
+                if row > 17:
+                    last_content_row = row - 1
+                    num_pages = ((last_content_row - 1) // 45) + 1
+                    last_row = num_pages * 45
+                    sheet.print_area(f'A1:M{last_row}')
+                    
+                    pagebreak_positions = [45 * page_num for page_num in range(1, num_pages)]
+                    if pagebreak_positions:
+                        sheet.set_h_pagebreaks(pagebreak_positions) 
                         
                         row += merge_line + 1
                     
