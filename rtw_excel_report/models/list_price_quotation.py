@@ -74,10 +74,10 @@ class ReportMrpExcel(models.AbstractModel):
             
             margin_header = 0.3
             margin_footer = 0.3
-            left_margin = 0.8
-            right_margin = 0.7
-            top_margin = 0.5
-            bottom_margin = 0.5
+            left_margin = 0.43
+            right_margin = 0.43
+            top_margin = 0.75
+            bottom_margin = 0.75
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
             sheet.set_header(f'{"&"}R No．{so.name if so.name else ""}', margin=margin_header) 
             sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)
