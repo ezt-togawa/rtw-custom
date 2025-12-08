@@ -38,6 +38,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_name_company_no_border = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14})
         format_text = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':11})
         format_text_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':11.25})
+        format_text_11_right = workbook.add_format({'align': 'right', 'valign': 'bottom', 'font_name': font_name, 'font_size':11})
         format_text_12_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':12})
         format_text_13_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':13})
         format_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
@@ -170,7 +171,8 @@ class ReportMrpExcel(models.AbstractModel):
                 total_list_price = so.currency_id.symbol + str(so.sale_order_total_list_price)
                 sheet.write(15, 1, total_list_price, format_text_12_right) 
                 
-            sheet.write(15, 12, _("消費税は含まれておりません"), format_text_12_right) 
+            sheet.write(14, 12, f"No．{so.name if so.name else ''}", format_text_11_right)
+            sheet.write(15, 12, _("消費税は含まれておりません"), format_text_12_right)
             #table title
             
             sheet.write(16, 0, _("№"), format_table)
