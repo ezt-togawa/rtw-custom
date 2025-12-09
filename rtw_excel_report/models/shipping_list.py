@@ -155,10 +155,10 @@ class productSpec(models.AbstractModel):
                                     depo_date_split = str(l.depo_date).split("-")
                                     depo_date = f"{depo_date_split[1]}/{depo_date_split[2]}"
 
-                    if line.prod_package_qty:
-                        prod_package_qty = line.prod_package_qty
+                    if line.product_package_quantity is not None:
+                        prod_package_qty = line.product_package_quantity
 
-                    if line.sai:
+                    if line.sai is not None:
                         sai = line.sai
 
                     sheet.write(row_inside, 4 , prod_name, format_left)
