@@ -1012,17 +1012,6 @@ class SaleOrderLineExcelReport(models.Model):
     sale_order_sell_unit_price = fields.Monetary(
         compute="_compute_sale_order_sell_unit_price",
         string="販売単価",
-        store=True,
-        readonly=True,
-    )
-    preserve_sell_unit_price = fields.Boolean(
-        string="Preserve Sell Unit Price",
-        default=False,
-        help="Flag to prevent recomputation of sale_order_sell_unit_price"
-    )
-    preserved_price_value = fields.Monetary(
-        string="Preserved Price Value",
-        help="Temporary field to store preserved price value"
     )
     sale_order_price_subtotal = fields.Char(
         compute="_compute_sale_order_price_subtotal",
@@ -1311,27 +1300,9 @@ class SaleOrderLineExcelReport(models.Model):
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
     
-    @api.depends('price_unit', 'discount', 'preserve_sell_unit_price', 'preserved_price_value')
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
-            if line.preserve_sell_unit_price and line.preserved_price_value:
-                line.sale_order_sell_unit_price = line.preserved_price_value
-            else:
-                line.sale_order_sell_unit_price = (line.price_unit - line.price_unit * line.discount / 100)
-    
-    @api.onchange('price_unit', 'discount')
-    def _onchange_price_discount(self):
-        for line in self:
-            if line.preserve_sell_unit_price:
-                line.preserve_sell_unit_price = False
-                line.preserved_price_value = 0.0
-    
-    def write(self, vals):
-        if ('price_unit' in vals or 'discount' in vals) and not self.env.context.get('from_update_prices'):
-            vals['preserve_sell_unit_price'] = False
-            vals['preserved_price_value'] = 0.0
-        
-        return super(SaleOrderLineExcelReport, self).write(vals)
+            line.sale_order_sell_unit_price = (line.price_unit - line.price_unit * line.discount / 100 )
             
     def _compute_sale_order_price_subtotal(self):
         for line in self:
