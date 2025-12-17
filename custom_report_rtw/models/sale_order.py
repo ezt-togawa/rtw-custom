@@ -220,6 +220,88 @@ class SaleOrder(models.Model):
                             so.update(hr_defaults)
                     else:
                         so.update(hr_defaults)
+            elif so.user_id:
+                hr_employee = self.env['hr.employee'].with_context({'lang':self.lang_code}).search([('user_id','=',so.user_id.id)])
+                if hr_employee:
+                    for employee in hr_employee:
+                        if employee.address_id :
+                            res = employee.address_id
+                            if res.company_type == 'company':
+                                so.hr_employee_company =  res.name if res.name else ''
+                            else:
+                                if res.parent_id :
+                                    so.hr_employee_company   =  res.parent_id.name if res.parent_id.name else ''
+                                else:
+                                    so.hr_employee_company =  ''
+                                            
+                            if res.site:
+                                if so.lang_code == 'ja_JP':
+                                    so.hr_employee_department = (res.site)
+                                else:
+                                    so.hr_employee_department = (res.site)
+                            else:
+                                so.hr_employee_department = ''
+                                    
+                            so.hr_employee_zip = ("〒" + res.zip) if res.zip else ''
+                                    
+                            if so.lang_code == 'ja_JP':
+                                so.hr_employee_info = f"{res.state_id.name or ''}  {res.city or ''} {res.street or ''} {res.street2 or ''}"
+                                so.hr_employee_address1 = f"{res.state_id.name or ''}  {res.city or ''}"
+                                so.hr_employee_address2 = f"{res.street or ''} {res.street2 or ''}"
+                            else:
+                                so.hr_employee_info = f"{res.street or ''} {res.street2 or ''} {res.city or ''} {res.state_id.name or ''}"
+                                so.hr_employee_address1 = f"{res.street or ''} {res.street2 or ''}"
+                                so.hr_employee_address2 = f"{res.city or ''}  {res.state_id.name or ''}  "
+                                        
+                            so.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
+                            so.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
+                                    
+                            so.hr_employee_printer = employee.name  if employee.name  else ''
+                        else:
+                            so.update(hr_defaults)
+                else:
+                    so.update(hr_defaults)
+            elif so.partner_id and so.partner_id.user_id:
+                hr_employee = self.env['hr.employee'].with_context({'lang':self.lang_code}).search([('user_id','=',so.partner_id.user_id.id)])
+                if hr_employee:
+                    for employee in hr_employee:
+                        if employee.address_id :
+                            res = employee.address_id
+                            if res.company_type == 'company':
+                                so.hr_employee_company =  res.name if res.name else ''
+                            else:
+                                if res.parent_id :
+                                    so.hr_employee_company   =  res.parent_id.name if res.parent_id.name else ''
+                                else:
+                                    so.hr_employee_company =  ''
+                                            
+                            if res.site:
+                                if so.lang_code == 'ja_JP':
+                                    so.hr_employee_department = (res.site)
+                                else:
+                                    so.hr_employee_department = (res.site)
+                            else:
+                                so.hr_employee_department = ''
+                                    
+                            so.hr_employee_zip = ("〒" + res.zip) if res.zip else ''
+                                    
+                            if so.lang_code == 'ja_JP':
+                                so.hr_employee_info = f"{res.state_id.name or ''}  {res.city or ''} {res.street or ''} {res.street2 or ''}"
+                                so.hr_employee_address1 = f"{res.state_id.name or ''}  {res.city or ''}"
+                                so.hr_employee_address2 = f"{res.street or ''} {res.street2 or ''}"
+                            else:
+                                so.hr_employee_info = f"{res.street or ''} {res.street2 or ''} {res.city or ''} {res.state_id.name or ''}"
+                                so.hr_employee_address1 = f"{res.street or ''} {res.street2 or ''}"
+                                so.hr_employee_address2 = f"{res.city or ''}  {res.state_id.name or ''}  "
+                                        
+                            so.hr_employee_tel = ("tel." + res.phone) if res.phone != False else ''
+                            so.hr_employee_fax = ("fax." + res.fax) if res.fax != False else ''
+                                    
+                            so.hr_employee_printer = employee.name  if employee.name  else ''
+                        else:
+                            so.update(hr_defaults)
+                else:
+                    so.update(hr_defaults)
             else:
                 so.update(hr_defaults)
 

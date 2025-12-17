@@ -12,7 +12,8 @@
                     <!-- <field name="production_id" invisible="1" /> -->
                     <field name="mrp_production_id" optional="show" />
                     <field name="origin" optional="hide" />
-                    <field name="product_id" />
+                    <field name="product_id" optional="show" />
+                    <field name="description_picking" string="説明" optional="show" />
                     <field name="spec" widget="many2many_tags" optional="hide" />
                     <field name="custom" widget="many2many_tags" optional="hide" />
                     <field name="product_qty" string="実際の予約数量" />

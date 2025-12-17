@@ -68,38 +68,40 @@ class productSpec(models.AbstractModel):
         sheet.merge_range(5, 14, 6, 15, _("送り先"), format_table)
         sheet.merge_range(5, 16, 6, 16, _("手段"), format_table)
 
-        row_start=7
+        row_start = 7
         merge_to = 7
         
         row_inside = 7
-        for index,stock_picking in enumerate(lines):
-            confirmed_shipping_date= ""
-            order_number= ""
+        for index, stock_picking in enumerate(lines):
+            confirmed_shipping_date = ""
+            order_number = ""
             status = ""
-            company_name= ""
+            company_name = ""
             city = ""
             state = ""
 
             if stock_picking.confirmed_shipping_date:
-                confirmed_shipping_date =  stock_picking.confirmed_shipping_date.strftime("%m/%d")
+                confirmed_shipping_date = stock_picking.confirmed_shipping_date.strftime("%m/%d")
 
             if stock_picking.sales_order_name:
-                order_number= stock_picking.sales_order_name
+                order_number = stock_picking.sales_order_name
 
-            if stock_picking.state and (stock_picking.state=='done'):
+            if stock_picking.state and (stock_picking.state == 'done'):
                 status = _("済") 
             else:
                 status = _("未") 
             
-            if stock_picking.partner_id.commercial_company_name :
+            if stock_picking.partner_id.commercial_company_name:
                 company_name = stock_picking.partner_id.commercial_company_name
             else:
-                if stock_picking.partner_id.name :
+                if stock_picking.partner_id.name:
                     company_name = stock_picking.partner_id.name
-            
-            if stock_picking.partner_id.city :
+                elif stock_picking.location_dest_id:
+                    company_name = stock_picking.location_dest_id.location_id.name
+
+            if stock_picking.partner_id.city:
                 city = stock_picking.partner_id.city 
-            if stock_picking.partner_id.state_id.name :
+            if stock_picking.partner_id.state_id.name:
                 state = stock_picking.partner_id.state_id.name
 
             prod_name = ""
@@ -110,8 +112,8 @@ class productSpec(models.AbstractModel):
             depo_date = ""
             prod_package_qty = 0
             sai = 0
-            stock_moves = self.env["stock.move"].search([("picking_id", "=",stock_picking.id)])
-            if stock_moves :
+            stock_moves = self.env["stock.move"].search([("picking_id", "=", stock_picking.id)])
+            if stock_moves:
                 for line in stock_moves:
                     if line.product_id.name:
                         base_name = line.product_id.name
@@ -138,30 +140,30 @@ class productSpec(models.AbstractModel):
                         
                         attrs = "\n".join(f"{attr.attribute_id.name}:{attr.product_attribute_value_id.name}" for attr in attribute[:4])
                     
-                    if line.product_qty :
+                    if line.product_qty:
                         prod_qty = line.product_qty
 
-                    if stock_picking.note :
+                    if stock_picking.note:
                         note = stock_picking.note
 
                     if line.sale_line_id:
                         sale_lines = self.env["sale.order.line"].search([("id", "=", line.sale_line_id.id)])
                         if sale_lines:
                             for l in sale_lines:
-                                if l.shiratani_date :
+                                if l.shiratani_date:
                                     shiratani_split = str(l.shiratani_date).split("-")
                                     shiratani_date = f"{shiratani_split[1]}/{shiratani_split[2]}"
                                 if l.depo_date: 
                                     depo_date_split = str(l.depo_date).split("-")
                                     depo_date = f"{depo_date_split[1]}/{depo_date_split[2]}"
 
-                    if line.prod_package_qty:
-                        prod_package_qty = line.prod_package_qty
+                    if line.product_package_quantity is not None:
+                        prod_package_qty = line.product_package_quantity
 
-                    if line.sai:
+                    if line.sai is not None:
                         sai = line.sai
 
-                    sheet.write(row_inside, 4 , prod_name, format_left)
+                    sheet.write(row_inside, 4, prod_name, format_left)
                     sheet.merge_range(row_inside, 5, row_inside, 6, attrs, format_attr)
                     sheet.write(row_inside, 7, prod_qty, format_wrap)
                     sheet.write(row_inside, 8, prod_package_qty, format_wrap)
@@ -169,7 +171,7 @@ class productSpec(models.AbstractModel):
 
                     row_inside += 1
             else:
-                sheet.write(row_inside, 4 , prod_name, format_left)
+                sheet.write(row_inside, 4, prod_name, format_left)
                 sheet.merge_range(row_inside, 5, row_inside, 6, attrs, format_attr)
                 sheet.write(row_inside, 7, prod_qty, format_wrap)
                 sheet.write(row_inside, 8, 0, format_wrap)
@@ -177,7 +179,7 @@ class productSpec(models.AbstractModel):
 
                 row_inside += 1
                     
-            merge_to  = row_inside - 1
+            merge_to = row_inside - 1
 
             if row_start == merge_to:
                 sheet.write(row_start, 0, index+1, format_wrap)
@@ -187,8 +189,8 @@ class productSpec(models.AbstractModel):
                 sheet.write(row_start, 10, note, format_wrap)
                 sheet.write(row_start, 11, "", format_wrap)
                 sheet.write(row_start, 12, shiratani_date, format_wrap)
-                sheet.write(row_start, 13, depo_date ,format_wrap)
-                sheet.write(row_start, 14, company_name ,format_wrap)
+                sheet.write(row_start, 13, depo_date,format_wrap)
+                sheet.write(row_start, 14, company_name,format_wrap)
                 sheet.write(row_start, 15, city + "\n" + state, format_wrap)
                 sheet.write(row_start, 16, "", format_wrap)
             else:
@@ -197,9 +199,9 @@ class productSpec(models.AbstractModel):
                 sheet.merge_range(row_start, 2, merge_to, 2, order_number, format_wrap)
                 sheet.merge_range(row_start, 3, merge_to, 3, status, format_wrap)
                 sheet.merge_range(row_start, 10, merge_to, 10, note, format_wrap)
-                sheet.merge_range(row_start, 11, merge_to, 11,"", format_wrap)
+                sheet.merge_range(row_start, 11, merge_to, 11, "", format_wrap)
                 sheet.merge_range(row_start, 12, merge_to, 12, shiratani_date, format_wrap)
-                sheet.merge_range(row_start, 13, merge_to, 13, depo_date ,format_wrap)
+                sheet.merge_range(row_start, 13, merge_to, 13, depo_date, format_wrap)
                 sheet.merge_range(row_start, 14, merge_to, 14, company_name, format_wrap)
                 sheet.merge_range(row_start, 15, merge_to, 15, city + "\n" + state, format_wrap)
                 sheet.merge_range(row_start, 16, merge_to, 16, "", format_wrap)

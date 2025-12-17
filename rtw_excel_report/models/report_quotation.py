@@ -38,6 +38,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_name_company_no_border = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14})
         format_text = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':11})
         format_text_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':11.25})
+        format_text_11_right = workbook.add_format({'align': 'right', 'valign': 'bottom', 'font_name': font_name, 'font_size':11})
         format_text_12_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':12})
         format_text_13_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':13})
         format_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
@@ -73,16 +74,20 @@ class ReportMrpExcel(models.AbstractModel):
             
             margin_header = 0.3
             margin_footer = 0.3
-            left_margin = 0.8
-            right_margin = 0.7
-            top_margin = 0.5
-            bottom_margin = 0.5
+            left_margin = 0.43
+            right_margin = 0.43
+            top_margin = 0.75
+            bottom_margin = 0.75
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
             sheet.set_header(f'{"&"}R No．{so.name if so.name else ""}', margin=margin_header)
             sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)
             note = '※商品の詳細は仕様書を参照ください'
             footer_text = f'&L&P/&N&R&"MS UI Gothic,Regular"&12 {note}'
             sheet.set_footer(footer_text, margin=0.3)
+            
+            sheet.fit_to_pages(1, 0)
+            sheet.center_horizontally()
+            sheet.center_vertically()
 
             sheet.set_column("A:A", width=14,cell_format=font_family)  
             sheet.set_column("B:B", width=20,cell_format=font_family)  
@@ -166,7 +171,8 @@ class ReportMrpExcel(models.AbstractModel):
                 total_list_price = so.currency_id.symbol + str(so.sale_order_total_list_price)
                 sheet.write(15, 1, total_list_price, format_text_12_right) 
                 
-            sheet.write(15, 12, _("消費税は含まれておりません"), format_text_12_right) 
+            sheet.write(14, 12, f"No．{so.name if so.name else ''}", format_text_11_right)
+            sheet.write(15, 12, _("消費税は含まれておりません"), format_text_12_right)
             #table title
             
             sheet.write(16, 0, _("№"), format_table)
@@ -201,4 +207,14 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.merge_range(row, 11, row + merge_line, 11, '{:,.0f}'.format(line.sale_order_sell_unit_price) or '', format_lines_13)
                         sheet.merge_range(row, 12, row + merge_line, 12, line.sale_order_price_subtotal or '', format_lines_13)
                         row += merge_line + 1
+                
+                if row > 17:
+                    last_content_row = row - 1
+                    num_pages = ((last_content_row - 1) // 45) + 1
+                    last_row = num_pages * 45
+                    sheet.print_area(f'A1:M{last_row}')
+                    
+                    pagebreak_positions = [45 * page_num for page_num in range(1, num_pages)]
+                    if pagebreak_positions:
+                        sheet.set_h_pagebreaks(pagebreak_positions)
 

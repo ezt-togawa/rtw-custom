@@ -127,13 +127,17 @@ class productSpec(models.AbstractModel):
             
             margin_header = 0.3
             margin_footer = 0.3
-            left_margin = 0.8
-            right_margin = 0.7
+            left_margin = 0.24
+            right_margin = 0.24
             top_margin = 0.5
             bottom_margin = 0.5
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
             sheet.set_header( f'{"&"}R No．{so.name  if so.name else ""}', margin=margin_header) 
             sheet.set_footer(f'{"&"}L page{" "}{"&"}P/{"&"}N',margin=margin_footer)    
+            
+            sheet.fit_to_pages(1, 0)
+            sheet.center_horizontally()
+            sheet.center_vertically()
                     
             sheet.set_column("A:A", width=0.81, cell_format=font_family)  
             sheet.set_column("B:B", width=0.63, cell_format=font_family)  
@@ -223,14 +227,12 @@ class productSpec(models.AbstractModel):
             sheet.merge_range(2, 43, 2, 48, so.sale_order_current_date if so.sale_order_current_date else "", format_date)
             sheet.merge_range(5, 2, 5, 3, _("件名"), format_text)
             sheet.merge_range(5, 4, 5, 48, so.title if so.title else "", format_text_14)
-            
-            pagebreaks = 0    
 
             if so.order_line:
                 lines = so.order_line.filtered(lambda x: x.display_type not in ['line_note', 'line_section'] and not x.is_pack_outside and x.config_ok)
                 length = len(lines)
                 if length > 0:
-                    more_height = 0 
+                    more_height = 0
                     for i,sol in enumerate(lines):
                         try:
                             line_index = so.order_line.ids.index(sol.id)
@@ -243,40 +245,39 @@ class productSpec(models.AbstractModel):
                             if next_line.display_type == 'line_note':
                                 line_note_content = next_line.name or ""
 
-                        # if line_note_content:
-                            product_pos = (i + 1) % 4
+                        # Always show memo frame (with or without content)
+                        product_pos = (i + 1) % 4
+                        height_ln = 0
+                        width_ln = 0
+
+                        if product_pos == 1:
                             height_ln = 0
                             width_ln = 0
+                        elif product_pos == 2:
+                            width_ln = 24
+                        elif product_pos == 3:
+                            height_ln = 23
+                            width_ln = 0
+                        elif product_pos == 0:
+                            height_ln = 23
+                            width_ln = 24
 
-                            if product_pos == 1:
-                                height_ln = 0
-                                width_ln = 0
-                            elif product_pos == 2:
-                                width_ln = 24
-                            elif product_pos == 3:
-                                height_ln = 23
-                                width_ln = 0
-                            elif product_pos == 0:
-                                height_ln = 23
-                                width_ln = 24
+                        row_ln = 28 + height_ln + more_height
+                        sheet.set_row(row_ln, 13.8)
+                        sheet.merge_range(
+                            row_ln, 2 + width_ln,
+                            row_ln, 22 + width_ln,
+                            line_note_content,
+                            format_text_with_bottom_border 
+                        )
+                        format_border_with_bottom = workbook.add_format({
+                            'bg_color': '#d9d9d9',
+                            'bottom': 5,
+                            'bottom_color': '#d9d9d9'
+                        })
+                        sheet.write(row_ln, 1 + width_ln, "", format_border_with_bottom)
+                        sheet.write(row_ln, 23 + width_ln, "", format_border_with_bottom)
 
-                            row_ln = 28 + height_ln + more_height
-                            sheet.set_row(row_ln, 13.8)
-                            sheet.merge_range(
-                                row_ln, 2 + width_ln,
-                                row_ln, 22 + width_ln,
-                                line_note_content,
-                                format_text_with_bottom_border 
-                            )
-                            format_border_with_bottom = workbook.add_format({
-                                'bg_color': '#d9d9d9',
-                                'bottom': 5,
-                                'bottom_color': '#d9d9d9'
-                            })
-                            sheet.write(row_ln, 1 + width_ln, "", format_border_with_bottom)
-                            sheet.write(row_ln, 23 + width_ln, "", format_border_with_bottom)
-
-                        pagebreaks += 1
                         height = 0
                         width = 0
                         i = i+1
@@ -466,12 +467,11 @@ class productSpec(models.AbstractModel):
                                 # attributes value write excel 
                                 sheet.write(18 + att_height + height + more_height, 5 + att_width + width, attr, format_text_center_size9)
                                             
-                            #break page 
-                            if i % 4 == 0:
-                                pagebreaks += 52
+                            # Update more_height for next page if needed
+                            if i % 4 == 0 and i < length:
                                 more_height += 52
-                                sheet.set_h_pagebreaks([pagebreaks])
                                 
+                                # Setup rows for next page
                                 sheet.set_row(more_height + 0, 14.4)
                                 sheet.set_row(more_height + 1, 14.4)
                                 sheet.set_row(more_height + 2, 14.4)
@@ -542,3 +542,12 @@ class productSpec(models.AbstractModel):
                                 sheet.merge_range(more_height + 2, 43,more_height + 2, 48, so.sale_order_current_date if so.sale_order_current_date else "", format_date)
                                 sheet.merge_range(more_height + 5, 2, more_height + 5, 3, _("件名"), format_text)
                                 sheet.merge_range(more_height + 5, 4, more_height + 5, 48, so.title if so.title else "", format_text_14)
+                    
+                    if length > 0:
+                        num_pages = (length + 3) // 4 
+                        last_row = num_pages * 52
+                        sheet.print_area(f'A1:AW{last_row}')
+                        
+                        pagebreak_positions = [52 * (page_num + 1) for page_num in range(num_pages - 1)]
+                        if pagebreak_positions:
+                            sheet.set_h_pagebreaks(pagebreak_positions)

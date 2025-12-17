@@ -1,4 +1,4 @@
-from odoo import models, fields, _
+from odoo import models, fields, _, api
 from datetime import datetime
 import math
 import babel.dates
@@ -1299,7 +1299,7 @@ class SaleOrderLineExcelReport(models.Model):
                 for attribute in attributes:
                     attr += attribute.attribute_id.name + "\n"
             line.sale_order_product_summary = attr
-                    
+    
     def _compute_sale_order_sell_unit_price(self):
         for line in self:
             line.sale_order_sell_unit_price = (line.price_unit - line.price_unit * line.discount / 100 )
