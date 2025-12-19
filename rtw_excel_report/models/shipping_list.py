@@ -110,11 +110,17 @@ class productSpec(models.AbstractModel):
             note = ""
             shiratani_date = ""
             depo_date = ""
-            prod_package_qty = 0
-            sai = 0
             stock_moves = self.env["stock.move"].search([("picking_id", "=", stock_picking.id)])
             if stock_moves:
                 for line in stock_moves:
+                    base_name = ""
+                    attrs = ""
+                    prod_qty = 0
+                    note = ""
+                    shiratani_date = ""
+                    depo_date = ""
+                    prod_package_qty = 0
+                    sai = 0
                     if line.product_id.name:
                         base_name = line.product_id.name
 
