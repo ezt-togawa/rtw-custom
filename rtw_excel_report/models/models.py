@@ -932,10 +932,11 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_list_price(self):
         for so in self:
             total_list_price = 0.0
-            if so.order_line :
+            if so.order_line:
                 for line in so.order_line:
-                    total_list_price += line.price_unit * line.product_uom_qty
-            so.sale_order_total_list_price =  '{0:,.0f}'.format(total_list_price)
+                    if not getattr(line, 'is_tax_excluded_product', False):
+                        total_list_price += line.price_unit * line.product_uom_qty
+            so.sale_order_total_list_price = '{0:,.0f}'.format(total_list_price)
     
     def _compute_sale_order_amount_untaxed2(self):
         for so in self:

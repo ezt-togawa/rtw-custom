@@ -6,3 +6,5 @@ from . import crm_lead
 from . import attach
 from . import sale_order_work_day
 from . import sale_order_instruction_status
+from . import product_group_master
+from . import product_product
