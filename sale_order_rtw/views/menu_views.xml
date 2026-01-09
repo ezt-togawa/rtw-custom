@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Menu Item under Sales > Configuration (dưới 同梱) -->
+    <menuitem 
+        id="menu_product_group_master"
+        name="プロダクトグループ"
+        parent="sale.menu_sale_config"
+        action="action_product_group_master"
+        sequence="12"/>
+
+</odoo>

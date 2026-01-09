@@ -115,8 +115,8 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_row(3, 17)
             sheet.set_row(11, 17)
             sheet.set_row(14, 24)
-            sheet.set_row(15, 5)
-            sheet.set_row(16, 26)
+            sheet.set_row(15, 24)
+            sheet.set_row(16, 32)
             
             sheet.insert_image(1, 0, "logo", {'image_data': img_io_R, 'x_offset': 5, 'y_offset': 1})
             sheet.insert_image(1, 10, "logo2", {'image_data': img_io_ritzwell})
@@ -162,7 +162,12 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(0,11,0,12, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
             sheet.merge_range(2,10,9,12, so.sale_order_hr_employee_split_street if so.sale_order_hr_employee_split_street else '' , format_address) 
 
-            sheet.write(14, 12, _("消費税は含まれておりません"), format_text_12_right) 
+            sheet.write(15, 0, _("税抜定価合計 "), format_text) 
+            if so.currency_id.symbol and so.sale_order_total_list_price:
+                total_list_price = so.currency_id.symbol + str(so.sale_order_total_list_price)
+                sheet.write(15, 1, total_list_price, format_text_12_right)
+
+            sheet.write(15, 12, _("消費税は含まれておりません"), format_text_12_right) 
 
             #table title
             sheet.write(16, 0, _("№"), format_table)

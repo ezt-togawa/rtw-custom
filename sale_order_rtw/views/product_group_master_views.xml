@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Tree View -->
+    <record id="view_product_group_master_tree" model="ir.ui.view">
+        <field name="name">product.group.master.tree</field>
+        <field name="model">product.group.master</field>
+        <field name="arch" type="xml">
+            <tree string="プロダクトグループ" editable="bottom">
+                <field name="group_id" options="{'no_create': true, 'no_open': true}"/>
+                <field name="group_code" invisible="1"/>
+                <field name="product_template_id" options="{'no_create': true}"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_product_group_master_form" model="ir.ui.view">
+        <field name="name">product.group.master.form</field>
+        <field name="model">product.group.master</field>
+        <field name="arch" type="xml">
+            <form string="プロダクトグループ">
+                <sheet>
+                    <group>
+                        <field name="group_id" options="{'no_create': true, 'no_open': true}"/>
+                        <field name="group_code" invisible="1"/>
+                    </group>
+                    <group string="プロダクト">
+                        <field name="product_template_id" options="{'no_create': true}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_product_group_master_search" model="ir.ui.view">
+        <field name="name">product.group.master.search</field>
+        <field name="model">product.group.master</field>
+        <field name="arch" type="xml">
+            <search string="プロダクトグループを検索">
+                <field name="group_name" string="グループ"/>
+                <field name="product_template_id" string="プロダクト"/>
+                <group expand="0" string="Group By">
+                    <filter string="グループ" name="group_by_group" context="{'group_by': 'group_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_product_group_master" model="ir.actions.act_window">
+        <field name="name">プロダクトグループ</field>
+        <field name="res_model">product.group.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_group_master_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                最初のプロダクトグループを作成します
+            </p>
+            <p>
+                Group products together for various purposes like tax-excluded pricing.
+            </p>
+        </field>
+    </record>
+
+</odoo>
