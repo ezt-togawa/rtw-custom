@@ -174,11 +174,16 @@ class MrpProduction(models.Model):
     sale_reference_title = fields.Char('SO Title', store=True)
     sale_title_tmp = fields.Char('SO Title', compute='_compute_reference_value_title')
     overseas = fields.Boolean('海外', compute='_compute_overseas')
-
+    spec_names_search = fields.Char(string='仕様名検索用', compute='_compute_specifications', store=True)
     def _compute_specifications(self):
         for rec in self:
             rec.specifications = rec.product_id.product_template_attribute_value_ids
-     
+            rec.spec_names_search = rec.product_id.product_template_attribute_value_ids.mapped('name')
+            if rec.specifications:
+                rec.spec_names_search = ", ".join(rec.specifications.mapped('name'))
+            else:
+                rec.spec_names_search = ""
+
 class Workorder(models.Model):
     _inherit = 'mrp.workorder'
 
