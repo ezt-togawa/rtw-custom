@@ -17,9 +17,12 @@
                 </xpath>
                 <xpath expr="//tree//field[@name='date_planned_start']" position="before">
                     <field name="implementation_plan_date" optional="show" />
+                    <field name="quantity" optional="show" string="数量" />
+                    <field name="work_notes" optional="show" string="作業メモ" />
                 </xpath>
                 <xpath expr="//tree//field[@name='implementation_plan_date']" position="before">
                     <field name="mrp_workorder_order_status" optional="show" string="発注状況" />
+                    <field name="planned_production_start_date" optional="show" string="製造開始予定日" />
                 </xpath>
             </field>
         </record>
