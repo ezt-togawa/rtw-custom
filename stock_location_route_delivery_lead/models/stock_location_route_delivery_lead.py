@@ -215,8 +215,12 @@ class sale_order_line(models.Model):
             days = int(additional_time)
             hours = (additional_time - int(additional_time)) * 24
             
+            order = line.order_id
+            base_date = order.scheduled_order_date if order and order.scheduled_order_date else fields.Date.context_today(self)
+            base_datetime = datetime.combine(base_date, datetime.min.time())
+            
             line.total_delivery_leadtime = additional_time
-            line.date_planned = datetime.today() + timedelta(days=days,hours=hours)
+            line.date_planned = base_datetime + timedelta(days=days, hours=hours)
 
     @api.model
     def _prepare_add_missing_fields(self , values):
@@ -298,8 +302,15 @@ class sale_order_line(models.Model):
           additional_time = supplier_delay + total_delivery_lead_time + product.product_tmpl_id.produce_delay
           days = int(additional_time)
           hours = (additional_time - int(additional_time)) * 24
+          order = False
+          if values.get('order_id'):
+            order = self.env['sale.order'].browse(values['order_id'])
+
+          base_date = order.scheduled_order_date if order and order.scheduled_order_date else fields.Date.context_today(self)
+
+          base_datetime = datetime.combine(base_date, datetime.min.time())
           
           res['total_delivery_leadtime'] = additional_time
-          res['date_planned'] = datetime.today() + timedelta(days=days , hours=hours)
-
+          res['date_planned'] = base_datetime + timedelta(days=days , hours=hours)
+ 
           return res
