@@ -42,6 +42,42 @@ class sale_order_leadtime(models.Model):
                             bom_total_lead_time = 0
                             bom_supplier_delay = 0
 
+                            bom_child_ids = self.env['mrp.bom'].search([
+                                ('product_tmpl_id', '=', bom_line.product_id.product_tmpl_id.id)
+                            ])
+                            for child_bom in bom_child_ids:
+                                for child_bom_line in child_bom.bom_line_ids:
+                                    if (
+                                        not child_bom_line.bom_product_template_attribute_value_ids.ids
+                                        or all(
+                                            v in template_attribute_value_ids.ids
+                                            for v in child_bom_line.bom_product_template_attribute_value_ids.ids
+                                        )
+                                    ) and child_bom_line.product_id.product_tmpl_id.type == 'product':
+                                        child_amount_consumed = child_bom_line.available_quantity - (
+                                            product_qty * child_bom_line.product_qty
+                                        )
+                                        if child_amount_consumed < 0:
+                                            child_bom_total_lead_time = 0
+                                            child_bom_supplier_delay = 0
+
+                                            for route in child_bom_line.product_id.route_ids:
+                                                child_bom_total_lead_time += route.delivery_lead_time or 0
+
+                                            child_supplier_infos = self.env['product.supplierinfo'].search([
+                                                ('product_tmpl_id', '=', child_bom_line.product_id.product_tmpl_id.id)
+                                            ])
+                                            for s in child_supplier_infos:
+                                                child_bom_supplier_delay = max(child_bom_supplier_delay, s.delay or 0)
+
+                                            child_total = (
+                                                child_bom_total_lead_time
+                                                + child_bom_supplier_delay
+                                                + child_bom_line.product_id.product_tmpl_id.produce_delay
+                                            )
+                                            if bom_supplier_delay < child_total:
+                                                bom_supplier_delay = child_total
+
                             for route in bom_line.product_id.route_ids:
                                 bom_total_lead_time += route.delivery_lead_time or 0
 
