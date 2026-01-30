@@ -22,6 +22,16 @@
                 </xpath>
                 <xpath expr="//tree//field[@name='implementation_plan_date']" position="before">
                     <field name="mrp_workorder_order_status" optional="show" string="発注状況" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="rtw_mrp_workorder_view_list_with_production" model="ir.ui.view">
+            <field name="name">mrp.production.work.order.tree.with.extra.fields</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mrp_workorder_order_status']" position="after">
                     <field name="planned_production_start_date" optional="show" string="製造開始予定日" />
                 </xpath>
             </field>

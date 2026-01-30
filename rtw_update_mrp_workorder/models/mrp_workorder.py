@@ -6,7 +6,7 @@ class AccountInvoice(models.Model):
     
     implementation_plan_date = fields.Date('Implementation Plan Date')
     mrp_workorder_order_status = fields.Boolean('Mrp Order Status', compute="_compute_workorder_status")
-    planned_production_start_date = fields.Date('Planned Production Start Date',compute="_compute_planned_production_start_date", store=True,)
+    planned_production_start_date = fields.Date('Planned Production Start Date',compute="_compute_planned_production_start_date", store=True)
     quantity = fields.Float('Quantity', compute='_compute_quantity')
     work_notes = fields.Char('作業メモ')
 
@@ -18,6 +18,7 @@ class AccountInvoice(models.Model):
             else:
                 record.mrp_workorder_order_status = False
 
+    @api.depends('production_id.date_planned_start')
     def _compute_planned_production_start_date(self):
         for record in self:
             if record.production_id:
