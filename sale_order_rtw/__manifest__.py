@@ -30,6 +30,8 @@
         'views/sale_order_work_day.xml',
         'views/templates.xml',
         'views/sale_order_instruction_status.xml',
+        'views/product_group_master_views.xml',
+        'views/menu_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

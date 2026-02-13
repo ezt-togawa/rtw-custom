@@ -13,6 +13,20 @@ class sale_order_line_rtw(models.Model):
     )
 
     combined_shipment = fields.Many2one(string='同梱',comodel_name='sale.order.instruction.status')
+    is_tax_excluded_product = fields.Boolean(
+        string='Tax Excluded Product',
+        compute='_compute_is_tax_excluded_product',
+        store=True,
+        help='Product is in GC001 (税抜定価除外) group'
+    )
+    
+    @api.depends('product_id')
+    def _compute_is_tax_excluded_product(self):
+        for line in self:
+            if line.product_id:
+                line.is_tax_excluded_product = line.product_id.is_tax_excluded_price_product()
+            else:
+                line.is_tax_excluded_product = False
 
     def _compute_item_attach_count(self):
         for line in self:

@@ -7,13 +7,16 @@
             <field name="inherit_id" ref="sale_order_rtw.sale_view_order_rtw_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='workday_id']" position="after">
-                    <label for="leadtime" />
+                    <field name="leadtime" force_save="1" readonly="1" />
+                </xpath>
+                <xpath expr="//field[@name='leadtime']" position="after">
+                    <label for="scheduled_order_date" />
                     <div class="o_row">
-                        <field name="leadtime" nolabel="1" />
+                        <field name="scheduled_order_date" nolabel="1" />
                         <button name="update_leadtime"
                             class="btn-link" icon="fa-refresh"
-                            confirm="指定のリードタイムに基づいてすべての明細情報の予定日が更新されます"
-                            string="予定日へ反映" type="object"
+                            confirm="発注予定日に基づいてすべての明細情報の製造完予定日が更新されます"
+                            string="再計算して反映" type="object"
                         />
                     </div>
                 </xpath>
