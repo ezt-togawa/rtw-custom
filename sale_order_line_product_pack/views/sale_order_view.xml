@@ -46,6 +46,9 @@
             <field name="series" position="attributes">
                 <attribute name="optional">show</attribute>
             </field>
+            <xpath expr="//field[@name='series']" position="before">
+                <field name="product_no" optional="show" string="品番"/>
+            </xpath>
             <field name="categ_id" position="attributes">
                 <attribute name="optional">show</attribute>
             </field>
