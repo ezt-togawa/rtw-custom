@@ -112,17 +112,27 @@ class rtw_stock_move(models.Model):
                 move.shipping_destination_text = ''
     @api.model_create_multi
     def create(self, vals_list):
-        mls = super().create(vals_list)
-        for move in mls:
-            if move.product_id and move.product_id.two_legs_scale:
-                move.product_package_quantity = round(move.product_qty * move.product_id.two_legs_scale, 2)
+        for vals in vals_list:
+            product_id = vals.get('product_id')
+            product = self.env['product.product'].browse(product_id) if product_id else False
+
+            # 数量を取得（入力がない場合は 0.0）
+            qty = vals.get('product_uom_qty', 0.0)
+
+            if product and product.two_legs_scale:
+                # 計算結果を math.ceil で整数に切り上げ
+                raw_value = qty * product.two_legs_scale
+                vals['product_package_quantity'] = math.ceil(raw_value)
             else:
-                move.product_package_quantity = 0.00
-            if move.product_id.sai:
-                move.sai = move.product_id.sai
+                vals['product_package_quantity'] = 0.0
+
+            # sai（才数）のセット
+            if product and product.sai:
+                vals['sai'] = product.sai
             else:
-                move.sai = 0
-        return mls
+                vals['sai'] = 0
+
+        return super(rtw_stock_move, self).create(vals_list)
 
     @api.depends('product_id', 'sale_line_id.depo_date','sale_line_id.depo_date','sale_line_id','sale_id','sale_id.warehouse_arrive_date')
     def _get_sale(self):

@@ -374,6 +374,8 @@ class productSpec(models.AbstractModel):
                             if image_product_db:
                                 frame_w, frame_h = 185, 110
                                 background = resize_contain(image_product_db, frame_w, frame_h)
+                                if background.mode in ("RGBA", "P"):
+                                    background = background.convert("RGB")
                                 big_img_2 = BytesIO()
                                 background.save(big_img_2, 'JPEG')
                                 big_img_2.seek(0)

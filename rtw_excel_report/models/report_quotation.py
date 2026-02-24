@@ -201,10 +201,16 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.merge_range(row, 0, row + merge_line, 0, line.sale_order_index or '', format_lines_10)
                         sheet.merge_range(row, 1, row + merge_line, 3, line.sale_order_line_name_excel or '', format_lines_9_left)
                         sheet.merge_range(row, 4, row + merge_line, 7, line.sale_order_number_and_size or '', format_lines_11_left)
-                        sheet.merge_range(row, 8, row + merge_line, 8, line.sale_order_line_product_uom_qty or '', format_lines_13)
-                        sheet.merge_range(row, 9, row + merge_line, 9, line.sale_order_price_unit or '', format_lines_13)
-                        sheet.merge_range(row, 10, row + merge_line, 10, line.sale_order_line_discount or '', format_lines_13)
-                        sheet.merge_range(row, 11, row + merge_line, 11, '{:,.0f}'.format(line.sale_order_sell_unit_price) or '', format_lines_13)
+                        if line.is_tax_excluded_product:
+                            sheet.merge_range(row, 8, row + merge_line, 8, '', format_lines_13)
+                            sheet.merge_range(row, 9, row + merge_line, 9, '', format_lines_13)
+                            sheet.merge_range(row, 10, row + merge_line, 10, '', format_lines_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, '', format_lines_13)
+                        else:
+                            sheet.merge_range(row, 8, row + merge_line, 8, line.sale_order_line_product_uom_qty or '', format_lines_13)
+                            sheet.merge_range(row, 9, row + merge_line, 9, line.sale_order_price_unit or '', format_lines_13)
+                            sheet.merge_range(row, 10, row + merge_line, 10, line.sale_order_line_discount or '', format_lines_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, '{:,.0f}'.format(line.sale_order_sell_unit_price) or '', format_lines_13)
                         sheet.merge_range(row, 12, row + merge_line, 12, line.sale_order_price_subtotal or '', format_lines_13)
                         row += merge_line + 1
                 

@@ -220,14 +220,18 @@
                         </td>
                         <td class="text-right" style="font-size:16px;">
                           <div id="quote_qty" class="two-lines">
-                            <span t-esc="l.sale_order_line_product_uom_qty" />
+                            <t t-if="not l.is_tax_excluded_product">
+                              <span t-esc="l.sale_order_line_product_uom_qty" />
+                            </t>
                           </div>
                         </td>
                         <td class="text-right" style="font-size:16px;">
                           <div class="two-lines">
-                            <span
-                              style="font-size:16px"
-                              t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                            <t t-if="not l.is_tax_excluded_product">
+                              <span
+                                style="font-size:16px"
+                                t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                            </t>
                           </div>
                         </td>
                         <td class="text-right" style="font-size:16px;">
