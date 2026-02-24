@@ -1910,18 +1910,7 @@ class StockMoveExcelReport(models.Model):
                 while decimal_part_after_dot % 10 == 0:
                     decimal_part_after_dot = decimal_part_after_dot / 10
                 line.stock_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
-    
-    prod_package_qty = fields.Float(compute="_compute_prod_package_qty")
-    
-    def _compute_prod_package_qty(self):
-        for line in self:
-            pack = 0.0
-            if line.product_package_quantity:
-                pack =  math.ceil(line.product_uom_qty * line.product_package_quantity)
-            else:
-                pack = line.product_uom_qty
-            line.prod_package_qty = '{0:,.0f}'.format(pack)
-    
+
     def _compute_stock_move(self):
         index = 0
         for line in self:
