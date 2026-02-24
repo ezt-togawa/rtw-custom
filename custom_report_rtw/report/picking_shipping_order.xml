@@ -170,7 +170,7 @@
                     <td class="text-center size14">
                       <div>
                         <span
-                          t-esc="l.prod_package_qty" />
+                          t-esc="l.product_package_quantity" />
                       </div>
                     </td>
                     <td class="text-center size13">
