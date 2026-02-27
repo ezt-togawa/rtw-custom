@@ -1085,10 +1085,19 @@ class SaleOrderLineExcelReport(models.Model):
     
     sale_line_product_uom_qty = fields.Char(string="sale_line_product_uom_qty" , compute="_compute_sale_line_product_uom_qty")
     sale_line_calculate_packages = fields.Float('Packages' , compute="_compute_sale_line_calculate_packages")
+    sale_line_sai = fields.Float(string="Sale_line_sai", compute="_compute_sale_line_calculate_sai")
     sale_line_product_no_delivery = fields.Char(string="Calculate product no delivery", compute="_compute_sale_line_product_no_pack")
     sale_line_product_pack_delivery = fields.Char(string="Calculate product pack delivery", compute="_compute_sale_line_product_no_pack")
     product_spec_detail = fields.Char(compute="_compute_sale_order_product_detail")
     
+    def _compute_sale_line_calculate_sai(self):
+        for line in self:
+            sale_line_id = self.env['stock.move'].search([('sale_line_id', '=', line.id)], limit=1)
+            if sale_line_id and sale_line_id.sai:
+                line.sale_line_sai = sale_line_id.sai
+            else:
+                line.sale_line_sai = 0
+
     def _compute_sale_line_product_no_pack(self):
         for line in self:
             prod_no = ""
@@ -1126,10 +1135,12 @@ class SaleOrderLineExcelReport(models.Model):
                 
     def _compute_sale_line_calculate_packages(self):
         for line in self:
-            if line.product_id.two_legs_scale:
-                line.sale_line_calculate_packages = round(line.product_uom_qty * line.product_id.two_legs_scale, 2)
-            else:
-                line.sale_line_calculate_packages = 0      
+            sale_line_id = self.env['stock.move'].search([('sale_line_id', '=', line.id)], limit=1)
+            if sale_line_id and sale_line_id.product_package_quantity:
+                line.sale_line_calculate_packages = sale_line_id.product_package_quantity
+            else:               
+                line.sale_line_calculate_packages = 0  
+
                 
     def _compute_sale_line_product_uom_qty(self):
         for line in self:

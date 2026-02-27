@@ -187,8 +187,11 @@
                         </div>
                       </td>
                       <td class="text-right" style="padding: 10px 0px;">
-                        <div t-if="l.product_id.sai" class="two-lines">
-                          <span t-esc="'{0:,.2f}'.format(l.product_id.sai).rstrip('0').rstrip('.')" t-if="l.product_id.sai"/>
+                        <div class="two-lines">
+                          <t t-if="l.sale_line_sai">
+                        <span
+                            t-field="l.sale_line_sai" />
+                          </t>
                         </div>
                       </td>
                       <td class="text-center" style="padding: 10px 0px;">

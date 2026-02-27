@@ -203,7 +203,7 @@ class StockPickingShipOrder(models.AbstractModel):
                     sheet.merge_range(row, 8, row + merge_line, 8, line.stock_product_uom_qty if line.stock_product_uom_qty else '', format_lines_13) 
                     sheet.merge_range(row, 9, row + merge_line, 9, line.product_package_quantity if line.product_package_quantity else 0, format_lines_13) 
                     
-                    sheet.merge_range(row, 10, row + merge_line, 10, line.stock_sai if line.stock_sai else '', format_lines_13) 
+                    sheet.merge_range(row, 10, row + merge_line, 10, line.sai if line.sai else '', format_lines_13) 
                     sheet.merge_range(row, 11, row + merge_line, 12, line.stock_warehouse if line.stock_warehouse else '', format_lines_13) 
                     sheet.merge_range(row, 13, row + merge_line, 13, line.stock_shiratani_date if line.stock_shiratani_date else '', format_lines_13) 
                     
