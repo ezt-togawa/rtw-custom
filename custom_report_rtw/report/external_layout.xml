@@ -51,7 +51,7 @@
             </div>
             <t t-raw="0" />
         </div>
-        <t t-call="custom_report_rtw.page_footer_layout" />
+        <t t-call="custom_report_rtw.page_footer_layout_base" />
     </template>
     <template id="po_ex_layout">
         <link href="/custom_report_rtw/static/src/css/report.css" rel="stylesheet" />
