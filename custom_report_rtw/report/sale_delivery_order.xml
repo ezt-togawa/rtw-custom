@@ -206,7 +206,7 @@
               </t>
             </table>
           </div>
-          <t t-call="custom_report_rtw.page_footer_layout"></t>
+          <t t-call="custom_report_rtw.page_footer_layout_base"></t>
         </t>
       </t>
     </t>
