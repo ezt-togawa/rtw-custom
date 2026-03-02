@@ -127,8 +127,32 @@ class rtw_stock_move(models.Model):
                 vals['product_package_quantity'] = 0.0
 
             # sai（才数）のセット
-            if product and product.sai:
-                vals['sai'] = product.sai
+            if product and product.product_tmpl_id:
+                tmpl = product.product_tmpl_id
+                scale = tmpl.two_legs_scale or 0.0
+
+                if scale >= 1:
+                    vals['sai'] = tmpl.sai * qty
+
+                elif scale < 1:
+                    calc_qty = (qty * scale) or 0.0
+
+                    integer_part = int(calc_qty)
+                    decimal_part = calc_qty - integer_part
+
+                    sai_total = integer_part * tmpl.sai_2
+
+                    if decimal_part > 0 and scale:
+                        ratio = decimal_part / scale
+
+                        if ratio <= 1:
+                            sai_total += tmpl.sai
+                        else:
+                            sai_total += tmpl.sai_2
+
+                    vals['sai'] = sai_total
+                else:
+                    vals['sai'] = 0
             else:
                 vals['sai'] = 0
 

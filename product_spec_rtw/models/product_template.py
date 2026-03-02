@@ -49,7 +49,8 @@ class ProductSpecRtw(models.Model):
     leather_ds = fields.Float('leather(ds)')
     shipping_cost_unit_price = fields.Integer('shipping cost unit price')
     leather_ds = fields.Float('leather(ds)')
-    sai = fields.Float('sai')
+    sai = fields.Float('sai(single)')
+    sai_2 = fields.Float('sai(multi)')
     # shipping_cost = fields.Integer('sipping cost', compute="_shipping_cost_calc")
     lx_key_figure = fields.Integer('LX Key Figure')
     #部材情報
