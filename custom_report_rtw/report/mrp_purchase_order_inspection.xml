@@ -217,7 +217,7 @@
               </div>
               <div class="col-4 size13">
                 <div style="padding-left:60px;">
-                  <div> 送り先注記: <span t-field="mrp.mrp_production_so_id.remark" />
+                  <div> 送り先注記: <span t-field="mrp.remark" />
                       <br />
                     <!-- <span t-field="docs.production_memo" /> -->
                   </div>
