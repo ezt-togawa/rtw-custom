@@ -4,6 +4,11 @@ from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
 from io import BytesIO
 class ReportMrpExcel(models.AbstractModel):
+    """
+        【検品発注書】Excelレポート出力ロジック
+        レポートID: rtw_excel_report.inspection_order_form_xls
+        用途: 製造オーダーより検品のための発注書のExcelを作成する（発注書を同じフォーマット）
+    """
     _name = 'report.rtw_excel_report.inspection_order_form_xls'
     _inherit = 'report.report_xlsx.abstract'
 
@@ -99,15 +104,32 @@ class ReportMrpExcel(models.AbstractModel):
                 else:
                     allow_print = False
                     break
-                    
+
+        # --- 共通のページ設定関数 ---
+        def apply_sheet_settings(sheet):
+            sheet.set_paper(9)  # A4
+            sheet.set_landscape()  # 横向き
+            sheet.fit_to_pages(1, 0)  # 横幅を1ページに強制
+            sheet.center_horizontally()  # 中央寄せ
+            sheet.set_margins(left=0.4, right=0.4, top=0.5, bottom=0.5)
+
+            # 列幅の設定 (J列: 9まで)
+            sheet.set_column("A:A", 11, font_family)
+            sheet.set_column("B:B", 25, font_family)
+            sheet.set_column("C:D", 25, font_family)
+            sheet.set_column("E:E", 7, font_family)
+            sheet.set_column("F:G", 25, font_family)
+            sheet.set_column("H:H", 0, font_family)  # 非表示
+            sheet.set_column("I:I", 20, font_family)
+            sheet.set_column("J:J", 20, font_family)
+            sheet.set_column("K:Z", None, font_family)
+
         #create sheet      
         if allow_print :
             for mrp in mrp_data[0]:
                 sheet_name = _("検品発注書") 
                 sheet = workbook.add_worksheet(sheet_name)
-                sheet.set_paper(9)  #A4
-                sheet.set_landscape()
-                # sheet.set_print_scale(66)
+                apply_sheet_settings(sheet)
                 isLinkeSale = mrp.sale_order_count >= 1
 
                 margin_header = 0.3
@@ -279,13 +301,22 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(row_below + 1, 5, _('メモ'), format_subheader_10pt)
                 sheet.merge_range(row_below + 1, 6, row_below + 1, 9, mrp.production_memo or '', format_content_12pt)
                 row = row_below + 2
-        else:   
+
+            # 印刷範囲と改ページの設定
+            last_row = 63
+            if 'row' in locals() and row > 63:
+                last_row = ((row // 63) + 1) * 63
+            sheet.print_area(0, 0, last_row - 1, 9)
+            total_pages = (last_row // 63)
+            if total_pages > 1:
+                breaks = [63 * p for p in range(1, total_pages)]
+                sheet.set_h_pagebreaks(breaks)
+
+        else:
             for mrp in mrp_data[0]:
                 sheet_name = _("検品発注書" )
                 sheet = workbook.add_worksheet(sheet_name)
-                sheet.set_paper(9)  #A4
-                sheet.set_landscape()
-                # sheet.set_print_scale(66)
+                apply_sheet_settings(sheet)
                 isLinkeSale = mrp.sale_order_count >= 1
                 
                 margin_header = 0.3
@@ -436,3 +467,12 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(row_below + 1, 4, _('メモ'), format_subheader_10pt)
                 sheet.merge_range(row_below + 1, 5, row_below + 1, 9, mrp.production_memo or '', format_content_12pt)
 
+                # 印刷範囲と改ページの設定
+                last_row = 63
+                if 'row' in locals() and row > 63:
+                    last_row = ((row // 63) + 1) * 63
+                sheet.print_area(0, 0, last_row - 1, 9)
+                total_pages = (last_row // 63)
+                if total_pages > 1:
+                    breaks = [63 * p for p in range(1, total_pages)]
+                    sheet.set_h_pagebreaks(breaks)
