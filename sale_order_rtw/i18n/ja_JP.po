@@ -179,7 +179,7 @@ msgstr ""
 #. module: sale_order_rtw
 #: model_terms:ir.ui.view,arch_db:sale_order_rtw.sale_view_order_rtw_form
 msgid "accepting an order"
-msgstr ""
+msgstr "受注"
 
 #. module: sale_order_rtw
 #: model:ir.model,name:sale_order_rtw.model_item_attach
