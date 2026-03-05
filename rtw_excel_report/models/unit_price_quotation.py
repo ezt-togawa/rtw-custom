@@ -4,6 +4,11 @@ from PIL import Image as PILImage
 from io import BytesIO
 
 class ReportMrpExcel(models.AbstractModel):
+    """
+        【単価御見積書】Excelレポート出力ロジック
+        レポートID: rtw_excel_report.unit_price_quotation_xls
+        用途: 販売オーダーより単価御見積書のExcelを作成する
+    """
     _name = 'report.rtw_excel_report.unit_price_quotation_xls'
     _inherit = 'report.report_xlsx.abstract'
     
@@ -185,13 +190,19 @@ class ReportMrpExcel(models.AbstractModel):
                         sheet.merge_range(row,0,row + merge_line,0, line.sale_order_index if line.sale_order_index else '' , format_lines_10) 
                         sheet.merge_range(row,1,row + merge_line,3, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '' , format_lines_9_left) 
                         
-                        sheet.merge_range(row,4,row + merge_line,7, line.sale_order_number_and_size if line.sale_order_number_and_size else '' , format_lines_11_left) 
-                        
-                        sheet.merge_range(row,8,row + merge_line,8, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '' , format_lines_13) 
-                        sheet.merge_range(row,9,row + merge_line,9, line.sale_order_price_unit if line.sale_order_price_unit else '' , format_lines_13) 
-                        sheet.merge_range(row,10,row + merge_line,10, line.sale_order_line_discount if line.sale_order_line_discount else '' , format_lines_13) 
-                        sheet.merge_range(row,11,row + merge_line,11, '{:,.0f}'.format(line.sale_order_sell_unit_price) if line.sale_order_sell_unit_price else '' , format_lines_13) 
-                        sheet.merge_range(row,12,row + merge_line,12, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '' , format_lines_13) 
+                        sheet.merge_range(row,4,row + merge_line,7, line.sale_order_number_and_size if line.sale_order_number_and_size else '' , format_lines_11_left)
+                        if line.is_tax_excluded_product:
+                            sheet.merge_range(row, 8, row + merge_line, 8, '', format_lines_13)
+                            sheet.merge_range(row, 9, row + merge_line, 9, '', format_lines_13)
+                            sheet.merge_range(row, 10, row + merge_line, 10, '', format_lines_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, '', format_lines_13)
+                        else:
+                            sheet.merge_range(row, 8, row + merge_line, 8, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '', format_lines_13)
+                            sheet.merge_range(row, 9, row + merge_line, 9, line.sale_order_price_unit if line.sale_order_price_unit else '', format_lines_13)
+                            sheet.merge_range(row, 10, row + merge_line, 10, line.sale_order_line_discount if line.sale_order_line_discount else '', format_lines_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, '{:,.0f}'.format(line.sale_order_sell_unit_price) if line.sale_order_sell_unit_price else '', format_lines_13)
+
+                        sheet.merge_range(row, 12, row + merge_line, 12, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '', format_lines_13)
                         row += merge_line + 1
                 
                 if row > 17:

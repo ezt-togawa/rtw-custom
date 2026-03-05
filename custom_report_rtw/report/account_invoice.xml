@@ -266,26 +266,34 @@
                                                 </td>
                                                 <td class="text-right" style="font-size:16px;">
                                                     <div id="quote_qty" class="two-lines">
-                                                        <span t-esc="l.acc_move_line_qty" />
+                                                        <t t-if="not l.sale_line_ids.is_tax_excluded_product">
+                                                            <span t-esc="l.acc_move_line_qty" />
+                                                        </t>
                                                     </div>
                                                 </td>
                                                 <td class="text-right" style="font-size:16px;">
                                                     <div class="two-lines">
-                                                        <span
-                                                            t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                                                        <t t-if="not l.sale_line_ids.is_tax_excluded_product">
+                                                            <span
+                                                                t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                                                        </t>
                                                     </div>
                                                 </td>
                                                 <td class="text-right" style="font-size:16px;">
                                                     <div class="two-lines">
-                                                        <span
-                                                            style="font-size:16px"
-                                                            t-esc="l.acc_line_discount if l.acc_line_discount % 1 != 0 else int(l.acc_line_discount)" />
+                                                        <t t-if="not l.sale_line_ids.is_tax_excluded_product">
+                                                            <span
+                                                                style="font-size:16px"
+                                                                t-esc="l.acc_line_discount if l.acc_line_discount % 1 != 0 else int(l.acc_line_discount)" />
+                                                        </t>
                                                     </div>
                                                 </td>
                                                 <td class="text-right" style="font-size:16px;">
                                                     <div class="two-lines">
-                                                        <span
-                                                            t-esc="'{0:,.0f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else '{0:,.0f}'.format(l.price_unit)" />
+                                                        <t t-if="not l.sale_line_ids.is_tax_excluded_product">
+                                                            <span
+                                                                t-esc="'{0:,.0f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else '{0:,.0f}'.format(l.price_unit)" />
+                                                        </t>
                                                     </div>
                                                 </td>
                                                 <td class="text-right" style="font-size:16px;">
