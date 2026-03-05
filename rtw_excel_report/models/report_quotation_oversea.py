@@ -4,6 +4,11 @@ from PIL import Image as PILImage
 from io import BytesIO
 
 class ReportMrpExcel(models.AbstractModel):
+    """
+        【御見積書（海外）】Excelレポート出力ロジック
+        レポートID: rtw_excel_report.report_quotation_oversea_xls
+        用途: 販売オーダーより注文書のExcelを作成する
+    """
     _name = 'report.rtw_excel_report.report_quotation_oversea_xls'
     _inherit = 'report.report_xlsx.abstract'
     
@@ -32,15 +37,6 @@ class ReportMrpExcel(models.AbstractModel):
         img_io_ritzwell = BytesIO()
         img_ritzwell.save(img_io_ritzwell, 'PNG')
         img_io_ritzwell.seek(0)
-
-        # 海外 img
-        image_logo_overseas = get_module_resource('custom_report_rtw', 'static/src/images', 'Overseas.jpg')
-        img_overseas = PILImage.open(image_logo_overseas)
-        img_overseas = img_overseas.convert('RGB')
-        img_overseas = img_overseas.resize((160, 85), PILImage.LANCZOS)
-        img_io_overseas = BytesIO()
-        img_overseas.save(img_io_overseas, 'PNG')
-        img_io_overseas.seek(0)
 
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
@@ -183,14 +179,7 @@ class ReportMrpExcel(models.AbstractModel):
                 total_list_price = so.currency_id.symbol + str(so.sale_order_total_list_price)
                 sheet.write(15, 1, total_list_price, format_text_12_right)
             sheet.write(15, 12, _("消費税は含まれておりません"), format_text_12_right) 
-            if  so.overseas:
-                    sheet.insert_image(1, 2, "overseas", {
-                        'image_data': img_io_overseas,
-                        'x_offset': 0,
-                        'y_offset': 2,
-                        'x_scale': 0.6,
-                        'y_scale': 0.6,
-                    })
+
             #table title
             sheet.write(16, 0, _("№"), format_table)
             sheet.merge_range(16, 1, 16, 3, _("品名"), format_table_left)

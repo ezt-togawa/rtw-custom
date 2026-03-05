@@ -174,9 +174,9 @@
                       </div>
                     </td>
                     <td class="text-center size13">
-                      <t t-if="l.product_id.product_tmpl_id.sai">
+                      <t t-if="l.sai">
                         <span
-                          t-field="l.product_id.product_tmpl_id.sai" />
+                          t-field="l.sai" />
                       </t>
                     </td>
                     <td class="text-center">
