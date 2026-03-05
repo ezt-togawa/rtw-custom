@@ -4,6 +4,11 @@ from PIL import Image as PILImage
 from io import BytesIO
 
 class ReportMrpExcel(models.AbstractModel):
+    """
+        【注文書】Excelレポート出力ロジック
+        レポートID: rtw_excel_report.report_purchase_order_xls
+        用途: 販売オーダーより注文書のExcelを作成する
+    """
     _name = 'report.rtw_excel_report.report_purchase_order_xls'
     _inherit = 'report.report_xlsx.abstract'
     
@@ -26,15 +31,7 @@ class ReportMrpExcel(models.AbstractModel):
         img_io_R = BytesIO()
         logo_R.save(img_io_R, 'PNG')
         img_io_R.seek(0)
-        # 海外 img
-        image_logo_overseas = get_module_resource('custom_report_rtw', 'static/src/images', 'Overseas.jpg')
-        img_overseas = PILImage.open(image_logo_overseas)
-        img_overseas = img_overseas.convert('RGB')
-        img_overseas = img_overseas.resize((160, 85), PILImage.LANCZOS)
-        img_io_overseas = BytesIO()
-        img_overseas.save(img_io_overseas, 'PNG')
-        img_io_overseas.seek(0)
-        
+
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':18,'font_name': font_name})
         format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
@@ -132,14 +129,7 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.write(2, 0, _("株式会社リッツウェル 宛"), format_text_14)
             # sheet.write(3, 0, so.sale_order_ritzwell_staff if so.sale_order_ritzwell_staff else "", format_text_14)
-            if  so.overseas:
-                    sheet.insert_image(1, 2, "overseas", {
-                        'image_data': img_io_overseas,
-                        'x_offset': 0,
-                        'y_offset': 2,
-                        'x_scale': 0.6,
-                        'y_scale': 0.6,
-                    })
+
             sheet.write(5,0, _("下記の通り注文いたします。"), format_text) 
             
             sheet.write(7, 0, _("件名 : "), format_text_14_border) 

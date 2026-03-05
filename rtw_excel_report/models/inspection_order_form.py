@@ -172,7 +172,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.insert_image(1, 9, "logo2", {'image_data': img_io_ritzwell})
                 
                 # y,x
-                if  isLinkeSale and mrp.sale_order.check_oversea:
+                if mrp.sale_order.check_oversea:
                     sheet.insert_image(0, 2, "overseas", {
                         'image_data': img_io_overseas,
                         'x_offset': 0,
@@ -358,7 +358,7 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.insert_image(1, 9, "logo2", {'image_data': img_io_ritzwell})
                 
                 # y,x
-                if  isLinkeSale and mrp.sale_order.check_oversea:
+                if mrp.sale_order.check_oversea:
                     sheet.insert_image(0, 2, "overseas", {
                         'image_data': img_io_overseas,
                         'x_offset': 0,
