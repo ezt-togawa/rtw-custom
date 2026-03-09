@@ -3,6 +3,11 @@ from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
 from io import BytesIO
 class ReportMrpExcel(models.AbstractModel):
+    """
+        【御見積書】Excelレポート出力ロジック
+        レポートID: rtw_excel_report.report_quotation_xls
+        用途: 販売オーダーより御見積書のExcelを作成する
+    """
     _name = 'report.rtw_excel_report.report_quotation_xls'
     _inherit = 'report.report_xlsx.abstract'
     

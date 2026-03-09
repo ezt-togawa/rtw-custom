@@ -178,27 +178,37 @@
                       </td>
                       <td class="text-right" style="padding: 10px 0px;">
                         <div id="quote_qty" class="two-lines">
-                          <span t-esc="l.sale_line_product_uom_qty" />
+                          <t t-if="not l.is_tax_excluded_product">
+                              <span t-esc="l.sale_line_product_uom_qty" />
+                          </t>
                         </div>
                       </td>
                       <td class="text-right" style="padding: 10px 0px;">
                         <div class="two-lines">
-                          <span t-esc="l.sale_line_calculate_packages" />
+                          <t t-if="not l.is_tax_excluded_product">
+                              <span t-esc="int(l.sale_line_calculate_packages)" />
+                          </t>
                         </div>
                       </td>
                       <td class="text-right" style="padding: 10px 0px;">
                         <div class="two-lines">
                           <t t-if="l.sale_line_sai">
-                        <span
-                            t-field="l.sale_line_sai" />
+                            <t t-if="not l.is_tax_excluded_product">
+                              <span
+                                  t-field="l.sale_line_sai" />
+                            </t>
                           </t>
                         </div>
                       </td>
                       <td class="text-center" style="padding: 10px 0px;">
-                        <span class="two-lines">有</span>
+                        <t t-if="not l.is_tax_excluded_product">
+                          <span class="two-lines">有</span>
+                        </t>
                       </td>
                       <td class="text-center" style="padding: 10px 0px;">
-                        <span class="two-lines">無</span>
+                        <t t-if="not l.is_tax_excluded_product">
+                          <span class="two-lines">無</span>
+                        </t>
                       </td>
                       <td class="text-right" style="padding: 10px 0px;">
                         <div class="two-lines"></div>

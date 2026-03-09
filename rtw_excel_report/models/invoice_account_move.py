@@ -3,6 +3,11 @@ from odoo.modules.module import get_module_resource
 from PIL import Image as PILImage
 from io import BytesIO
 class ReportMrpExcel(models.AbstractModel):
+    """
+        【請求書】Excelレポート出力ロジック
+        レポートID: rtw_excel_report.invoice_account_move_xls
+        用途: 請求情報より請求書のExcelを作成する
+    """
     _name = 'report.rtw_excel_report.invoice_account_move_xls'
     _inherit = 'report.report_xlsx.abstract'
     
@@ -77,6 +82,8 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_10_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
         format_lines_11_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
         format_lines_13 = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
+        format_lines_note = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':11, 'bottom':1})
+        format_lines_section= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1})
 
         #create sheet
         for index,so in enumerate(so_data):
@@ -196,14 +203,33 @@ class ReportMrpExcel(models.AbstractModel):
             if so.invoice_line_ids:
                 row = 17
                 merge_line = 1
-                for line in so.invoice_line_ids:
-                    sheet.merge_range(row, 0, row + merge_line, 0, line.acc_line_index if line.acc_line_index else '' , format_lines_10) 
-                    sheet.merge_range(row, 1, row + merge_line, 3, line.acc_line_name if line.acc_line_name else '' , format_lines_9_left) 
-                    sheet.merge_range(row, 4, row + merge_line, 7, line.acc_line_number_and_size if line.acc_line_number_and_size else '' , format_lines_11_left) 
-                    sheet.merge_range(row, 8, row + merge_line, 8, line.acc_move_line_qty if line.acc_move_line_qty else '' , format_lines_13) 
-                    sheet.merge_range(row, 9, row + merge_line, 9, line.acc_line_price_unit if line.acc_line_price_unit else '' , format_lines_13) 
-                    sheet.merge_range(row, 10, row + merge_line, 10, line.acc_line_discount if line.acc_line_discount else '' , format_lines_13) 
-                    sheet.merge_range(row, 11, row + merge_line, 11, line.acc_line_sell_unit_price if line.acc_line_sell_unit_price else '' , format_lines_13) 
-                    sheet.merge_range(row, 12, row + merge_line, 12, line.acc_line_price_subtotal if line.acc_line_price_subtotal else '' , format_lines_13) 
+                for ind, line in enumerate(so.invoice_line_ids):
+                # for line in so.invoice_line_ids:
+                    if line.sale_line_ids.display_type == 'line_note':
+                        sheet.merge_range(row, 0, row, 12, "=data!A" + str(ind * 1 + 1), format_lines_note)
+                        sheet_data.write(ind, 0, line.name if line.name else '', format_lines_note)
+                        row += 1
+                    elif line.sale_line_ids.display_type == 'line_section':
+                        sheet.merge_range(row, 0, row, 12, "=data!B" + str(ind * 1 + 1), format_lines_section)
+                        sheet_data.write(ind, 1, line.name if line.name else '', format_lines_section)
+                        row += 1
+                    else:
+
+                        sheet.merge_range(row, 0, row + merge_line, 0, line.acc_line_index if line.acc_line_index else '' , format_lines_10)
+                        sheet.merge_range(row, 1, row + merge_line, 3, line.acc_line_name if line.acc_line_name else '' , format_lines_9_left)
+                        sheet.merge_range(row, 4, row + merge_line, 7, line.acc_line_number_and_size if line.acc_line_number_and_size else '' , format_lines_11_left)
+
+                        if line.sale_line_ids.is_tax_excluded_product:
+                            sheet.merge_range(row, 8, row + merge_line, 8, '', format_lines_13)
+                            sheet.merge_range(row, 9, row + merge_line, 9, '', format_lines_13)
+                            sheet.merge_range(row, 10, row + merge_line, 10, '', format_lines_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, '', format_lines_13)
+                        else:
+                            sheet.merge_range(row, 8, row + merge_line, 8, line.acc_move_line_qty if line.acc_move_line_qty else '', format_lines_13)
+                            sheet.merge_range(row, 9, row + merge_line, 9, line.acc_line_price_unit if line.acc_line_price_unit else '', format_lines_13)
+                            sheet.merge_range(row, 10, row + merge_line, 10, line.acc_line_discount if line.acc_line_discount else '', format_lines_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, line.acc_line_sell_unit_price if line.acc_line_sell_unit_price else '', format_lines_13)
+
+                        sheet.merge_range(row, 12, row + merge_line, 12, line.acc_line_price_subtotal if line.acc_line_price_subtotal else '', format_lines_13)
                     
-                    row += merge_line + 1
+                        row += merge_line + 1
