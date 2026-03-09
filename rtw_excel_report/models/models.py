@@ -1092,11 +1092,35 @@ class SaleOrderLineExcelReport(models.Model):
     
     def _compute_sale_line_calculate_sai(self):
         for line in self:
-            sale_line_id = self.env['stock.move'].search([('sale_line_id', '=', line.id)], limit=1)
+            sale_line_id = self.env['stock.move'].search([('sale_line_id', '=', line.id), ('state', '!=', 'cancel')], limit=1)
             if sale_line_id and sale_line_id.sai:
                 line.sale_line_sai = sale_line_id.sai
             else:
-                line.sale_line_sai = 0
+                # 配送がまだない場合の才数の算出（rtw_stock_move_line/models/stock_move.py のcreate内の処理と同じ）
+                tmpl = line.product_id.product_tmpl_id
+                scale = tmpl.two_legs_scale or 0.0
+                if scale >= 1:
+                    line.sale_line_sai = tmpl.sai * line.product_uom_qty
+
+                elif scale < 1:
+                    calc_qty = (line.product_uom_qty * scale) or 0.0
+
+                    integer_part = int(calc_qty)
+                    decimal_part = calc_qty - integer_part
+
+                    sai_total = integer_part * tmpl.sai_2
+
+                    if decimal_part > 0 and scale:
+                        ratio = decimal_part / scale
+
+                        if ratio <= 1:
+                            sai_total += tmpl.sai
+                        else:
+                            sai_total += tmpl.sai_2
+
+                    line.sale_line_sai = sai_total
+                else:
+                    line.sale_line_sai = 0
 
     def _compute_sale_line_product_no_pack(self):
         for line in self:
@@ -1135,12 +1159,15 @@ class SaleOrderLineExcelReport(models.Model):
                 
     def _compute_sale_line_calculate_packages(self):
         for line in self:
-            sale_line_id = self.env['stock.move'].search([('sale_line_id', '=', line.id)], limit=1)
+            sale_line_id = self.env['stock.move'].search([('sale_line_id', '=', line.id), ('state', '!=', 'cancel')], limit=1)
             if sale_line_id and sale_line_id.product_package_quantity:
                 line.sale_line_calculate_packages = sale_line_id.product_package_quantity
-            else:               
-                line.sale_line_calculate_packages = 0  
-
+            else:
+                # 配送がまだない場合の個口数の算出
+                if line.product_id.two_legs_scale:
+                    line.sale_line_calculate_packages = math.ceil(line.product_uom_qty * line.product_id.two_legs_scale)
+                else:
+                    line.sale_line_calculate_packages = 0
                 
     def _compute_sale_line_product_uom_qty(self):
         for line in self:

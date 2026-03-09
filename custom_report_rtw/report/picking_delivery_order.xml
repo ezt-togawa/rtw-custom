@@ -174,7 +174,7 @@
                     </td>
                     <td class="text-right" style="padding: 10px 0px;">
                       <div class="two-lines">
-                        <span t-esc="l.product_package_quantity" />
+                        <span t-esc="int(l.product_package_quantity)" />
                       </div>
                     </td>
                     <td class="text-right" style="padding: 10px 0px;">
