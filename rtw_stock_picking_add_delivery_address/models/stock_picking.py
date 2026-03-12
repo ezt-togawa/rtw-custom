@@ -109,6 +109,11 @@ class StockPicking(models.Model):
     def button_validate(self):
 
         for picking in self:
+            for move in picking.move_lines:
+                # 予約が0でロックされていても、要求数を完了数にコピーしてエラーを封じる,これでだとアラートが出ない
+                if not move.quantity_done:
+                    move.quantity_done = move.product_uom_qty
+
             if picking.picking_type_id.sequence_code == 'DS':
                 previous_picking = self.env['stock.picking'].search([
                     ('group_id', '=', picking.group_id.id),
