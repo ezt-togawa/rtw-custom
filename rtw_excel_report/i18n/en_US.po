@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-10 06:59+0000\n"
-"PO-Revision-Date: 2024-06-10 06:59+0000\n"
+"POT-Creation-Date: 2026-03-13 06:41+0000\n"
+"PO-Revision-Date: 2026-03-13 06:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,153 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid " 御中"
 msgstr " Dear"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid " 株式会社"
-msgstr " Co. Ltd"
+msgstr " Co., Ltd."
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/models.py:0
+#: code:addons/rtw_excel_report/models/models.py:0
+#: code:addons/rtw_excel_report/models/models.py:0
+#, python-format
+msgid " 様 ご依頼分"
+msgstr " Ordered by Mr./Ms."
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.shipping_instruction
+msgid "'SHIPPING_INSTRUCTION-' + object.current_print"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.mrp_wip_product_list
+msgid "'仕掛品伝票一覧-' + object.current_print"
+msgstr "'WIP_Product_List-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.picking_scheduled_arrival_list
+msgid "'入荷予定リスト-' + object.current_print"
+msgstr "'Scheduled_Arrival_List-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.picking_scheduled_shipment_list
+msgid "'出荷予定リスト-' + object.current_print"
+msgstr "'Scheduled_Shipment_List-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.stock_picking_ship_order_excel
+msgid "'出荷依頼書-' + object.current_print"
+msgstr "'Shipping_Request_Form-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.unit_price_quotation
+msgid "'単価御見積書-' + object.current_print"
+msgstr "'Unit_Price_Quotation-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.mrp_product_label_seal
+msgid "'商品ラベルシール-' "
+msgstr "'Product_Label_Seal-' "
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.product_spec
+msgid "'商品仕様書-' + object.current_print"
+msgstr "'Product_Specification-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.prod_tmpl_inventory_status_list
+msgid "'在庫状況一覧-' + object.current_print"
+msgstr "'Inventory_Status_List-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.list_price_quotation
+msgid "'定価御見積書-' + object.current_print"
+msgstr "'List_Price_Quotation-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.report_purchase_order2
+msgid "'定価注文書-' + object.current_print"
+msgstr "'List_Price_Order_Form-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.report_quotation
+msgid "'御見積書-' + object.current_print"
+msgstr "'Quotation-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.report_quotation_oversea
+msgid "'御見積書（海外）-' + object.current_print"
+msgstr "'Quotation_Overseas-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.picking_scheduled_supply_list
+msgid "'支給予定リスト-' + object.current_print"
+msgstr "'Scheduled_Supply_List-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.picking_supplied_parts_details
+msgid "'支給部材明細-' + object.current_print"
+msgstr "'Supplied_Parts_Details-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.stock_quant_inventory_entry_list
+msgid "'棚卸記入リスト-' + object.current_print"
+msgstr "'Inventory_Entry_List-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.picking_inspection_check_sheet
+msgid "'検品チェックシート-' + object.current_print"
+msgstr "'Inspection_Check_Sheet-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.mrp_purchase_order_inspection
+msgid "'検品発注書-' + object.current_print"
+msgstr "'Inspection_Purchase_Order-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.report_purchase_order
+msgid "'注文書-' + object.current_print"
+msgstr "'Purchase_Order-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.purchase_order_component
+#: model:ir.actions.report,print_report_name:rtw_excel_report.purchase_order_line_component_2
+msgid "'発注書(部材用) -' + object.current_print"
+msgstr "'Purchase_Order_Components-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.mrp_purchase_order
+msgid "'発注書-' + object.current_print"
+msgstr "'Purchase_Order-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.account_invoice
+#: model:ir.actions.report,print_report_name:rtw_excel_report.invoice_sale_order
+msgid "'請求書-' + object.current_print"
+msgstr "'Invoice-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.picking_shipping_form_seal
+msgid "'送り状シール-' + object.current_print"
+msgstr "'Shipping_Label-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.sale_delivery_order
+msgid "'配送作業依頼書-' + object.current_print"
+msgstr "'Delivery Request-' + object.current_print"
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,print_report_name:rtw_excel_report.stock_picking_delivery_excel
+msgid "'配送依頼書-' + object.current_print"
+msgstr "'Delivery Request-' + object.current_print"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
@@ -43,12 +178,6 @@ msgid ""
 msgstr ""
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
-#, python-format
-msgid "(海外)"
-msgstr "Oversea"
-
-#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_bank_statement_line__acc_move_current_date
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_bank_statement_line__acc_move_invoice_date_due
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_bank_statement_line__acc_move_shipping_date
@@ -59,21 +188,21 @@ msgstr "Oversea"
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_payment__acc_move_invoice_date_due
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_payment__acc_move_shipping_date
 msgid "Acc move confirm date"
-msgstr ""
+msgstr "Account move confirm date"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_bank_statement_line__acc_move_invoice_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move__acc_move_invoice_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_payment__acc_move_invoice_name
 msgid "Acc move invoice name"
-msgstr ""
+msgstr "Account move invoice name"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_bank_statement_line__acc_move_print_staff
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move__acc_move_print_staff
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_payment__acc_move_print_staff
 msgid "Acc move print staff"
-msgstr ""
+msgstr "Account move print staff"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_account_number
@@ -111,11 +240,13 @@ msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__action_assemble
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__action_assemble
 msgid "Action assemble"
 msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__action_packages
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__action_packages
 msgid "Action packages"
 msgstr ""
 
@@ -146,7 +277,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_payment__acc_move_amount_untaxed
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_amount_untaxed
 msgid "Amount untax"
-msgstr ""
+msgstr "Amount untaxed"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_amount_untaxed2
@@ -163,6 +294,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move__bank_acc_number
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_payment__bank_acc_number
 msgid "Bank account number"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_billing_notes
+msgid "Billing notes"
 msgstr ""
 
 #. module: rtw_excel_report
@@ -196,13 +332,24 @@ msgid "Blank Cell6"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_line_product_no_delivery
+msgid "Calculate product no delivery"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__calculate_product_pack
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__calculate_product_pack
 msgid "Calculate product pack"
 msgstr ""
 
 #. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_line_product_pack_pdf
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_line_product_pack_delivery
+msgid "Calculate product pack delivery"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__calculate_product_pack_pdf
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__calculate_product_pack_pdf
 msgid "Calculate product pack pdf"
 msgstr ""
 
@@ -231,16 +378,13 @@ msgid "Current Date"
 msgstr ""
 
 #. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__stock_picking_current_date
-msgid "Current date"
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move_container__current_print
+msgid "Current Print"
 msgstr ""
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#, python-format
-msgid "Custom"
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__stock_picking_current_date
+msgid "Current date"
 msgstr ""
 
 #. module: rtw_excel_report
@@ -270,6 +414,11 @@ msgid "Day"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__dear_to_delivery
+msgid "Dear To Delivery"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_purchase_order__purchase_order_detail_address_partner
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_detail_address_partner
 msgid "Detail Address Partner"
@@ -296,6 +445,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_list_price_quotation_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_product_label_sticker_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_product_spec_xls__display_name
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_purchase_order_line_for_part_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_purchase_order_sheet_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_report_purchase_order2_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_report_purchase_order_for_part_xls__display_name
@@ -306,6 +456,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_scheduled_payment_list_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_shipping_instruction_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_shipping_list_xls__display_name
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_picking_delivery_xls__display_name
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_picking_ship_order_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_status_list_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_supplied_material_detail_xls__display_name
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_unit_price_quotation_xls__display_name
@@ -336,6 +488,41 @@ msgid "Fax"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_company
+msgid "Hr Employee Company"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_department
+msgid "Hr Employee Department"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_fax
+msgid "Hr Employee Fax"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_info
+msgid "Hr Employee Info"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_printer
+msgid "Hr Employee Printer"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_tel
+msgid "Hr Employee Tel"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_zip
+msgid "Hr Employee Zip"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__id
@@ -351,6 +538,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_list_price_quotation_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_product_label_sticker_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_product_spec_xls__id
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_purchase_order_line_for_part_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_purchase_order_sheet_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_report_purchase_order2_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_report_purchase_order_for_part_xls__id
@@ -361,6 +549,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_scheduled_payment_list_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_shipping_instruction_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_shipping_list_xls__id
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_picking_delivery_xls__id
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_picking_ship_order_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_status_list_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_supplied_material_detail_xls__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_unit_price_quotation_xls__id
@@ -373,6 +563,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__id
 #: model:ir.model.fields,field_description:rtw_excel_report.field_xlsx_styles__id
 msgid "ID"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__is_child_mo
+msgid "Is Child Mo"
 msgstr ""
 
 #. module: rtw_excel_report
@@ -412,6 +607,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_list_price_quotation_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_product_label_sticker_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_product_spec_xls____last_update
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_purchase_order_line_for_part_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_purchase_order_sheet_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_report_purchase_order2_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_report_purchase_order_for_part_xls____last_update
@@ -422,6 +618,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_scheduled_payment_list_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_shipping_instruction_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_shipping_list_xls____last_update
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_picking_delivery_xls____last_update
+#: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_picking_ship_order_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_stock_status_list_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_supplied_material_detail_xls____last_update
 #: model:ir.model.fields,field_description:rtw_excel_report.field_report_rtw_excel_report_unit_price_quotation_xls____last_update
@@ -449,6 +647,41 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__monthUnit
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__monthUnit
 msgid "Month"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__mrp_child_mo_desired_delivery_date
+msgid "Mrp Child Mo Desired Delivery Date"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__mrp_choose_option_find_warehouse_address
+msgid "Mrp Choose Option Find Warehouse Address"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__mrp_choose_option_find_warehouse_company_name
+msgid "Mrp Choose Option Find Warehouse Company Name"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__mrp_choose_option_find_warehouse_phone
+msgid "Mrp Choose Option Find Warehouse Phone"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__mrp_hr_employee
+msgid "Mrp Hr Employee"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__mrp_picking_type_warehouse_address
+msgid "Mrp Picking Type Warehouse Address"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__mrp_picking_type_warehouse_company
+msgid "Mrp Picking Type Warehouse Company"
 msgstr ""
 
 #. module: rtw_excel_report
@@ -490,11 +723,6 @@ msgid "Note Eng"
 msgstr ""
 
 #. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__packages_number
-msgid "Number packages"
-msgstr ""
-
-#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_date_planned
 msgid "Order Date Planned"
 msgstr ""
@@ -508,6 +736,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_line_calculate_packages
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_order_packages
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__calculate_packages
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__calculate_packages
 msgid "Packages"
 msgstr ""
 
@@ -536,12 +765,12 @@ msgstr ""
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__stock_picking_sipping_to
 msgid "Partner sipping to"
-msgstr ""
+msgstr "Partner shipping to"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__stock_picking_partner_tel_phone
 msgid "Partner tel phone"
-msgstr ""
+msgstr "Partner phone/tel"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_preferred_delivery_date
@@ -564,22 +793,31 @@ msgid "Printing staff"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__product_spec_detail
+msgid "Product Spec Detail"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__product_attribute
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__product_attribute
 msgid "Product attribute"
 msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__product_name
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__product_name
 msgid "Product name"
 msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__product_number_and_size
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__product_number_and_size
 msgid "Product number and size"
 msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__product_pack_and_prod_no
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__product_pack_and_prod_no
 msgid "Product pack and prod no"
 msgstr ""
 
@@ -616,7 +854,7 @@ msgstr ""
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_purchase_order_line__purchase_order_prod_name
 msgid "Purchase Order Prod Name"
-msgstr ""
+msgstr "Purchase Order Product Name"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_ritzwell_staff
@@ -625,13 +863,24 @@ msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.shipping_instruction
-msgid "SHIPPING INSTRUCTION (EXCEL)"
+msgid "SHIPPING INSTRUCTION"
 msgstr ""
 
 #. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__sale_line_instruction_status
-msgid "Sale Line Instruction Status"
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__sale_line_combined_shipment
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__sale_line_combined_shipment
+msgid "Sale Line Combined Shipment"
 msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_order_product_attr_all
+msgid "Sale Order Product Attr All"
+msgstr "Sale Order Product Attribute All"
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_witness_name_phone
+msgid "Sale Witness Name Phone"
+msgstr "Sale Witness Name/Phone"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_bank_statement_line__sale_order
@@ -682,6 +931,11 @@ msgid "Sale order preferred delivery period"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_line_sai
+msgid "Sale_line_sai"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model,name:rtw_excel_report.model_sale_order_line
 msgid "Sales Order Line"
 msgstr ""
@@ -691,6 +945,21 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__stock_scheduled_date
 msgid "Scheduled date"
 msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__send_to_company_delivery
+msgid "Send To Company Delivery"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__send_to_people_delivery
+msgid "Send To People Delivery"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__send_to_tel_fax
+msgid "Send To Tel Fax"
+msgstr "Send To Tel/Fax"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_bank_statement_line__send_company
@@ -710,6 +979,11 @@ msgid "Send to company2"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_shipping_notes
+msgid "Shipping notes"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_shiratani_entry_date
 msgid "Shiratani Entry Date"
 msgstr ""
@@ -718,12 +992,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_move_product_uom_qty
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_shiratani_date
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__stock_shiratani_date
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_move_product_uom_qty
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_shiratani_date
 msgid "Shiratani date"
 msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__stock_picking_shiratani_entry_date
 msgid "Shiratani entry date"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__so_warehouse_arrive_date_has_day
+msgid "So Warehouse Arrive Date Has Day"
 msgstr ""
 
 #. module: rtw_excel_report
@@ -743,12 +1024,37 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_move_line_name_excel
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_move_line_name_excel
+msgid "Stock Move Line Name Excel"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_move_line_name_pdf
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_move_line_name_pdf
+msgid "Stock Move Line Name Pdf"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_move_line_p_type_pdf
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_move_line_p_type_pdf
+msgid "Stock Move Line P Type Pdf"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_move_line_summary_pdf
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_move_line_summary_pdf
+msgid "Stock Move Line Summary Pdf"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move_pallet__stock_pallet_index
 msgid "Stock Pallet Index"
 msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_index
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_index
 msgid "Stock index"
 msgstr ""
 
@@ -760,11 +1066,13 @@ msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_sai
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_sai
 msgid "Stock sai"
 msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_warehouse
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_warehouse
 msgid "Stock warehouse"
 msgstr ""
 
@@ -772,6 +1080,8 @@ msgstr ""
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
@@ -792,10 +1102,10 @@ msgid "TEL: "
 msgstr ""
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "TEL／携帯"
-msgstr "TEL／Mobile"
+msgstr "TEL/Mobile"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_tel
@@ -844,6 +1154,11 @@ msgid "Transfer"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__price_unit
+msgid "Unit Price"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_validity_date
 msgid "Validity Date"
 msgstr ""
@@ -876,108 +1191,78 @@ msgstr ""
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__acc_line_name
 msgid "acc line name excel"
-msgstr ""
+msgstr "Account line name (Excel)"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__acc_line_name_pdf
 msgid "acc line name pdf"
-msgstr ""
+msgstr "Account line name (PDF)"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_bank_name
 msgid "bank name"
-msgstr ""
+msgstr "Bank name"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_bank_branch
 msgid "bank_branch"
-msgstr ""
+msgstr "Bank branch"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__check_oversea
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_picking__check_oversea
 msgid "checkout oversea"
-msgstr ""
+msgstr "Check overseas"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__acc_line_discount
 msgid "discount"
-msgstr ""
+msgstr "Discount"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_draff_invoice
 msgid "draff invoice"
-msgstr ""
-
-#. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__mrp_hr_employee
-msgid "hr employee"
-msgstr ""
-
-#. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_company
-msgid "hr employee company"
-msgstr ""
-
-#. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_department
-msgid "hr employee department"
-msgstr ""
-
-#. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_fax
-msgid "hr employee fax"
-msgstr ""
-
-#. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_info
-msgid "hr employee info"
-msgstr ""
-
-#. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_tel
-msgid "hr employee tel"
-msgstr ""
-
-#. module: rtw_excel_report
-#: model:ir.model.fields,field_description:rtw_excel_report.field_mrp_production__hr_employee_zip
-msgid "hr employee zip"
-msgstr ""
+msgstr "Draft invoice"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_purchase_order_line__purchase_order_index
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_order_index
 msgid "index"
-msgstr ""
+msgstr "Index"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_bank_statement_line__acc_move_draff_invoice
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move__acc_move_draff_invoice
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_payment__acc_move_draff_invoice
 msgid "invoice name"
-msgstr ""
+msgstr "Invoice name"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__is_show_prescription_note
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__is_show_prescription_note_en
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__is_show_prescription_note_ita
 msgid "is show prescription note"
-msgstr ""
+msgstr "Show prescription note"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_number_account
 msgid "number account"
-msgstr ""
+msgstr "Account number"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_partner_address
 msgid "partner address"
-msgstr ""
+msgstr "Partner address"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_partner_info
 msgid "partner information"
-msgstr ""
+msgstr "Partner information"
+
+#. module: rtw_excel_report
+#: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_payment_deadline
+msgid "payment deadline"
+msgstr "Payment deadline"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__prescription_address_country
@@ -985,29 +1270,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__prescription_email
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__prescription_note
 msgid "prescription note"
-msgstr ""
+msgstr "Prescription note"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__prescription_address_info
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__prescription_note_detail
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__prescription_tel_fax
 msgid "prescription note detail"
-msgstr ""
+msgstr "Prescription note detail"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_print_staff
 msgid "print staff"
-msgstr ""
+msgstr "Print staff"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_purchase_order__purchase_order_origin
 msgid "purchase order origin"
-msgstr ""
+msgstr "Purchase order origin"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_purchase_order__purchase_print_staff
 msgid "purchase print staff"
-msgstr ""
+msgstr "Purchase print staff"
 
 #. module: rtw_excel_report
 #: model:ir.model,name:rtw_excel_report.model_report_rtw_excel_report_delivery_sale_order_xls
@@ -1057,6 +1342,11 @@ msgstr ""
 #. module: rtw_excel_report
 #: model:ir.model,name:rtw_excel_report.model_report_rtw_excel_report_product_spec_xls
 msgid "report.rtw_excel_report.product_spec_xls"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model,name:rtw_excel_report.model_report_rtw_excel_report_purchase_order_line_for_part_xls
+msgid "report.rtw_excel_report.purchase_order_line_for_part_xls"
 msgstr ""
 
 #. module: rtw_excel_report
@@ -1110,6 +1400,16 @@ msgid "report.rtw_excel_report.shipping_list_xls"
 msgstr ""
 
 #. module: rtw_excel_report
+#: model:ir.model,name:rtw_excel_report.model_report_rtw_excel_report_stock_picking_delivery_xls
+msgid "report.rtw_excel_report.stock_picking_delivery_xls"
+msgstr ""
+
+#. module: rtw_excel_report
+#: model:ir.model,name:rtw_excel_report.model_report_rtw_excel_report_stock_picking_ship_order_xls
+msgid "report.rtw_excel_report.stock_picking_ship_order_xls"
+msgstr ""
+
+#. module: rtw_excel_report
 #: model:ir.model,name:rtw_excel_report.model_report_rtw_excel_report_stock_status_list_xls
 msgid "report.rtw_excel_report.stock_status_list_xls"
 msgstr ""
@@ -1152,12 +1452,12 @@ msgstr ""
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__acc_line_sell_unit_price
 msgid "sell unit price"
-msgstr ""
+msgstr "Sell unit price"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_sipping_to
 msgid "sipping to"
-msgstr ""
+msgstr "Shipping to"
 
 #. module: rtw_excel_report
 #: model:ir.model,name:rtw_excel_report.model_stock_move_container
@@ -1171,62 +1471,66 @@ msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_stock_move__stock_product_uom_qty
+#: model:ir.model.fields,field_description:rtw_excel_report.field_stock_reservation__stock_product_uom_qty
 msgid "stock_product_uom_qty"
 msgstr ""
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_waypoint_address
 msgid "waypoint address"
-msgstr ""
+msgstr "Waypoint address"
 
 #. module: rtw_excel_report
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order__sale_order_waypoint_name
 msgid "waypoint name"
-msgstr ""
+msgstr "Waypoint name"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "※右表にチェック"
-msgstr "※Checklist on the right"
+msgstr "*Check the table on the right"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "※脚部の強度確認を必ず実施して下さい"
-msgstr "※Please check the strength of the legs"
+msgstr "*Please ensure the leg strength test is performed"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "≪仕掛品伝票一覧≫"
-msgstr "≪WIP Product List≫"
+msgstr "<<WIP Product List>>"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "≪入荷予定リスト≫ "
-msgstr "≪Scheduled arrival list≫ "
+msgstr "<<Scheduled Arrival List>> "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "≪出荷予定リスト≫ "
-msgstr "≪Scheduled shipment list≫ "
+msgstr "<<Scheduled Shipment List>> "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #, python-format
 msgid "≪支給予定リスト≫"
-msgstr "≪Scheduled supply list≫"
+msgstr "<<Scheduled Supply List>>"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #, python-format
 msgid "≪棚卸記入リスト≫ "
-msgstr "≪Inventory entry list≫ "
+msgstr "<<Inventory Entry List>> "
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "■不良箇所確認表"
@@ -1246,11 +1550,13 @@ msgstr "■Scheduled arrival data"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "■最終検品時　作業確認表"
 msgstr "■Checklist for final inspection"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "■梱包時　作業確認表"
@@ -1262,48 +1568,42 @@ msgstr "■Checklist for packing"
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
-msgid "⽀払条件："
-msgstr "Payment Terms:"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/list_price_quotation.py:0
-#: code:addons/rtw_excel_report/models/report_quotation.py:0
-#: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
-#: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
-#, python-format
 msgid "⾒積有効期限："
-msgstr "Quotation Expiration Date:"
+msgstr "Quotation Validity Period:"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
 msgid "お届け先（物件名）"
-msgstr "Delivery address (property name)"
+msgstr "Delivery Address (Property Name)"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #, python-format
 msgid "お振込先"
-msgstr "Delivery address"
+msgstr "Bank Transfer Information"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #, python-format
 msgid "お支払内容"
-msgstr "Payment detail"
+msgstr "Payment Details"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #, python-format
 msgid "お支払期限"
-msgstr "Payment period"
+msgstr "Payment Deadline"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "これ以降"
-msgstr "Thenceforth"
+msgstr "Thereafter"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
@@ -1312,31 +1612,44 @@ msgstr "Thenceforth"
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "ご査収の程宜しくお願い致します。"
-msgstr "Please review it at your earliest convenience."
+msgstr "Please review it at your convenience."
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "その他不良"
-msgstr "Other defection"
+msgstr "Other defects"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#, python-format
+msgid "カスタム"
+msgstr "Custom"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "ガタツキ・脚裏の汚れを確認"
-msgstr "Unstableness and underside dirt"
+msgstr "Check for instability and dirt on the soles of the legs"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "キシミ音"
-msgstr "Squeaking noise"
+msgstr "Squeak"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "キズ・へこみ"
-msgstr "Scratch & dent"
+msgstr "Scratch/Dent"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
@@ -1348,20 +1661,19 @@ msgstr "Comment"
 #: code:addons/rtw_excel_report/models/product_spec.py:0
 #, python-format
 msgid "サイズ："
-msgstr "Size"
+msgstr "Size:"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #, python-format
 msgid "デシ"
-msgstr "Deci-"
+msgstr "Deci"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "デポ"
-msgstr "Depo"
+msgstr "Depot"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
@@ -1374,21 +1686,24 @@ msgstr "Memo"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "リッツウェル"
 msgstr "Ritzwell"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "リッツウェル製造部 "
-msgstr "Ritzwell manufacture dept. "
+msgstr "Ritzwell Manufacturing Dept. "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "レベル・脚裏確認"
-msgstr "Check levelness & underside"
+msgstr "Level/Leg check"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
@@ -1402,6 +1717,7 @@ msgstr "Lot"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "ワレ"
 msgstr "Crack"
@@ -1411,63 +1727,58 @@ msgstr "Crack"
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #, python-format
 msgid "下記の通り、ご請求申し上げます。"
-msgstr "We would like to request the following."
+msgstr "We would like to invoice you as follows."
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #, python-format
 msgid "下記の通り注文いたします。"
-msgstr "Order shall be made as follows."
+msgstr "We place an order as follows."
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "不良箇所詳細"
-msgstr "Detailed dscription"
+msgstr "Defect Details"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "不良項目"
-msgstr "Defection items"
+msgstr "Defect Item"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "予定数"
-msgstr "Plan qty"
+msgstr "Scheduled Quantity"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "予定日"
-msgstr "Plan date"
+msgstr "Scheduled Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "仕入先"
-msgstr "Supplier"
+msgstr "Vendor"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
+#: model:ir.actions.report,name:rtw_excel_report.mrp_wip_product_list
 #, python-format
 msgid "仕掛品伝票一覧"
 msgstr "WIP Product List"
 
 #. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.work_progress_slip_list
-msgid "仕掛品伝票一覧(EXCEL)"
-msgstr "WIP Product List(EXCEL)"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.mrp_wip_product_list
-msgid "仕掛品伝票一覧"
-msgstr "WIP Product List"
-
-#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
@@ -1475,17 +1786,7 @@ msgid "仕様"
 msgstr "Specifications"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
-#: code:addons/rtw_excel_report/models/invoice_account_move.py:0
-#: code:addons/rtw_excel_report/models/invoice_account_move.py:0
-#: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
-#: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__acc_line_product_detail
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__acc_line_product_detail2
 #: model:ir.model.fields,field_description:rtw_excel_report.field_purchase_order_line__purchase_order_product_detail
@@ -1493,33 +1794,25 @@ msgstr "Specifications"
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_order_product_detail_2
 #, python-format
 msgid "仕様・詳細"
-msgstr "Specs & details"
+msgstr "Specs & Details"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/list_price_quotation.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#: code:addons/rtw_excel_report/models/report_quotation.py:0
-#: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
-#: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "仕様・詳細１"
-msgstr "Specs & details 1"
+msgstr "Specs & Details 1"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/list_price_quotation.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#: code:addons/rtw_excel_report/models/report_quotation.py:0
-#: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
-#: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "仕様・詳細２"
-msgstr "Specs & details 2"
+msgstr "Specs & Details 2"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
@@ -1531,42 +1824,68 @@ msgstr "Reservation"
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "仮押え込み"
-msgstr "Reserved"
+msgstr "Reserved Included"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/product_spec.py:0
+#: code:addons/rtw_excel_report/models/product_spec.py:0
+#, python-format
+msgid "件名"
+msgstr "Subject"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
-#: code:addons/rtw_excel_report/models/product_spec.py:0
-#: code:addons/rtw_excel_report/models/product_spec.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #, python-format
-msgid "件名"
-msgstr "Title"
+msgid "件名 : "
+msgstr "Subject : "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
-#: code:addons/rtw_excel_report/models/report_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
-msgid "件名    "
-msgstr "Title "
+msgid "件名 :   "
+msgstr "Subject :   "
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/report_quotation.py:0
+#, python-format
+msgid "件名 :    "
+msgstr "Subject :    "
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
+#, python-format
+msgid "会社名・氏名"
+msgstr "Company / Name"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "伝票区分"
-msgstr "Form ctegory"
+msgstr "Slip Type"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#, python-format
+msgid "住    所："
+msgstr "Address:"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "住所"
 msgstr "Address"
@@ -1581,71 +1900,79 @@ msgstr "Address:"
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "作成済"
-msgstr "Status"
+msgstr "Created"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "作業項目"
-msgstr "Work Items"
+msgstr "Work Item"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "使用数"
-msgstr "Usage"
+msgstr "Quantity Used"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "保管場所"
-msgstr "Storage location"
+msgstr "Storage Location"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "個口"
-msgstr "Pcs"
+msgstr "Packages"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "個口数"
-msgstr "Pieces Qty"
+msgstr "Number of Packages"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
 msgid "備考"
-msgstr "Note"
+msgstr "Remarks"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "備考１"
-msgstr "Note 1"
+msgstr "Remarks 1"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "備考２"
-msgstr "Note 2"
+msgstr "Remarks 2"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "備考："
-msgstr "Note:"
+msgstr "Remarks:"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
@@ -1658,17 +1985,8 @@ msgstr "Arrival"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
-#, python-format
-msgid "入荷予定リスト"
-msgstr "Scheduled Arrival List"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.scheduled_arrival_list
-msgid "入荷予定リスト(EXCEL)"
-msgstr "Scheduled Arrival List(EXCEL)"
-
-#. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.picking_scheduled_arrival_list
+#, python-format
 msgid "入荷予定リスト"
 msgstr "Scheduled Arrival List"
 
@@ -1676,39 +1994,37 @@ msgstr "Scheduled Arrival List"
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "入荷予定数"
-msgstr "Scheduled arrival qty"
+msgstr "Scheduled Arrival Quantity"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "入荷予定日"
-msgstr "Scheduled arrival date"
+msgstr "Scheduled Arrival Date"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
+#, python-format
+msgid "入荷元 "
+msgstr "Supplier "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "入荷数"
-msgstr "Arrival qty"
+msgstr "Arrival Quantity"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
 msgid "入荷日"
-msgstr "Shipping Date"
+msgstr "Arrival Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
-#, python-format
-msgid "出荷予定リスト"
-msgstr "Scheduled shipping list"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.shipping_list
-msgid "出荷予定リスト(EXCEL)"
-msgstr "Scheduled Shipment List(EXCEL)"
-
-#. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.picking_scheduled_shipment_list
+#, python-format
 msgid "出荷予定リスト"
 msgstr "Scheduled Shipment List"
 
@@ -1716,11 +2032,12 @@ msgstr "Scheduled Shipment List"
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "出荷予定日"
-msgstr "Scheduled shipping date"
+msgstr "Scheduled Shipping Date"
 
 #. module: rtw_excel_report
-#: model:ir.actions.act_window,name:rtw_excel_report.action_ship_order_export_xlsx
-#: model:ir.ui.menu,name:rtw_excel_report.menu_report_ship_order
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
+#: model:ir.actions.report,name:rtw_excel_report.stock_picking_ship_order_excel
+#, python-format
 msgid "出荷依頼書"
 msgstr "Shipping Request Form"
 
@@ -1728,6 +2045,7 @@ msgstr "Shipping Request Form"
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "出荷日"
 msgstr "Shipping Date"
@@ -1735,16 +2053,17 @@ msgstr "Shipping Date"
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/invoice_sticker.py:0
 #, python-format
 msgid "別注"
-msgstr "Special order"
+msgstr "Special Order"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
 #, python-format
 msgid "単価 "
-msgstr "Unit price "
+msgstr "Unit Price "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
@@ -1755,19 +2074,10 @@ msgstr "Unit Price Quotation"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "取り付け・加工等"
-msgstr "Installation & processing"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
-#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#, python-format
-msgid "取説"
-msgstr "Manual"
+msgstr "Installation / Processing"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
@@ -1780,26 +2090,26 @@ msgstr "Order"
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "受注No"
-msgstr "Order no"
+msgstr "Order No."
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "受注引当"
-msgstr "Order allocation"
+msgstr "Order Allocation"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "受注数"
-msgstr "Order qty"
+msgstr "Order Quantity"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "受注日"
-msgstr "Order date"
+msgstr "Order Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
@@ -1807,25 +2117,37 @@ msgstr "Order date"
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
 #, python-format
 msgid "受注番号"
-msgstr "Order no"
+msgstr "Order Number"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "受注番号 "
-msgstr "Order no"
+msgstr "Order Number "
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #, python-format
-msgid "同梱物"
+msgid "同梱"
 msgstr "Bundle"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#, python-format
+msgid "同梱物"
+msgstr "Bundled Items"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "同梱物の確認"
-msgstr "Check bundled items"
+msgstr "Verification of Bundled Items"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
@@ -1834,23 +2156,30 @@ msgstr "Check bundled items"
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/report_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "品名"
 msgstr "Product Name"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
+#, python-format
+msgid "品名・仕様"
+msgstr "Product Name / Specs"
+
+#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "品番"
-msgstr "Product no"
+msgstr "Product No."
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
@@ -1861,35 +2190,28 @@ msgstr "Product no"
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #: code:addons/rtw_excel_report/models/report_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #: model:ir.model.fields,field_description:rtw_excel_report.field_account_move_line__acc_line_number_and_size
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_order_number_and_size
 #, python-format
 msgid "品番・サイズ"
-msgstr "Product no & size"
+msgstr "Product No. / Size"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #, python-format
 msgid "品質管理部 御中"
-msgstr "Dear quality control dept"
+msgstr "To Quality Control Dept."
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/product_label_sticker.py:0
+#: model:ir.actions.report,name:rtw_excel_report.mrp_product_label_seal
 #, python-format
 msgid "商品ラベルシール"
-msgstr "Product Label Seal"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.product_label_sticker
-msgid "商品ラベルシール(EXCEL)"
-msgstr "Product Label Seal(EXCEL)"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.mrp_product_label_seal
-msgid "商品ラベルシール"
-msgstr "Product Label Seal"
+msgstr "Product Label Sticker"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/product_spec.py:0
@@ -1903,12 +2225,7 @@ msgstr "Product Specifications"
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "商品名"
-msgstr "Product name"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.stock_status_list
-msgid "在庫状況一覧(EXCEL)"
-msgstr "Inventory Status List(EXCEL)"
+msgstr "Product Name"
 
 #. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.prod_tmpl_inventory_status_list
@@ -1917,15 +2234,17 @@ msgstr "Inventory Status List"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "塗装不良・ムラ"
-msgstr "Paint defect"
+msgstr "Painting Defect / Unevenness"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "外観チェック"
-msgstr "Check appearance"
+msgstr "Visual Check"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
@@ -1940,28 +2259,22 @@ msgstr "Check appearance"
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_order_price_unit
 #, python-format
 msgid "定価"
-msgstr "List price"
+msgstr "List Price"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #, python-format
 msgid "定価合計: "
-msgstr "Total list price: "
+msgstr "Total List Price: "
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/list_price_quotation.py:0
 #: model:ir.actions.report,name:rtw_excel_report.list_price_quotation
-#, python-format
 msgid "定価御見積書"
 msgstr "List Price Quotation"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #: model:ir.actions.report,name:rtw_excel_report.report_purchase_order2
-#, python-format
 msgid "定価注文書"
 msgstr "List Price Order Form"
 
@@ -1969,19 +2282,25 @@ msgstr "List Price Order Form"
 #: code:addons/rtw_excel_report/models/product_spec.py:0
 #, python-format
 msgid "定価："
-msgstr "List price:"
+msgstr "List Price:"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
+#, python-format
+msgid "定期便"
+msgstr "Regular Flight"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #, python-format
 msgid "実在庫"
-msgstr "Actual stock"
+msgstr "Physical Inventory"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
 #, python-format
 msgid "届先名"
-msgstr "To"
+msgstr "Consignee Name"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
@@ -1993,25 +2312,26 @@ msgstr "Factory"
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "工場出荷"
-msgstr "Factory shipment"
+msgstr "Factory Shipment"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "工場責任者"
-msgstr "Factory manager"
+msgstr "Factory Manager"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "帳簿在庫"
-msgstr "Book stock"
+msgstr "Book Inventory"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #, python-format
 msgid "帳簿在庫数"
-msgstr "Book stock qty"
+msgstr "Book Inventory Qty"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
@@ -2029,65 +2349,70 @@ msgstr ""
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "引当のみ"
-msgstr "Allocation only"
+msgstr "Allocation Only"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "引当基準日"
-msgstr "Allocation base date"
+msgstr "Allocation Base Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "張り仕上がり"
-msgstr "Upholstery finish"
+msgstr "Upholstery Finish"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "張り後"
-msgstr "Post upholstery"
+msgstr "After Upholstery"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "張地"
-msgstr "Upholstery"
+msgstr "Fabric / Leather"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #, python-format
 msgid "張地・部材名"
-msgstr "Upholstery & product name"
+msgstr "Fabric / Component Name"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "張地不良（ベルト・ファスナー)"
-msgstr "Upholstery defection (belt & zipper)"
+msgstr "Upholstery Defect (Belt / Zipper)"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
 #, python-format
 msgid "張地支給明細"
-msgstr "Upholstery supply details"
+msgstr "Fabric Supply Details"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
 #, python-format
 msgid "張地支給明細 "
-msgstr "Upholstery supply details"
+msgstr "Fabric Supply Details "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "得意先名"
-msgstr "Customer name"
+msgstr "Customer Name"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "御中 "
 msgstr "Dear "
@@ -2099,19 +2424,19 @@ msgstr "Dear "
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "御依頼の件、下記の通りお⾒積り致しました。"
-msgstr "We have prepared an estimate as requested."
+msgstr "We are pleased to provide the estimate as follows per your request."
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/list_price_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation.py:0
+#: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #: model:ir.actions.report,name:rtw_excel_report.report_quotation
 #, python-format
 msgid "御見積書"
 msgstr "Quotation"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #: model:ir.actions.report,name:rtw_excel_report.report_quotation_oversea
-#, python-format
 msgid "御見積書（海外）"
 msgstr "Quotation (Overseas)"
 
@@ -2126,7 +2451,16 @@ msgstr "Invoice"
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "手段"
-msgstr "Method"
+msgstr "Means"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/shipping_list.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
+#, python-format
+msgid "才数"
+msgstr "Measurement (CBM)"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
@@ -2147,13 +2481,6 @@ msgid "担当者"
 msgstr "PIC"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
-#, python-format
-msgid "担当者名"
-msgstr "Person In Charge"
-
-#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
@@ -2162,45 +2489,48 @@ msgstr "Person In Charge"
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "掛率 "
-msgstr "Markup"
+msgstr "Rate "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "接合部スキマ・グラツキ"
-msgstr "Joints gaps & unstableness"
+msgstr "Joint Gaps / Instability"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #, python-format
 msgid "換算"
-msgstr "convert"
+msgstr "Conversion"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
-msgid "搬入日時"
-msgstr "Delivery Datetime:"
+msgid "搬入設置日"
+msgstr "Delivery & Installation Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
-msgid "搬入立会人"
-msgstr "Delivery witness"
+msgid "搬入費用："
+msgstr "Delivery Fee:"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/list_price_quotation.py:0
+#: code:addons/rtw_excel_report/models/report_quotation.py:0
+#: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
+#: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
+#, python-format
+msgid "支払方法："
+msgstr "Payment Method:"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
-#, python-format
-msgid "支給予定リスト"
-msgstr "Scheduled Supply List"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.scheduled_payment_list
-msgid "支給予定リスト(EXCEL)"
-msgstr "Scheduled Supply List(EXCEL)"
-
-#. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.picking_scheduled_supply_list
+#, python-format
 msgid "支給予定リスト"
 msgstr "Scheduled Supply List"
 
@@ -2208,17 +2538,12 @@ msgstr "Scheduled Supply List"
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #, python-format
 msgid "支給日"
-msgstr "Supply date"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.supplied_material_detail
-msgid "支給部材明細(EXCEL)"
-msgstr "Supplied Parts Details(EXCEL)"
+msgstr "Supply Date"
 
 #. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.picking_supplied_parts_details
 msgid "支給部材明細"
-msgstr "Supplied Parts Details"
+msgstr "Supplied Material Details"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
@@ -2235,6 +2560,8 @@ msgstr "Supplied Parts Details"
 #: code:addons/rtw_excel_report/models/report_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
@@ -2242,22 +2569,18 @@ msgid "数量"
 msgstr "Quantity"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/product_label_sticker.py:0
+#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
-msgid "日1"
-msgstr "Day1"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/product_label_sticker.py:0
-#, python-format
-msgid "日2"
-msgstr "Day2"
+msgid "時間"
+msgstr "Time"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "最終検品"
-msgstr "Final check"
+msgstr "Final Inspection"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
@@ -2267,34 +2590,29 @@ msgstr "Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "木目・節・白太"
-msgstr "Woodgrain, knots & sapwood"
+msgstr "Wood Grain / Knots / Sapwood"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "木部"
-msgstr "Wood"
+msgstr "Wooden Part"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #, python-format
 msgid "枚数"
-msgstr "Sheet qty"
+msgstr "Number of Sheets"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
-#, python-format
-msgid "株式 会社リッツウェル"
-msgstr "Ritzwell Co., Ltd."
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "株式会社 "
-msgstr "Co. Ltd."
+msgstr "Co., Ltd. "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
@@ -2303,6 +2621,14 @@ msgid "株式会社 リッツウェル"
 msgstr "Ritzwell Co., Ltd."
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
+#, python-format
+msgid "株式会社リッツウェル 宛"
+msgstr "To: Ritzwell Co., Ltd."
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "梱包"
@@ -2310,26 +2636,22 @@ msgstr "Packing"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "梱包仕様・製品梱包間違い"
-msgstr "Packing specs & product packing errors"
+msgstr "Packing Specs / Wrong Product Packing"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #, python-format
 msgid "棚卸実数 "
-msgstr "Actual inventory "
+msgstr "Physical Inventory Count "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #, python-format
 msgid "棚卸数"
-msgstr "Inventory qty"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.inventory_import_list
-msgid "棚卸記入リスト(EXCEL)"
-msgstr "Inventory Entry List(EXCEL)"
+msgstr "Inventory Quantity"
 
 #. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.stock_quant_inventory_entry_list
@@ -2338,46 +2660,37 @@ msgstr "Inventory Entry List"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "検印シール"
-msgstr "Inspection seal"
+msgstr "Inspection Seal"
 
 #. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.inspection_check_sheet
-msgid "検品チェックシート(EXCEL)"
-msgstr "Inspection Check Sheet(EXCEL)"
-
-#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: model:ir.actions.report,name:rtw_excel_report.picking_inspection_check_sheet
+#, python-format
 msgid "検品チェックシート"
 msgstr "Inspection Check Sheet"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "検品日"
-msgstr "Inspection date"
+msgstr "Inspection Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: model:ir.actions.report,name:rtw_excel_report.mrp_purchase_order_inspection
 #, python-format
 msgid "検品発注書"
 msgstr "Purchase Order Inspection"
 
 #. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.inspection_order_form
-msgid "検品発注書(EXCEL)"
-msgstr "Purchase Order Inspection(EXCEL)"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.mrp_purchase_order_inspection
-msgid "検品発注書"
-msgstr "Purchase Order Inspection"
-
-#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "検品者"
@@ -2387,49 +2700,33 @@ msgstr "Inspector"
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "残数"
-msgstr "Remaining qty"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
-#, python-format
-msgid "氏名"
-msgstr "full name"
+msgstr "Remaining Qty"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "汚れ・銀ペン・接着剤"
-msgstr "Dirt, silver pen, glue"
+msgstr "Dirt / Silver Pen / Glue"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "注意点"
-msgstr "Important points"
+msgstr "Notes"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #: model:ir.actions.report,name:rtw_excel_report.report_purchase_order
 #, python-format
 msgid "注文書"
 msgstr "Order Form"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#, python-format
-msgid "海外"
-msgstr "Oversea"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/invoice_account_move.py:0
-#: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
@@ -2437,7 +2734,14 @@ msgstr "Oversea"
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #, python-format
 msgid "消費税"
-msgstr "Consumption tax"
+msgstr "Consumption Tax"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/invoice_account_move.py:0
+#: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
+#, python-format
+msgid "消費税(10%)"
+msgstr "Consumption Tax (10%)"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
@@ -2446,66 +2750,58 @@ msgstr "Consumption tax"
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "消費税は含まれておりません"
-msgstr "Sales tax is not included"
+msgstr "Tax not included"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
 #, python-format
 msgid "物件名"
-msgstr "Property name"
+msgstr "Property Name"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/invoice_sticker.py:0
 #, python-format
 msgid "特注"
-msgstr "Custom"
+msgstr "Custom-made"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "番号"
-msgstr "No"
+msgstr "No."
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "発注"
-msgstr "Order"
+msgstr "Ordering"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "発注先"
-msgstr "Order address"
+msgstr "Supplier"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "発注数"
-msgstr "Order qty"
+msgstr "Order Quantity"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#, python-format
-msgid "発注書"
-msgstr "Purchase Order"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.purchase_order_sheet
-msgid "発注書(EXCEL)"
-msgstr "Purchase Order(EXCEL)"
-
-#. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.mrp_purchase_order
+#, python-format
 msgid "発注書"
 msgstr "Purchase Order"
 
@@ -2514,23 +2810,23 @@ msgstr "Purchase Order"
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
 #, python-format
 msgid "発注書(部材用)"
-msgstr "Purchase Order(Components)"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.purchase_order_for_part
-msgid "発注書(部材用）-(EXCEL)"
-msgstr "Purchase Order(Components) -(EXCEL)"
+msgstr "Purchase Order (Components)"
 
 #. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.purchase_order_component
-msgid "発注書(部材用）"
-msgstr "Purchase Order(Components)"
+msgid "発注書(部材用) "
+msgstr "Purchase Order (Components) "
+
+#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.purchase_order_line_component_2
+msgid "発注書(部材用/明細別)"
+msgstr "Purchase Order (Components / by Line)"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "発注期限日"
-msgstr "Order deadline"
+msgstr "Order Deadline"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
@@ -2548,9 +2844,17 @@ msgstr "Order Deadline:"
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "発注番号"
-msgstr "Order No"
+msgstr "Order Number"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
+#, python-format
+msgid "発注者 "
+msgstr "Ordered by "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
@@ -2565,18 +2869,30 @@ msgid "白谷"
 msgstr "Shiratani"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
+#, python-format
+msgid "白谷着日"
+msgstr "Shiratani Arrival Date"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "直座り検査"
-msgstr "Upright inspection"
+msgstr "Direct Sitting Test"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
 #, python-format
 msgid "着日"
-msgstr "Shipping date"
+msgstr "Arrival Date"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
@@ -2584,14 +2900,7 @@ msgstr "Shipping date"
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "確認"
-msgstr "CB"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
-#, python-format
-msgid "社名"
-msgstr "Company Name"
+msgstr "Verified"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
@@ -2603,14 +2912,15 @@ msgstr "Company Name"
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #, python-format
 msgid "税抜合計"
-msgstr "Total w/o tax"
+msgstr "Subtotal (Excl. Tax)"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/list_price_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #, python-format
-msgid "税抜定価合計: "
-msgstr "List price w/o tax: "
+msgid "税抜定価合計 "
+msgstr "Subtotal List Price (Excl. Tax) "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
@@ -2622,7 +2932,14 @@ msgstr "List price w/o tax: "
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #, python-format
 msgid "税込合計"
-msgstr "Total w/tax"
+msgstr "Total (Incl. Tax)"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#, python-format
+msgid "立 会 人："
+msgstr "Witness:"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
@@ -2643,7 +2960,7 @@ msgstr "Witness Contact"
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #, python-format
 msgid "糸島工場 御中"
-msgstr "Dear Itoshima factory"
+msgstr "To Itoshima Factory"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
@@ -2659,7 +2976,7 @@ msgstr "Delivery Address"
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #, python-format
 msgid "納品場所"
-msgstr "Delivery name"
+msgstr "Delivery Location"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
@@ -2671,69 +2988,60 @@ msgid "納品場所："
 msgstr "Delivery Location:"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/invoice_account_move.py:0
-#, python-format
-msgid "納品希望⽇"
-msgstr "Desired delivery date"
-
-#. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation.py:0
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "納品希望⽇："
-msgstr "Desired Delivery Date:"
+msgstr "Requested Delivery Date:"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #, python-format
 msgid "納品希望日"
-msgstr "Desired delivery date"
+msgstr "Requested Delivery Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #, python-format
 msgid "納品日"
-msgstr "Delivery date"
+msgstr "Delivery Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
 #, python-format
 msgid "納期"
-msgstr "Delivery deadline"
+msgstr "Delivery Deadline"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
 msgid "組立"
 msgstr "Assembly"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "脚切・プラパート・同梱物・その他"
-msgstr "Leg cut, plastic, bundles, etc."
+msgstr "Leg Cut / Glides / Bundles / Others"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "脚部強度確認"
-msgstr "Check leg strength"
+msgstr "Leg Strength Verification"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "製作"
-msgstr "Manufacture"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/invoice_account_move.py:0
-#, python-format
-msgid "製作⽇数"
-msgstr "Manufacture period"
+msgstr "Production"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
@@ -2742,86 +3050,66 @@ msgstr "Manufacture period"
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
 msgid "製作⽇数："
-msgstr "Manufacturing time (days):"
+msgstr "Production Lead Time:"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #, python-format
 msgid "製作中"
-msgstr "Manufacturing"
+msgstr "In Production"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #, python-format
 msgid "製作中在庫"
-msgstr "Manufacturing inventory"
+msgstr "WIP Inventory"
 
 #. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "製品名"
-msgstr "Product name"
+msgstr "Product Name"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "製造工場 "
-msgstr "Factory"
+msgstr "Manufacturing Factory "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #, python-format
 msgid "西暦        年   月   日"
-msgstr "Date        ／   ／   "
+msgstr "Year / Month / Day"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/supplied_material_detail.py:0
 #, python-format
 msgid "要尺"
-msgstr "Required size"
+msgstr "Required Amount"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "要検品"
-msgstr "Key item"
+msgstr "Inspection Required"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/scheduled_arrival_list.py:0
 #, python-format
 msgid "記入メモ"
-msgstr "Memo"
+msgstr "Entry Memo"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
-#, python-format
-msgid "設置先"
-msgstr "Installation Location"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
-#, python-format
-msgid "設置先〒"
-msgstr "Installation Location 〒"
-
-#. module: rtw_excel_report
+#: model:ir.actions.report,name:rtw_excel_report.account_invoice
 #: model:ir.actions.report,name:rtw_excel_report.invoice_sale_order
 msgid "請求書"
 msgstr "Invoice"
 
 #. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.invoice_account_move
-msgid "請求書(EXCEL)2"
-msgstr "Invoice(EXCEL)2"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.account_invoice
-msgid "請求書"
-msgstr "Invoice"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
 #: code:addons/rtw_excel_report/models/list_price_quotation.py:0
@@ -2835,28 +3123,26 @@ msgstr "Invoice"
 #: model:ir.model.fields,field_description:rtw_excel_report.field_sale_order_line__sale_order_price_subtotal
 #, python-format
 msgid "販売⾦額"
-msgstr "Sales amount"
+msgstr "Sales Amount"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
+#, python-format
+msgid "販売価格合計"
+msgstr "Total Sales Price"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
 #, python-format
 msgid "販売価格合計:"
-msgstr "Total sales amount:"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
-#, python-format
-msgid "発注者 "
-msgstr "Orderer "
+msgstr "Total Sales Price:"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
 #: code:addons/rtw_excel_report/models/invoice_sale_order.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_form2.py:0
 #, python-format
 msgid "販売価格合計: "
-msgstr "Total sales amount: "
+msgstr "Total Sales Price: "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/invoice_account_move.py:0
@@ -2872,9 +3158,10 @@ msgstr "Sales Unit Price"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "貼り忘れ注意"
-msgstr "Need to be attached"
+msgstr "Caution: Do not forget to attach"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_order_form.py:0
@@ -2883,9 +3170,10 @@ msgstr "Need to be attached"
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #: code:addons/rtw_excel_report/models/scheduled_payment_list.py:0
 #: code:addons/rtw_excel_report/models/shipping_list.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "送り先"
-msgstr "Shipping Destination:"
+msgstr "Shipping Address"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
@@ -2900,63 +3188,56 @@ msgstr "Shipping Destination:"
 #: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
 #, python-format
 msgid "送り先注記"
-msgstr "Shipping note"
+msgstr "Shipping Note"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
 #, python-format
 msgid "送り先注記:"
-msgstr "Shipping Notes:"
+msgstr "Shipping Note:"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
-#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
 #: code:addons/rtw_excel_report/models/purchase_order_for_part.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
-#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "送り先着日"
-msgstr "Shipment Arrival Date"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.invoice_sticker
-msgid "送り状シール(EXCEL)"
-msgstr "Shipping Form Seal(EXCEL)"
+msgstr "Delivery Date at Destination"
 
 #. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.picking_shipping_form_seal
 msgid "送り状シール"
-msgstr "Shipping Form Seal"
+msgstr "Shipping Form Sticker"
 
 #. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
 #, python-format
 msgid "送り状注記"
-msgstr "Shipping address memo"
+msgstr "Shipping Label Note"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
+#: code:addons/rtw_excel_report/models/inspection_check_sheet.py:0
 #, python-format
 msgid "通常"
-msgstr "Normal"
+msgstr "Standard"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/stock_status_list.py:0
 #, python-format
 msgid "過去分"
-msgstr "History"
+msgstr "Historical"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
 #, python-format
 msgid "部材コード"
-msgstr "Product code"
+msgstr "Material Code"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "部材コード "
-msgstr "Product code "
+msgstr "Material Code "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
@@ -2965,43 +3246,49 @@ msgstr "Product code "
 #: code:addons/rtw_excel_report/models/work_progress_slip_list.py:0
 #, python-format
 msgid "部材名"
-msgstr "Product name"
+msgstr "Material Name"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
-msgid "配送"
-msgstr "Delivery"
-
-#. module: rtw_excel_report
-#: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
-#, python-format
-msgid "配送ラベル"
-msgstr "Delivery label"
-
-#. module: rtw_excel_report
-#: model:ir.actions.act_window,name:rtw_excel_report.action_delivery_request_form_export_xlsx
-#: model:ir.actions.report,name:rtw_excel_report.delivery_sale_order
-#: model:ir.ui.menu,name:rtw_excel_report.menu_report_delivery_request_form
-msgid "配送作業依頼書"
-msgstr "Delivery Work Request"
+msgid "郵便番号："
+msgstr "Zip Code:"
 
 #. module: rtw_excel_report
 #: model:ir.actions.report,name:rtw_excel_report.sale_delivery_order
 msgid "配送作業依頼書"
-msgstr "Delivery Work Request"
+msgstr "Delivery Request Form"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
+#: model:ir.actions.report,name:rtw_excel_report.stock_picking_delivery_excel
 #, python-format
 msgid "配送依頼書"
-msgstr "Delivery request"
+msgstr "Delivery Request Form"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/stock_picking_ship_order.py:0
+#, python-format
+msgid "配送手段"
+msgstr "Delivery Method"
+
+#. module: rtw_excel_report
+#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: code:addons/rtw_excel_report/models/inspection_order_form.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#: code:addons/rtw_excel_report/models/purchase_order_sheet.py:0
+#, python-format
+msgid "配達希望日"
+msgstr "Desired Delivery Date"
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/delivery_sale_order.py:0
+#: code:addons/rtw_excel_report/models/stock_picking_delivery.py:0
 #, python-format
 msgid "開梱 "
-msgstr "Unbox "
+msgstr "Unpacking "
 
 #. module: rtw_excel_report
 #: code:addons/rtw_excel_report/models/inventory_import_list.py:0
@@ -3015,13 +3302,3 @@ msgstr "Set"
 #, python-format
 msgid "ﾁｪｯｸ"
 msgstr "Check"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.stock_picking_delivery_excel
-msgid "配送依頼書"
-msgstr "Delivery Work Request"
-
-#. module: rtw_excel_report
-#: model:ir.actions.report,name:rtw_excel_report.stock_picking_ship_order_excel
-msgid "出荷依頼書"
-msgstr "Shipping Request Form"

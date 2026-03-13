@@ -146,7 +146,7 @@ class StockPickingDelivery(models.AbstractModel):
             sheet.write(12, 0, _("住    所："), format_text_14) 
             sheet.write(12, 1, ("〒 " + so.forwarding_address )if so.forwarding_address else "", format_text_14) 
             
-            sheet.write(12, 12, "搬入費用：", format_text_12) 
+            sheet.write(12, 12, _("搬入費用："), format_text_12)
             
             sheet.write(13, 0, _("立 会 人："), format_text_14) 
             sheet.write(13, 1, so.stock_picking_witness_name_phone if so.stock_picking_witness_name_phone else "", format_text_14) 
