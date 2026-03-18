@@ -1,6 +1,11 @@
 from odoo import models, _
 
 class productLabelSticker(models.AbstractModel):
+    """
+        【送り状シール】Excelレポート出力ロジック
+        レポートID: rtw_excel_report.invoice_sticker_xls
+        用途: 出荷指示（stock.picking）から送り状シール用のExcelを作成する
+    """
     _name = 'report.rtw_excel_report.invoice_sticker_xls'
     _inherit = 'report.report_xlsx.abstract'
 
@@ -45,23 +50,23 @@ class productLabelSticker(models.AbstractModel):
                     row_offset = 0  
                     for count in range(2):
                         row_start = count * 16 + row_offset
-                        sheet_main.merge_range(row_start + 1, 1, row_start + 2, 5, f"=data_{index}!A" + str(count * 1 + 1), format_p_name)
+                        sheet_main.merge_range(row_start + 1, 1, row_start + 2, 5, f"=data_{index}!A" + str(count * 1 + 1), format_p_name)      #categ_id.name
 
-                        sheet_main.merge_range(row_start + 1, 7, row_start + 1, 8, f"=data_{index}!B" + str(count * 1 + 1), ship_date)
-                        sheet_main.merge_range(row_start + 2, 7, row_start + 2, 8, f"=data_{index}!C" + str(count * 1 + 1), depo_date)
-                        sheet_main.merge_range(row_start + 3, 1, row_start + 3, 4, f"=data_{index}!D" + str(count * 1 + 1), merge_format)
+                        sheet_main.merge_range(row_start + 1, 7, row_start + 1, 8, f"=data_{index}!B" + str(count * 1 + 1), ship_date)          #confirmed_shiping_date
+                        sheet_main.merge_range(row_start + 2, 7, row_start + 2, 8, f"=data_{index}!C" + str(count * 1 + 1), depo_date)          #Depodate
+                        sheet_main.merge_range(row_start + 3, 1, row_start + 3, 4, f"=data_{index}!D" + str(count * 1 + 1), merge_format)       #属性Name連結
                         sheet_main.set_row(row_start + 3,18)
 
-                        sheet_main.merge_range(row_start + 5, 1, row_start + 5, 9, f"=data_{index}!E" + str(count * 1 + 1), format_sale_title)
+                        sheet_main.merge_range(row_start + 5, 1, row_start + 5, 9, f"=data_{index}!E" + str(count * 1 + 1), format_sale_title)  #販売title
                         sheet_main.set_row(row_start + 3,16)
-                        sheet_main.merge_range(row_start + 6, 1, row_start + 6, 9, f"=data_{index}!F" + str(count * 1 + 1), merge_format)
-                        sheet_main.merge_range(row_start + 7, 1, row_start + 7, 9, f"=data_{index}!G" + str(count * 1 + 1), merge_format)
-                        sheet_main.merge_range(row_start + 8, 1, row_start + 8, 9, f"=data_{index}!H" + str(count * 1 + 1), merge_format)
-                        sheet_main.merge_range(row_start + 9, 1, row_start + 9, 9, f"=data_{index}!I" + str(count * 1 + 1), merge_format)
+                        sheet_main.merge_range(row_start + 6, 1, row_start + 6, 9, f"=data_{index}!F" + str(count * 1 + 1), merge_format)       #配送先display_name
+                        sheet_main.merge_range(row_start + 7, 1, row_start + 7, 9, f"=data_{index}!G" + str(count * 1 + 1), merge_format)       #配送先ZIP/city/state
+                        sheet_main.merge_range(row_start + 8, 1, row_start + 8, 9, f"=data_{index}!H" + str(count * 1 + 1), merge_format)       #配送先street
+                        sheet_main.merge_range(row_start + 9, 1, row_start + 9, 9, f"=data_{index}!I" + str(count * 1 + 1), merge_format)       #配送先name
 
-                        sheet_main.merge_range(row_start + 10, 1, row_start + 10, 4, f"=data_{index}!J" + str(count * 1 + 1), merge_format)
-                        sheet_main.merge_range(row_start + 11, 1, row_start + 11, 4, f"=data_{index}!K" + str(count * 1 + 1), merge_format)
-                        sheet_main.merge_range(row_start + 12, 1, row_start + 15, 7, f"=data_{index}!L" + str(count * 1 + 1), format_top)
+                        sheet_main.merge_range(row_start + 10, 1, row_start + 10, 4, f"=data_{index}!J" + str(count * 1 + 1), merge_format)     #配送先TEL
+                        sheet_main.merge_range(row_start + 11, 1, row_start + 11, 4, f"=data_{index}!K" + str(count * 1 + 1), merge_format)     #運送番号
+                        sheet_main.merge_range(row_start + 12, 1, row_start + 15, 7, f"=data_{index}!L" + str(count * 1 + 1), format_top)       #note
                         row_offset += 1
 
                         sheet_data.write(count, 0,p_detail, merge_format)

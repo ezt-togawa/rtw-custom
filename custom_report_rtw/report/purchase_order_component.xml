@@ -242,12 +242,15 @@
                             <span t-esc="line['product_uom_name']" />
                           </td>
                           <td class="text-center size14">
-                            <span t-if="line['purchase_order_sell_unit_price']"
-                              t-esc="'{0:,.0f}'.format(line['purchase_order_sell_unit_price'])" />
+                            <span t-if="line.get('purchase_order_sell_unit_price')"
+                                    t-esc="line['purchase_order_sell_unit_price']"
+                                    t-options='{"widget": "float", "precision": po.currency_id.decimal_places, "use_thousand_separator": True}' />
+                              <span t-else="">0</span>
                           </td>
                           <td class="text-center size14">
-                            <span t-if="line['price_subtotal']"
-                              t-esc="(line['price_subtotal']) if line['price_subtotal'] else 0" />
+                            <t t-set="subtotal" t-value="line.get('price_subtotal') or 0" />
+                              <span t-esc="subtotal"
+                                    t-options='{"widget": "float", "precision": po.currency_id.decimal_places, "use_thousand_separator": True}' />
                           </td>
                           <td class="size13">
 
@@ -303,11 +306,13 @@
                           </td>
                           <td class="text-center size14">
                             <span t-if="l.purchase_order_sell_unit_price"
-                              t-esc="l.purchase_order_sell_unit_price" />
+                                  t-field="l.purchase_order_sell_unit_price"
+                                  t-options='{"widget": "float", "precision": po2.currency_id.decimal_places, "use_thousand_separator": True}' />
                           </td>
                           <td class="text-center size14">
-                            <span t-if="l.price_subtotal"
-                              t-esc="l.price_subtotal" />
+                              <span t-if="l.price_subtotal"
+                                    t-field="l.price_subtotal"
+                                    t-options='{"widget": "float", "precision": po2.currency_id.decimal_places, "use_thousand_separator": True}' />
                           </td>
                           <td class="size13"></td>
                         </tr>
@@ -323,7 +328,7 @@
                     t-if="po._name == 'purchase.order'">
                     <t t-foreach="docs"
                       t-as="po_name2">
-                      <t t-set="total_amount" t-value="total_amount + int(po_name2.amount_untaxed)" />
+                      <t t-set="total_amount" t-value="total_amount + po_name2.amount_untaxed" />
                     </t>
                   </t>
                   <t
@@ -332,11 +337,12 @@
                     <t t-foreach="docs"
                       t-as="po_name2">
                       <t t-set="total_amount"
-                        t-value="total_amount + int(po_name2.price_subtotal)" />
+                        t-value="total_amount + po_name2.price_subtotal" />
                     </t>
                   </t>
-                    <span
-                    class="size15" t-esc="'{0:,.0f}'.format(total_amount)" />
+                  <span class="size15"
+                        t-esc="total_amount"
+                        t-options='{"widget": "monetary", "display_currency": po.currency_id}' />
                 </div>
               </div>
             </t>

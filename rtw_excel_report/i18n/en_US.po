@@ -2341,7 +2341,7 @@ msgstr "Book Inventory Qty"
 #: code:addons/rtw_excel_report/models/report_quotation_oversea.py:0
 #: code:addons/rtw_excel_report/models/unit_price_quotation.py:0
 #, python-format
-msgid "平素より格別のお引き⽴てを賜り暑く御礼申し上げます。"
+msgid "平素より格別のお引き⽴てを賜り厚く御礼申し上げます。"
 msgstr ""
 "We would like to express our sincere gratitude for your continued patronage."
 

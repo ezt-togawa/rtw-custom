@@ -67,10 +67,6 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_sale_order_company_owner",
         string="Company Name",
     )
-    sale_order_total_list_price = fields.Char(
-        compute="_compute_sale_order_list_price",
-        string="Total List Price",
-    )
     sale_order_amount_untaxed2 = fields.Char(
         compute="_compute_sale_order_amount_untaxed2",
         string="Amount untaxed",
@@ -252,7 +248,26 @@ class SaleOrderExcelReport(models.Model):
     dear_to_delivery = fields.Char(compute="_compute_send_to_company_delivery")
     sale_witness_name_phone = fields.Char(compute="_compute_sale_witness_name_phone")
     so_warehouse_arrive_date_has_day = fields.Char(compute="_compute_sale_order_format_date")
-
+    sale_order_total_list_price = fields.Monetary(
+        compute="_compute_sale_order_list_price",
+        string="販売合計（税抜・定価・除外）",
+        currency_field='currency_id'
+    )
+    sale_order_list_price_untaxed = fields.Monetary(
+        compute="_compute_sale_order_list_price_totals",
+        string="販売合計（税抜・定価）",
+        currency_field='currency_id'
+    )
+    sale_order_list_price_tax = fields.Monetary(
+        compute="_compute_sale_order_list_price_totals",
+        string="販売合計消費税（定価）",
+        currency_field='currency_id'
+    )
+    sale_order_list_price_total = fields.Monetary(
+        compute="_compute_sale_order_list_price_totals",
+        string="販売合計（税込・定価）",
+        currency_field='currency_id'
+    )
     def _compute_sale_payment_deadline(self):
         for line in self:
             payment_deadline = line.payment_deadline
@@ -930,14 +945,54 @@ class SaleOrderExcelReport(models.Model):
                 record.sale_order_company_owner = ""
 
     def _compute_sale_order_list_price(self):
+        """
+        除外指定を考慮した税抜金額合計
+        """
         for so in self:
             total_list_price = 0.0
-            if so.order_line:
-                for line in so.order_line:
-                    if not getattr(line, 'is_tax_excluded_product', False):
-                        total_list_price += line.price_unit * line.product_uom_qty
-            so.sale_order_total_list_price = '{0:,.0f}'.format(total_list_price)
-    
+            for line in so.order_line:
+                # セクションやノート、あるいは商品がセットされていない行をスキップ
+                if line.display_type or not line.product_id:
+                    continue
+                # 除外指定商品ではない場合のみ合算
+                if not getattr(line, 'is_tax_excluded_product', False):
+                    total_list_price += line.price_unit * line.product_uom_qty
+
+            so.sale_order_total_list_price = total_list_price
+
+    @api.depends('order_line.price_unit', 'order_line.product_uom_qty', 'order_line.tax_id')
+    def _compute_sale_order_list_price_totals(self):
+        """
+        Odoo標準の金額集計ロジック（_amount_all）をベースに、
+        値引き前の「定価」で再計算す
+        """
+        for order in self:
+            amount_untaxed = 0.0
+            amount_tax = 0.0
+
+            for line in order.order_line:
+                # セクションやノート、あるいは商品がセットされていない行をスキップ
+                if line.display_type or not line.product_id:
+                    continue
+
+                # 【重要】標準の price_subtotal の代わりに、定価(price_unit)ベースで計算
+                # compute_allを使うことで、Odooの税率設定をそのまま利用
+                taxes = line.tax_id.compute_all(
+                    line.price_unit,
+                    order.currency_id,
+                    line.product_uom_qty,
+                    product=line.product_id,
+                    partner=order.partner_id
+                )
+
+                # 税抜分と税金分を加算
+                amount_untaxed += taxes['total_excluded']
+                amount_tax += sum(t.get('amount', 0.0) for t in taxes.get('taxes', []))
+
+            order.sale_order_list_price_untaxed = amount_untaxed
+            order.sale_order_list_price_tax = amount_tax
+            order.sale_order_list_price_total = amount_untaxed + amount_tax
+
     def _compute_sale_order_amount_untaxed2(self):
         for so in self:
             so.sale_order_amount_untaxed2 =  '{0:,.0f}'.format(so.amount_untaxed) if so.amount_untaxed else ''
@@ -1018,7 +1073,7 @@ class SaleOrderLineExcelReport(models.Model):
         compute="_compute_sale_order_price_subtotal",
         string="販売⾦額",
     )
-    sale_order_amount_no_rate = fields.Char(
+    sale_order_amount_no_rate = fields.Monetary(
         compute="_compute_sale_order_amount_no_rate",
         string="販売⾦額",
     )
@@ -1349,8 +1404,8 @@ class SaleOrderLineExcelReport(models.Model):
     
     def _compute_sale_order_amount_no_rate(self):
         for line in self:
-            if line.product_uom_qty and line.price_unit :
-                line.sale_order_amount_no_rate = '{0:,.0f}'.format(line.product_uom_qty * line.price_unit)
+            if line.product_uom_qty and line.price_unit:
+                line.sale_order_amount_no_rate = line.product_uom_qty * line.price_unit
             else:
                 line.sale_order_amount_no_rate = ''    
                 
@@ -2193,18 +2248,19 @@ class AccountMoveExcelReport(models.Model):
         string="invoice name",
     )
        
-    acc_move_total_list_price = fields.Char(
+    acc_move_total_list_price = fields.Monetary(
         compute="_compute_acc_move_list_price",
         string="Total List Price",
+        currency_field='currency_id'
     )
     
     def _compute_acc_move_list_price(self):
         for move in self:
             total_list_price = 0.0
-            if move.invoice_line_ids :
+            if move.invoice_line_ids:
                 for line in move.invoice_line_ids:
                     total_list_price += line.price_unit * line.quantity
-            move.acc_move_total_list_price = '{0:,.0f}'.format(total_list_price)
+            move.acc_move_total_list_price = total_list_price
                 
     def _compute_acc_move_draff_invoice(self):
         for line in self:
@@ -2399,9 +2455,10 @@ class AccountMoveLineExcelReport(models.Model):
         string="discount",
     )   
 
-    acc_line_sell_unit_price = fields.Char(
+    acc_line_sell_unit_price = fields.Monetary(
         compute="_compute_acc_line_sell_unit_price",
         string="sell unit price",
+        currency_field='currency_id'
     )
     
     acc_line_name = fields.Char(
@@ -2549,7 +2606,7 @@ class AccountMoveLineExcelReport(models.Model):
     
     def _compute_acc_line_discount(self):
         for line in self:
-            if  line.discount != 0.00 or line.discount != 0.0 or line.discount != 0 :
+            if line.discount != 0.00 or line.discount != 0.0 or line.discount != 0:
                 discount_value = 100-line.discount
                 discount_value = round(discount_value, 2)
                 line.acc_line_discount = discount_value
@@ -2632,7 +2689,7 @@ class AccountMoveLineExcelReport(models.Model):
 
     def _compute_acc_line_sell_unit_price(self):
         for line in self:
-            line.acc_line_sell_unit_price = '{0:,.0f}'.format(line.price_unit - line.price_unit * line.discount / 100 ) 
+            line.acc_line_sell_unit_price = line.price_unit - line.price_unit * line.discount / 100
 class MrpProductionExcelReport(models.Model):
     _inherit = "mrp.production"
 
@@ -3247,9 +3304,10 @@ class PurChaseOrderLineExcelReport(models.Model):
         string="Text piece leg",
     )
 
-    purchase_order_sell_unit_price = fields.Float(
+    purchase_order_sell_unit_price = fields.Monetary(
         compute="_compute_purchase_order_sell_unit_price",
         string="販売単価",
+        currency_field='currency_id'
     )
 
     purchase_order_config_session = fields.Char(

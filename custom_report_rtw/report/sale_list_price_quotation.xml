@@ -104,20 +104,17 @@
                                 <div class="col-6 size16">
                                     <div class="width-money">
                                         <div>税抜合計 <div class="float-right">
-                                                <span t-field="docs.currency_id.symbol" />
-                                                <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                                            <span t-field="docs.sale_order_list_price_untaxed"/>
                                             </div>
                                         </div>
                                         <div>消費税 <div class="float-right">
-                                                <span t-field="docs.currency_id.symbol" />
-                                                <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                                            <span t-field="docs.sale_order_list_price_tax"/>
                                             </div>
                                         </div>
                                         <div class="size28 total-price bold">
                                             <span>税込合計</span>
                                             <div style="float:right">
-                                                <span t-field="docs.currency_id.symbol" />
-                                                <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                                                <span t-field="docs.sale_order_list_price_total"/>
                                             </div>
                                         </div>
                                     </div>
@@ -164,8 +161,7 @@
                                 <div class="size16 width-money">
                                     <span>税抜定価合計 </span>
                                     <div class="float-right">
-                                        <span t-field="docs.currency_id.symbol" />
-                                        <span t-esc="docs.sale_order_total_list_price" />
+                                        <span t-field="docs.sale_order_total_list_price"/>
                                     </div>
                                 </div>
                             </div>
@@ -254,17 +250,17 @@
                                                 <td class="text-right">
                                                     <div class="two-lines">
                                                         <t t-if="not l.is_tax_excluded_product">
-                                                            <span
-                                                                style="font-size:16px"
-                                                                t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                                                          <span style="font-size:16px"
+                                                                t-field="l.price_unit"
+                                                                t-options='{"widget": "float", "precision": docs.currency_id.decimal_places}' />
                                                         </t>
                                                         </div>
                                                 </td>
                                                 <td class="text-right">
                                                     <div class="two-lines">
-                                                        <span
-                                                            style="font-size:16px"
-                                                            t-esc="'{0:,.0f}'.format(l.price_unit * l.product_uom_qty)" />
+                                                      <span style="font-size:16px"
+                                                            t-field="l.sale_order_amount_no_rate"
+                                                            t-options='{"widget": "float", "precision": docs.currency_id.decimal_places}' />
                                                     </div>
                                                 </td>
                                             </t>

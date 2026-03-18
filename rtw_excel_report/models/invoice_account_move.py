@@ -61,18 +61,34 @@ class ReportMrpExcel(models.AbstractModel):
         stamp_signature_rgba.save(img_io_stamp_signature, 'PNG')
         img_io_stamp_signature.seek(0)
 
+        # 通貨処理
+        currency = so_data[0].currency_id
+        symbol = currency.symbol or ''
+        decimal_places = currency.decimal_places
+        num_format_with_symbol = f'"{symbol}"#,##0'
+        if decimal_places > 0:
+            num_format_with_symbol += '.' + ('0' * decimal_places)
+        num_format_no_symbol = '#,##0'
+        if decimal_places > 0:
+            num_format_no_symbol += '.' + ('0' * decimal_places)
+        num_format_trailing_0 = 'General'  # [#,##0.###]指定だと整数の場合ドットが残ってしまうので、カンマ編集を捨ててドットを消す
+
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
         format_name_company = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'text_wrap':True, 'bottom':1})
         format_text = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':11})
-        format_text_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':11})
+        format_text_right_0 = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':11})
+        format_text_right_1 = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':11})
         format_text_right_2 = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':11.25})
         format_text_12_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':12})
+        format_text_12_right.set_num_format(num_format_with_symbol)
         format_text_13_right = workbook.add_format({'align': 'right', 'font_name': font_name, 'font_size':13})
+        format_text_13_right.set_num_format(num_format_with_symbol)
         format_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
         format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name, 'font_size':14, 'bottom':1})
         format_money_bgRed = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'font_name': font_name, 'font_size':14, 'text_wrap':True, 'color':'white', 'bg_color':'#C00000'})
         format_money_bgRed_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':14, 'text_wrap':True, 'color':'white', 'bg_color':'#C00000'})
+        format_money_bgRed_right.set_num_format(num_format_with_symbol)
         format_date = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'num_format': 'yyyy-mm-dd', 'font_name': font_name, 'font_size':10})
         format_address = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10.5})
         format_table = workbook.add_format({'align': 'center', 'valign': 'vcenter', 'bg_color': '#999999', 'font_name': font_name, 'font_size':11, 'color':'white', 'bold':True})
@@ -82,11 +98,14 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_10_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
         format_lines_11_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
         format_lines_13 = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
+        format_lines_13.set_num_format(num_format_no_symbol)
+        format_lines_14 = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
+        format_lines_14.set_num_format(num_format_trailing_0)
         format_lines_note = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':11, 'bottom':1})
         format_lines_section= workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1})
 
         #create sheet
-        for index,so in enumerate(so_data):
+        for index, so in enumerate(so_data):
             sheet_name = f"{so.name}" 
             sheet = workbook.add_worksheet(sheet_name)
             sheet_data = workbook.add_worksheet("data")
@@ -149,7 +168,7 @@ class ReportMrpExcel(models.AbstractModel):
             # y,x
             sheet.write(1, 1, _("御請求書"), format_sheet_title) 
             sheet.merge_range(2, 0, 3, 2, so.dear_to_invoice if so.dear_to_invoice else '', format_name_company)
-            sheet.write(5, 0, _("平素より格別のお引き⽴てを賜り暑く御礼申し上げます。"), format_text) 
+            sheet.write(5, 0, _("平素より格別のお引き⽴てを賜り厚く御礼申し上げます。"), format_text)
             sheet.write(6, 0, _("下記の通り、ご請求申し上げます。"), format_text) 
             sheet.write(8, 0, _("件名 : "), format_text_14_border) 
             sheet.write(10, 0, _("税抜合計"), format_text) 
@@ -160,9 +179,9 @@ class ReportMrpExcel(models.AbstractModel):
             else:
                 title_text = so.sale_order.title if so.sale_order.title else ''
             sheet.write(8, 1, title_text, format_text_14_border) 
-            sheet.write(10, 1, so.acc_move_amount_untaxed if so.acc_move_amount_untaxed else '', format_text_13_right)
-            sheet.write(11, 1, so.acc_move_amount_tax if so.acc_move_amount_tax else '', format_text_12_right)
-            sheet.write(12, 1, so.acc_move_amount_total if so.acc_move_amount_total else '', format_money_bgRed_right)
+            sheet.write(10, 1, so.amount_untaxed, format_text_13_right)
+            sheet.write(11, 1, so.amount_tax, format_text_12_right)
+            sheet.write(12, 1, so.amount_total, format_money_bgRed_right)
 
 
             sheet.write(2, 5, _("お支払期限"), format_text_right_2) 
@@ -185,10 +204,13 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.merge_range(0, 11, 0, 12, so.acc_move_current_date if so.acc_move_current_date else '' , format_date) 
             sheet.merge_range(2, 11, 9, 12, so.sale_order_hr_employee_invoice if so.sale_order_hr_employee_invoice else '' , format_address)
 
-
-            sheet.write(13, 9, _("定価合計: ") + str(so.acc_move_total_list_price) if so.acc_move_total_list_price else '', format_text_right) 
-            sheet.write(13, 12, _("販売価格合計: ") + str(so.acc_move_amount_untaxed) if so.acc_move_amount_untaxed else '', format_text_right) 
-            sheet.write(14, 12, so.acc_move_draff_invoice if so.acc_move_draff_invoice else '', format_text_13_right) 
+            label_list_price = _("定価合計: ")
+            format_text_right_0.set_num_format(f'"{label_list_price}"{num_format_no_symbol}')
+            sheet.merge_range(13, 8, 13, 9, so.acc_move_total_list_price, format_text_right_0)
+            label_sale_price = _("販売価格合計: ")
+            format_text_right_1.set_num_format(f'"{label_sale_price}"{num_format_no_symbol}')
+            sheet.merge_range(13, 11, 13, 12, so.amount_untaxed, format_text_right_1)
+            sheet.write(14, 12, so.acc_move_draff_invoice if so.acc_move_draff_invoice else '', format_text_13_right)
 
             #table title
             sheet.write(16, 0, _("№"), format_table)
@@ -225,11 +247,9 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row, 10, row + merge_line, 10, '', format_lines_13)
                             sheet.merge_range(row, 11, row + merge_line, 11, '', format_lines_13)
                         else:
-                            sheet.merge_range(row, 8, row + merge_line, 8, line.acc_move_line_qty if line.acc_move_line_qty else '', format_lines_13)
-                            sheet.merge_range(row, 9, row + merge_line, 9, line.acc_line_price_unit if line.acc_line_price_unit else '', format_lines_13)
-                            sheet.merge_range(row, 10, row + merge_line, 10, line.acc_line_discount if line.acc_line_discount else '', format_lines_13)
-                            sheet.merge_range(row, 11, row + merge_line, 11, line.acc_line_sell_unit_price if line.acc_line_sell_unit_price else '', format_lines_13)
-
-                        sheet.merge_range(row, 12, row + merge_line, 12, line.acc_line_price_subtotal if line.acc_line_price_subtotal else '', format_lines_13)
-                    
+                            sheet.merge_range(row, 8, row + merge_line, 8, line.quantity or 0, format_lines_14)
+                            sheet.merge_range(row, 9, row + merge_line, 9, line.price_unit or 0, format_lines_13)
+                            sheet.merge_range(row, 10, row + merge_line, 10, line.acc_line_discount or 0, format_lines_14)
+                            sheet.merge_range(row, 11, row + merge_line, 11, line.acc_line_sell_unit_price or 0, format_lines_13)
+                        sheet.merge_range(row, 12, row + merge_line, 12, line.price_subtotal or 0, format_lines_13)
                         row += merge_line + 1
