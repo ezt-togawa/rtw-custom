@@ -8,6 +8,11 @@ from collections import defaultdict
 from operator import itemgetter
 from odoo.http import content_disposition, request, route
 class ReportMrpExcel(models.AbstractModel):
+    """
+        【発注書（部材用）】Excelレポート出力ロジック
+        レポートID: rtw_excel_report.report_purchase_order_for_part_xls
+        用途: 購買より発注書（部材用）のExcelを作成する
+    """
     _name = 'report.rtw_excel_report.report_purchase_order_for_part_xls'
     _inherit = 'report.report_xlsx.abstract'
 
@@ -45,6 +50,18 @@ class ReportMrpExcel(models.AbstractModel):
         img_ritzwell.save(img_io_ritzwell, 'PNG')
         img_io_ritzwell.seek(0)
 
+        # 通貨処理
+        currency = purchase_order[0].currency_id
+        symbol = currency.symbol or ''
+        decimal_places = currency.decimal_places
+        num_format_with_symbol = f'"{symbol}"#,##0'
+        if decimal_places > 0:
+            num_format_with_symbol += '.' + ('0' * decimal_places)
+        num_format_no_symbol = '#,##0'
+        if decimal_places > 0:
+            num_format_no_symbol += '.' + ('0' * decimal_places)
+        num_format_trailing_0 = 'General'  # [#,##0.###]指定だと整数の場合ドットが残ってしまうので、カンマ編集を捨ててドットを消す
+
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':18,'font_name': font_name})
         format_sheet_partner = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':16,'font_name': font_name})
@@ -52,6 +69,7 @@ class ReportMrpExcel(models.AbstractModel):
         format_text_wrap = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11,'text_wrap':True})
         format_resend = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13,'text_wrap':True})
         format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
+        format_text_right.set_num_format(num_format_with_symbol)
         format_note = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True,'font_name': font_name,'font_size':10})
 
         format_date = workbook.add_format({'align': 'right','valign': 'vcenter','text_wrap':True,'num_format': 'yyyy-mm-dd', 'font_name': font_name,'font_size':10})
@@ -66,7 +84,8 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_10_right = workbook.add_format({'align': 'right','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
         format_lines_11_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
         format_lines_13 = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':13,'bottom':1})
-        
+        format_lines_13.set_num_format(num_format_no_symbol)
+
         sheet_name = _("発注書(部材用)") 
         sheet= workbook.add_worksheet(sheet_name)
         sheet_data= workbook.add_worksheet("data")
@@ -234,7 +253,7 @@ class ReportMrpExcel(models.AbstractModel):
                 list_order_line += po.order_line
                 po_name += po.name + ', '
                 po_origin += po.purchase_order_origin + ', '
-                po_amount_untaxed += int(po.amount_untaxed)
+                po_amount_untaxed += po.amount_untaxed
             arr = po_origin.split(', ')
             arr2 = []
             for item in arr:
@@ -359,10 +378,10 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row, 0, row + merge_line, 0, line['purchase_order_index'] if line['purchase_order_index'] else '' , format_lines_10) 
                             sheet.merge_range(row, 1, row + merge_line, 3, line['purchase_order_prod_name'] if line['purchase_order_prod_name'] else '' , format_lines_11_left) 
                             sheet.merge_range(row, 7, row + merge_line, 8, line['purchase_order_line_product_uom_qty'] if line['purchase_order_line_product_uom_qty'] else 0 , format_lines_13) 
-                            sheet.merge_range(row, 9, row + merge_line, 9, line['product_uom_name'] if line['product_uom_name'] else "", format_lines_10) 
-                            sheet.merge_range(row, 10, row + merge_line, 10, "{:,.0f}".format(line['purchase_order_sell_unit_price']) if line['purchase_order_sell_unit_price'] else 0 , format_lines_13) 
-                            sheet.merge_range(row, 11, row + merge_line, 11,line['price_subtotal']  if line['price_subtotal'] else 0 , format_lines_13)
-                            sheet.merge_range(row, 12, row + merge_line, 13, '' , format_lines_13)
+                            sheet.merge_range(row, 9, row + merge_line, 9, line['product_uom_name'] if line['product_uom_name'] else "", format_lines_10)
+                            sheet.merge_range(row, 10, row + merge_line, 10, line['purchase_order_sell_unit_price'] if line['purchase_order_sell_unit_price'] else 0, format_lines_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, line['price_subtotal'] if line['price_subtotal'] else 0, format_lines_13)
+                            sheet.merge_range(row, 12, row + merge_line, 13, '', format_lines_13)
                             row += merge_line + 1
                 
             else:
@@ -385,13 +404,13 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row, 9, row + merge_line, 9, line.product_uom.name if line.product_uom.name else "", format_lines_10) 
                             sheet.merge_range(row, 10, row + merge_line, 10, line.purchase_order_sell_unit_price if line.purchase_order_sell_unit_price else 0 , format_lines_13) 
                             sheet.merge_range(row, 11, row + merge_line, 11, line.price_subtotal if line.price_subtotal else 0 , format_lines_13) 
-                            sheet.merge_range(row, 12, row + merge_line, 13, '' , format_lines_13) 
+                            sheet.merge_range(row, 12, row + merge_line, 13, '', format_lines_13)
                             row += merge_line + 1
         else:
             for po in purchase_order[0]:
                 po_name += po.name if po.name else ""
                 po_origin += po.origin if po.origin else ""
-                po_amount_untaxed += int(sum(line.price_subtotal for line in po.order_line))
+                po_amount_untaxed += sum(line.price_subtotal for line in po.order_line)
                 if po.order_line:
                     # merge_line = 3 
                     for ind,line in enumerate(po.order_line):
@@ -409,15 +428,15 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row, 1, row + merge_line, 3, line.purchase_order_prod_name if line.purchase_order_prod_name else '' , format_lines_11_left) 
                             sheet.merge_range(row, 7, row + merge_line, 8, line.purchase_order_line_product_uom_qty if line.purchase_order_line_product_uom_qty else 0 , format_lines_13) 
                             sheet.merge_range(row, 9, row + merge_line, 9, line.product_uom.name if line.product_uom.name else "", format_lines_10) 
-                            sheet.merge_range(row, 10, row + merge_line, 10, "{:,.0f}".format(line.purchase_order_sell_unit_price) if line.purchase_order_sell_unit_price else 0 , format_lines_13) 
-                            sheet.merge_range(row, 11, row + merge_line, 11, "{:,.0f}".format(line.price_subtotal) if line.price_subtotal else 0 , format_lines_13) 
-                            sheet.merge_range(row, 12, row + merge_line, 13, '' , format_lines_13) 
+                            sheet.merge_range(row, 10, row + merge_line, 10, line.purchase_order_sell_unit_price if line.purchase_order_sell_unit_price else 0 , format_lines_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, format(line.price_subtotal) if line.price_subtotal else 0, format_lines_13)
+                            sheet.merge_range(row, 12, row + merge_line, 13, '', format_lines_13)
                             row += merge_line + 1
                             
         sheet.set_header( f'{"&"}R {po_name if po_name else ""}', margin=margin_header)
         sheet.write(4, 1, po_name if po_name else "", format_text)
         sheet.write(3, 1, po_origin if po_name else "", format_text)
-        sheet.write(11, 13, "{:,.0f}".format(po_amount_untaxed), format_text_right)
+        sheet.write(11, 13, po_amount_untaxed, format_text_right)
 
 
 class ReportMrpExcelPurchaseLine(models.AbstractModel):

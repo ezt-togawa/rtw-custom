@@ -38,6 +38,18 @@ class ReportMrpExcel(models.AbstractModel):
         img_ritzwell.save(img_io_ritzwell, 'PNG')
         img_io_ritzwell.seek(0)
 
+        # 通貨処理
+        currency = so_data[0].currency_id
+        symbol = currency.symbol or ''
+        decimal_places = currency.decimal_places
+        num_format_with_symbol = f'"{symbol}"#,##0'
+        if decimal_places > 0:
+            num_format_with_symbol += '.' + ('0' * decimal_places)
+        num_format_no_symbol = '#,##0'
+        if decimal_places > 0:
+            num_format_no_symbol += '.' + ('0' * decimal_places)
+        num_format_trailing_0 = 'General'  # [#,##0.###]指定だと整数の場合ドットが残ってしまうので、カンマ編集を捨ててドットを消す
+
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left', 'valign': 'vcenter', 'font_size':18, 'font_name': font_name})
         format_name_company = workbook.add_format({'align': 'left', 'font_name': font_name, 'font_size':14, 'underline':1})
@@ -61,6 +73,9 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_10_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':10, 'bottom':1})
         format_lines_11_left = workbook.add_format({'align': 'left', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
         format_lines_13 = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
+        format_lines_13.set_num_format(num_format_no_symbol)
+        format_lines_14 = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'text_wrap':True, 'font_name': font_name, 'font_size':12, 'bottom':1})
+        format_lines_14.set_num_format(num_format_trailing_0)
         format_text_12_right = workbook.add_format({'align': 'right', 'valign': 'vcenter', 'font_name': font_name, 'font_size':12})
 
         #create sheet
@@ -139,7 +154,7 @@ class ReportMrpExcel(models.AbstractModel):
             elif so.send_to_people:
                 sheet.write(2, 0,  so.send_to_people if so.send_to_people else '', format_name_company)
 
-            sheet.write(5,0, _("平素より格別のお引き⽴てを賜り暑く御礼申し上げます。"), format_text) 
+            sheet.write(5,0, _("平素より格別のお引き⽴てを賜り厚く御礼申し上げます。"), format_text)
             sheet.write(6,0, _("御依頼の件、下記の通りお⾒積り致しました。"), format_text)
             sheet.write(7,0, _("ご査収の程宜しくお願い致します。"), format_text) 
             sheet.write(10, 0, _("件名 :   ") + so.title if so.title else '', format_text_14_border) 
@@ -197,12 +212,11 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row, 10, row + merge_line, 10, '', format_lines_13)
                             sheet.merge_range(row, 11, row + merge_line, 11, '', format_lines_13)
                         else:
-                            sheet.merge_range(row, 8, row + merge_line, 8, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '', format_lines_13)
-                            sheet.merge_range(row, 9, row + merge_line, 9, line.sale_order_price_unit if line.sale_order_price_unit else '', format_lines_13)
-                            sheet.merge_range(row, 10, row + merge_line, 10, line.sale_order_line_discount if line.sale_order_line_discount else '', format_lines_13)
-                            sheet.merge_range(row, 11, row + merge_line, 11, '{:,.0f}'.format(line.sale_order_sell_unit_price) if line.sale_order_sell_unit_price else '', format_lines_13)
-
-                        sheet.merge_range(row, 12, row + merge_line, 12, line.sale_order_price_subtotal if line.sale_order_price_subtotal else '', format_lines_13)
+                            sheet.merge_range(row, 8, row + merge_line, 8, line.product_uom_qty or 0, format_lines_14)
+                            sheet.merge_range(row, 9, row + merge_line, 9, line.price_unit or 0, format_lines_13)
+                            sheet.merge_range(row, 10, row + merge_line, 10, line.call_rate or 0, format_lines_14)
+                            sheet.merge_range(row, 11, row + merge_line, 11, line.price_reduce or 0, format_lines_13)
+                        sheet.merge_range(row, 12, row + merge_line, 12, line.price_subtotal or 0, format_lines_13)
                         row += merge_line + 1
                 
                 if row > 17:

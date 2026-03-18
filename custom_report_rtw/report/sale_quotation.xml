@@ -5,7 +5,6 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="custom_report_rtw.so_ex_layout">
                     <t t-set="total_subprice" t-value="0" />
-                    <t t-set="total_listprice" t-value="0" />
                     <t t-if="not o" t-set="o" t-value="doc" />
                     <t t-if="not company">
                         <t t-if="company_id">
@@ -102,20 +101,17 @@
                                 <div class="col-6 size16">
                                     <div class="width-money">
                                         <div>税抜合計 <div class="float-right">
-                                                <span t-field="docs.currency_id.symbol" />
-                                                <span t-esc="'{0:,.0f}'.format(docs.amount_untaxed)" />
+                                                <span t-field="docs.amount_untaxed" />
                                             </div>
                                         </div>
                                         <div>消費税 <div class="float-right">
-                                                <span t-field="docs.currency_id.symbol" />
-                                                <span t-esc="'{0:,.0f}'.format(docs.amount_tax)" />
+                                                <span t-field="docs.amount_tax" />
                                             </div>
                                         </div>
                                         <div class="size28 total-price bold">
                                             <span>税込合計</span>
                                             <div style="float:right">
-                                                <span t-field="docs.currency_id.symbol" />
-                                                <span t-esc="'{0:,.0f}'.format(docs.amount_total)" />
+                                                <span t-field="docs.amount_total" />
                                             </div>
                                         </div>
                                     </div>
@@ -163,8 +159,7 @@
                                 <div class="size16 width-money">
                                     <span>税抜定価合計 </span>
                                     <div class="float-right">
-                                        <span t-field="docs.currency_id.symbol" />
-                                        <span t-esc="docs.sale_order_total_list_price" />
+                                        <span t-field="docs.sale_order_total_list_price" />
                                     </div>
                                 </div>
                             </div>
@@ -178,8 +173,6 @@
                                 t-att-last="last">
                                 <t t-set="total_subprice"
                                     t-value="total_subprice + l.price_subtotal" />
-                                <t t-set="total_listprice"
-                                    t-value="total_listprice + l.price_unit * l.product_uom_qty" />
                                 <t t-if="l_index == 0">
                                     <thead>
                                         <tr class="table-title bold"
@@ -264,18 +257,17 @@
                                                     style="font-size:16px; padding: 10px 0px;">
                                                     <div class="two-lines">
                                                         <t t-if="not l.is_tax_excluded_product">
-                                                            <span
-                                                                style="font-size:16px"
-                                                                t-esc="'{0:,.0f}'.format(l.price_unit)" />
+                                                            <span style="font-size:16px"
+                                                                  t-field="l.price_unit"
+                                                                  t-options='{"widget": "float", "precision": docs.currency_id.decimal_places}' />
                                                         </t>
                                                     </div>
                                                 </td>
                                                 <td class="text-right" style="padding: 10px 0px;">
                                                     <div class="two-lines">
                                                         <t t-if="not l.is_tax_excluded_product">
-                                                            <span
-                                                                style="font-size:16px"
-                                                                t-esc="l.sale_order_line_discount if l.sale_order_line_discount % 1 != 0 else int(l.sale_order_line_discount)" />
+                                                            <span style="font-size:16px"
+                                                                  t-esc="('{0:,.4f}'.format(l.call_rate or 0)).rstrip('0').rstrip('.')" />
                                                         </t>
                                                     </div>
                                                 </td>
@@ -283,17 +275,17 @@
                                                     style="font-size:16px; padding: 10px 0px;">
                                                     <div class="two-lines">
                                                         <t t-if="not l.is_tax_excluded_product">
-                                                            <span
-                                                                t-esc="'{0:,.0f}'.format(l.price_unit - l.price_unit * l.discount/100) if l.discount else
-                                                    '{0:,.0f}'.format(l.price_unit)" />
+                                                            <span style="font-size:16px"
+                                                                  t-field="l.price_reduce"
+                                                                  t-options='{"widget": "float", "precision": docs.currency_id.decimal_places}' />
                                                         </t>
                                                     </div>
                                                 </td>
                                                 <td class="text-right" style="padding: 10px 0px;">
                                                     <div class="two-lines">
-                                                        <span
-                                                            style="font-size:16px"
-                                                            t-esc="'{0:,.0f}'.format(l.price_subtotal)" />
+                                                        <span style="font-size:16px"
+                                                              t-field="l.price_subtotal"
+                                                              t-options='{"widget": "float", "precision": docs.currency_id.decimal_places}' />
                                                     </div>
                                                 </td>
                                             </tr>

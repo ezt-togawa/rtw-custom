@@ -1311,26 +1311,26 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_list_price
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_quotation_oversea
 msgid ""
-"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/>\n"
+"平素より格別のお引き立てを賜り厚く御礼申し上げます。 <br/>\n"
 "                                    御依頼の件、下記の通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
 msgstr ""
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.PO_header_layout
 msgid ""
-"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/>\n"
+"平素より格別のお引き立てを賜り厚く御礼申し上げます。 <br/>\n"
 "                        御依頼の件、下記の通りお見積り致しました。 <br/> ご査収の程宜しくお願い致します。"
 msgstr ""
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_invoice_3
-msgid "平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/> 下記の通り、ご請求申し上げます。<br/>"
+msgid "平素より格別のお引き立てを賜り厚く御礼申し上げます。 <br/> 下記の通り、ご請求申し上げます。<br/>"
 msgstr ""
 
 #. module: custom_report_rtw
 #: model_terms:ir.ui.view,arch_db:custom_report_rtw.report_unit_price
 msgid ""
-"平素より格別のお引き立てを賜り暑く御礼申し上げます。 <br/> 御依頼の件、下記の通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
+"平素より格別のお引き立てを賜り厚く御礼申し上げます。 <br/> 御依頼の件、下記の通りお見積り致しました。ご査収の程宜しくお願い致します。<br/>"
 msgstr ""
 
 #. module: custom_report_rtw

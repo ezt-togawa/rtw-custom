@@ -32,19 +32,34 @@ class ReportMrpExcel(models.AbstractModel):
         logo_R.save(img_io_R, 'PNG')
         img_io_R.seek(0)
 
+        # 通貨処理
+        currency = so_data[0].currency_id
+        symbol = currency.symbol or ''
+        decimal_places = currency.decimal_places
+        num_format_with_symbol = f'"{symbol}"#,##0'
+        if decimal_places > 0:
+            num_format_with_symbol += '.' + ('0' * decimal_places)
+        num_format_no_symbol = '#,##0'
+        if decimal_places > 0:
+            num_format_no_symbol += '.' + ('0' * decimal_places)
+        num_format_trailing_0 = 'General'  # [#,##0.###]指定だと整数の場合ドットが残ってしまうので、カンマ編集を捨ててドットを消す
+
         # different format  width font 
         format_sheet_title = workbook.add_format({ 'align': 'left','valign': 'vcenter','font_size':18,'font_name': font_name})
         format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
         format_text_2 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11.25})
         format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
         format_text_12_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':12})
+        format_text_12_right.set_num_format(num_format_with_symbol)
         format_text_14 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
         format_text_14_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':14})
         format_text_13_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':13})
+        format_text_13_right.set_num_format(num_format_with_symbol)
         format_note = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True,'font_name': font_name,'font_size':10})
         format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'bottom':1})
         format_money_bgRed = workbook.add_format({'align': 'left','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
         format_money_bgRed_right = workbook.add_format({'align': 'right','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
+        format_money_bgRed_right.set_num_format(num_format_with_symbol)
 
         format_date = workbook.add_format({'align': 'right','valign': 'vcenter','num_format': 'yyyy-mm-dd', 'font_name': font_name,'font_size':10})
     
@@ -59,6 +74,9 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_10_left = workbook.add_format({'align': 'left','valign': 'top', 'text_wrap':True,'font_name': font_name,'font_size':10,'bottom':1})
         format_lines_11_left = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1})
         format_lines_13 = workbook.add_format({'align': 'right','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1})
+        format_lines_13.set_num_format(num_format_no_symbol)
+        format_lines_14 = workbook.add_format({'align': 'right','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1})
+        format_lines_14.set_num_format(num_format_trailing_0)
 
         #create sheet
         for index,so in enumerate(so_data):
@@ -137,9 +155,9 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(11, 0, _("消費税"), format_text) 
             sheet.write(12, 0, _("税込合計"), format_money_bgRed) 
             sheet.write(7, 1, so.title if so.title else '', format_text_14_border) 
-            sheet.write(10, 1, so.sale_order_amount_untaxed if so.sale_order_amount_untaxed else '', format_text_13_right) 
-            sheet.write(11, 1, so.sale_order_amount_tax if so.sale_order_amount_tax else '', format_text_12_right) 
-            sheet.write(12, 1, so.sale_order_amount_total if so.sale_order_amount_total else '', format_money_bgRed_right) 
+            sheet.write(10, 1, so.sale_order_list_price_untaxed, format_text_13_right)
+            sheet.write(11, 1, so.sale_order_list_price_tax, format_text_12_right)
+            sheet.write(12, 1, so.sale_order_list_price_total, format_money_bgRed_right)
 
             sheet.write(3,4, _("納品希望日"), format_text_right) 
             sheet.write(4,4, _("納品場所"), format_text_right) 
@@ -192,11 +210,9 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row, 9, row + merge_line, 10, '', format_lines_13)
                             sheet.merge_range(row, 11, row + merge_line, 11, '', format_lines_13)
                         else:
-                            sheet.merge_range(row, 9, row + merge_line, 10, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '', format_lines_13)
-                            sheet.merge_range(row, 11, row + merge_line, 11, line.sale_order_price_unit if line.sale_order_price_unit else '', format_lines_13)
-
-                        sheet.merge_range(row, 12, row + merge_line, 14, line.sale_order_amount_no_rate if line.sale_order_amount_no_rate else '', format_lines_13)
-
+                            sheet.merge_range(row, 9, row + merge_line, 10, line.product_uom_qty or 0, format_lines_14)
+                            sheet.merge_range(row, 11, row + merge_line, 11, line.price_unit or 0, format_lines_13)
+                        sheet.merge_range(row, 12, row + merge_line, 14, line.sale_order_amount_no_rate or 0, format_lines_13)
                         row += merge_line + 1
                 
                         
