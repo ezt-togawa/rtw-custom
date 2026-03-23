@@ -196,6 +196,30 @@ class rtw_product_configurator(models.TransientModel):
     # _inherits = {"product.config.session": "config_session_id"}
     # _description = "Product configuration Wizard"
 
+    @api.model
+    def create(self, vals):
+        """
+        既存のセッションを再利用せず、常に新規セッションで開始するようにする
+        販売明細や製品の確認ダイアログで常に新規状態となる（過去の保持情報を使わない）
+        """
+        if "product_tmpl_id" in vals and not vals.get("config_session_id"):
+            product_tmpl_id = int(vals.get("product_tmpl_id"))
+
+            # 標準の create_get_session は既存を探してしまうため、直接 create を使う
+            session = self.env["product.config.session"].create({
+                "product_tmpl_id": product_tmpl_id,
+                "user_id": self.env.uid,
+            })
+
+            # 作成した新規セッションIDをセットし、値(value_ids)を空にする
+            vals.update({
+                "config_session_id": session.id,
+                "user_id": self.env.uid,
+                "value_ids": [(5, 0, 0)],  # 既存の関連をすべてクリア
+            })
+
+        return super(rtw_product_configurator, self).create(vals)
+
     @property
     def _prefixes(self):
         """Return a dictionary with all dynamic field prefixes used to generate
