@@ -7,41 +7,13 @@ import pytz
 class SaleOrderExcelReport(models.Model):
     _inherit = "sale.order"
 
-    sale_order_amount_total = fields.Char(
-        compute="_compute_sale_order_missing_currency",
-        string="Amount total",
-    )
     sale_order_amount_untaxed = fields.Char(
         compute="_compute_sale_order_missing_currency",
         string="Amount untax",
     )
-    sale_order_amount_tax = fields.Char(
-        compute="_compute_sale_order_missing_currency",
-        string="Amount tax",
-    )
-    sale_order_fax = fields.Char(
-        compute="_compute_sale_order_missing_char",
-        string="Fax",
-    )
-    sale_order_tel = fields.Char(
-        compute="_compute_sale_order_missing_char",
-        string="Tel",
-    )
-    sale_order_zip = fields.Char(
-        compute="_compute_sale_order_missing_char",
-        string="Zip",
-    )
     sale_order_current_date = fields.Char(
         compute="_compute_sale_order_current_date",
         string="Current Date",
-    )
-    sale_order_estimated_shipping_date = fields.Char(
-        compute="_compute_sale_order_format_date",
-        string="Estimated Shipping Date",
-    )
-    sale_order_date_order = fields.Char(
-        compute="_compute_sale_order_format_date",
-        string="Date Order",
     )
     sale_order_validity_date = fields.Char(
         compute="_compute_sale_order_format_date",
@@ -63,21 +35,9 @@ class SaleOrderExcelReport(models.Model):
         compute="_compute_sale_order_special_note",
         string="Special note",
     )
-    sale_order_company_owner = fields.Char(
-        compute="_compute_sale_order_company_owner",
-        string="Company Name",
-    )
     sale_order_amount_untaxed2 = fields.Char(
         compute="_compute_sale_order_amount_untaxed2",
         string="Amount untaxed",
-    )
-    sale_order_total_discount = fields.Char(
-        compute="_compute_sale_order_total_discount",
-        string="Total Discount",
-    )
-    sale_order_account_number = fields.Char(
-        compute="_compute_sale_order_account_number",
-        string="Account Number",
     )
     sale_order_preferred_delivery_date = fields.Char(
         compute="_compute_sale_order_format_date",
@@ -847,33 +807,15 @@ class SaleOrderExcelReport(models.Model):
     
     def _compute_sale_order_missing_currency(self):
         for record in self:
-            record.sale_order_amount_total = record.currency_id.symbol + str(
-                '{0:,.0f}'.format(record.amount_total) if record.amount_total else 0
-            )
+            # record.sale_order_amount_total = record.currency_id.symbol + str(
+            #     '{0:,.0f}'.format(record.amount_total) if record.amount_total else 0
+            # )
             record.sale_order_amount_untaxed = record.currency_id.symbol + str(
                 '{0:,.0f}'.format(record.amount_untaxed) if record.amount_untaxed else 0
             )
-            record.sale_order_amount_tax = record.currency_id.symbol + str(
-                '{0:,.0f}'.format(record.amount_tax) if record.amount_tax else 0
-            )
-
-    def _compute_sale_order_missing_char(self):
-        for record in self:
-            record.sale_order_fax = "fax." + str(
-                record.company_id.partner_id.fax
-                if record.company_id.partner_id.fax
-                else ""
-            )
-            record.sale_order_tel = "tel." + str(
-                record.company_id.partner_id.phone
-                if record.company_id.partner_id.phone
-                else ""
-            )
-            record.sale_order_zip = "〒" + str(
-                record.company_id.partner_id.zip
-                if record.company_id.partner_id.zip
-                else ""
-            )
+            # record.sale_order_amount_tax = record.currency_id.symbol + str(
+            #     '{0:,.0f}'.format(record.amount_tax) if record.amount_tax else 0
+            # )
 
     def _compute_sale_order_current_date(self):
         day = str(datetime.now().day)
@@ -884,16 +826,7 @@ class SaleOrderExcelReport(models.Model):
 
     def _compute_sale_order_format_date(self):
         for record in self:
-            if record.estimated_shipping_date:
-                record.sale_order_estimated_shipping_date = record._format_date(record.estimated_shipping_date, record.lang_code)
-            else:
-                record.sale_order_estimated_shipping_date = ""
-                
-            if record.date_order:
-                record.sale_order_date_order = record._format_date(record.date_order, record.lang_code)
-            else:
-                record.sale_order_date_order = ""
-                
+
             if record.validity_date:
                 record.sale_order_validity_date = record._format_date(record.validity_date, record.lang_code)
             else:
@@ -936,13 +869,6 @@ class SaleOrderExcelReport(models.Model):
             return f"{formatted_date} [{day_of_week}]"
         
         return f"{formatted_date}"
-
-    def _compute_sale_order_company_owner(self):
-        for record in self:
-            if record.partner_id.name:
-                record.sale_order_company_owner = record.partner_id.name + " 様"
-            else:
-                record.sale_order_company_owner = ""
 
     def _compute_sale_order_list_price(self):
         """
@@ -996,25 +922,6 @@ class SaleOrderExcelReport(models.Model):
     def _compute_sale_order_amount_untaxed2(self):
         for so in self:
             so.sale_order_amount_untaxed2 =  '{0:,.0f}'.format(so.amount_untaxed) if so.amount_untaxed else ''
-
-    def _compute_sale_order_total_discount(self):
-        for record in self:
-            total_discount = 0.0
-            sale_order_lines = record.order_line
-            for line in sale_order_lines:
-                total_discount += (
-                    line.price_unit - line.price_reduce
-                ) * line.product_uom_qty
-            record.sale_order_total_discount = "- " + '{0:,.0f}'.format(total_discount)
-            
-    def _compute_sale_order_account_number(self):
-        for record in self:
-            if record.partner_id.bank_ids.acc_number:
-                record.sale_order_account_number = "(普) " + str(
-                    record.partner_id.bank_ids.acc_number
-                )
-            else:
-                record.sale_order_account_number = ""
 
     def _compute_sale_order_send_to_company(self):
         for record in self:
@@ -1118,11 +1025,6 @@ class SaleOrderLineExcelReport(models.Model):
         string="Text piece leg",
     )
 
-    sale_order_date_order = fields.Char(
-        compute="_compute_sale_order_date_order",
-        string="Order date",
-    )
-
     sale_order_voucher_class = fields.Char(
         compute="_compute_sale_order_voucher_class",
         string="Voucher Class",
@@ -1214,9 +1116,9 @@ class SaleOrderLineExcelReport(models.Model):
                 
     def _compute_sale_line_calculate_packages(self):
         for line in self:
-            sale_line_id = self.env['stock.move'].search([('sale_line_id', '=', line.id), ('state', '!=', 'cancel')], limit=1)
-            if sale_line_id and sale_line_id.product_package_quantity:
-                line.sale_line_calculate_packages = sale_line_id.product_package_quantity
+            stock_move = self.env['stock.move'].search([('sale_line_id', '=', line.id), ('state', '!=', 'cancel')], limit=1)
+            if stock_move and stock_move.product_package_quantity:
+                line.sale_line_calculate_packages = stock_move.product_package_quantity
             else:
                 # 配送がまだない場合の個口数の算出
                 if line.product_id.two_legs_scale:
@@ -1265,15 +1167,6 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_order_voucher_class(self):
         for line in self:
             line.sale_order_voucher_class = "受注引当"
-
-    def _compute_sale_order_date_order(self):
-        for line in self:
-            if line.order_id.date_order:
-                line.sale_order_date_order = line.order_id.date_order.strftime(
-                    "%Y-%m-%d"
-                )
-            else:
-                line.sale_order_date_order = ""
 
     def get_image_url(self, image_path, id):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
