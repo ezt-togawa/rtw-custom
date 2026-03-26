@@ -1117,7 +1117,7 @@ class SaleOrderLineExcelReport(models.Model):
     def _compute_sale_line_calculate_packages(self):
         for line in self:
             stock_move = self.env['stock.move'].search([('sale_line_id', '=', line.id), ('state', '!=', 'cancel')], limit=1)
-            if stock_move and stock_move.product_package_quantity:
+            if stock_move:
                 line.sale_line_calculate_packages = stock_move.product_package_quantity
             else:
                 # 配送がまだない場合の個口数の算出
