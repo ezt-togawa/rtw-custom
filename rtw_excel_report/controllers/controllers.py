@@ -1,21 +1,44 @@
-# -*- coding: utf-8 -*-
-# from odoo import http
+import json
+from datetime import datetime
+
+from odoo.http import content_disposition, request, route
+from odoo.tools.safe_eval import safe_eval
+
+from odoo.addons.web.controllers import main as web_report
 
 
-# class RtwExcelReport(http.Controller):
-#     @http.route('/rtw_excel_report/rtw_excel_report/', auth='public')
-#     def index(self, **kw):
-#         return "Hello, world"
-
-#     @http.route('/rtw_excel_report/rtw_excel_report/objects/', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('rtw_excel_report.listing', {
-#             'root': '/rtw_excel_report/rtw_excel_report',
-#             'objects': http.request.env['rtw_excel_report.rtw_excel_report'].search([]),
-#         })
-
-#     @http.route('/rtw_excel_report/rtw_excel_report/objects/<model("rtw_excel_report.rtw_excel_report"):obj>/', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('rtw_excel_report.object', {
-#             'object': obj
-#         })
+class ReportController(web_report.ReportController):
+    @route()
+    def report_routes(self, reportname, docids=None, converter=None, **data):
+        if converter == "xlsx":
+            report = request.env["ir.actions.report"]._get_report_from_name(reportname)
+            context = dict(request.env.context)
+            if docids:
+                docids = [int(i) for i in docids.split(",")]
+            if data.get("options"):
+                data.update(json.loads(data.pop("options")))
+            if data.get("context"):
+                data["context"] = json.loads(data["context"])
+                if data["context"].get("lang"):
+                    del data["context"]["lang"]
+                context.update(data["context"])
+            xlsx = report.with_context(context)._render_xlsx(docids, data=data)[0]
+            report_name = report.report_file or report.name or "report"
+            if report.print_report_name:
+                obj = request.env[report.model].browse(docids[0])
+                now = datetime.now()
+                report_name = safe_eval(report.print_report_name, {"object": obj, "datetime": datetime, "now": now}) or report_name
+            report_name = str(report_name) if report_name else "report"
+            xlsxhttpheaders = [
+                (
+                    "Content-Type",
+                    "application/vnd.openxmlformats-"
+                    "officedocument.spreadsheetml.sheet",
+                ),
+                ("Content-Length", len(xlsx)),
+                ("Content-Disposition", content_disposition(report_name + ".xlsx")),
+            ]
+            return request.make_response(xlsx, headers=xlsxhttpheaders)
+        return super(ReportController, self).report_routes(
+            reportname, docids, converter, **data
+        )
