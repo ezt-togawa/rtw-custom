@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from odoo import models, _
 
 
@@ -10,6 +10,38 @@ class productShippingLabel(models.AbstractModel):
     """
     _name = 'report.rtw_excel_report.shipping_label_xls'
     _inherit = 'report.report_xlsx.abstract'
+
+    def _format_jp_date_with_weekday(self, value):
+        weekday_names = ['月', '火', '水', '木', '金', '土', '日']
+
+        if not value or value == ' ':
+            return ' '
+
+        dt_value = None
+
+        if isinstance(value, datetime):
+            dt_value = value.date()
+        elif isinstance(value, date):
+            dt_value = value
+        elif isinstance(value, str):
+            normalized = value.strip()
+            if not normalized:
+                return ' '
+
+            normalized = normalized.split('（')[0].split('(')[0].strip()
+
+            for fmt in ('%Y-%m-%d', '%Y/%m/%d', '%Y年%m月%d日'):
+                try:
+                    dt_value = datetime.strptime(normalized, fmt).date()
+                    break
+                except ValueError:
+                    continue
+
+        if not dt_value:
+            return value
+
+        weekday = weekday_names[dt_value.weekday()]
+        return f"{dt_value.year}年{dt_value.month}月{dt_value.day}日（{weekday}）"
 
     def _get_objs_for_report(self, docids, data):
         return self.env['stock.picking'].browse(docids)
@@ -270,11 +302,10 @@ class productShippingLabel(models.AbstractModel):
                 customer_name = line.customer_id.name if line.customer_id.name else ' '
                 sale_order = line.sale_id.name if line.sale_id.name else ' '
 
-                stock_move_date = (line.date.strftime('%Y') + '年' + str(line.date.month) + '月' + str(line.date.day) + '日（  ）') if line.date else ' '
+                stock_move_date = self._format_jp_date_with_weekday(line.date)
 
                 warehouse_arrive_date = line.warehouse_arrive_date or ' '
-                if warehouse_arrive_date and warehouse_arrive_date != ' ' and isinstance(warehouse_arrive_date, str) and not warehouse_arrive_date.endswith('（  ）'):
-                    warehouse_arrive_date = warehouse_arrive_date.replace('(  )', '') + '（  ）'
+                warehouse_arrive_date = self._format_jp_date_with_weekday(warehouse_arrive_date)
                 itoshima_shiratani_shipping_notes_first_line = line.itoshima_shiratani_shipping_notes.split('\n')[0] if line.itoshima_shiratani_shipping_notes else ' '
                 product_qty = line.product_qty or ' '
                 product_package_quantity = line.product_package_quantity if line.product_package_quantity is not False else ' '
