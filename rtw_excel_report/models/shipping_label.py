@@ -109,19 +109,19 @@ class productShippingLabel(models.AbstractModel):
         })
         fmt_product_qty= workbook.add_format({
             'font_name': font_name, 'font_size': 14,
-            'align': 'left', 'valign': 'left',
+            'align': 'left', 'valign': 'vcenter',
         })
         fmt_qty_center = workbook.add_format({
             'font_name': font_name, 'font_size': 14,
-            'align': 'left', 'valign': 'center',
+            'align': 'center', 'valign': 'vcenter',
         })
 
         COL_WIDTHS = {
-            0: 17.89,   # A
-            1: 10.44,   # B
+            0: 17.20,   # A
+            1: 10.00,   # B
             2: 2.22,    # C
             3: 15.66,   # D
-            4: 8.0,     # E  
+            4: 12.0,    # E
             5: 20.11,   # F
             6: 4.0,     # G 
             7: 2.89,    # H  
@@ -131,7 +131,7 @@ class productShippingLabel(models.AbstractModel):
             11: 1.78,   # L
             12: 5.78,   # M
             13: 0.89,   # N
-            14: 4.22,   # O
+            14: 1.82,   # O
         }
         HIDDEN_COLS = {6, 7, 8, 9}  # G, H, I, J
 
@@ -154,7 +154,7 @@ class productShippingLabel(models.AbstractModel):
             (15.0,  False),   # row 15 
             (13.5,  False),   # row 16 
             (6.0,   False),   # row 17
-            (18.0,  False),   # row 18 
+            (18.0,  False),   # row 18
             (9.75,  False),   # row 19
             (9.75,  False),   # row 20
         ]
@@ -203,7 +203,7 @@ class productShippingLabel(models.AbstractModel):
             (6.0,   False),  # row 17
             (18.0,  False),  # row 18
             (9.75,  False),  # row 19
-            (10.2,  False),  # row 20
+            (2.50,  False),  # row 20
         ]
         
         PAGE_ROW_LAYOUTS = [ROW_LAYOUT, ROW_LAYOUT_2, ROW_LAYOUT_3]
@@ -258,7 +258,7 @@ class productShippingLabel(models.AbstractModel):
 
         sheet_main = workbook.add_worksheet("印刷画面")
         sheet_main.set_paper(9)
-        sheet_main.set_margins(left=0.15, right=0.15, top=0.15, bottom=0.15)
+        sheet_main.set_margins(left=0.35, right=0.20, top=0.39, bottom=0.20)
         sheet_main.set_footer('&C Page &P ')
 
         for col_idx, width in COL_WIDTHS.items():
@@ -349,9 +349,10 @@ class productShippingLabel(models.AbstractModel):
                     current_label_pos += 1
 
         total_pages = (current_label_pos + 2) // 3
+        sheet_main.print_area(0, 0, (total_pages * 63) - 1, 14)
         sheet_main.set_h_pagebreaks([63 * i for i in range(1, total_pages)])
-        sheet_main.print_area(0, 0, (total_pages * 63) - 1, 12)
         sheet_main.fit_to_pages(1, total_pages)
+        sheet_main.set_print_scale(100)
 
 
 class ProductShippingLabelMove(models.AbstractModel):
