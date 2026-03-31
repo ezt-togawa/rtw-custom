@@ -33,7 +33,7 @@ from . import inventory_import_list
 from . import inspection_check_sheet
 from . import stock_status_list
 from . import shipping_list
-from . import invoice_sticker
+from . import shipping_label
 from . import scheduled_payment_list
 from . import scheduled_arrival_list
 from . import supplied_material_detail

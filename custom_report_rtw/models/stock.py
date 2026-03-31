@@ -51,6 +51,12 @@ class StockPicking(models.Model):
 
 class StockMove(models.Model):
   _inherit = 'stock.move'
+  current_print = fields.Char(compute="_compute_current_print")
+
+  def _compute_current_print(self):
+      for move in self:
+          move.current_print = datetime.now().strftime('%Y-%m-%dT%H%M%S')
+
   calculate_packages = fields.Integer('Packages' , compute="_compute_calculate_packages")
   stock_move_product_size = fields.Char(compute="_compute_stock_move_related_sale_order_line")
   stock_move_sale_line_id= fields.Many2one('sale.order.line',compute="_compute_stock_move_related_sale_order_line")

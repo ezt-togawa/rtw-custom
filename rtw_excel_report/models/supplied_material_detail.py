@@ -87,7 +87,7 @@ class productSpec(models.AbstractModel):
         
         sheet.merge_range(6, 6, 6, 7, _("株式会社 リッツウェル"), format_bold_left2)
         sheet.merge_range(7, 5, 7, 7, address, format_add_user_login)
-        sheet.merge_range(8, 5, 8, 6, _("TEL: ") + phone, format_add_user_login)
+        sheet.merge_range(8, 5, 8, 6, _("TEL: ") + (phone or ""), format_add_user_login)
         sheet.merge_range(9, 5, 9, 6, _("担当: ") + responsible, format_add_user_login)
 
         for  index,stock_picking in enumerate(lines):
