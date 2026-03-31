@@ -1,6 +1,10 @@
 from odoo import models, _
 
 class productLabelSticker(models.AbstractModel):
+    """
+        【商品ラベルシール】Excel出力ロジック
+        レポートID: rtw_excel_report.product_label_sticker_xls
+    """
     _name = "report.rtw_excel_report.product_label_sticker_xls"
     _inherit = "report.report_xlsx.abstract"
 
@@ -28,18 +32,12 @@ class productLabelSticker(models.AbstractModel):
         sheet_main.set_column("K:K", None,cell_format=font_family)  
         sheet_main.set_column("L:L", width=15,cell_format=font_family) 
         sheet_main.set_column("M:M", width=0,cell_format=font_family) 
-        sheet_main.set_column("N:Z", None,cell_format=font_family) 
+        sheet_main.set_column("N:Z", None,cell_format=font_family)
 
-        location_item_row = 1
+        # 印字開始位置の取得
+        rec = self.env["mrp.location_item_excel_prod_label"].get_singleton()
+        location_item_row = rec.location_item_row or 1
 
-        last_mrp_prod = self.env["mrp.location_item_excel_prod_label"].search([], order="create_date desc", limit=1)
-        if last_mrp_prod:
-            location_item_row = last_mrp_prod.location_item_row
-            records_to_delete = self.env["mrp.location_item_excel_prod_label"].search([("create_date", "<", last_mrp_prod.create_date)])
-            if records_to_delete:
-                records_to_delete.unlink()
-        else: 
-            location_item_row = 1
         row_start_begin = (location_item_row - 1) // 2 * 9
         count = 0
         for obj in lines:
