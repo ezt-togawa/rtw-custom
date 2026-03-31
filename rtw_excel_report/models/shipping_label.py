@@ -76,7 +76,7 @@ class productShippingLabel(models.AbstractModel):
         })
         fmt_description_picking = workbook.add_format({
             'font_name': font_name, 'font_size': 18,
-            'align': 'left',
+            'align': 'left', 'shrink': True,
         })
         fmt_prod_attrs = workbook.add_format({
             'font_name': font_name, 'font_size': 11,
@@ -85,26 +85,26 @@ class productShippingLabel(models.AbstractModel):
         })
         fmt_address = workbook.add_format({
             'font_name': font_name, 'font_size': 11,
-            'align': 'left', 'valign': 'top',
+            'align': 'left', 'valign': 'top', 'shrink': True,
         })
         fmt_sale_title = workbook.add_format({
             'font_name': font_name, 'font_size': 11,
             'align': 'left', 'valign': 'vcenter',
-            'text_wrap': True,
+            'shrink': True,
         })
         fmt_recipient = workbook.add_format({
             'font_name': font_name, 'font_size': 11,
-            'align': 'left', 'valign': 'top',
+            'align': 'left', 'valign': 'top', 'shrink': True,
         })
         fmt_customer_name = workbook.add_format({
             'font_name': font_name, 'font_size': 11,
             'align': 'left', 'valign': 'vcenter',
-            'text_wrap': True,
+            'shrink': True,
         })
         fmt_itoshima_shiratani_shipping_notes_first_line = workbook.add_format({
             'font_name': font_name, 'font_size': 11,
             'align': 'left', 'valign': 'vcenter',
-            'text_wrap': True,
+            'shrink': True,
         })
         fmt_product_qty= workbook.add_format({
             'font_name': font_name, 'font_size': 14,
