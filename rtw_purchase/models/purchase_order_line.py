@@ -16,13 +16,12 @@ class ProductConfigSessionCustomValue(models.Model):
 class rtw_purchase(models.Model):
     _inherit = "purchase.order.line"
 
-    sale_order_ids = fields.Char("sale order", compute='_compute_sale_order')
-    sale_order_names = fields.Char("sale order title", compute='_compute_sale_order')
+    sale_order_ids = fields.Char("sale order", compute='_compute_sale_order', store=True)
+    sale_order_names = fields.Char("sale order title", compute='_compute_sale_order', store=True)
     name_selection = fields.Many2one("product.config.session.custom.value", store=True , string='説明選択' , domain= "[('id' , 'in' , allowed_custom_config)]")
     allowed_custom_config = fields.Many2many( # THIS FIELD STORES THE APPROPRIATE CONFIG
         'product.config.session.custom.value', compute='_compute_allowed_custom_config'
     )
-    filter_so_ids = fields.Char("filter so ids")
     destination_purchase_order_line = fields.Text(string='送り先',compute='_compute_destination_purchase_order_line')
     purchase_state = fields.Char("purchase state", compute='_compute_purchase_state')
 
@@ -98,7 +97,7 @@ class rtw_purchase(models.Model):
             sale_order_id = self.env['sale.order'].search([('name','=',mrp_production.origin)])
         return sale_order_id
                 
-    @api.depends('move_dest_ids.group_id.mrp_production_ids')
+    @api.depends('move_dest_ids.group_id.mrp_production_ids', 'move_ids.move_dest_ids.group_id.mrp_production_ids', 'order_id.origin')
     def _compute_sale_order(self):
         for purchase in self:
             purchase.sale_order_ids = False
@@ -113,31 +112,27 @@ class rtw_purchase(models.Model):
                         if sale_order and not sale_order.id in order_ids:
                             if sale_order.name:
                                 order.append(sale_order.name)
-                            if sale_order.title:
+                            if hasattr(sale_order, 'title') and sale_order.title:
                                 name.append(sale_order.title)
                             order_ids.append(sale_order.id)
                 purchase.sale_order_ids = ','.join(order)
                 purchase.sale_order_names = ','.join(name)
-                purchase.filter_so_ids = ','.join(order)
             else:
                 if purchase.order_id:
                     check_sale_order = self.env['sale.order'].search([('name', '=', purchase.order_id.origin)], limit=1)
                     if check_sale_order:
                         purchase.sale_order_ids = purchase.order_id.origin
-                        purchase.sale_order_names = check_sale_order.title
-                        purchase.filter_so_ids = purchase.order_id.origin
+                        if hasattr(check_sale_order, 'title') and check_sale_order.title:
+                            purchase.sale_order_names = check_sale_order.title
                     else:
                         purchase.sale_order_ids = ''
                         purchase.sale_order_names = ''
-                        purchase.filter_so_ids = ''
                 elif purchase.sale_order_id:
                     purchase.sale_order_ids = purchase.sale_order_id.name
                     purchase.sale_order_names = purchase.sale_order_id.title
-                    purchase.filter_so_ids = purchase.sale_order_ids
                 else:
                     purchase.sale_order_ids = ''
                     purchase.sale_order_names = ''
-                    purchase.filter_so_ids = ''
 
     def action_open_parent_purchase(self):
         self.ensure_one()

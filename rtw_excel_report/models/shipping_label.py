@@ -4,9 +4,8 @@ from odoo import models, _
 
 class productShippingLabel(models.AbstractModel):
     """
-        【送り状シール】Excelレポート出力ロジック
+        【送り状シール】Excel出力ロジック
         レポートID: rtw_excel_report.shipping_label_xls
-        用途: 出荷指示（stock.picking）から送り状シール用のExcelを作成する
     """
     _name = 'report.rtw_excel_report.shipping_label_xls'
     _inherit = 'report.report_xlsx.abstract'
@@ -49,10 +48,12 @@ class productShippingLabel(models.AbstractModel):
     def generate_xlsx_report(self, workbook, data, lines):
    
         self = self.with_context(lang=self.env.user.lang)
-
         font_name = 'HGP創英角ｺﾞｼｯｸUB'
 
-    
+        # 印字開始位置の取得
+        rec = self.env["mrp.location_item_excel_prod_label"].get_singleton()
+        location_item_row = rec.location_item_row or 1
+
         fmt_sale_order = workbook.add_format({
             'font_name': font_name, 'font_size': 11,
             'align': 'left', 'valign': 'top',
@@ -108,19 +109,19 @@ class productShippingLabel(models.AbstractModel):
         })
         fmt_product_qty= workbook.add_format({
             'font_name': font_name, 'font_size': 14,
-            'align': 'left', 'valign': 'left',
+            'align': 'left', 'valign': 'vcenter',
         })
         fmt_qty_center = workbook.add_format({
             'font_name': font_name, 'font_size': 14,
-            'align': 'left', 'valign': 'center',
+            'align': 'center', 'valign': 'vcenter',
         })
 
         COL_WIDTHS = {
-            0: 17.89,   # A
-            1: 10.44,   # B
+            0: 17.20,   # A
+            1: 10.00,   # B
             2: 2.22,    # C
             3: 15.66,   # D
-            4: 8.0,     # E  
+            4: 12.0,    # E
             5: 20.11,   # F
             6: 4.0,     # G 
             7: 2.89,    # H  
@@ -130,7 +131,7 @@ class productShippingLabel(models.AbstractModel):
             11: 1.78,   # L
             12: 5.78,   # M
             13: 0.89,   # N
-            14: 4.22,   # O
+            14: 1.82,   # O
         }
         HIDDEN_COLS = {6, 7, 8, 9}  # G, H, I, J
 
@@ -153,7 +154,7 @@ class productShippingLabel(models.AbstractModel):
             (15.0,  False),   # row 15 
             (13.5,  False),   # row 16 
             (6.0,   False),   # row 17
-            (18.0,  False),   # row 18 
+            (18.0,  False),   # row 18
             (9.75,  False),   # row 19
             (9.75,  False),   # row 20
         ]
@@ -202,7 +203,7 @@ class productShippingLabel(models.AbstractModel):
             (6.0,   False),  # row 17
             (18.0,  False),  # row 18
             (9.75,  False),  # row 19
-            (10.2,  False),  # row 20
+            (2.50,  False),  # row 20
         ]
         
         PAGE_ROW_LAYOUTS = [ROW_LAYOUT, ROW_LAYOUT_2, ROW_LAYOUT_3]
@@ -257,7 +258,7 @@ class productShippingLabel(models.AbstractModel):
 
         sheet_main = workbook.add_worksheet("印刷画面")
         sheet_main.set_paper(9)
-        sheet_main.set_margins(left=0.15, right=0.15, top=0.15, bottom=0.15)
+        sheet_main.set_margins(left=0.35, right=0.20, top=0.39, bottom=0.20)
         sheet_main.set_footer('&C Page &P ')
 
         for col_idx, width in COL_WIDTHS.items():
@@ -275,6 +276,8 @@ class productShippingLabel(models.AbstractModel):
             target_moves = lines
         else:
             target_moves = []
+
+        current_label_pos = location_item_row  # 開始位置
 
         for line in target_moves:
             stock_picking = line.picking_id
@@ -320,43 +323,36 @@ class productShippingLabel(models.AbstractModel):
                 if pkg_qty <= 0:
                     pkg_qty = 1
 
-                label_data = {
-                    'sale_order': sale_order,
-                    'stock_move_date': stock_move_date,
-                    'warehouse_arrive_date': warehouse_arrive_date,
-                    'description_picking': description_picking,
-                    'prod_attrs': prod_attrs,
-                    'partner_name': partner_name,
-                    'zip_city_state': zip_city_state,
-                    'phone': phone,
-                    'sale_title': sale_title,
-                    'customer_name': customer_name,
-                    'itoshima_shiratani_shipping_notes_first_line': itoshima_shiratani_shipping_notes_first_line,
-                    'product_qty': product_qty,
-                    'seri_number': 1,
-                    'product_package_quantity': product_package_quantity,
-                }
-
                 for count in range(pkg_qty):
-                    label_data['seri_number'] = count + 1
-                    row_start = global_label_index * 21
-                    layout = PAGE_ROW_LAYOUTS[global_label_index % 3]
-                    write_label(sheet_main, row_start, layout, label_data)
-                    global_label_index += 1
+                    label_data = {
+                        'sale_order': sale_order,
+                        'stock_move_date': stock_move_date,
+                        'warehouse_arrive_date': warehouse_arrive_date,
+                        'description_picking': description_picking,
+                        'prod_attrs': prod_attrs,
+                        'partner_name': partner_name,
+                        'zip_city_state': zip_city_state,
+                        'phone': phone,
+                        'sale_title': sale_title,
+                        'customer_name': customer_name,
+                        'itoshima_shiratani_shipping_notes_first_line': itoshima_shiratani_shipping_notes_first_line,
+                        'product_qty': product_qty,
+                        'seri_number': count + 1,
+                        'product_package_quantity': product_package_quantity,
+                    }
 
-        total_labels = global_label_index
-        total_pages = (total_labels + 2) // 3
-        global_row = total_pages * 63
+                    # 印字位置計算
+                    page_inner_idx = (current_label_pos - 1) % 3
+                    row_start = ((current_label_pos - 1) // 3) * 63 + (page_inner_idx * 21)
 
-        page_breaks = [63 * i for i in range(1, total_pages)]
-        if page_breaks:
-            sheet_main.set_h_pagebreaks(page_breaks)
+                    write_label(sheet_main, row_start, PAGE_ROW_LAYOUTS[page_inner_idx], label_data)
+                    current_label_pos += 1
 
-        if total_pages > 0:
-            sheet_main.fit_to_pages(1, total_pages)
-
-        if global_row > 0:
-            sheet_main.print_area(0, 0, global_row - 1, 12)
+        total_pages = (current_label_pos + 2) // 3
+        sheet_main.print_area(0, 0, (total_pages * 63) - 1, 14)
+        sheet_main.set_h_pagebreaks([63 * i for i in range(1, total_pages)])
+        sheet_main.fit_to_pages(1, total_pages)
+        sheet_main.set_print_scale(100)
 
 
 class ProductShippingLabelMove(models.AbstractModel):

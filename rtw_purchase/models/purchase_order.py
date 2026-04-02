@@ -10,13 +10,12 @@ class rtw_purchase(models.Model):
     check_schedule_boolean = fields.Boolean()
     check_schedule_icon = fields.Char('Icon', default="fa-warning")
 
-    sale_order_ids = fields.Char("sale order", compute='_compute_sale_order')
-    sale_order_names = fields.Char("sale order title")
+    sale_order_ids = fields.Char("sale order", compute='_compute_sale_order', store=True)
+    sale_order_names = fields.Char("sale order title", compute='_compute_sale_order', store=True)
     operation_type = fields.Many2one('stock.picking.type' , string="オペレーションタイプ", compute='_compute_operation_type')
     working_notes = fields.Char(string='作業メモ')
     destination_note = fields.Text('送り先注記')
     resend = fields.Char('再送')
-    filter_so_ids = fields.Char("filter so ids")
 
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
     open_record_button = fields.Html(
@@ -77,7 +76,7 @@ class rtw_purchase(models.Model):
             sale_order_id = self.env['sale.order'].search([('name','=',mrp_production.origin)])
         return sale_order_id
     
-    @api.depends('order_line.move_dest_ids.group_id.mrp_production_ids')
+    @api.depends('order_line.move_dest_ids.group_id.mrp_production_ids', 'order_line.move_ids.move_dest_ids.group_id.mrp_production_ids', 'origin')
     def _compute_sale_order(self):
         for purchase in self:
             purchase.sale_order_ids = False
@@ -92,40 +91,32 @@ class rtw_purchase(models.Model):
                         if sale_order and not sale_order.id in order_ids:
                             if sale_order.name:
                                 order.append(sale_order.name)
-                            if sale_order.title:
+                            if hasattr(sale_order, 'title') and sale_order.title:
                                 name.append(sale_order.title)
                             order_ids.append(sale_order.id)
                     
                     purchase.sale_order_ids = ','.join(order)
-                    purchase.filter_so_ids = ','.join(order)
                     purchase.sale_order_names = ','.join(name)
             else:
                 if purchase.origin:
                     check_sale_order = self.env['sale.order'].search([('name', '=', purchase.origin)], limit=1)
                     if check_sale_order:
                         purchase.sale_order_ids = purchase.origin
-                        purchase.filter_so_ids = purchase.origin
-                        purchase.sale_order_names = check_sale_order.title
+                        if hasattr(check_sale_order, 'title') and check_sale_order.title:
+                            purchase.sale_order_names = check_sale_order.title
                     else:
                         purchase.sale_order_ids = ''
                         purchase.sale_order_names = ''
-                        purchase.filter_so_ids = ''
-                elif purchase.purchase_order_line and purchase.purchase_order_line[0].sale_order_ids:
-                    purchase.sale_order_ids = purchase.purchase_order_line[0].sale_order_ids
-                    purchase.filter_so_ids = purchase.purchase_order_line[0].sale_order_ids
-                    purchase.sale_order_names = purchase.purchase_order_line[0].sale_order_names
+                elif purchase.order_line and purchase.order_line[0].sale_order_ids:
+                    purchase.sale_order_ids = purchase.order_line[0].sale_order_ids
+                    if hasattr(purchase.order_line[0], 'sale_order_names'):
+                        purchase.sale_order_names = purchase.order_line[0].sale_order_names
+                    else:
+                        purchase.sale_order_names = ''
                 else:
                     purchase.sale_order_ids = ''
-                    purchase.filter_so_ids = ''
                     purchase.sale_order_names = ''
 
-                # sale_order = self.env['sale.order'].search([('name', '=', move_dest_ids)])
-            # move_dest_ids.write({
-            #     'name': self.invoice_id.name,
-            #     'warranty_request_ids': [(4, self.id, {
-            #     })]
-            #     })
-            
     def toggle_check_schedule(self):
         for line in self:
             line.check_schedule_boolean = False
