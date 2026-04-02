@@ -267,7 +267,17 @@ class productShippingLabel(models.AbstractModel):
             else:
                 sheet_main.set_column(col_idx, col_idx, width)
 
-        global_label_index = 0
+        for pos in range(1, location_item_row):
+            page_inner_idx = (pos - 1) % 3
+            row_start = ((pos - 1) // 3) * 63 + (page_inner_idx * 21)
+            layout = PAGE_ROW_LAYOUTS[page_inner_idx]
+
+            # ラベルデータは書かずに、行の高さと非表示設定だけ適用
+            for rel, (h, hidden) in enumerate(layout):
+                r = row_start + rel
+                sheet_main.set_row(r, h)
+                if hidden:
+                    sheet_main.set_row(r, h, None, {'hidden': True})
 
         model_name = lines._name if lines else ''
         if model_name == 'stock.picking':
