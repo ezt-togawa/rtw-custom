@@ -7,6 +7,9 @@
                 <form>
                     <sheet>
                         <group>
+                            <field name="label_type" string="ラベルタイプ" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        <group>
                             <h2> 印字スタート位置設定：</h2>
                         </group>
                         <group>
