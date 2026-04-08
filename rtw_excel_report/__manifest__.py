@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management', 'sale','sale_sourced_by_line','product','purchase','stock_move_container','stock_move_pallet'],
+    'depends': ['base', 'sale_management', 'sale','sale_sourced_by_line','product','purchase','stock_move_container','stock_move_pallet','mrp'],
 
     # always loaded
     'data': [

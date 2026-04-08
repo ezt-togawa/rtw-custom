@@ -2,3 +2,4 @@
 
 from . import stock_move
 from . import location_item_excel_prod_label
+from . import mrp_production

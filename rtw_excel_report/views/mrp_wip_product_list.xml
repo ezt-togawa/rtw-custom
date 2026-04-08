@@ -10,4 +10,16 @@
         <field name="binding_view_types">list,form</field>
         <field name="print_report_name">'仕掛品伝票一覧-' + object.current_print</field>
     </record>
+
+    <record id="mrp_product_label_seal" model="ir.actions.report">
+        <field name="model">mrp.production</field>
+        <field name="name">商品ラベルシール</field>
+        <field name="report_name">rtw_excel_report.product_label_sticker_mrp_xls</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_type">action</field>
+        <field name="report_type">xlsx</field>
+        <field name="attachment_use">False</field>
+        <field name="binding_view_types">list,form</field>
+        <field name="print_report_name">'商品ラベルシール-' + object.current_print</field>
+    </record>
 </odoo>
