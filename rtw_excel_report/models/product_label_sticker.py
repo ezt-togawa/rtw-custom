@@ -150,13 +150,13 @@ class productLabelSticker(models.AbstractModel):
         sheet = workbook.add_worksheet(_("商品ラベルシール-"))
 
   
-        sheet.set_column(0,  0,  0.64,  fmt_base)
-        sheet.set_column(1,  6,  7.67,  fmt_base)
-        sheet.set_column(7,  8,  0.64,  fmt_base)
-        sheet.set_column(9,  14, 7.67,  fmt_base)
-        sheet.set_column(15, 15, 0.64,  fmt_base)
+        sheet.set_column(0,  0,  0.69,  fmt_base)
+        sheet.set_column(1,  6,  7.89,  fmt_base)
+        sheet.set_column(7,  8,  0.69,  fmt_base)
+        sheet.set_column(9,  14, 7.89,  fmt_base)
+        sheet.set_column(15, 15, 0.69,  fmt_base)
 
-        ROW_HEIGHTS_6 = [7.35, 53.85, 46.75, 46.75, 46.75, 46.75, 46.75, 7.15]
+        ROW_HEIGHTS_6 = [7.35, 53.85, 46.75, 46.75, 46.75, 46.75, 46.75, 6.15]
 
         ROW_HEIGHTS_8 = [7.35, 105.0, 104.5, 7.15]
 
@@ -177,10 +177,11 @@ class productLabelSticker(models.AbstractModel):
         sheet.set_margins(left=0, right=0, top=0.05, bottom=0)
         sheet.center_horizontally()
         sheet.set_paper(9)
-        if rec and rec.label_type == '6':
-            sheet.set_footer('&C&8Page &P', {'margin': 0.1, 'scale_with_doc': False})
-        else:
-            sheet.set_footer('&C&8Page &P', {'scale_with_doc': False})
+        # ページ数は印刷しない（ラベル用紙にスペースなし想定）
+        # if rec and rec.label_type == '6':
+        #     sheet.set_footer('&C&8Page &P', {'margin': 0.1, 'scale_with_doc': False})
+        # else:
+        #     sheet.set_footer('&C&8Page &P', {'scale_with_doc': False})
 
         
 
