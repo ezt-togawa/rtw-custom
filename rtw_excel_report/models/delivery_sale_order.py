@@ -198,8 +198,14 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row, 9, row + merge_line, 9, line.sale_order_line_product_uom_qty if line.sale_order_line_product_uom_qty else '', format_lines_14)
                             sheet.merge_range(row, 10, row + merge_line, 10, line.sale_line_calculate_packages if line.sale_line_calculate_packages else '', format_lines_14)
                             sheet.merge_range(row, 11, row + merge_line, 11, line.sale_line_sai if line.sale_line_sai else '', format_lines_14)
-                            sheet.merge_range(row, 12, row + merge_line, 12, '有', format_lines_14)
-                            sheet.merge_range(row, 13, row + merge_line, 13, '無', format_lines_14)
-                        sheet.merge_range(row, 14, row + merge_line, 14, '', format_lines_14) 
+                            umu1 = _('有')
+                            if line.product_id.is_no_unpacking_product:
+                                umu1 = _('無')
+                            umu2 = _('有')
+                            if line.product_id.is_no_assembly_product:
+                                umu2 = _('無')
+                            sheet.merge_range(row, 12, row + merge_line, 12, umu1, format_lines_14)
+                            sheet.merge_range(row, 13, row + merge_line, 13, umu2, format_lines_14)
+                        sheet.merge_range(row, 14, row + merge_line, 14, '', format_lines_14)
                         
                         row += merge_line + 1

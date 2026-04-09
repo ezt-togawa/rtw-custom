@@ -174,9 +174,15 @@ class StockPickingDelivery(models.AbstractModel):
                     sheet.merge_range(row, 4, row + merge_line, 8, line.product_number_and_size if line.product_number_and_size else '', format_lines_14_left) 
                     sheet.merge_range(row, 9, row + merge_line, 9, line.stock_product_uom_qty if line.stock_product_uom_qty else '', format_lines_14) 
                     sheet.merge_range(row, 10, row + merge_line, 10, line.product_package_quantity if line.product_package_quantity else '', format_lines_14) 
-                    sheet.merge_range(row, 11, row + merge_line, 11, line.sai if line.sai else '', format_lines_14) 
-                    sheet.merge_range(row, 12, row + merge_line, 12, _('有'), format_lines_14)
-                    sheet.merge_range(row, 13, row + merge_line, 13, _('無'), format_lines_14) 
+                    sheet.merge_range(row, 11, row + merge_line, 11, line.sai if line.sai else '', format_lines_14)
+                    umu1 = _('有')
+                    if line.product_id.is_no_unpacking_product:
+                        umu1 = _('無')
+                    umu2 = _('有')
+                    if line.product_id.is_no_assembly_product:
+                        umu2 = _('無')
+                    sheet.merge_range(row, 12, row + merge_line, 12, umu1, format_lines_14)
+                    sheet.merge_range(row, 13, row + merge_line, 13, umu2, format_lines_14)
                     sheet.merge_range(row, 14, row + merge_line, 14, '', format_lines_14) 
                     
                     row += merge_line + 1
