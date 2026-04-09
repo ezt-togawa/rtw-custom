@@ -201,19 +201,23 @@
                         </div>
                       </td>
                       <td class="text-center" style="padding: 10px 0px;">
-                        <t t-if="l.product_id.is_no_unpacking_product">
-                          <span class="two-lines">無</span>
-                        </t>
-                        <t t-else="">
-                          <span class="two-lines">有</span>
+                        <t t-if="not l.is_tax_excluded_product">
+                          <t t-if="l.product_id.is_no_unpacking_product">
+                            <span class="two-lines">無</span>
+                          </t>
+                          <t t-else="">
+                            <span class="two-lines">有</span>
+                          </t>
                         </t>
                       </td>
                       <td class="text-center" style="padding: 10px 0px;">
-                        <t t-if="l.product_id.is_no_assembly_product">
-                          <span class="two-lines">無</span>
-                        </t>
-                        <t t-else="">
-                          <span class="two-lines">有</span>
+                        <t t-if="not l.is_tax_excluded_product">
+                          <t t-if="l.product_id.is_no_assembly_product">
+                            <span class="two-lines">無</span>
+                          </t>
+                          <t t-else="">
+                            <span class="two-lines">有</span>
+                          </t>
                         </t>
                       </td>
                       <td class="text-right" style="padding: 10px 0px;">
