@@ -15,7 +15,9 @@ class ProductGroupMaster(models.Model):
     )
     
     group_id = fields.Selection(
-        [('tax_excluded_price', '税抜定価除外')],
+        [('tax_excluded_price', '税抜定価除外'),
+         ('no_assembly', '組立なし'),
+         ('no_unpacking', '開梱なし')],
         string='グループ',
         required=True,
         default='tax_excluded_price',
@@ -59,6 +61,8 @@ class ProductGroupMaster(models.Model):
     def _compute_group_code(self):
         group_code_mapping = {
             'tax_excluded_price': 'GC001',
+            'no_assembly': 'GC002',
+            'no_unpacking': 'GC003',
         }
         for record in self:
             record.group_code = group_code_mapping.get(record.group_id, '')
