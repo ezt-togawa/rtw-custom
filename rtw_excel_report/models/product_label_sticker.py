@@ -68,6 +68,25 @@ class productLabelSticker(models.AbstractModel):
 
         model_name = lines._name if lines else ''
 
+        def _to_label_count(qty):
+            try:
+                qty_float = float(qty or 0)
+            except (TypeError, ValueError):
+                return 0
+            qty_int = int(qty_float)
+            return qty_int if qty_int > 0 else 0
+
+        def _get_label_count(record):
+            if model_name == 'stock.move':
+                return _to_label_count(record.product_package_quantity)
+            if model_name == 'mrp.production':
+                for move in record.move_finished_ids:
+                    for dest_move in move.move_dest_ids:
+                        if dest_move.picking_id:
+                            return _to_label_count(dest_move.product_package_quantity)
+                return 0
+            return 1
+
         font_name = 'HGPｺﾞｼｯｸM'
 
         def _fmt(props):
@@ -192,7 +211,10 @@ class productLabelSticker(models.AbstractModel):
         pairs_per_page = labels_per_page // 2
         rows_per_page = pairs_per_page * group_size
 
-        total_labels = len(lines)
+        total_labels = sum(_get_label_count(obj) for obj in lines)
+        if total_labels <= 0:
+            total_labels = 1
+        
         max_group_index = (location_item_row + total_labels - 2) // 2
         full_pages = (max_group_index // pairs_per_page) + 1
         total_rows = full_pages * rows_per_page
@@ -289,8 +311,9 @@ class productLabelSticker(models.AbstractModel):
             elif model_name == 'stock.move':
                 sale_name = obj.sale_id.name if obj.sale_id else ""
                 product_uom_qty = obj.product_uom_qty if obj.product_uom_qty else ""
-
-            row_start = row_start_begin + count * group_size
+            else:
+                sale_name = ""
+                product_uom_qty = ""
 
             data_row = {
                 'prod_name':   prod_name,
@@ -306,14 +329,17 @@ class productLabelSticker(models.AbstractModel):
                 'attr_value_8': attributes[7],
             }
 
-            if rec.label_type == '6':
-                _write_label_sheet6(location_item_row, row_heights_set, row_start, data_row)
-            else:
-                _write_label_sheet8(location_item_row, row_heights_set, row_start, data_row)
+            for label_index in range(_get_label_count(obj)):
+                row_start = row_start_begin + count * group_size
 
-            if location_item_row % 2 == 0:
-                count += 1
-            location_item_row += 1
+                if rec.label_type == '6':
+                    _write_label_sheet6(location_item_row, row_heights_set, row_start, data_row)
+                else:
+                    _write_label_sheet8(location_item_row, row_heights_set, row_start, data_row)
+
+                if location_item_row % 2 == 0:
+                    count += 1
+                location_item_row += 1
 class ProductLabelStickerMrp(models.AbstractModel):
     _name = 'report.rtw_excel_report.product_label_sticker_mrp_xls'
     _inherit = 'report.report_xlsx.abstract'
