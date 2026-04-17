@@ -202,9 +202,9 @@
                   <t t-set="generate_pdf_result" t-value="docs.generate_pdf()" />
                   <t t-foreach="generate_pdf_result" t-as="line" t-groupby="10" t-att-last="last">
                     <t t-set="total_listprice"
-                      t-value="total_listprice + (float(line.get('purchase_order_sell_unit_price') or 0.0) * float(line.get('purchase_order_line_product_uom_qty') or 0.0))"/>
+                      t-value="total_listprice + (float(line.get('purchase_order_sell_unit_price') or 0.0) * (line.get('purchase_order_line_product_uom_qty') or 0.0))"/>
                     <t t-set="total_subprice"
-                          t-value="total_subprice + float(str(line['price_subtotal'] or 0.0).replace(',', ''))"/>
+                      t-value="total_subprice + float(line.get('price_subtotal') or 0.0)"/>
                     <tbody class="invoice_tbody">
                       <t
                         t-if="line['display_type'] =='line_section' or line['display_type'] =='line_note'">

@@ -99,8 +99,7 @@ class PurchaseOrderEmployee(models.Model):
                             aggregated_data[key]["price_subtotal"] += subtotal
                         result = []
                         for key, value in aggregated_data.items():
-                            value["purchase_order_line_product_uom_qty"] = str(value["purchase_order_line_product_uom_qty"] / 100)
-                            value["price_subtotal"] = f"{value['price_subtotal']:,}"
+                            value["purchase_order_line_product_uom_qty"] = value["purchase_order_line_product_uom_qty"] / 100
                             value["ir_model_id"] = key
                             result.append(value)
                         return sorted(result, key=lambda x: x['sequence'])
