@@ -32,8 +32,15 @@ class PurchaseOrderEmployee(models.Model):
             for po in self:
                 list_order_line += po.order_line
             if list_order_line:
+                def to_float(val):
+                    if not val: return 0.0
+                    if isinstance(val, str):
+                        return float(val.replace(',', ''))
+                    return float(val)
+
                 for ind, line in enumerate(list_order_line):
                     purchase_order_line = line.product_id
+
                     if purchase_order_line:
                         name_ir_data = self.env['ir.model.data'].search([('res_id', '=', purchase_order_line.id)], limit=1)
                         data.append({
@@ -41,11 +48,11 @@ class PurchaseOrderEmployee(models.Model):
                            "purchase_order_index": line.purchase_order_index,
                            "ir_model_id": name_ir_data.name if name_ir_data else None,
                            "purchase_order_prod_name": line.purchase_order_prod_name,
-                           "purchase_order_line_product_uom_qty": line.purchase_order_line_product_uom_qty,
+                           "purchase_order_line_product_uom_qty": to_float(line.purchase_order_line_product_uom_qty),
                            "product_uom_name": line.product_uom.name,
                            "display_type": line.display_type,
-                           "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
-                           "price_subtotal": line.price_subtotal,
+                           "purchase_order_sell_unit_price": to_float(line.purchase_order_sell_unit_price),
+                           "price_subtotal": to_float(line.price_subtotal),
                            "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids,
                            "name": line.name
                             })
@@ -55,11 +62,11 @@ class PurchaseOrderEmployee(models.Model):
                             "purchase_order_index": line.purchase_order_index,
                             "ir_model_id": None,
                             "purchase_order_prod_name": line.purchase_order_prod_name,
-                            "purchase_order_line_product_uom_qty": line.purchase_order_line_product_uom_qty,
+                            "purchase_order_line_product_uom_qty": to_float(line.purchase_order_line_product_uom_qty),
                             "product_uom_name": line.product_uom.name,
                             "display_type": line.display_type,
-                            "purchase_order_sell_unit_price": line.purchase_order_sell_unit_price,
-                            "price_subtotal": line.price_subtotal,
+                            "purchase_order_sell_unit_price": to_float(line.purchase_order_sell_unit_price),
+                            "price_subtotal": to_float(line.price_subtotal),
                             "product_template_attribute_value_ids": line.product_id.product_template_attribute_value_ids if line.product_id else [],
                             "name": line.name
                             })
@@ -83,8 +90,8 @@ class PurchaseOrderEmployee(models.Model):
                         })
                         for item in data:
                             key = item["ir_model_id"]
-                            qty = float(item["purchase_order_line_product_uom_qty"].replace(",", ""))
-                            subtotal = float(str(item["price_subtotal"]).replace(",", ""))
+                            qty = item["purchase_order_line_product_uom_qty"]
+                            subtotal = item["price_subtotal"]
                             
                             if item["sequence"] < aggregated_data[key]["sequence"]:
                                 aggregated_data[key]["sequence"] = item["sequence"]
