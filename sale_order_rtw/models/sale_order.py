@@ -94,6 +94,33 @@ class sale_order_rtw(models.Model):
 
 
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
+    sales_date = fields.Date(string="売上日", copy=False)
+
+    def action_done(self):
+        if not self.env.context.get('ignore_pack_outside_alert'):
+            for record in self:
+                if any(line.is_pack_outside for line in record.order_line):
+                    return {
+                        'name': 'Confirmation',
+                        'type': 'ir.actions.act_window',
+                        'res_model': 'sale.order.lock.confirm',
+                        'view_mode': 'form',
+                        'target': 'new',
+                        'context': {'default_order_id': record.id}
+                    }
+        res = super(sale_order_rtw, self).action_done()
+        for record in self:
+            if record.warehouse_arrive_date_2:
+                record.sales_date = record.warehouse_arrive_date_2
+            else:
+                record.sales_date = record.warehouse_arrive_date
+        return res
+
+    def action_unlock(self):
+        res = super(sale_order_rtw, self).action_unlock()
+        for record in self:
+            record.sales_date = False
+        return res
 
     @api.depends('estimated_shipping_date')
     def _compute_days_remaining(self):
@@ -266,5 +293,16 @@ class mrp_order_rtw(models.Model):
                 record.mo_shiratani_date = f"{formatted_date} [{day_of_week}]"
             else:
                 record.mo_shiratani_date = ''
+
+class SaleOrderLockConfirm(models.TransientModel):
+    _name = 'sale.order.lock.confirm'
+    _description = 'Confirm Lock Sale Order'
+
+    order_id = fields.Many2one('sale.order', string="Sale Order")
+
+    def action_confirm_lock(self):
+        self.ensure_one()
+        if self.order_id:
+            return self.order_id.with_context(ignore_pack_outside_alert=True).action_done()
     
     

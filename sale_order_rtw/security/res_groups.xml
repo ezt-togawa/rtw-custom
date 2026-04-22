@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="group_sale_unlock" model="res.groups">
+            <field name="name">販売のロック解除</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+        </record>
+    </data>
+</odoo>
