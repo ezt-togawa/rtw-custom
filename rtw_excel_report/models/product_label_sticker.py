@@ -1,5 +1,5 @@
 from odoo import models, _
-
+import math
 
 class productLabelSticker(models.AbstractModel):
     """
@@ -45,6 +45,7 @@ class productLabelSticker(models.AbstractModel):
             if attr_code:
                 attr_code_map[attr_code] = f"{attr_name}: {value_name}"
 
+        # 属性のコード
         priority_code_map = {
             '4': ['001', '050'],
             '5': ['002', '051'],
@@ -202,8 +203,6 @@ class productLabelSticker(models.AbstractModel):
         # else:
         #     sheet.set_footer('&C&8Page &P', {'scale_with_doc': False})
 
-        
-
         group_size = 8 if rec.label_type == '6' else 4
         row_start_begin = (location_item_row - 1) // 2 * group_size
 
@@ -267,7 +266,25 @@ class productLabelSticker(models.AbstractModel):
 
             sheet.merge_range(r+1, c0,     r+1, c_end,    data_row['prod_name'], fmt8_prod_name)
             sheet.merge_range(r+2, c0,     r+2, c_mid1-1, data_row['sale_name'], fmt8_chubun)
-            sheet.merge_range(r+2, c_mid1, r+2, c_end,    data_row['product_uom_qty'],    fmt8_product_uom_qty)
+            sheet.merge_range(r+2, c_mid1, r+2, c_end,    data_row['product_uom_qty'], fmt8_product_uom_qty)
+
+        # 入数算出
+        def _calculate_package_contents(qty, num_packages):
+            if num_packages <= 0:
+                return []
+
+            # 1箱あたりの基本の数（最低限入る数、切り捨て）
+            base_qty = qty // num_packages
+            # 余りの数
+            remainder = qty % num_packages
+
+            packages = []
+            for i in range(num_packages):
+                # 余りがあるうちは、基本の数に +1 してあげる
+                current_package_qty = base_qty + (1 if i < remainder else 0)
+                packages.append(current_package_qty)
+
+            return packages
 
         row_heights_set = set()
         count = 0
@@ -305,20 +322,33 @@ class productLabelSticker(models.AbstractModel):
             ]
 
             attributes = [attr if attr else "" for attr in attributes]
+            # 個口数（ラベル枚数）を取得
+            label_count = int(_get_label_count(obj))
+            quantity_list = []
             if model_name == 'mrp.production':
                 sale_name = obj.sale_reference if obj.sale_reference else ""
-                product_uom_qty = obj.product_qty if obj.product_qty else ""
+                # 数量＞個口数 の場合は入数を計算
+                if obj.product_qty > 0 and obj.product_qty > label_count:
+                    quantity_list = _calculate_package_contents(obj.product_qty, label_count)
+                else:
+                    quantity_list = [1] * label_count
+
             elif model_name == 'stock.move':
                 sale_name = obj.sale_id.name if obj.sale_id else ""
-                product_uom_qty = obj.product_uom_qty if obj.product_uom_qty else ""
+                # 数量＞個口数 の場合は入数を計算
+                if obj.product_uom_qty > 0 and obj.product_uom_qty > label_count:
+                    # 入数計算（数量/個口数）
+                    quantity_list = _calculate_package_contents(obj.product_uom_qty, label_count)
+                else:
+                    quantity_list = [1] * label_count
             else:
                 sale_name = ""
-                product_uom_qty = ""
+                quantity_list = [""] * label_count
 
             data_row = {
-                'prod_name':   prod_name,
-                'sale_name':    sale_name,
-                'product_uom_qty':  product_uom_qty,
+                'prod_name': prod_name,
+                'sale_name': sale_name,
+                'product_uom_qty': "",  # ここは後で書き換え
                 'attr_value_1': attributes[0],
                 'attr_value_2': attributes[1],
                 'attr_value_3': attributes[2],
@@ -329,8 +359,13 @@ class productLabelSticker(models.AbstractModel):
                 'attr_value_8': attributes[7],
             }
 
-            for label_index in range(_get_label_count(obj)):
+            for label_index in range(label_count):
                 row_start = row_start_begin + count * group_size
+
+                if label_index < len(quantity_list):
+                    data_row['product_uom_qty'] = quantity_list[label_index]
+                else:
+                    data_row['product_uom_qty'] = ""
 
                 if rec.label_type == '6':
                     _write_label_sheet6(location_item_row, row_heights_set, row_start, data_row)
@@ -340,6 +375,9 @@ class productLabelSticker(models.AbstractModel):
                 if location_item_row % 2 == 0:
                     count += 1
                 location_item_row += 1
+
+
+
 class ProductLabelStickerMrp(models.AbstractModel):
     _name = 'report.rtw_excel_report.product_label_sticker_mrp_xls'
     _inherit = 'report.report_xlsx.abstract'
