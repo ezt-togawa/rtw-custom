@@ -327,7 +327,12 @@ class productLabelSticker(models.AbstractModel):
             quantity_list = []
             if model_name == 'mrp.production':
                 sale_name = obj.sale_reference if obj.sale_reference else ""
-                quantity_list = _calculate_package_contents(obj.product_qty, label_count)
+                # 数量＞個口数 の場合は入数を計算
+                if obj.product_qty > 0 and obj.product_qty > label_count:
+                    quantity_list = _calculate_package_contents(obj.product_qty, label_count)
+                else:
+                    quantity_list = [1] * label_count
+
             elif model_name == 'stock.move':
                 sale_name = obj.sale_id.name if obj.sale_id else ""
                 # 数量＞個口数 の場合は入数を計算
