@@ -12,7 +12,11 @@
                         attrs="{'invisible': [('status', '=', 'done')]}" />
                     <button string="back to draft" name="back_to_draft" type="object"
                         class="oe_highlight"
+                        groups="sale_order_rtw.group_sale_unlock"
                         attrs="{'invisible': [('status', '!=', 'done')]}" />
+                </xpath>
+                <xpath expr="//button[@name='action_unlock']" position="attributes">
+                    <attribute name="groups">sale_order_rtw.group_sale_unlock</attribute>
                 </xpath>
                 <xpath expr="//button[@id='action_confirm']" position="attributes">
                     <attribute name="attrs">{'invisible': ['|',('state', 'not in',
@@ -47,6 +51,9 @@
                 <xpath expr="//field[@name='date_order']" position="after">
                     <field name="date_deadline" string="Date deadline" />
                 </xpath>
+                <xpath expr="//field[@name='date_order'][2]" position="after">
+                    <field name="sales_date" string="売上日" readonly="1" attrs="{'invisible': [('state', '!=', 'done')]}" />
+                </xpath>
                 <xpath expr="//field[@name='date_deadline']" position="after">
                     <field name="payment_deadline" string="支払期限" />
                 </xpath>
@@ -72,8 +79,7 @@
                         attrs="{'required': ['&amp;', ('status', '=', 'done'), ('sipping_to', 'in', ['depo', 'inst', 'direct'])]}" />
 
                     <field name="warehouse_arrive_date_2" string="デポ２到着日"
-                        attrs="{'required': ['&amp;', ('status', '=', 'done'),
-                         ('sipping_to', 'in', ['depo', 'inst']),
+                        attrs="{'required': ['&amp;', '&amp;', ('status', '=', 'done'), ('sipping_to', 'in', ['depo', 'inst']),
                          ('waypoint_2', '!=', False)]}" />
 
                     <field name="estimated_shipping_date" string="Estimated shipping date"
@@ -89,7 +95,7 @@
                         string="デポ１"
                         context="{'default_type':'delivery'}"
                         domain="[('type', '=', 'delivery')]"
-                        attrs="{'invisible': [('sipping_to', '=', 'direct')], 'required': ['&amp;', ('status', '=', 'done'), ('sipping_to', 'in', ['depo','inst'])]}" />
+                        attrs="{'invisible': [('sipping_to', '=', 'direct')], 'required': ['&amp;', ('status', '=', 'done'),('sipping_to', 'in', ['depo','inst'])]}" />
                     <field
                         name="waypoint_2"
                         string="デポ２"
@@ -170,6 +176,9 @@
                     <attribute name="decoration-info">state == 'draft' or state == 'sent'</attribute>
                     <attribute name="widget">badge</attribute>
                     <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="sales_date" string="売上日" optional="hide" />
                 </xpath>
             </field>
         </record>
@@ -297,8 +306,36 @@
                     ('order_line.product_id.product_tmpl_id.product_no', 'ilike', self)
                 ]" />
                 </xpath>
+                <xpath expr="//filter[@name='order_month']" position="after">
+                    <filter string="売上日" name="group_sales_date" domain="[]" context="{'group_by': 'sales_date'}" />
+                </xpath>
             </field>
         </record>
+
+        <record id="view_sale_order_search_inherit_sale_rtw" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.sale.rtw</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale" />
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='order_date']" position="after">
+                    <separator />
+                    <filter string="売上日" name="filter_sales_date" date="sales_date" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sale_order_search_inherit_quotation_rtw" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.quotation.rtw</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation" />
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='sales']" position="after">
+                    <separator />
+                    <filter string="売上日" name="filter_sales_date_quotation" date="sales_date" />
+                </xpath>
+            </field>
+        </record>
+
          <record id="view_sale_order_form_add_transactions" model="ir.ui.view">
             <field name="name">add transactions</field>
             <field name="model">sale.order</field>
@@ -313,6 +350,23 @@
                 <xpath expr="//field[@name='payment_term_id']" position="attributes">
                     <attribute name="attrs">{'invisible': True}</attribute>
                 </xpath>
+            </field>
+        </record>
+
+        <record id="view_sale_order_lock_confirm_form" model="ir.ui.view">
+            <field name="name">sale.order.lock.confirm.form</field>
+            <field name="model">sale.order.lock.confirm</field>
+            <field name="arch" type="xml">
+                <form string="Confirmation">
+                    <p>
+                        明細の帳票出力外にチェックがあります、このままロックしますか？
+                    </p>
+                    <field name="order_id" invisible="1"/>
+                    <footer>
+                        <button name="action_confirm_lock" string="OK" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
             </field>
         </record>
     </data>
