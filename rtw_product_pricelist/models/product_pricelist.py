@@ -8,6 +8,12 @@ from odoo.exceptions import UserError, ValidationError
 class rtw_product_pricelist(models.Model):
     _inherit = "product.pricelist.item"
 
+    # 検索関数追加版
+    name = fields.Char(
+        compute='_get_pricelist_item_name_price',  # 標準と同じ名前
+        search='_search_pricelist_item_name'
+    )
+
     applied_on = fields.Selection([
         ('3_global', 'All Products'),
         ('2_product_category', 'Product Category'),
@@ -50,7 +56,31 @@ class rtw_product_pricelist(models.Model):
                 item.name = _("All Products")
         return res
 
+    # 適用対象の検索用
+    def _search_pricelist_item_name(self, operator, value):
+        if operator in ('ilike', 'like', '=', '=ilike'):
+            return [
+                '|', '|', '|',
+                # 1. カテゴリ設定かつカテゴリ名一致
+                '&', ('applied_on', '=', '2_product_category'),
+                ('categ_id.name', operator, value),
 
+                # 2. プロダクト設定かつテンプレート名一致
+                '&', ('applied_on', '=', '1_product'),
+                ('product_tmpl_id.name', operator, value),
+
+                # 3. バリアント設定かつバリアント名一致
+                '&', ('applied_on', '=', '0_product_variant'),
+                ('product_id.name', operator, value),
+
+                # 4. 属性価格設定かつ（テンプレート・属性・値のどれか一致）
+                '&', ('applied_on', '=', '4_product_attribute'),
+                '|', '|',
+                ('product_template_attribute_value_id.product_tmpl_id.name', operator, value),
+                ('product_template_attribute_value_id.attribute_id.name', operator, value),
+                ('product_template_attribute_value_id.product_attribute_value_id.name', operator, value)
+            ]
+        return []
 class rtw_product_attribute_value(models.Model):
     _inherit = "product.attribute.value"
 
@@ -59,53 +89,48 @@ class rtw_product_attribute_value(models.Model):
         self, product_tmpl_id, pt_attr_value_ids, pricelist=None
     ):
         sale_order_id = None
-        pricelist_2 = None
         if 'default_order_id' in self.env.context:
             sale_order_id = self.env.context.get('default_order_id')
 
         sale_order = self.env['sale.order'].search(
             [('id', '=', sale_order_id)])
-        sale_order_price_list = sale_order.pricelist_id
+        sale_order_price_list = sale_order.pricelist_id or pricelist or self.env.user.partner_id.property_product_pricelist
+        order_currency = sale_order.currency_id
+
+        # 価格リストから「属性価格」を取得
         pricelist_items = self.env['product.pricelist.item'].search(
             [('pricelist_id', '=', sale_order_price_list.id), ('applied_on', '=', '4_product_attribute'),('product_template_attribute_value_id.product_tmpl_id','=',product_tmpl_id)])
-        extra_prices = {}
+        # 初期値を 0.0 でセット
+        extra_prices = {av.id: 0.0 for av in pt_attr_value_ids}
 
-        if not pricelist:
-            pricelist = self.env.user.partner_id.property_product_pricelist
-        if sale_order_price_list:
-            pricelist_2 = sale_order_price_list
         related_product_av_ids = self.env["product.attribute.value"].search(
             [("id", "in", pt_attr_value_ids.ids), ("product_id", "!=", False)]
         )
+        for av in related_product_av_ids:
+            # 価格リストの設定（カテゴリ割引やバリアント価格）をOdooに計算させます
+            extra_prices[av.id] = av.product_id.with_context(pricelist=sale_order_price_list.id).price
 
-        extra_prices = {
-            av.id: av.product_id.with_context(pricelist=pricelist.id).price
-            for av in related_product_av_ids
-        }
-        extra_prices_2 = {
-            av.product_template_attribute_value_id.product_attribute_value_id.id: av.with_context(
-                pricelist=pricelist_2.id).fixed_price
-            for av in pricelist_items
-        }
+        # 通貨が同じ場合のみ、標準の price_extra を計算（後で上書きされる可能性あり）
+        if order_currency and order_currency == self.env.company.currency_id:
+            remaining_av_ids = pt_attr_value_ids - related_product_av_ids
+            pe_lines = self.env["product.template.attribute.value"].search(
+                [
+                    ("product_attribute_value_id", "in", remaining_av_ids.ids),
+                    ("product_tmpl_id", "=", product_tmpl_id),
+                ]
+            )
+            for line in pe_lines:
+                attr_val_id = line.product_attribute_value_id
+                if attr_val_id.id not in extra_prices:
+                    extra_prices[attr_val_id.id] = 0
+                extra_prices[attr_val_id.id] += line.price_extra
 
-        remaining_av_ids = pt_attr_value_ids - related_product_av_ids
-
-        pe_lines = self.env["product.template.attribute.value"].search(
-            [
-                ("product_attribute_value_id", "in", remaining_av_ids.ids),
-                ("product_tmpl_id", "=", product_tmpl_id),
-            ]
-        )
-        for line in pe_lines:
-            attr_val_id = line.product_attribute_value_id
-            if attr_val_id.id not in extra_prices:
-                extra_prices[attr_val_id.id] = 0
-            extra_prices[attr_val_id.id] += line.price_extra
-
+        # 属性価格があれば、通貨に関わらず上書き
         for line in pricelist_items:
             attr_val_id = line.product_template_attribute_value_id.product_attribute_value_id
             if attr_val_id.id in extra_prices:
                 extra_prices[attr_val_id.id] = line.fixed_price
+
         return extra_prices
 
 
