@@ -8,6 +8,12 @@ from odoo.exceptions import UserError, ValidationError
 class rtw_product_pricelist(models.Model):
     _inherit = "product.pricelist.item"
 
+    # 検索関数追加版
+    name = fields.Char(
+        compute='_get_pricelist_item_name_price',  # 標準と同じ名前
+        search='_search_pricelist_item_name'
+    )
+
     applied_on = fields.Selection([
         ('3_global', 'All Products'),
         ('2_product_category', 'Product Category'),
@@ -50,7 +56,31 @@ class rtw_product_pricelist(models.Model):
                 item.name = _("All Products")
         return res
 
+    # 適用対象の検索用
+    def _search_pricelist_item_name(self, operator, value):
+        if operator in ('ilike', 'like', '=', '=ilike'):
+            return [
+                '|', '|', '|',
+                # 1. カテゴリ設定かつカテゴリ名一致
+                '&', ('applied_on', '=', '2_product_category'),
+                ('categ_id.name', operator, value),
 
+                # 2. プロダクト設定かつテンプレート名一致
+                '&', ('applied_on', '=', '1_product'),
+                ('product_tmpl_id.name', operator, value),
+
+                # 3. バリアント設定かつバリアント名一致
+                '&', ('applied_on', '=', '0_product_variant'),
+                ('product_id.name', operator, value),
+
+                # 4. 属性価格設定かつ（テンプレート・属性・値のどれか一致）
+                '&', ('applied_on', '=', '4_product_attribute'),
+                '|', '|',
+                ('product_template_attribute_value_id.product_tmpl_id.name', operator, value),
+                ('product_template_attribute_value_id.attribute_id.name', operator, value),
+                ('product_template_attribute_value_id.product_attribute_value_id.name', operator, value)
+            ]
+        return []
 class rtw_product_attribute_value(models.Model):
     _inherit = "product.attribute.value"
 
