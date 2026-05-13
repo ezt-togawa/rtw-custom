@@ -2862,10 +2862,11 @@ class MrpProductionExcelReport(models.Model):
 
     def _compute_sale_order(self):
         for line in self:
-            if line.origin.startswith("S"):# mo mother
+            line.sale_order = False
+            if line.origin and line.origin.startswith("S"):# mo mother
                 line.sale_order = self.env["sale.order"].search([("name", "=", line.origin)])
             else: # mo child
-                mrp =  self.env["mrp.production"].search([("name", "=", line.origin)])
+                mrp = self.env["mrp.production"].search([("name", "=", line.origin)])
                 if mrp:
                     line.sale_order = self.env["sale.order"].search([("name", "=", mrp.origin)])                    
 class StockMoveContainerReport(models.Model):
