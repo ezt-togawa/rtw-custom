@@ -87,7 +87,7 @@ class StockPicking(models.Model):
         "送り先",
     )
     
-    sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order")
+    sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order", store=True, index=True)
     sales_order_name = fields.Char(string='Sales Order Name', compute="_compute_sale_order_name", store=True)
     shiratani_entry_date = fields.Date("Shiratani entry date", compute='compute_shiretani_entry_date')
     itoshima_shiratani_shipping_notes = fields.Text(string="糸島/白谷配送注記",compute="_compute_itoshima_shiratani_shipping_notes")
@@ -114,16 +114,35 @@ class StockPicking(models.Model):
                 picking.itoshima_shiratani_shipping_notes = sale_order.itoshima_shiratani_shipping_notes
             else:
                 picking.itoshima_shiratani_shipping_notes = ''
+
+    @api.depends('sale_id', 'origin')
     def _compute_sale_order(self):
         for picking in self:
+            # 1. sale_idがあれば最優先
             if picking.sale_id:
                 picking.sale_order_id = picking.sale_id
-            else:
-                if picking.origin and picking.origin.startswith("S"):
-                    sale_order = self.env['sale.order'].search([('name', '=', picking.origin)], limit=1)
-                    picking.sale_order_id = sale_order
+
+            # 2. sale_idがない場合、originから辿る
+            elif picking.origin:
+                origin_name = picking.origin
+
+                # 購買(P)から始まるなら、その元のoriginを取得
+                if origin_name.startswith("P"):
+                    po = self.env['purchase.order'].search([('name', '=', origin_name)], limit=1)
+                    origin_name = po.origin if po else origin_name
+
+                # Sから始まるなら直接、そうでなければMO(製造)として検索
+                target_so = False
+                if origin_name and origin_name.startswith("S"):
+                    target_so = self.env['sale.order'].search([('name', '=', origin_name)], limit=1)
                 else:
-                    picking.sale_order_id = False
+                    mrp = self.env['mrp.production'].search([('name', '=', origin_name)], limit=1)
+                    if mrp and mrp.sale_reference:
+                        target_so = self.env['sale.order'].search([('name', '=', mrp.sale_reference)], limit=1)
+
+                picking.sale_order_id = target_so
+            else:
+                picking.sale_order_id = False
 
     @api.depends('name')
     def _compute_sale_order_name(self):

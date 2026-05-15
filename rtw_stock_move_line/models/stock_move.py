@@ -269,12 +269,6 @@ class rtw_stock_move(models.Model):
                             break  
             else:
                 rec.shiratani_date = False
-            # if rec.sale_line_id.shiratani_date:
-            #     rec.shiratani_date = rec.sale_line_id.shiratani_date
-            # elif rec.sale_id:
-            #     rec.shiratani_date = rec.sale_id.shiratani_entry_date
-            # else:
-            #     rec.shiratani_date = False
 
     @api.depends('sale_line_id.depo_date','sale_line_id.depo_date','sale_line_id','sale_id','sale_id.warehouse_arrive_date')
     def _get_warehouse_arrive_date(self):
