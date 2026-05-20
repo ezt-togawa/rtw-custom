@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from lxml import etree
 
 
 class sale_order_line_rtw(models.Model):
@@ -101,3 +102,13 @@ class sale_order_line_rtw(models.Model):
             result = super(sale_order_line_rtw, line).write(vals_for_line)
         
         return result
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+        if not self.env.user.has_group('sale_order_rtw.group_sale_cost_price'):
+            arch = etree.fromstring(res['arch'])
+            for node in arch.xpath("//field[@name='purchase_price']"):
+                node.getparent().remove(node)
+            res['arch'] = etree.tostring(arch, encoding='unicode')
+        return res
