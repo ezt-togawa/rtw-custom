@@ -274,9 +274,9 @@ class SaleOrderExcelReport(models.Model):
                     
                 else:   
                     if res.company_type == 'company':
-                        company_name =  res.name + ' 御中' if res.name else '' 
+                        company_name =  res.name + _(' 御中') if res.name else ''
                     else:
-                        partner_name =  res.last_name + ' 様' if res.last_name else ''
+                        partner_name =  res.last_name + _(' 様') if res.last_name else ''
                 
                 if res.phone:
                     tel = res.phone
@@ -433,21 +433,21 @@ class SaleOrderExcelReport(models.Model):
             if record.lang_code =="en_US":
                 record.yearUnit = "-"
             else:
-                record.yearUnit = "年"
+                record.yearUnit = _("年")
 
     def _compute_month_unit(self):
         for record in self:
             if record.lang_code =="en_US":
                 record.monthUnit = "-"
             else:
-                record.monthUnit = "月"
+                record.monthUnit = _("月")
 
     def _compute_day_unit(self):
         for record in self:
             if record.lang_code =="en_US":
                 record.dayUnit = ""
             else:
-                record.dayUnit = "日"
+                record.dayUnit = _("日")
                 
     def _compute_sale_order_transactions_term(self):
         for record in self:
@@ -612,7 +612,7 @@ class SaleOrderExcelReport(models.Model):
     def _compute_check_oversea(self):
         for record in self:
             if record.overseas:
-                record.check_oversea = "海外 "
+                record.check_oversea = _("海外 ")
             else:
                 record.check_oversea = ""
 
@@ -642,7 +642,7 @@ class SaleOrderExcelReport(models.Model):
                     company_name += " " + partner.department
 
                 if partner.user_id and partner.user_id.name :
-                    company_name += " " + partner.user_id.name + " ご依頼分"
+                    company_name += " " + partner.user_id.name + _(" ご依頼分")
 
             line.sale_order_company_name = company_name
             
@@ -702,13 +702,13 @@ class SaleOrderExcelReport(models.Model):
                 if user and user.name:
                     info_cus += user.name + " "
             info_cus = info_cus.rstrip()    
-            line.sale_order_info_cus = info_cus + " ご依頼分"
+            line.sale_order_info_cus = info_cus + _(" ご依頼分")
 
     def _compute_sale_order_ritzwell_staff(self):
         for line in self:
             if line.user_id.name:
                 if line.lang_code == 'ja_JP':
-                    line.sale_order_ritzwell_staff = line.user_id.name + "  様宛"
+                    line.sale_order_ritzwell_staff = line.user_id.name + _("  様宛")
                 else:
                     line.sale_order_ritzwell_staff = "Mr/Mrs. " + line.user_id.name 
             else:
@@ -1154,9 +1154,9 @@ class SaleOrderLineExcelReport(models.Model):
             config=""
             if line.p_type:
                 if line.p_type =="special":
-                    config += "別注" +"\n"
+                    config += _("別注") +"\n"
                 if line.p_type =="custom":
-                    config += "特注" +"\n"
+                    config += _("特注") +"\n"
             configCus=line.config_session_id.custom_value_ids
             if configCus:
                 for cfg in configCus:
@@ -1166,7 +1166,7 @@ class SaleOrderLineExcelReport(models.Model):
 
     def _compute_sale_order_voucher_class(self):
         for line in self:
-            line.sale_order_voucher_class = "受注引当"
+            line.sale_order_voucher_class = _("受注引当")
 
     def get_image_url(self, image_path, id):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
@@ -1175,15 +1175,14 @@ class SaleOrderLineExcelReport(models.Model):
 
     def _compute_sale_order_text_piece_leg(self):
         for line in self:
-            line.sale_order_text_piece_leg = "脚"
+            line.sale_order_text_piece_leg = _("脚")
 
     def _compute_sale_order_action_packages(self):
         for line in self:
-            line.sale_order_action_packages = "有"
-
+            line.sale_order_action_packages = _("有")
     def _compute_sale_order_action_assemble(self):
         for line in self:
-            line.sale_order_action_assemble = "無"
+            line.sale_order_action_assemble = _("無")
 
     def _compute_sale_order_packages(self):
         for line in self:
@@ -1376,9 +1375,9 @@ class SaleOrderLineExcelReport(models.Model):
             p_type = ""
             if line.p_type:
                 if line.p_type == "special":
-                    p_type = "別注"
+                    p_type = _("別注")
                 elif line.p_type == "custom":
-                    p_type = "特注"
+                    p_type = _("特注")
 
             prod = "" 
             if categ_name and p_type:
@@ -1413,9 +1412,9 @@ class SaleOrderLineExcelReport(models.Model):
                         
             p_type = ""
             if line.p_type == "special":
-                p_type = "[別注]"
+                p_type = _("[別注]")
             elif line.p_type == "custom":
-                p_type = "[特注]"
+                p_type = _("[特注]")
             detail = ""
             if categ_name and summary and p_type:
                 detail = categ_name + " " + p_type + "\n" + summary
@@ -1540,21 +1539,21 @@ class StockPickingExcelReport(models.Model):
             if record.lang_code =="en_US":
                 record.yearUnit = "-"
             else:
-                record.yearUnit = "年"
+                record.yearUnit = _("年")
 
     def _compute_month_unit(self):
         for record in self:
             if record.lang_code =="en_US":
                 record.monthUnit = "-"
             else:
-                record.monthUnit = "月"
+                record.monthUnit = _("月")
 
     def _compute_day_unit(self):
         for record in self:
             if record.lang_code =="en_US":
                 record.dayUnit = ""
             else:
-                record.dayUnit = "日"
+                record.dayUnit = _("日")
 
 
     def _compute_lang_code(self):
@@ -1576,13 +1575,13 @@ class StockPickingExcelReport(models.Model):
     def _compute_to_sale_order(self):
         for record in self:
             if record.sale_id.overseas:
-                record.check_oversea = "海外 "
+                record.check_oversea = _("海外 ")
             else:
                 record.check_oversea = ""
 
             if record.sale_id.partner_id.commercial_company_name:
                 record.stock_picking_company_name = (
-                    "株式会社 " + record.sale_id.partner_id.commercial_company_name + " 御中"
+                    _("株式会社 ") + record.sale_id.partner_id.commercial_company_name + _(" 御中")
                 )
             else:
                 record.stock_picking_company_name = ""
@@ -1784,7 +1783,7 @@ class StockMoveExcelReport(models.Model):
         for line in self:
             status = ''
             if line.stock_move_sale_line_id and line.stock_move_sale_line_id.combined_shipment:
-                status = '有'
+                status = _('有')
             line.sale_line_combined_shipment = status
             
     def _compute_calculate_product_pack(self):
@@ -1944,9 +1943,9 @@ class StockMoveExcelReport(models.Model):
                     
             p_type = ""            
             if line.p_type == "special":
-                p_type = "別注"
+                p_type = _("別注")
             elif line.p_type == "custom":
-                p_type = "特注"
+                p_type = _("特注")
                     
             product_name = ""
             if categ_name and p_type:
@@ -1984,8 +1983,8 @@ class StockMoveExcelReport(models.Model):
                 line.product_number_and_size = other_size
             else:
                 line.product_number_and_size = ''
-            line.action_packages = "有"
-            line.action_assemble = "無"
+            line.action_packages = _("有")
+            line.action_assemble = _("無")
             line.stock_sai = prod_tmpl.sai if prod_tmpl.sai else ''
             line.stock_warehouse = line.warehouse_id.name if line.warehouse_id and line.warehouse_id.name else ''
             line.stock_shiratani_date = line.stock_move_sale_line_id.shiratani_date if line.stock_move_sale_line_id and line.stock_move_sale_line_id.shiratani_date else ''
@@ -2023,9 +2022,9 @@ class StockMoveExcelReport(models.Model):
                     
             p_type = ""
             if line.p_type == "special":
-                p_type = "[別注]"
+                p_type = _("[別注]")
             elif line.p_type == "custom":
-                p_type = "[特注]"
+                p_type = _("[特注]")
 
             detail = ""
             if categ_name and summary and p_type:
@@ -2189,21 +2188,21 @@ class AccountMoveExcelReport(models.Model):
             if record.lang_code =="en_US":
                 record.yearUnit = "-"
             else:
-                record.yearUnit = "年"
+                record.yearUnit = _("年")
 
     def _compute_month_unit(self):
         for record in self:
             if record.lang_code =="en_US":
                 record.monthUnit = "-"
             else:
-                record.monthUnit = "月"
+                record.monthUnit = _("月")
 
     def _compute_day_unit(self):
         for record in self:
             if record.lang_code =="en_US":
                 record.dayUnit = ""
             else:
-                record.dayUnit = "日"
+                record.dayUnit = _("日")
 
     def _compute_lang_code(self):
         for l in self:
@@ -2245,7 +2244,7 @@ class AccountMoveExcelReport(models.Model):
     def _compute_bank_acc_number(self):
         for line in self:
             line.bank_acc_number = (
-                "(普) " + line.partner_id.bank_ids.acc_number
+                _("(普) ") + line.partner_id.bank_ids.acc_number
                 if line.partner_id.bank_ids.acc_number
                 else ""
             )
@@ -2287,7 +2286,7 @@ class AccountMoveExcelReport(models.Model):
         for line in self:
             if line.partner_id.commercial_company_name:
                 line.send_company = (
-                    "株式会社 " + line.partner_id.commercial_company_name + " 御中"
+                    _("株式会社 ") + line.partner_id.commercial_company_name + _(" 御中")
                 )
             else:
                 line.send_company = ""
@@ -2295,14 +2294,14 @@ class AccountMoveExcelReport(models.Model):
     def _compute_to_receiver(self):
         for line in self:
             if line.partner_id.name:
-                line.to_receiver = line.partner_id.name + " 様"
+                line.to_receiver = line.partner_id.name + _(" 様")
             else:
                 line.to_receiver = ""
 
     def _compute_printing_staff(self):
         for line in self:
             if line.user_id.name:
-                line.printing_staff = line.user_id.name + " 様"
+                line.printing_staff = line.user_id.name + _(" 様")
             else:
                 line.printing_staff = ""
 
@@ -2567,7 +2566,7 @@ class AccountMoveLineExcelReport(models.Model):
                             company_name += " " + partner.department
                             
                         if partner.user_id and partner.user_id.name :
-                            company_name += " " + partner.user_id.name + " ご依頼分"
+                            company_name += " " + partner.user_id.name + _(" ご依頼分")
                         
             line.mrp_join_partner_address = address.strip()
             line.mrp_join_partner_company_name = company_name.strip()
@@ -2762,7 +2761,7 @@ class MrpProductionExcelReport(models.Model):
                             company_name += " " + partner.department
                             
                         if partner.user_id and partner.user_id.name :
-                            company_name += " " + partner.user_id.name + " ご依頼分"
+                            company_name += " " + partner.user_id.name + _(" ご依頼分")
                         
             line.mrp_picking_type_warehouse_address = address.strip()
             line.mrp_picking_type_warehouse_company = company_name.strip()
@@ -2770,12 +2769,12 @@ class MrpProductionExcelReport(models.Model):
     def _compute_hr_employee(self):
         for mo in self:
             hr_defaults = {
-                'hr_employee_company': "株式会社リッツウェル",
-                'hr_employee_department': "大阪オフィス",
-                'hr_employee_zip': "〒542-0081",
-                'hr_employee_info': "大阪市中央区南船場4-7-6 B1F",
-                'hr_employee_tel': "tel.06-4963-8777",
-                'hr_employee_fax': "fax.06-4963-8778",
+                'hr_employee_company': _("株式会社リッツウェル"),
+                'hr_employee_department': _("大阪オフィス"),
+                'hr_employee_zip': _("〒542-0081"),
+                'hr_employee_info': _("大阪市中央区南船場4-7-6 B1F"),
+                'hr_employee_tel': _("tel.06-4963-8777"),
+                'hr_employee_fax': _("fax.06-4963-8778"),
                 'hr_employee_printer': mo.mrp_production_so_id and mo.mrp_production_so_id.sale_order_printing_staff or '',
             }
             
@@ -2813,7 +2812,7 @@ class MrpProductionExcelReport(models.Model):
                             mo.hr_employee_fax = ''
                             
                         if employee.name:
-                            mo.hr_employee_printer = "発注者 " +  employee.name
+                            mo.hr_employee_printer = _("発注者 ") +  employee.name
                         else:
                             mo.hr_employee_printer = ""
                 else:
@@ -3055,21 +3054,21 @@ class PurchaseOrderExcelReport(models.Model):
             if record.lang_code =="en_US":
                 record.yearUnit = "-"
             else:
-                record.yearUnit = "年"
+                record.yearUnit = _("年")
 
     def _compute_month_unit(self):
         for record in self:
             if record.lang_code =="en_US":
                 record.monthUnit = "-"
             else:
-                record.monthUnit = "月"
+                record.monthUnit = _("月")
 
     def _compute_day_unit(self):
         for record in self:
             if record.lang_code =="en_US":
                 record.dayUnit = ""
             else:
-                record.dayUnit = "日"
+                record.dayUnit = _("日")
 
     def _compute_lang_code(self):
         for l in self:
@@ -3132,7 +3131,7 @@ class PurchaseOrderExcelReport(models.Model):
                 if line.lang_code == 'en_US':
                     line.purchase_order_printing_staff = "Orderer " + printing_staff
                 else:
-                    line.purchase_order_printing_staff = "発注者 " + printing_staff
+                    line.purchase_order_printing_staff = _("発注者 ")+ printing_staff
             else:
                 line.purchase_order_printing_staff = ""
 
@@ -3152,9 +3151,9 @@ class PurchaseOrderExcelReport(models.Model):
             if record.partner_id:
                 if record.lang_code == 'ja_JP':
                     if record.partner_id.commercial_company_name:
-                        company = record.partner_id.commercial_company_name + " 御中"
+                        company = record.partner_id.commercial_company_name + _(" 御中")
                     elif record.partner_id.name:
-                        company = record.partner_id.name + " 御中"
+                        company = record.partner_id.name + _(" 御中")
                 else:
                     if record.partner_id.commercial_company_name:
                         company = "Dear " + record.partner_id.commercial_company_name
@@ -3337,7 +3336,7 @@ class PurChaseOrderLineExcelReport(models.Model):
             if line.display_type == "line_section" or line.display_type == "line_note":
                 line.purchase_order_text_piece_leg = ""
             else:
-                line.purchase_order_text_piece_leg = "脚"
+                line.purchase_order_text_piece_leg = _("脚")
             
     def _compute_purchase_order_sell_unit_price(self):
         for line in self:
@@ -3355,9 +3354,9 @@ class PurChaseOrderLineExcelReport(models.Model):
             config=""
             if line.p_type:
                 if line.p_type =="special":
-                    config += "別注" +"\n"
+                    config += _("別注") +"\n"
                 if line.p_type =="custom":
-                    config += "特注" +"\n"
+                    config += _("特注") +"\n"
             configCus=line.config_session_id.custom_value_ids
             if configCus:
                 for cfg in configCus:
