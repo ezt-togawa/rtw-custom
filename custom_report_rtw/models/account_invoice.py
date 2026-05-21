@@ -1,7 +1,7 @@
 # Copyright 2018-2019 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import fields, models, _
 from datetime import datetime
 
 class AccountInvoiceLine(models.Model):
@@ -58,26 +58,26 @@ class AccountMoveCus(models.Model):
                     for line in res_partner:
                         if so.lang_code == 'en_US':
                             if line.company_type == 'company':
-                                company_name =  "Dear " + line.name if line.name else ''
-                            elif line.parent_id :
+                                company_name = "Dear " + line.name if line.name else ''
+                            elif line.parent_id:
                                 if line.dummy and line.last_name:
-                                    partner_name =  'Mr./Mrs. ' + line.last_name
+                                    partner_name = 'Mr./Mrs. ' + line.last_name
                                 else:
-                                    company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
-                                    partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                                    company_name = "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
+                                    partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                             else:
-                                partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                                partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                         else:   
                             if line.company_type == 'company':
-                                company_name =  line.name + ' 御中' if line.name else '' 
-                            elif line.parent_id :
+                                company_name = line.name + _(' 御中') if line.name else ''
+                            elif line.parent_id:
                                 if line.dummy and line.last_name:
-                                    partner_name =  line.last_name+ ' 様'
+                                    partner_name = line.last_name + _(' 様')
                                 else:
-                                    company_name =  line.parent_id.name if line.parent_id.name else ''
-                                    partner_name =  line.last_name + ' 様' if line.last_name else ''
+                                    company_name = line.parent_id.name if line.parent_id.name else ''
+                                    partner_name = line.last_name + _(' 様') if line.last_name else ''
                             else:
-                                partner_name =  line.last_name + ' 様' if line.last_name else ''
+                                partner_name = line.last_name + _(' 様') if line.last_name else ''
             send = ""   
             if company_name and partner_name:
                 send += company_name + '\n' + partner_name
@@ -114,34 +114,34 @@ class AccountMoveCus(models.Model):
                     for line in res_partner:
                         if so.lang_code == 'en_US':
                             if line.company_type == 'company':
-                                company_name =  "Dear " + line.name if line.name else ''
+                                company_name = "Dear " + line.name if line.name else ''
                             else:
-                                if line.parent_id :
+                                if line.parent_id:
                                     if line.dummy:
-                                        partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                                        partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                                     else:
                                         if line.parent_id.name:
-                                            company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.'
-                                        partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                                            company_name = "Dear " + line.parent_id.name + ' Co., Ltd.'
+                                        partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                                 else:
-                                    partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                                    partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                         else:   
                             if line.company_type == 'company':
                                 if line.name:
-                                    company_name =  line.name+ ' 御中'
+                                    company_name = line.name + _(' 御中')
                             else:
-                                if line.parent_id :
+                                if line.parent_id:
                                     if line.dummy:
                                         if line.last_name:
-                                            partner_name =  line.last_name+ ' 様'
+                                            partner_name = line.last_name + _(' 様')
                                     else:
                                         if line.parent_id.name:
-                                            company_name =  line.parent_id.name
+                                            company_name = line.parent_id.name
                                         if line.last_name:
-                                            partner_name =  line.last_name+ ' 様'
+                                            partner_name = line.last_name + _(' 様')
                                 else:
                                     if line.last_name:
-                                            partner_name =  line.last_name+ ' 様'
+                                            partner_name = line.last_name + _(' 様')
 
         so.send_to_company = company_name
         so.send_to_people = partner_name
@@ -158,12 +158,12 @@ class AccountMoveCus(models.Model):
     def _compute_hr_employee(self):
         for ac in self:
             hr_defaults = {
-                'hr_employee_company': "株式会社リッツウェル",
-                'hr_employee_department': "大阪オフィス",
-                'hr_employee_zip': "〒542-0081",
-                'hr_employee_info': "大阪市中央区南船場4-7-6 B1F",
-                'hr_employee_tel': "tel.06-4963-8777",
-                'hr_employee_fax': "fax.06-4963-8778",
+                'hr_employee_company': _("株式会社リッツウェル"),
+                'hr_employee_department': _("大阪オフィス"),
+                'hr_employee_zip': _("〒542-0081"),
+                'hr_employee_info': _("大阪市中央区南船場4-7-6 B1F"),
+                'hr_employee_tel': _("tel.06-4963-8777"),
+                'hr_employee_fax': _("fax.06-4963-8778"),
                 'hr_employee_printer': ac.acc_move_print_staff
             }
 
@@ -237,11 +237,11 @@ class AccountMoveCus(models.Model):
         if self.env.user.lang == 'en_US':
             self.registration_number = 'Registration number: T4290001017449'
         else:
-            self.registration_number = '登録番号:T4290001017449'
+            self.registration_number = _('登録番号:T4290001017449')
 
     def _compute_sale_order_hr_employee(self):
         for record in self:
-            record.sale_order_hr_employee_invoice = (
+            record.sale_order_hr_employee_invoice = _(
                 "Ritzwell & Co.\n"
                 "登録番号:T4290001017449\n"
                 "本社\n"
