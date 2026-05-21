@@ -282,6 +282,22 @@
                 </xpath>
             </field>
         </record>
+        <record id="crm_case_form_view_oppor_rtw" model="ir.ui.view">
+            <field name="name">crm.lead.oppor.inherited.crm.rtw</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='sale_amount_total']" position="before">
+                    <field name="sale_currency_id" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='sale_amount_total']" position="attributes">
+                    <attribute name="options">{'currency_field': 'sale_currency_id'}</attribute>
+                </xpath>
+
+            </field>
+        </record>
         <record id="view_crm_list_sf" model="ir.ui.view">
             <field name="name">crm sf list</field>
             <field name="model">crm.lead</field>

@@ -309,7 +309,7 @@ class SaleOrder(models.Model):
         if self.env.user.lang == 'en_US':
             self.registration_number = 'Registration number: T4290001017449'
         else:
-            self.registration_number = '登録番号:T4290001017449'
+            self.registration_number = _('登録番号:T4290001017449')
         
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'

@@ -791,6 +791,27 @@ class rtw_crm(models.Model):
     tracking_deadline = fields.Date(compute="_set_deadline", store=True, tracking=True)
     presentation_flag = fields.Boolean(compute="_get_presentation_flag")
     sr_status = fields.Char(compute="_get_sr_status")
+    sale_currency_id = fields.Many2one(
+        'res.currency',
+        string='Sale Currency',
+        compute='_compute_sale_currency_id',
+        compute_sudo=True
+    )
+
+    @api.depends('company_id')
+    def _compute_sale_currency_id(self):
+        """
+        案件に紐づく見積書（sale.order）があれば、その通貨を設定
+        """
+        for lead in self:
+            order_currency = False
+            # ルートA: 案件に紐づく見積書・受注書があるか確認（直近の1件）
+            order = lead.env['sale.order'].search([('opportunity_id', '=', lead.id), ('state', 'in', ['sale', 'done'])], order='write_date desc', limit=1)
+            if order.exists() and order.currency_id:
+                order_currency = order.currency_id.id
+
+            # 取れなければ会社の基本通貨
+            lead.sale_currency_id = order_currency or lead.company_currency.id
 
     @api.depends('date_deadline')
     def _set_deadline(self):
