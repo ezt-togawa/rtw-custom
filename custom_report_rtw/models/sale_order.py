@@ -1,7 +1,7 @@
 # Copyright 2018-2019 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import fields, models, _
 import math
 from datetime import datetime
 import base64
@@ -61,32 +61,32 @@ class SaleOrder(models.Model):
                     for line in res_partner:
                         if so.lang_code == 'en_US':
                             if line.company_type == 'company':
-                                company_name =  "Dear " + line.name if line.name else ''
-                            elif line.parent_id :
+                                company_name = "Dear " + line.name if line.name else ''
+                            elif line.parent_id:
                                 if line.dummy and line.last_name:
-                                    partner_name =  'Mr./Mrs. ' + line.last_name
+                                    partner_name = 'Mr./Mrs. ' + line.last_name
                                 else:
-                                    company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
-                                    partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                                    company_name = "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
+                                    partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                             else:
-                                partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                                partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                         else:   
                             if line.company_type == 'company':
-                                company_name =  line.name + ' 御中' if line.name else '' 
+                                company_name = line.name + _(" 御中") if line.name else ''
                             elif line.parent_id :
                                 if line.dummy and line.last_name:
-                                    partner_name =  line.last_name+ ' 様'
+                                    partner_name = line.last_name + _(' 様')
                                 else:
-                                    company_name =  line.parent_id.name if line.parent_id.name else ''
-                                    partner_name =  line.last_name + ' 様' if line.last_name else ''
+                                    company_name = line.parent_id.name if line.parent_id.name else ''
+                                    partner_name = line.last_name + _(' 様') if line.last_name else ''
                             else:
-                                partner_name =  line.last_name + ' 様' if line.last_name else ''
+                                partner_name = line.last_name + _(' 様') if line.last_name else ''
             send = ""   
             if company_name and partner_name:
                 send += company_name + '\n' + partner_name  
-            elif company_name :
+            elif company_name:
                 send += company_name
-            elif partner_name :
+            elif partner_name:
                 send += partner_name
                 
             so.send_to_company = company_name
@@ -103,32 +103,32 @@ class SaleOrder(models.Model):
                     for line in res_partner:
                         if so.lang_code == 'en_US':
                             if line.company_type == 'company':
-                                company_name =  "Dear " + line.name if line.name else ''
-                            elif line.parent_id :
+                                company_name = "Dear " + line.name if line.name else ''
+                            elif line.parent_id:
                                 if line.dummy and line.last_name:
-                                    partner_name =  'Mr./Mrs. ' + line.last_name
+                                    partner_name = 'Mr./Mrs. ' + line.last_name
                                 else:
-                                    company_name =  "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
-                                    partner_name =  'Mr./Mrs. ' +  line.last_name if line.last_name else ''
+                                    company_name = "Dear " + line.parent_id.name + ' Co., Ltd.' if line.parent_id.name else ''
+                                    partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                             else:
-                                partner_name =  'Mr./Mrs. ' + line.last_name if line.last_name else ''
+                                partner_name = 'Mr./Mrs. ' + line.last_name if line.last_name else ''
                         else:   
                             if line.company_type == 'company':
-                                company_name =  line.name + ' 御中' if line.name else '' 
+                                company_name = line.name + _(' 御中') if line.name else ''
                             elif line.parent_id :
                                 if line.dummy and line.last_name:
-                                    partner_name =  line.last_name+ ' 様'
+                                    partner_name = line.last_name + _(' 様')
                                 else:
-                                    company_name =  line.parent_id.name if line.parent_id.name else ''
-                                    partner_name =  line.last_name + ' 様' if line.last_name else ''
+                                    company_name = line.parent_id.name if line.parent_id.name else ''
+                                    partner_name = line.last_name + _(' 様') if line.last_name else ''
                             else:
-                                partner_name =  line.last_name + ' 様' if line.last_name else ''
+                                partner_name = line.last_name + _(' 様') if line.last_name else ''
             send = ""   
             if company_name and partner_name:
                 send += company_name + '\n' + partner_name  
-            elif company_name :
+            elif company_name:
                 send += company_name
-            elif partner_name :
+            elif partner_name:
                 send += partner_name
                 
             so.send_to_company_invoice_sale = company_name
@@ -163,14 +163,14 @@ class SaleOrder(models.Model):
     def _compute_hr_employee(self):
         for so in self:
             hr_defaults = {
-                'hr_employee_company': "株式会社リッツウェル",
-                'hr_employee_department': "大阪オフィス",
-                'hr_employee_zip': "〒542-0081",
-                'hr_employee_info': "大阪市中央区南船場4-7-6 B1F",
-                'hr_employee_address1': "大阪市中央区",
-                'hr_employee_address2': "南船場4-7-6 B1F",
-                'hr_employee_tel': "tel.06-4963-8777",
-                'hr_employee_fax': "fax.06-4963-8778",
+                'hr_employee_company': _("株式会社リッツウェル"),
+                'hr_employee_department': _("大阪オフィス"),
+                'hr_employee_zip': _("〒542-0081"),
+                'hr_employee_info': _("大阪市中央区南船場4-7-6 B1F"),
+                'hr_employee_address1': _("大阪市中央区"),
+                'hr_employee_address2': _("南船場4-7-6 B1F"),
+                'hr_employee_tel': _("tel.06-4963-8777"),
+                'hr_employee_fax': _("fax.06-4963-8778"),
                 'hr_employee_printer': so.sale_order_printing_staff
             }
 

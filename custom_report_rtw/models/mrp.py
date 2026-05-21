@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, _
 import pytz
 from datetime import datetime
 
@@ -145,9 +145,9 @@ class MrpProduction(models.Model):
                         for l in sol:
                             if l.p_type:
                                 if l.p_type == "special":
-                                    p_type = "[別注]"
+                                    p_type = _("[別注]")
                                 elif l.p_type == "custom":
-                                    p_type = "[特注]"
+                                    p_type = _("[特注]")
             line.mrp_product_type = p_type
         
     def _compute_mrp_product_name_excel(self):   

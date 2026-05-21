@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, _
 from datetime import datetime 
 from collections import defaultdict
 
@@ -145,12 +145,12 @@ class PurchaseOrderEmployee(models.Model):
     def _compute_hr_employee(self):
         for po in self:
             hr_defaults = {
-                'hr_employee_company': "株式会社リッツウェル",
-                'hr_employee_department': "大阪オフィス",
-                'hr_employee_zip': "〒542-0081",
-                'hr_employee_info': "大阪市中央区南船場4-7-6 B1F",
-                'hr_employee_tel': "tel.06-4963-8777",
-                'hr_employee_fax': "fax.06-4963-8778",
+                'hr_employee_company': _("株式会社リッツウェル"),
+                'hr_employee_department': _("大阪オフィス"),
+                'hr_employee_zip': _("〒542-0081"),
+                'hr_employee_info': _("大阪市中央区南船場4-7-6 B1F"),
+                'hr_employee_tel': _("tel.06-4963-8777"),
+                'hr_employee_fax': _("fax.06-4963-8778"),
                 'hr_employee_printer': po.purchase_order_printing_staff
             }
 
