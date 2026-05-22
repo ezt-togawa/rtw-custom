@@ -21,7 +21,15 @@
           </t>
           <t t-call="custom_report_rtw.SO_purchase_order_sheet_header_layout"></t>
           <div class="page">
-            <t
+            <style>
+                body, div, p, span, table, tr, td, th {
+                    font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
+                }
+                .bold, strong, th {
+                    font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
+                    font-weight: 700 !important;
+                }
+            </style>            <t
               t-set="type">quotation</t>
             <t t-set="address">
               <div t-field="mrp.mrp_production_so_id.partner_id"
@@ -366,7 +374,7 @@
     <field name="margin_right">5</field>
     <field name="header_line" eval="False" />
     <field name="header_spacing">12</field>
-    <field name="dpi">90</field>
+    <field name="dpi">96</field>
   </record>
 
   <record id="report_purchase_order_sheet_rtw" model="ir.actions.report">
