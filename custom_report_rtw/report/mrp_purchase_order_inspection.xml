@@ -358,7 +358,7 @@
     <field name="page_height">297</field>
     <field name="orientation">Landscape</field>
     <field name="margin_top">17</field>
-    <field name="margin_bottom">5</field>
+    <field name="margin_bottom">7</field>
     <field name="margin_left">1</field>
     <field name="margin_right">1</field>
     <field name="header_line" eval="False" />
