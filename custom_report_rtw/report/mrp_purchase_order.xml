@@ -156,7 +156,7 @@
                       <div> TEL: <span t-field="mrp.mrp_production_so_id.waypoint_2.phone" /></div>
                     </t>
                   </div>
-                  <div class="col-6 size13">
+                  <div class="col-6 size14">
                     <div style="padding-left:20px"> <div> 送り先注記: <span t-field="mrp.remark" /><br /></div>
                     </div>
                   </div>
@@ -327,7 +327,7 @@
     <field name="page_width">210</field>
     <field name="page_height">297</field>
     <field name="orientation">Landscape</field>
-    <field name="margin_top">15</field>
+    <field name="margin_top">17</field>
     <field name="margin_bottom">5</field>
     <field name="margin_left">1</field>
     <field name="margin_right">1</field>
