@@ -21,7 +21,15 @@
           </t>
           <t t-call="custom_report_rtw.SO_inspection_order_form_header_layout"></t>
           <div class="page">
-            <t
+            <style>
+                body, div, p, span, table, tr, td, th {
+                    font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
+                }
+                .bold, strong, th {
+                    font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
+                    font-weight: 700 !important;
+                }
+            </style>            <t
               t-set="type">quotation</t>
             <t t-set="address">
               <div t-field="mrp.mrp_production_so_id.partner_id"
@@ -36,8 +44,11 @@
               t-if="mrp.mrp_production_so_id.company_id.logo or mrp.mrp_production_so_id.company_id.report_header"
               class="row zero_min_height">
             </div>
-            <div class="row size13" style="margin-top:-30px;">
-              <div class="col-4">
+            <div class="row" style="margin-top:-30px;">
+
+              <div class="col-8">
+                <div class="row size13">
+                  <div class="col-6">
                 <t t-if="mrp.lang_code == 'en_US'">
                   <t t-if="mrp.mrp_workorder_state">
                     <t t-if="mrp.mrp_workorder_state == 'wk_001'">
@@ -139,63 +150,23 @@
                       <p style="line-height:16px; margin:0;"
                         t-field="mrp.mrp_production_so_id.title" />
                     </div>
-                    <div class="size13">
+                    <div class="size14">
                       <span t-field="mrp.mrp_production_so_id.partner_id.name" />
-                      <span
-                        t-field="mrp.mrp_production_so_id.partner_id.site" />
-                      <span
-                        t-field="mrp.mrp_production_so_id.partner_id.department" />
-                      <span
-                        t-field="mrp.mrp_production_so_id.partner_id.user_id.name" /> ご依頼分 </div>
+                      <span t-field="mrp.mrp_production_so_id.partner_id.site" />
+                      <span t-field="mrp.mrp_production_so_id.partner_id.department" />
+                      <span t-field="mrp.mrp_production_so_id.partner_id.user_id.name" /> ご依頼分
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-4">
+
+                  <div class="col-6">
                 <div class=" size18" t-if="mrp.resend_so" t-field="mrp.resend_so" />
               </div>
-              <div class="col-4" name="company_address">
-                <div class="float-right">
-                  <div class="d-flex">
-                    <div>
-                      <!-- <span t-if="mrp.mrp_production_so_id.overseas" class="size18 pt-2
-                      pr-1">(海外)</span> -->
-                    </div>
-                    <div>
-                      <div>
-                        <img style="width:250px;height:auto; object-fit:contain;"
-                          src="/custom_report_rtw/static/src/images/Ritzwell_log.jpg"
-                          alt="Logo" />
-                      </div>
-                      <div class="size14">
-                        <div>
-                          <span t-esc="mrp.hr_employee_company" />
                         </div>
-                        <div>
-                          <span t-esc="mrp.hr_employee_department" />
-                        </div>
-                        <div>
-                          <span t-esc="mrp.hr_employee_zip" />
-                        </div>
-                        <div>
-                          <span t-esc="mrp.hr_employee_info" />
-                        </div>
-                        <div>
-                          <span t-esc="mrp.hr_employee_tel" />
-                        </div>
-                        <div>
-                          <span t-esc="mrp.hr_employee_fax" />
-                        </div>
-                        <div>
-                          <span t-esc="mrp.hr_employee_printer" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-4 size14">
+
+            <div class="row" style="margin-top: 15px;">
+              <div class="col-6 size15">
                 <t t-if="mrp.address_ship == '倉庫'">
                   <div> 送り先: <span t-field="mrp.mrp_choose_option_find_warehouse_company_name" /></div>
                   <div> 住所: <span t-field="mrp.mrp_choose_option_find_warehouse_address" /></div>
@@ -215,19 +186,38 @@
                   <div> TEL: <span t-field="mrp.mrp_production_so_id.waypoint_2.phone" /></div>
                 </t>
               </div>
-              <div class="col-4 size13">
-                <div style="padding-left:60px;">
-                  <div> 送り先注記: <span t-field="mrp.remark" />
-                      <br />
-                    <!-- <span t-field="docs.production_memo" /> -->
+                  <div class="col-6 size13">
+                    <div style="padding-left:20px"> <div> 送り先注記: <span t-field="mrp.remark" /><br /></div>
                   </div>
                 </div>
               </div>
-              <div class="col-4">
+              </div>
+
+              <div class="col-4 size11" name="company_address">
+                <div class="float-right">
+                  <div class="d-flex">
+                    <div></div>
+                    <div>
+                      <div>
+                        <img style="width:250px;height:auto; object-fit:contain;"
+                          src="/custom_report_rtw/static/src/images/Ritzwell_log.jpg" alt="Logo" />
+            </div>
+                      <div class="size14">
+                        <div><span t-esc="mrp.hr_employee_company" /></div>
+                        <div><span t-esc="mrp.hr_employee_department" /></div>
+                        <div><span t-esc="mrp.hr_employee_zip" /></div>
+                        <div><span t-esc="mrp.hr_employee_info" /></div>
+                        <div><span t-esc="mrp.hr_employee_tel" /></div>
+                        <div><span t-esc="mrp.hr_employee_fax" /></div>
+                        <div><span t-esc="mrp.hr_employee_printer" /></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <table
-              class="table">
+
+             <table class="table" style="margin-top: 5px;">
               <t t-groupby="10" t-att-last="last">
                 <thead>
                   <tr class="table-title bold" style="font-size:13px;background-color:#999999">
@@ -239,59 +229,35 @@
                     <th class="text-center" style="width:4%;padding:12px 0px;" />
                   </tr>
                 </thead>
-                <tbody class="invoice_tbody">
-                  <t t-set="index" t-value="0" />
-                  <t t-foreach="docs" t-as="line">
-                    <t t-set="index" t-value="index+1" />
-                    <tr class="size15 table-border-bottom">
-                      <td class="text-center size16" style="padding:20px 0px 0px 0px;">
-                        <span t-esc="index" />
+              </t> <t t-set="index" t-value="0" />
+              <t t-foreach="docs" t-as="line">
+                <t t-set="index" t-value="index+1" />
+
+                <tbody class="invoice_tbody" style="page-break-inside: avoid !important;">
+                  <tr class="size15 table-border-bottom">
+                    <td class="text-center size16" style="vertical-align: middle;">
+                      <span t-esc="index" />
+                    </td>
+
+                    <t t-if="line.mrp_product_attribute">
+                      <td class="size16" style="padding:5px 0px 0px 1px; text-align:left;">
+                        <div class="five-lines" style="height: 96px;">
+                          <div>
+                            <span t-field="line.mrp_product_type" />
+                            <t t-if="line.mrp_product_name">
+                              <span t-field="line.mrp_product_name" />
+                            </t>
+                          </div>
+                          <br/>
+                          <t t-if="line.mrp_production_order_line">
+                            <span t-field="line.mrp_production_order_line.product_size" />
+                          </t>
+                        </div>
                       </td>
-                      <t t-if="line.mrp_product_attribute">
-                        <td class="size16" style="padding:5px 0px 0px 1px; text-align:left;">
-                          <div class="five-lines">
-                            <div>
-                              <span t-field="line.mrp_product_type" />
-                              <t t-if="line.mrp_product_name">
-                                <span t-field="line.mrp_product_name" />
-                              </t>
-                            </div>
-                              <br/>
-                            <t t-if="line.mrp_production_order_line">
-                              <span t-field="line.mrp_production_order_line.product_size" />
-                            </t>
-                          </div>
-                        </td>
                       <td class="size16" style="padding:5px 0px; text-align:left;">
                         <div class="five-lines" style="height: 96px;">
-                            <t t-if="line.mrp_product_attribute">
-                            <t t-set="attr_arr"
-                              t-value="line.mrp_product_attribute.split('\n')" />
-                              <t t-foreach="attr_arr" t-as="att">
-                                <div>
-                                  <span t-esc="att.strip()" />
-                                </div>
-                              </t>
-                            </t>
-                          </div>
-                        </td>
-                    </t>
-                    <t t-else="">
-                        <td class="size16" colspan="2">
-                          <div style="white-space: nowrap; overflow: hidden;">
-                            <span t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
-                            <span t-if="line.mrp_product_no" style="margin-left: 10px;" t-field="line.mrp_product_no" />
-                            <t t-if="line.mrp_production_order_line">
-                              <span style="margin-left: 10px;" t-field="line.mrp_production_order_line.product_size" />
-                            </t>
-                          </div>
-                        </td>
-                    </t>
-                      <td class="size16" style="padding:5px 0px; text-align:left;">
-                        <div class="five-lines" style="height: 96px;">
-                          <t t-if="line.mrp_product_attribute2">
-                            <t t-set="attr_arr"
-                              t-value="line.mrp_product_attribute2.split('\n')" />
+                          <t t-if="line.mrp_product_attribute">
+                            <t t-set="attr_arr" t-value="line.mrp_product_attribute.split('\n')" />
                             <t t-foreach="attr_arr" t-as="att">
                               <div>
                                 <span t-esc="att.strip()" />
@@ -300,69 +266,83 @@
                           </t>
                         </div>
                       </td>
-                      <td class="text-right size16" style="padding:20px 0px 0px 0px;">
-                        <div id="quote_qty" class="five-lines">
-                          <span t-esc="line.mrp_product_product_qty" />
-                        </div>
-                      </td>
-                      <td class="text-left size14" style="padding:20px 0px 0px 2px;">
-                        <div class="five-lines">
-                          <t t-if="line.product_id.product_tmpl_id.uom_id.name">
-                            <span
-                              t-field="line.product_id.product_tmpl_id.uom_id.name" />
+                    </t>
+                    <t t-else="">
+                      <td class="size16" colspan="2">
+                        <div style="white-space: nowrap; overflow: hidden;">
+                          <span t-if="line.mrp_product_name" t-field="line.mrp_product_name" />
+                          <span t-if="line.mrp_product_no" style="margin-left: 10px;" t-field="line.mrp_product_no" />
+                          <t t-if="line.mrp_production_order_line">
+                            <span style="margin-left: 10px;" t-field="line.mrp_production_order_line.product_size" />
                           </t>
                         </div>
                       </td>
-                    </tr>
-                    <tr style="border:none;">
-                      <td class="size16" colspan="6"
-                        style="padding:0px; border:none; line-height:1.2;  padding-left:20px;">
-                        <div style=" border:1px solid #000; border-bottom:none !important; ">
-                          <strong
-                            style="background-color:#7f7f7f; display:inline-block; color:#fff; font-size:13px !important; width:80px; height:100%;padding:3px 0px; padding-left:5px; border-right:1px solid #000;">
-                            カスタム
-                          </strong>
-                          <t t-set="sol"
-                            t-value="line.order_line.filtered(lambda l: l.product_id.id == line.product_id.id) and line.order_line.filtered(lambda l: l.product_id.id == line.product_id.id)[0]" />
-                          <t t-foreach="sol.config_session_id.custom_value_ids" t-as="cfg">
-                            <span style="margin-left:5px;">● <span t-esc="cfg.display_name" /></span>
+                    </t>
+
+                    <td class="size16" style="padding:5px 0px; text-align:left;">
+                      <div class="five-lines" style="height: 96px;">
+                        <t t-if="line.mrp_product_attribute2">
+                          <t t-set="attr_arr" t-value="line.mrp_product_attribute2.split('\n')" />
+                          <t t-foreach="attr_arr" t-as="att">
+                            <div>
+                              <span t-esc="att.strip()" />
+                            </div>
                           </t>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr class="size16" style="border:none; border-bottom:1px solid #000;">
-                      <td colspan="6"
-                        style="padding: 0px; border:none; line-height:1.2; padding-left:20px; border-bottom:1px solid #000 !important">
-                        <div style="display:table; width:100%; line-height:1.2;">
-                          <div style="display:table-cell; width:35%; vertical-align:top;">
-                            <div
-                              style=" border:1px solid #000; border-right:none; border-bottom:none !important;">
-                              <strong
-                                style="background-color:#7f7f7f; display:inline-block; color:#fff; font-size:13px !important; height:100%;  width:80px; padding:3px 0px; padding-left:5px; border-right:1px solid #000;">
-                                同梱
-                              </strong>
-                              <!-- <br /> -->
-                              <span
-                                t-field="line.mrp_production_order_line.combined_shipment.abbreviation" />
-                            </div>
+                        </t>
+                      </div>
+                    </td>
+                    <td class="text-right size16" style="padding:20px 0px 0px 0px;">
+                      <div id="quote_qty" class="five-lines">
+                        <span t-esc="line.mrp_product_product_qty" />
+                      </div>
+                    </td>
+                    <td class="text-left size14" style="padding:20px 0px 0px 2px;">
+                      <div class="five-lines">
+                        <t t-if="line.product_id.product_tmpl_id.uom_id.name">
+                          <span t-field="line.product_id.product_tmpl_id.uom_id.name" />
+                        </t>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr style="border:none;">
+                    <td class="size16" colspan="6" style="padding:0px; border:none; line-height:1.2; padding-left:20px;">
+                      <div style="border:1px solid #000; border-bottom:none !important;">
+                        <strong style="background-color:#7f7f7f; display:inline-block; color:#fff; font-size:13px !important; width:80px; height:100%; padding:3px 0px; padding-left:5px; border-right:1px solid #000;">
+                          カスタム
+                        </strong>
+                        <t t-set="sol" t-value="line.order_line.filtered(lambda l: l.product_id.id == line.product_id.id) and line.order_line.filtered(lambda l: l.product_id.id == line.product_id.id)[0]" />
+                        <t t-foreach="sol.config_session_id.custom_value_ids" t-as="cfg">
+                          <span style="margin-left:5px;">● <span t-esc="cfg.display_name" /></span>
+                        </t>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="size16" style="border:none; border-bottom:1px solid #000;">
+                    <td colspan="6" style="padding: 0px; border:none; line-height:1.2; padding-left:20px; border-bottom:1px solid #000 !important">
+                      <div style="display:table; width:100%; line-height:1.2;">
+                        <div style="display:table-cell; width:35%; vertical-align:top;">
+                          <div style="border:1px solid #000; border-right:none; border-bottom:none !important;">
+                            <strong style="background-color:#7f7f7f; display:inline-block; color:#fff; font-size:13px !important; height:100%; width:80px; padding:3px 0px; padding-left:5px; border-right:1px solid #000;">
+                              同梱
+                            </strong>
+                            <span t-field="line.mrp_production_order_line.combined_shipment.abbreviation" />
                           </div>
-                          <div style="display:table-cell; width:65%; vertical-align:top;">
-                            <div
-                              style="display:flex; border:1px solid #000; border-bottom:none !important;">
-                              <strong
-                                style="background-color:#7f7f7f; display:inline-block; color:#fff; font-size:13px !important; height:100%;  width:80px; padding:3px 0px; padding-left:5px; border-right:1px solid #000; border-left:none;">
-                                メモ</strong>
-                              <span t-field="line.production_memo" />
-                            </div>
-                            <!-- <br /> -->
+                        </div>
+                        <div style="display:table-cell; width:65%; vertical-align:top;">
+                          <div style="display:flex; border:1px solid #000; border-bottom:none !important;">
+                            <strong style="background-color:#7f7f7f; display:inline-block; color:#fff; font-size:13px !important; height:100%; width:80px; padding:3px 0px; padding-left:5px; border-right:1px solid #000; border-left:none;">
+                              メモ
+                            </strong>
+                            <span t-field="line.production_memo" />
                           </div>
                         </div>
-                      </td>
-                    </tr>
-                  </t>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
-              </t>
-            </table>
+              </t> </table>
           </div>
           <t t-call="custom_report_rtw.page_footer_layout__"></t>
         </t>
@@ -377,13 +357,13 @@
     <field name="page_width">210</field>
     <field name="page_height">297</field>
     <field name="orientation">Landscape</field>
-    <field name="margin_top">20</field>
-    <field name="margin_bottom">10</field>
-    <field name="margin_left">5</field>
-    <field name="margin_right">5</field>
+    <field name="margin_top">15</field>
+    <field name="margin_bottom">5</field>
+    <field name="margin_left">1</field>
+    <field name="margin_right">1</field>
     <field name="header_line" eval="False" />
     <field name="header_spacing">12</field>
-    <field name="dpi">90</field>
+    <field name="dpi">96</field>
   </record>
 
   <record id="report_inspection_order_form_rtw" model="ir.actions.report">
