@@ -104,7 +104,7 @@ class sale_order_rtw(models.Model):
         readonly=True
     )
     amount_total_jpy = fields.Monetary(
-        string='合計額',
+        string='合計額(￥)',
         currency_field='currency_jpy_id',
         compute='_compute_amount_total_jpy',
         store=True
@@ -123,11 +123,12 @@ class sale_order_rtw(models.Model):
                         'context': {'default_order_id': record.id}
                     }
         res = super(sale_order_rtw, self).action_done()
-        for record in self:
-            if record.warehouse_arrive_date_2:
-                record.sales_date = record.warehouse_arrive_date_2
-            else:
-                record.sales_date = record.warehouse_arrive_date
+        if not self.env.context.get('from_confirm_action'):
+            for record in self:
+                if record.warehouse_arrive_date_2:
+                    record.sales_date = record.warehouse_arrive_date_2
+                else:
+                    record.sales_date = record.warehouse_arrive_date
         return res
 
     def action_unlock(self):
@@ -238,7 +239,10 @@ class sale_order_rtw(models.Model):
             record.commitment_date = self.estimated_shipping_date
 
     def action_confirm(self):
-        res = super(sale_order_rtw, self).action_confirm()
+        # 確認ボタン押下空の処理であることをマークしておく（別途ロック処理で利用）
+        ctx_self = self.with_context(from_confirm_action=True)
+        res = super(sale_order_rtw, ctx_self).action_confirm()
+        # 販売とロックの同時処理をさけるためにステータス戻し
         self.state = 'sale'
         return res
 
