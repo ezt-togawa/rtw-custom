@@ -12,8 +12,7 @@
                         attrs="{'invisible': [('status', '=', 'done')]}" />
                     <button string="back to draft" name="back_to_draft" type="object"
                         class="oe_highlight"
-                        groups="sale_order_rtw.group_sale_unlock"
-                        attrs="{'invisible': [('status', '!=', 'done')]}" />
+                        attrs="{'invisible': ['|', ('status', '!=', 'done'), ('state', '=', 'done')]}" />
                 </xpath>
                 <xpath expr="//button[@name='action_unlock']" position="attributes">
                     <attribute name="groups">sale_order_rtw.group_sale_unlock</attribute>

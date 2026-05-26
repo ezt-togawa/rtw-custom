@@ -20,7 +20,7 @@ class sale_order_rtw(models.Model):
         ('draft', 'draft'),
         ('done', 'done'),
     ],
-        string="status", default='draft', store=True)
+        string="status", default='draft', store=True, tracking=True)
     process = fields.Selection([
         ('draft', 'draft'),
         ('manufactured', 'manufactured'),
