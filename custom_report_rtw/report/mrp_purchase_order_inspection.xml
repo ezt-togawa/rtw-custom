@@ -29,8 +29,14 @@
                     font-family: 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif !important;
                     font-weight: 700 !important;
                 }
-            </style>            <t
-              t-set="type">quotation</t>
+                .invoice_tbody {
+                    border-bottom: 2px solid #000000 !important;
+                }
+                .invoice_tbody tr.product-main-row {
+                    border-bottom: 1px solid #000000 !important;
+                }
+            </style>
+            <t t-set="type">quotation</t>
             <t t-set="address">
               <div t-field="mrp.mrp_production_so_id.partner_id"
                 t-options='{"widget": "contact", "fields": ["address", "name"],
