@@ -176,9 +176,9 @@ class productLabelSticker(models.AbstractModel):
         sheet.set_column(9,  14, 7.89,  fmt_base)
         sheet.set_column(15, 15, 0.69,  fmt_base)
 
-        ROW_HEIGHTS_6 = [7.35, 53.85, 46.75, 46.75, 46.75, 46.75, 46.75, 6.15]
-
-        ROW_HEIGHTS_8 = [7.35, 105.0, 104.5, 7.15]
+        # 印刷先の環境に合わせて調整（お客様調整の行高さ）
+        ROW_HEIGHTS_6 = [9.2, 50.4, 50.4, 50.4, 50.4, 50.4, 50.4, 9.2]
+        ROW_HEIGHTS_8 = [9.6, 111.0, 111.5, 9.6]
 
         L_START = 1   # B
         L_MID1  = 4   # E 
