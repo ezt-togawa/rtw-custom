@@ -96,19 +96,19 @@ class sale_order_rtw(models.Model):
 
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
     sales_date = fields.Date(string="売上日", copy=False)
-    # currency_jpy_id = fields.Many2one(
-    #     comodel_name='res.currency',
-    #     string='JPY Currency',
-    #     default=lambda self: self.env.ref('base.JPY', raise_if_not_found=False)
-    #     or self.env['res.currency'].search([('name', '=', 'JPY')], limit=1),
-    #     readonly=True
-    # )
-    # amount_total_jpy = fields.Monetary(
-    #     string='合計額(￥)',
-    #     currency_field='currency_jpy_id',
-    #     compute='_compute_amount_total_jpy',
-    #     store=True
-    # )
+    currency_jpy_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='JPY Currency',
+        default=lambda self: self.env.ref('base.JPY', raise_if_not_found=False)
+        or self.env['res.currency'].search([('name', '=', 'JPY')], limit=1),
+        readonly=True
+    )
+    amount_total_jpy = fields.Monetary(
+        string='合計額(￥)',
+        currency_field='currency_jpy_id',
+        compute='_compute_amount_total_jpy',
+        store=True
+    )
 
     def action_done(self):
         if not self.env.context.get('ignore_pack_outside_alert'):
@@ -147,27 +147,27 @@ class sale_order_rtw(models.Model):
             else:
                 record.days_remaining = 999
 
-    # @api.depends('amount_total', 'currency_id', 'company_id', 'date_order')
-    # def _compute_amount_total_jpy(self):
-    #     jpy_currency = self.env.ref('base.JPY', raise_if_not_found=False)
-    #     if not jpy_currency:
-    #         jpy_currency = self.env['res.currency'].search([('name', '=', 'JPY')], limit=1)
-    #     for order in self:
-    #         target_currency = order.currency_jpy_id or jpy_currency or order.currency_id
-    #         if not order.currency_id or not target_currency or not order.company_id:
-    #             order.amount_total_jpy = order.amount_total
-    #             continue
-    #         if order.currency_id == target_currency:
-    #             order.amount_total_jpy = order.amount_total
-    #             continue
-    #         convert_date = order.date_order or fields.Date.context_today(order)
-    #         order.amount_total_jpy = order.currency_id._convert(
-    #             order.amount_total,
-    #             target_currency,
-    #             order.company_id,
-    #             convert_date,
-    #         )
-    #
+    @api.depends('amount_total', 'currency_id', 'company_id', 'date_order')
+    def _compute_amount_total_jpy(self):
+        jpy_currency = self.env.ref('base.JPY', raise_if_not_found=False)
+        if not jpy_currency:
+            jpy_currency = self.env['res.currency'].search([('name', '=', 'JPY')], limit=1)
+        for order in self:
+            target_currency = order.currency_jpy_id or jpy_currency or order.currency_id
+            if not order.currency_id or not target_currency or not order.company_id:
+                order.amount_total_jpy = order.amount_total
+                continue
+            if order.currency_id == target_currency:
+                order.amount_total_jpy = order.amount_total
+                continue
+            convert_date = order.date_order or fields.Date.context_today(order)
+            order.amount_total_jpy = order.currency_id._convert(
+                order.amount_total,
+                target_currency,
+                order.company_id,
+                convert_date,
+            )
+
     def _compute_mo_shiratani_entry_date(self):
         for record in self:
             if record.shiratani_entry_date:
@@ -302,18 +302,18 @@ class sale_order_rtw(models.Model):
             else:
                 so.payment_terms = None
 
-    # @api.model
-    # def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
-    #     res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
-    #     if not self.env.user.has_group('sale_order_rtw.group_sale_cost_price'):
-    #         order_line_field = res.get('fields', {}).get('order_line', {})
-    #         for vtype, view_data in order_line_field.get('views', {}).items():
-    #             if vtype in ('tree', 'form'):
-    #                 arch = etree.fromstring(view_data['arch'])
-    #                 for node in arch.xpath("//field[@name='purchase_price']"):
-    #                     node.getparent().remove(node)
-    #                 view_data['arch'] = etree.tostring(arch, encoding='unicode')
-    #     return res
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+        if not self.env.user.has_group('sale_order_rtw.group_sale_cost_price'):
+            order_line_field = res.get('fields', {}).get('order_line', {})
+            for vtype, view_data in order_line_field.get('views', {}).items():
+                if vtype in ('tree', 'form'):
+                    arch = etree.fromstring(view_data['arch'])
+                    for node in arch.xpath("//field[@name='purchase_price']"):
+                        node.getparent().remove(node)
+                    view_data['arch'] = etree.tostring(arch, encoding='unicode')
+        return res
 
 class mrp_order_rtw(models.Model):
     _inherit = "mrp.production"
