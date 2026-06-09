@@ -6,7 +6,7 @@ class sale_order_line_warehouse(models.Model):
      _inherit = "sale.order.line"
 
      warehouse_id = fields.Many2one(
-         'stock.warehouse', store=True, domain="[('id' , 'in' , allowed_warehouse_ids)]"
+         'stock.warehouse', store=True
      )
 
      allowed_warehouse_ids = fields.Many2many(  # THIS FIELD STORES THE APPROPRIATE WAREHOUSES
@@ -41,8 +41,16 @@ class sale_order_line_warehouse(models.Model):
                     if rule.warehouse_id.id not in warehouses and rule.warehouse_id:
                         warehouses.append(rule.warehouse_id.id)
             line.allowed_warehouse_ids = [(6, 0, warehouses)]   # (6, 0)は入れ替えの意味
-            if not line.warehouse_id and warehouses:
-                line.warehouse_id = warehouses[0]
+
+            # 倉庫が未設定なら候補の先頭をセットする
+            if warehouses:
+                # すでに現在入っている倉庫が、許可されたルート以外の倉庫（糸島など）になってしまっている場合も、
+                # 強制的に正しい倉庫（先頭）に上書き修正してバグの着地を防ぎます
+                if not line.warehouse_id or line.warehouse_id.id not in warehouses:
+                    line.warehouse_id = warehouses[0]
+            else:
+                # ルートに倉庫が1つもない特殊な製品の場合は、クリアするか親注文の倉庫を安全弁として残す
+                line.warehouse_id = False
 
      def _prepare_add_missing_fields(self, values): # SET DEFAULT WAREHOUSE WHEN CREATE SALE ORDER LINE WITH CONFIGURE PRODUCT
         res = super(sale_order_line_warehouse, self)._prepare_add_missing_fields(values)
