@@ -64,6 +64,21 @@ class sale_order_line_rtw(models.Model):
                 if not line.display_type and line.sequence >= 9999:
                     # 新規追加時は明細の9999を除く最大Sequenceにプラス1した値をセットする
                     line.sequence = order_lines_seq_max + 1
+
+                # Packあり製品の順番担保処理
+                if hasattr(line, 'pack_parent_line_id'):
+                    # 自分（本体）を親として持つ、先に作成済みのPack明細をすべて取得
+                    child_pack_lines = line.order_id.order_line.filtered(
+                        lambda l: l.pack_parent_line_id.id == line.id
+                    )
+
+                    if child_pack_lines:
+                        # 本体（自分）のシーケンス番号を基準にする
+                        base_sequence = line.sequence
+
+                        # 先に作られて上にいってしまっていたPack（子）たちのシーケンスを、下に来るように修正
+                        for i, child_line in enumerate(child_pack_lines, start=1):
+                            child_line.sequence = base_sequence + i
         return res
 
     def write(self, vals):
@@ -111,4 +126,39 @@ class sale_order_line_rtw(models.Model):
             for node in arch.xpath("//field[@name='purchase_price']"):
                 node.getparent().remove(node)
             res['arch'] = etree.tostring(arch, encoding='unicode')
+        return res
+
+    def _purchase_service_create(self, quantity=False):
+        """
+        販売明細の自動購買生成時、既存POへの合流をさせない
+        """
+        # 変更点だけの事前対応：
+        # 現在データベース上にある、この仕入先宛の「下書き（draft）」状態のPOをすべて探す
+        partner_ids = []
+        for line in self:
+            suppliers = line.product_id._select_seller(quantity=line.product_uom_qty, uom_id=line.product_uom)
+            if suppliers:
+                partner_ids.append(suppliers[0].name.id)
+
+        draft_pos = self.env['purchase.order'].search([
+            ('partner_id', 'in', partner_ids),
+            ('state', '=', 'draft'),
+            ('company_id', 'in', self.mapped('company_id').ids)
+        ])
+
+        # 【一時退避】標準の search() に既存POが見つからないよう、一瞬だけステータスを 'sent' に偽装する
+        # ※データベースの書き込み（SQL）は発生しますが、メモリ上の処理なので一瞬
+        if draft_pos:
+            draft_pos.write({'state': 'sent'})
+
+        try:
+            # 既存のPOが 'sent' になっているため、標準コードは「既存POなし」と判定し、必ず綺麗な別POを新規作成します。
+            # 単価（price_unit）や通貨、納期などは、正しい仕入先の情報のまま100%正確に計算されます。
+            res = super(sale_order_line_rtw, self)._purchase_service_create(quantity=quantity)
+        finally:
+            # 変更点事後の補正：
+            # 何があっても必ず（エラーが起きても）退避させていた既存POのステータスを元の 'draft' に戻す
+            if draft_pos:
+                draft_pos.write({'state': 'draft'})
+
         return res
