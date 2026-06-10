@@ -6,7 +6,7 @@ class sale_order_line_warehouse(models.Model):
      _inherit = "sale.order.line"
 
      warehouse_id = fields.Many2one(
-         'stock.warehouse', store=True
+         'stock.warehouse', store=True, domain="[('id', 'in', allowed_warehouse_ids)]"
      )
 
      allowed_warehouse_ids = fields.Many2many(  # THIS FIELD STORES THE APPROPRIATE WAREHOUSES
@@ -30,27 +30,31 @@ class sale_order_line_warehouse(models.Model):
 
      @api.depends('product_id')
      def _compute_allowed_warehouses(self):
-        for line in self:
-            if not line.product_id:
-                line.allowed_warehouse_ids = [(5, 0, 0)]  # (5,0,0)は「全クリア」の意味
-                continue
+         for line in self:
+             if not line.product_id:
+                 line.allowed_warehouse_ids = [(5, 0, 0)]  # (5,0,0)は「全クリア」の意味
+                 continue
 
-            warehouses = []
-            for route in line.product_id.route_ids:
-                for rule in route.rule_ids:
-                    if rule.warehouse_id.id not in warehouses and rule.warehouse_id:
-                        warehouses.append(rule.warehouse_id.id)
-            line.allowed_warehouse_ids = [(6, 0, warehouses)]   # (6, 0)は入れ替えの意味
+             warehouses = []
+             for route in line.product_id.route_ids:
+                 for rule in route.rule_ids:
+                     if rule.warehouse_id.id not in warehouses and rule.warehouse_id:
+                         warehouses.append(rule.warehouse_id.id)
 
-            # 倉庫が未設定なら候補の先頭をセットする
-            if warehouses:
-                # すでに現在入っている倉庫が、許可されたルート以外の倉庫（糸島など）になってしまっている場合も、
-                # 強制的に正しい倉庫（先頭）に上書き修正してバグの着地を防ぎます
-                if not line.warehouse_id or line.warehouse_id.id not in warehouses:
-                    line.warehouse_id = warehouses[0]
-            else:
-                # ルートに倉庫が1つもない特殊な製品の場合は、クリアするか親注文の倉庫を安全弁として残す
-                line.warehouse_id = False
+             # ルートに設定されている倉庫はすべて出して良い（Many2manyに格納）
+             line.allowed_warehouse_ids = [(6, 0, warehouses)]  # (6, 0)は入れ替えの意味
+
+             # 最初の倉庫（warehouses[0]）を自動的に初期表示にする
+             if warehouses and not line.warehouse_id:
+                 line.warehouse_id = warehouses[0]
+
+     @api.onchange('product_id')
+     def onchange_product_id_set_domain(self):
+         """ 製品が選ばれた・変わったその瞬間に、画面の倉庫コンボボックスに即時ドメインを強制注入する """
+         # 事前に最新の倉庫リストを計算させておく
+         self._compute_allowed_warehouses()
+         # 画面の『倉庫』フィールドに対して、その場で直接ドメインを叩き込んでロックする
+         return {'domain': {'warehouse_id': [('id', 'in', self.allowed_warehouse_ids.ids)]}}
 
      def _prepare_add_missing_fields(self, values): # SET DEFAULT WAREHOUSE WHEN CREATE SALE ORDER LINE WITH CONFIGURE PRODUCT
         res = super(sale_order_line_warehouse, self)._prepare_add_missing_fields(values)
