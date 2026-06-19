@@ -263,8 +263,11 @@ class SaleOrderExcelReport(models.Model):
             
             if so.sipping_to == 'direct':
                 send = so.shipping_to_text if so.shipping_to_text else ''
-            elif so.waypoint:
-                res = self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id', '=', so.waypoint.id)])
+            elif so.waypoint or so.waypoint_2:
+                if so.waypoint_2:
+                    res = self.env['res.partner'].with_context({'lang': self.lang_code}).search([('id', '=', so.waypoint_2.id)])
+                elif so.waypoint:
+                    res = self.env['res.partner'].with_context({'lang':self.lang_code}).search([('id', '=', so.waypoint.id)])
                 
                 if so.lang_code == 'en_US':
                     if res.company_type == 'company':
