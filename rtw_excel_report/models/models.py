@@ -845,7 +845,9 @@ class SaleOrderExcelReport(models.Model):
             else:
                 record.sale_order_preferred_delivery_date = ""
                 
-            if record.warehouse_arrive_date:
+            if record.warehouse_arrive_date_2:
+                record.sale_order_warehouse_arrive_date = record._format_date(record.warehouse_arrive_date_2, record.lang_code)
+            elif record.warehouse_arrive_date:
                 record.sale_order_warehouse_arrive_date = record._format_date(record.warehouse_arrive_date, record.lang_code)
             else:
                 record.sale_order_warehouse_arrive_date = ""
