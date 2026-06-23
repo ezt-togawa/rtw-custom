@@ -3,7 +3,6 @@
 from odoo import models, fields, api, _
 from lxml import etree
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_compare
 
 class rtw_product_pricelist(models.Model):
     _inherit = "product.pricelist.item"
