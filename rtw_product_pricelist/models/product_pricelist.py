@@ -4,7 +4,6 @@ from odoo import models, fields, api, _
 from lxml import etree
 from odoo.exceptions import UserError, ValidationError
 
-
 class rtw_product_pricelist(models.Model):
     _inherit = "product.pricelist.item"
 
@@ -137,7 +136,8 @@ class rtw_product_attribute_value(models.Model):
 class rtw_product_config_session(models.Model):
     _inherit = 'product.config.session'
 
-    specifications = fields.Many2many('product.template.attribute.value',string='仕様（属性)', compute='_compute_specifications')
+    specifications = fields.Many2many('product.template.attribute.value', string='仕様（属性)', compute='_compute_specifications')
+    cfg_final_price = fields.Float(string="確定単価（属性価格込）")
 
     def _compute_specifications(self):
         for rec in self:
@@ -193,8 +193,12 @@ class rtw_product_config_session(models.Model):
                 extra_prices[key] = value
 
         price_extra = sum(extra_prices.values())
+        final_price = product_tmpl.list_price + price_extra
 
-        return product_tmpl.list_price + price_extra
+        # return後に本体側で属性価格が再度更新されるため、後続で正しい価格を利用するため保持しておく（create/write）
+        self.write({'cfg_final_price': final_price})
+
+        return final_price
 
 
 class rtw_product_configurator_sale_order_line(models.Model):
@@ -215,6 +219,57 @@ class rtw_product_configurator_sale_order_line(models.Model):
             super(rtw_product_configurator_sale_order_line,
                   self).product_uom_change()
 
+    @api.model
+    def create(self, vals):
+        """ダイアログ確定直後、まずはOdooに正常に明細を作らせ、
+           作られた直後の綺麗なレコードに対して正しい get_cfg_price の金額を焼き付ける
+        """
+        lines = super(rtw_product_configurator_sale_order_line, self).create(vals)
+
+        # linesをループして、コンフィギュレータ製品だけを狙い撃ち
+        for line in lines:
+            if line.config_session_id and line.config_session_id.cfg_final_price:
+
+                # get_cfg_priceで保持したPrice（cfg_final_price）で税金計算
+                account_tax_obj = self.env["account.tax"]
+                correct_price = account_tax_obj._fix_tax_included_price_company(
+                    line.config_session_id.cfg_final_price,
+                    line.product_id.taxes_id,
+                    line.tax_id,
+                    line.company_id,
+                )
+
+                # get_cfg_priceで保持した単価で上書き固定
+                line.write({'price_unit': correct_price})
+
+        return lines
+
+    def write(self, vals):
+        """【属性の再編集時】
+        ダイアログで属性を変更して確定した直後、価格リストの暴走で
+        先頭価格に化けてしまった単価を、正しい金額で奪い返す
+        """
+        res = super(rtw_product_configurator_sale_order_line, self).write(vals)
+
+        # linesをループして、コンフィギュレータ製品だけを狙い撃ち
+        for line in self:
+            if line.config_session_id:
+
+                # get_cfg_priceで保持したPrice（cfg_final_price）で税金計算
+                account_tax_obj = self.env["account.tax"]
+                correct_price = account_tax_obj._fix_tax_included_price_company(
+                    line.config_session_id.cfg_final_price,
+                    line.product_id.taxes_id,
+                    line.tax_id,
+                    line.company_id,
+                )
+
+                # get_cfg_priceで保持した単価で上書き固定
+                # 現在の単価と乖離がある場合のみ write を実行する安全策をとる
+                if line.price_unit != correct_price:
+                    super(rtw_product_configurator_sale_order_line, line).write({'price_unit': correct_price})
+
+        return res
 
 class rtw_product_configurator(models.TransientModel):
     _inherit = "product.configurator"
