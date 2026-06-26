@@ -251,6 +251,10 @@ class rtw_product_configurator_sale_order_line(models.Model):
         """
         res = super(rtw_product_configurator_sale_order_line, self).write(vals)
 
+        # 単価手入力の場合にはそのまま抜ける（価格リストを反映しない）
+        if 'price_unit' in vals and 'product_template_attribute_value_ids' not in vals:
+            return res
+
         # linesをループして、コンフィギュレータ製品だけを狙い撃ち
         for line in self:
             if line.config_session_id:
