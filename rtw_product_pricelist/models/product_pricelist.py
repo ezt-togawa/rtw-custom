@@ -206,18 +206,15 @@ class rtw_product_configurator_sale_order_line(models.Model):
 
     @api.onchange("product_uom", "product_uom_qty")
     def product_uom_change(self):
-        if self.config_session_id:
-            price = self.config_session_id.get_cfg_price()
-            account_tax_obj = self.env["account.tax"]
-            self.price_unit = account_tax_obj._fix_tax_included_price_company(
-                price,
-                self.product_id.taxes_id,
-                self.tax_id,
-                self.company_id,
-            )
-        else:
-            super(rtw_product_configurator_sale_order_line,
-                  self).product_uom_change()
+        # superが勝手に書き換える前に、現在の画面の単価を緊急避難
+        current_price_unit = self.price_unit
+
+        # 標準処理を実行（ここでOdooが価格リストから単価を取り直して上書きしてくる）
+        super(rtw_product_configurator_sale_order_line, self).product_uom_change()
+
+        # 強制上書き脱出】お節介に書き換えられた単価を、退避しておいた元の単価で上書きして奪い返す！
+        # これにより、手入力された単価だろうが初期単価だろうが、画面上の単価が勝手に変わるのを100%物理的に遮断します。
+        self.price_unit = current_price_unit
 
     @api.model
     def create(self, vals):
@@ -251,15 +248,14 @@ class rtw_product_configurator_sale_order_line(models.Model):
         """
         # 単価手入力の場合にはそのまま抜ける（価格リストを反映しない）
         if 'product_template_attribute_value_ids' not in vals:
-            if 'price_unit' in vals and 'product_uom_qty' not in vals:
-                # 手入力された単価をそのまま残して、即座に保存して終了！
-                return super(rtw_product_configurator_sale_order_line, self).write(vals)
-            else:
-                # 数量変更などの裏で、Odooが勝手に価格リストから元の計算単価を混ぜてきていたら、
-                # 現在の単価を保持するためにOdoo指定単価を確実にクリアする
+            res = True
+            for line in self:
                 if 'price_unit' in vals:
-                    del vals['price_unit']
-                return super(rtw_product_configurator_sale_order_line, self).write(vals)
+                    res = super(rtw_product_configurator_sale_order_line, line).write(vals)
+                else:
+                    line_vals = dict(vals, price_unit=line.price_unit)
+                    res = super(rtw_product_configurator_sale_order_line, line).write(line_vals)
+            return res
 
         res = super(rtw_product_configurator_sale_order_line, self).write(vals)
 
