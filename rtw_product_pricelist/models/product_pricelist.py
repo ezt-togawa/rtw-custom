@@ -249,6 +249,18 @@ class rtw_product_configurator_sale_order_line(models.Model):
         ダイアログで属性を変更して確定した直後、価格リストの暴走で
         先頭価格に化けてしまった単価を、正しい金額で奪い返す
         """
+        # 単価手入力の場合にはそのまま抜ける（価格リストを反映しない）
+        if 'product_template_attribute_value_ids' not in vals:
+            if 'price_unit' in vals and 'product_uom_qty' not in vals:
+                # 手入力された単価をそのまま残して、即座に保存して終了！
+                return super(rtw_product_configurator_sale_order_line, self).write(vals)
+            else:
+                # 数量変更などの裏で、Odooが勝手に価格リストから元の計算単価を混ぜてきていたら、
+                # 現在の単価を保持するためにOdoo指定単価を確実にクリアする
+                if 'price_unit' in vals:
+                    del vals['price_unit']
+                return super(rtw_product_configurator_sale_order_line, self).write(vals)
+
         res = super(rtw_product_configurator_sale_order_line, self).write(vals)
 
         # linesをループして、コンフィギュレータ製品だけを狙い撃ち
