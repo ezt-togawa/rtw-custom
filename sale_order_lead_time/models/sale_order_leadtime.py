@@ -139,13 +139,3 @@ class sale_order_leadtime(models.Model):
                     hours=hours
                 )
 
-        if self.leadtime:
-            # for line in self.order_line:
-            #     line.date_planned = self.leadtime
-            ## update delivery
-            stock_picking = self.env['stock.picking'].search([('sale_id', '=', self.id)])
-            for stock in stock_picking:
-                if stock.state not in ('done', 'cancel'):
-                    stock.write({"scheduled_date": self.leadtime})
-                    stock.write({"date_deadline": self.leadtime})
-
