@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id="rtw_sale_order_line_recreate_form" model="ir.ui.view">
+            <field name="name">rtw sale order line recreate form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_template_id']" position="before">
+                    <field name="has_recreate_mo" invisible="1"/>
+                    <field name="is_recreate_needed" invisible="1"/>
+
+                    <button name="action_sale_line_recreate" string="再" type="object"
+                            icon="fa-refresh" class="btn-outline-success"
+                            confirm="販売明細行に関連する製造・購買・運送を再作成しますか？"
+                            groups="rtw_recreate.group_recreate_permission"
+                            attrs="{'invisible': ['|', ('has_recreate_mo', '=', False), ('is_recreate_needed', '=', True)]}"/>
+
+                    <button name="action_sale_line_recreate" string="再" type="object"
+                            icon="fa-exclamation-circle" class="btn-warning"
+                            confirm="販売明細の仕様・数量・倉庫が変更された可能性があります。製造・購買・運送を再作成しますか？"
+                            groups="rtw_recreate.group_recreate_permission"
+                            attrs="{'invisible': ['|', ('has_recreate_mo', '=', False), ('is_recreate_needed', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree//button[@name='reconfigure_product']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('config_ok', '=', False), ('state', 'in', ('done', 'cancel'))]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
