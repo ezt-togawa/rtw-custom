@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="rtw_mrp_recreate_form" model="ir.ui.view">
+            <field name="name">rtw mrp recreate_form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_mrp_recreate" string="再作成" type="object"
+                            class="oe_highlight" icon="fa-magic"
+                            confirm="現在の構成品に基づき、子製造・購買・運送を再生成しますか？"
+                            groups="rtw_recreate.group_recreate_permission"
+                            attrs="{'invisible': [('state', 'not in', ['confirmed', 'draft'])]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
