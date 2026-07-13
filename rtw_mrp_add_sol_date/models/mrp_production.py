@@ -121,6 +121,16 @@ class rtw_mrp_production_add_sol_date(models.Model):
                             # old_date = child.date_planned_start
                             so.calc_date_planned_start(child)
 
+            # 白谷到着日を子製造へも無条件で伝播する
+            if not self.env.context.get('skip_move_date_sync'):
+                child_list = self.env["mrp.production"].search([('origin', '=', mo.name)])
+                if child_list:
+                    child_list.write({'shiratani_date': mo.shiratani_date})
+
+            # 算出した糸島出荷日をMove/Pikingへ反映する（date_planned_startの再計算とは異なり、MOの状態を問わず常に反映する）
+            if not self.env.context.get('skip_move_date_sync'):
+                mo._sync_dates_to_related_moves()
+
     # 糸島出荷日を画面で変更した時に変更値を保持する
     def _inverse_itoshima_shipping_date(self):
         for mo in self:
@@ -136,3 +146,25 @@ class rtw_mrp_production_add_sol_date(models.Model):
                 record.mrp_mo_date = f"{formatted_date} [{day_of_week}]"
             else:
                 record.mrp_mo_date = ''
+
+    def write(self, vals):
+        res = super(rtw_mrp_production_add_sol_date, self).write(vals)
+        # 糸島出荷日・白谷到着日に影響する値が変更されたら、経路を問わず必ず紐づく全Moveへ反映する
+        # （mrp_production_id が一致するMoveすべてが対象。Pikingがない内部消費Moveや、MTOで紐づく購買の入荷Moveも含む）
+        # ※skip_move_date_syncコンテキストは、Move側からの書き戻し（write()内）でここに戻ってきた際の
+        # 　無限ループ防止用（stock_move.pyのwrite()/_set_shiratani_date_deliveryと対）
+        if not self.env.context.get('skip_move_date_sync') and \
+                {'shiratani_date', 'itoshima_shipping_date_edit', 'arrival_date_itoshima_stock_move'}.intersection(vals):
+            self._sync_dates_to_related_moves()
+        return res
+
+    def _sync_dates_to_related_moves(self):
+        for mo in self:
+            moves = self.env['stock.move'].search([('mrp_production_id', '=', mo.name)])
+            if moves:
+                # skip_move_date_sync: Move側のwrite()がこの反映をMOへ書き戻さないようにする（無限ループ防止）
+                moves.with_context(skip_move_date_sync=True).write({
+                    'shiratani_date': mo.shiratani_date,
+                    'shiratani_date_delivery': mo.shiratani_date,
+                    'arrival_date_itoshima': mo.itoshima_shipping_date,
+                })

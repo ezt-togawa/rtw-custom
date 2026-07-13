@@ -43,51 +43,38 @@ class rtw_stock_move(models.Model):
     itoshima_shiratani_shipping_notes_first_line = fields.Char(
         string="糸島/白谷配送注記", compute="_compute_first_line"
     )
-    arrival_date_itoshima = fields.Date(string="糸島出荷日", compute="_compute_arrival_date_itoshima", inverse="_inverse_arrival_date_itoshima")
-    arrival_date_itoshima_inherit_2 = fields.Date()
-    arrival_date_itoshima_inherit = fields.Date()
+    arrival_date_itoshima = fields.Date(string="糸島出荷日")
     shipping_destination_text = fields.Text(string="送り先", compute="_compute_shipping_destination_text")
 
-    def _compute_arrival_date_itoshima(self):
-        for move in self:
-            if move.mrp_production_id:
-                mrp = self.env["mrp.production"].search([('name', '=', move.mrp_production_id)], limit=1)
-                if move.arrival_date_itoshima_inherit_2:
-                    if mrp.itoshima_shipping_date != move.arrival_date_itoshima_inherit_2:
-                        move.arrival_date_itoshima =  mrp.itoshima_shipping_date
-                        move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
-                    else:
-                         move.arrival_date_itoshima = move.arrival_date_itoshima_inherit_2
-                elif move.arrival_date_itoshima_inherit and mrp.is_active == False: 
-                    move.arrival_date_itoshima = move.arrival_date_itoshima_inherit
-                else:
-                    if mrp:
-                        move.arrival_date_itoshima =  mrp.itoshima_shipping_date
-                        move.arrival_date_itoshima_inherit = mrp.itoshima_shipping_date
-            else: 
-                move.arrival_date_itoshima = False
-        
-           
-    def _inverse_arrival_date_itoshima(self):
-        mrp = ""
-        for rec in self:
-            if rec.mrp_production_id:
+    def write(self, vals):
+        res = super(rtw_stock_move, self).write(vals)
+        # Move側で糸島出荷日・白谷到着日を直接編集したら、紐づく製造オーダーへ書き戻す（Move→製造）。
+        # ※両方をここで1回にまとめて処理する。別々のタイミング（例：shiratani_date_deliveryの
+        # 　inverseから直接MOへwrite）で書き戻すと、片方の反映がMOの値を読みに行くタイミングと
+        # 　競合し、同時更新時に一方の変更が上書きされて消えてしまう不具合があったため。
+        # ※製造側からの一斉反映中（skip_move_date_syncコンテキスト）は書き戻さない（無限ループ防止）
+        # ※ここでのMOへのwriteにはskip_move_date_syncを付けない。MO側のwrite()が正常に発火し、
+        # 　このMOに紐づく他の全Move/Pikingへも一斉反映（伝播）されるようにするため。
+        if not self.env.context.get('skip_move_date_sync') and \
+                {'arrival_date_itoshima', 'shiratani_date_delivery'}.intersection(vals):
+            for rec in self:
+                if not rec.mrp_production_id:
+                    continue
                 mrp = self.env["mrp.production"].search([('name', '=', rec.mrp_production_id)], limit=1)
-                if mrp:
-                    mrp.write({'arrival_date_itoshima_stock_move': rec.arrival_date_itoshima})
-                    mrp.write({'is_active': False})
-                    stock_move = self.env['stock.move'].search([
-                            ('id', '=', rec.id),
-                        ])
-                    if stock_move:
-                        stock_move.arrival_date_itoshima = rec.arrival_date_itoshima 
-                        stock_move.arrival_date_itoshima_inherit_2 = stock_move.arrival_date_itoshima
-                    else:
-                        return
-                else:
-                    return
-        else:
-            return
+                if not mrp:
+                    continue
+                push_vals = {}
+                if 'arrival_date_itoshima' in vals:
+                    # arrival_date_itoshima_stock_move（Move由来）+ is_active=False で書き戻す。
+                    # itoshima_shipping_date_edit（MOフォーム直接編集用）に書くと、
+                    # _compute_itoshima_shipping_date内の後段の無条件ifで上書きされてしまうため使わない。
+                    push_vals['arrival_date_itoshima_stock_move'] = rec.arrival_date_itoshima
+                    push_vals['is_active'] = False
+                if 'shiratani_date_delivery' in vals:
+                    push_vals['shiratani_date'] = rec.shiratani_date_delivery
+                if push_vals:
+                    mrp.write(push_vals)
+        return res
 
 
     def _compute_first_line(self):
@@ -158,11 +145,17 @@ class rtw_stock_move(models.Model):
 
         return super(rtw_stock_move, self).create(vals_list)
 
-    @api.depends('product_id', 'sale_line_id.depo_date','sale_line_id.depo_date','sale_line_id','sale_id','sale_id.warehouse_arrive_date')
+    @api.depends('product_id', 'sale_line_id.depo_date','sale_line_id.depo_date','sale_line_id','sale_id','sale_id.warehouse_arrive_date','mrp_production_id')
     def _get_sale(self):
+        # 子製造の内部消費Moveなどsale_line_idを持たない場合は、mrp_production_id経由で補完する。
         for rec in self:
             if rec.sale_line_id.depo_date:
                 rec.depo_date = rec.sale_line_id.depo_date
+            elif rec.mrp_production_id:
+                mrp = self.env['mrp.production'].search([('name', '=', rec.mrp_production_id)], limit=1)
+                rec.depo_date = mrp.depo_date if mrp else False
+            elif rec.sale_id:
+                rec.depo_date = rec.sale_id.warehouse_arrive_date
             else:
                 rec.depo_date = False
 
@@ -233,9 +226,14 @@ class rtw_stock_move(models.Model):
                 rec.mrp_production_id = None
 
             # 調達グループに製造が紐づいていない場合、販売直下の配送＝製品の配送が考えられるため対象の製造オーダーをstock.picking経由で取得する
+            # ※取消済は除外し、新しい方が優先されるようid降順で取得する。
             if not rec.mrp_production_id and rec.product_id:
                 mrp = self.env['mrp.production'].search(
-                    [('origin', '=', rec.picking_id.sale_id.name), ('product_id', '=', rec.product_id.id)], limit=1)
+                    [
+                        ('origin', '=', rec.picking_id.sale_id.name),
+                        ('product_id', '=', rec.product_id.id),
+                        ('state', '!=', 'cancel'),
+                    ], order='id desc', limit=1)
                 if mrp:
                     rec.mrp_production_id = mrp.name
                 else:
@@ -373,23 +371,17 @@ class rtw_stock_move(models.Model):
             
     @api.depends('shiratani_date_delivery')
     def _set_shiratani_date_delivery(self):
+        # ※MOへの書き戻しは、ここでは行わない（write()に一本化。
+        #   糸島出荷日と同時に更新された時の競合を避けるため。下のwrite()を参照）
         for rec in self:
             rec.shiratani_date = rec.shiratani_date_delivery
-            if rec.product_id:
-                mrp_production = self.env['mrp.production'].search([('name', '=', rec.mrp_production_id)])
-                if mrp_production:
-                    # 製造に紐づく運送/配送の白谷到着日を更新
-                    move_list = self.env["stock.move"].search([('mrp_production_id', '=', mrp_production.name)])
-                    if move_list:
-                        move_list.write({'shiratani_date': rec.shiratani_date_delivery})
-
-                    mrp_production.write({'shiratani_date': rec.shiratani_date_delivery})
-
-                    if rec.picking_id:
-                        picking_ids = self.env['stock.move'].search([
-                            ('product_id', '=', rec.product_id.id),
-                            ('origin', '=', rec.origin),
-                            ('description_picking' ,'=', rec.description_picking)
-                        ])
-                        if picking_ids:
-                            picking_ids.write({'shiratani_date': rec.shiratani_date_delivery})
+            if rec.product_id and not self.env.context.get('skip_move_date_sync'):
+                # MOを介さず直接受注に紐づくMove/Piking（製造オーダーが存在しない購買のみの製品など）の対応
+                if rec.picking_id:
+                    picking_ids = self.env['stock.move'].search([
+                        ('product_id', '=', rec.product_id.id),
+                        ('origin', '=', rec.origin),
+                        ('description_picking' ,'=', rec.description_picking)
+                    ])
+                    if picking_ids:
+                        picking_ids.write({'shiratani_date': rec.shiratani_date_delivery})

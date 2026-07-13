@@ -67,3 +67,21 @@ class MrpAddSolDateSaleOrder(models.Model):
             move_list.write({
                 "warehouse_arrive_date": mrp.depo_date
             })
+
+
+class MrpAddSolDateSaleOrderHeader(models.Model):
+    _inherit = "sale.order"
+
+    def write(self, vals):
+        res = super(MrpAddSolDateSaleOrderHeader, self).write(vals)
+        if 'estimated_shipping_date' in vals:
+            for order in self:
+                # 製造オーダーが存在しない（購買のみで完結する等の）Move/Pikingは
+                # mrp_production_idで解決できず、MO経由の反映が一切効かないため、sale_id経由で直接、糸島出荷日を反映する
+                moves = self.env['stock.move'].search([
+                    ('sale_id', '=', order.id),
+                    ('mrp_production_id', '=', False),
+                ])
+                if moves:
+                    moves.write({'arrival_date_itoshima': order.estimated_shipping_date})
+        return res
