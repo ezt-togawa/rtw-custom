@@ -176,10 +176,9 @@ class sale_line_recreate(models.Model):
         """
         保存時、特定のフィールドに変更があったかを監視してフラグを立てる
         監視するトリガー項目：数量、製品バリアント、倉庫(製造工場)
+        ※確定済み（sale/done）の受注に対する変更だけを「要再作成」として検知する。
         """
         trigger_fields = {'product_uom_qty', 'product_id', 'warehouse_id'}
-        if any(key in vals for key in trigger_fields):
-            vals['is_recreate_needed'] = True
 
         """
         数量変更を検知した場合、裏側で「今は保存ボタンからの自動処理だよ」
@@ -187,6 +186,16 @@ class sale_line_recreate(models.Model):
         """
         if 'product_uom_qty' in vals and any(line.order_id.state in ['sale', 'done'] for line in self):
             self = self.with_context(skip_auto_procurement_on_write=True)
+
+        if any(key in vals for key in trigger_fields) and 'is_recreate_needed' not in vals:
+            confirmed_lines = self.filtered(lambda line: line.order_id.state in ['sale', 'done'])
+            other_lines = self - confirmed_lines
+            res = True
+            if confirmed_lines:
+                res = super(sale_line_recreate, confirmed_lines).write(dict(vals, is_recreate_needed=True)) and res
+            if other_lines:
+                res = super(sale_line_recreate, other_lines).write(vals) and res
+            return res
 
         return super(sale_line_recreate, self).write(vals)
 
@@ -212,6 +221,5 @@ class sale_line_recreate(models.Model):
             # 通常商品が混ざっていた場合のみ、それらだけ標準エンジンに渡す
             return super(sale_line_recreate, lines_to_procure)._action_launch_stock_rule(previous_product_uom_qty=previous_product_uom_qty)
 
-        # 最初の受注確定ボタンや、私たちが作った「再作成ボタン」から手動で呼ばれた時は、
-        # コンテキストがないため、関所を素通りして100%の力で調達エンジンが走ります！
+        # 最初の受注確定ボタンや、「再作成ボタン」から手動で呼ばれた時は、コンテキストがないため、通常の調達エンジンが走ります
         return super(sale_line_recreate, self)._action_launch_stock_rule(previous_product_uom_qty=previous_product_uom_qty)
