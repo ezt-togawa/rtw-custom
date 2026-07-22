@@ -1,4 +1,5 @@
 from odoo import models, fields, _, api
+from odoo.tools import format_date
 from datetime import datetime
 import math
 import babel.dates
@@ -2675,6 +2676,14 @@ class MrpProductionExcelReport(models.Model):
             return f"{formatted_date} [{day_of_week}]"
 
         return f"{formatted_date}"
+
+    def _format_lang_date_with_weekday(self, date, lang_code):
+        if not date:
+            return ''
+        date_to_format = fields.Date.from_string(date) if isinstance(date, str) else date
+        formatted_date = format_date(self.env, date_to_format, lang_code=lang_code)
+        day_of_week = babel.dates.format_date(date_to_format, format='EEE', locale=lang_code)
+        return f"{formatted_date} [{day_of_week}]"
 
     def _convert_timezone(self, date):            
         timezone = pytz.timezone(self.env.user.tz or 'UTC')
