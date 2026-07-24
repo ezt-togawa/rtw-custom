@@ -250,9 +250,7 @@ class sale_order_line(models.Model):
                             bom_supplier_delay = 0
                             is_bom_route_buy = False
                             bom_product_quantity = bom_product.qty_available
-                            sale_order_line_product_qty = 1 
-                            if 'product_uom' in res:
-                                sale_order_line_product_qty = res['product_uom']
+                            sale_order_line_product_qty = self.product_uom_qty or values.get('product_uom_qty') or 1
                             amount_consumed = bom_line.available_quantity - (sale_order_line_product_qty * bom_line.product_qty)
                             # for route in bom_product_routes:
                             #     for rule in route.rule_ids:
