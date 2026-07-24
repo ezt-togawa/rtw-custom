@@ -23,6 +23,7 @@
                 <xpath expr="//field[@name='company_id']" position="after">
                     <field name="remark" />
                     <field name="resend_so" string="再送" widget="char"/>
+                    <field name="desired_delivery_date" string="配達希望日" />
                     <field name="attached" />
                 </xpath>
             </field>
