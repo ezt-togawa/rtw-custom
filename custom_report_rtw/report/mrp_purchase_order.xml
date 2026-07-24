@@ -72,7 +72,10 @@
                     <br />
                     <div> 配達希望日
                       <t>
-                        <t t-if="mrp.is_child_mo">
+                        <t t-if="mrp.desired_delivery_date">
+                          <span class="size16" t-esc="mrp._format_lang_date_with_weekday(mrp.desired_delivery_date, mrp.lang_code)" />
+                        </t>
+                        <t t-elif="mrp.is_child_mo">
                           <span class="size16" t-field="mrp.mrp_child_mo_desired_delivery_date" />
                         </t>
                         <t t-elif="mrp and mrp.picking_type_id and mrp.picking_type_id.warehouse_id and mrp.picking_type_id.warehouse_id.name == '糸島工場'">
