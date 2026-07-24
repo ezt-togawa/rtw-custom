@@ -170,7 +170,9 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else mrp.name, format_text_14)
                 sheet.merge_range(3, 3, 3, 6, mrp.resend_so if mrp.resend_so else "", format_resend_so)
                 sheet.write(6, 0, _("配達希望日"), format_text)
-                if mrp.is_child_mo:
+                if mrp.desired_delivery_date:
+                    sheet.write(6, 1, mrp._format_lang_date_with_weekday(mrp.desired_delivery_date, mrp.lang_code), format_text_date)
+                elif mrp.is_child_mo:
                     sheet.write(6, 1, mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '', format_text_date)
                 elif mrp.picking_type_id.warehouse_id and mrp.picking_type_id.warehouse_id.name == "糸島工場":
                     if mrp.mrp_mo_date:
@@ -350,7 +352,9 @@ class ReportMrpExcel(models.AbstractModel):
                 sheet.write(5, 0, _("発注番号"), format_text)
                 sheet.write(5, 1,  mrp.sale_reference if mrp.sale_reference else mrp.name, format_text_14)
                 sheet.write(6, 0, _("配達希望日"), format_text)
-                if mrp.is_child_mo:
+                if mrp.desired_delivery_date:
+                    sheet.write(6, 1, mrp._format_lang_date_with_weekday(mrp.desired_delivery_date, mrp.lang_code), format_text_date)
+                elif mrp.is_child_mo:
                     sheet.write(6, 1,
                                 mrp.mrp_child_mo_desired_delivery_date if mrp.mrp_child_mo_desired_delivery_date else '',
                                 format_text_date)
