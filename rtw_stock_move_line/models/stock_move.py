@@ -45,6 +45,8 @@ class rtw_stock_move(models.Model):
     )
     arrival_date_itoshima = fields.Date(string="糸島出荷日")
     shipping_destination_text = fields.Text(string="送り先", compute="_compute_shipping_destination_text")
+    manufacturing_products = fields.Char(string='製造プロダクト', compute='_compute_manufacturing_products')
+    number_of_products = fields.Float(string='製品数', compute='_compute_number_of_products')
 
     def write(self, vals):
         res = super(rtw_stock_move, self).write(vals)
@@ -97,6 +99,38 @@ class rtw_stock_move(models.Model):
                 move.shipping_destination_text = move.sale_id.shipping_destination_text
             else:
                 move.shipping_destination_text = ''
+
+    def _get_related_mrp_production(self):
+        self.ensure_one()
+        if not self.mrp_production_id:
+            return self.env['mrp.production']
+        return self.env['mrp.production'].search(
+            [
+                ('name', '=', self.mrp_production_id),
+            ],
+            limit=1,
+        )
+
+    @api.depends(
+        'mrp_production_id',
+    )
+    def _compute_manufacturing_products(self):
+        for move in self:
+            production = move._get_related_mrp_production()
+            move.manufacturing_products = (
+                production.product_id.product_tmpl_id.name
+                or production.product_id.name
+                or ''
+            )
+
+    @api.depends(
+        'mrp_production_id',
+    )
+    def _compute_number_of_products(self):
+        for move in self:
+            production = move._get_related_mrp_production()
+            move.number_of_products = production.product_qty or 0.0
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:

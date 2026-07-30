@@ -20,6 +20,8 @@
                     <field name="product_package_quantity" optional="show" />
                     <field name="sai" sum="sai" string="才数" optional="show" />
                     <field name="factory" sum="工場" />
+                    <field name="manufacturing_products" optional="hide" />
+                    <field name="number_of_products" optional="hide" />
                     <field name="state" />
                     <field name="customer_id" optional="hide" />
                     <field name="shiratani_date" string="白谷到着日" optional="show" />
