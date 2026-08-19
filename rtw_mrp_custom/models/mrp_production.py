@@ -25,6 +25,7 @@ class MrpProductionCus(models.Model):
     duration = fields.Float('Duration', help="Track duration in hours.")
     color = fields.Integer(string='Event Color', default=1)
     sales_order = fields.Char(string='販売オーダー', compute="_compute_sales_order")
+    sale_line_product_type = fields.Selection(related='origin_sale_line_id.p_type', string='製品タイプ')
     calendar_display_name = fields.Text(compute="_compute_display_name_calendar", store=True)
     shipping = fields.Char(compute="_compute_shipping", string="送付先")
     

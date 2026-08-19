@@ -101,6 +101,7 @@
                     <field name="product_uom_id" string="単位" options="{'no_open':True,'no_create':True}" groups="uom.group_uom" optional="show"/>
                 </xpath>
                 <xpath expr="//field[@name='product_uom_id']" position="after">
+                    <field name="sale_line_product_type" optional="hide" />
                     <field name="combined_shipment" optional="show" />
                     <field name="working_notes" optional="show" />
                 </xpath>
