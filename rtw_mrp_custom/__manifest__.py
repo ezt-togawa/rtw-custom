@@ -21,7 +21,8 @@
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'mrp','rtw_mrp_add_sol_date', 'sales_mo_sequence', 'sales_team',
-                'sale_mrp', 'sale_order_crm_case', 'rtw_mrp_order_manage','mail','stock'],
+                'sale_mrp', 'sale_order_crm_case', 'rtw_mrp_order_manage','mail','stock',
+                'rtw_recreate', 'sale_order_line_custom_date'],
 
     # always loaded
     'data': [
