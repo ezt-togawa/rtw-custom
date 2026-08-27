@@ -44,9 +44,12 @@ class ReportMrpExcel(models.AbstractModel):
         format_name_company = workbook.add_format({'align': 'right','font_name': font_name,'font_size':14, 'text_wrap':True})
         format_tel_fax = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12})
         format_text = workbook.add_format({'align': 'left','font_name': font_name,'font_size':11})
+        format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
         format_text_12 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12})
+        format_text_12_shrink = workbook.add_format({'align': 'left','font_name': font_name,'font_size':12,'shrink':1})
         format_text_13 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':13})
         format_text_14 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
+        format_text_14_shrink = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'shrink':1})
         format_note = workbook.add_format({'align': 'left', 'valign': 'top', 'text_wrap':True, 'font_name': font_name, 'font_size':10})
         
         format_address = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True, 'font_name': font_name,'font_size':10.5})
@@ -69,14 +72,14 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.set_paper(9)  #A4
             sheet.set_landscape()
-            sheet.set_print_scale(72)
-            
-            margin_header = 0.3
-            margin_footer = 0.3
-            left_margin = 0.4
-            right_margin = 0.4
-            top_margin = 0.6
-            bottom_margin = 0.5
+            sheet.hide_gridlines(2)
+
+            margin_header = 0.08
+            margin_footer = 0.12
+            left_margin = 0.2
+            right_margin = 0.2
+            top_margin = 0.2
+            bottom_margin = 0.2
 
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
             header_parts = []
@@ -87,17 +90,20 @@ class ReportMrpExcel(models.AbstractModel):
             header_text = " &R " + " ".join(header_parts)
 
             sheet.set_header(header_text, margin=margin_header)
-            sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)   
+            sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)
 
-            sheet.set_column("A:A", width=17, cell_format=font_family)  
-            sheet.set_column("B:B", width=20, cell_format=font_family)  
-            sheet.set_column("C:C", width=20, cell_format=font_family)  
-            sheet.set_column("D:D", width=2, cell_format=font_family)  
-            sheet.set_column("E:E", width=15, cell_format=font_family)  
-            sheet.set_column("F:F", width=15, cell_format=font_family)
-            sheet.set_column("G:G", width=12, cell_format=font_family)  
-            sheet.set_column("H:H", width=0, cell_format=font_family)  
-            sheet.set_column("I:I", width=8, cell_format=font_family)  
+            sheet.fit_to_pages(1, 0)
+            sheet.center_horizontally()
+
+            sheet.set_column("A:A", width=14, cell_format=font_family)
+            sheet.set_column("B:B", width=20, cell_format=font_family)
+            sheet.set_column("C:C", width=18, cell_format=font_family)
+            sheet.set_column("D:D", width=16, cell_format=font_family)
+            sheet.set_column("E:E", width=10, cell_format=font_family)
+            sheet.set_column("F:F", width=10, cell_format=font_family)
+            sheet.set_column("G:G", width=10, cell_format=font_family)
+            sheet.set_column("H:H", width=26, cell_format=font_family)
+            sheet.set_column("I:I", width=8, cell_format=font_family)
             sheet.set_column("J:J", width=8, cell_format=font_family)  
             sheet.set_column("K:K", width=8, cell_format=font_family) 
             sheet.set_column("L:L", width=8, cell_format=font_family) 
@@ -142,18 +148,18 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(6, 0, _("時間"), format_text_12)
             sheet.write(6, 1, so.time_text if so.time_text else "", format_text_12)
             
-            sheet.write(8, 0, _("お届け先（物件名）"), format_text_12) 
+            sheet.write(8, 0, _("お届け先（物件名）"), format_text_12_shrink)
             sheet.write(8, 1, so.title if so.title else "", format_text)
             sheet.write(9, 1, so.sale_order_partner_info  if so.sale_order_partner_info else "", format_text)
             
             sheet.write(11, 0, _("郵便番号："), format_text_14) 
             sheet.write(11, 1, ("〒 " + so.forwarding_address_zip )if so.forwarding_address_zip else "", format_text_14) 
 
-            sheet.write(11, 4, _("備考："), format_text) 
+            sheet.write(11, 4, _("備考："), format_text_right)
             sheet.merge_range(11, 5,13, 8,so.sale_order_shipping_notes[:120] if so.sale_order_shipping_notes else "", format_note) 
             
             sheet.write(12, 0, _("住    所："), format_text_14) 
-            sheet.write(12, 1, ("〒 " + so.forwarding_address )if so.forwarding_address else "", format_text_14) 
+            sheet.merge_range(12, 1, 12, 3, ("〒 " + so.forwarding_address )if so.forwarding_address else "", format_text_14_shrink)
             
             sheet.write(12, 12, _("搬入費用："), format_text_12)
             
@@ -174,6 +180,8 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.write(20, 13, _("組立"), format_table)
             sheet.write(20, 14, _("備考"), format_table)
 
+            sheet.print_area('A1:O21')
+
             if so.order_line:
                 row = 21
                 count = 0
@@ -185,7 +193,9 @@ class ReportMrpExcel(models.AbstractModel):
                         continue
                     else:
                         merge_line = 1
-                        sheet.merge_range(row, 0, row + merge_line, 0, line.sale_order_index if line.sale_order_index else '' , format_lines_no) 
+                        sheet.set_row(row, 18)
+                        sheet.set_row(row + merge_line, 18)
+                        sheet.merge_range(row, 0, row + merge_line, 0, line.sale_order_index if line.sale_order_index else '' , format_lines_no)
                         sheet.merge_range(row, 1, row + merge_line, 3, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '', format_lines_14_left) 
                         sheet.merge_range(row, 4, row + merge_line, 8, line.sale_order_number_and_size if line.sale_order_number_and_size else '', format_lines_14_left)
                         if line.is_tax_excluded_product:
@@ -207,5 +217,9 @@ class ReportMrpExcel(models.AbstractModel):
                             sheet.merge_range(row, 12, row + merge_line, 12, umu1, format_lines_14)
                             sheet.merge_range(row, 13, row + merge_line, 13, umu2, format_lines_14)
                         sheet.merge_range(row, 14, row + merge_line, 14, '', format_lines_14)
-                        
+
                         row += merge_line + 1
+
+                if row > 21:
+                    last_content_row = row - 1
+                    sheet.print_area(f'A1:O{last_content_row + 1}')

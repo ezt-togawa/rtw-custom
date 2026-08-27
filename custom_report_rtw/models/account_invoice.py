@@ -3,6 +3,7 @@
 
 from odoo import fields, models, _
 from datetime import datetime
+from markupsafe import Markup, escape
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.move.line'
@@ -251,3 +252,47 @@ class AccountMoveCus(models.Model):
                 "tel.092-584-2240\n"
                 "fax.092-584-2241"
             )
+
+    def _zenkaku_width(self, text):
+        if not text:
+            return 0.0
+        width = 0.0
+        for ch in text:
+            code = ord(ch)
+            if (0x1100 <= code <= 0x115F) or (0x2E80 <= code <= 0xA4CF) or \
+               (0xAC00 <= code <= 0xD7A3) or (0xF900 <= code <= 0xFAFF) or \
+               (0xFF00 <= code <= 0xFF60) or (0xFFE0 <= code <= 0xFFE6):
+                width += 1.0
+            else:
+                width += 0.5
+        return width
+
+    def render_fit_text(self, text, target_width_px, font_size=22, underline=False, fixed_width=False):
+        text = text or ''
+        if not text:
+            return Markup('')
+        escaped = escape(text)
+        estimated_px = self._zenkaku_width(text) * font_size
+        if estimated_px <= target_width_px:
+            if fixed_width:
+                style = ('display:inline-block; width:%dpx; white-space:nowrap;') % target_width_px
+                if underline:
+                    style += ' border-bottom:1px solid black;'
+                return Markup('<span style="%s">%s</span>') % (style, escaped)
+            if underline:
+                return Markup('<span class="border-bottom2" style="white-space:nowrap;">%s</span>') % escaped
+            return Markup('<span style="white-space:nowrap;">%s</span>') % escaped
+        svg_height = int(font_size * 1.3)
+        baseline_y = int(font_size * 0.95)
+        line_svg = Markup('')
+        if underline:
+            line_y = svg_height - 2
+            line_svg = Markup('<line x1="0" y1="%d" x2="%d" y2="%d" stroke="black" stroke-width="1"/>') % (line_y, target_width_px, line_y)
+        return Markup(
+            '<svg width="%(width)dpx" height="%(height)dpx" '
+            'style="display:inline-block; vertical-align:bottom;">'
+            '<text x="0" y="%(baseline)d" font-size="%(font_size)dpx" '
+            'textLength="%(width)d" lengthAdjust="spacingAndGlyphs">%(text)s</text>'
+            '%(line)s</svg>'
+        ) % {'width': target_width_px, 'height': svg_height, 'baseline': baseline_y,
+             'font_size': font_size, 'text': escaped, 'line': line_svg}

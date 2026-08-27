@@ -51,12 +51,12 @@ class ReportMrpExcel(models.AbstractModel):
         format_text_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':11})
         format_text_12_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':12})
         format_text_12_right.set_num_format(num_format_with_symbol)
-        format_text_14 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14})
+        format_text_14 = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'shrink':1,'bottom':1})
         format_text_14_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':14})
         format_text_13_right = workbook.add_format({'align': 'right','font_name': font_name,'font_size':13})
         format_text_13_right.set_num_format(num_format_with_symbol)
         format_note = workbook.add_format({'align': 'left','valign': 'top','text_wrap':True,'font_name': font_name,'font_size':10})
-        format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'bottom':1})
+        format_text_14_border = workbook.add_format({'align': 'left','font_name': font_name,'font_size':14,'shrink':1,'bottom':1})
         format_money_bgRed = workbook.add_format({'align': 'left','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
         format_money_bgRed_right = workbook.add_format({'align': 'right','valign': 'vcenter','font_name': font_name,'font_size':14, 'text_wrap':True,'color':'white','bg_color':'#C00000'})
         format_money_bgRed_right.set_num_format(num_format_with_symbol)
@@ -65,6 +65,7 @@ class ReportMrpExcel(models.AbstractModel):
     
         format_table = workbook.add_format({'align': 'center','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
         format_table_left = workbook.add_format({'align': 'left','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
+        format_table_right = workbook.add_format({'align': 'right','valign': 'vcenter','bg_color': '#999999', 'font_name': font_name,'font_size':11,'color':'white','bold':True})
 
         format_lines_note = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bottom':1})
         format_lines_section= workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1})
@@ -78,6 +79,17 @@ class ReportMrpExcel(models.AbstractModel):
         format_lines_14 = workbook.add_format({'align': 'right','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1})
         format_lines_14.set_num_format(num_format_trailing_0)
 
+        # 改ページ直後の明細1行目は、直前(前ページ側)の明細の下線を頼りに区切り線を出せないため上罫線を追加
+        format_lines_note_top = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bottom':1,'top':1})
+        format_lines_section_top = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11,'bg_color':'#e9ecef','bottom':1,'top':1})
+        format_lines_9_left_top = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':11.25,'bottom':1,'top':1})
+        format_lines_10_top = workbook.add_format({'align': 'center','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1,'top':1})
+        format_lines_11_left_top = workbook.add_format({'align': 'left','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1,'top':1})
+        format_lines_13_top = workbook.add_format({'align': 'right','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1,'top':1})
+        format_lines_13_top.set_num_format(num_format_no_symbol)
+        format_lines_14_top = workbook.add_format({'align': 'right','valign': 'vcenter', 'text_wrap':True,'font_name': font_name,'font_size':12,'bottom':1,'top':1})
+        format_lines_14_top.set_num_format(num_format_trailing_0)
+
         #create sheet
         for index,so in enumerate(so_data):
             sheet_name = f"{so.name}" 
@@ -87,22 +99,26 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.set_paper(9)  #A4
             sheet.set_landscape()
+            sheet.hide_gridlines(2)
             # sheet.set_print_scale(63)
-            
-            margin_header = 0.3
-            margin_footer = 0.3
-            left_margin = 0.7
-            right_margin = 0.7
-            top_margin = 0.5
-            bottom_margin = 0.5
+
+            margin_header = 0.08
+            margin_footer = 0.12
+            left_margin = 0.2
+            right_margin = 0.2
+            top_margin = 0.2
+            bottom_margin = 0.2
             sheet.set_margins(left=left_margin, right=right_margin, top=top_margin,bottom= bottom_margin)
-            sheet.set_header(f'{"&"}R No．{so.name if so.name else ""}', margin=margin_header) 
-            sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)   
+            sheet.set_header(f'{"&"}R No．{so.name if so.name else ""}', margin=margin_header)
+            sheet.set_footer(f'{"&"}P/{"&"}N',margin=margin_footer)
             note = '※商品の詳細につきましては仕様書と相違がないか必ずご確認ください'
             footer_text = f'&L&P/&N&R&"MS UI Gothic,Regular"&12 {note}'
-            sheet.set_footer(footer_text, margin=0.3)
-                     
-            sheet.set_column("A:A", width=13,cell_format=font_family)  
+            sheet.set_footer(footer_text, margin=margin_footer)
+
+            sheet.fit_to_pages(1, 0)
+            sheet.center_horizontally()
+
+            sheet.set_column("A:A", width=14,cell_format=font_family)
             sheet.set_column("B:B", width=20,cell_format=font_family)  
             sheet.set_column("C:C", width=18,cell_format=font_family)  
 
@@ -111,8 +127,8 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_column("E:E", width=10,cell_format=font_family)  
             sheet.set_column("F:F", width=10,cell_format=font_family)
 
-            sheet.set_column("G:G", width=10,cell_format=font_family)  
-            sheet.set_column("H:H", width=7,cell_format=font_family)  
+            sheet.set_column("G:G", width=10,cell_format=font_family)
+            sheet.set_column("H:H", width=26,cell_format=font_family)
 
             sheet.set_column("I:I", width=9,cell_format=font_family)  
             sheet.set_column("J:J", width=14,cell_format=font_family)  
@@ -127,34 +143,36 @@ class ReportMrpExcel(models.AbstractModel):
             sheet.set_row(1, 46)
             sheet.set_row(2, 17)
             sheet.set_row(3, 17)
-            sheet.set_row(5, 15)
-            sheet.set_row(6, 15)
-            sheet.set_row(7, 15)
-            sheet.set_row(8, 15)
-            sheet.set_row(9, 12)
-            sheet.set_row(10, 15)
-            sheet.set_row(11, 19)
-            sheet.set_row(12, 24)
-            sheet.set_row(13, 22)
+            sheet.set_row(4, 17)
+            sheet.set_row(5, 17)
+            sheet.set_row(6, 17)
+            sheet.set_row(7, 17)
+            sheet.set_row(8, 17)
+            sheet.set_row(9, 17)
+            sheet.set_row(10, 22)
+            sheet.set_row(11, 22)
+            sheet.set_row(12, 26)
+            sheet.set_row(13, 17)
             sheet.set_row(14, 26)
             sheet.set_row(15, 15)
             sheet.set_row(16, 15)
-            
+
+            name_title_end_col = 2  # 宛先・件名の縮小/下線を揃える幅(report_quotation.pyに合わせる)
+
             sheet.insert_image(1, 0, "logo", {'image_data': img_io_R, 'x_offset': 5, 'y_offset': 1})
-            
+
             # y,x
             sheet.write(1, 1, _("注文書"), format_sheet_title)
-            
-            sheet.write(2, 0, _("株式会社リッツウェル 宛"), format_text_14)
+
+            sheet.merge_range(2, 0, 2, name_title_end_col, _("株式会社リッツウェル 宛"), format_text_14)
             # sheet.write(3, 0, so.sale_order_ritzwell_staff if so.sale_order_ritzwell_staff else '', format_text_14)
 
             sheet.write(5,0, _("下記の通り注文いたします。"), format_text) 
             
-            sheet.write(7, 0, _("件名 : "), format_text_14_border) 
-            sheet.write(10, 0, _("税抜合計"), format_text) 
-            sheet.write(11, 0, _("消費税"), format_text) 
-            sheet.write(12, 0, _("税込合計"), format_money_bgRed) 
-            sheet.write(7, 1, so.title if so.title else '', format_text_14_border) 
+            sheet.merge_range(7, 0, 7, name_title_end_col, (_("件名 : ") + so.title) if so.title else '', format_text_14_border)
+            sheet.write(10, 0, _("税抜合計"), format_text)
+            sheet.write(11, 0, _("消費税"), format_text)
+            sheet.write(12, 0, _("税込合計"), format_money_bgRed)
             sheet.write(10, 1, so.sale_order_list_price_untaxed, format_text_13_right)
             sheet.write(11, 1, so.sale_order_list_price_tax, format_text_12_right)
             sheet.write(12, 1, so.sale_order_list_price_total, format_money_bgRed_right)
@@ -165,7 +183,7 @@ class ReportMrpExcel(models.AbstractModel):
             
             sheet.write(3,5,so.sale_order_preferred_delivery_period if so.sale_order_preferred_delivery_period else '', format_text) 
             sheet.write(4,5, so.forwarding_address if so.forwarding_address else '', format_text) 
-            sheet.merge_range(5,5,8,8,so.special_note[:115] if so.special_note else '', format_note) 
+            sheet.merge_range(5,5,9,8,so.special_note if so.special_note else '', format_note)
 
             sheet.write(0, 14, so.sale_order_current_date if so.sale_order_current_date else '' , format_date) 
             sheet.write(1, 13, _("西暦        年   月   日") , format_text_right) 
@@ -176,43 +194,81 @@ class ReportMrpExcel(models.AbstractModel):
             # else:
             sheet.write(3, 10, _("会社名・氏名") , format_text_2) 
                 
-            sheet.write(4, 14, _("印"), format_text_2) 
-            sheet.write(7, 10, _("納品先住所"), format_text_2) 
-            sheet.write(9, 10, _("立会者"), format_text_2) 
-            sheet.write(10, 10, _("立会者連絡先"), format_text_2) 
+            sheet.write(5, 14, _("印"), format_text_2)
+            sheet.write(8, 10, _("納品先住所"), format_text_2)
+            sheet.write(10, 10, _("立会者"), format_text_2)
+            sheet.write(12, 10, _("立会者連絡先"), format_text_2)
             #table title
             sheet.write(14, 0, _("№"), format_table)
             sheet.merge_range(14, 1, 14, 3, _("品名"), format_table_left)
             sheet.merge_range(14, 4, 14, 8, _("品番・サイズ"), format_table_left)
-            sheet.merge_range(14, 9, 14, 10, _("数量"), format_table)
-            sheet.write(14, 11, _("定価"), format_table)
-            sheet.merge_range(14, 12,14, 14, _("販売⾦額"), format_table)
-            
-            if so.order_line:       
+            sheet.merge_range(14, 9, 14, 10, _("数量"), format_table_right)
+            sheet.write(14, 11, _("定価"), format_table_right)
+            sheet.merge_range(14, 12,14, 14, _("販売⾦額"), format_table_right)
+
+            sheet.print_area('A1:O15')
+
+            if so.order_line:
                 row = 15
                 merge_line = 1
+
+                # 改ページ位置(0-indexed行)は実際の印刷結果から特定した固定値をreport_quotation.pyから流用し、
+                # このファイルの明細開始行(0-idx 15)とreport_quotation.py側の明細開始行(0-idx 16)との差分(-1)だけ補正する。
+                # 39 = 40 - 1, 83 = 84 - 1。ページ2以降の間隔(44行)は補正の影響を受けないためそのまま踏襲する。
+                FIRST_PAGE_BREAK_ROW = 39
+                SECOND_PAGE_BREAK_ROW = 83
+                PAGE_BREAK_INTERVAL = SECOND_PAGE_BREAK_ROW - FIRST_PAGE_BREAK_ROW
+
+                next_break_row = FIRST_PAGE_BREAK_ROW
+                pagebreak_positions = []
+
                 for ind,line in enumerate(so.order_line.filtered(lambda x: not x.is_pack_outside)):
-                    
+                    line_span = 1 if line.display_type in ('line_note', 'line_section') else merge_line + 1
+
+                    is_first_of_new_page = row >= next_break_row
+                    if is_first_of_new_page:
+                        pagebreak_positions.append(row)
+                        next_break_row = (
+                            SECOND_PAGE_BREAK_ROW if next_break_row == FIRST_PAGE_BREAK_ROW
+                            else next_break_row + PAGE_BREAK_INTERVAL
+                        )
+
                     if line.display_type == 'line_note':
-                        sheet.merge_range(row,0,row,14, "=data!A" + str(ind * 1 + 1) , format_lines_note) 
-                        sheet_data.write(ind,0, line.name if line.name else '', format_lines_note) 
-                        row += 1 
+                        fmt_note = format_lines_note_top if is_first_of_new_page else format_lines_note
+                        sheet.set_row(row, 18)
+                        sheet.merge_range(row,0,row,14, "=data!A" + str(ind * 1 + 1) , fmt_note)
+                        sheet_data.write(ind,0, line.name if line.name else '', fmt_note)
                     elif line.display_type == 'line_section':
-                        sheet.merge_range(row,0,row,14, "=data!B" + str(ind * 1 + 1) , format_lines_section) 
-                        sheet_data.write(ind,1,line.name if line.name else '' , format_lines_section) 
-                        row += 1 
+                        fmt_section = format_lines_section_top if is_first_of_new_page else format_lines_section
+                        sheet.set_row(row, 18)
+                        sheet.merge_range(row,0,row,14, "=data!B" + str(ind * 1 + 1) , fmt_section)
+                        sheet_data.write(ind,1,line.name if line.name else '' , fmt_section)
                     else:
-                        sheet.merge_range(row,0,row + merge_line,0, line.sale_order_index if line.sale_order_index else '' , format_lines_10) 
-                        sheet.merge_range(row,1,row + merge_line,3, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '' , format_lines_9_left) 
-                        sheet.merge_range(row,4,row + merge_line,8, line.sale_order_number_and_size if line.sale_order_number_and_size else '' , format_lines_11_left)
+                        fmt_10 = format_lines_10_top if is_first_of_new_page else format_lines_10
+                        fmt_9_left = format_lines_9_left_top if is_first_of_new_page else format_lines_9_left
+                        fmt_11_left = format_lines_11_left_top if is_first_of_new_page else format_lines_11_left
+                        fmt_13 = format_lines_13_top if is_first_of_new_page else format_lines_13
+                        fmt_14 = format_lines_14_top if is_first_of_new_page else format_lines_14
+                        sheet.set_row(row, 18)
+                        sheet.set_row(row + merge_line, 18)
+                        sheet.merge_range(row,0,row + merge_line,0, line.sale_order_index if line.sale_order_index else '' , fmt_10)
+                        sheet.merge_range(row,1,row + merge_line,3, line.sale_order_line_name_excel if line.sale_order_line_name_excel else '' , fmt_9_left)
+                        sheet.merge_range(row,4,row + merge_line,8, line.sale_order_number_and_size if line.sale_order_number_and_size else '' , fmt_11_left)
 
                         if line.is_tax_excluded_product:
-                            sheet.merge_range(row, 9, row + merge_line, 10, '', format_lines_13)
-                            sheet.merge_range(row, 11, row + merge_line, 11, '', format_lines_13)
+                            sheet.merge_range(row, 9, row + merge_line, 10, '', fmt_13)
+                            sheet.merge_range(row, 11, row + merge_line, 11, '', fmt_13)
                         else:
-                            sheet.merge_range(row, 9, row + merge_line, 10, line.product_uom_qty or 0, format_lines_14)
-                            sheet.merge_range(row, 11, row + merge_line, 11, line.price_unit or 0, format_lines_13)
-                        sheet.merge_range(row, 12, row + merge_line, 14, line.sale_order_amount_no_rate or 0, format_lines_13)
-                        row += merge_line + 1
+                            sheet.merge_range(row, 9, row + merge_line, 10, line.product_uom_qty or 0, fmt_14)
+                            sheet.merge_range(row, 11, row + merge_line, 11, line.price_unit or 0, fmt_13)
+                        sheet.merge_range(row, 12, row + merge_line, 14, line.sale_order_amount_no_rate or 0, fmt_13)
+
+                    row += line_span
+
+                if row > 15:
+                    last_content_row = row - 1
+                    sheet.print_area(f'A1:O{last_content_row + 1}')
+                    if pagebreak_positions:
+                        sheet.set_h_pagebreaks(pagebreak_positions)
                 
                         

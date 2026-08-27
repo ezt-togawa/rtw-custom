@@ -35,99 +35,75 @@
                         <div t-if="docs.company_id.logo or docs.company_id.report_header"
                             class="row zero_min_height">
                         </div>
-                        <div class="row size13" style="margin-top:-50px;">
-                            <div class="col-8">
-                                <div class="d-flex">
-                                    <div class="col-8">
-                                        <div class="so_price" style="max-height:25px">
-                                            <span t-esc="docs.send_to_company_invoice"
-                                                t-att-class="not docs.send_to_people_invoice and 'border-bottom2' or ''"/>
-                                        </div>
-                                        <span t-esc="docs.send_to_people_invoice"
-                                            class="so_price border-bottom2"/>
-                                        <br />
-                                        <div class="mt-1">平素より格別のお引き立てを賜り厚く御礼申し上げます。 <br />
-                                            下記の通り、ご請求申し上げます。<br />
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div>
-                                            <span class="title_pdf">お支払期限: </span>
-                                        </div>
-                                        <div>
-                                            <span class="title_pdf">お支払内容:</span>
-                                            <span
-                                                t-field="docs.payment_details_invoice" />
-                                        </div>
-                                        <div class="d-flex">
-                                            <div>
-                                                <span class="title_pdf"> お振込先: </span>
+                        <t t-if="docs.invoice_origin and ',' in docs.invoice_origin">
+                            <t t-if="docs.invoice_date">
+                                <t t-set="acc_invoice_title" t-value="str(docs.invoice_date.year) + '年' + str(docs.invoice_date.month) + '月 分'" />
+                            </t>
+                            <t t-else="">
+                                <t t-set="acc_invoice_title" t-value="''" />
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <t t-set="acc_invoice_title" t-value="docs.sale_order.title or ''" />
+                        </t>
+                        <div class="d-flex size13" style="margin-top:-50px;">
+                            <div class="col-8" style="position:relative; min-height:260px;">
+                                <div class="so_price"
+                                    t-raw="docs.render_fit_text(docs.send_to_company_invoice, 482, 22, underline=not docs.send_to_people_invoice)" />
+                                <div t-if="docs.send_to_people_invoice" class="so_price"
+                                    t-raw="docs.render_fit_text(docs.send_to_people_invoice, 482, 22, underline=True, fixed_width=True)" />
+                                <div class="size12 greeting-block">
+                                    <div>平素より格別のお引き立てを賜り厚く御礼申し上げます。</div>
+                                    <div>下記の通り、ご請求申し上げます。</div>
+                                </div>
+                                <div class="so_price mt-1"
+                                    t-raw="docs.render_fit_text(u'件名 : ' + acc_invoice_title, 482, 22, underline=True, fixed_width=True)" />
+                                <div class="col-8 size16" style="width:66.667%;">
+                                    <div class="width-money" style="overflow:hidden;">
+                                        <div>税抜合計 <div style="float:right">
+                                                <span t-field="docs.amount_untaxed" />
                                             </div>
-                                            <div>
-                                                <div>西日本シティ銀行 （0190）</div>
-                                                <div>筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）</div>
-                                                <div>（普）0272585</div>
+                                        </div>
+                                        <div>消費税(10%) <div style="float:right">
+                                                <span t-field="docs.amount_tax" />
+                                            </div>
+                                        </div>
+                                        <div class="size28 total-price bold">
+                                            <span>税込合計</span>
+                                            <div style="float:right">
+                                                <span t-field="docs.amount_total" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex">
-                                    <div class="col-8">
-                                        <span class="mt-1 so_price border-bottom2">件名 :
-                                            <t t-if="docs.invoice_origin and ',' in docs.invoice_origin">
-                                                <t t-if="docs.invoice_date">
-                                                    <t t-set="year" t-value="docs.invoice_date.year"/>
-                                                    <t t-set="month" t-value="docs.invoice_date.month"/>
-                                                    <span t-esc="str(year) + '年' + str(month) + '月 分'"/>
-                                                </t>
-                                                <t t-else="">
-                                                    <span></span>
-                                                </t>
-                                            </t>
-                                            <t t-else="">
-                                                <span t-esc="docs.sale_order.title"/>
-                                            </t>
-                                        </span>
+                                <div style="position:absolute; top:0; left:66.667%; width:33.333%; font-size:15px;">
+                                    <div>
+                                        <span class="title_pdf">お支払期限: </span>
                                     </div>
-                                    <div class="col-4">
+                                    <div>
+                                        <span class="title_pdf">お支払内容 : </span>
+                                        <span t-field="docs.payment_details_invoice" />
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="title_pdf" style="white-space:nowrap;"> お振込先 : </div>
                                         <div>
-                                            <span class="title_pdf">納品日: </span>
-                                            <span
-                                                t-field="docs.sale_order.sale_order_preferred_delivery_date" />
-                                        </div>
-                                        <div>
-                                            <span class="title_pdf">納品場所: </span>
-                                            <span
-                                                t-field="docs.sale_order.forwarding_address" />
+                                            <div>西日本シティ銀行 （0190）</div>
+                                            <div>筑紫通 （ﾁｸｼﾄﾞｵﾘ） 支店 （714）</div>
+                                            <div>（普）0272585</div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="d-flex">
-                                    <div class="col-8 size16">
-                                        <div class="width-money">
-                                            <div>税抜合計 <div style="float:right">
-                                                    <span t-field="docs.amount_untaxed" />
-                                                </div>
-                                            </div>
-                                            <div>消費税(10%) <div style="float:right">
-                                                    <span t-field="docs.amount_tax" />
-                                                </div>
-                                            </div>
-                                            <div class="so_price total-price">
-                                                <span>税込合計</span>
-                                                <div style="float:right">
-                                                    <span t-field="docs.amount_total" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <span class="title_pdf">納品日 : </span>
+                                        <span
+                                            t-field="docs.sale_order.sale_order_preferred_delivery_date" />
                                     </div>
-                                    <div class="col-4">
-                                        <div
-                                            style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow:hidden;max-height:60px;">
-                                            <span class="title_pdf">備考: </span>
-                                            <span
-                                                t-field="docs.sale_order.sale_order_billing_notes" />
-                                        </div>
+                                    <div class="d-flex">
+                                        <div class="title_pdf" style="white-space:nowrap;">納品場所 : </div>
+                                        <div style="white-space:pre-line;" t-esc="docs.sale_order.forwarding_address" />
+                                    </div>
+                                    <div class="d-flex" style="max-height:100px; overflow:hidden;">
+                                        <div class="title_pdf" style="white-space:nowrap;">備考 : </div>
+                                        <div style="white-space:pre-line;" t-esc="docs.sale_order.sale_order_billing_notes" />
                                     </div>
                                 </div>
                             </div>
@@ -188,11 +164,11 @@
                                             <th class="text-center" style="width:1%">№</th>
                                             <th class="text-left" style="width:30%">品名</th>
                                             <th class="text-left" style="width:30%">品番・サイズ</th>
-                                            <th class="text-center" style="width:5%">数量</th>
-                                            <th class="text-center" style="width:8%">定価</th>
-                                            <th class="text-center" style="width:6%">掛率</th>
-                                            <th class="text-center" style="width:10%">販売単価</th>
-                                            <th class="text-center" style="width:10%">販売金額</th>
+                                            <th class="text-right" style="width:5%; padding:12px 20px 12px 0px;">数量</th>
+                                            <th class="text-right" style="width:8%">定価&#160;&#160;</th>
+                                            <th class="text-right" style="width:6%">掛率</th>
+                                            <th class="text-right" style="width:10%">販売単価</th>
+                                            <th class="text-right" style="width:10%; padding-right:8px;">販売金額</th>
                                         </tr>
                                     </thead>
                                 </t>
@@ -259,7 +235,7 @@
                                                         </t>
                                                     </div>
                                                 </td>
-                                                <td class="text-right" style="font-size:16px;">
+                                                <td class="text-right" style="font-size:16px; padding: 12px 20px 12px 0px;">
                                                     <div id="quote_qty" class="two-lines">
                                                         <t t-if="not l.sale_line_ids.is_tax_excluded_product">
                                                             <span tyle="font-size:16px"
@@ -293,7 +269,7 @@
                                                         </t>
                                                     </div>
                                                 </td>
-                                                <td class="text-right" style="font-size:16px;">
+                                                <td class="text-right" style="font-size:16px; padding-right:8px;">
                                                     <div class="two-lines">
                                                         <span style="font-size:16px"
                                                               t-field="l.price_subtotal"

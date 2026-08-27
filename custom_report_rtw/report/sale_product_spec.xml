@@ -33,7 +33,7 @@
               </p>
             </t>
             <div style="margin-top:-50px">
-              <div class="size14"> 件名 <span class="size16" t-esc="docs.title" />
+              <div class="size14"> 件名 : <span class="size16" t-esc="docs.title" />
               </div>
             </div>
             <table class="table table-condensed">
@@ -48,8 +48,7 @@
                     <div class="product-container">
                       <div class="product-name bg-white mb-1">
                         <span>
-                            No<t t-esc="l_index + 1"/> 
-                            <t t-set="is_hanyo" t-value="l.product_id and l.product_id.product_tmpl_id and l.product_id.product_tmpl_id.categ_id and l.product_id.product_tmpl_id.categ_id.name == '汎用商品'"/>
+                            No<t t-esc="l_index + 1"/>&#160;&#160;<t t-set="is_hanyo" t-value="l.product_id and l.product_id.product_tmpl_id and l.product_id.product_tmpl_id.categ_id and l.product_id.product_tmpl_id.categ_id.name == '汎用商品'"/>
                             <span>
                               <t t-if="is_hanyo">
                                 <span t-esc="l.name or ''"/>
@@ -145,7 +144,7 @@
                             <div> 定価: <span
                                 t-field="docs.currency_id.symbol" />
                                             <span
-                                t-esc="'{0:,.0f}'.format(l.price_unit * l.product_uom_qty)" />
+                                t-esc="'{0:,.0f}'.format(l.price_unit)" />
                             </div>
                             <div> サイズ: <t t-if="l.product_size">
                                 <span

@@ -21,7 +21,8 @@
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale', 'account', 'product_spec_rtw',
-                'rtw_mrp_custom', 'rtw_product_attribute_value_images','excel_import_export'],
+                'rtw_mrp_custom', 'rtw_product_attribute_value_images','excel_import_export',
+                'sale_order_remark'],
 
     # always loaded
     'data': [
