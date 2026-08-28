@@ -42,7 +42,7 @@ class sale_order_approve(models.Model):
             if record.total_price_sale != record.amount_total:
                 sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
                 min_price = 0
-                max_price = 1000000
+                max_price = 2000000
                 for line in sale_order_lines:
                     min_price += line.product_id.standard_price
                 if  record.amount_total > max_price or record.amount_total < min_price:
@@ -61,7 +61,7 @@ class sale_order_approve(models.Model):
         for record in self:
             sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
             min_price = 0
-            max_price = 1000000
+            max_price = 2000000
 
             for line in sale_order_lines:
                 min_price += line.product_id.standard_price

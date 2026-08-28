@@ -67,5 +67,15 @@
                 </xpath>
             </field>
         </record>
+        <record id="order_tree_approve_status_order" model="ir.ui.view">
+            <field name="name">sale.order.tree.approve.status.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="approve_button" string="承認状態" optional="hide" />
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

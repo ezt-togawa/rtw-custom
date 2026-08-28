@@ -45,7 +45,8 @@ class sale_order_rtw(models.Model):
     mo_warehouse_arrive_date_2 = fields.Char(string="Mo Warehouse Arrive Date 2", compute='_compute_mo_warehouse_arrive_date_2')
     depo_date = fields.Date(string="Depo Date")
     customer_order_number = fields.Char('Customer Order Number')
-    items_under_consideration = fields.Boolean('Items under consideration', default=0)
+    items_under_consideration = fields.Boolean('検印', default=0)
+    partner_situation = fields.Selection(related='partner_id.situation', string='状況')
     waypoint = fields.Many2one(
         comodel_name="res.partner",
         string="デポ１",

@@ -31,11 +31,11 @@
                     <button name="toggle_under_consideration" type="object" class="oe_stat_button"
                         icon="fa-check-square">
                         <field name="items_under_consideration" widget="boolean_button"
-                            options="{&quot;active&quot;: &quot;検討中&quot;, &quot;inactive&quot;: &quot;OK&quot;}" />
+                            options="{&quot;active&quot;: &quot;検印OK&quot;, &quot;inactive&quot;: &quot;未検印&quot;}" />
                     </button>
                 </xpath>
                 <xpath expr="//div[@class='oe_button_box']" position="after">
-                    <widget name="web_ribbon" title="under review" bg_color="bg-danger"
+                    <widget name="web_ribbon" title="Verified" bg_color="bg-success"
                         attrs="{'invisible': [('items_under_consideration', '=', False)]}" />
                 </xpath>
                 <xpath expr="//field[@name='name']" position="before">
@@ -135,7 +135,7 @@
                         optional="hide" />
                     <field name="title" optional="show" />
                     <field name="process" optional="show" />
-                    <field name="items_under_consideration" string="Items under consideration" optional="hide" />
+                    <field name="items_under_consideration" string="検印" optional="hide" />
                     <field name="estimated_shipping_date" optional="show" />
                 </xpath>
                 <xpath expr="//field[@name='estimated_shipping_date']" position="after">
@@ -181,6 +181,16 @@
                 </xpath>
             </field>
         </record>
+        <record id="order_tree_partner_situation" model="ir.ui.view">
+            <field name="name">sale.order.tree.partner.situation</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_payment.view_order_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_method']" position="after">
+                    <field name="partner_situation" string="状況" optional="hide" />
+                </xpath>
+            </field>
+        </record>
         <record id="order_tree_quotation" model="ir.ui.view">
             <field name="name">sale.order.tree_quotation</field>
             <field name="model">sale.order</field>
@@ -192,7 +202,7 @@
                     <field name="title" optional="show" />
                     <field name="process" optional="show" />
                     <field name="status" optional="hide" />
-                    <field name="items_under_consideration" string="Items under consideration" optional="hide" />
+                    <field name="items_under_consideration" string="検印" optional="hide" />
                     <field name="estimated_shipping_date" optional="show" />
                 </xpath>
                 <xpath expr="//field[@name='estimated_shipping_date']" position="after">
@@ -249,7 +259,7 @@
                 <xpath expr="//filter[@name='my_quotation']" position="after">
                     <separator />
                     <filter name="status" string="Done" domain="[('status','=','done')]" />
-                    <filter string="Items under consideration" name="items_under_consideration"
+                    <filter string="検印OK" name="items_under_consideration"
                         domain="[('items_under_consideration', '=', True)]" />
                     <separator />
                 </xpath>
