@@ -264,8 +264,7 @@ body {
   border-bottom: 1px solid #dee2e6;
 }
 
-/* 明細の途中の線は、前後の行の罫線(border-top/border-bottom)が隣り合って重なり太く見える。
-   最終行はそれと隣り合う行が無いため単独の細い線になってしまうので、その分だけ太くして揃える。 */
+/* 明細の途中の線と最終行をあわせる */
 .invoice_tbody:last-of-type .table-border-bottom,
 .invoice_tbody:last-of-type .table-border-bottom-auto {
   border-bottom-width: 2px;
