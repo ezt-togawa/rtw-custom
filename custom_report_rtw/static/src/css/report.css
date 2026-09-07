@@ -222,7 +222,9 @@ body {
 
 .greeting-block {
   margin-top: 1em !important;
-  margin-bottom: 1em !important;
+  margin-bottom: 0.3em !important;
+  width: 500px;
+  white-space: nowrap;
 }
 
 .letter-spacing {
