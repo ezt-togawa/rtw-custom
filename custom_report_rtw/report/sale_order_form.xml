@@ -36,14 +36,10 @@
               class="row zero_min_height">
             </div>
             <div class="row size13" style="margin-top:-50px;">
-              <div class="col-8">
-                <div class="d-flex">
-                  <div class="col-5">
-                    <div class="so_price">
-                      <span class="border-bottom2">
-                        株式会社リッツウェル 宛
-                      </span>
-                    </div>
+              <div class="col-8" style="position:relative; min-height:260px;">
+                <div class="col-6" style="width:50%;">
+                  <div class="so_price"
+                    t-raw="docs.render_fit_text(u'株式会社リッツウェル 宛', 482, 22, underline=True, fixed_width=True)" />
 <!--                    <t t-if="docs.lang_code == 'en_US'">-->
 <!--                      <span class="so_price border-bottom2"> Mr./Mrs. <t-->
 <!--                          t-esc="' '" /> <span t-field="docs.user_id.name" />-->
@@ -53,23 +49,12 @@
 <!--                      <span class="so_price border-bottom2">-->
 <!--                        <span t-field="docs.user_id.name" /> 宛 </span>-->
 <!--                    </t>-->
-                    <div style="font-size:12px;padding-top:6px;padding-bottom:10px;">下記の通り注文いたします。<br />
-                    </div>
-                  </div>
-                  <div class="col-7">
-                    <div>納品希望日 : <span t-if="docs.preferred_delivery_period"
-                        t-esc="docs.preferred_delivery_period" />
-                    </div>
-                    <div> 納品場所 : <span t-field="docs.forwarding_address" />
-                    </div>
-                    <div> 備考 : <span t-field="docs.special_note" />
-                    </div>
+                  <div style="font-size:12px;padding-top:6px;padding-bottom:10px;">下記の通り注文いたします。<br />
                   </div>
                 </div>
-                <div class="so_price">
-                  <span class="border-bottom2">件名 : <span t-field="docs.title" /></span>
-                </div>
-                <div class="col-5 size16">
+                <div class="so_price"
+                  t-raw="docs.render_fit_text(u'件名 : ' + (docs.title or ''), 482, 22, underline=True, fixed_width=True)" />
+                <div class="col-5 size16" style="width:41.667%;">
                   <div class="width-money">
                     <div>税抜合計 <div style="float:right">
                         <span t-field="docs.amount_untaxed" />
@@ -79,12 +64,27 @@
                         <span t-field="docs.amount_tax" />
                       </div>
                     </div>
-                    <div class="so_price total-price">
+                    <div class="size28 total-price bold">
                       <span>税込合計</span>
                       <div style="float:right">
                           <span t-field="docs.amount_total" />
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div style="position:absolute; top:0; left:66.667%; width:33.333%; font-size:15px;">
+                  <div>
+                    <span class="title_pdf">納品希望日 : </span>
+                    <span t-if="docs.preferred_delivery_period"
+                      t-esc="docs.preferred_delivery_period" />
+                  </div>
+                  <div class="d-flex">
+                    <div class="title_pdf" style="white-space:nowrap;">納品場所 : </div>
+                    <div style="white-space:pre-line;" t-esc="docs.forwarding_address" />
+                  </div>
+                  <div class="d-flex" style="max-height:100px; overflow:hidden;">
+                    <div class="title_pdf" style="white-space:nowrap;">備考 : </div>
+                    <div style="white-space:pre-line;" t-esc="docs.special_note" />
                   </div>
                 </div>
               </div>
@@ -104,7 +104,7 @@
                     </t>
                   </div>
                 </div>
-                <div style="position: relative; top: -23px;">
+                <div style="position: relative; top: -1px;">
                   <!-- <t t-if="docs.partner_id.company_type == 'company'">
                     <div class="title_pdf">
                       社名
@@ -131,9 +131,13 @@
                     会社名・氏名
                   </div>
                   <t t-if="docs.lang_code == 'en_US'">
+                    <br />
+                    <br />
                     <div class="d-flex justify-content-end title_pdf">Seal</div>
                   </t>
                   <t t-else="">
+                    <br />
+                    <br />
                     <div class="d-flex justify-content-end title_pdf">印</div>
                   </t>
                   <!-- </t> -->
@@ -145,6 +149,7 @@
                   <br />
                   <div class="title_pdf"> 立会者
                   </div>
+                  <br />
                   <div class="title_pdf"> 立会者連絡先
                   </div>
                 </div>
@@ -162,13 +167,14 @@
                 <t t-if="l_index == 0">
                   <thead>
                     <tr class="table-title bold" style="font-size:13px;background-color:#999999">
-                      <th class="text-center" style="width:1%">№</th>
-                      <th class="text-left" style="width:34%">品名</th>
-                      <th class="text-left" style="width:33%">品番・サイズ</th>
-                      <th class="text-center" style="width:7%">数量</th>
-                      <th class="text-center" style="width:8%">定価</th>
-                      <th class="text-center" style="width:7%">掛率</th>
-                      <th class="text-center" style="width:10%">販売金額</th>
+                      <th class="text-center" style="width:3%">№</th>
+                      <th class="text-left" style="width:28%">品名</th>
+                      <th class="text-left" style="width:30%">品番・サイズ</th>
+                      <th class="text-right" style="width:5%; padding:12px 20px 12px 0px;">数量</th>
+                      <th class="text-right" style="width:8%">定価&#160;&#160;</th>
+                      <th class="text-right" style="width:6%">掛率</th>
+                      <th class="text-right" style="width:10%">販売単価</th>
+                      <th class="text-right" style="width:10%; padding-right:8px;">販売金額</th>
                     </tr>
                   </thead>
                 </t>
@@ -216,7 +222,7 @@
                             </t>
                           </div>
                         </td>
-                        <td class="text-right" style="font-size:16px;">
+                        <td class="text-right" style="font-size:16px; padding: 12px 20px 12px 0px;">
                           <div id="quote_qty" class="two-lines">
                             <t t-if="not l.is_tax_excluded_product">
                               <span t-esc="l.sale_order_line_product_uom_qty" />
@@ -241,6 +247,15 @@
                           </div>
                         </td>
                         <td class="text-right" style="font-size:16px;">
+                          <div class="two-lines">
+                            <t t-if="not l.is_tax_excluded_product">
+                              <span style="font-size:16px"
+                                    t-field="l.price_reduce"
+                                    t-options='{"widget": "float", "precision": docs.currency_id.decimal_places}' />
+                            </t>
+                          </div>
+                        </td>
+                        <td class="text-right" style="font-size:16px; padding-right:8px;">
                           <div class="two-lines">
                             <span style="font-size:16px"
                                   t-field="l.price_subtotal"

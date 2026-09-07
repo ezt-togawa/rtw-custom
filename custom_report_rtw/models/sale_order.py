@@ -10,6 +10,9 @@ from io import BytesIO
 import io
 import json
 from PIL import Image
+from markupsafe import Markup, escape
+
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
     so_title = fields.Char(string="title")
@@ -310,6 +313,76 @@ class SaleOrder(models.Model):
             self.registration_number = 'Registration number: T4290001017449'
         else:
             self.registration_number = _('登録番号:T4290001017449')
+
+    def _zenkaku_width(self, text):
+        """全角文字=1.0、半角文字=0.5として表示幅を概算する(縮小要否の判定のみに使用)"""
+        if not text:
+            return 0.0
+        width = 0.0
+        for ch in text:
+            code = ord(ch)
+            if (0x1100 <= code <= 0x115F) or (0x2E80 <= code <= 0xA4CF) or \
+               (0xAC00 <= code <= 0xD7A3) or (0xF900 <= code <= 0xFAFF) or \
+               (0xFF00 <= code <= 0xFF60) or (0xFFE0 <= code <= 0xFFE6):
+                width += 1.0
+            else:
+                width += 0.5
+        return width
+
+    def render_fit_text(self, text, target_width_px, font_size=22, underline=False, fixed_width=False):
+        """Excelの「縮小して全体を表示する」相当。
+        長さの判定はフォント依存の概算だが、実際にはみ出す場合はSVGのtextLengthで
+        指定幅ぴったりに収める(フォントの実測幅に依存しないので確実)。
+        収まる見込みの場合はSVGを使わず通常のテキストとして表示する(短い文字列を
+        不要に引き伸ばさないため)。
+        underline=Trueで下線を付ける。SVGを使う場合はCSSのborder-bottomではなく
+        SVG内部の<line>で描画する(divでSVGを囲んでborder-bottomを付けても表示
+        されない環境があるため)。
+        fixed_width=Trueの場合、縮小が不要な短い文字列でも下線の長さをtarget_width_px
+        に固定する(担当者名・件名向け)。Falseの場合は文字の実際の長さなりの下線に
+        なる(担当者名がない場合の会社名向け)。"""
+        text = text or ''
+        if not text:
+            return Markup('')
+        escaped = escape(text)
+        estimated_px = self._zenkaku_width(text) * font_size
+        if estimated_px <= target_width_px:
+            if fixed_width:
+                style = (
+                    'display:inline-block; width:%dpx; white-space:nowrap;'
+                ) % target_width_px
+                if underline:
+                    style += ' border-bottom:1px solid black;'
+                return Markup('<span style="%s">%s</span>') % (style, escaped)
+            if underline:
+                return Markup(
+                    '<span class="border-bottom2" style="white-space:nowrap;">%s</span>'
+                ) % escaped
+            return Markup('<span style="white-space:nowrap;">%s</span>') % escaped
+        svg_height = int(font_size * 1.3)
+        baseline_y = int(font_size * 0.95)
+        line_svg = Markup('')
+        if underline:
+            line_y = svg_height - 2
+            line_svg = Markup(
+                '<line x1="0" y1="%d" x2="%d" y2="%d" stroke="black" stroke-width="1"/>'
+            ) % (line_y, target_width_px, line_y)
+        return Markup(
+            '<svg width="%(width)dpx" height="%(height)dpx" '
+            'style="display:inline-block; vertical-align:bottom;">'
+            '<text x="0" y="%(baseline)d" font-size="%(font_size)dpx" '
+            'textLength="%(width)d" lengthAdjust="spacingAndGlyphs">%(text)s</text>'
+            '%(line)s'
+            '</svg>'
+        ) % {
+            'width': target_width_px,
+            'height': svg_height,
+            'baseline': baseline_y,
+            'font_size': font_size,
+            'text': escaped,
+            'line': line_svg,
+        }
+
         
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -353,48 +426,6 @@ class SaleOrderLine(models.Model):
                 while decimal_part_after_dot % 10 == 0:
                     decimal_part_after_dot = decimal_part_after_dot / 10
                 line.sale_order_line_product_uom_qty =  integer_part + float('0.' + str(decimal_part_after_dot))
-
-
-    def resize_image_for_pdf(self, image_base64, frame_w, frame_h, margin=5):
-        if not image_base64:
-            return False
-        if isinstance(image_base64, bytes):
-            image_base64 = image_base64.decode('utf-8')
-        try:
-            img_bytes = base64.b64decode(image_base64)
-        except Exception:
-            return False
-        try:
-            img = PILImage.open(io.BytesIO(img_bytes))
-        except Exception:
-            return False
-
-        if img.mode in ("RGBA", "LA"):
-            background = PILImage.new("RGBA", img.size, (255, 255, 255, 255))
-            background.paste(img, mask=img.split()[-1])
-            img = background.convert("RGB")
-        else:
-            img = img.convert("RGB")
-        w, h = img.size
-        if w == 0 or h == 0:
-            return False
-
-        inner_frame_w = frame_w - (margin * 2)
-        inner_frame_h = frame_h - (margin * 2)
-
-        ratio = min(inner_frame_w / w, inner_frame_h / h)
-        new_w = max(1, int(w * ratio))
-        new_h = max(1, int(h * ratio))
-        img = img.resize((new_w, new_h), PILImage.LANCZOS)
-
-        background = PILImage.new('RGB', (frame_w, frame_h), (255, 255, 255))
-        paste_x = (frame_w - new_w) // 2
-        paste_y = (frame_h - new_h) // 2
-        background.paste(img, (paste_x, paste_y))
-
-        output = io.BytesIO()
-        background.save(output, format='PNG')
-        return base64.b64encode(output.getvalue()).decode('utf-8')
 
 
     def resize_image_for_pdf(self, image_base64, frame_w, frame_h, margin=5):

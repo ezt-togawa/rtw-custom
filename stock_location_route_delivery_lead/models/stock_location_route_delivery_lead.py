@@ -43,11 +43,24 @@ class sale_order(models.Model):
         return result
     
     def write(self,vals):
-        old_mrp = self.env['mrp.production'].search([('origin', '=',self.name),('state','not in',('done','cancel'))])
+        old_mrp_by_order = {}
+        if 'order_line' in vals:
+            for order in self:
+                old_mrp_by_order[order.id] = self.env['mrp.production'].search(
+                    [('origin', '=', order.name), ('state', 'not in', ('done', 'cancel'))])
+
         res = super(sale_order, self).write(vals)
-        new_mrp = self.env['mrp.production'].search([('origin', '=',self.name),('state','not in',('done','cancel'))])
-        if 'order_line' in vals and self.state == 'sale':
-            if old_mrp != new_mrp:
+
+        if 'order_line' in vals:
+            for order in self:
+                if order.state != 'sale':
+                    continue
+                old_mrp = old_mrp_by_order.get(order.id, self.env['mrp.production'])
+                new_mrp = self.env['mrp.production'].search(
+                    [('origin', '=', order.name), ('state', 'not in', ('done', 'cancel'))])
+                if old_mrp == new_mrp:
+                    continue
+
                 old_mrp_ids = set(old_mrp.ids)
                 new_mrp_ids = set(new_mrp.ids)
                 new_mrp_diff_ids = new_mrp_ids - old_mrp_ids
@@ -56,12 +69,12 @@ class sale_order(models.Model):
                     child_mrp = self.env['mrp.production'].search([('origin','=',mrp.name),('state','not in',('done','cancel'))])
                     new_mrp += child_mrp
                 for mrp in new_mrp:
-                    if self.estimated_shipping_date and not mrp.estimated_shipping_date:
-                        mrp.estimated_shipping_date = self.estimated_shipping_date
-                        
+                    if order.estimated_shipping_date and not mrp.estimated_shipping_date:
+                        mrp.estimated_shipping_date = order.estimated_shipping_date
+
                     stock_picking = self.env['stock.picking'].search(
-                        [('sale_id', '=', self.id),('state','not in',('cancel','draft'))])
-                    
+                        [('sale_id', '=', order.id),('state','not in',('cancel','draft'))])
+
                     def get_delay_by_rule(move,moves):
                         delay = 0
                         next_move = next((m for m in moves if m.location_id == move.location_dest_id), None)
@@ -69,7 +82,7 @@ class sale_order(models.Model):
                             delay += get_delay_by_rule(next_move,moves)
                         delay += move.rule_id.delay
                         return delay
-            
+
                     for delivery in stock_picking:
                         moves = [move for move in delivery.group_id.stock_move_ids if move.state != 'cancel']
                         for move in moves:
@@ -80,9 +93,9 @@ class sale_order(models.Model):
                                 move.picking_id.scheduled_date = new_date
 
                     # 製造開始予定日を計算
-                    self.calc_date_planned_start(mrp)
+                    order.calc_date_planned_start(mrp)
 
-            return res
+        return res
 
     # 製造開始予定日を算出、リードタイム計算
     def calc_date_planned_start(self, mrp):

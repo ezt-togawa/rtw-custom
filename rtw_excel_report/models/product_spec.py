@@ -123,6 +123,7 @@ class productSpec(models.AbstractModel):
             sheet= workbook.add_worksheet(sheet_name)
             sheet.set_paper(9)  #A4
             sheet.set_landscape()
+            sheet.hide_gridlines(2)
             sheet.set_print_scale(71)
             
             margin_header = 0.3
@@ -225,8 +226,7 @@ class productSpec(models.AbstractModel):
             # y,x,y,x
             sheet.merge_range(1, 5, 3, 11, _("商品仕様書"), format_sheet_title) 
             sheet.merge_range(2, 43, 2, 48, so.sale_order_current_date if so.sale_order_current_date else "", format_date)
-            sheet.merge_range(5, 2, 5, 3, _("件名"), format_text)
-            sheet.merge_range(5, 4, 5, 48, so.title if so.title else "", format_text_14)
+            sheet.merge_range(5, 2, 5, 48, (_("件名 : ") + so.title) if so.title else _("件名 : "), format_text_14)
 
             if so.order_line:
                 lines = so.order_line.filtered(lambda x: x.display_type not in ['line_note', 'line_section'] and not x.is_pack_outside and x.config_ok)
@@ -312,9 +312,9 @@ class productSpec(models.AbstractModel):
                         product_name_with_no = ""
                         if sol.product_id and sol.product_id.product_tmpl_id:
                             if sol.product_id.product_tmpl_id.categ_id and sol.product_id.product_tmpl_id.categ_id.name == '汎用商品':
-                                product_name_with_no = f"No{i} {sol.name or ''}"
+                                product_name_with_no = f"No{i}  {sol.name or ''}"
                             else:
-                                product_name_with_no = f"No{i} {sol.product_id.name or ''}"
+                                product_name_with_no = f"No{i}  {sol.product_id.name or ''}"
                         else:
                             product_name_with_no = f"No{i}"
                         sheet.merge_range(7 + height + more_height, 2 + width, 7 + height + more_height, 22 + width, product_name_with_no, format_text_12)
@@ -335,7 +335,7 @@ class productSpec(models.AbstractModel):
                         price += _('定価：')
                         if sol.currency_id.symbol:
                             price += sol.currency_id.symbol
-                        price += str('{0:,.0f}'.format(sol.price_subtotal))
+                        price += str('{0:,.0f}'.format(sol.price_unit))
 
                         if sol.product_size:
                             size = sol.product_size
@@ -542,8 +542,7 @@ class productSpec(models.AbstractModel):
                                 # y,x,y,x
                                 sheet.merge_range(more_height + 1, 5, more_height + 3, 11, _("商品仕様書"), format_sheet_title) 
                                 sheet.merge_range(more_height + 2, 43,more_height + 2, 48, so.sale_order_current_date if so.sale_order_current_date else "", format_date)
-                                sheet.merge_range(more_height + 5, 2, more_height + 5, 3, _("件名"), format_text)
-                                sheet.merge_range(more_height + 5, 4, more_height + 5, 48, so.title if so.title else "", format_text_14)
+                                sheet.merge_range(more_height + 5, 2, more_height + 5, 48, (_("件名 : ") + so.title) if so.title else _("件名 : "), format_text_14)
                     
                     if length > 0:
                         num_pages = (length + 3) // 4 
