@@ -256,8 +256,18 @@ body {
   overflow: hidden;
 }
 
+.table-border-bottom {
+  border-bottom: 1px solid #dee2e6;
+}
+
 .table-border-bottom-auto {
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* 明細の途中の線と最終行をあわせる */
+.invoice_tbody:last-of-type .table-border-bottom,
+.invoice_tbody:last-of-type .table-border-bottom-auto {
+  border-bottom-width: 2px;
 }
 
 .product-attribute {
