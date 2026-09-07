@@ -194,11 +194,11 @@
                                             <t t-set="total_discount"
                                                 t-value="total_discount + (l.price_unit - l.price_reduce) * l.product_uom_qty" />
                                             <t>
-                                                <td class="text-center" style="font-size:16px;">
+                                                <td class="text-center" style="font-size:16px; padding: 10px 0px;">
                                                     <t t-set="number" t-value="number + 1" />
                                                     <t t-esc="number" />
                                                 </td>
-                                                <td class="text-left" style="font-size:15px;">
+                                                <td class="text-left" style="font-size:15px; padding: 10px 0px;">
                                                     <div class="two-lines">
                                                         <div t-if="l.sale_order_line_name_pdf"
                                                             t-field="l.sale_order_line_name_pdf" />
@@ -206,7 +206,7 @@
                                                             t-field="l.product_id.summary" />
                                                     </div>
                                                 </td>
-                                                <td class="text-left">
+                                                <td class="text-left" style="padding: 10px 0px;">
                                                     <div class="two-lines">
                                                         <div style="font-size:16px;"
                                                             t-if="l.product_id.product_no"
@@ -225,7 +225,7 @@
                                                         </t>
                                                     </div>
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-right" style="padding: 10px 0px;">
                                                     <div class="two-lines">
                                                         <t t-if="not l.is_tax_excluded_product">
                                                           <span style="font-size:16px"
@@ -234,7 +234,7 @@
                                                         </t>
                                                         </div>
                                                 </td>
-                                                <td class="text-right" style="padding-right:8px;">
+                                                <td class="text-right" style="padding: 10px 8px 10px 0px;">
                                                     <div class="two-lines">
                                                       <span style="font-size:16px"
                                                             t-field="l.sale_order_amount_no_rate"
