@@ -163,11 +163,11 @@
                   <t t-else="">
                     <tr class="size15 table-border-bottom">
                       <t>
-                        <td class="text-center " style="font-size:16px;">
+                        <td class="text-center " style="font-size:16px; padding: 10px 0px;">
                           <t t-set="number" t-value="number + 1" />
                           <t t-esc="number" />
                         </td>
-                        <td class="text-left" style="font-size:15px;">
+                        <td class="text-left" style="font-size:15px; padding: 10px 0px;">
                           <div class="two-lines">
                             <div t-if="l.sale_order_line_name_pdf"
                               t-field="l.sale_order_line_name_pdf" />
@@ -175,7 +175,7 @@
                               t-field="l.product_id.summary" />
                           </div>
                         </td>
-                        <td class="text-left">
+                        <td class="text-left" style="padding: 10px 0px;">
                           <div class="two-lines">
                             <div style="font-size:16px;" t-if="l.product_id.product_no"
                               t-field="l.product_id.product_no" />
@@ -192,7 +192,7 @@
                             </t>
                           </div>
                         </td>
-                        <td class="text-right" style=" font-size:16px;">
+                        <td class="text-right" style="font-size:16px; padding: 10px 0px;">
                           <div class="two-lines">
                             <t t-if="not l.is_tax_excluded_product">
                               <span style="font-size:16px"
@@ -201,7 +201,7 @@
                             </t>
                           </div>
                         </td>
-                        <td class="text-right" style="font-size:16px;">
+                        <td class="text-right" style="font-size:16px; padding: 10px 0px;">
                           <div class="two-lines">
                             <t t-if="not l.is_tax_excluded_product">
                               <span style="font-size:16px"
@@ -209,7 +209,7 @@
                             </t>
                           </div>
                         </td>
-                        <td class="text-right" style=" font-size:16px;">
+                        <td class="text-right" style="font-size:16px; padding: 10px 0px;">
                           <div class="two-lines">
                             <t t-if="not l.is_tax_excluded_product">
                               <span style="font-size:16px"
@@ -218,7 +218,7 @@
                             </t>
                           </div>
                         </td>
-                        <td class="text-right" style="font-size:16px; padding-right:8px;">
+                        <td class="text-right" style="font-size:16px; padding: 10px 8px 10px 0px;">
                           <div class="two-lines">
                             <span style="font-size:16px"
                                   t-field="l.price_subtotal"
