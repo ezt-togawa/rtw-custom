@@ -14,6 +14,22 @@ class sale_order_approve(models.Model):
     total_price_sale = fields.Float('Total Price Sale')
     approve_user = fields.Char('承認者', store=True)
 
+    def _get_over_price_threshold(self):
+        # 承認なしで確認できる金額の上限。変更する場合はここ1箇所だけでOK。
+        return 2000000
+
+    def _get_amount_total_in_company_currency(self):
+        # 閾値(円)や商品原価(標準は会社通貨=円)と比較するため、
+        # 受注が外貨建てでも会社通貨(円)に換算した金額を返す。
+        self.ensure_one()
+        company = self.company_id or self.env.company
+        company_currency = company.currency_id
+        if not self.currency_id or self.currency_id == company_currency:
+            return self.amount_total
+        return self.currency_id._convert(
+            self.amount_total, company_currency, company, self.date_order or fields.Date.today()
+        )
+
     def toggle_approve_btn(self):
         admin_sale_id = self.env.ref('sales_team.group_sale_manager')
         for record in self:
@@ -36,37 +52,37 @@ class sale_order_approve(models.Model):
                 record.approve_status = not record.approve_status
         else:
             return
-    @api.depends('amount_total')
+    @api.depends('amount_total', 'currency_id')
     def _compute_is_over_price(self):
         for record in self:
-            if record.total_price_sale != record.amount_total:
-                sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
-                min_price = 0
-                max_price = 2000000
-                for line in sale_order_lines:
-                    min_price += line.product_id.standard_price
-                if  record.amount_total > max_price or record.amount_total < min_price:
-                    record.is_over_price = True
-                    record.approve_status = False
-                    record.approve_user = ''
-                else:
-                    record.is_over_price = False
-                    record.approve_status = False
-                    record.approve_user = ''
-                record.total_price_sale = record.amount_total
-            
+            sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
+            min_price = 0
+            max_price = self._get_over_price_threshold()
+            for line in sale_order_lines:
+                min_price += line.product_id.standard_price
+            amount_total_company = record._get_amount_total_in_company_currency()
+            new_is_over_price = amount_total_company > max_price or amount_total_company < min_price
+            if new_is_over_price != record.is_over_price:
+                # 承認要否の判定自体が変わった時だけ、既存の承認状態をリセットする
+                # (単に再計算しただけで手動承認を消してしまわないため)
+                record.approve_status = False
+                record.approve_user = ''
+            record.is_over_price = new_is_over_price
+            record.total_price_sale = amount_total_company
 
-    @api.onchange('amount_total')
+
+    @api.onchange('amount_total', 'currency_id')
     def _onchange_amount_total(self):
         for record in self:
             sale_order_lines = self.env['sale.order.line'].search([('order_id' , '=' , record.id)])
             min_price = 0
-            max_price = 2000000
+            max_price = self._get_over_price_threshold()
 
             for line in sale_order_lines:
                 min_price += line.product_id.standard_price
 
-            if record.amount_total > max_price or record.amount_total < min_price:
+            amount_total_company = record._get_amount_total_in_company_currency()
+            if amount_total_company > max_price or amount_total_company < min_price:
                 record.is_over_price = True
                 record.approve_status = False
                 record.approve_user = ''
