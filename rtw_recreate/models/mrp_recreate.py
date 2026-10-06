@@ -113,6 +113,10 @@ class mrp_recreate(models.Model):
         # ==================================================
         saved_mo_links = self._save_parent_child_mo_links(mo, active_sub_mos)
         saved_purchase_links = self._save_confirmed_purchase_links(all_mos)
+        # 完成品Move → 後続Move（配送など）のリンクも退避（親製造・子製造とも同じ処理）
+        saved_dest_links = self._save_finished_move_dest_links(all_mos)
+        # 子製造 → 運送 → 親の部材Move と運送が挟まる連鎖も退避（親の再作成のお掃除で運送が取消されるため）
+        saved_transfer_chains = self._save_sub_mo_transfer_chains(mo, active_sub_mos)
 
         # ==================================================
         # ステップ2：親・すべての子製造の「お掃除」を一斉に実行、取消の子製造も掃除対象にしておく
@@ -147,6 +151,10 @@ class mrp_recreate(models.Model):
         # ==================================================
         self._restore_parent_child_mo_links(mo, saved_mo_links)
         self._restore_confirmed_purchase_links(mo, saved_purchase_links)
+        # 切れた「完成品Move → 後続Move（配送など）」のリンクを復元（親・子とも同じ処理）
+        self._restore_finished_move_dest_links(all_mos, saved_dest_links)
+        # 親の再確定で新しく作られた運送を、子の完成品Moveと親の部材Moveの間につなぎ直す
+        self._restore_sub_mo_transfer_chains(saved_transfer_chains)
 
         # ==================================================
         # ステップ7：リンク復元（数量変更）によって子製造の下に湧いたゴミPOの掃除

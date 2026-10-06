@@ -115,6 +115,187 @@ class recreate_mixin(models.AbstractModel):
                     })
         return mo_links
 
+    def _save_finished_move_dest_links(self, mos):
+        """
+        再作成前に、各製造の完成品Move → 後続Move（配送・運送など）のリンクを退避する。
+        """
+        saved_links = []
+        for mo in mos:
+            for fin_move in mo.move_finished_ids:
+                for dest_move in fin_move.move_dest_ids:
+                    saved_links.append({
+                        'mo_id': mo.id,
+                        'finished_move_id': fin_move.id,
+                        'product_id': fin_move.product_id.id,
+                        'dest_move_id': dest_move.id,
+                        # _action_cancelは後続Moveをmake_to_stockに変えるため、元の値も退避する
+                        'dest_procure_method': dest_move.procure_method,
+                    })
+        return saved_links
+
+    def _restore_finished_move_dest_links(self, mos, saved_links):
+        """
+        再確定後、_save_finished_move_dest_linksで退避した完成品Move → 後続Moveのリンクを復元する。
+        - 後続Moveが取消・完了済みの場合は復元しない（再作成前に取消された運送などを生き返らせない）
+        - 後続Moveが今回再作成するグループ内の部材Move（親⇔子製造のリンク）の場合は、
+          _restore_parent_child_mo_linksが復元するため対象外
+        """
+        Move = self.env['stock.move']
+        saved_dest_ids = {}
+        for link in saved_links:
+            saved_dest_ids.setdefault(link['finished_move_id'], set()).add(link['dest_move_id'])
+
+        for link in saved_links:
+            dest_move = Move.browse(link['dest_move_id']).exists()
+            if not dest_move or dest_move.state in ('cancel', 'done'):
+                continue
+            if dest_move.raw_material_production_id in mos:
+                continue
+
+            fin_move = Move.browse(link['finished_move_id']).exists()
+            if not fin_move or fin_move.state == 'cancel':
+                # 完成品Moveが作り直されていた場合に備え、同じ製造・同じ製品の有効なMoveで代替する
+                mo = self.env['mrp.production'].browse(link['mo_id'])
+                fin_move = mo.move_finished_ids.filtered(
+                    lambda m: m.product_id.id == link['product_id'] and m.state != 'cancel'
+                )[:1]
+            if not fin_move:
+                continue
+
+            # 再確定時にプッシュルール等で新しい後続Moveが作られていた場合は、二重にならないよう復元しない
+            known_dest_ids = saved_dest_ids.get(link['finished_move_id'], set())
+            if fin_move.move_dest_ids.filtered(
+                lambda m: m.state not in ('cancel', 'done') and m.id not in known_dest_ids
+            ):
+                continue
+
+            vals = {}
+            if fin_move not in dest_move.move_orig_ids:
+                vals['move_orig_ids'] = [(4, fin_move.id, 0)]
+            if dest_move.procure_method != link['dest_procure_method']:
+                vals['procure_method'] = link['dest_procure_method']
+            if vals:
+                dest_move.write(vals)
+
+    def _save_sub_mo_transfer_chains(self, parent_mo, sub_mos):
+        """
+        子製造の完成品Move → 親製造の部材Move の間に運送（工場間移動などのpicking付きMove）が
+        挟まっている場合、そのMove連鎖の情報を退避する。
+        """
+        Move = self.env['stock.move']
+        baseline_move_id = Move.search([], order='id desc', limit=1).id
+        parent_raw_moves = parent_mo.move_raw_ids
+        chains = []
+        for sub_mo in sub_mos:
+            for fin_move in sub_mo.move_finished_ids:
+                hops = []
+                raw_move = Move
+                moves = fin_move.move_dest_ids
+                for _i in range(10):
+                    if not moves:
+                        break
+                    reached = moves & parent_raw_moves
+                    if reached:
+                        raw_move = reached[0]
+                        break
+                    if len(moves) != 1:
+                        hops = []
+                        break
+                    hops.append({
+                        'rule_id': moves.rule_id.id,
+                        'group_id': moves.group_id.id,
+                        'product_id': moves.product_id.id,
+                        'location_id': moves.location_id.id,
+                        'location_dest_id': moves.location_dest_id.id,
+                        'procure_method': moves.procure_method,
+                        'created_production_id': moves.created_production_id.id,
+                    })
+                    moves = moves.move_dest_ids
+                if hops and raw_move:
+                    chains.append({
+                        'baseline_move_id': baseline_move_id,
+                        'finished_move_id': fin_move.id,
+                        'parent_raw_move_id': raw_move.id,
+                        'hops': hops,
+                    })
+        return chains
+
+    def _restore_sub_mo_transfer_chains(self, saved_chains):
+        """
+        再確定後、親の再確定で新しく生成された運送Move（子製造の完成品Moveにつながっていない孤立した運送）を、
+        退避した連鎖と同じ形で「子の完成品Move → 運送 → 親の部材Move」につなぎ直す。
+        """
+        Move = self.env['stock.move']
+        live = lambda m: m.state not in ('cancel', 'done')
+        claimed = Move
+        for chain in saved_chains:
+            fin_move = Move.browse(chain['finished_move_id']).exists()
+            raw_move = Move.browse(chain['parent_raw_move_id']).exists()
+            if not fin_move or fin_move.state == 'cancel' or not raw_move or not live(raw_move):
+                continue
+
+            first = chain['hops'][0]
+            heads = Move.search([
+                ('id', '>', chain['baseline_move_id']),
+                ('picking_id', '!=', False),
+                ('rule_id', '=', first['rule_id']),
+                ('group_id', '=', first['group_id']),
+                ('product_id', '=', first['product_id']),
+                ('location_id', '=', first['location_id']),
+                ('location_dest_id', '=', first['location_dest_id']),
+            ], order='id').filtered(lambda m: live(m) and not m.move_orig_ids and m not in claimed)
+
+            new_hops = Move
+            for head in heads:
+                candidate = head
+                walked = head
+                ok = True
+                for hop in chain['hops'][1:]:
+                    nxt = candidate.move_dest_ids.filtered(
+                        lambda m, h=hop: live(m)
+                        and m.rule_id.id == h['rule_id']
+                        and m.product_id.id == h['product_id']
+                        and m.location_id.id == h['location_id']
+                        and m.location_dest_id.id == h['location_dest_id']
+                    )
+                    if len(nxt) != 1:
+                        ok = False
+                        break
+                    candidate = nxt
+                    walked |= nxt
+                # 連鎖の末尾が他に繋がっていない（親の部材Moveへの接続が外れている）場合のみ採用
+                if ok and not candidate.move_dest_ids.filtered(live):
+                    new_hops = walked
+                    break
+            if not new_hops:
+                continue
+
+            claimed |= new_hops
+            ordered_hops = self._order_hops(new_hops)
+            for index, (new_move, hop) in enumerate(zip(ordered_hops, chain['hops'])):
+                vals = {}
+                if new_move.procure_method != hop['procure_method']:
+                    vals['procure_method'] = hop['procure_method']
+                if hop['created_production_id'] and new_move.created_production_id.id != hop['created_production_id']:
+                    if self.env['mrp.production'].browse(hop['created_production_id']).exists():
+                        vals['created_production_id'] = hop['created_production_id']
+                if index == 0:
+                    vals['move_orig_ids'] = [(4, fin_move.id, 0)]
+                if vals:
+                    new_move.write(vals)
+            # 従来の復元で張られた「子の完成品Move → 親の部材Move」の直結を外し、運送の末尾につなぎ直す
+            raw_move.write({'move_orig_ids': [(3, fin_move.id, 0), (4, ordered_hops[-1].id, 0)]})
+
+    def _order_hops(self, hops):
+        """運送Moveの連鎖を、上流（子の完成品Move側）から下流の順に並べる"""
+        ordered = []
+        remaining = hops
+        current = hops.filtered(lambda m: not (m.move_orig_ids & hops))
+        while current and len(ordered) < len(hops):
+            ordered.append(current[0])
+            current = (current[0].move_dest_ids & remaining)
+        return hops.browse([m.id for m in ordered])
+
     def _restore_confirmed_purchase_links(self, mo, saved_links):
         """
         再確定後に、製造とバラバラになった確定購買とのリンクを再設定する
