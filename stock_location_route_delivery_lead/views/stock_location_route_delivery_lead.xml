@@ -13,6 +13,16 @@
         </xpath>
       </field>
     </record>
+    <record id="product_template_route_ids_limit" model="ir.ui.view">
+      <field name="name">product.template.route_ids.limit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="stock.view_template_property_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='route_ids'][@widget='many2many_checkboxes']" position="attributes">
+          <attribute name="context">{'route_name_search_limit': 150}</attribute>
+        </xpath>
+      </field>
+    </record>
     <record id="mrp_production_route_delivery_lead" model="ir.ui.view">
       <field name="name">mrp production route delivery lead</field>
       <field name="model">mrp.production</field>
