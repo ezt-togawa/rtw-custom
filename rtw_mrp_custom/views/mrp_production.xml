@@ -230,11 +230,15 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view" />
             <field name="arch" type="xml">
+                <!-- ボタンの呼び出し先も、完了の確認ダイアログ付きのメソッドに差し替える
+                     （標準のダイアログが出る場合は標準の動き、どれも出ないときだけ確認を出す） -->
                 <xpath expr="//header/button[@name='button_mark_done'][contains(@attrs, &quot;('qty_producing', '=', 0)&quot;)]" position="attributes">
                     <attribute name="groups">rtw_mrp_custom.group_mrp_production_done</attribute>
+                    <attribute name="name">action_mark_done_with_confirm</attribute>
                 </xpath>
                 <xpath expr="//header/button[@name='button_mark_done'][contains(@attrs, &quot;('state', '!=', 'to_close')&quot;)]" position="attributes">
                     <attribute name="groups">rtw_mrp_custom.group_mrp_production_done</attribute>
+                    <attribute name="name">action_mark_done_with_confirm</attribute>
                 </xpath>
             </field>
         </record>
@@ -269,6 +273,13 @@
         <!-- 一覧のアクションメニュー「Mark as Done」（複数選択での一括完了）も同じ権限で制御する -->
         <record id="mrp.action_production_order_mark_done" model="ir.actions.server">
             <field name="groups_id" eval="[(4, ref('rtw_mrp_custom.group_mrp_production_done'))]"/>
+            <!-- 標準のコードのbutton_mark_doneを、完了の確認ダイアログ付きのメソッドに差し替える -->
+            <field name="code">
+            if records:
+                res = records.filtered(lambda mo: mo.state in {'confirmed', 'to_close', 'progress'}).action_mark_done_with_confirm()
+                if res is not True:
+                    action = res
+            </field>
         </record>
 
         <!-- 一覧／フォームのアクションメニュー「取消（一括）」（bi_bulk_confirm_and_cancel_orders）を、
