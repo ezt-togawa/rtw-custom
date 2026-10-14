@@ -11,7 +11,15 @@ class stock_location_route_delivery_lead(models.Model):
     delivery_lead_time = fields.Float(
         '配送リードタイム', default=0.0
     )
-    
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        # 製品フォームのルート欄（many2many_checkboxes）は件数指定なしで呼ばれ100件で切れるため、contextで上限を指定できるようにする
+        context_limit = self.env.context.get('route_name_search_limit')
+        if context_limit:
+            limit = context_limit
+        return super(stock_location_route_delivery_lead, self).name_search(name=name, args=args, operator=operator, limit=limit)
+
 class sale_order(models.Model):
     _inherit = "sale.order"
     

@@ -38,8 +38,8 @@ class productSpec(models.AbstractModel):
         sheet.set_column("H:H", width=4, cell_format=font_family)  
         sheet.set_column("I:I", width=4, cell_format=font_family)
         sheet.set_column("J:J", width=4, cell_format=font_family) 
-        sheet.set_column("K:K", width=12, cell_format=font_family)  
-        sheet.set_column("L:L", width=12, cell_format=font_family )
+        sheet.set_column("K:K", width=20, cell_format=font_family)  # 備考１
+        sheet.set_column("L:L", width=20, cell_format=font_family )  # 備考２
         sheet.set_column("M:M", width=8, cell_format=font_family ) 
         sheet.set_column("N:N", width=8, cell_format=font_family ) 
         sheet.set_column("O:O", width=12, cell_format=font_family )  
@@ -174,6 +174,8 @@ class productSpec(models.AbstractModel):
                     sheet.write(row_inside, 7, prod_qty, format_wrap)
                     sheet.write(row_inside, 8, prod_package_qty, format_wrap)
                     sheet.write(row_inside, 9, sai, format_wrap)
+                    # 備考２：明細（stock.move）ごとの運用メモ
+                    sheet.write(row_inside, 11, line.operational_Notes or "", format_wrap)
 
                     row_inside += 1
             else:
@@ -182,6 +184,7 @@ class productSpec(models.AbstractModel):
                 sheet.write(row_inside, 7, prod_qty, format_wrap)
                 sheet.write(row_inside, 8, 0, format_wrap)
                 sheet.write(row_inside, 9, 0, format_wrap)
+                sheet.write(row_inside, 11, "", format_wrap)
 
                 row_inside += 1
                     
@@ -193,7 +196,6 @@ class productSpec(models.AbstractModel):
                 sheet.write(row_start, 2, order_number, format_wrap)
                 sheet.write(row_start, 3, status, format_wrap)
                 sheet.write(row_start, 10, note, format_wrap)
-                sheet.write(row_start, 11, "", format_wrap)
                 sheet.write(row_start, 12, shiratani_date, format_wrap)
                 sheet.write(row_start, 13, depo_date,format_wrap)
                 sheet.write(row_start, 14, company_name,format_wrap)
@@ -205,7 +207,6 @@ class productSpec(models.AbstractModel):
                 sheet.merge_range(row_start, 2, merge_to, 2, order_number, format_wrap)
                 sheet.merge_range(row_start, 3, merge_to, 3, status, format_wrap)
                 sheet.merge_range(row_start, 10, merge_to, 10, note, format_wrap)
-                sheet.merge_range(row_start, 11, merge_to, 11, "", format_wrap)
                 sheet.merge_range(row_start, 12, merge_to, 12, shiratani_date, format_wrap)
                 sheet.merge_range(row_start, 13, merge_to, 13, depo_date, format_wrap)
                 sheet.merge_range(row_start, 14, merge_to, 14, company_name, format_wrap)
@@ -213,3 +214,10 @@ class productSpec(models.AbstractModel):
                 sheet.merge_range(row_start, 16, merge_to, 16, "", format_wrap)
 
             row_start = merge_to + 1
+
+        # 印刷設定：A4横、横幅を1ページに収める、余白は左右0.6cm・上下2cm（xlsxwriterはインチ指定）
+        sheet.set_paper(9)  # A4
+        sheet.set_landscape()
+        sheet.set_margins(left=0.6 / 2.54, right=0.6 / 2.54, top=2 / 2.54, bottom=2 / 2.54)
+        sheet.fit_to_pages(1, 0)
+        sheet.print_area(0, 0, max(row_inside - 1, 6), 16)
