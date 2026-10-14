@@ -120,8 +120,11 @@ class sale_order(models.Model):
 
         if mrp.itoshima_shipping_date:
             itoshima_shipping_datetime = datetime.combine(mrp.itoshima_shipping_date, datetime.min.time())
+            # 販売の発送予定日・白谷到着日に伴う自動算出。製造開始予定日の手動変更の権限チェック
+            # （rtw_mrp_custom）の対象外とするため、自動算出の印（コンテキスト）を付けて書き込む
             if mrp.origin == self.name:  # parent
-                mrp.date_planned_start = itoshima_shipping_datetime - timedelta(days=days, hours=hours)
+                mrp.with_context(rtw_auto_calc_date_planned_start=True).write(
+                    {'date_planned_start': itoshima_shipping_datetime - timedelta(days=days, hours=hours)})
             else:  # child
                 parent_mrp = self.env['mrp.production'].search([('name', '=', mrp.origin)])
                 parent_delivery_lead_time = 0
@@ -133,7 +136,8 @@ class sale_order(models.Model):
                 child_additional_time = additional_time + parent_delivery_lead_time + parent_product.product_tmpl_id.produce_delay
                 child_days = int(child_additional_time)
                 child_hours = (child_additional_time - int(child_additional_time)) * 24
-                mrp.date_planned_start = itoshima_shipping_datetime - timedelta(days=child_days, hours=child_hours)
+                mrp.with_context(rtw_auto_calc_date_planned_start=True).write(
+                    {'date_planned_start': itoshima_shipping_datetime - timedelta(days=child_days, hours=child_hours)})
 
         stock_picking = self.env['stock.picking'].search([('origin', '=', mrp.name)])
         if stock_picking:

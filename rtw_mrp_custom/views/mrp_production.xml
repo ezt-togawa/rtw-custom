@@ -11,7 +11,7 @@
                         class="oe_highlight" />
                 </xpath>
                 <xpath expr="//notebook" position="inside">
-                    <page string="Revised Edition" name="revised_edition">
+                    <page string="Revised Edition" name="revised_edi    tion">
                         <field name="revised_edition_ids" />
                     </page>
                 </xpath>
@@ -191,6 +191,91 @@
                     <field name="working_notes"/>
             </xpath>
             </field>
+        </record>
+
+        <!-- 取消ボタンを、再作成ボタンと同じ権限（製造再作成/取消）で制御する。権限がないと表示されない。
+             標準フォームには確認ダイアログなし／ありの2つの取消ボタンがあるため、両方に付ける -->
+        <record id="mrp_production_form_view_cancel_button_groups" model="ir.ui.view">
+            <field name="name">mrp.production.form.cancel.button.groups</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='action_cancel'][contains(@attrs, &quot;('confirm_cancel', '=', True)&quot;)]" position="attributes">
+                    <attribute name="groups">rtw_recreate.group_recreate_permission</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='action_cancel'][contains(@attrs, &quot;('confirm_cancel', '=', False)&quot;)]" position="attributes">
+                    <attribute name="groups">rtw_recreate.group_recreate_permission</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- 「ドラフトに戻す」ボタン（OCA mrp_production_back_to_draft）も、取消ボタンと同じ権限で制御する。
+             ボタンはOCAのビューが追加するため、適用順序が確実になるようOCAのビューを継承する -->
+        <record id="mrp_production_form_view_return_to_draft_groups" model="ir.ui.view">
+            <field name="name">mrp.production.form.return.to.draft.groups</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp_production_back_to_draft.mrp_production_form_view_return_to_draft" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_return_to_draft']" position="attributes">
+                    <attribute name="groups">rtw_recreate.group_recreate_permission</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- 製造オーダーの完了ボタンを「製造完了」権限で制御する。権限がないと表示されない。
+             標準フォームには完了ボタンが2つ（Validate／Mark as Done）あるため、両方に付ける。
+             ボタンの文言（string）はビュー継承のセレクタに使えないため、attrsの内容で区別する -->
+        <record id="mrp_production_form_view_mark_done_groups" model="ir.ui.view">
+            <field name="name">mrp.production.form.mark.done.groups</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='button_mark_done'][contains(@attrs, &quot;('qty_producing', '=', 0)&quot;)]" position="attributes">
+                    <attribute name="groups">rtw_mrp_custom.group_mrp_production_done</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='button_mark_done'][contains(@attrs, &quot;('state', '!=', 'to_close')&quot;)]" position="attributes">
+                    <attribute name="groups">rtw_mrp_custom.group_mrp_production_done</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- 製造開始予定日の手動変更を「製造完了/予定日」権限で制御する。権限がないとフォームで編集できない。
+             （販売の発送予定日・白谷到着日に伴う自動算出は、この画面を通らないので影響しない） -->
+        <record id="mrp_production_form_view_date_planned_start_groups" model="ir.ui.view">
+            <field name="name">mrp.production.form.date.planned.start.groups</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_planned_start']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'in', ['done', 'cancel']), ('can_edit_date_planned_start', '=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_planned_start']" position="after">
+                    <field name="can_edit_date_planned_start" invisible="1"/>
+                </xpath>
+                <!-- 計画ボタンは作業オーダーを再計画して製造開始予定日を動かすため、同じ権限で制御する -->
+                <xpath expr="//header/button[@name='button_plan']" position="attributes">
+                    <attribute name="groups">rtw_mrp_custom.group_mrp_production_done</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- 一覧のアクションメニュー「MRP:計画製造オーダ」（計画ボタンの一括実行）も同じ権限で制御する。
+             サーバーアクションのグループは「いずれかに属していれば実行可」のため、元の
+             「Manage Work Order Operations」（全社内ユーザーが持つ）を残すと制限にならない。置き換える -->
+        <record id="mrp.production_order_server_action" model="ir.actions.server">
+            <field name="groups_id" eval="[(6, 0, [ref('rtw_mrp_custom.group_mrp_production_done')])]"/>
+        </record>
+
+        <!-- 一覧のアクションメニュー「Mark as Done」（複数選択での一括完了）も同じ権限で制御する -->
+        <record id="mrp.action_production_order_mark_done" model="ir.actions.server">
+            <field name="groups_id" eval="[(4, ref('rtw_mrp_custom.group_mrp_production_done'))]"/>
+        </record>
+
+        <!-- 一覧／フォームのアクションメニュー「取消（一括）」（bi_bulk_confirm_and_cancel_orders）を、
+             取消ボタンと同じ「製造再作成/取消」で制御する。サーバーアクションのグループは、
+             メニュー表示だけでなく実行時にも強制される（権限がないと AccessError） -->
+        <record id="bi_bulk_confirm_and_cancel_orders.action_mo_cancel" model="ir.actions.server">
+            <field name="groups_id" eval="[(4, ref('rtw_recreate.group_recreate_permission'))]"/>
         </record>
 
         <record id="sale_to_mrp_list_form_view_inherit" model="ir.ui.view">

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, _, api
+from odoo.exceptions import UserError
 from dateutil.parser import parse
 from datetime import datetime
 
@@ -32,6 +33,14 @@ class MrpProductionCus(models.Model):
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
     # 製造開始予定日再計算フラグ＆製造画面変更マーククリアのトリガー
     is_calc_planned_start = fields.Boolean(default=False, store=True)
+    # 製造開始予定日を手動で変更できるか（製造完了/予定日権限）。フォームの編集可否の制御用
+    can_edit_date_planned_start = fields.Boolean(compute='_compute_can_edit_date_planned_start')
+
+    @api.depends_context('uid')
+    def _compute_can_edit_date_planned_start(self):
+        can_edit = self.env.user.has_group('rtw_mrp_custom.group_mrp_production_done')
+        for record in self:
+            record.can_edit_date_planned_start = can_edit
 
     @api.depends('date_planned_start')
     def _compute_days_remaining(self):
@@ -219,7 +228,27 @@ class MrpProductionCus(models.Model):
 
             record.display_name = record.calendar_display_name
 
+    def _check_can_change_date_planned_start(self, vals):
+        """
+        製造開始予定日の手動変更を「製造完了/予定日」権限のあるユーザーに限定する（カレンダーの移動を含む）。
+        次の場合は権限不要：
+        - 販売の発送予定日・白谷到着日に伴う自動算出（rtw_auto_calc_date_planned_start）
+        - 標準の内部連動（force_date：計画ボタンによる再計画、作業オーダーの日付からの連動）
+        """
+        ctx = self.env.context
+        if self.env.su or ctx.get('rtw_auto_calc_date_planned_start') or ctx.get('force_date') \
+                or ctx.get('import_file'):
+            return
+        if self.env.user.has_group('rtw_mrp_custom.group_mrp_production_done'):
+            return
+        new_date = fields.Datetime.to_datetime(vals.get('date_planned_start'))
+        if any(record.date_planned_start != new_date for record in self):
+            raise UserError(_("製造開始予定日を変更する権限がありません。"))
+
     def write(self, vals):
+        if 'date_planned_start' in vals:
+            self._check_can_change_date_planned_start(vals)
+
         old_date_planned_start = {record.id: record.date_planned_start for record in self}
 
         res = super(MrpProductionCus, self).write(vals)
