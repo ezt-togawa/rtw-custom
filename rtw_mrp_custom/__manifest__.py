@@ -32,6 +32,7 @@
         'views/revised_edition.xml',
         'views/sale_to_mrp_list.xml',
         'views/mrp_production_done_confirm.xml',
+        'views/mrp_production_tag.xml',
         'views/mrp_production.xml',
         'views/mrp_workorder.xml',
         'views/mrp_ship_address.xml',

@@ -12,6 +12,7 @@ class MrpProductionCus(models.Model):
         comodel_name="mrp.revised_edition",
         inverse_name="mrp_id",
         string="revised edition")
+    tag_ids = fields.Many2many('mrp.production.tag', string='製造タグ', context={'active_test': False})
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
@@ -33,7 +34,6 @@ class MrpProductionCus(models.Model):
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
     # 製造開始予定日再計算フラグ＆製造画面変更マーククリアのトリガー
     is_calc_planned_start = fields.Boolean(default=False, store=True)
-    # 製造開始予定日を手動で変更できるか（製造完了/予定日権限）。フォームの編集可否の制御用
     can_edit_date_planned_start = fields.Boolean(compute='_compute_can_edit_date_planned_start')
 
     @api.depends_context('uid')
@@ -229,12 +229,6 @@ class MrpProductionCus(models.Model):
             record.display_name = record.calendar_display_name
 
     def _check_can_change_date_planned_start(self, vals):
-        """
-        製造開始予定日の手動変更を「製造完了/予定日」権限のあるユーザーに限定する（カレンダーの移動を含む）。
-        次の場合は権限不要：
-        - 販売の発送予定日・白谷到着日に伴う自動算出（rtw_auto_calc_date_planned_start）
-        - 標準の内部連動（force_date：計画ボタンによる再計画、作業オーダーの日付からの連動）
-        """
         ctx = self.env.context
         if self.env.su or ctx.get('rtw_auto_calc_date_planned_start') or ctx.get('force_date') \
                 or ctx.get('import_file'):
@@ -246,10 +240,6 @@ class MrpProductionCus(models.Model):
             raise UserError(_("製造開始予定日を変更する権限がありません。"))
 
     def _write_with_started_workorders(self, vals):
-        """
-        計画済みの製造オーダーで、作業オーダーが進行中（または完了済み）でも、製造開始予定日を変更できるようにする
-        （前倒し・後ろ倒しとも同じ）。
-        """
         if 'date_planned_start' not in vals or self.env.context.get('force_date'):
             return super(MrpProductionCus, self).write(vals)
         started = self.filtered(
@@ -265,7 +255,7 @@ class MrpProductionCus(models.Model):
         others = self - started
         if others:
             res = super(MrpProductionCus, others).write(vals)
-        # force_date：標準の「全作業オーダーの計画解除」を通さない（この後で、未着手の作業オーダーだけ解除する）
+        # force_date：全作業オーダーの計画解除を避け、未着手分だけ後段で解除する
         res = super(MrpProductionCus, started.with_context(force_date=True)).write(vals) and res
         for production in started:
             not_started = production.workorder_ids.filtered(lambda w: w.state in ('pending', 'ready'))
@@ -277,15 +267,13 @@ class MrpProductionCus(models.Model):
         return res
 
     def _plan_workorders(self, replan=False):
-        # 製造開始予定日と実作業は切り離す。
-        # ※標準は、計画の最後に、製造オーダーの製造開始予定日を最初の作業オーダーの予定開始に書き換える（「計画」ボタン、部材等の編集による自動再計画）。
+        # 製造開始予定日と実作業は切り離す（再計画しても製造開始予定日は変えない）
         return super(MrpProductionCus, self.with_context(rtw_keep_planned_start=True))._plan_workorders(replan=replan)
 
     def write(self, vals):
         ctx = self.env.context
         if 'date_planned_start' in vals and ctx.get('force_date') \
                 and (ctx.get('rtw_skip_mo_start_sync') or ctx.get('rtw_keep_planned_start')):
-            # 作業オーダー由来の更新・再計画による、製造開始予定日の書き換えは反映しない
             vals = {key: value for key, value in vals.items() if key != 'date_planned_start'}
             if not vals:
                 return True

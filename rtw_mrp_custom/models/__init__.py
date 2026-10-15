@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from . import mrp_production_tag
 from . import mrp_production
 from . import mrp_production_done_confirm
 from . import mrp_workorder

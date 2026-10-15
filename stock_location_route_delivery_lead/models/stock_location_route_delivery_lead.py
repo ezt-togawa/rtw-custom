@@ -120,8 +120,7 @@ class sale_order(models.Model):
 
         if mrp.itoshima_shipping_date:
             itoshima_shipping_datetime = datetime.combine(mrp.itoshima_shipping_date, datetime.min.time())
-            # 販売の発送予定日・白谷到着日に伴う自動算出。製造開始予定日の手動変更の権限チェック
-            # （rtw_mrp_custom）の対象外とするため、自動算出の印（コンテキスト）を付けて書き込む
+            # 自動算出は、rtw_mrp_customの製造開始予定日の権限チェック対象外
             if mrp.origin == self.name:  # parent
                 mrp.with_context(rtw_auto_calc_date_planned_start=True).write(
                     {'date_planned_start': itoshima_shipping_datetime - timedelta(days=days, hours=hours)})

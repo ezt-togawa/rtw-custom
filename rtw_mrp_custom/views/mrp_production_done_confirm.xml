@@ -12,7 +12,7 @@
                     <field name="show_productions" invisible="1"/>
                     <field name="production_ids" nolabel="1" readonly="1" attrs="{'invisible': [('show_productions', '=', False)]}">
                         <tree create="0" delete="0">
-                            <!-- product_id等の編集可否の条件がstateに依存するため、一覧に含めておく必要がある -->
+                            <!-- 他項目のattrsがstateに依存するため必要 -->
                             <field name="state" invisible="1"/>
                             <field name="name"/>
                             <field name="product_id"/>
