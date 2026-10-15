@@ -47,14 +47,11 @@ class productLabelSticker(models.AbstractModel):
                     attr_code = code_part
 
             if attr_code in FABRIC_CLASS_CODES:
-                # 張地クラス（例: 張地クラス（BC）: 外注張地 [布]）は「クラス」を除いて張地と同じ形式にそろえる。
                 attr_code_map[attr_code] = line.display_name.replace('クラス', '', 1)
             elif attr_code:
                 attr_code_map[attr_code] = f"{attr_name}: {value_name}"
 
-        # 属性のコード
-        # 張地は、張地（110/117/111/118, 112）が取れなかった場合のみ、対応する張地クラス
-        # （100/103/101/104, 102）を出力する（リストの前方＝張地を優先し、なければ後方＝張地クラス）
+        # 属性のコード（8・9は張地が取れない場合のみ後方の張地クラスを使う）
         priority_code_map = {
             '4': ['001', '050'],
             '5': ['002', '051'],

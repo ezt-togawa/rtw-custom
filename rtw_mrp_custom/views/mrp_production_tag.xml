@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_mrp_production_tag_tree" model="ir.ui.view">
+            <field name="name">mrp.production.tag.tree</field>
+            <field name="model">mrp.production.tag</field>
+            <field name="arch" type="xml">
+                <tree string="製造タグ" editable="bottom">
+                    <field name="name"/>
+                    <field name="color" widget="color_picker"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mrp_production_tag_search" model="ir.ui.view">
+            <field name="name">mrp.production.tag.search</field>
+            <field name="model">mrp.production.tag</field>
+            <field name="arch" type="xml">
+                <search string="製造タグ">
+                    <field name="name"/>
+                    <filter string="アーカイブ済み" name="inactive" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_mrp_production_tag" model="ir.actions.act_window">
+            <field name="name">製造タグ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.production.tag</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">製造タグを作成します</p>
+                <p>製造オーダーに「〇〇済」などの状態を、自由な文言で付けるためのタグです。</p>
+            </field>
+        </record>
+
+        <menuitem
+            id="menu_mrp_production_tag"
+            name="製造タグ"
+            action="action_mrp_production_tag"
+            parent="mrp.menu_mrp_configuration"
+            sequence="103" />
+    </data>
+</odoo>

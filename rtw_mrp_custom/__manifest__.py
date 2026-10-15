@@ -22,13 +22,17 @@
     # any module necessary for this one to work correctly
     'depends': ['base', 'mrp','rtw_mrp_add_sol_date', 'sales_mo_sequence', 'sales_team',
                 'sale_mrp', 'sale_order_crm_case', 'rtw_mrp_order_manage','mail','stock',
-                'rtw_recreate', 'sale_order_line_custom_date'],
+                'rtw_recreate', 'sale_order_line_custom_date',
+                'bi_bulk_confirm_and_cancel_orders'],
 
     # always loaded
     'data': [
+        'security/res_groups.xml',
         'security/ir.model.access.csv',
         'views/revised_edition.xml',
         'views/sale_to_mrp_list.xml',
+        'views/mrp_production_done_confirm.xml',
+        'views/mrp_production_tag.xml',
         'views/mrp_production.xml',
         'views/mrp_workorder.xml',
         'views/mrp_ship_address.xml',

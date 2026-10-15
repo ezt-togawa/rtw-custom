@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+from odoo import models, fields, api
+
+
+class MrpProductionDoneConfirm(models.TransientModel):
+    _name = 'mrp.production.done.confirm'
+    _description = '製造完了の確認'
+
+    production_ids = fields.Many2many('mrp.production', string='製造オーダー', readonly=True)
+    show_productions = fields.Boolean(compute='_compute_show_productions')
+
+    @api.depends('production_ids')
+    def _compute_show_productions(self):
+        for wizard in self:
+            wizard.show_productions = len(wizard.production_ids) > 1
+
+    def action_confirm(self):
+        self.ensure_one()
+        return self.production_ids.button_mark_done()
+
+
+class MrpProductionDoneConfirmMixin(models.Model):
+    _inherit = 'mrp.production'
+
+    def action_mark_done_with_confirm(self):
+        # 標準のダイアログ・エラーが出る場合はそれを優先し、出ない場合だけ確認ダイアログを出す
+        if not self:
+            return True
+        self._button_mark_done_sanity_checks()
+        if not self.env.context.get('button_mark_done_production_ids'):
+            self = self.with_context(button_mark_done_production_ids=self.ids)
+        res = self._pre_button_mark_done()
+        if res is not True:
+            return res
+        wizard = self.env['mrp.production.done.confirm'].create({'production_ids': [(6, 0, self.ids)]})
+        view = self.env.ref('rtw_mrp_custom.view_mrp_production_done_confirm')
+        return {
+            'name': '製造完了の確認',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mrp.production.done.confirm',
+            'res_id': wizard.id,
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+        }

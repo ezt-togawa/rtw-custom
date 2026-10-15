@@ -174,7 +174,6 @@ class productSpec(models.AbstractModel):
                     sheet.write(row_inside, 7, prod_qty, format_wrap)
                     sheet.write(row_inside, 8, prod_package_qty, format_wrap)
                     sheet.write(row_inside, 9, sai, format_wrap)
-                    # 備考２：明細（stock.move）ごとの運用メモ
                     sheet.write(row_inside, 11, line.operational_Notes or "", format_wrap)
 
                     row_inside += 1
@@ -215,7 +214,6 @@ class productSpec(models.AbstractModel):
 
             row_start = merge_to + 1
 
-        # 印刷設定：A4横、横幅を1ページに収める、余白は左右0.6cm・上下2cm（xlsxwriterはインチ指定）
         sheet.set_paper(9)  # A4
         sheet.set_landscape()
         sheet.set_margins(left=0.6 / 2.54, right=0.6 / 2.54, top=2 / 2.54, bottom=2 / 2.54)
