@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="group_mrp_production_done" model="res.groups">
+            <field name="name">製造完了/予定日</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+        </record>
+    </data>
+</odoo>
