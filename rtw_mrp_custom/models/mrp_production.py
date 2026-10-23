@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, _, api
+from odoo.exceptions import UserError
 from dateutil.parser import parse
 from datetime import datetime
 
@@ -11,6 +12,7 @@ class MrpProductionCus(models.Model):
         comodel_name="mrp.revised_edition",
         inverse_name="mrp_id",
         string="revised edition")
+    tag_ids = fields.Many2many('mrp.production.tag', string='製造タグ', context={'active_test': False})
     prod_parts_arrival_schedule = fields.Char(string="製造部材入荷予定", store=True)
     is_drag_drop_calendar = fields.Boolean()
     mrp_ship_address_id = fields.Many2one(comodel_name='mrp.ship.address', string="最終配送先")
@@ -32,6 +34,13 @@ class MrpProductionCus(models.Model):
     days_remaining = fields.Integer(string='Days Remaining', compute='_compute_days_remaining')
     # 製造開始予定日再計算フラグ＆製造画面変更マーククリアのトリガー
     is_calc_planned_start = fields.Boolean(default=False, store=True)
+    can_edit_date_planned_start = fields.Boolean(compute='_compute_can_edit_date_planned_start')
+
+    @api.depends_context('uid')
+    def _compute_can_edit_date_planned_start(self):
+        can_edit = self.env.user.has_group('rtw_mrp_custom.group_mrp_production_done')
+        for record in self:
+            record.can_edit_date_planned_start = can_edit
 
     @api.depends('date_planned_start')
     def _compute_days_remaining(self):
@@ -219,10 +228,62 @@ class MrpProductionCus(models.Model):
 
             record.display_name = record.calendar_display_name
 
+    def _check_can_change_date_planned_start(self, vals):
+        ctx = self.env.context
+        if self.env.su or ctx.get('rtw_auto_calc_date_planned_start') or ctx.get('force_date') \
+                or ctx.get('import_file'):
+            return
+        if self.env.user.has_group('rtw_mrp_custom.group_mrp_production_done'):
+            return
+        new_date = fields.Datetime.to_datetime(vals.get('date_planned_start'))
+        if any(record.date_planned_start != new_date for record in self):
+            raise UserError(_("製造開始予定日を変更する権限がありません。"))
+
+    def _write_with_started_workorders(self, vals):
+        if 'date_planned_start' not in vals or self.env.context.get('force_date'):
+            return super(MrpProductionCus, self).write(vals)
+        started = self.filtered(
+            lambda p: p.is_planned and any(w.state in ('progress', 'done') for w in p.workorder_ids))
+        if not started:
+            return super(MrpProductionCus, self).write(vals)
+
+        for production in started:
+            if production.state in ('done', 'cancel'):
+                raise UserError(_('You cannot move a manufacturing order once it is cancelled or done.'))
+
+        res = True
+        others = self - started
+        if others:
+            res = super(MrpProductionCus, others).write(vals)
+        # force_date：全作業オーダーの計画解除を避け、未着手分だけ後段で解除する
+        res = super(MrpProductionCus, started.with_context(force_date=True)).write(vals) and res
+        for production in started:
+            not_started = production.workorder_ids.filtered(lambda w: w.state in ('pending', 'ready'))
+            not_started.leave_id.unlink()
+            not_started.write({'date_planned_start': False, 'date_planned_finished': False})
+            move_vals = production._get_move_finished_values(
+                production.product_id, production.product_uom_qty, production.product_uom_id)
+            production.move_finished_ids.write({'date': move_vals['date']})
+        return res
+
+    def _plan_workorders(self, replan=False):
+        # 製造開始予定日と実作業は切り離す（再計画しても製造開始予定日は変えない）
+        return super(MrpProductionCus, self.with_context(rtw_keep_planned_start=True))._plan_workorders(replan=replan)
+
     def write(self, vals):
+        ctx = self.env.context
+        if 'date_planned_start' in vals and ctx.get('force_date') \
+                and (ctx.get('rtw_skip_mo_start_sync') or ctx.get('rtw_keep_planned_start')):
+            vals = {key: value for key, value in vals.items() if key != 'date_planned_start'}
+            if not vals:
+                return True
+
+        if 'date_planned_start' in vals:
+            self._check_can_change_date_planned_start(vals)
+
         old_date_planned_start = {record.id: record.date_planned_start for record in self}
 
-        res = super(MrpProductionCus, self).write(vals)
+        res = self._write_with_started_workorders(vals)
         for record in self:
             if 'date_planned_start' in vals:
                 old_date_planned = old_date_planned_start.get(record.id)

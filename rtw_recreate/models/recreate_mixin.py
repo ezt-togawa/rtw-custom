@@ -116,9 +116,6 @@ class recreate_mixin(models.AbstractModel):
         return mo_links
 
     def _save_finished_move_dest_links(self, mos):
-        """
-        再作成前に、各製造の完成品Move → 後続Move（配送・運送など）のリンクを退避する。
-        """
         saved_links = []
         for mo in mos:
             for fin_move in mo.move_finished_ids:
@@ -128,18 +125,12 @@ class recreate_mixin(models.AbstractModel):
                         'finished_move_id': fin_move.id,
                         'product_id': fin_move.product_id.id,
                         'dest_move_id': dest_move.id,
-                        # _action_cancelは後続Moveをmake_to_stockに変えるため、元の値も退避する
+                        # _action_cancelが後続Moveをmake_to_stockに変えるため
                         'dest_procure_method': dest_move.procure_method,
                     })
         return saved_links
 
     def _restore_finished_move_dest_links(self, mos, saved_links):
-        """
-        再確定後、_save_finished_move_dest_linksで退避した完成品Move → 後続Moveのリンクを復元する。
-        - 後続Moveが取消・完了済みの場合は復元しない（再作成前に取消された運送などを生き返らせない）
-        - 後続Moveが今回再作成するグループ内の部材Move（親⇔子製造のリンク）の場合は、
-          _restore_parent_child_mo_linksが復元するため対象外
-        """
         Move = self.env['stock.move']
         saved_dest_ids = {}
         for link in saved_links:
@@ -149,12 +140,12 @@ class recreate_mixin(models.AbstractModel):
             dest_move = Move.browse(link['dest_move_id']).exists()
             if not dest_move or dest_move.state in ('cancel', 'done'):
                 continue
+            # 親⇔子製造のリンクは_restore_parent_child_mo_linksが復元する
             if dest_move.raw_material_production_id in mos:
                 continue
 
             fin_move = Move.browse(link['finished_move_id']).exists()
             if not fin_move or fin_move.state == 'cancel':
-                # 完成品Moveが作り直されていた場合に備え、同じ製造・同じ製品の有効なMoveで代替する
                 mo = self.env['mrp.production'].browse(link['mo_id'])
                 fin_move = mo.move_finished_ids.filtered(
                     lambda m: m.product_id.id == link['product_id'] and m.state != 'cancel'
@@ -162,7 +153,7 @@ class recreate_mixin(models.AbstractModel):
             if not fin_move:
                 continue
 
-            # 再確定時にプッシュルール等で新しい後続Moveが作られていた場合は、二重にならないよう復元しない
+            # 新しい後続Moveが既にある場合は二重にしない
             known_dest_ids = saved_dest_ids.get(link['finished_move_id'], set())
             if fin_move.move_dest_ids.filtered(
                 lambda m: m.state not in ('cancel', 'done') and m.id not in known_dest_ids
@@ -178,10 +169,6 @@ class recreate_mixin(models.AbstractModel):
                 dest_move.write(vals)
 
     def _save_sub_mo_transfer_chains(self, parent_mo, sub_mos):
-        """
-        子製造の完成品Move → 親製造の部材Move の間に運送（工場間移動などのpicking付きMove）が
-        挟まっている場合、そのMove連鎖の情報を退避する。
-        """
         Move = self.env['stock.move']
         baseline_move_id = Move.search([], order='id desc', limit=1).id
         parent_raw_moves = parent_mo.move_raw_ids
@@ -221,10 +208,6 @@ class recreate_mixin(models.AbstractModel):
         return chains
 
     def _restore_sub_mo_transfer_chains(self, saved_chains):
-        """
-        再確定後、親の再確定で新しく生成された運送Move（子製造の完成品Moveにつながっていない孤立した運送）を、
-        退避した連鎖と同じ形で「子の完成品Move → 運送 → 親の部材Move」につなぎ直す。
-        """
         Move = self.env['stock.move']
         live = lambda m: m.state not in ('cancel', 'done')
         claimed = Move
@@ -263,7 +246,7 @@ class recreate_mixin(models.AbstractModel):
                         break
                     candidate = nxt
                     walked |= nxt
-                # 連鎖の末尾が他に繋がっていない（親の部材Moveへの接続が外れている）場合のみ採用
+                # 末尾が未接続の連鎖だけ採用
                 if ok and not candidate.move_dest_ids.filtered(live):
                     new_hops = walked
                     break
@@ -283,11 +266,10 @@ class recreate_mixin(models.AbstractModel):
                     vals['move_orig_ids'] = [(4, fin_move.id, 0)]
                 if vals:
                     new_move.write(vals)
-            # 従来の復元で張られた「子の完成品Move → 親の部材Move」の直結を外し、運送の末尾につなぎ直す
+            # 子の完成品Moveと親の部材Moveの直結を外し、運送の末尾につなぐ
             raw_move.write({'move_orig_ids': [(3, fin_move.id, 0), (4, ordered_hops[-1].id, 0)]})
 
     def _order_hops(self, hops):
-        """運送Moveの連鎖を、上流（子の完成品Move側）から下流の順に並べる"""
         ordered = []
         remaining = hops
         current = hops.filtered(lambda m: not (m.move_orig_ids & hops))

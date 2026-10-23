@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_mrp_production_done_confirm" model="ir.ui.view">
+            <field name="name">mrp.production.done.confirm.form</field>
+            <field name="model">mrp.production.done.confirm</field>
+            <field name="arch" type="xml">
+                <form string="製造完了の確認">
+                    <group>
+                        <p>製造を一度完了にしてしまうと単純には元に戻すことはできませんのでご注意ください。本当に製造を完了にしますか？</p>
+                    </group>
+                    <field name="show_productions" invisible="1"/>
+                    <field name="production_ids" nolabel="1" readonly="1" attrs="{'invisible': [('show_productions', '=', False)]}">
+                        <tree create="0" delete="0">
+                            <!-- 他項目のattrsがstateに依存するため必要 -->
+                            <field name="state" invisible="1"/>
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button name="action_confirm" string="完了にする" type="object" class="btn-primary"/>
+                        <button string="キャンセル" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

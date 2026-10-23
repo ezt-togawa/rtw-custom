@@ -15,12 +15,10 @@ class sale_order_approve(models.Model):
     approve_user = fields.Char('承認者', store=True)
 
     def _get_over_price_threshold(self):
-        # 承認なしで確認できる金額の上限。変更する場合はここ1箇所だけでOK。
         return 2000000
 
     def _get_amount_total_in_company_currency(self):
-        # 閾値(円)や商品原価(標準は会社通貨=円)と比較するため、
-        # 受注が外貨建てでも会社通貨(円)に換算した金額を返す。
+        # 閾値・商品原価は会社通貨（円）基準のため、外貨建ては換算して返す
         self.ensure_one()
         company = self.company_id or self.env.company
         company_currency = company.currency_id
@@ -63,8 +61,7 @@ class sale_order_approve(models.Model):
             amount_total_company = record._get_amount_total_in_company_currency()
             new_is_over_price = amount_total_company > max_price or amount_total_company < min_price
             if new_is_over_price != record.is_over_price:
-                # 承認要否の判定自体が変わった時だけ、既存の承認状態をリセットする
-                # (単に再計算しただけで手動承認を消してしまわないため)
+                # 承認要否が変わった時だけ承認状態をリセットする
                 record.approve_status = False
                 record.approve_user = ''
             record.is_over_price = new_is_over_price
