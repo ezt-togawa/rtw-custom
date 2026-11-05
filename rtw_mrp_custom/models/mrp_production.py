@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, _, api
 from odoo.exceptions import UserError
+from odoo.tools import float_is_zero
 from dateutil.parser import parse
 from datetime import datetime
 
@@ -35,6 +36,20 @@ class MrpProductionCus(models.Model):
     # 製造開始予定日再計算フラグ＆製造画面変更マーククリアのトリガー
     is_calc_planned_start = fields.Boolean(default=False, store=True)
     can_edit_date_planned_start = fields.Boolean(compute='_compute_can_edit_date_planned_start')
+
+    has_started_workorder = fields.Boolean(compute='_compute_workorder_started')
+    workorder_progress_text = fields.Char(compute='_compute_workorder_started')
+
+    @api.depends('workorder_ids.state', 'state')
+    def _compute_workorder_started(self):
+        for production in self:
+            workorders = production.workorder_ids.filtered(lambda w: w.state != 'cancel')
+            in_progress = len(workorders.filtered(lambda w: w.state == 'progress'))
+            done = len(workorders.filtered(lambda w: w.state == 'done'))
+            production.has_started_workorder = bool(in_progress or done)
+            show = production.has_started_workorder and production.state in ('confirmed', 'progress', 'to_close')
+            production.workorder_progress_text = \
+                '作業着手済み：作業オーダー 進行中%s・完了%s／全%s' % (in_progress, done, len(workorders)) if show else False
 
     @api.depends_context('uid')
     def _compute_can_edit_date_planned_start(self):
@@ -266,6 +281,15 @@ class MrpProductionCus(models.Model):
             production.move_finished_ids.write({'date': move_vals['date']})
         return res
 
+    def _compute_state(self):
+        super(MrpProductionCus, self)._compute_state()
+        # 作業オーダーの状態は製造オーダーの状態に反映しない（完成数量・消費数量の入力による「進行中」は標準どおり）
+        for production in self.filtered(lambda p: p.workorder_ids and p.state in ('progress', 'to_close')):
+            has_input = not float_is_zero(production.qty_producing, precision_rounding=production.product_uom_id.rounding) \
+                or any(not float_is_zero(move.quantity_done, precision_rounding=move.product_uom.rounding or move.product_id.uom_id.rounding)
+                       for move in production.move_raw_ids)
+            production.state = 'progress' if has_input else 'confirmed'
+
     def _plan_workorders(self, replan=False):
         # 製造開始予定日と実作業は切り離す（再計画しても製造開始予定日は変えない）
         return super(MrpProductionCus, self.with_context(rtw_keep_planned_start=True))._plan_workorders(replan=replan)
@@ -275,6 +299,12 @@ class MrpProductionCus(models.Model):
         if 'date_planned_start' in vals and ctx.get('force_date') \
                 and (ctx.get('rtw_skip_mo_start_sync') or ctx.get('rtw_keep_planned_start')):
             vals = {key: value for key, value in vals.items() if key != 'date_planned_start'}
+            if not vals:
+                return True
+
+        # 実績開始日時は最初の作業オーダーの開始時だけ記録する
+        if 'date_start' in vals and ctx.get('rtw_workorder_start') and all(self.mapped('date_start')):
+            vals = {key: value for key, value in vals.items() if key != 'date_start'}
             if not vals:
                 return True
 
