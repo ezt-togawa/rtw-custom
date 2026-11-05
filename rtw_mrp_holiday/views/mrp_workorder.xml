@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mrp_workorder_form_view_holiday_warning" model="ir.ui.view">
+            <field name="name">mrp.workorder.form.holiday.warning</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="rtw_update_mrp_workorder.rtw_mrp_workorder_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="after">
+                    <field name="is_plan_date_holiday" invisible="1" />
+                    <div class="mb-2" attrs="{'invisible': [('is_plan_date_holiday', '=', False)]}">
+                        <span class="badge badge-warning o_rtw_holiday_badge" title="休日です">休</span>
+                        <span class="text-muted ml-1">実施予定日または開始予定日が休日です</span>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mrp_workorder_tree_view_holiday_mark" model="ir.ui.view">
+            <field name="name">mrp.workorder.tree.holiday.mark</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='implementation_plan_date']" position="after">
+                    <field name="holiday_mark" widget="badge" decoration-warning="holiday_mark" optional="hide" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

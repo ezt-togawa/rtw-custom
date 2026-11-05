@@ -1,0 +1,23 @@
+.o_rtw_holiday_calendar td.fc-day.fc-sat {
+    background-color: #e6f0fa;
+}
+
+.o_rtw_holiday_calendar td.fc-day.fc-sun {
+    background-color: #fbe9e9;
+}
+
+.o_rtw_holiday_calendar td.fc-day.o_rtw_holiday {
+    background-color: #fff1c7;
+}
+
+.o_rtw_holiday_calendar td.fc-day.fc-today.o_rtw_holiday {
+    background-color: #fff8e1 !important;
+    box-shadow: inset 0 0 0 2px rgba(220, 53, 69, 0.45);
+}
+
+.o_rtw_holiday_badge {
+    align-self: baseline;
+    font-size: 1rem;
+    line-height: 1.2;
+    padding: 0.25em 0.5em;
+}

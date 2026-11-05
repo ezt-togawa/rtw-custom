@@ -1,0 +1,8 @@
+<odoo>
+    <template id="assets_backend" name="rtw_mrp_holiday_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/rtw_mrp_holiday/static/src/css/holiday_calendar.css"/>
+            <script type="text/javascript" src="/rtw_mrp_holiday/static/src/js/holiday_calendar.js"></script>
+        </xpath>
+    </template>
+</odoo>
