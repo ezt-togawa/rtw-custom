@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_mrp_holiday_tree" model="ir.ui.view">
+            <field name="name">mrp.holiday.tree</field>
+            <field name="model">mrp.holiday</field>
+            <field name="arch" type="xml">
+                <tree string="製造休日" editable="bottom">
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mrp_holiday_search" model="ir.ui.view">
+            <field name="name">mrp.holiday.search</field>
+            <field name="model">mrp.holiday</field>
+            <field name="arch" type="xml">
+                <search string="製造休日">
+                    <field name="name"/>
+                    <filter string="開始日" name="filter_date_from" date="date_from"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_mrp_holiday" model="ir.actions.act_window">
+            <field name="name">製造休日</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.holiday</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">製造休日を登録します</p>
+                <p>登録した日は、製造オーダー・作業オーダーのカレンダーで色分け表示され、開始予定日が休日の場合に警告が出ます。</p>
+            </field>
+        </record>
+
+        <menuitem
+            id="menu_mrp_holiday"
+            name="製造休日"
+            action="action_mrp_holiday"
+            parent="mrp.menu_mrp_configuration"
+            sequence="104" />
+    </data>
+</odoo>
