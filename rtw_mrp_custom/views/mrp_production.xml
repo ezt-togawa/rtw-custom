@@ -278,7 +278,7 @@
             <field name="inherit_id" ref="mrp.mrp_production_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="//sheet" position="before">
-                    <div class="alert alert-info mb-0" role="alert" attrs="{'invisible': [('workorder_progress_text', '=', False)]}">
+                    <div class="alert mb-0" style="background-color: #fffacd;" role="alert" attrs="{'invisible': [('workorder_progress_text', '=', False)]}">
                         <field name="workorder_progress_text" readonly="1"/>
                     </div>
                 </xpath>
