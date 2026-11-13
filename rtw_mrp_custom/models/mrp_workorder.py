@@ -10,3 +10,12 @@ class MrpWorkorderCus(models.Model):
         if 'date_planned_start' in values:
             self = self.with_context(rtw_skip_mo_start_sync=True)
         return super(MrpWorkorderCus, self).write(values)
+
+    def _set_qty_producing(self):
+        if self.env.context.get('rtw_workorder_start'):
+            return
+        return super(MrpWorkorderCus, self)._set_qty_producing()
+
+    def button_start(self):
+        # 開始しても製造オーダーの完成数量・消費数量を自動入力しない（製造オーダーを「進行中」にしないため）
+        return super(MrpWorkorderCus, self.with_context(rtw_workorder_start=True)).button_start()
