@@ -88,7 +88,7 @@ class StockPicking(models.Model):
     )
     
     sale_order_id = fields.Many2one('sale.order', compute="_compute_sale_order", string="Sale Order", store=True, index=True)
-    sales_order_name = fields.Char(string='Sales Order Name', compute="_compute_sale_order_name", store=True)
+    sales_order_name = fields.Char(string='販売オーダー', compute="_compute_sale_order_name", store=True)
     shiratani_entry_date = fields.Date("Shiratani entry date", compute='compute_shiretani_entry_date')
     itoshima_shiratani_shipping_notes = fields.Text(string="糸島/白谷配送注記",compute="_compute_itoshima_shiratani_shipping_notes")
     estimated_shipping_date = fields.Date('Estimated shipping date', compute='_compute_date_info')

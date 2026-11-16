@@ -4,13 +4,13 @@ class rtw_stock_move(models.Model):
     _inherit = "stock.move"
     sai = fields.Float(group_operator="sum", store=True)
     depo_date = fields.Date(compute="_get_sale",  store=True)
-    shiratani_date = fields.Date(compute="_get_shiratani_date",store=True)
+    shiratani_date = fields.Date(string="白谷到着日", compute="_get_shiratani_date",store=True)
     shiratani_date_delivery = fields.Date(string="白谷到着日", compute="_get_shiratani_date_delivery", inverse="_set_shiratani_date_delivery",store=True)
     date_planned = fields.Datetime(
         related='sale_line_id.date_planned', store=True)
     sale_id = fields.Many2one(
-        'sale.order', compute="_get_sale_id",store=True)
-    sale_id_title = fields.Char('sale.order.title', store=True)
+        'sale.order', string="注番", compute="_get_sale_id",store=True)
+    sale_id_title = fields.Char('Title', store=True)
     customer_id = fields.Many2one(related='sale_id.partner_id', string='顧客')
     title = fields.Char(related='sale_id.title', string='案件名')
     spec = fields.Many2many(
@@ -28,9 +28,9 @@ class rtw_stock_move(models.Model):
     shipping_to = fields.Text(
         string="配送", compute="_get_shipping_to",store=True)
     warehouse_arrive_date = fields.Date(
-        compute="_get_warehouse_arrive_date",store=True )
+        string="デポ１到着日", compute="_get_warehouse_arrive_date",store=True )
     warehouse_arrive_date_2 = fields.Date(
-        compute="_get_warehouse_arrive_date_2",store=True )
+        string="デポ２到着日", compute="_get_warehouse_arrive_date_2",store=True )
     mrp_production_id = fields.Char(
         string="製造オーダー", compute="_get_mrp_production_id",store=True)
     product_package_quantity = fields.Float(string="個口数")
@@ -47,6 +47,14 @@ class rtw_stock_move(models.Model):
     shipping_destination_text = fields.Text(string="送り先", compute="_compute_shipping_destination_text")
     manufacturing_products = fields.Char(string='製造プロダクト', compute='_compute_manufacturing_products')
     number_of_products = fields.Float(string='製品数', compute='_compute_number_of_products')
+
+    @api.model
+    def fields_get(self, allfields=None, attributes=None):
+        res = super(rtw_stock_move, self).fields_get(allfields, attributes)
+        # 一覧の「白谷到着日」はshiratani_date。編集用のshiratani_date_deliveryはカスタムグループの候補から外す
+        if 'sortable' in res.get('shiratani_date_delivery', {}):
+            res['shiratani_date_delivery']['sortable'] = False
+        return res
 
     def write(self, vals):
         res = super(rtw_stock_move, self).write(vals)
