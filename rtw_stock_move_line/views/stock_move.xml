@@ -108,9 +108,20 @@
                     <field string=" 注番" name="sale_id" />
                 </xpath>
                 <xpath expr="//filter[@name='by_product']" position="before">
-                    <filter name="sale_id" domain="[]" context="{'group_by': 'sale_id'}" />
+                    <filter name="sale_id" string="注番" domain="[]" context="{'group_by': 'sale_id'}" />
+                    <filter name="groupby_area" string="デポ１" domain="[]" context="{'group_by': 'area'}" />
+                    <filter name="groupby_area_2" string="デポ２" domain="[]" context="{'group_by': 'area_2'}" />
 
                     <separator />
+                </xpath>
+                <xpath expr="//filter[@name='groupby_picking_id']" position="attributes">
+                    <attribute name="string">運送</attribute>
+                </xpath>
+                <xpath expr="//filter[@name='groupby_location_id']" position="attributes">
+                    <attribute name="string">移動元</attribute>
+                </xpath>
+                <xpath expr="//filter[@name='groupby_dest_location_id']" position="attributes">
+                    <attribute name="string">移動先</attribute>
                 </xpath>
                
             </field>
